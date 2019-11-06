@@ -1,0 +1,47 @@
+@import "../../../root/vars";
+
+$form-legend-size: 17px !default;
+$form-group-spacing: 18px !default;
+
+.n-form-group {
+    position: relative;
+}
+
+.n-form-group__label {
+    display: flex;
+    flex-direction: row;
+    padding: 5px 0;
+}
+
+.n-form-group.n-form-group--checkable .n-form-group__label {
+    cursor: pointer;
+}
+
+.n-form-group__label .n-checkbox {
+    flex: 0 0 auto;
+    margin-right: 9px;
+}
+
+.n-form-group__label .n-form-group__label-text {
+    flex: 1 1 auto;
+    font-size: $form-legend-size;
+    color: $--color-black;
+    transition: color 0.15s;
+}
+
+.n-form-group.n-form-group--checkable .n-form-group__label:hover .n-form-group__label-text {
+    color: $--color-primary;
+}
+
+.n-inverse .n-form-group__label .n-form-group__label-text {
+    color: $--color-white;
+}
+
+.n-form-group__actions {
+    flex: 0 0 auto;
+    margin-left: 20px;
+}
+
+.n-form-group__body {
+    margin-top: $form-group-spacing * 0.5;
+}

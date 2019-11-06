@@ -1,0 +1,41 @@
+
+* {
+    outline: none;
+}
+
+html, body {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 15px;
+    font-variant-numeric: normal;
+    font-feature-settings: normal;
+}
+
+body {
+    font-size: 14px;
+    min-height: 100vh;
+}
+
+#app {
+    max-width: 1024px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+pre {
+    font-family: 'Fira Code', monospace;
+}
+
+.n-inverse pre {
+    color: #fff;
+}
+
+#app > .n-form {
+    border-radius: 4px;
+    padding: 30px;
+}
+
+.n-inverse {
+    background: #32383e;
+}

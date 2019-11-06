@@ -1,0 +1,96 @@
+@import "../../../root/vars";
+
+$input-size: 14px !default;
+$input-height: 34px !default;
+
+.n-input__wrapper {
+    position: relative;
+    display: inline-flex;
+    width: 100%;
+}
+
+.n-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0 $input-height * 0.3;
+    height: $input-height;
+    background: $--color-white;
+    font-size: $input-size;
+    color: $color-black;
+    border: 1px solid $--color-gray-15;
+    border-radius: $radius-small;
+    transition: 0.15s border;
+}
+
+.n-input.n-input--round {
+    border-radius: 500px;
+    padding: 0 $input-height * 0.6;
+}
+
+.n-inverse .n-input {
+    border-color: $--color-gray-80;
+    background: $--color-black;
+    color: $--color-white;
+}
+
+.n-input:hover,
+.n-input:focus {
+    border: 1px solid $--color-primary;
+}
+
+.n-input.n-input--small {
+    font-size: $input-size * 0.875;
+    padding: 0 $input-height * 0.3 * 0.875;
+    height: $input-height * 0.875;
+}
+
+.n-input.n-input--round.n-input--small {
+    padding: 0 $input-height * 0.6 * 0.875;
+}
+
+.n-input.n-input--large {
+    font-size: $input-size * 1.125;
+    padding: 0 $input-height * 0.3 * 1.125;
+    height: $input-height * 1.125;
+}
+
+.n-input.n-input--round.n-input--large {
+    padding: 0 $input-height * 0.6 * 1.125;
+}
+
+.n-input.n-input--icon {
+    padding-right: $input-height;
+}
+
+.n-input.n-input--icon.n-input--small {
+    padding-right: $input-height * 0.875;
+}
+
+.n-input.n-input--icon.n-input--large {
+    padding-right: $input-height * 1.125;
+}
+
+.n-input.n-input--disabled {
+    cursor: not-allowed;
+    background: $--color-gray-05;
+}
+
+.n-inverse .n-input.n-input--disabled {
+    background: $--color-gray-90;
+}
+
+.n-input.n-input--disabled:hover,
+.n-input.n-input--disabled:focus {
+    border-color: $--color-gray-15;
+}
+
+.n-inverse .n-input.n-input--disabled:hover,
+.n-inverse .n-input.n-input--disabled:focus {
+    border-color: $--color-gray-80;
+}
+
+.n-input__wrapper .n-button__wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+}

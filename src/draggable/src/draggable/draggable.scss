@@ -1,0 +1,84 @@
+@import "../../../root/vars";
+
+$draggable-item-height: 34px !default;
+$draggable-empty-height: 100px !default;
+$draggable-placeholder-radius: 500px !default;
+$draggable-placeholder-size: 13px !default;
+
+.n-draggable {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.n-draggable__item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: $draggable-item-height;
+}
+
+.n-draggable__item:hover {
+    background: $--color-background-light;
+}
+
+.n-inverse .n-draggable__item:hover {
+    background: $--color-gray-85;
+}
+
+.n-draggable__item.n-draggable--nodrop {
+    //cursor: no-drop !important;
+}
+
+.n-draggable__item.n-draggable--dragover {
+    background: rgba($color-primary, 0.15);
+}
+
+.n-draggable__empty {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: $draggable-empty-height;
+}
+
+.n-draggable__empty span {
+    color: $--color-info;
+}
+
+.n-draggable.n-draggable--nodrop > .n-draggable__empty {
+    cursor: no-drop !important;
+}
+
+.n-draggable.n-draggable--dragover > .n-draggable__empty {
+    background: rgba(10, 163, 235, 0.15);
+}
+
+.n-draggable__placeholder {
+    z-index: 99999;
+    position: absolute;
+    top: -99999px;
+    left: -99999px;
+    border-radius: $draggable-placeholder-radius;
+    background: $--color-primary;
+}
+
+.n-draggable__placeholder span {
+    display: inline-block;
+    padding: 5px 12px;
+    color: $--color-white;
+    font-size: $draggable-placeholder-size;
+    white-space: nowrap;
+}
+
+.n-draggable__indicator {
+    z-index: 99999;
+    position: absolute;
+    top: -99999px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    margin-top: -1px;
+    background: $--color-primary;
+}

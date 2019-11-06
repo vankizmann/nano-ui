@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI Input</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../../dist/index.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <script src="../../dist/index.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <n-form :form="form" :class="{ 'n-inverse': inverse }">
+
+        <n-form-item label="Inverse">
+            <n-checkbox v-model="inverse">Inverse</n-checkbox>
+        </n-form-item>
+
+        <n-form-item label="Small">
+            <n-input :value="form.name" size="small" />
+        </n-form-item>
+
+        <n-form-item label="Default">
+            <n-input v-model="form.name" size="default" />
+        </n-form-item>
+
+        <n-form-item label="Large">
+            <n-input v-model="form.name" size="large" />
+        </n-form-item>
+
+        <n-form-item label="Disabled">
+            <n-input v-model="form.name" :disabled="true" />
+        </n-form-item>
+
+        <n-form-item label="Info">
+            <n-input v-model="form.name" icon="fa fa-times" :icon-disabled="form.name === ''" @icon-click="form.name = ''" />
+        </n-form-item>
+
+        <n-form-item label="Password">
+            <n-input v-model="form.name" :native-type="nativeType" :icon="icon" @icon-click="changeNative" />
+        </n-form-item>
+
+        <n-form-item label="Object">
+            <pre>{{ form }}</pre>
+        </n-form-item>
+
+    </n-form>
+</div>
+
+<script>
+    Nano.Dom.ready(() => {
+
+        Vue.config.devtools = true;
+
+        var config = {
+
+            computed: {
+
+                icon: function() {
+                    return this.nativeType === 'text' ?
+                        'fa fa-eye-slash' : 'fa fa-eye';
+                }
+
+            },
+
+            methods: {
+
+                changeNative: function() {
+                    this.nativeType = this.nativeType === 'text' ?
+                        'password' : 'text';
+                }
+
+            },
+
+            data: function() {
+
+                var form = {
+                    name: ''
+                };
+
+                return {
+                    form: form, inverse: false, nativeType: 'password'
+                };
+            }
+        };
+
+        window.App = new Vue(config).$mount('#app');
+    })
+</script>
+</body>
+</html>

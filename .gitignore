@@ -1,0 +1,6 @@
+.DS_Store
+.ignore.js
+yarn.lock
+yarn-error.log
+/.idea
+/node_modules

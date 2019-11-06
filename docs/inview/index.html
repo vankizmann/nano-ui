@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI Datepicker</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../../dist/index.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="../../dist/index.js"></script>
+
+</head>
+<body>
+
+<div id="app" style="padding: 0;">
+    <div style="height: 2000px; width: 100%; background: blue;"></div>
+    <div id="test" style="height: 500px; width: 100%; background: yellow;"></div>
+    <div style="height: 2000px; width: 100%; background: red;"></div>
+</div>
+
+<script>
+    Nano.Dom.ready(() => {
+        Nano.Dom.find(window).on('scroll', function () {
+            console.log(Nano.Dom.find('#test').inviewY());
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI Modal</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../../dist/index.legacy.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <!--[if IE ]>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=Element.prototype.append%2CElement.prototype.before%2CElement.prototype.classList%2CElement.prototype.closest%2CElement.prototype.matches%2CElement.prototype.prepend%2CElement.prototype.remove%2CNodeList.prototype.%40%40iterator%2CNodeList.prototype.forEach%2CNode.prototype.contains%2CMutationObserver%2CURL%2CElement%2CDocumentFragment%2CDocumentFragment.prototype.append%2CDocumentFragment.prototype.prepend%2CHTMLDocument%2Cdocument.querySelector%2Cdocument.getElementsByClassName%2Cdocument%2CgetComputedStyle%2CrequestAnimationFrame"></script>
+    <![endif]-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+    <script src="../../dist/index.js"></script>
+
+</head>
+<body style="position: relative;">
+
+<div id="app">
+    <div class="n-form">
+
+        <div id="test" style="position: relative !important; background: #eee; height: 300px; overflow: auto;">
+            <div style="position: relative !important; padding: 20px;">
+                <n-button type="primary">
+                    Modal 01
+                </n-button>
+                <n-modal>
+                    Hello 01!
+                </n-modal>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <n-button type="warning">
+                    Modal 02
+                </n-button>
+                <n-modal :close-outside="false" title="Modal :)">
+                    <div>
+                        Hello 02!
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        Width overflow
+                    </div>
+                </n-modal>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    Nano.Dom.ready(function () {
+
+        Vue.config.devtools = true;
+
+        var config = {
+            data: function() {
+                return { };
+            }
+        };
+
+        window.App = new Vue(config).$mount('#app');
+
+    });
+</script>
+</body>
+</html>

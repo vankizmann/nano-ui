@@ -1,0 +1,32 @@
+@import "../../../root/vars";
+
+.n-info {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.n-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-width: 100%;
+    overflow: hidden;
+}
+
+.n-info__body {
+    z-index: 100;
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-width: 100%;
+    overflow-y: auto;
+}
+
+.n-info__empty {
+    text-align: center;
+}
+
+.n-info__column {
+    margin-bottom: 14px;
+}

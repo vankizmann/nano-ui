@@ -1,0 +1,14 @@
+@import "../../../root/vars";
+
+.n-file-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.n-file-list__item {
+    display: flex;
+    flex-direction: column;
+    width: 33%;
+    padding: 5px;
+}

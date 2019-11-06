@@ -1,0 +1,125 @@
+@import "../../../root/vars";
+
+$popover-default-size: 14px !default;
+$popover-default-padding: 9px 12px !default;
+
+$popover-select-size: 13px !default;
+$popover-select-padding: 3px 0 !default;
+
+$popover-tooltip-size: 12px !default;
+$popover-tooltip-padding: 3px 9px !default;
+
+.n-popover {
+    z-index: 1000;
+    position: fixed;
+    padding: 3px;
+}
+
+.n-popover.n-popover--select {
+    width: 100% !important;
+}
+
+.n-popover.n-popover--tooltip {
+    max-width: 280px !important;
+}
+
+.n-popover__frame {
+    width: 100%;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.n-popover.n-popover--default > .n-popover__frame {
+    font-size: $popover-default-size;
+    background: $--color-white;
+    border-radius: $radius-medium;
+    box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+}
+
+.n-popover.n-popover--select > .n-popover__frame {
+    font-size: $popover-default-size;
+    background: $--color-white;
+    border-radius: $radius-medium;
+    box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+}
+
+.n-popover.n-popover--cascader > .n-popover__frame {
+    font-size: $popover-default-size;
+    background: $--color-white;
+    border-radius: $radius-medium;
+    box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+}
+
+.n-popover.n-popover--datepicker > .n-popover__frame {
+    font-size: $popover-default-size;
+    background: $--color-white;
+    border-radius: $radius-medium;
+    box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+}
+
+.n-popover.n-popover--timepicker > .n-popover__frame {
+    font-size: $popover-default-size;
+    background: $--color-white;
+    border-radius: $radius-medium;
+    box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+}
+
+.n-popover.n-popover--tooltip > .n-popover__frame {
+    color: $--color-white;
+    font-size: $popover-tooltip-size;
+    background: rgba($color-black, 0.85);
+    border-radius: $radius-medium;
+    box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+}
+
+.n-popover__header {
+    flex: 0 0 auto;
+}
+
+.n-popover.n-popover--default > .n-popover__frame > .n-popover__header {
+    padding: $popover-default-padding;
+    border-bottom: 1px solid $--color-gray-10;
+}
+
+.n-popover.n-popover--select > .n-popover__frame > .n-popover__header {
+    padding: $popover-select-padding;
+}
+
+.n-popover.n-popover--tooltip > .n-popover__frame > .n-popover__header {
+    padding: $popover-tooltip-padding;
+}
+
+.n-popover__body {
+    flex: 1 1 auto;
+}
+
+.n-popover.n-popover--default > .n-popover__frame > .n-popover__body {
+    padding: $popover-default-padding;
+}
+
+.n-popover.n-popover--select > .n-popover__frame > .n-popover__body {
+    padding: $popover-select-padding;
+}
+
+.n-popover.n-popover--tooltip > .n-popover__frame > .n-popover__body {
+    padding: $popover-tooltip-padding;
+}
+
+.n-popover__footer {
+    flex: 0 0 auto;
+}
+
+.n-popover.n-popover--default > .n-popover__frame > .n-popover__footer {
+    padding: $popover-default-padding;
+    border-top: 1px solid $--color-gray-10;
+}
+
+.n-popover.n-popover--select > .n-popover__frame > .n-popover__footer {
+    padding: $popover-select-padding;
+    border-top: 1px solid $--color-gray-10;
+}
+
+.n-popover.n-popover--tooltip > .n-popover__frame > .n-popover__footer {
+    padding: $popover-tooltip-padding;
+}
+

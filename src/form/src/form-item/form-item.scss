@@ -1,0 +1,55 @@
+@import "../../../root/vars";
+
+$form-label-size: 14px !default;
+$form-item-spacing: 18px !default;
+
+.n-form-item {
+    position: relative;
+    display: flex;
+    margin-bottom: $form-item-spacing;
+}
+
+.n-form--vertical .n-form-item {
+    flex-direction: column;
+}
+
+.n-form--horizontal .n-form-item {
+    flex-direction: row;
+    align-items: center;
+}
+
+.n-form-item > * {
+    flex: 1 1 auto;
+}
+
+.n-form-item__label {
+    flex: 0 0 auto;
+    display: flex;
+    margin-bottom: $form-item-spacing * 0.25;
+}
+
+.n-form--vertical .n-form-item__label {
+    width: 100%;
+}
+
+.n-form--horizontal .n-form-item__label {
+    width: 180px;
+}
+
+.n-form-item__label label {
+    color: $--color-gray-60;
+    font-size: $form-label-size;
+}
+
+.n-inverse .n-form-item__label label {
+    color: $--color-gray-40;
+}
+
+.n-form-item__error {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 1px;
+    font-size: $form-label-size * 0.875;
+    color: $--color-danger;
+}

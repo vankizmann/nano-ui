@@ -1,0 +1,205 @@
+@import "../../../root/vars";
+
+$timepicker-size: 14px !default;
+$timepicker-height: 34px !default;
+
+$timepicker-display-size: 15px !default;
+$timepicker-item-height: 35px !default;
+
+.n-timepicker__wrapper {
+    position: relative;
+    display: inline-flex;
+    width: 100%;
+    color: $--color-black;
+}
+
+.n-timepicker__wrapper .n-popover {
+    display: inline-flex;
+    flex-direction: row;
+    text-align: left;
+    max-width: 100% !important;
+}
+
+.n-timepicker {
+    flex: 1 1 auto;
+    min-width: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: $--color-white;
+    color: $--color-black;
+    border: 1px solid $--color-gray-15;
+    border-radius: $radius-small;
+    transition: 0.15s border;
+}
+
+.n-inverse .n-timepicker {
+    border-color: $--color-gray-80;
+    background: $--color-black;
+    color: $--color-white;
+}
+
+.n-timepicker:hover,
+.n-timepicker.n-popover--open {
+    border: 1px solid $--color-primary;
+}
+
+.n-timepicker.n-timepicker--default {
+    font-size: $timepicker-size;
+    padding: 0 $timepicker-height * 0.3;
+    min-height: $timepicker-height;
+}
+
+.n-timepicker.n-timepicker--clearable {
+    padding-right: $timepicker-height;
+}
+
+.n-timepicker.n-timepicker--small {
+    font-size: $timepicker-size * 0.875;
+    padding: 0 $timepicker-height * 0.3 * 0.875;
+    min-height: $timepicker-height * 0.875;
+}
+
+.n-timepicker.n-timepicker--clearable {
+    padding-right: $timepicker-height * 0.875;
+}
+
+.n-timepicker.n-timepicker--large {
+    font-size: $timepicker-size * 1.125;
+    padding: 0 $timepicker-height * 0.3 * 1.125;
+    min-height: $timepicker-height * 1.125;
+}
+
+.n-timepicker.n-timepicker--clearable {
+    padding-right: $timepicker-height * 1.125;
+}
+
+.n-timepicker.n-timepicker--disabled,
+.n-timepicker.n-timepicker--disabled:hover {
+    cursor: not-allowed;
+    background: $--color-gray-05;
+    border-color: $--color-gray-15;
+}
+
+.n-inverse .n-timepicker.n-timepicker--disabled,
+.n-inverse .n-timepicker.n-timepicker--disabled:hover {
+    background: $--color-gray-90;
+    border-color: $--color-gray-80;
+}
+
+.n-timepicker .n-button__wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.n-timepicker__icon {
+    flex: 0 0 auto;
+    color: $--color-gray-40;
+}
+
+.n-timepicker__seperator {
+    flex: 0 0 auto;
+    color: $--color-gray-50;
+}
+
+.n-timepicker__input {
+    flex: 1 1 auto;
+}
+
+.n-timepicker__input input {
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: $--color-black;
+    padding: 0 $timepicker-height * 0.3;
+}
+
+.n-inverse .n-timepicker__input input {
+    color: $--color-white;
+}
+
+.n-timepicker.n-timepicker--disabled .n-timepicker__input input {
+    cursor: not-allowed;
+}
+
+.n-timepicker__input.n-timepicker__input--range input {
+    text-align: center;
+}
+
+.n-timepicker__header {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    border-bottom: 1px solid $--color-gray-10;
+}
+
+.n-timepicker__toolbar {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $timepicker-display-size;
+}
+
+.n-timepicker__prev {
+    margin-right: auto;
+}
+
+.n-timepicker__next {
+    margin-left: auto;
+}
+
+.n-timepicker__display .n-timepicker__time {
+    padding: 5px 7px;
+}
+
+.n-timepicker__body {
+    display: flex;
+}
+
+.n-timepicker__footer {
+    padding: 10px;
+    text-align: right;
+    border-top: 1px solid $--color-gray-10;
+}
+
+.n-timepicker__panel {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    min-height: 0;
+    padding: 5px;
+    overflow-y: auto;
+    border-right: 1px solid $--color-gray-10;
+}
+
+.n-timepicker__panel:last-child {
+    border-right: 0;
+}
+
+.n-timepicker__panel .n-timepicker__item {
+    cursor: pointer;
+    padding: 3px;
+}
+
+.n-timepicker__panel .n-timepicker__item span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: $timepicker-item-height;
+    border-radius: $radius-small;
+}
+
+.n-timepicker__panel .n-timepicker__item:hover span {
+    background: $--color-background;
+}
+
+.n-timepicker__panel .n-timepicker__item.n-timepicker__item--selected span {
+    color: $--color-white;
+    background: $--color-primary;
+}

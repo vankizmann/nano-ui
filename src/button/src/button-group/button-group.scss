@@ -1,0 +1,97 @@
+@import "../../../root/vars";
+
+.n-button-group {
+    display: flex;
+    flex-direction: row;
+}
+
+.n-button-group .n-button__wrapper .n-button,
+.n-button-group .n-input__wrapper .n-input,
+.n-button-group .n-select__wrapper .n-select,
+.n-button-group .n-cascader__wrapper .n-cascader,
+.n-button-group .n-datepicker__wrapper .n-datepicker,
+.n-button-group .n-timepicker__wrapper .n-timepicker {
+    position: relative;
+    border-radius: 0;
+    margin-left: -1px;
+}
+
+.n-button-group .n-button__wrapper .n-button:hover,
+.n-button-group .n-button__wrapper .n-input:hover,
+.n-button-group .n-button__wrapper .n-select:hover,
+.n-button-group .n-cascader__wrapper .n-cascader:hover,
+.n-button-group .n-datepicker__wrapper .n-datepicker:hover,
+.n-button-group .n-timepicker__wrapper .n-timepicker:hover {
+    z-index: 10;
+}
+
+.n-button-group .n-button__wrapper:first-child .n-button,
+.n-button-group .n-input__wrapper:first-child .n-input,
+.n-button-group .n-select__wrapper:first-child .n-select,
+.n-button-group .n-cascader__wrapper:first-child .n-cascader,
+.n-button-group .n-datepicker__wrapper:first-child .n-datepicker,
+.n-button-group .n-timepicker__wrapper:first-child .n-timepicker {
+    border-radius: $radius-small 0 0 $radius-small;
+    margin-left: 0;
+}
+
+.n-button-group .n-button__wrapper:last-child .n-button,
+.n-button-group .n-input__wrapper:last-child .n-input,
+.n-button-group .n-select__wrapper:last-child .n-select,
+.n-button-group .n-cascader__wrapper:last-child .n-cascader,
+.n-button-group .n-datepicker__wrapper:last-child .n-datepicker,
+.n-button-group .n-timepicker__wrapper:last-child .n-timepicker {
+    border-radius: 0 $radius-small $radius-small 0;
+}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--primary {
+//    border-left-color: $--color-primary-dark;
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--outline.n-button--primary {
+//    border-left-color: rgba($color-primary, 0.25);
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--secondary {
+//    border-left-color: $--color-gray-10;
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--secondary:hover {
+//    border-left-color: $--color-primary;
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--outline.n-button--secondary {
+//    border-left-color: rgba($color-secondary, 0.25);
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--success {
+//    border-left-color: $--color-success-dark;
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--outline.n-button--success {
+//    border-left-color: rgba($color-success, 0.25);
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--warning {
+//    border-left-color: $--color-warning-dark;
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--outline.n-button--warning {
+//    border-left-color: rgba($color-warning, 0.25);
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--danger {
+//    border-left-color: $--color-danger-dark;
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--outline.n-button--danger {
+//    border-left-color: rgba($color-danger, 0.25);
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--info {
+//    border-left-color: $--color-info-dark;
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--outline.n-button--info {
+//    border-left-color: rgba($color-info, 0.25);
+//}

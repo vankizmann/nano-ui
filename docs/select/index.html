@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI Select</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../../dist/index.legacy.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <!--[if IE ]>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=Element.prototype.append%2CElement.prototype.before%2CElement.prototype.classList%2CElement.prototype.closest%2CElement.prototype.matches%2CElement.prototype.prepend%2CElement.prototype.remove%2CNodeList.prototype.%40%40iterator%2CNodeList.prototype.forEach%2CNode.prototype.contains%2CMutationObserver%2CURL%2CElement%2CDocumentFragment%2CDocumentFragment.prototype.append%2CDocumentFragment.prototype.prepend%2CHTMLDocument%2Cdocument.querySelector%2Cdocument.getElementsByClassName%2Cdocument%2CgetComputedStyle%2CrequestAnimationFrame"></script>
+    <![endif]-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <script src="../../dist/index.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <n-form :form="form" :class="{ 'n-inverse': inverse }">
+
+        <n-form-item label="Inverse">
+            <n-checkbox v-model="inverse">Inverse</n-checkbox>
+        </n-form-item>
+
+        <n-form-item label="Test">
+            <n-select v-model="form.name3" size="default">
+            </n-select>
+        </n-form-item>
+
+        <n-form-item label="Test">
+            <n-select v-model="form.name2" size="default" :allow-create="true">
+                <n-select-option value="mike">Mike</n-select-option>
+                <n-select-option value="alex">Alex</n-select-option>
+                <n-select-option value="hans">Hans</n-select-option>
+            </n-select>
+        </n-form-item>
+
+        <n-form-item label="Small">
+            <n-select v-model="form.name" size="small">
+                <n-select-option value="mike">Mike</n-select-option>
+                <n-select-option value="alex">Alex</n-select-option>
+                <n-select-option value="hans">Hans</n-select-option>
+            </n-select>
+        </n-form-item>
+
+        <n-form-item label="Default">
+            <n-select v-model="form.name" size="default">
+                <n-select-option value="mike">Mike</n-select-option>
+                <n-select-option value="alex">Alex</n-select-option>
+                <n-select-option value="hans">Hans</n-select-option>
+            </n-select>
+        </n-form-item>
+
+        <n-form-item label="Large">
+            <n-select v-model="form.name" size="large">
+                <n-select-option value="mike">Mike</n-select-option>
+                <n-select-option value="alex">Alex</n-select-option>
+                <n-select-option value="hans">Hans</n-select-option>
+            </n-select>
+        </n-form-item>
+
+        <n-form-item label="Clearable">
+            <n-select v-model="form.name" :clearable="true">
+                <n-select-option value="mike">Mike</n-select-option>
+                <n-select-option value="alex">Alex</n-select-option>
+                <n-select-option value="hans">Hans</n-select-option>
+            </n-select>
+        </n-form-item>
+
+        <n-form-item label="Disabled">
+            <n-select v-model="form.name" :disabled="true">
+                <n-select-option value="mike">Mike</n-select-option>
+                <n-select-option value="alex">Alex</n-select-option>
+                <n-select-option value="hans">Hans</n-select-option>
+            </n-select>
+        </n-form-item>
+
+        <n-form-item label="Multiple">
+            <n-select v-model="form.names" :multiple="true" :clearble="true">
+                <n-select-option value="mike">Mike</n-select-option>
+                <n-select-option value="alex">Alex</n-select-option>
+                <n-select-option value="hans">Hans</n-select-option>
+            </n-select>
+        </n-form-item>
+
+        <n-form-item label="Multiple clearable">
+            <n-select v-model="form.names" :multiple="true" :clearable="true">
+                <n-select-option value="mike">Mike</n-select-option>
+                <n-select-option value="alex">Alex</n-select-option>
+                <n-select-option value="hans">Hans</n-select-option>
+            </n-select>
+        </n-form-item>
+
+        <n-form-item label="Multiple custom options">
+            <n-select v-model="form.custom" :multiple="true" :allow-create="true">
+                <n-select-option value="foobar">Foobar</n-select-option>
+            </n-select>
+        </n-form-item>
+
+        <n-form-item label="Object">
+            <pre>{{ form }}</pre>
+        </n-form-item>
+
+    </n-form>
+</div>
+
+<script>
+    Nano.Dom.ready(function () {
+
+        Vue.config.devtools = true;
+
+        var config = {
+            data: function() {
+
+                var form = {
+                    name2: null, name3: 0, name: 'mike', names: [], custom: []
+                };
+
+                return {
+                    form: form, inverse: false
+                };
+            }
+        };
+
+        window.App = new Vue(config).$mount('#app');
+    })
+</script>
+</body>
+</html>

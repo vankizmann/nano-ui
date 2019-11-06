@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI Datepicker</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../../dist/index.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <script src="../../dist/index.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <n-form :form="form" :class="{ 'n-inverse': inverse }">
+
+        <n-form-item label="Inverse">
+            <n-checkbox v-model="inverse">Inverse</n-checkbox>
+        </n-form-item>
+
+        <n-form-item label="Test">
+            <n-button-group>
+                <n-datepicker v-model="form.date" :clearable="true" :disabled="true"></n-datepicker>
+                <n-timepicker v-model="form.date" :clearable="true" :disabled="true"></n-timepicker>
+            </n-button-group>
+        </n-form-item>
+
+        <n-form-item label="Test">
+            <n-datepicker :arrive.sync="form.arrive" :depart.sync="form.depart" :range="true" />
+        </n-form-item>
+
+        <n-form-item label="Object">
+            <pre>{{ form }}</pre>
+        </n-form-item>
+
+    </n-form>
+</div>
+
+<script>
+    Nano.Dom.ready(() => {
+
+        Vue.config.devtools = true;
+
+        var config = {
+
+            data: function() {
+
+                var form = {
+                    date: '2006-12-12T23:45:12+08:00', arrive: 'now', depart: 'now+2days'
+                };
+
+                return {
+                    form: form, inverse: false
+                };
+            }
+        };
+
+        window.App = new Vue(config).$mount('#app');
+    })
+</script>
+</body>
+</html>

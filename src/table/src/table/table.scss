@@ -1,0 +1,170 @@
+@import "../../../root/vars";
+
+$table-row-height: 40px !default;
+
+.n-table {
+    position: relative;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: auto;
+    border-radius: $radius-medium;
+    border-left: 1px solid $--color-gray-10;
+    border-right: 1px solid $--color-gray-10;
+}
+
+.n-table .n-draggable {
+    min-height: 100%;
+}
+
+.n-table .n-checkbox-group {
+    display: inline-flex;
+    min-width: 100%;
+    flex: 1 1 auto;
+    overflow: hidden;
+}
+
+.n-table-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-width: 100%;
+    overflow: hidden;
+    border-top: 1px solid $--color-gray-10;
+    border-bottom: 1px solid $--color-gray-10;
+}
+
+.n-table__resizer {
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    right: -4px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    padding-right: 4px;
+    height: $table-row-height * 1.2;
+}
+
+.n-table__column.n-table__column--resizable .n-table__resizer {
+    cursor: col-resize;
+}
+
+.n-table__resizer span {
+    display: block;
+    width: 0;
+    height: 0;
+    border: 4px solid transparent;
+    border-right-color: $--color-gray-10;
+    border-bottom-color: $--color-gray-10;
+}
+
+.n-table__head {
+    z-index: 200;
+    position: relative;
+    user-select: none;
+    flex: 0 0 auto;
+    min-width: 100%;
+    box-shadow: 0 0 3px rgba($color-black, 0.05);
+}
+
+.n-table__head .n-table__row {
+    height: $table-row-height * 1.2;
+    border-bottom: 1px solid $--color-gray-10;
+}
+
+.n-table.n-table--scroll.n-table--visible .n-table__head .n-table__row {
+    padding-right: 15px;
+}
+
+.n-table__head .n-table__row > .n-table__column {
+    padding: 0 $table-row-height * 0.25;
+    color: $--color-gray-60;
+    border-right: 1px solid $--color-gray-10;
+}
+
+.n-table__head .n-table__row > .n-table__column:last-child {
+    border-right: none;
+}
+
+.n-table.n-table--scroll.n-table--visible .n-table__head .n-table__column:last-child {
+    border-right: 1px solid $--color-gray-10;
+}
+
+.n-table__body {
+    z-index: 100;
+    position: relative;
+    flex: 1 1 auto;
+    min-width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin-bottom: -1px;
+}
+
+.n-table.n-table--scroll .n-table__body {
+    overflow-y: auto;
+}
+
+.n-table__body .n-table__row {
+    height: $table-row-height;
+    border-bottom: 1px solid $--color-gray-10;
+}
+
+.n-table__body .n-table__row.n-table__row--current {
+    background: $--color-background-light;
+}
+
+.n-table__body .n-table__row > .n-table__column {
+    padding: 0 $table-row-height * 0.25;
+}
+
+.n-table__row {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    min-width: 100%;
+}
+
+.n-table__row > .n-table__column {
+    position: relative;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+.n-table__row > .n-table__column:last-child:before {
+    content: '\00a0';
+    position: absolute;
+    top: 0;
+    right: -1px;
+    display: block;
+    width: 1px;
+    height: 100%;
+    background: $--color-gray-10;
+}
+
+.n-table__row > .n-table__column.n-table__column--auto {
+    flex: 1 1 auto;
+}
+
+.n-table__row > .n-table__column.n-table__column--fixed {
+    flex: 0 0 auto;
+}
+
+.n-table__row > .n-table__column.n-table__column--left {
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.n-table__row > .n-table__column.n-table__column--center {
+    justify-content: center;
+    text-align: center;
+}
+
+.n-table__row > .n-table__column.n-table__column--right {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.n-table__footer {
+    flex: 0 0 auto;
+    min-width: 100%;
+}
