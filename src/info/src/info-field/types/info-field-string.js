@@ -1,7 +1,5 @@
-import { Nano } from "nano-js";
+import { Any } from "nano-js";
 import InfoField from "../info-field";
-
-let { Any } = Nano;
 
 export default {
 

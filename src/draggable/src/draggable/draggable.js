@@ -1,6 +1,4 @@
-import { Nano } from "nano-js";
-
-let { UUID, Num, Arr, Obj, Dom, Any, Event } = Nano;
+import { UUID, Num, Arr, Obj, Dom, Any, Event } from "nano-js";
 
 export default {
 

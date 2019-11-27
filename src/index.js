@@ -15,6 +15,11 @@ export function Install(Vue)
         return console.error('Nano JS is not available in window scope.');
     }
 
+    scope.Nano.install(Vue);
+
+    Vue.prototype.trans = scope.Nano.Locale.trans;
+    Vue.prototype.choice = scope.Nano.Locale.choice;
+
     require('./notification/index');
     require('./render/index');
     require('./draggable/index');

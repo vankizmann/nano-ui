@@ -1,6 +1,4 @@
-import { Nano } from "nano-js";
-
-let { Locale } = Nano;
+import { Locale } from "nano-js";
 
 export default {
 

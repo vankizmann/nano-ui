@@ -1,7 +1,5 @@
-import { Nano } from "nano-js";
+import { Arr, Obj, Any } from "nano-js";
 import InfoField from "../info-field";
-
-let { Arr, Obj, Any } = Nano;
 
 export default {
 

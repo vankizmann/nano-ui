@@ -1,9 +1,6 @@
 import NWysiwygPlugin from "../wysiwyg-plugin";
 import Link from "../extensions/link";
-import { Nano } from "nano-js";
-
-let { Obj } = Nano;
-
+import { Obj } from "nano-js";
 
 export default {
 

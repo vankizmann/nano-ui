@@ -1,7 +1,5 @@
 import TableCell from "../table-cell";
-import { Nano } from "nano-js";
-
-let { Any } = Nano;
+import { Any } from "nano-js";
 
 export default {
 

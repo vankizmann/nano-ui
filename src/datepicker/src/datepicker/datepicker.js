@@ -1,5 +1,5 @@
-import CtorMixin from "../../../mixins/src/ctor";
 import { Arr, Obj, Str, Now, Any } from "nano-js";
+import CtorMixin from "../../../mixins/src/ctor";
 
 export default {
 
@@ -185,6 +185,12 @@ export default {
 
         value()
         {
+            let value = Now.make(this.value);
+
+            if ( value.valid() === false ) {
+                return;
+            }
+
             if ( this.value !== this.nativeValue.format(this.format) ) {
                 this.nativeValue = this.tempValue = Now.make(this.value);
             }
@@ -585,6 +591,8 @@ export default {
             }
 
             let value = Now.make(event.target.value);
+
+            console.log(value.valid());
 
             if ( value.valid() === false ) {
                 return;

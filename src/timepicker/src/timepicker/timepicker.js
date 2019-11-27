@@ -126,6 +126,12 @@ export default {
 
         value()
         {
+            let value = Now.make(this.value);
+
+            if ( value.valid() === false ) {
+                return;
+            }
+
             if ( this.value !== this.nativeValue.format(this.format) ) {
                 this.nativeValue = Now.make(this.value);
             }
@@ -243,7 +249,9 @@ export default {
                 return;
             }
 
-            let value = Now.make(event.target.value);
+            let value = Now.make(event.target.value, this.format);
+
+            console.log(event.target.value, value.valid(), value, value.format(this.format));
 
             if ( value.valid() === false ) {
                 return;

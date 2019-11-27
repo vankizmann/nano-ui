@@ -1,6 +1,4 @@
-import { Nano } from "nano-js";
-
-let { Arr, Obj, Any } = Nano;
+import { Arr, Obj } from "nano-js";
 
 export default {
 

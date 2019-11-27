@@ -1,8 +1,6 @@
 import { Editor, EditorContent } from "tiptap";
+import { Arr } from "nano-js";
 import CtorMixin from "../../../mixins/src/ctor";
-import { Nano } from "nano-js";
-
-let { Arr } = Nano;
 
 export default {
 

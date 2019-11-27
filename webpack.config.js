@@ -38,7 +38,7 @@ let jsExtExport = {
 
 let jsWinExport = {
     mode: "development",
-    entry: ["@babel/polyfill", "./src/index.js"],
+    entry: ["@babel/polyfill/noConflict", "./src/index.js"],
     output: {
         filename: "index.js",
         path: path.resolve(__dirname, "dist"),

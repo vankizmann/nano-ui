@@ -1,7 +1,5 @@
-import { Nano } from "nano-js";
+import { Arr, Obj, Any } from "nano-js";
 import NDraggable from "../draggable/draggable";
-
-let { Arr, Obj, Any } = Nano;
 
 export default {
 

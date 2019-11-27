@@ -1,7 +1,5 @@
-import { Nano } from "nano-js";
+import { Obj } from "nano-js";
 import CtorMixin from "../../../mixins/src/ctor";
-
-let { Obj } = Nano;
 
 export default {
 

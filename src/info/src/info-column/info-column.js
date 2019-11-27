@@ -1,7 +1,5 @@
-import { Nano } from "nano-js";
+import { UUID, Num, Arr, Obj, Any, Dom, Locale, Str } from "nano-js";
 import CtorMixin from "../../../mixins/src/ctor";
-
-let { UUID, Num, Arr, Obj, Any, Dom, Locale, Str } = Nano;
 
 export default {
 

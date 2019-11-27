@@ -1,7 +1,5 @@
 import TableFilter from "../table-filter";
-import { Nano } from "nano-js";
-
-let { Any, Locale } = Nano;
+import { Any, Locale } from "nano-js";
 
 export default {
 
