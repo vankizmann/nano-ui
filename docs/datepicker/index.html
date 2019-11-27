@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../style.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <script src="https://raw.githubusercontent.com/vankizmann/nano-js/master/dist/nano-js.js"></script>
     <script src="../../dist/index.js"></script>
 
 </head>
@@ -26,8 +27,8 @@
 
         <n-form-item label="Test">
             <n-button-group>
-                <n-datepicker v-model="form.date" :clearable="true" :disabled="true"></n-datepicker>
-                <n-timepicker v-model="form.date" :clearable="true" :disabled="true"></n-timepicker>
+                <n-datepicker v-model="form.date" :clearable="true"></n-datepicker>
+                <n-timepicker v-model="form.date" :clearable="true"></n-timepicker>
             </n-button-group>
         </n-form-item>
 
