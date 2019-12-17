@@ -23,8 +23,6 @@ $tooltip-border: 3px !default;
     top: calc(50% - #{$loader-size / 2});
     left: calc(50% - #{$loader-size / 2});
     display: none;
-    width: $loader-size;
-    height: $loader-size;
     border-radius: 500px;
     border: 2px solid $--color-primary;
     border-bottom-color: transparent;
@@ -33,6 +31,21 @@ $tooltip-border: 3px !default;
 
 .n-loader.n-loader--active:before {
     display: block;
+}
+
+.n-loader.n-loader--default {
+    width: $loader-size;
+    height: $loader-size;
+}
+
+.n-loader.n-loader--small {
+    width: $loader-size * 0.5;
+    height: $loader-size * 0.5;
+}
+
+.n-loader.n-loader--large {
+    width: $loader-size * 1.5;
+    height: $loader-size * 1.5;
 }
 
 .n-loader:after {
