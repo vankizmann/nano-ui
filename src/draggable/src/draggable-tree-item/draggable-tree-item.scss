@@ -43,7 +43,3 @@ $draggable-tree-item-expand-size: 12px !default;
     min-width: 0;
     min-height: $draggable-tree-item-height;
 }
-
-.n-draggable-tree-item.n-draggable-tree-item--selected >.n-draggable-tree-item__body {
-    color: $--color-primary;
-}
