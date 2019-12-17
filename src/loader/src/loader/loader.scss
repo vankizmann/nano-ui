@@ -20,8 +20,6 @@ $tooltip-border: 3px !default;
     content: '\00a0';
     z-index: 900;
     position: absolute;
-    top: calc(50% - #{$loader-size / 2});
-    left: calc(50% - #{$loader-size / 2});
     display: none;
     border-radius: 500px;
     border: 2px solid $--color-primary;
@@ -34,16 +32,22 @@ $tooltip-border: 3px !default;
 }
 
 .n-loader.n-loader--default:before {
+    top: calc(50% - #{$loader-size / 2});
+    left: calc(50% - #{$loader-size / 2});
     width: $loader-size;
     height: $loader-size;
 }
 
 .n-loader.n-loader--small:before {
+    top: calc(50% - #{$loader-size * 0.5 / 2});
+    left: calc(50% - #{$loader-size * 0.5 / 2});
     width: $loader-size * 0.5;
     height: $loader-size * 0.5;
 }
 
 .n-loader.n-loader--large:before {
+    top: calc(50% - #{$loader-size * 1.5 / 2});
+    left: calc(50% - #{$loader-size * 1.5 / 2});
     width: $loader-size * 1.5;
     height: $loader-size * 1.5;
 }
