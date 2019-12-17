@@ -110,7 +110,7 @@ export default {
         format: {
             default()
             {
-                return 'YYYY-MM-DD hh:ii:ss';
+                return 'YYYY-MM-DD hh:mm:ss';
             },
             type: [String]
         },
@@ -284,7 +284,7 @@ export default {
             <div class="n-datepicker__toolbar">
                 <div class="n-datepicker__display">
                     <span class="n-datepicker__month" vOn:click={() => this.nativeView = 'month'}>
-                        {this.months[this.tempValue.month() - 1]}
+                        {this.months[this.tempValue.month()]}
                     </span>
                     <span class="n-datepicker__year" vOn:click={() => this.nativeView = 'year'}>
                         {this.tempValue.year()}
@@ -471,7 +471,7 @@ export default {
 
         return (
             <div on={events} class={classList}>
-                <span>{ this.months[now.month() - 1] }</span>
+                <span>{ this.months[now.month()] }</span>
             </div>
         )
     },
@@ -591,8 +591,6 @@ export default {
             }
 
             let value = Now.make(event.target.value);
-
-            console.log(value.valid());
 
             if ( value.valid() === false ) {
                 return;

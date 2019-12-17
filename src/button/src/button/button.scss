@@ -46,8 +46,12 @@ $button-height: 34px !default;
     cursor: not-allowed;
 }
 
-.n-button.n-button--icon span:first-child {
+.n-button.n-button--icon .n-icon.n-icon--left {
     margin-right: $button-size * 0.45;
+}
+
+.n-button.n-button--icon .n-icon.n-icon--right {
+    margin-left: $button-size * 0.45;
 }
 
 .n-button.n-button--icon span:first-child:last-child {

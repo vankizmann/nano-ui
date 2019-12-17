@@ -64,7 +64,7 @@ export default {
         format: {
             default()
             {
-                return 'YYYY-MM-DD hh:ii:ss';
+                return 'YYYY-MM-DD HH:mm:ss';
             },
             type: [String]
         },
@@ -72,7 +72,7 @@ export default {
         displayFormat: {
             default()
             {
-                return this.trans('hh:ii:ss');
+                return this.trans('HH:mm:ss');
             },
             type: [String]
         },
@@ -172,7 +172,7 @@ export default {
             'n-timepicker__item'
         ];
 
-        if ( now.hours() === this.nativeValue.hours() ) {
+        if ( now.hour() === this.nativeValue.hour() ) {
             classList.push('n-timepicker__item--selected');
         }
 
@@ -182,7 +182,7 @@ export default {
 
         return (
             <div on={events} class={classList}>
-                <span>{ now.format('hh') }</span>
+                <span>{ now.format('HH') }</span>
             </div>
         );
     },
@@ -193,7 +193,7 @@ export default {
             'n-timepicker__item'
         ];
 
-        if ( now.minutes() === this.nativeValue.minutes() ) {
+        if ( now.minute() === this.nativeValue.minute() ) {
             classList.push('n-timepicker__item--selected');
         }
 
@@ -203,7 +203,7 @@ export default {
 
         return (
             <div on={events} class={classList}>
-                <span>{ now.format('ii') }</span>
+                <span>{ now.format('mm') }</span>
             </div>
         );
     },
@@ -214,7 +214,7 @@ export default {
             'n-timepicker__item'
         ];
 
-        if ( now.seconds() === this.nativeValue.seconds() ) {
+        if ( now.second() === this.nativeValue.second() ) {
             classList.push('n-timepicker__item--selected');
         }
 
@@ -249,13 +249,16 @@ export default {
                 return;
             }
 
-            let value = Now.make(event.target.value, this.format);
-
-            console.log(event.target.value, value.valid(), value, value.format(this.format));
+            let value = Now.make(event.target.value,
+                this.displayFormat);
 
             if ( value.valid() === false ) {
                 return;
             }
+
+            value = this.nativeValue.get().set({
+                hour: value.hour(), minute: value.minute(), second: value.second(),
+            });
 
             this.$emit('input', value.format(this.format));
         };
@@ -293,12 +296,12 @@ export default {
                             {this.ctor('renderToolbar')()}
                         </div>
                         <div class="n-timepicker__body">
-                            { this.displayFormat.match('hh') &&
+                            { this.displayFormat.match('HH') &&
                                 <div class="n-timepicker__panel">
                                     { Arr.each(this.hoursGrid, this.ctor('renderHourItem')) }
                                 </div>
                             }
-                            { this.displayFormat.match('ii') &&
+                            { this.displayFormat.match('mm') &&
                                 <div class="n-timepicker__panel">
                                     { Arr.each(this.minutesGrid, this.ctor('renderMinuteItem')) }
                                 </div>

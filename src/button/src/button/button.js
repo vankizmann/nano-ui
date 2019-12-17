@@ -14,6 +14,14 @@ export default {
             type: [String]
         },
 
+        iconPosition: {
+            default()
+            {
+                return 'left';
+            },
+            type: [String]
+        },
+
         type: {
             default()
             {
@@ -109,12 +117,19 @@ export default {
             Obj.assign(events, this.$listeners)
         }
 
-        let icon = Any.isEmpty(this.icon) ?
-            null : <span class={this.icon}></span>;
+        let icon = null;
+
+        if ( ! Any.isEmpty(this.icon) ) {
+            icon = <span class={'n-icon n-icon--' + this.iconPosition + ' ' + this.icon}></span>
+        }
 
         let element = h('button', {
             class: className, domProps: domProps, on: events
-        }, [icon, this.$slots.default && <span>{ this.$slots.default }</span>]);
+        }, [
+            this.iconPosition === 'left' && icon,
+            this.$slots.default && <span>{ this.$slots.default }</span>,
+            this.iconPosition === 'right' && icon,
+        ]);
 
         return <div class={['n-button__wrapper', this.disabled && 'n-disabled']}>
             { element }
