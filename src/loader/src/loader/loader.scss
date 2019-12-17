@@ -33,17 +33,17 @@ $tooltip-border: 3px !default;
     display: block;
 }
 
-.n-loader.n-loader--default {
+.n-loader.n-loader--default:before {
     width: $loader-size;
     height: $loader-size;
 }
 
-.n-loader.n-loader--small {
+.n-loader.n-loader--small:before {
     width: $loader-size * 0.5;
     height: $loader-size * 0.5;
 }
 
-.n-loader.n-loader--large {
+.n-loader.n-loader--large:before {
     width: $loader-size * 1.5;
     height: $loader-size * 1.5;
 }
