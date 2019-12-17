@@ -8,6 +8,7 @@ $draggable-tree-item-expand-size: 12px !default;
     max-width: 100%;
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 .n-draggable-tree-item > .n-draggable-tree-item__expand {
@@ -17,7 +18,7 @@ $draggable-tree-item-expand-size: 12px !default;
     align-items: center;
     justify-content: center;
     width: $draggable-tree-item-height;
-    height: $draggable-tree-item-height;
+    min-height: $draggable-tree-item-height;
 }
 
 .n-draggable-tree-item.n-draggable-tree-item--empty > .n-draggable-tree-item__expand {
@@ -40,7 +41,7 @@ $draggable-tree-item-expand-size: 12px !default;
     align-items: center;
     justify-content: flex-start;
     min-width: 0;
-    height: $draggable-tree-item-height;
+    min-height: $draggable-tree-item-height;
 }
 
 .n-draggable-tree-item.n-draggable-tree-item--selected >.n-draggable-tree-item__body {
