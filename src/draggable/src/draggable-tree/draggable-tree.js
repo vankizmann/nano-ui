@@ -253,7 +253,7 @@ export default {
     render(h)
     {
         let scopedSlots = {
-            default: (p) => this.renderDefault(h, p), after: (p) => this.renderAfter(h, p)
+            default: (p) => this.renderDefault(h, p), after: (p) => [this.useAfter, this.renderAfter(h, p)]
         };
 
         let events = {
