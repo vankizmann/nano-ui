@@ -675,14 +675,14 @@ export default {
                 this.$scopedSlots.before(props);
 
             if ( this.useBefore !== null ) {
-                beforeSlot = h(this.useBefore, { key: value._dragid + '_before', props, on });
+                beforeSlot = [beforeSlot, h(this.useBefore, { key: value._dragid + '_before', props, on })];
             }
 
             let afterSlot = this.$scopedSlots.after &&
                 this.$scopedSlots.after(props);
 
             if ( this.useAfter !== null ) {
-                afterSlot = h(this.useAfter, { key: value._dragid + '_after', props, on });
+                afterSlot = [h(this.useAfter, { key: value._dragid + '_after', props, on }), afterSlot];
             }
 
             let defaultSlot = (
@@ -691,7 +691,7 @@ export default {
                 </div>
             );
 
-            return ([beforeSlot, defaultSlot, afterSlot]);
+            return Arr.merge(beforeSlot, [defaultSlot], afterSlot);
         }
     },
 
