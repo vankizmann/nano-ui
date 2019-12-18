@@ -2354,6 +2354,16 @@
 .n-popover.n-popover--tooltip > .n-popover__frame > .n-popover__footer {
   padding: 3px 9px; }
 
+.n-popover-option {
+  cursor: pointer;
+  padding: 9px 12px;
+  font-size: 13px;
+  -webkit-transition: background 0.15s;
+  transition: background 0.15s; }
+
+.n-popover-option:hover {
+  background: #F0F3F7; }
+
 .n-modal {
   z-index: 2000;
   position: fixed;
