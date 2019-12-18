@@ -695,8 +695,6 @@ export default {
                 </div>
             );
 
-            console.log(beforeSlot, [defaultSlot], afterSlot);
-
             return Arr.merge(beforeSlot, [defaultSlot], afterSlot);
         }
     },
