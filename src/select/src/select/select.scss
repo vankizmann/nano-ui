@@ -20,6 +20,10 @@ $select-empty-padding: 6px 12px !default;
     overflow-y: hidden;
 }
 
+.n-select__wrapper .n-popover.n-popover--select {
+    width: 100% !important;
+}
+
 .n-select__wrapper .n-popover .n-popover__frame {
     flex: 0 0 auto;
 }
