@@ -121,8 +121,8 @@ $popover-tooltip-padding: 3px 9px !default;
 
 .n-popover-option {
     cursor: pointer;
+    display: block;
     padding: $popover-default-padding;
-    font-size: $popover-select-size;
     transition: background 0.15s;
 }
 

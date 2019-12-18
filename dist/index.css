@@ -2356,8 +2356,8 @@
 
 .n-popover-option {
   cursor: pointer;
+  display: block;
   padding: 9px 12px;
-  font-size: 13px;
   -webkit-transition: background 0.15s;
   transition: background 0.15s; }
 
