@@ -41,6 +41,20 @@ export default {
             }
         },
 
+        useBefore: {
+            default()
+            {
+                return null;
+            }
+        },
+
+        useAfter: {
+            default()
+            {
+                return null;
+            }
+        },
+
         depth: {
             default()
             {
