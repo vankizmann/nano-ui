@@ -132,6 +132,11 @@ export default {
 
     methods: {
 
+        close()
+        {
+            this.$emit('input', this.nativeVisible = false);
+        },
+
         refresh()
         {
             let style = {};
