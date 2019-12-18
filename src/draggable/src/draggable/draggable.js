@@ -671,18 +671,22 @@ export default {
                 }
             };
 
-            let beforeSlot = this.$scopedSlots.before &&
-                this.$scopedSlots.before(props);
+            let beforeSlot = [this.$scopedSlots.before ?
+                this.$scopedSlots.before(props) : null];
 
             if ( this.useBefore !== null ) {
-                beforeSlot = [beforeSlot, h(this.useBefore, { key: value._dragid + '_before', props, on })];
+                Arr.append(beforeSlot, h(this.useBefore, {
+                    key: value._dragid + '_before', props, on
+                }));
             }
 
-            let afterSlot = this.$scopedSlots.after &&
-                this.$scopedSlots.after(props);
+            let afterSlot = [this.$scopedSlots.after ?
+                this.$scopedSlots.after(props) : null];
 
             if ( this.useAfter !== null ) {
-                afterSlot = [h(this.useAfter, { key: value._dragid + '_after', props, on }), afterSlot];
+                Arr.prepend(afterSlot, h(this.useAfter, {
+                    key: value._dragid + '_after', props, on
+                }));
             }
 
             let defaultSlot = (
@@ -690,6 +694,8 @@ export default {
                     { this.use === null ? this.$scopedSlots.default(props) : h(this.use, { key: value._dragid, props, on }) }
                 </div>
             );
+
+            console.log(beforeSlot, [defaultSlot], afterSlot);
 
             return Arr.merge(beforeSlot, [defaultSlot], afterSlot);
         }
