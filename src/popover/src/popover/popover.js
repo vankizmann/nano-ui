@@ -330,6 +330,9 @@ export default {
                 return;
             }
 
+            event.preventDefault();
+            event.stopPropagation();
+
             let final = Dom.find(target).closest(this.element),
                 popover = Dom.find(target).closest(this.node);
 
