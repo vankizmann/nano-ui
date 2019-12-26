@@ -64,7 +64,7 @@ export default {
         clearableIcon: {
             default()
             {
-                return 'fa fa-times';
+                return this.icons.times;
             },
             type: [String]
         },

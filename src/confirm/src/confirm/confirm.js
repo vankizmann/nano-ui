@@ -119,16 +119,16 @@ export default {
                     <div class={className}>
                         <div class="n-confirm__icon">
                             { this.type === 'success' &&
-                                <span class="fa fa-check-circle"></span>
+                                <span class={this.icons.success}></span>
                             }
                             { this.type === 'warning' &&
-                                <span class="fa fa-exclamation-circle"></span>
+                                <span class={this.icons.warning}></span>
                             }
                             { this.type === 'danger' &&
-                                <span class="fa fa-times-circle"></span>
+                                <span class={this.icons.danger}></span>
                             }
                             { this.type === 'primary' &&
-                                <span class="fa fa-info-circle"></span>
+                                <span class={this.icons.info}></span>
                             }
                         </div>
                         <div class="n-confirm__body">

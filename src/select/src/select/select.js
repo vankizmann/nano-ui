@@ -378,7 +378,7 @@ export default {
                 <div class={className} onClick={() => this.$refs.input.focus()}>
                     { ( this.clearable === true && this.disabled === false && this.nativeSelected.length !== 0 ) &&
                         <div class="n-select__clear" vOn:mousedown_stop={this.clearNativeSelected}>
-                            <span class="fa fa-times"></span>
+                            <span class={this.icons.times}></span>
                         </div>
                     }
                     <div class="n-select__label">
@@ -400,7 +400,7 @@ export default {
 
                                 return (
                                     <span class={className}>
-                                        {option.label} { this.multiple && <i onClick={clickEvent} class="fa fa-times"></i>}
+                                        {option.label} { this.multiple && <i onClick={clickEvent} class={this.icons.times}></i>}
                                     </span>
                                 );
                             })
@@ -410,7 +410,7 @@ export default {
 
                     </div>
                     <div class="n-select__arrow">
-                        <span class="fa fa-angle-down"></span>
+                        <span class={this.icons.angleDown}></span>
                     </div>
                 </div>
                 <NPopover vModel={this.visible} trigger="click" type="select" position={this.position} disabled={this.disabled} closeInside={false}>

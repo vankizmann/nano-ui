@@ -352,7 +352,7 @@ export default {
 
         return [
             <div class="n-table-filter__filter">
-                <span class="fa fa-angle-down"></span>
+                <span class={this.icons.angleDown}></span>
             </div>,
             <NPopover class="n-popover-filter" type="default" trigger="click">
                 {

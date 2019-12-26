@@ -273,13 +273,13 @@ export default {
         return (
             <div class={classList}>
                 <div class="n-timepicker__icon">
-                    <span class="fa fa-clock"></span>
+                    <span class={this.icons.clock}></span>
                 </div>
                 <div class="n-timepicker__input">
                     <input type="text" disabled={this.disabled} value={this.nativeValue.format(this.displayFormat)} placeholder={this.placeholder} vOn:input={inputEvent} />
                 </div>
                 { this.clearable &&
-                    <NButton type="input" icon="fa fa-times" disabled={this.disabled || Any.isEmpty(this.value)} vOn:mousedown_stop={clearEvent} />
+                    <NButton type="input" icon={this.icons.times} disabled={this.disabled || Any.isEmpty(this.value)} vOn:mousedown_stop={clearEvent} />
                 }
             </div>
         );

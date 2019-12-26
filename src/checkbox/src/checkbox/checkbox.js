@@ -180,8 +180,8 @@ export default {
         return (<div class={className} {...attrs}>
             <div class="n-checkbox__checkbox">
                 { intermediate === true ?
-                    this.$slots.intermediate || <span class="fa fa-minus"></span> :
-                    this.$slots.checked || <span class="fa fa-check"></span>
+                    this.$slots.intermediate || <span class={this.icons.intermediate}></span> :
+                    this.$slots.checked || <span class={this.icons.checked}></span>
                 }
             </div>
             { (this.$slots.default || this.$slots.label) &&

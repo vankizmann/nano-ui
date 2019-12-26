@@ -233,7 +233,7 @@ export default {
                 </div>
                 { Any.isEmpty(childs) === false &&
                     <div class="n-cascader-option__arrow">
-                        <span class="fa fa-angle-right"></span>
+                        <span class={this.icons.angleRight}></span>
                     </div>
                 }
             </div>
@@ -278,7 +278,7 @@ export default {
                 <div class={className}>
                     { (this.clearable === true && this.disabled === false && this.nativeCascade.length !== 0 ) &&
                         <div class="n-cascader__clear" vOn:mousedown_stop={this.clearNativeCascade}>
-                            <span class="fa fa-times"></span>
+                            <span class={this.icons.times}></span>
                         </div>
                     }
                     <div class="n-cascader__label">
@@ -298,7 +298,7 @@ export default {
                         }
                     </div>
                     <div class="n-cascader__arrow">
-                        <span class="fa fa-angle-down"></span>
+                        <span class={this.icons.angleDown}></span>
                     </div>
                 </div>
                 <NPopover vModel={this.visible} disabled={this.disabled} type="cascader" trigger="click" position="bottom-start">

@@ -232,7 +232,7 @@ export default {
                             </div>
                         </div>
                         <div class="n-transfer__search">
-                            <NInput vModel={this.searchSource} placeholder={this.trans('Search item')} icon="fa fa-times" iconDisabled={Any.isEmpty(this.searchSource)} vOn:iconClick={() => this.searchSource = ''} />
+                            <NInput vModel={this.searchSource} placeholder={this.trans('Search item')} icon={this.icons.times} iconDisabled={Any.isEmpty(this.searchSource)} vOn:iconClick={() => this.searchSource = ''} />
                         </div>
                         <div class="n-transfer__body">
                             <NDraggable vModel={this.valueSource} displayItems={valueSource} props={propsSource} scopedSlots={scopedSlots} on={eventsSource} />
@@ -240,8 +240,8 @@ export default {
                     </NCheckboxGroup>
                 </div>
                 <div class="n-transfer__controls">
-                    <NButton square={true} disabled={this.selectedKeysSource.length === 0} icon="fa fa-angle-right" vOn:click={() => this.moveToTarget()} />
-                    <NButton square={true} disabled={this.selectedKeysTarget.length === 0} icon="fa fa-angle-left" vOn:click={() => this.moveToSource()} />
+                    <NButton square={true} disabled={this.selectedKeysSource.length === 0} icon={this.icons.angleRight} vOn:click={() => this.moveToTarget()} />
+                    <NButton square={true} disabled={this.selectedKeysTarget.length === 0} icon={this.icons.angleLeft} vOn:click={() => this.moveToSource()} />
                 </div>
                 <div class="n-transfer__pane">
                     <NCheckboxGroup vModel={this.selectedKeysTarget}>
@@ -251,7 +251,7 @@ export default {
                             </div>
                         </div>
                         <div class="n-transfer__search">
-                            <NInput vModel={this.searchTarget} placeholder={this.trans('Search item')} icon="fa fa-times" />
+                            <NInput vModel={this.searchTarget} placeholder={this.trans('Search item')} icon={this.icons.times} />
                         </div>
                         <div class="n-transfer__body">
                             <NDraggable vModel={this.value} displayItems={valueTarget} props={propsTarget} scopedSlots={scopedSlots} on={eventsTarget} />

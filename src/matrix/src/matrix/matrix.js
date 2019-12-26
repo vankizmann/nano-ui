@@ -334,7 +334,7 @@ export default {
                 <div class={className}>
                     <div class="n-matrix__column n-matrix__column--item" vOn:dblclick={toggleRow}>
                         <div class="n-matrix__expand" vOn:click={toggleRow}>
-                            <span class="fa fa-angle-right"></span>
+                            <span class={this.icons.angleRight}></span>
                         </div>
                         <div class="n-matrix__title">
                             { this.use ? this.h(this.use, { props }) : this.$slots.title || title }

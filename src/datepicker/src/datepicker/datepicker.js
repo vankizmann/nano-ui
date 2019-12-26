@@ -273,11 +273,11 @@ export default {
     renderToolbar({ prev, next })
     {
         prev = Obj.assign({
-            props: { type: 'link', icon: 'fa fa-angle-left', square: true, round: true }
+            props: { type: 'link', icon: this.icons.angleLeft, square: true, round: true }
         }, prev);
 
         next = Obj.assign({
-            props: { type: 'link', icon: 'fa fa-angle-right', square: true, round: true }
+            props: { type: 'link', icon: this.icons.angleRight, square: true, round: true }
         }, next);
 
         return (
@@ -609,13 +609,13 @@ export default {
         return (
             <div class={classList}>
                 <div class="n-datepicker__icon">
-                    <span class="fa fa-calendar"></span>
+                    <span class={this.icons.calendar}></span>
                 </div>
                 <div class="n-datepicker__input">
                     <input type="text" disabled={this.disabled} value={this.nativeValue.format(this.displayFormat)} placeholder={this.placeholder} vOn:input={inputEvent} />
                 </div>
                 { this.clearable &&
-                    <NButton type="input" icon="fa fa-times" disabled={this.disabled || Any.isEmpty(this.value)} vOn:mousedown_stop={clearEvent} />
+                    <NButton type="input" icon={this.icons.times} disabled={this.disabled || Any.isEmpty(this.value)} vOn:mousedown_stop={clearEvent} />
                 }
             </div>
         );
@@ -679,7 +679,7 @@ export default {
         return (
             <div class={classList}>
                 <div class="n-datepicker__icon">
-                    <span class=" fa fa-calendar"></span>
+                    <span class={this.icons.calendar}></span>
                 </div>
                 <div class="n-datepicker__input n-datepicker__input--range">
                     <input type="text" disabled={this.disabled} value={this.nativeArrive.format(this.displayFormat)} placeholder={this.placeholderArrive} vOn:input={arriveEvent} />
@@ -691,7 +691,7 @@ export default {
                     <input type="text" disabled={this.disabled} value={this.nativeDepart.format(this.displayFormat)} placeholder={this.placeholderDepart} vOn:input={departEvent} />
                 </div>
                 { this.clearable &&
-                    <NButton type="input" icon="fa fa-times" disabled={this.disabled || Any.isEmpty(this.arrive) && Any.isEmpty(this.depart)} vOn:mousedown_stop={clearEvent} />
+                    <NButton type="input" icon={this.icons.times} disabled={this.disabled || Any.isEmpty(this.arrive) && Any.isEmpty(this.depart)} vOn:mtimesusedown_stop={clearEvent} />
                 }
             </div>
         );

@@ -251,7 +251,7 @@ export default {
                                 { this.$slots.header }
                                 { this.closable === true &&
                                     <div ref="close" class="n-modal__close">
-                                        <span class="fa fa-times"></span>
+                                        <span class={this.icons.times}></span>
                                     </div>
                                 }
                             </div>

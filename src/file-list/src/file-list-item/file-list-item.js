@@ -112,7 +112,7 @@ export default {
                     </div>
                 </div>
                 <a class="n-file-list-item__remove" href="javascript:void(0)" vOn:click={() => this.$emit('remove')}>
-                    <span class="fa fa-times"></span>
+                    <span class={this.icons.times}></span>
                 </a>
             </div>
         );

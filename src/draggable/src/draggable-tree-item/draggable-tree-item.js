@@ -85,7 +85,7 @@ export default {
         return (
             <div class={className} style={style} vOn:click={this.cascadeItem}>
                 <div class="n-draggable-tree-item__expand" vOn:click_stop={this.expandItem}>
-                    <span class="fa fa-angle-right"></span>
+                    <span class={this.icons.angleRight}></span>
                 </div>
                 <div class="n-draggable-tree-item__body">
                     { this.$slots.default || this.$scopedSlots.default({ value: this.value, key: this.$vnode.key }) }

@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import { UUID, Str, Obj, Dom } from "nano-js";
 
 class Notification {
@@ -12,10 +13,10 @@ class Notification {
 
     options = {
         duration: 3500,
-        iconSuccess: 'fa fa-check-circle',
-        iconWarning: 'fa fa-exclamation-circle',
-        iconDanger: 'fa fa-times-circle',
-        iconPrimary: 'fa fa-info-circle'
+        iconSuccess: Vue.icons.success,
+        iconWarning: Vue.icons.warning,
+        iconDanger: Vue.icons.danger,
+        iconPrimary: Vue.icons.info
     };
 
     constructor(text, type = 'primary', options = {})

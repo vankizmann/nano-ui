@@ -9,7 +9,7 @@ if (typeof window !== 'undefined') {
     scope = window;
 }
 
-export function Install(Vue)
+export function Install(Vue, Icons = {})
 {
     if ( scope.Nano === undefined ) {
         return console.error('Nano JS is not available in window scope.');
@@ -19,6 +19,22 @@ export function Install(Vue)
 
     Vue.prototype.trans = scope.Nano.Locale.trans;
     Vue.prototype.choice = scope.Nano.Locale.choice;
+
+    Vue.prototype.icons = Vue.Obj.assign({
+        checked: 'fa fa-check',
+        intermediate: 'fa fa-minus',
+        clock: 'fa fa-clock',
+        calendar: 'fa fa-calendar',
+        times: 'fa fa-times',
+        success: 'fa fa-check-circle',
+        warning: 'fa fa-exclamation-circle',
+        danger: 'fa fa-times-circle',
+        info: 'fa fa-info-circle',
+        angleUp: 'fa fa-angle-up',
+        angleRight: 'fa fa-angle-right',
+        angleDown: 'fa fa-angle-down',
+        angleLeft: 'fa fa-angle-left',
+    }, Icons);
 
     require('./notification/index');
     require('./render/index');
