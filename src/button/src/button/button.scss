@@ -2,6 +2,7 @@
 
 $button-size: 14px !default;
 $button-height: 34px !default;
+$button-ratio: 0.3 !default;
 
 .n-button__wrapper {
     position: relative;
@@ -15,7 +16,7 @@ $button-height: 34px !default;
 }
 
 .n-button:not(.n-button--link) {
-    padding: 0 $button-height * 0.3;
+    padding: 0 $button-height * $button-ratio;
     height: $button-height;
     background: $--color-gray-10;
     font-size: $button-size;
@@ -60,7 +61,7 @@ $button-height: 34px !default;
 
 .n-button.n-button--small:not(.n-button--link) {
     font-size: $button-size * 0.875;
-    padding: 0 $button-height * 0.3 * 0.875;
+    padding: 0 $button-height * $button-ratio * 0.875;
     height: $button-height * 0.875;
 }
 
@@ -75,7 +76,7 @@ $button-height: 34px !default;
 
 .n-button.n-button--large:not(.n-button--link) {
     font-size: $button-size * 1.125;
-    padding: 0 $button-height * 0.3 * 1.125;
+    padding: 0 $button-height * $button-ratio * 1.125;
     height: $button-height * 1.125;
 }
 
