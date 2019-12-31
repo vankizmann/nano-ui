@@ -45,7 +45,11 @@ export default {
 
         updateForm()
         {
-            this.$emit('change');
+            if ( this.hash === Any.md5(this.form) ) {
+                this.$emit('change');
+            }
+
+            this.hash = Any.md5(this.form);
         },
 
         updateErrors()
@@ -58,7 +62,7 @@ export default {
     data()
     {
         return {
-            items: []
+            hash: null
         }
     },
 
