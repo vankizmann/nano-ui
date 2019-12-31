@@ -45,7 +45,7 @@ export default {
 
         updateForm()
         {
-            if ( this.hash === Any.md5(this.form) ) {
+            if ( this.hash !== Any.md5(this.form) ) {
                 this.$emit('change');
             }
 
