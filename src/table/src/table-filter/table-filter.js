@@ -34,11 +34,17 @@ export default {
 
         changeFilter()
         {
+            let prevData = Arr.find(this.NTable.filterProps, {
+                property: this.column.filterProp
+            });
+
             let data = Obj.each(this.$data, (value) => {
                 return Any.isArray(value) ? value.join(',') : value;
             });
 
-            this.column.filterColumn(data);
+            if ( Any.md5(prevData) !== Any.md5(data) ) {
+                this.column.filterColumn(data);
+            }
         },
 
         resetFilter()
