@@ -45,11 +45,7 @@ export default {
 
         updateForm()
         {
-            if ( this.hash !== Any.md5(this.form) ) {
-                this.$emit('change');
-            }
-
-            this.hash = Any.md5(this.form);
+            this.$emit('change');
         },
 
         updateErrors()
@@ -62,7 +58,7 @@ export default {
     data()
     {
         return {
-            items: [], hash: null
+            items: []
         }
     },
 
@@ -75,8 +71,8 @@ export default {
 
     mounted()
     {
-        this.$watch('form', this.updateForm, { deep: true });
-        this.$watch('errors', this.updateErrors, { deep: true });
+        this.$watch('form', Any.debounce(this.updateForm, 10), { deep: true });
+        this.$watch('errors', Any.debounce(this.updateErrors, 10), { deep: true });
     },
 
     render(h)
