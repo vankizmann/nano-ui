@@ -94,13 +94,13 @@ export default {
     mounted()
     {
         this.$watch('nativePage', (value) => {
-            this.updatePaginate();
             this.$emit('update:page', value);
+            this.updatePaginate();
         });
 
         this.$watch('nativeLimit', (value) => {
-            this.updatePaginate();
             this.$emit('update:limit', value);
+            this.updatePaginate();
         });
     },
 
