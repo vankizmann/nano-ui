@@ -1,5 +1,14 @@
-import Vue from 'vue';
 import { UUID, Str, Obj, Dom } from "nano-js";
+
+let scope = {};
+
+if (typeof global !== 'undefined') {
+    scope = global;
+}
+
+if (typeof window !== 'undefined') {
+    scope = window;
+}
 
 class Notification {
 
@@ -13,10 +22,10 @@ class Notification {
 
     options = {
         duration: 3500,
-        iconSuccess: Vue.icons.success,
-        iconWarning: Vue.icons.warning,
-        iconDanger: Vue.icons.danger,
-        iconPrimary: Vue.icons.info
+        iconSuccess: scope.NanoIcons.success,
+        iconWarning: scope.NanoIcons.warning,
+        iconDanger: scope.NanoIcons.danger,
+        iconPrimary: scope.NanoIcons.info
     };
 
     constructor(text, type = 'primary', options = {})
