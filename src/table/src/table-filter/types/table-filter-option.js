@@ -25,8 +25,12 @@ export default {
 
         let options = this.getFilterProps(defaults);
 
-        if ( ! Any.isObject(options) ) {
+        if ( ! Any.isArray(options) ) {
             options.value = options.value.split(',');
+        }
+
+        if ( ! Any.isArray(options) ) {
+            options.value = [options.value];
         }
 
         return options;
