@@ -23,6 +23,12 @@ export default {
             property: this.column.filterProp, type: this.column.type, value: null, operator: 'in'
         };
 
+        let options = this.getFilterProps(defaults);
+
+        if ( ! Any.isObject(options) ) {
+            options.value = options.value.split(',');
+        }
+
         return this.getFilterProps(defaults);
     },
 
