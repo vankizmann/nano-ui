@@ -134,6 +134,51 @@ $button-ratio: 0.3 !default;
     color: $--color-primary-darker;
 }
 
+.n-button.n-button--link.n-button--primary {
+    color: $--color-primary;
+}
+
+.n-button.n-button--link.n-button--primary:hover,
+.n-button.n-button--link.n-button--primary:focus {
+    color: $--color-primary-darker;
+}
+
+.n-button.n-button--link.n-button--success {
+    color: $--color-success;
+}
+
+.n-button.n-button--link.n-button--success:hover,
+.n-button.n-button--link.n-button--success:focus {
+    color: $--color-success-darker;
+}
+
+.n-button.n-button--link.n-button--warning {
+    color: $--color-warning;
+}
+
+.n-button.n-button--link.n-button--warning:hover,
+.n-button.n-button--link.n-button--warning:focus {
+    color: $--color-warning-darker;
+}
+
+.n-button.n-button--link.n-button--danger {
+    color: $--color-danger;
+}
+
+.n-button.n-button--link.n-button--danger:hover,
+.n-button.n-button--link.n-button--danger:focus {
+    color: $--color-danger-darker;
+}
+
+.n-button.n-button--link.n-button--info {
+    color: $--color-info;
+}
+
+.n-button.n-button--link.n-button--info:hover,
+.n-button.n-button--link.n-button--info:focus {
+    color: $--color-info-darker;
+}
+
 .n-button.n-button--small.n-button--link {
     font-size: $button-size * 0.875;
 }

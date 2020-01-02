@@ -38,6 +38,14 @@ export default {
             type: [String]
         },
 
+        link: {
+            default()
+            {
+                return this.type === 'link';
+            },
+            type: [Boolean]
+        },
+
         square: {
             default()
             {
@@ -88,6 +96,10 @@ export default {
 
         if ( Any.isEmpty(this.icon) === false ) {
             className.push('n-button--icon');
+        }
+
+        if ( this.link === true ) {
+            className.push('n-button--link');
         }
 
         if ( this.square === true ) {

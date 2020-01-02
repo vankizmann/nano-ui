@@ -422,6 +422,41 @@
 .n-button.n-button--link:focus {
   color: #055bea; }
 
+.n-button.n-button--link.n-button--primary {
+  color: #2877FA; }
+
+.n-button.n-button--link.n-button--primary:hover,
+.n-button.n-button--link.n-button--primary:focus {
+  color: #055bea; }
+
+.n-button.n-button--link.n-button--success {
+  color: #3ed786; }
+
+.n-button.n-button--link.n-button--success:hover,
+.n-button.n-button--link.n-button--success:focus {
+  color: #27bb6d; }
+
+.n-button.n-button--link.n-button--warning {
+  color: #ffac2f; }
+
+.n-button.n-button--link.n-button--warning:hover,
+.n-button.n-button--link.n-button--warning:focus {
+  color: #fb9700; }
+
+.n-button.n-button--link.n-button--danger {
+  color: #fd2f51; }
+
+.n-button.n-button--link.n-button--danger:hover,
+.n-button.n-button--link.n-button--danger:focus {
+  color: #f7022b; }
+
+.n-button.n-button--link.n-button--info {
+  color: #62686d; }
+
+.n-button.n-button--link.n-button--info:hover,
+.n-button.n-button--link.n-button--info:focus {
+  color: #4a4e52; }
+
 .n-button.n-button--small.n-button--link {
   font-size: 12.25px; }
 
