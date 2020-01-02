@@ -359,6 +359,10 @@ export default {
 
         itemMouseDown(event, target)
         {
+            if ( event.which !== 1 ) {
+                return;
+            }
+
             if ( ! Dom.find(target).parent().parent().is(this.$el) ) {
                 return;
             }
