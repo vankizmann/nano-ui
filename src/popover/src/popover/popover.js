@@ -264,7 +264,7 @@ export default {
                 return;
             }
 
-            if ( this.trigger !== 'click' || this.disabled === true ) {
+            if ( this.trigger !== 'click' || this.disabled === true || event.which !== 1 ) {
                 return;
             }
 
