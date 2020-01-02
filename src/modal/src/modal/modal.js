@@ -149,6 +149,10 @@ export default {
 
         clickTrigger(event, target)
         {
+            if ( event.which !== 1 ) {
+                return;
+            }
+
             if ( ! Dom.find(target).inside(this.parent) ) {
                 return;
             }
