@@ -388,6 +388,10 @@
 .n-button {
   -webkit-box-flex: 1;
           flex: 1 1 auto;
+  display: -webkit-inline-box;
+  display: inline-flex;
+  -webkit-box-align: center;
+          align-items: center;
   min-width: 0;
   white-space: nowrap; }
 
@@ -2391,8 +2395,7 @@
 
 .n-popover-option {
   cursor: pointer;
-  display: -webkit-box;
-  display: flex;
+  display: block;
   padding: 9px 12px;
   -webkit-transition: background 0.15s;
   transition: background 0.15s; }

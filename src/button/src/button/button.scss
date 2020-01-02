@@ -11,6 +11,8 @@ $button-ratio: 0.3 !default;
 
 .n-button {
     flex: 1 1 auto;
+    display: inline-flex;
+    align-items: center;
     min-width: 0;
     white-space: nowrap;
 }
