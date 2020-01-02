@@ -29,7 +29,7 @@ export default {
             options.value = options.value.split(',');
         }
 
-        return this.getFilterProps(defaults);
+        return options;
     },
 
     renderForm()
