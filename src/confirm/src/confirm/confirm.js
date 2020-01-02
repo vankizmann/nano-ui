@@ -118,6 +118,9 @@ export default {
                 <template slot="raw">
                     <div class={className}>
                         <div class="n-confirm__icon">
+                            { this.type === 'primary' &&
+                                <span class={this.icons.primary}></span>
+                            }
                             { this.type === 'success' &&
                                 <span class={this.icons.success}></span>
                             }
@@ -127,8 +130,8 @@ export default {
                             { this.type === 'danger' &&
                                 <span class={this.icons.danger}></span>
                             }
-                            { this.type === 'primary' &&
-                                <span class={this.icons.info}></span>
+                            { this.type === 'info' &&
+                            <span class={this.icons.info}></span>
                             }
                         </div>
                         <div class="n-confirm__body">
