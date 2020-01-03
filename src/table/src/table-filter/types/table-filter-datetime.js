@@ -23,7 +23,13 @@ export default {
             property: this.column.filterProp, type: this.column.type, value: null, operator: 'eq'
         };
 
-        return this.getFilterProps(defaults);
+        let options = this.getFilterProps(defaults);
+
+        if ( Any.isEmpty(options.value) ) {
+            options.value = 'now'
+        }
+
+        return options;
     },
 
     renderForm()
