@@ -78,7 +78,13 @@
                             return children;
                         };
 
-                        return { items: childGenerator(), target: childGenerator(), kill: false };
+                        let self = this;
+
+                        setTimeout(function () {
+                            self.target = childGenerator();
+                        }, 1000);
+
+                        return { items: childGenerator(), target: [], kill: false };
                     }
                 };
 

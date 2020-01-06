@@ -269,8 +269,12 @@ export default {
             this.setWidth(width);
         },
 
-        setWidth(width)
+        setWidth(width, force = false)
         {
+            if ( force === true ) {
+                return this.width = width;
+            }
+
             if ( this.fixedWidth !== 0 ) {
                 return this.width = this.fixedWidth;
             }

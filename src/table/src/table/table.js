@@ -240,7 +240,7 @@ export default {
                 element = this.adaptHeight;
             }
 
-            Dom.find(element).observerResize(this.updateObserver)();
+            Dom.find(element).observerResize(this.updateObserver)(element);
         },
 
         updateObserver()
@@ -343,7 +343,9 @@ export default {
 
         scroll()
         {
-            this.$emit('hook:updated');
+            Arr.each(this.columns, (column) => {
+                column.setWidth(0, true);
+            });
         },
 
         currentKey()
