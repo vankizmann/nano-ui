@@ -306,7 +306,7 @@ export default {
 
     mounted()
     {
-        this.NTable.$once('hook:updated', () => Any.delay(this.getWidth));
+        this.NTable.$on('hook:updated', Any.debounce(this.getWidth));
     },
 
     renderLabel({ column })
