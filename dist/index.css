@@ -2407,6 +2407,10 @@
   -webkit-transition: background 0.15s;
   transition: background 0.15s; }
 
+.n-popover-option.n-button__wrapper > .n-button.n-button--link {
+  -webkit-box-pack: start;
+          justify-content: flex-start; }
+
 .n-popover-option:not(.n-button__wrapper):hover,
 .n-popover-option.n-button__wrapper > .n-button.n-button--link:hover {
   background: #F0F3F7; }
