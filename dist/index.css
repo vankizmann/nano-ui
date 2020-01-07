@@ -2407,6 +2407,9 @@
 .n-popover-option.n-button__wrapper > .n-button.n-button--link:hover {
   background: #F0F3F7; }
 
+.n-popover-option.n-disabled {
+  background: transparent !important; }
+
 .n-modal {
   z-index: 2000;
   position: fixed;
