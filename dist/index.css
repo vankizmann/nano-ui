@@ -2398,7 +2398,9 @@
 .n-popover-option:not(.n-button__wrapper),
 .n-popover-option.n-button__wrapper > .n-button.n-button--link {
   cursor: pointer;
-  display: block;
+  display: -webkit-box;
+  display: flex;
+  width: 100%;
   padding: 9px 12px;
   -webkit-transition: background 0.15s;
   transition: background 0.15s; }
