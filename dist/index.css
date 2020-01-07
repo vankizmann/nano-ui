@@ -2395,12 +2395,14 @@
 .n-popover.n-popover--tooltip > .n-popover__frame > .n-popover__footer {
   padding: 3px 9px; }
 
-.n-popover-option:not(.n-button__wrapper),
-.n-popover-option.n-button__wrapper > .n-button.n-button--link {
-  cursor: pointer;
+.n-popover-option {
   display: -webkit-box;
   display: flex;
   width: 100%;
+  cursor: pointer; }
+
+.n-popover-option:not(.n-button__wrapper),
+.n-popover-option.n-button__wrapper > .n-button.n-button--link {
   padding: 9px 12px;
   -webkit-transition: background 0.15s;
   transition: background 0.15s; }
