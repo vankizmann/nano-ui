@@ -35,7 +35,7 @@ export function Install(Vue, Icons = {})
 
     scope.Nano.install(Vue);
 
-    Vue.prototype.ctor = CtorMixin;
+    Vue.prototype.ctor = CtorMixin.ctor;
 
     Vue.prototype.trans = scope.Nano.Locale.trans;
     Vue.prototype.choice = scope.Nano.Locale.choice;
