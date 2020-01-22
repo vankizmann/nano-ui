@@ -120,12 +120,26 @@ $popover-tooltip-padding: 3px 9px !default;
 }
 
 .n-popover-option {
+    display: flex;
+    width: 100%;
     cursor: pointer;
-    display: block;
+}
+
+.n-popover-option:not(.n-button__wrapper),
+.n-popover-option.n-button__wrapper > .n-button.n-button--link {
     padding: $popover-default-padding;
     transition: background 0.15s;
 }
 
-.n-popover-option:hover {
+.n-popover-option.n-button__wrapper > .n-button.n-button--link {
+    justify-content: flex-start;
+}
+
+.n-popover-option:not(.n-button__wrapper):hover,
+.n-popover-option.n-button__wrapper > .n-button.n-button--link:hover {
     background: $--color-background;
+}
+
+.n-popover-option.n-disabled {
+    background: transparent !important;
 }
