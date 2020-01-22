@@ -276,7 +276,7 @@ export default {
                     <span class={this.icons.clock}></span>
                 </div>
                 <div class="n-timepicker__input">
-                    <input type="text" disabled={this.disabled} value={this.nativeValue.format(this.displayFormat)} placeholder={this.placeholder} vOn:input={inputEvent} />
+                    <input type="text" disabled={this.disabled} value={this.value ? this.nativeValue.format(this.displayFormat) : ''} placeholder={this.placeholder} vOn:input={inputEvent} />
                 </div>
                 { this.clearable &&
                     <NButton type="input" icon={this.icons.times} disabled={this.disabled || Any.isEmpty(this.value)} vOn:mousedown_stop={clearEvent} />
