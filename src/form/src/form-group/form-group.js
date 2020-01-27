@@ -106,11 +106,11 @@ export default {
         return <fieldset class={classList}>
             { this.legend &&
                 <div class="n-form-group__legend">
-                    <legend class="n-form-group__label" vOn:click={this.toggleValue}>
+                    <legend class="n-form-group__label">
                         { this.checkable &&
                             <NCheckbox checked={this.nativeValue} />
                         }
-                        <div class="n-form-group__label-text">
+                        <div class="n-form-group__label-text" vOn:click={this.toggleValue}>
                             <span>{this.legend}</span>
                             { this.tooltip && <NPopover type="tooltip" position={this.tooltipPosition}>{this.tooltip}</NPopover> }
                         </div>
