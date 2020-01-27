@@ -108,7 +108,7 @@ export default {
 
         checked()
         {
-            if ( Any.isEqual(this.checked, this.nativeChecked) ) {
+            if ( ! Any.isEqual(this.checked, this.nativeChecked) ) {
                 this.nativeChecked = this.checked;
             }
         }
