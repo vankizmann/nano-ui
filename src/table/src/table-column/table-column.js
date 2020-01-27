@@ -198,7 +198,7 @@ export default {
         datetimeFormat: {
             default()
             {
-                return this.trans('YYYY-MM-DD hh:mm');
+                return this.trans('YYYY-MM-DD HH:mm');
             },
             type: [String]
         }

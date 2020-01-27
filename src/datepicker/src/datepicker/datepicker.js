@@ -110,7 +110,7 @@ export default {
         format: {
             default()
             {
-                return 'YYYY-MM-DD hh:mm:ss';
+                return 'YYYY-MM-DD HH:mm:ss';
             },
             type: [String]
         },
