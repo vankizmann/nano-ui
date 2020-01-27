@@ -108,12 +108,14 @@ export default {
                 <div class="n-form-group__legend">
                     <legend class="n-form-group__label">
                         { this.checkable &&
-                            <NCheckbox checked={this.nativeValue} />
+                            <NCheckbox checked={this.nativeValue} vOn:input={this.toggleValue} />
                         }
                         <div class="n-form-group__label-text" vOn:click={this.toggleValue}>
                             <span>{this.legend}</span>
-                            { this.tooltip && <NPopover type="tooltip" position={this.tooltipPosition}>{this.tooltip}</NPopover> }
                         </div>
+                        { this.tooltip &&
+                            <NPopover type="tooltip" position={this.tooltipPosition}>{this.tooltip}</NPopover>
+                        }
                         { this.$slots.actions &&
                             <div class="n-form-group__actions">
                                 { this.$slots.actions }

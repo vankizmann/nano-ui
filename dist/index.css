@@ -250,14 +250,12 @@
   flex-direction: row;
   padding: 5px 0; }
 
-.n-form-group.n-form-group--checkable .n-form-group__label {
-  cursor: pointer; }
-
 .n-form-group__label .n-checkbox {
   flex: 0 0 auto;
   margin-right: 9px; }
 
 .n-form-group__label .n-form-group__label-text {
+  cursor: pointer;
   flex: 0 1 auto;
   margin-right: auto;
   font-size: 17px;
