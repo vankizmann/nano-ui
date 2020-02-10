@@ -87,8 +87,6 @@ export default {
 
             this.marker.marker.addListener('mouseout',
                 () => this.$emit('mouseleave', this.marker));
-
-            this.NMap.getMap().focusMarkers(null, this.NMap.zoom);
         },
 
         setMarkerByAddress(address)

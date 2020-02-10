@@ -51,7 +51,6 @@ export default {
     mounted()
     {
         this.map = new Map(this.$el, { lat: this.lat, lng: this.lng, zoom: this.zoom });
-
     },
 
     methods: {
