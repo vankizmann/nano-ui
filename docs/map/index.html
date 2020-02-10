@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI Map</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../../dist/index.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvJ7NNFrrSL13b3xEB07Itw0luJSHDTmE"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <script src="https://vankizmann.github.io/nano-js/dist/nano-js.js"></script>
+    <script src="../../dist/index.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <n-form :form="form">
+
+        <n-form-item :label="trans('Address')">
+            <n-button-group>
+                <n-input v-model="address"></n-input>
+                <n-button @click="setMarkerByAddress">{{ trans('Set marker') }}</n-button>
+            </n-button-group>
+        </n-form-item>
+
+        <n-form-item>
+            <n-map>
+                <n-map-marker ref="marker" :lat.sync="form.lat" :lng.sync="form.lng" :draggable="true">
+                    <div style="padding: 20px; background: yellow; color: red;">Huhu!</div>
+                </n-map-marker>
+            </n-map>
+        </n-form-item>
+
+        <n-form-item label="Object">
+            <pre>{{ form }}</pre>
+        </n-form-item>
+
+    </n-form>
+</div>
+
+<script>
+    Nano.Dom.ready(() => {
+
+        Vue.config.devtools = true;
+
+        var config = {
+
+            data: function() {
+
+                var form = {
+                    lat: 53.565000, lng: 10.042280
+                };
+
+                return {
+                    form: form, address: ''
+                };
+            },
+
+            methods: {
+
+                setMarkerByAddress()
+                {
+                    this.$refs.marker.setMarkerByAddress(this.address);
+                }
+
+            }
+
+        };
+
+        window.App = new Vue(config).$mount('#app');
+    })
+</script>
+</body>
+</html>

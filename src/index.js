@@ -66,6 +66,7 @@ export function Install(Vue, Icons = {})
     require('./tabs/index');
     require('./info/index');
     require('./file-list/index');
+    require('./map/index');
     require('./wysiwyg/index');
 }
 
