@@ -770,6 +770,14 @@
   border-radius: 0;
   margin-left: -1px; }
 
+.n-button-group .n-button__wrapper:not(:first-child):not(:last-child) .n-button,
+.n-button-group .n-input__wrapper:not(:first-child):not(:last-child) .n-input,
+.n-button-group .n-select__wrapper:not(:first-child):not(:last-child) .n-select,
+.n-button-group .n-cascader__wrapper:not(:first-child):not(:last-child) .n-cascader,
+.n-button-group .n-datepicker__wrapper:not(:first-child):not(:last-child) .n-datepicker,
+.n-button-group .n-timepicker__wrapper:not(:first-child):not(:last-child) .n-timepicker {
+  border-radius: 0; }
+
 .n-button-group .n-button__wrapper .n-button:hover,
 .n-button-group .n-button__wrapper .n-input:hover,
 .n-button-group .n-button__wrapper .n-select:hover,
