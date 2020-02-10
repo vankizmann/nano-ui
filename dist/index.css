@@ -767,7 +767,6 @@
 .n-button-group .n-datepicker__wrapper .n-datepicker,
 .n-button-group .n-timepicker__wrapper .n-timepicker {
   position: relative;
-  border-radius: 0;
   margin-left: -1px; }
 
 .n-button-group .n-button__wrapper:not(:first-child):not(:last-child) .n-button,
