@@ -25,22 +25,29 @@
     z-index: 10;
 }
 
-.n-button-group .n-button__wrapper:first-child .n-button,
-.n-button-group .n-input__wrapper:first-child .n-input,
-.n-button-group .n-select__wrapper:first-child .n-select,
-.n-button-group .n-cascader__wrapper:first-child .n-cascader,
-.n-button-group .n-datepicker__wrapper:first-child .n-datepicker,
-.n-button-group .n-timepicker__wrapper:first-child .n-timepicker {
+.n-button-group .n-button__wrapper .n-select.n-popover--open,
+.n-button-group .n-cascader__wrapper .n-cascader.n-popover--open,
+.n-button-group .n-datepicker__wrapper .n-datepicker.n-popover--open,
+.n-button-group .n-timepicker__wrapper .n-timepicker.n-popover--open {
+    z-index: 5;
+}
+
+.n-button-group .n-button__wrapper:first-child:not(:last-child) .n-button,
+.n-button-group .n-input__wrapper:first-child:not(:last-child) .n-input,
+.n-button-group .n-select__wrapper:first-child:not(:last-child) .n-select,
+.n-button-group .n-cascader__wrapper:first-child:not(:last-child) .n-cascader,
+.n-button-group .n-datepicker__wrapper:first-child:not(:last-child) .n-datepicker,
+.n-button-group .n-timepicker__wrapper:first-child:not(:last-child) .n-timepicker {
     border-radius: $radius-small 0 0 $radius-small;
     margin-left: 0;
 }
 
-.n-button-group .n-button__wrapper:last-child .n-button,
-.n-button-group .n-input__wrapper:last-child .n-input,
-.n-button-group .n-select__wrapper:last-child .n-select,
-.n-button-group .n-cascader__wrapper:last-child .n-cascader,
-.n-button-group .n-datepicker__wrapper:last-child .n-datepicker,
-.n-button-group .n-timepicker__wrapper:last-child .n-timepicker {
+.n-button-group .n-button__wrapper:last-child:not(:first-child) .n-button,
+.n-button-group .n-input__wrapper:last-child:not(:first-child) .n-input,
+.n-button-group .n-select__wrapper:last-child:not(:first-child) .n-select,
+.n-button-group .n-cascader__wrapper:last-child:not(:first-child) .n-cascader,
+.n-button-group .n-datepicker__wrapper:last-child:not(:first-child) .n-datepicker,
+.n-button-group .n-timepicker__wrapper:last-child:not(:first-child) .n-timepicker {
     border-radius: 0 $radius-small $radius-small 0;
 }
 //
