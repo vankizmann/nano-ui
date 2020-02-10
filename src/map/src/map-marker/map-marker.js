@@ -1,4 +1,4 @@
-import { UUID, Any } from "nano-js";
+import { UUID, Obj, Num, Any } from "nano-js";
 
 export default {
 
@@ -30,21 +30,21 @@ export default {
             type: [Number]
         },
 
-        style: {
-            default()
-            {
-                return 'default';
-            },
-            type: [String]
-        },
-
         draggable: {
             default()
             {
                 return false;
             },
             type: [Boolean]
-        }
+        },
+
+        options: {
+            default()
+            {
+                return { style: 'default' };
+            },
+            type: [Object]
+        },
 
     },
 
@@ -63,9 +63,9 @@ export default {
 
         initializeMarker()
         {
-            let options = {
-                lat: this.lat, lng: this.lng, draggable: this.draggable, style: this.style
-            };
+            let options = Obj.assign({
+                lat: Num.float(this.lat), lng: Num.float(this.lng), draggable: this.draggable
+            }, this.options);
 
             if ( ! Any.isEmpty(this.$slots.default) ) {
                 options.html = this.$el.innerHTML;
