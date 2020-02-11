@@ -43,7 +43,7 @@ export default {
         itemHeight: {
             default()
             {
-                return 40;
+                return 0;
             },
             type: [Number]
         },
