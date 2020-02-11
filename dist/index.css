@@ -89,8 +89,7 @@
 .n-draggable__item {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  min-height: 34px; }
+  align-items: center; }
 
 .n-draggable__item:hover {
   background: #f8fafb; }
@@ -2400,7 +2399,7 @@
   overflow-y: auto; }
 
 .n-table__body .n-table__row {
-  height: 40px;
+  padding: 6px 0;
   border-bottom: 1px solid #e8e9ea; }
 
 .n-table__body .n-table__row.n-table__row--current {

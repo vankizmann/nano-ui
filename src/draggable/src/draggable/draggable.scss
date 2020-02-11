@@ -15,7 +15,7 @@ $draggable-placeholder-size: 13px !default;
     display: flex;
     flex-direction: row;
     align-items: center;
-    min-height: $draggable-item-height;
+    //min-height: $draggable-item-height;
 }
 
 .n-draggable__item:hover {

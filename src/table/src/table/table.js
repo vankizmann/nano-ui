@@ -140,7 +140,7 @@ export default {
         {
             let style = {};
 
-            if ( ! Any.isEmpty(this.itemHeight) ) {
+            if ( this.itemHeight !== 0 ) {
                 style.height = Num.fixed(this.itemHeight);
             }
 

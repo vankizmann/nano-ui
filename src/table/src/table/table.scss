@@ -104,7 +104,7 @@ $table-row-height: 40px !default;
 }
 
 .n-table__body .n-table__row {
-    height: $table-row-height;
+    padding: $table-row-height * 0.15 0;
     border-bottom: 1px solid $--color-gray-10;
 }
 
