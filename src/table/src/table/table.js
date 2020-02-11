@@ -138,9 +138,13 @@ export default {
 
         rowStyle()
         {
-            return {
-                height: Num.fixed(this.itemHeight) + 'px'
-            };
+            let style = {};
+
+            if ( ! Any.isEmpty(this.itemHeight) ) {
+                style.height = Num.fixed(this.itemHeight);
+            }
+
+            return style;
         },
 
     },
