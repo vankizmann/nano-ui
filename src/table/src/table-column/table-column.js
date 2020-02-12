@@ -227,6 +227,8 @@ export default {
                 style['width'] = Num.fixed(this.fixedWidth) + 'px'
             }
 
+            style['minHeight'] = this.NTable.itemHeight + 'px';
+
             return style;
         },
 
