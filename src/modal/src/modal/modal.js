@@ -211,6 +211,8 @@ export default {
         this.$on('close', () => {
             this.$emit('input', this.nativeVisible = false);
         });
+
+        Dom.find(document.body).append(this.$el);
     },
 
     updated()

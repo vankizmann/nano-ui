@@ -523,8 +523,12 @@ export default {
             this.$emit('row-dblclick', { row: props.value, key: props.key });
         };
 
+        let rowStyle = Obj.assign({
+            minHeight: this.itemHeight + 'px'
+        }, this.rowStyle);
+
         return (
-            <div class={className} style={this.rowStyle} vOn:click={onClick} vOn:dblclick={onDblClick}>
+            <div class={className} style={rowStyle} vOn:click={onClick} vOn:dblclick={onDblClick}>
                 {
                     Arr.each(this.columns, (column) => {
 
@@ -546,12 +550,8 @@ export default {
                             className.push('n-table__column--fixed');
                         }
 
-                        let style = Obj.assign({
-                            minHeight: this.itemHeight + 'px'
-                        }, column.style);
-
                         return (
-                            <div class={className} style={style}>
+                            <div class={className} style={column.style}>
                                 { column.$scopedSlots.default({ column: column, row: props.value, key: props.key }) }
                             </div>
                         );
