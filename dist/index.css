@@ -203,8 +203,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  min-height: 100px; }
+  width: 100%; }
 
 .n-draggable__empty span {
   color: #62686d; }

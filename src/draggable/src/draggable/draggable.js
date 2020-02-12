@@ -709,8 +709,12 @@ export default {
                 }));
             }
 
+            let style = {
+                minHeight: this.itemHeight + 'px'
+            };
+
             let defaultSlot = (
-                <div class={className} data-drag-id={value._dragid} selectable={selectable} draggable={draggable}>
+                <div style={style} class={className} data-drag-id={value._dragid} selectable={selectable} draggable={draggable}>
                     { this.use === null ? this.$scopedSlots.default(props) : h(this.use, { key: value._dragid, props, on }) }
                 </div>
             );
