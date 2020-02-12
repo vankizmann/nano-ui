@@ -101,6 +101,13 @@ export default {
             type: [Number]
         },
 
+        viewportHeight: {
+            default()
+            {
+                return false;
+            }
+        },
+
         uniqueProp: {
             default()
             {
@@ -268,6 +275,10 @@ export default {
         let props = Obj.assign({}, this.$props, {
             use: null
         });
+
+        if ( this.NDraggableTree ) {
+            props.viewportHeight = false;
+        }
 
         return h('NDraggable', {
             props: props, on: events, scopedSlots

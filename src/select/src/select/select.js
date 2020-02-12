@@ -377,7 +377,7 @@ export default {
             <div class={['n-select__wrapper', this.disabled && 'n-disabled']}>
                 <div class={className} onClick={() => this.$refs.input.focus()}>
                     { ( this.clearable === true && this.disabled === false && this.nativeSelected.length !== 0 ) &&
-                        <div class="n-select__clear" vOn:mousedown_stop={this.clearNativeSelected}>
+                        <div class="n-select__clear" vOn:mousedown={this.clearNativeSelected}>
                             <span class={this.icons.times}></span>
                         </div>
                     }

@@ -1,0 +1,47 @@
+@import "../../../root/vars";
+
+.n-render-list {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.n-render-list > div::-webkit-scrollbar,
+.n-render-list > div::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.n-render-list > .n-render-list__scrollbar-x {
+    z-index: 10;
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    width: 0;
+    height: 8px;
+    background: rgba($color-black, 0.3);
+    border-radius: 500px;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.n-render-list.n-render-list--x:hover > .n-render-list__scrollbar-x {
+    opacity: 1;
+}
+
+.n-render-list__scrollbar-y {
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    right: 5px;
+    width: 8px;
+    height: 0;
+    background: rgba($color-black, 0.3);
+    border-radius: 500px;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.n-render-list.n-render-list--y:hover > .n-render-list__scrollbar-y {
+    opacity: 1;
+}

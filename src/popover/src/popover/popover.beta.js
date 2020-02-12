@@ -3,7 +3,7 @@ import { Obj, Any, Dom, UUID } from "nano-js";
 
 export default {
 
-    name: 'NPopoverBeta',
+    name: 'NPopover',
 
     model: {
         prop: 'visible'
@@ -139,7 +139,7 @@ export default {
             }
 
             if ( this.trigger === 'context' ) {
-                clientX = this.clientX;
+                clientX = this.clientX - Dom.find(this.parent).offsetLeft();
             }
 
             let clientY = Dom.find(this.target).offsetTop(this.parent);
@@ -149,7 +149,7 @@ export default {
             }
 
             if ( this.trigger === 'context' ) {
-                clientY = this.clientY;
+                clientY = this.clientY - Dom.find(this.parent).offsetTop();
             }
 
             let height = this.trigger === 'context' ?
@@ -159,7 +159,7 @@ export default {
                 0 : Dom.find(this.target).width();
 
             let reset = {
-                'max-width': (this.width || width) + 'px'
+                'max-width': this.width ? (this.width + 'px') : 'auto'
             };
 
             if ( this.width ) {
@@ -215,7 +215,28 @@ export default {
             // Get target offsets to adjust padding or margin
             let offset = Dom.find(this.target).offset(null, this.parent);
 
-            if ( this.position.match(/^(top|bottom)-(start|center|end)$/) ) {
+
+            if ( this.trigger === 'context' ) {
+
+                if ( style.left < 0 ) {
+                    style.left = 0;
+                }
+
+                if ( style.left + nodeWidth > parentWidth ) {
+                    style.left = parentWidth - nodeWidth;
+                }
+
+                if ( style.top < 0 ) {
+                    style.top = 0;
+                }
+
+                // if ( style.top + nodeHeight > parentHeight ) {
+                //     style.top = parentHeight - nodeHeight;
+                // }
+
+            }
+
+            if ( this.trigger !== 'context' && this.position.match(/^(top|bottom)-(start|center|end)$/) ) {
 
                 if ( style.left < 0 ) {
                     style.left = 0;
@@ -225,17 +246,17 @@ export default {
                     style.left = parentWidth - nodeWidth;
                 }
 
-                if ( style.top - nodeHeight < 0 ) {
-                    style.top = height + offset.top;
-                }
-
                 if ( style.top + nodeHeight > parentHeight ) {
                     style.top = parentHeight - height - nodeHeight - offset.bottom;
                 }
 
+                if ( style.top - nodeHeight < 0 ) {
+                    style.top = height + offset.top;
+                }
+
             }
 
-            if ( this.position.match(/^(left|right)-(start|center|end)$/) ) {
+            if ( this.trigger !== 'context' && this.position.match(/^(left|right)-(start|center|end)$/) ) {
 
                 if ( style.top < 0 ) {
                     style.top = 0;
@@ -245,12 +266,12 @@ export default {
                     style.top = parentHeight - nodeHeight;
                 }
 
-                if ( style.left - nodeWidth < 0 ) {
-                    style.left = width + offset.left;
-                }
-
                 if ( style.left + nodeWidth > parentWidth ) {
                     style.left = parentWidth - width - nodeWidth - offset.right;
+                }
+
+                if ( style.left - nodeWidth < 0 ) {
+                    style.left = width + offset.left;
                 }
 
             }
@@ -258,10 +279,10 @@ export default {
             let pseudo = Obj.map(Obj.clone(style), (prop) => prop + 'px');
 
             if ( this.trigger !== 'context' ) {
-                pseudo['max-width'] = (this.width || width) + 'px';
+                pseudo['max-width'] = this.width ? (this.width + 'px') : 'auto';
             }
 
-            if ( this.visibleBS === false && this.visible === false ) {
+            if ( ! this.visibleBS && ! this.visible ) {
                 pseudo.display = 'none';
             }
 

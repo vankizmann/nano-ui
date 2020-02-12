@@ -316,7 +316,25 @@ export default {
     renderLabel({ column })
     {
         if ( this.type === 'selection' ) {
-            return <NCheckbox key={UUID()} global={true} />;
+
+            let checked = false;
+
+            if ( this.NTable.items.length !== 0 ) {
+                checked = this.NTable.nativeSelectedKeys.length === this.NTable.items.length;
+            }
+
+            let intermediate = false;
+
+            if ( this.NTable.nativeSelectedKeys.length !== 0 ) {
+                intermediate = this.NTable.nativeSelectedKeys.length !== this.NTable.items.length;
+            }
+
+            let onInput = () => {
+                this.NTable.nativeSelectedKeys = checked ? [] :
+                    Arr.each(this.NTable.items, (item) => Obj.get(item, this.NTable.uniqueProp));
+            };
+
+            return (<NCheckbox key={UUID()} intermediate={intermediate} checked={checked} onInput={() => onInput()} />);
         }
 
         let className = [
@@ -339,7 +357,7 @@ export default {
                 <span>{this.label}</span>
             </div>
 
-            <NPopover class="n-popover-label" type="tooltip" trigger="hover">
+            <NPopover class="n-popover-label" type="tooltip" trigger="hover" boundry={this.NTable.$el}>
                 <span>{this.label}</span>
             </NPopover>
 
@@ -358,7 +376,7 @@ export default {
             <div class="n-table-filter__filter">
                 <span class={this.icons.angleDown}></span>
             </div>,
-            <NPopover class="n-popover-filter" type="default" trigger="click">
+            <NPopover class="n-popover-filter" type="default" trigger="click" boundry={this.NTable.$el}>
                 {
                     this.h(name, {
                         slot: 'raw', props: { column }
@@ -373,7 +391,14 @@ export default {
         let prop = Obj.get(row, this.NTable.uniqueProp);
 
         if ( this.type === 'selection' ) {
-            return <NCheckbox key={prop} value={prop} sort={key} />;
+
+            let checked = Arr.has(this.NTable.nativeSelectedKeys, prop);
+
+            let onInput = () => {
+                Arr.toggle(this.NTable.nativeSelectedKeys, prop);
+            };
+
+            return <NCheckbox key={prop} sort={key} checked={checked} onInput={onInput} />;
         }
 
         return this.ctor('renderCell')({ column, row, key });

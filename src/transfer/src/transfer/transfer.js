@@ -235,7 +235,7 @@ export default {
                             <NInput vModel={this.searchSource} placeholder={this.trans('Search item')} icon={this.icons.times} iconDisabled={Any.isEmpty(this.searchSource)} vOn:iconClick={() => this.searchSource = ''} />
                         </div>
                         <div class="n-transfer__body">
-                            <NDraggable vModel={this.valueSource} displayItems={valueSource} props={propsSource} scopedSlots={scopedSlots} on={eventsSource} />
+                            <NDraggable vModel={this.valueSource} viewportHeight={true} displayItems={valueSource} props={propsSource} scopedSlots={scopedSlots} on={eventsSource} />
                         </div>
                     </NCheckboxGroup>
                 </div>
@@ -254,7 +254,7 @@ export default {
                             <NInput vModel={this.searchTarget} placeholder={this.trans('Search item')} icon={this.icons.times} />
                         </div>
                         <div class="n-transfer__body">
-                            <NDraggable vModel={this.value} displayItems={valueTarget} props={propsTarget} scopedSlots={scopedSlots} on={eventsTarget} />
+                            <NDraggable vModel={this.value} viewportHeight={true} displayItems={valueTarget} props={propsTarget} scopedSlots={scopedSlots} on={eventsTarget} />
                         </div>
                     </NCheckboxGroup>
                 </div>

@@ -130,7 +130,7 @@ $table-row-height: 40px !default;
     align-items: center;
 }
 
-.n-table__row > .n-table__column:last-child:before {
+.n-table__row > .n-table__row:before {
     content: '\00a0';
     position: absolute;
     top: 0;

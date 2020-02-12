@@ -102,6 +102,14 @@ export default {
             type: [Number]
         },
 
+        viewportHeight: {
+            default()
+            {
+                return false;
+            },
+            type: [Number]
+        },
+
         uniqueProp: {
             default()
             {
@@ -371,7 +379,7 @@ export default {
                 _dragid: Dom.find(target).attr('data-drag-id')
             });
 
-            if ( Any.isEmpty(item) === true ) {
+            if ( ! Any.isEmpty(item) && Any.isEmpty(this.nativeSelected) ) {
                 return;
             }
 
@@ -391,6 +399,14 @@ export default {
         {
             if ( ! Dom.find(target).inside(this.$el) ) {
                 return;
+            }
+
+            let item = Arr.find(this.items, {
+                _dragid: Dom.find(target).attr('data-drag-id')
+            });
+
+            if ( ! Any.isEmpty(item) && Any.isEmpty(this.nativeSelected) ) {
+                this.nativeSelected = [Obj.clone(item)];
             }
 
             let selected = Any.isEmpty(this.selected) ?
@@ -437,11 +453,11 @@ export default {
                 Dom.find(el).not(target).removeClass('n-draggable--dragover');
             });
 
-            let offset = Dom.find(this.$el).offsetTop() -
-                    Dom.find(this.$el.parentNode).scrollTop(null, window);
+            let offsetTarget = Dom.find(target).offsetTop(this.$el) -
+                Dom.find(target).scroll('top', this.$el);
 
-            let inside = Dom.find(target).offsetTop(this.$el) -
-                    Dom.find(this.$el.parentNode).scrollTop(null, this.$el);
+            let offsetElement = Dom.find(this.$el).offsetTop() -
+                Dom.find(this.$el).scroll('top');
 
             let height = Dom.find(target).height(),
                 displayHeight = Dom.find(target).height();
@@ -455,11 +471,11 @@ export default {
 
             this.move = 'inner';
 
-            if ( event.clientY < offset + inside + safeZone ) {
+            if ( event.clientY < offsetTarget + offsetElement + safeZone ) {
                 this.move = 'before';
             }
 
-            if ( event.clientY > offset + inside + height - safeZone ) {
+            if ( event.clientY > offsetTarget + offsetElement + height - safeZone ) {
                 this.move = 'after';
             }
 
@@ -503,11 +519,11 @@ export default {
             }
 
             if ( this.move === 'before' ) {
-                Dom.find(this.$refs.indicator).css({ top: (inside + displayHeight) + 'px' });
+                Dom.find(this.$refs.indicator).css({ top: (offsetTarget + displayHeight) + 'px' });
             }
 
             if ( this.move === 'after' ) {
-                Dom.find(this.$refs.indicator).css({ top: (inside + displayHeight) + 'px' });
+                Dom.find(this.$refs.indicator).css({ top: (offsetTarget + displayHeight) + 'px' });
             }
 
             if ( this.move === 'inner' ) {
@@ -808,7 +824,7 @@ export default {
         }
 
         let props = {
-            items: items, itemHeight: this.itemHeight, renderNode: this.renderNode
+            items: items, itemHeight: this.itemHeight, viewportHeight: this.viewportHeight, renderNode: this.renderNode
         };
 
         return (

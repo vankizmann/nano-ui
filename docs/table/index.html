@@ -24,8 +24,8 @@
             <n-button @click="kill = true">Kill all instances</n-button>
         </div>
 
-        <div v-if="kill === false" class="auto-height" style="padding: 20px;">
-            <n-table :items="items" :allow-drop="true">
+        <div v-if="kill === false" class="adapt-height" style="height: 350px; overflow: hidden; padding: 20px;">
+            <n-table :items="items" :adapt-height="true" :allow-drop="true">
                 <n-table-column prop="selection" align="center" type="selection" label="Selection" :fixed-width="50"></n-table-column>
                 <n-table-column prop="label" type="string" label="Label" :filter="true" :default-width="200"></n-table-column>
                 <n-table-column prop="id" align="center" type="string" label="ID" :default-width="100"></n-table-column>
@@ -59,7 +59,7 @@
                         let childGenerator = function (count) {
 
                             if ( count === undefined ) {
-                                count = 10;
+                                count = 300;
                             }
 
                             let children = Array(count).fill(null);
@@ -80,11 +80,15 @@
 
                         let self = this;
 
+                        // setTimeout(function () {
+                        //     self.items = childGenerator(30);
+                        // }, 1000);
+
                         setTimeout(function () {
-                            self.target = childGenerator();
+                            self.target = childGenerator(400);
                         }, 1000);
 
-                        return { items: childGenerator(), target: [], kill: false };
+                        return { items: childGenerator(10), target: [], kill: false };
                     }
                 };
 

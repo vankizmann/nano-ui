@@ -43,7 +43,7 @@ export default {
         itemHeight: {
             default()
             {
-                return 0;
+                return 34;
             },
             type: [Number]
         },
@@ -417,7 +417,7 @@ export default {
         }, 0);
 
         if ( this.adaptHeight === null ) {
-            this.calculateHeight();
+            // this.calculateHeight();
         }
 
         if ( this.adaptHeight !== null && this.adaptHeight !== false ) {
@@ -428,11 +428,10 @@ export default {
     updated()
     {
         if ( this.adaptHeight === null ) {
-            this.calculateHeight();
+            // this.calculateHeight();
         }
 
-        this.scroll = this.$refs.body.scrollHeight >
-            this.$refs.body.clientHeight;
+        this.scroll = false;
 
         this.visible = this.$refs.body.offsetWidth -
             this.$refs.body.clientWidth;
@@ -521,9 +520,7 @@ export default {
         };
 
         let onDblClick = () => {
-            this.$emit('row-dblclick', {
-                row: props.value, key: props.key
-            });
+            this.$emit('row-dblclick', { row: props.value, key: props.key });
         };
 
         return (
@@ -580,6 +577,7 @@ export default {
             items: this.items,
             selected: this.selected,
             itemHeight: this.itemHeight,
+            viewportHeight: this.adaptHeight,
             group: this.group,
             insertNode: this.insertNode,
             removeNode: this.removeNode,
@@ -620,30 +618,28 @@ export default {
 
         return (
             <div class={classList}>
-                <NCheckboxGroup vModel={this.nativeSelectedKeys}>
-                    <div ref="wrapper" class="n-table-wrapper" style={style}>
-                        <div ref="head" class="n-table__head">
-                            { this.ctor('renderHeadRow')() }
-                        </div>
-                        <NPopover trigger="context">
-                            <NCheckboxGroup vModel={this.nativeVisibleColumns}>
-                                {
-                                    Arr.each(this.columns, (column) => {
-                                        return <NCheckbox size="small" value={column.prop}>{ column.label }</NCheckbox>;
-                                    })
-                                }
-                            </NCheckboxGroup>
-                        </NPopover>
-                        <div ref="body" class="n-table__body">
-                            {
-                                h('NDraggable', { props: props, on: events, scopedSlots }, [
-                                    this.$slots.empty && emptySlot
-                                ])
-                            }
-                        </div>
-                        { this.$slots.default }
+                <div ref="wrapper" class="n-table-wrapper" style={style}>
+                    <div ref="head" class="n-table__head">
+                        { this.ctor('renderHeadRow')() }
                     </div>
-                </NCheckboxGroup>
+                    <NPopover trigger="context">
+                        <NCheckboxGroup vModel={this.nativeVisibleColumns}>
+                            {
+                                Arr.each(this.columns, (column) => {
+                                    return <NCheckbox size="small" value={column.prop}>{ column.label }</NCheckbox>;
+                                })
+                            }
+                        </NCheckboxGroup>
+                    </NPopover>
+                    <div ref="body" class="n-table__body">
+                        {
+                            h('NDraggable', { props: props, on: events, scopedSlots }, [
+                                this.$slots.empty && emptySlot
+                            ])
+                        }
+                    </div>
+                    { this.$slots.default }
+                </div>
             </div>
         );
     }
