@@ -546,8 +546,12 @@ export default {
                             className.push('n-table__column--fixed');
                         }
 
+                        let style = Obj.assign({
+                            minHeight: this.itemHeight + 'px'
+                        }, column.style);
+
                         return (
-                            <div class={className} style={column.style}>
+                            <div class={className} style={style}>
                                 { column.$scopedSlots.default({ column: column, row: props.value, key: props.key }) }
                             </div>
                         );
