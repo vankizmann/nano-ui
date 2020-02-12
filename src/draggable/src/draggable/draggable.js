@@ -106,8 +106,7 @@ export default {
             default()
             {
                 return false;
-            },
-            type: [Number]
+            }
         },
 
         uniqueProp: {
