@@ -18,6 +18,57 @@ export default {
 
     methods: {
 
+        mousedownScrollbar(event, target)
+        {
+            if ( Dom.find(target).closest(this.scrollbarX.get(0)) ) {
+                this.trackX = true;
+                this.mousemoveScrollbar(event, target, true);
+            }
+
+            if ( Dom.find(target).closest(this.scrollbarY.get(0)) ) {
+                this.trackY = true;
+                this.mousemoveScrollbar(event, target, true);
+            }
+        },
+
+        mouseupScrollbar(event)
+        {
+            this.trackX = this.trackY = false;
+        },
+
+        mousemoveScrollbar(event, target)
+        {
+            if ( Dom.find(target).closest(this.scrollbarY.get(0)) ) {
+                this.showScrollbarY();
+            }
+
+            if ( Dom.find(target).closest(this.scrollbarX.get(0)) ) {
+                this.showScrollbarX();
+            }
+
+            if ( this.trackX ) {
+
+                let parentWidth = Dom.find(this.$el).width() - this.scrollbarY.child().width() - 8;
+                let targetWidth = Dom.find(this.$el).child().width() - Dom.find(this.$el).width();
+
+                let positionX = (1 / parentWidth * (event.clientY - Dom.find(this.$el).offset('left') -
+                    (this.scrollbarY.child().width() / 2)) * targetWidth);
+
+                Dom.find(this.$el).scrollLeft(positionX);
+            }
+
+            if ( this.trackY ) {
+
+                let parentHeight = Dom.find(this.$el).height() - this.scrollbarY.child().height() - 8;
+                let targetHeight = Dom.find(this.$el).child().height() - Dom.find(this.$el).height();
+
+                let positionY = (1 / parentHeight * (event.clientY - Dom.find(this.$el).offset('top') -
+                    (this.scrollbarY.child().height() / 2)) * targetHeight);
+
+                Dom.find(this.$el).scrollTop(positionY);
+            }
+        },
+
         showScrollbarX()
         {
             clearTimeout(this.timeoutX);
@@ -92,16 +143,10 @@ export default {
 
     data()
     {
-        return { scrollX: 0, scollbarX: null, scollY: 0, scollbarY: null }
+        return { scrollX: 0, trackX: false, scollbarX: null, scollY: 0, trackY: false, scollbarY: null }
     },
 
     mounted()
-    {
-
-        Dom.find(this.$el).on('scroll', (event) => this.$emit('scroll', event));
-    },
-
-    mounted2()
     {
         let $parent = Dom.find(this.$el).parent();
 
@@ -112,14 +157,14 @@ export default {
 
         this.scrollbarX.addClass('n-render-scrollbar__x');
 
-        this.scrollbarX.on('mousemove', this.showScrollbarX);
-
         this.scrollbarY = Dom.make('div').append(Dom.make('div').el)
             .appendTo($parent.get(0));
 
         this.scrollbarY.addClass('n-render-scrollbar__y');
 
-        this.scrollbarY.on('mousemove', this.showScrollbarY);
+        Dom.find(document.body).on('mousedown', this.mousedownScrollbar, { _uid: this._uid });
+        Dom.find(document.body).on('mouseup', this.mouseupScrollbar, { _uid: this._uid });
+        Dom.find(document.body).on('mousemove', Any.throttle(this.mousemoveScrollbar, 5), { _uid: this._uid });
 
         this.$on('scroll', this.discoverScollbarHeight);
 
@@ -132,6 +177,13 @@ export default {
         };
 
         Dom.find(this.$el).observer(this.discoverScollbarHeight)(this.$el, options);
+    },
+
+    beforeDestroy()
+    {
+        Dom.find(document.body).off('mousedown', null, { _uid: this._uid });
+        Dom.find(document.body).off('mouseup', null, { _uid: this._uid });
+        Dom.find(document.body).off('mousemove', null, { _uid: this._uid });
     },
 
     render()
