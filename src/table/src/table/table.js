@@ -566,9 +566,9 @@ export default {
         this.h = h;
 
         let scopedSlots = {
-            default: (props) => {
-                return this.ctor('renderBodyRow')(props);
-            }
+            // default: (props) => {
+            //     return this.ctor('renderBodyRow')(props);
+            // }
         };
 
         let emptySlot = (
@@ -587,6 +587,7 @@ export default {
             removeNode: this.removeNode,
             allowDrag: this.allowDrag,
             allowDrop: this.allowDrop,
+            renderNode: this.ctor('renderBodyRow')
         };
 
         let events = {

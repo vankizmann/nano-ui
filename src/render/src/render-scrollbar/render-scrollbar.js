@@ -97,6 +97,12 @@ export default {
 
     mounted()
     {
+
+        Dom.find(this.$el).on('scroll', (event) => this.$emit('scroll', event));
+    },
+
+    mounted2()
+    {
         let $parent = Dom.find(this.$el).parent();
 
         $parent.addClass('n-render-scrollbar');

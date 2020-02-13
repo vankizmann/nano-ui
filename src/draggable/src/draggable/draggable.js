@@ -36,6 +36,13 @@ export default {
             }
         },
 
+        renderNode: {
+            default()
+            {
+                return null;
+            }
+        },
+
         use: {
             default()
             {
@@ -637,7 +644,7 @@ export default {
             this.$emit('move', sources.join(','), item[this.uniqueProp], this.move);
         },
 
-        renderNode(h, value, key)
+        renderRow(h, value, key)
         {
             let realKey = Arr.findIndex(this.items, {
                 _dragid: value._dragid
@@ -714,9 +721,23 @@ export default {
                 minHeight: this.itemHeight + 'px'
             };
 
+            let finalNode = null;
+
+            if ( Any.isNull(finalNode) ) {
+                finalNode = this.renderNode(props);
+            }
+
+            if ( Any.isNull(finalNode) ) {
+                finalNode = h(this.use, { key: value._dragid, props, on });
+            }
+
+            if ( Any.isNull(finalNode) ) {
+                finalNode = this.$scopedSlots.default(props);
+            }
+
             let defaultSlot = (
-                <div style={style} class={className} data-drag-id={value._dragid} selectable={selectable} draggable={draggable}>
-                    { this.use === null ? this.$scopedSlots.default(props) : h(this.use, { key: value._dragid, props, on }) }
+                <div key={value._dragid} style={style} class={className} data-drag-id={value._dragid} selectable={selectable} draggable={draggable}>
+                    { finalNode }
                 </div>
             );
 
@@ -829,7 +850,7 @@ export default {
         }
 
         let props = {
-            items: items, itemHeight: this.itemHeight, viewportHeight: this.viewportHeight, renderNode: this.renderNode
+            items: items, itemHeight: this.itemHeight, viewportHeight: this.viewportHeight, renderNode: this.renderRow
         };
 
         return (
