@@ -114,18 +114,18 @@ export default {
 
         this.scrollbarY.on('mousemove', this.showScrollbarY);
 
-        Dom.find(this.$el).on('scroll', (event) => {
+        Dom.find(this.$el).on('scroll', Any.throttle((event) => {
 
             this.discoverScollbarHeight();
 
             this.$emit('scroll', event)
-        });
+        }, 20));
 
         let options = {
             childList: true, subtree: true,
         };
 
-        Dom.find(this.$el).observer(Any.debounce(this.discoverScollbarHeight))(this.$el, options);
+        Dom.find(this.$el).observer(Any.debounce(this.discoverScollbarHeight, 20))(this.$el, options);
     },
 
     render()

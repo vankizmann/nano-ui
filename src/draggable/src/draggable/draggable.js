@@ -682,7 +682,9 @@ export default {
                     this.$emit('input', Arr.set(this.items, key, input));
                 },
                 remove: () => {
-                    this.$emit('input', Arr.removeIndex(this.items, key));
+                    this.$emit('input', Arr.removeIndex(this.items, {
+                        _dragid: value._dragid
+                    }));
                 },
                 clone: () => {
                     let clone = Obj.assign({}, value, { _dragid: UUID() });

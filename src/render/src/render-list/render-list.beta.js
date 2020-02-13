@@ -106,7 +106,6 @@ export default {
     {
         this.$watch('items', this.discoverHeight);
 
-        this.refreshDriver();
         this.discoverHeight();
     },
 
