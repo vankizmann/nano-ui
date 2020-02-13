@@ -48,24 +48,29 @@ export default {
 
             if ( this.trackX ) {
 
-                let parentWidth = Dom.find(this.$el).width() - this.scrollbarY.child().width() - 8;
+                let parentWidth = Dom.find(this.$el).width() - this.heightX - 8;
                 let targetWidth = Dom.find(this.$el).child().width() - Dom.find(this.$el).width();
 
-                let positionX = (1 / parentWidth * (event.clientY - Dom.find(this.$el).offset('left') -
-                    (this.scrollbarY.child().width() / 2)) * targetWidth);
+                let scrollX = event.clientX - Dom.find(this.$el).offset('left') -
+                    Dom.find(this.$el).parent().scroll('left');
 
-                Dom.find(this.$el).scrollLeft(positionX);
+
+                let offsetX = (1 / parentWidth * (scrollX - (this.heightX / 2)) * targetWidth);
+
+                Any.async(() => Dom.find(this.$el).scrollTop(offsetX));
             }
 
             if ( this.trackY ) {
 
-                let parentHeight = Dom.find(this.$el).height() - this.scrollbarY.child().height() - 8;
+                let parentHeight = Dom.find(this.$el).height() - this.heightY - 8;
                 let targetHeight = Dom.find(this.$el).child().height() - Dom.find(this.$el).height();
 
-                let positionY = (1 / parentHeight * (event.clientY - Dom.find(this.$el).offset('top') -
-                    (this.scrollbarY.child().height() / 2)) * targetHeight);
+                let scrollY = event.clientY - Dom.find(this.$el).offset('top') +
+                    Dom.find(this.$el).parent().scroll('top');
 
-                Dom.find(this.$el).scrollTop(positionY);
+                let offsetY = (1 / parentHeight * (scrollY - (this.heightY / 2)) * targetHeight);
+
+                Any.async(() => Dom.find(this.$el).scrollTop(offsetY));
             }
         },
 
@@ -110,11 +115,11 @@ export default {
             }
 
             let style = {
-                height: (ratio * parentHeight) - 8
+                height: this.heightY = (ratio * parentHeight) - 8
             };
 
             if ( style.height < 30 ) {
-                style.height = 30;
+                this.heightY = style.height = 30;
             }
 
             style.top = (100 / (targetHeight - parentHeight) * this.$el.scrollTop) /
@@ -124,7 +129,7 @@ export default {
                 return Any.isNumber(val) ? Num.fixed(val, 1) + 'px' : 0;
             });
 
-            this.scrollbarY.child().css(style);
+            Any.async(() => this.scrollbarY.child().css(style));
 
             if ( this.scrollY !== this.$el.scrollTop ) {
                 this.showScrollbarY();
