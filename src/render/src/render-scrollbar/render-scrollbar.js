@@ -42,7 +42,7 @@ export default {
 
         discoverScollbarHeight()
         {
-            let parentHeight = Dom.find(this.$el).height();
+            let parentHeight = Dom.find(this.$el).parent().height();
             let targetHeight = Dom.find(this.$el).child().height();
 
             if ( targetHeight < parentHeight ) {
