@@ -43,6 +43,9 @@ export default {
         discoverScollbarHeight()
         {
             let parentHeight = Dom.find(this.$el).parent().height();
+
+            Dom.find(this.$el).css({ height: parentHeight + 'px' });
+
             let targetHeight = Dom.find(this.$el).child().height();
 
             if ( targetHeight < parentHeight ) {
@@ -96,8 +99,6 @@ export default {
     {
         let parent = Dom.find(this.$el).parent();
 
-        Dom.find(this.$el).css({ height: parent.height() + 'px' });
-
         parent.addClass('n-render-scrollbar');
 
         this.scrollbarX = Dom.make('div').append(Dom.make('div').el)
@@ -114,12 +115,11 @@ export default {
 
         this.scrollbarY.on('mousemove', this.showScrollbarY);
 
-        Dom.find(this.$el).on('scroll', Any.throttle((event) => {
+        this.$on('scroll', this.discoverScollbarHeight);
 
-            this.discoverScollbarHeight();
+        Dom.find(this.$el).on('scroll', (event) => this.$emit('scroll', event));
 
-            this.$emit('scroll', event)
-        }, 20));
+        Dom.find(window).on('resize', Any.throttle(this.discoverScollbarHeight, 20));
 
         let options = {
             childList: true, subtree: true,
