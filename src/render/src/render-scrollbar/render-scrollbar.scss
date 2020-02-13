@@ -2,11 +2,15 @@
 
 .n-render-scrollbar {
     position: relative;
+}
+
+.n-render-scrollbar,
+.n-render-scrollbar > * {
     -ms-overflow-style: none;
 }
 
 .n-render-scrollbar::-webkit-scrollbar,
-.n-render-scrollbar::-webkit-scrollbar {
+.n-render-scrollbar > *::-webkit-scrollbar {
     width: 0;
     height: 0;
 }
