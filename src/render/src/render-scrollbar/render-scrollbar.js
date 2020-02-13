@@ -96,6 +96,8 @@ export default {
     {
         let parent = Dom.find(this.$el).parent();
 
+        Dom.find(this.$el).css({ height: parent.height() + 'px' });
+
         parent.addClass('n-render-scrollbar');
 
         this.scrollbarX = Dom.make('div').append(Dom.make('div').el)
