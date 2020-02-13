@@ -106,7 +106,7 @@ export default {
     {
         this.$watch('items', this.discoverHeight);
 
-        this.discoverHeight();
+        Dom.find(this.$el).observerResize(this.discoverHeight)(this.$el);
     },
 
     renderItems(start, count)

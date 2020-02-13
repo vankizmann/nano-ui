@@ -97,19 +97,19 @@ export default {
 
     mounted()
     {
-        let parent = Dom.find(this.$el).parent();
+        let $parent = Dom.find(this.$el).parent();
 
-        parent.addClass('n-render-scrollbar');
+        $parent.addClass('n-render-scrollbar');
 
         this.scrollbarX = Dom.make('div').append(Dom.make('div').el)
-            .appendTo(parent.get(0));
+            .appendTo($parent.get(0));
 
         this.scrollbarX.addClass('n-render-scrollbar__x');
 
         this.scrollbarX.on('mousemove', this.showScrollbarX);
 
         this.scrollbarY = Dom.make('div').append(Dom.make('div').el)
-            .appendTo(parent.get(0));
+            .appendTo($parent.get(0));
 
         this.scrollbarY.addClass('n-render-scrollbar__y');
 
@@ -119,13 +119,13 @@ export default {
 
         Dom.find(this.$el).on('scroll', (event) => this.$emit('scroll', event));
 
-        Dom.find(window).on('resize', Any.throttle(this.discoverScollbarHeight, 20));
+        // $parent.observerResize('resize', this.discoverScollbarHeight)($parent.get(0));
 
         let options = {
             childList: true, subtree: true,
         };
 
-        Dom.find(this.$el).observer(Any.debounce(this.discoverScollbarHeight, 20))(this.$el, options);
+        Dom.find(this.$el).observer(this.discoverScollbarHeight)(this.$el, options);
     },
 
     render()

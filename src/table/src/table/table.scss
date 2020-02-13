@@ -12,10 +12,6 @@ $table-row-height: 40px !default;
     border-right: 1px solid $--color-gray-10;
 }
 
-.n-table .n-draggable {
-    min-height: 100%;
-}
-
 .n-table .n-checkbox-group {
     display: inline-flex;
     min-width: 100%;
@@ -93,14 +89,23 @@ $table-row-height: 40px !default;
     z-index: 100;
     position: relative;
     flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
     min-width: 100%;
-    overflow-x: hidden;
-    overflow-y: hidden;
     margin-bottom: -1px;
+    min-height: 0;
 }
 
-.n-table.n-table--scroll .n-table__body {
-    overflow-y: auto;
+.n-table__body > .n-draggable {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.n-table__body > .n-draggable > div {
+    flex: 1 1 auto;
+    min-height: 0;
 }
 
 .n-table__body .n-table__row {
