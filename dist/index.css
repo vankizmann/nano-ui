@@ -121,85 +121,242 @@
 .n-render-list.n-render-list--y:hover > .n-render-list__scrollbar-y {
   opacity: 1; }
 
-.n-render-scrollbar {
-  position: relative; }
+/* Set these values before importing optiscroll.scss 
+ * to override the defaults
+ */
+/**************************************
+ *  Optiscroll container base style
+ */
+.optiscroll {
+  position: relative;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch; }
+  .optiscroll.is-enabled {
+    overflow: hidden; }
 
-.n-render-scrollbar,
-.n-render-scrollbar > * {
-  -ms-overflow-style: none; }
+.optiscroll.is-enabled > .optiscroll-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch; }
 
-.n-render-scrollbar::-webkit-scrollbar,
-.n-render-scrollbar > *::-webkit-scrollbar {
-  width: 0;
+/**************************************
+ *  Optiscroll scrollbars base style
+ */
+.optiscroll-v,
+.optiscroll-h {
+  position: absolute;
+  visibility: hidden;
+  z-index: 2;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
+
+.optiscroll-v {
+  right: 0; }
+
+.optiscroll-h {
+  bottom: 0; }
+
+.optiscroll.has-vtrack > .optiscroll-v,
+.optiscroll.has-htrack > .optiscroll-h {
+  visibility: visible; }
+
+.optiscroll.is-rtl > .optiscroll-v {
+  left: 0;
+  right: auto; }
+
+/**************************************
+ *  Optiscroll tracks base style
+ */
+.optiscroll-vtrack,
+.optiscroll-htrack {
+  display: block;
+  position: absolute;
+  opacity: 1;
+  transform: translate(0%, 0%);
+  transition: height 0.2s ease 0s, width 0.2s ease 0s, opacity 0.2s ease 0s;
+  box-sizing: border-box; }
+
+/**************************************
+ *  Prevent parent scroll
+ *  even when content is not longer enough.
+ */
+/**************************************
+ *  DEFAULT STYLE
+ **************************************/
+/***
+   ***  Scrollbars style  ***/
+.optiscroll-v {
+  top: 4px;
+  bottom: 4px;
+  width: 0; }
+
+.optiscroll-h {
+  left: 4px;
+  right: 4px;
   height: 0; }
 
-.n-render-scrollbar > .n-render-scrollbar__x {
-  z-index: 10;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 8px;
-  background: rgba(27, 34, 41, 0.15);
-  opacity: 0;
-  transition: opacity 0.15s; }
+/* Avoid overapping while both scrollbars are enabled */
+.optiscroll.has-vtrack.has-htrack > .optiscroll-v {
+  bottom: 8px; }
 
-.n-render-scrollbar > .n-render-scrollbar__x.visible {
+.optiscroll.has-vtrack.has-htrack > .optiscroll-h {
+  right: 8px; }
+
+/***
+   ***  Tracks style  ***/
+.optiscroll-vtrack,
+.optiscroll-htrack {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+  box-shadow: 0 0 1px #FFF;
+  opacity: 0; }
+
+.optiscroll-vtrack {
+  width: 3px;
+  right: 4px; }
+
+.optiscroll-htrack {
+  height: 3px;
+  bottom: 4px; }
+
+.optiscroll:hover > .optiscroll-v .optiscroll-vtrack,
+.optiscroll:hover > .optiscroll-h .optiscroll-htrack {
   opacity: 1; }
 
-.n-render-scrollbar > .n-render-scrollbar__x div {
-  z-index: 10;
+.optiscroll.has-vtrack.has-htrack.is-rtl > .optiscroll-h {
+  right: 4px;
+  left: 8px; }
+
+.optiscroll.is-rtl > .optiscroll-v .optiscroll-vtrack {
+  right: auto;
+  left: 4px; }
+
+.n-scrollbar {
+  position: relative;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch; }
+
+.n-scrollbar.is-enabled {
+  overflow: hidden; }
+
+.n-scrollbar.is-enabled > .n-scrollbar-content {
   position: absolute;
+  top: 0;
   left: 0;
+  right: 0;
   bottom: 0;
-  width: 0;
-  height: 8px;
-  background: rgba(27, 34, 41, 0.3);
-  border-radius: 500px; }
+  z-index: 1;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch; }
 
-.n-render-scrollbar > .n-render-scrollbar__y {
-  z-index: 10;
+/**************************************
+ *  Optiscroll scrollbars base style
+ */
+.n-scrollbar-v,
+.n-scrollbar-h {
   position: absolute;
+  visibility: hidden;
+  z-index: 2;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
+
+.n-scrollbar-v {
+  right: 0; }
+
+.n-scrollbar-h {
+  bottom: 0; }
+
+.n-scrollbar.has-vtrack > .n-scrollbar-v,
+.n-scrollbar.has-htrack > .n-scrollbar-h {
+  visibility: visible; }
+
+/**************************************
+ *  Optiscroll tracks base style
+ */
+.n-scrollbar-vtrack,
+.n-scrollbar-htrack {
+  display: block;
+  position: absolute;
+  transform: translate(0%, 0%);
+  transition: transform 100ms ease;
+  box-sizing: border-box; }
+
+/**************************************
+ *  Prevent parent scroll
+ *  even when content is not longer enough.
+ */
+/**************************************
+ *  DEFAULT STYLE
+ **************************************/
+/***
+ ***  Scrollbars style  ***/
+.n-scrollbar-v {
   top: 0;
+  bottom: 0;
+  width: 6px;
+  height: 100%; }
+
+.n-scrollbar-h {
+  left: 0;
   right: 0;
-  width: 8px;
-  height: 100%;
-  background: rgba(27, 34, 41, 0.15);
+  height: 6px; }
+
+.n-scrollbar > .n-scrollbar-v,
+.n-scrollbar > .n-scrollbar-h {
   opacity: 0;
-  transition: opacity 0.15s 1s; }
+  transition: opacity 200ms;
+  background: rgba(27, 34, 41, 0.15); }
 
-.n-render-scrollbar > .n-render-scrollbar__y.visible {
-  opacity: 1;
-  transition: opacity 0.15s; }
+.n-inverse .n-scrollbar > .n-scrollbar-v,
+.n-inverse .n-scrollbar > .n-scrollbar-h {
+  background: rgba(255, 255, 255, 0.15); }
 
-.n-render-scrollbar > .n-render-scrollbar__y div {
-  z-index: 10;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 8px;
-  height: 0;
+.n-scrollbar:hover > .n-scrollbar-v,
+.n-scrollbar:hover > .n-scrollbar-h {
+  opacity: 1; }
+
+/* Avoid overapping while both scrollbars are enabled */
+.n-scrollbar.has-vtrack.has-htrack > .n-scrollbar-v {
+  bottom: 8px; }
+
+.n-scrollbar.has-vtrack.has-htrack > .n-scrollbar-h {
+  right: 8px; }
+
+/***
+ ***  Tracks style  ***/
+.n-scrollbar-vtrack,
+.n-scrollbar-htrack {
   background: rgba(27, 34, 41, 0.3); }
+
+.n-inverse .n-scrollbar-vtrack,
+.n-inverse .n-scrollbar-htrack {
+  background: rgba(255, 255, 255, 0.3); }
+
+.n-scrollbar-vtrack {
+  width: 6px;
+  right: 0; }
+
+.n-scrollbar-htrack {
+  height: 6px;
+  bottom: 0; }
 
 .n-draggable {
   position: relative;
   display: flex;
-  flex-direction: column; }
-
-.n-draggable__item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 34px; }
+  flex-direction: column;
+  padding: 8px 0; }
 
 .n-draggable__item:hover {
   background: #f8fafb; }
-
-.n-inverse .n-draggable__item:hover {
-  background: #3d4349; }
-
-.n-draggable__item.n-draggable--dragover {
-  background: rgba(40, 119, 250, 0.15); }
 
 .n-draggable__empty {
   flex: 1 1 auto;
@@ -217,30 +374,56 @@
 .n-draggable.n-draggable--dragover > .n-draggable__empty {
   background: rgba(10, 163, 235, 0.15); }
 
-.n-draggable__placeholder {
-  z-index: 99999;
-  position: absolute;
-  top: -99999px;
-  left: -99999px;
-  border-radius: 500px;
-  background: #2877FA; }
-
-.n-draggable__placeholder span {
-  display: inline-block;
-  padding: 5px 12px;
-  color: #ffffff;
-  font-size: 13px;
-  white-space: nowrap; }
-
 .n-draggable__indicator {
   z-index: 99999;
   position: absolute;
-  top: -99999px;
+  top: -9999px;
   left: 0;
+  display: block;
   width: 100%;
   height: 1px;
   margin-top: -1px;
   background: #2877FA; }
+
+.n-draggable__counter {
+  z-index: 99999;
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  display: inline-block;
+  margin: 2px 10px;
+  padding: 4px 12px;
+  border-radius: 500px;
+  color: #ffffff;
+  background: #2877FA; }
+
+/**
+ * Fix flickering by set transition delay
+ */
+.n-draggable-item {
+  transition: background 0ms 100ms; }
+
+.n-dragged .n-draggable-item.n-selected {
+  opacity: 0.5; }
+
+.n-draggable-item.n-dragover {
+  background: rgba(40, 119, 250, 0.1);
+  transition: background 0ms; }
+
+.n-draggable-item.n-nodrop {
+  background: rgba(253, 47, 81, 0.1);
+  transition: background 0ms; }
+
+.n-draggable-item .n-draggable-item__collapse > div {
+  cursor: pointer;
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center; }
+
+.n-draggable-item:not(.n-collapsed) .n-draggable-item__collapse > div {
+  transform: rotate(90deg); }
 
 .n-draggable-tree .n-draggable-tree {
   margin-left: 24px; }

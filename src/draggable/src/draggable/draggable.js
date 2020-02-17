@@ -723,11 +723,11 @@ export default {
 
             let finalNode = null;
 
-            if ( Any.isNull(finalNode) ) {
+            if ( Any.isNull(finalNode) && ! Any.isNull(this.renderNode) ) {
                 finalNode = this.renderNode(props);
             }
 
-            if ( Any.isNull(finalNode) ) {
+            if ( Any.isNull(finalNode) && ! Any.isNull(this.use) ) {
                 finalNode = h(this.use, { key: value._dragid, props, on });
             }
 

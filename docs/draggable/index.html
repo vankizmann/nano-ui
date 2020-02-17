@@ -6,13 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Nano UI Draggable</title>
 
-    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="http://localhost/backpack.css">
+    <link rel="stylesheet" href="../../fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../../dist/index.css">
     <link rel="stylesheet" href="../style.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
-    <script src="https://vankizmann.github.io/nano-js/dist/nano-js.js"></script>
+    <script src="http://localhost/vue.min.js"></script>
+    <script src="http://nano-js.local/dist/nano-js.js"></script>
     <script src="../../dist/index.js"></script>
 
 </head>
@@ -26,12 +26,17 @@
         </n-form-item>
 
         <n-form-item label="List">
-            <n-draggable :items="form.value" unique-prop="id">
-                <div slot-scope="props">{{ props.value.label }}</div>
-            </n-draggable>
-        </n-form-item>
+            <div style="display: block; border: 2px solid #000;">
+                <div>
+                    <n-draggable style="height: 500px; overflow: hidden;" :items="form.value" :viewport-height="true" :render-collapse="true" :render-select="true">
+                        <div slot-scope="props" style="position: relative">
+                            <n-input size="small" v-model="props.value.label" />
+                        </div>
+                    </n-draggable>
+                </div>
+            </div>
 
-        <n-form-item label="Tree">
+        <n-form-item v-if="false" label="Tree">
             <n-draggable-tree :items="form.value" unique-prop="id" :cascade.sync="form.cascade">
                 <div slot-scope="props">{{ props.value.label }}</div>
             </n-draggable-tree>
@@ -61,16 +66,14 @@
                         }
 
                         if ( depth === undefined ) {
-                            depth = 3;
+                            depth = 2;
                         }
 
                         if ( current === undefined ) {
                             current = 1;
                         }
 
-                        let children = Array(
-                            Math.floor((Math.random() * count)  + 2)
-                        ).fill(null);
+                        let children = Array(count).fill(null);
 
                         Nano.Arr.map(children, function (item) {
 
@@ -93,7 +96,7 @@
                     };
 
                     var form = {
-                        value: childGenerator(), cascade: []
+                        value: childGenerator(170, 2)
                     };
 
                     return { form: form, inverse: false };

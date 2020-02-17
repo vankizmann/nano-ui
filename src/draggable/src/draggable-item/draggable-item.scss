@@ -1,0 +1,36 @@
+@import "../../../root/vars";
+
+/**
+ * Fix flickering by set transition delay
+ */
+
+.n-draggable-item {
+    transition: background 0ms 100ms;
+}
+
+.n-dragged .n-draggable-item.n-selected {
+    opacity: 0.5;
+}
+
+.n-draggable-item.n-dragover {
+    background: rgba($color-primary, 0.1);
+    transition: background 0ms;
+}
+
+.n-draggable-item.n-nodrop {
+    background: rgba($color-danger, 0.1);
+    transition: background 0ms;
+}
+
+.n-draggable-item .n-draggable-item__collapse > div {
+    cursor: pointer;
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-draggable-item:not(.n-collapsed) .n-draggable-item__collapse > div {
+    transform: rotate(90deg);
+}

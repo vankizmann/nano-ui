@@ -43,10 +43,21 @@ export default {
 
     methods: {
 
+        bindScroller()
+        {
+            if ( ! Obj.has(this.$refs, 'viewport.$el') ) {
+                return Any.delay(this.bindScroller);
+            }
+
+            this.$refs.viewport.$on('scroll', this.refreshDriver);
+        },
+
         refreshDriver()
         {
+            console.log('pe');
+
             if ( ! this.$refs.viewport ) {
-                return Any.delay(this.refreshDriver);
+                return;
             }
 
             let scrollTop = 0;
@@ -62,7 +73,15 @@ export default {
                 scrollTop: scrollTop,
             };
 
-            this.state = virtualScrollDriver(options, this.state, () => this.itemHeight);
+            let newState = virtualScrollDriver(options, this.state, () => this.itemHeight);
+
+            if ( Any.isEqual(newState, this.state) ) {
+                return;
+            }
+
+            console.log(newState, this.state);
+
+            this.state = newState;
         },
 
         discoverHeight()
@@ -79,7 +98,7 @@ export default {
                 return Any.delay(this.discoverHeight, 100);
             }
 
-            this.refreshDriver();
+            Any.async(this.refreshDriver);
         }
 
     },
@@ -105,6 +124,8 @@ export default {
     mounted()
     {
         this.$watch('items', this.discoverHeight);
+
+        this.bindScroller();
 
         Dom.find(this.$el).observerResize(this.discoverHeight)(this.$el);
     },
@@ -151,7 +172,7 @@ export default {
         return (
             <div class="n-render-list">
                 { ! Any.isEmpty(this.state) &&
-                    <NRenderScrollbar ref="viewport" style={style} onScroll={() => this.refreshDriver()}>
+                    <NRenderScrollbar ref="viewport" style={style}>
                         <div style={{ height: targetHeight ? targetHeight + 'px' : 'auto' }}>
                             { ! Any.isEmpty(this.state.topPlaceholderHeight) &&
                                 <div draggable={false} style={{ height: this.state.topPlaceholderHeight + 'px' }}></div>

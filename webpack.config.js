@@ -17,7 +17,8 @@ let jsExtExport = {
             {
                 test: /.js$/,
                 include: [
-                    path.resolve(__dirname, './src')
+                    path.resolve(__dirname, './src'),
+                    path.resolve(__dirname, './node_modules/dynamic-virtual-scroll')
                 ],
                 loader: 'babel-loader',
                 options: {
@@ -39,6 +40,7 @@ let jsExtExport = {
 let jsWinExport = {
     mode: "development",
     entry: ["@babel/polyfill/noConflict", "./src/index.js"],
+    devtool: 'source-map',
     output: {
         filename: "index.js",
         path: path.resolve(__dirname, "dist"),
@@ -50,7 +52,8 @@ let jsWinExport = {
             {
                 test: /.js$/,
                 include: [
-                    path.resolve(__dirname, './src')
+                    path.resolve(__dirname, './src'),
+                    path.resolve(__dirname, './node_modules/dynamic-virtual-scroll')
                 ],
                 loader: 'babel-loader',
                 options: {

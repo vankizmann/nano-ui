@@ -2,9 +2,25 @@ export default {
 
     name: 'NRenderDiv',
 
+    props: {
+
+        value: {
+            default()
+            {
+                return {};
+            },
+            type: [Object]
+        }
+
+    },
+
     render(h)
     {
-        return h('div', { attrs: this.$attrs }, this.$slots.default);
+        return (
+            <div>
+                <NInput size="smalls" vModel={this.value.label} />
+            </div>
+        );
     }
 
 }

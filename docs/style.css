@@ -27,6 +27,10 @@ pre {
     font-family: 'Fira Code', monospace;
 }
 
+.n-inverse {
+    color: #fff;
+}
+
 .n-inverse pre {
     color: #fff;
 }
