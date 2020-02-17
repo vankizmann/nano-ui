@@ -3,7 +3,7 @@ import Optiscroll from 'optiscroll';
 
 export default {
 
-    name: 'NRenderScrollbar',
+    name: 'NScrollbar',
 
     props: {
 

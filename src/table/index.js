@@ -1,6 +1,6 @@
 import Vue from "vue";
 
-import Table from './src/table/table';
+import Table from './src/table/table.beta';
 Vue.component(Table.name, Table);
 
 import TableColumn from './src/table-column/table-column';

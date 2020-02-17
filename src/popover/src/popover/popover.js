@@ -1,4 +1,5 @@
-import { Obj, Any, Dom } from "nano-js";
+import { Obj, Any, Dom, UUID } from "nano-js";
+
 
 export default {
 
@@ -44,8 +45,16 @@ export default {
         boundry: {
             default()
             {
-                return window;
+                return null;
             },
+        },
+
+        window: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
         },
 
         trigger: {
@@ -67,7 +76,8 @@ export default {
         position: {
             default()
             {
-                return 'bottom-center';
+                return this.trigger === 'context' ?
+                    'bottom-start' : 'bottom-center';
             },
             type: [String]
         },
@@ -75,28 +85,10 @@ export default {
         closeInside: {
             default()
             {
-                return true;
+                return false;
             },
             type: [Boolean]
-        }
-
-    },
-
-    computed: {
-
-        parent()
-        {
-            return this.node.parentNode;
         },
-
-        element()
-        {
-            if ( this.selector === null ) {
-                return Dom.find(this.node).previous().get(0);
-            }
-
-            return Dom.find(this.node).parent().find(this.selector).get(0);
-        }
 
     },
 
@@ -104,25 +96,21 @@ export default {
 
         visible()
         {
-            if ( ! Any.isEqual(this.nativeVisible, this.visible) ) {
-                this.nativeVisible = this.visible;
+            if ( ! Any.isEqual(this.veVisible, this.visible) ) {
+                this.veVisible = this.visible;
             }
         },
 
-        nativeVisible()
+        veVisible()
         {
-            if ( this.nativeVisible === true ) {
-
-                Any.delay(() => {
-                    Dom.find(this.node).addClass('n-popover--open');
-                });
-
-                Dom.find(this.element).addClass('n-popover--open');
+            if ( this.veVisible === true ) {
+                Dom.find(this.$el).addClass('n-popover--open');
+                Dom.find(this.target).addClass('n-popover--open');
             }
 
-            if ( this.nativeVisible === false ) {
-                Dom.find(this.node).removeClass('n-popover--open');
-                Dom.find(this.element).removeClass('n-popover--open');
+            if ( this.veVisible === false ) {
+                Dom.find(this.$el).removeClass('n-popover--open');
+                Dom.find(this.target).removeClass('n-popover--open');
             }
 
             this.refresh();
@@ -134,48 +122,53 @@ export default {
 
         close()
         {
-            this.$emit('input', this.nativeVisible = false);
+            this.$emit('input', this.veVisible = false);
         },
 
         refresh()
         {
             let style = {};
 
-            if ( this.node === null ) {
+            if ( this.$el === null ) {
                 return { display: 'none' };
             }
 
-            let clientX = Dom.find(this.element).offsetLeft(window) -
-                Dom.find(this.parent).scrollLeft(null);
+            let clientX = Dom.find(this.target).offset('left', this.parent);
 
-
-            if ( this.trigger === 'context' ) {
-                clientX = this.clientX;
+            if ( this.trigger !== 'context' ) {
+                clientX -= Dom.find(this.target).scroll('left', this.parent);
             }
 
-            let clientY = Dom.find(this.element).offsetTop(window) -
-                Dom.find(this.parent).scrollTop(null);
+            if ( this.trigger === 'context' ) {
+                clientX = this.clientX - Dom.find(this.parent).offset('left');
+            }
+
+            let clientY = Dom.find(this.target).offset('top', this.parent);
+
+            if ( this.trigger !== 'context' ) {
+                clientY -= Dom.find(this.target).scroll('top', this.parent);
+            }
 
             if ( this.trigger === 'context' ) {
-                clientY = this.clientY;
+                clientY = this.clientY - Dom.find(this.parent).offset('top');
             }
 
             let height = this.trigger === 'context' ?
-                0 : Dom.find(this.element).height();
+                0 : Dom.find(this.target).height();
 
             let width = this.trigger === 'context' ?
-                0 : Dom.find(this.element).width();
+                0 : Dom.find(this.target).width();
 
             let reset = {
-                'max-width': (this.width || width) + 'px'
+                'max-width': this.width ? (this.width + 'px') : 'auto'
             };
 
             if ( this.width ) {
                 reset.width = this.width + 'px';
             }
 
-            let nodeWidth = Dom.find(this.node).realWidth(reset);
-            let nodeHeight = Dom.find(this.node).realHeight(reset);
+            let nodeWidth = Dom.find(this.$el).realWidth(reset);
+            let nodeHeight = Dom.find(this.$el).realHeight(reset);
 
             if ( this.position.match(/^top-(start|center|end)$/) ) {
                 style.top = clientY - nodeHeight;
@@ -217,192 +210,238 @@ export default {
                 style.top = clientY + (height / 2) - (nodeHeight / 2);
             }
 
-            let pseudo = Obj.map(Obj.clone(style), (prop) => prop + 'px');
+            let parentWidth = Dom.find(this.parent).width();
+            let parentHeight = Dom.find(this.parent).height();
 
-            Dom.find(this.node).actual((el) => {
+            // Get target offsets to adjust padding or margin
+            let offset = Dom.find(this.target).offset(null, this.parent);
 
-                let offsetTop = Dom.find(this.boundry).offsetTop(window);
 
-                if ( offsetTop > style.top ) {
-                    pseudo.top = (style.top - (style.top - offsetTop)) + 'px';
+            if ( this.trigger === 'context' ) {
+
+                if ( style.left < 0 ) {
+                    style.left = 0;
                 }
 
-                let boundryHeight = Dom.find(this.boundry).height();
-
-                if ( style.top + nodeHeight > boundryHeight + offsetTop ) {
-                    pseudo.top = (boundryHeight + offsetTop - nodeHeight) + 'px';
+                if ( style.left + nodeWidth > parentWidth ) {
+                    style.left = parentWidth - nodeWidth;
                 }
 
-                let offsetLeft = Dom.find(this.boundry).offsetLeft(window);
-
-                if ( offsetLeft > style.left ) {
-                    pseudo.left = (style.left - (style.left - offsetLeft)) + 'px';
+                if ( style.top < 0 ) {
+                    style.top = 0;
                 }
 
-                let boundryWidth = Dom.find(this.boundry).width();
-
-                if ( style.left + nodeWidth > boundryWidth + offsetLeft ) {
-                    pseudo.left = (boundryWidth + offsetLeft - nodeWidth) + 'px';
+                if ( style.top + nodeHeight > parentHeight ) {
+                    style.top = parentHeight - nodeHeight;
                 }
 
-            }, pseudo);
-
-            if ( this.trigger !== 'context' ) {
-                pseudo['max-width'] = (this.width || width) + 'px';
             }
 
-            if ( this.nativeVisible === false && this.visible === false ) {
+            if ( this.trigger !== 'context' && this.position.match(/^(top|bottom)-(start|center|end)$/) ) {
+
+                if ( style.left < 0 ) {
+                    style.left = 0;
+                }
+
+                if ( style.left > parentWidth ) {
+                    style.left = parentWidth - nodeWidth;
+                }
+
+                if ( style.top + nodeHeight > parentHeight ) {
+                    style.top = parentHeight - height - nodeHeight - offset.bottom;
+                }
+
+                if ( style.top - nodeHeight < 0 ) {
+                    style.top = height + offset.top;
+                }
+
+            }
+
+            if ( this.trigger !== 'context' && this.position.match(/^(left|right)-(start|center|end)$/) ) {
+
+                if ( style.top < 0 ) {
+                    style.top = 0;
+                }
+
+                if ( style.top > parentHeight ) {
+                    style.top = parentHeight - nodeHeight;
+                }
+
+                if ( style.left + nodeWidth > parentWidth ) {
+                    style.left = parentWidth - width - nodeWidth - offset.right;
+                }
+
+                if ( style.left - nodeWidth < 0 ) {
+                    style.left = width + offset.left;
+                }
+
+            }
+
+            let pseudo = Obj.map(Obj.clone(style), (prop) => prop + 'px');
+
+            if ( this.trigger !== 'context' ) {
+                pseudo['max-width'] = this.width ? (this.width + 'px') : 'auto';
+            }
+
+            if ( ! this.veVisible && ! this.visible ) {
                 pseudo.display = 'none';
             }
 
             return this.style = pseudo;
         },
 
-        clickTrigger(event, target)
+        eventMousemove(event, el)
         {
-            if ( ! Dom.find(target).inside(this.parent) && this.nativeVisible === false ) {
+            if ( this.disabled ) {
                 return;
             }
 
-            if ( this.trigger !== 'click' || this.disabled === true || event.which !== 1 ) {
+            let target = Dom.find(el).closest(this.target),
+                source = Dom.find(el).closest(this.$el);
+
+            let result = !! target || !! source;
+
+            if ( this.veVisible === result ) {
                 return;
             }
 
-            let final = Dom.find(target).closest(this.element),
-                popover = Dom.find(target).closest(this.node);
-
-            let visible = popover !== null ||
-                (final !== null && this.nativeVisible === false);
-
-            if ( visible === true && final !== null && event.which !== 1 ) {
-                visible = false;
-            }
-
-            if ( this.closeInside === false && final !== null ) {
-                visible = true;
-            }
-
-            if ( visible === true && this.nativeVisible === true ) {
-                return;
-            }
-
-            if ( visible === false && this.nativeVisible === false ) {
-                return;
-            }
-
-            this.$emit('input', this.nativeVisible = visible);
+            this.$emit('input', this.veVisible = result);
         },
 
-        hoverTrigger(event, target)
+        eventMouseup(event, el)
         {
-            if ( ! Dom.find(target).inside(this.parent) && this.nativeVisible === false ) {
+            if ( this.disabled || this.veVisible ) {
                 return;
             }
 
-            if ( this.trigger !== 'hover' || this.disabled === true ) {
+            if ( event.which !== 1 ) {
                 return;
             }
 
-            let final = Dom.find(target).closest(this.element),
-                popover = Dom.find(target).closest(this.node);
+            let target = Dom.find(el).closest(this.target),
+                source = Dom.find(el).closest(this.$el);
 
+            let result = !! target || !! source;
 
-            let visible = final !== null || popover !== null;
-
-            if ( visible === true && this.nativeVisible === true ) {
+            if ( this.veVisible === result ) {
                 return;
             }
 
-            if ( visible === false && this.nativeVisible === false ) {
-                return;
+            if ( ! this.closeInside && !! source ) {
+                result = true;
             }
 
-            this.$emit('input', this.nativeVisible = visible);
+            this.$emit('input', this.veVisible = result);
         },
 
-        contextTrigger(event, target)
+        eventContextmenu(event, el)
         {
-            if ( ! Dom.find(target).inside(this.parent) && this.nativeVisible === false ) {
+            if ( this.disabled || this.veVisible ) {
                 return;
             }
 
-            if ( this.trigger !== 'context' || this.disabled === true ) {
+            if ( event.which !== 3 ) {
                 return;
             }
 
-            let final = Dom.find(target).closest(this.element),
-                popover = Dom.find(target).closest(this.node);
+            let target = Dom.find(el).closest(this.target),
+                source = Dom.find(el).closest(this.$el);
 
-            let visible = popover !== null ||
-                (final !== null && this.nativeVisible === false);
+            let result = !! target || !! source;
 
-            if ( visible === true && final !== null && event.which !== 3 ) {
-                visible = false;
+            if ( result ) {
+                event.preventDefault();
             }
 
-            if ( this.closeInside === false && final !== null ) {
-                visible = true;
-            }
-
-            if ( visible === true && this.nativeVisible === true ) {
+            if ( this.veVisible === result ) {
                 return;
             }
 
-            if ( visible === false && this.nativeVisible === false ) {
-                return;
-            }
+            this.$emit('input', this.veVisible = result);
+        },
 
+        eventMousedown(event, el)
+        {
             this.clientX = event.clientX;
             this.clientY = event.clientY;
 
-            this.$emit('input', this.nativeVisible = visible);
-        },
-
-        contextPrevent(event, target)
-        {
-            if ( this.trigger !== 'context' ) {
+            if ( ! this.veVisible ) {
                 return;
             }
 
-            if ( Dom.find(target).closest(this.node) ) {
-                event.preventDefault();
+            let target = Dom.find(el).closest(this.target),
+                source = Dom.find(el).closest(this.$el);
+
+            let result = !! target || !! source;
+
+            if ( ! this.closeInside && result ) {
+                return;
             }
 
-            if ( Dom.find(target).closest(this.element) ) {
-                event.preventDefault();
-            }
+            event.preventDefault();
+            event.stopPropagation();
+
+            this.$emit('input', this.veVisible = false);
         }
 
     },
 
     data()
     {
-        return {
-            style: { display: 'none' }, node: null, nativeVisible: this.visible, clientX: 0, clientY: 0
+        let options = {
+            veVisible: this.visible, clientX: 0, clientY: 0, target: null, parent: null
         };
+
+        options.style = {
+            display: 'none'
+        };
+
+        return options;
+    },
+
+    created()
+    {
+        this._uuid = UUID();
     },
 
     mounted()
     {
-        if ( this.trigger === 'click' ) {
-            Dom.find(document).on('mousedown',
-                Any.throttle(this.clickTrigger, 80), { _uid: this._uid });
-        }
 
         if ( this.trigger === 'hover' ) {
-            Dom.find(document).on('mousemove',
-                Any.debounce(this.hoverTrigger, 80), { _uid: this._uid });
+            Dom.find(document).on('mousemove', Any.debounce(this.eventMousemove), { _uid: this._uid });
+        }
+
+        if ( this.trigger === 'click' ) {
+            Dom.find(document).on('mousedown', this.eventMousedown, { _uid: this._uid });
+            Dom.find(document).on('click', this.eventMouseup, { _uid: this._uid });
         }
 
         if ( this.trigger === 'context' ) {
-            Dom.find(document).on('mousedown',
-                Any.throttle(this.contextTrigger, 80), { _uid: this._uid });
-
-            Dom.find(document).on('contextmenu',
-                Any.throttle(this.contextPrevent, 80), { _uid: this._uid });
+            Dom.find(document).on('contextmenu', this.eventContextmenu, { _uid: this._uid });
+            Dom.find(document).on('mousedown', this.eventMousedown, { _uid: this._uid });
         }
 
-        this.node = this.$el;
+        this.target = Dom.find(this.$el).previous().get(0);
+
+        if ( ! Any.isEmpty(this.selector) ) {
+            this.target = Dom.find(this.$el).parent().find(this.selector).get(0);
+        }
+
+        this.parent = null;
+
+        if ( Any.isEmpty(this.boundry) ) {
+            this.parent = Dom.find(this.boundry).get(0);
+        }
+
+        if ( this.window ) {
+            this.parent = document.body;
+        }
+
+        if ( this.parent ) {
+            return Dom.find(this.parent).append(this.$el);
+        }
+
+        this.parent = Dom.find(this.target).parent().get(0);
     },
 
     beforeDestroy()
@@ -415,12 +454,15 @@ export default {
 
         Dom.find(document).off('contextmenu',
             null, { _uid: this._uid });
+
+        this.$el.remove();
     },
 
     render()
     {
         let className = [
             'n-popover',
+            'n-popover--beta',
             'n-popover--' + this.type,
             'n-popover--' + this.position
         ];

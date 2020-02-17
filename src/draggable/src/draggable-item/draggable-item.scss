@@ -22,11 +22,12 @@
     transition: background 0ms;
 }
 
-.n-draggable-item .n-draggable-item__collapse > div {
+.n-draggable-item .n-draggable-item__collapse > div,
+.n-draggable-item .n-draggable-item__select > div{
     cursor: pointer;
     display: inline-flex;
     width: 20px;
-    height: 20px;
+    height: 34px;
     align-items: center;
     justify-content: center;
 }

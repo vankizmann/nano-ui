@@ -1,4 +1,4 @@
-import { UUID, Num, Arr, Obj, Dom, Any, Event } from "nano-js";
+import { UUID, Num, Arr, Obj, Dom, Any, Event, Locale } from "nano-js";
 
 export default {
 
@@ -43,40 +43,11 @@ export default {
             }
         },
 
-        use: {
-            default()
-            {
-                return null;
-            }
-        },
-
-        useBefore: {
-            default()
-            {
-                return null;
-            }
-        },
-
-        useAfter: {
-            default()
-            {
-                return null;
-            }
-        },
-
         selected: {
             default()
             {
-                return null;
+                return [];
             }
-        },
-
-        depth: {
-            default()
-            {
-                return 0;
-            },
-            type: [Number]
         },
 
         group: {
@@ -98,7 +69,8 @@ export default {
             default()
             {
                 return true;
-            }
+            },
+            type: [Boolean]
         },
 
         itemHeight: {
@@ -116,6 +88,22 @@ export default {
             }
         },
 
+        keyProp: {
+            default()
+            {
+                return 'md5';
+            },
+            type: [String]
+        },
+
+        orderProp: {
+            default()
+            {
+                return 'order';
+            },
+            type: [String]
+        },
+
         uniqueProp: {
             default()
             {
@@ -124,11 +112,52 @@ export default {
             type: [String]
         },
 
+        depthProp: {
+            default()
+            {
+                return 'depth';
+            },
+            type: [String]
+        },
+
+        pathProp: {
+            default()
+            {
+                return 'path';
+            },
+            type: [String]
+        },
+
+        indexProp: {
+            default()
+            {
+                return 'index';
+            },
+            type: [String]
+        },
+
         childProp: {
             default()
             {
-                return null;
-            }
+                return 'children';
+            },
+            type: [String]
+        },
+
+        renderSelect: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
+        renderCollapse: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
         },
 
         transformDrop: {
@@ -136,6 +165,14 @@ export default {
             {
                 return (item) => item;
             }
+        },
+
+        disableMove: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
         },
 
         insertNode: {
@@ -173,582 +210,28 @@ export default {
             }
         },
 
-        className: {
+        bufferItems: {
             default()
             {
-                return ['n-draggable'];
-            }
+                return 8;
+            },
+            type: [Number]
+        },
+
+        updateDelay: {
+            default()
+            {
+                return 0;
+            },
+            type: [Number]
         }
 
-    },
-
-    methods: {
-
-        draggableStart(cache, group)
-        {
-            if ( Arr.intersect(group, this.group).length === 0 ) {
-                return;
-            }
-
-            this.cache = cache;
-        },
-
-        draggableEnd(group)
-        {
-            if ( Arr.intersect(group, this.group).length === 0 ) {
-                return;
-            }
-
-            let selected = this.selected || this.nativeSelected;
-
-            if ( this.self.length === 0 ) {
-                return;
-            }
-
-            let items = this.items;
-
-            Arr.each(selected, (item) => {
-
-                let removeNode = typeof this.removeNode === 'function' ?
-                    this.removeNode : () => this.removeNode;
-
-                if ( ! removeNode(item) ) {
-                    return;
-                }
-
-                items = Arr.remove(items, { _dragid: item._dragid });
-            });
-
-            this.$emit('update:selected', this.nativeSelected =
-                this.cache = this.self =  []);
-
-            this.$emit('input', items);
-        },
-
-        draggableAbort()
-        {
-            this.cache = this.self = this.nativeSelected = [];
-        },
-
-        docDragOver(event)
-        {
-            event.preventDefault();
-
-            let target = Dom.location(this.clientX = event.clientX,
-                this.clientY = event.clientY).get(0);
-
-            if ( Dom.find(target).inside(this.$refs.indicator) ) {
-                return;
-            }
-
-            let dragFrame = Dom.find(target)
-                .closest('.n-draggable');
-
-            let dragItem = Dom.find(target)
-                .closest('[data-drag-id]');
-
-            if (
-                ! Dom.find(dragFrame).is(this.$el) &&
-                ! Dom.find(dragItem).isParent(this.$el)
-            ) {
-                return this.frameDragLeave(event, this.$el);
-            }
-
-            if ( dragItem !== null ) {
-                return this.itemDragOver(event, dragItem);
-            }
-
-            this.frameDragOver(event, this.$el);
-        },
-
-        docDragLeave(event)
-        {
-            let target = Dom.location(event.clientX,
-                event.clientY).get(0);
-
-            let dragItem = Dom.find(target).closest('[data-drag-id]');
-
-            if ( ! Dom.find(dragItem).isParent(this.$el) ) {
-                return;
-            }
-
-            delete this.clientX;
-            delete this.clientY;
-
-            this.frameDragLeave(event, this.$el);
-        },
-
-        docDragEnd(event)
-        {
-            if ( event.dataTransfer ) {
-                event.dataTransfer.dropEffect = "move";
-            }
-
-            if ( this.clientX === undefined || this.clientY === undefined ) {
-                return;
-            }
-
-            let target = Dom.location(this.clientX,
-                this.clientY).first();
-
-            let dragFrame = Dom.find(target)
-                .closest('.n-draggable');
-
-            let dragItem = Dom.find(target)
-                .closest('[data-drag-id]');
-
-            if (
-                ! Dom.find(dragFrame).is(this.$el) &&
-                ! Dom.find(dragItem).isParent(this.$el)
-            ) {
-                return;
-            }
-
-            if ( dragItem !== null ) Any.delay(() => {
-                this.itemDragEnd(event, dragItem);
-            }, 14);
-
-            if ( this.items.length === 0 ) Any.delay(() => {
-                this.frameDragEnd(event, this.$el);
-            }, 14);
-        },
-
-        frameDragLeave(event, target)
-        {
-            if ( this.$refs.indicator !== undefined ) {
-                Dom.find(this.$refs.indicator).css({ top: -99999 + 'px' });
-            }
-
-            Dom.find(target).childs('[data-drag-id]').each((el) => {
-                Dom.find(el).removeClass('n-draggable--dragover');
-            });
-
-            Dom.find(target).removeClass('n-draggable--dragover');
-            Dom.find('.n-draggable--selected').removeClass('n-draggable--nodrop');
-        },
-
-        frameDragEnd(event, target)
-        {
-            if ( ! Dom.find(target).inside(this.$el) ) {
-                return;
-            }
-
-            let cache = Arr.clone(this.cache);
-
-            Arr.each(cache, (item, key) => {
-                cache[key]['_dragid'] = UUID();
-            });
-
-            let items = this.items;
-
-            Arr.each(cache, (item) => {
-                items.splice(items.length, 0, this.transformDrop(item));
-            });
-
-            Dom.find(target).removeClass('n-draggable--dragover');
-
-            let sources = Arr.each(this.selected || this.nativeSelected, (item) => {
-                return item[this.uniqueProp];
-            });
-
-            Event.fire('draggable:end', this.group);
-
-            this.$emit('move', sources.join(','), null, 'inner');
-        },
-
-        frameDragOver(event, target)
-        {
-            if ( ! Dom.find(target).inside(this.$el) ) {
-                return;
-            }
-
-            Dom.find(this.$refs.indicator).css({ top: -99999 + 'px' });
-
-            Dom.find(this.$el).childs('[data-drag-id]').each((el) => {
-                Dom.find(el).removeClass('n-draggable--dragover');
-            });
-
-            Dom.find(target).addClass('n-draggable--dragover');
-        },
-
-        itemMouseDown(event, target)
-        {
-            if ( event.which !== 1 ) {
-                return;
-            }
-
-            if ( ! Dom.find(target).parent().parent().is(this.$el) ) {
-                return;
-            }
-
-            let item = Arr.find(this.items, {
-                _dragid: Dom.find(target).attr('data-drag-id')
-            });
-
-            if ( ! Any.isEmpty(item) && Any.isEmpty(this.nativeSelected) ) {
-                return;
-            }
-
-            this.nativeSelected = [Obj.clone(item)];
-        },
-
-        itemMouseUp(event, target)
-        {
-            if ( ! Dom.find(target).parent().parent().is(this.$el) ) {
-                return;
-            }
-
-            this.nativeSelected = [];
-        },
-
-        itemDragStart(event, target)
-        {
-            if ( ! Dom.find(target).inside(this.$el) ) {
-                return;
-            }
-
-            let item = Arr.find(this.items, {
-                _dragid: Dom.find(target).attr('data-drag-id')
-            });
-
-            if ( ! Any.isEmpty(item) && Any.isEmpty(this.nativeSelected) ) {
-                this.nativeSelected = [Obj.clone(item)];
-            }
-
-            let selected = Any.isEmpty(this.selected) ?
-                this.nativeSelected : this.selected;
-
-            if ( Any.isEmpty(selected) === true ) {
-                return;
-            }
-
-            let index = Arr.findIndex(selected, {
-                _dragid: Dom.find(target).attr('data-drag-id')
-            });
-
-            if ( index === -1 ) {
-                selected = this.nativeSelected
-            }
-
-            this.$emit('update:selected', selected);
-
-            if ( window.IE === true ) {
-                event.dataTransfer.setData('Text', '');
-            } else {
-                event.dataTransfer.setData('text/plain', '');
-            }
-
-            if (typeof event.dataTransfer.setDragImage === "function") {
-
-                let dragImage = Dom.find(this.$refs.placeholder)
-                    .appendTo(document.body);
-
-                event.dataTransfer.setDragImage(dragImage.get(0), 0, 0);
-            }
-
-            Event.fire('draggable:start', this.self = selected, this.group);
-        },
-
-        itemDragOver(event, target)
-        {
-            if ( ! Dom.find(target).inside(this.$el) ) {
-                return;
-            }
-
-            Dom.find('.n-draggable--dragover').each((el) => {
-                Dom.find(el).not(target).removeClass('n-draggable--dragover');
-            });
-
-            let offsetTarget = Dom.find(target).offsetTop(this.$el) -
-                Dom.find(target).scroll('top', this.$el);
-
-            let offsetElement = Dom.find(this.$el).offsetTop() -
-                Dom.find(this.$el).scroll('top');
-
-            let height = Dom.find(target).height(),
-                displayHeight = Dom.find(target).height();
-
-            if ( ! Dom.find(target).next().attr('data-drag-id') ) {
-                displayHeight += Dom.find(target).next().height();
-            }
-
-            let safeZone = typeof this.safeZone === 'function' ?
-                this.safeZone(height) : this.safeZone;
-
-            this.move = 'inner';
-
-            if ( event.clientY < offsetTarget + offsetElement + safeZone ) {
-                this.move = 'before';
-            }
-
-            if ( event.clientY > offsetTarget + offsetElement + height - safeZone ) {
-                this.move = 'after';
-            }
-
-            let index = Arr.findIndex(this.items, {
-                _dragid: Dom.find(target).attr('data-drag-id')
-            });
-
-            if ( this.move === 'before' ) {
-                displayHeight = 0;
-            }
-
-            if ( index === 0 ) {
-                displayHeight += 1;
-            }
-
-            if ( index === this.items.length - 1 ) {
-                displayHeight -= 1;
-            }
-
-            let dest = this.items[index];
-
-            let rainbow = Arr.each(this.cache, (src) => {
-                return typeof this.allowDrop === 'function' ?
-                    this.allowDrop(src, dest, this.move, this.depth) : this.allowDrop;
-            });
-
-            if ( Arr.has(rainbow, false) || this.cache.length === 0 ) {
-                this.move = 'nodrop';
-            }
-
-            if ( this.childProp === null && this.move === 'inner' ) {
-                this.move = 'nodrop';
-            }
-
-            if ( this.move === 'inner' ) {
-                Dom.find(this.$refs.indicator).css({ top: -99999 + 'px' });
-            }
-
-            if ( this.move === 'nodrop' ) {
-                Dom.find(this.$refs.indicator).css({ top: -99999 + 'px' });
-            }
-
-            if ( this.move === 'before' ) {
-                Dom.find(this.$refs.indicator).css({ top: (offsetTarget + displayHeight) + 'px' });
-            }
-
-            if ( this.move === 'after' ) {
-                Dom.find(this.$refs.indicator).css({ top: (offsetTarget + displayHeight) + 'px' });
-            }
-
-            if ( this.move === 'inner' ) {
-                Dom.find(target).addClass('n-draggable--dragover');
-            } else {
-                Dom.find(target).removeClass('n-draggable--dragover');
-            }
-
-            if ( this.move === 'nodrop' ) {
-                Dom.find('.n-draggable--selected').addClass('n-draggable--nodrop');
-            } else {
-                Dom.find('.n-draggable--selected').removeClass('n-draggable--nodrop');
-            }
-
-            Dom.find(this.$el).removeClass('n-draggable--dragover');
-        },
-
-        itemDragEnd(event, target)
-        {
-            Dom.find(this.$refs.indicator).css({ top: -99999 + 'px' });
-
-            Dom.find(target).removeClass('n-draggable--dragover');
-
-            Dom.find('.n-draggable--selected').removeClass('n-draggable--nodrop');
-
-            if ( Dom.find(target).inside('.n-draggable--selected') ) {
-                return Event.fire('draggable:abort', this.group);
-            }
-
-            if ( Dom.find(target).inside('.n-draggable--selected + .n-draggable') ) {
-                return Event.fire('draggable:abort', this.group);
-            }
-
-            if ( this.move === 'nodrop' ) {
-                return Event.fire('draggable:abort', this.group);
-            }
-
-            let item = Arr.find(this.items, {
-                _dragid: Dom.find(target).attr('data-drag-id')
-            });
-
-            let rainbow = Arr.each(this.cache, (src) => {
-                return typeof this.allowDrop === 'function' ?
-                    this.allowDrop(src, item, this.move, this.depth) : this.allowDrop;
-            });
-
-            if ( Arr.has(rainbow, false) === true ) {
-                return Event.fire('draggable:abort', this.group);
-            }
-
-            let index = Arr.findIndex(this.items, {
-                _dragid: Dom.find(target).attr('data-drag-id')
-            });
-
-            let cache = Arr.clone(this.cache);
-
-            Arr.each(cache, (item, key) => {
-                cache[key]['_dragid'] = UUID();
-            });
-
-            let insertNode = typeof this.insertNode === 'function' ?
-                this.insertNode : () => this.insertNode;
-
-            let items = this.items;
-
-            if ( this.move === 'before' && insertNode ) {
-                Arr.each(cache, (_item, count) => {
-
-                    _item = this.transformDrop(_item);
-
-                    if ( ! insertNode(_item, item) ) {
-                        return;
-                    }
-
-                    items.splice(index + Num.int(count), 0, _item);
-                });
-            }
-
-            if ( this.move === 'after' && insertNode ) {
-                Arr.each(cache, (_item, count) => {
-
-                    _item = this.transformDrop(_item);
-
-                    if ( ! insertNode(_item, item) ) {
-                        return;
-                    }
-
-                    items.splice(index + Num.int(count) + 1, 0, _item);
-                });
-            }
-
-            if ( this.move === 'inner' && insertNode ) {
-                Arr.each(cache, (_item) => {
-
-                    _item = this.transformDrop(_item);
-
-                    if ( ! insertNode(_item, item) ) {
-                        return;
-                    }
-
-                    items[index][this.childProp].splice(
-                        items[index][this.childProp].length, 0, _item);
-                });
-            }
-
-            Event.fire('draggable:end', this.group);
-
-            let sources = Arr.each(cache, (item) => {
-                return item[this.uniqueProp];
-            });
-
-            this.$emit('move', sources.join(','), item[this.uniqueProp], this.move);
-        },
-
-        renderRow(h, value, key)
-        {
-            let realKey = Arr.findIndex(this.items, {
-                _dragid: value._dragid
-            });
-
-            value = this.items[realKey];
-
-            let className = [
-                'n-draggable__item'
-            ];
-
-            let index = Arr.findIndex(this.selected || this.nativeSelected, {
-                _dragid: value._dragid
-            });
-
-            if ( index !== -1 ) {
-                className.push('n-draggable--selected');
-            }
-
-            let selectable = typeof this.allowSelect === 'function' ?
-                this.allowSelect(value, this.depth) : this.allowSelect;
-
-            let draggable = typeof this.allowDrag === 'function' ?
-                this.allowDrag(value, this.depth) : this.allowDrag;
-
-            let updateItem = (input) => {
-                value = input;
-            };
-
-            let updateProp = (path) => {
-                return (input) => {
-                    Obj.set(value, path, input);
-                }
-            };
-
-            let props = {
-                value: value, key: key, updateItem, updateProp
-            };
-
-            let on = {
-                input: (input) => {
-                    this.$emit('input', Arr.set(this.items, key, input));
-                },
-                remove: () => {
-                    this.$emit('input', Arr.removeIndex(this.items, {
-                        _dragid: value._dragid
-                    }));
-                },
-                clone: () => {
-                    let clone = Obj.assign({}, value, { _dragid: UUID() });
-                    this.$emit('input', Arr.insert(this.items, key, clone));
-                }
-            };
-
-            let beforeSlot = [this.$scopedSlots.before ?
-                this.$scopedSlots.before(props) : null];
-
-            if ( this.useBefore !== null ) {
-                Arr.append(beforeSlot, h(this.useBefore, {
-                    key: value._dragid + '_before', props, on
-                }));
-            }
-
-            let afterSlot = [this.$scopedSlots.after ?
-                this.$scopedSlots.after(props) : null];
-
-            if ( this.useAfter !== null ) {
-                Arr.prepend(afterSlot, h(this.useAfter, {
-                    key: value._dragid + '_after', props, on
-                }));
-            }
-
-            let style = {
-                minHeight: this.itemHeight + 'px'
-            };
-
-            let finalNode = null;
-
-            if ( Any.isNull(finalNode) && ! Any.isNull(this.renderNode) ) {
-                finalNode = this.renderNode(props);
-            }
-
-            if ( Any.isNull(finalNode) && ! Any.isNull(this.use) ) {
-                finalNode = h(this.use, { key: value._dragid, props, on });
-            }
-
-            if ( Any.isNull(finalNode) ) {
-                finalNode = this.$scopedSlots.default(props);
-            }
-
-            let defaultSlot = (
-                <div key={value._dragid} style={style} class={className} data-drag-id={value._dragid} selectable={selectable} draggable={draggable}>
-                    { finalNode }
-                </div>
-            );
-
-            return Arr.merge(beforeSlot, [defaultSlot], afterSlot);
-        }
     },
 
     data()
     {
         return {
-            move: null, nativeSelected: [], self: [], cache: []
+            veCopy: [], veItems: [], veSelected: [], veCollapsed: [], veCached: [], veSelfCached: []
         };
     },
 
@@ -761,120 +244,681 @@ export default {
 
     beforeMount()
     {
-        Arr.each(this.items, (item, key) => {
-            if ( item._dragid === undefined )
-                this.items[key]['_dragid'] = UUID();
-        });
+        this.veCopy = Obj.clone(this.items);
+
+        this.$watch('veCopy', Any.debounce(() => {
+            this.$emit('input', Obj.clone(this.veCopy));
+        }, this.updateDelay), { deep: true });
+
+        this.refreshItems();
+
+        this.initialized = true;
     },
 
-    beforeUpdate()
-    {
-        Arr.each(this.items, (item, key) => {
-            if ( item._dragid === undefined )
-                this.items[key]['_dragid'] = UUID();
-        });
+    methods: {
+
+        refreshItems()
+        {
+            this.veItems = this.itemReducer([], this.veCopy);
+        },
+
+        moveItems(event, target, strategy = 'inner')
+        {
+            let ids = Arr.each(this.veCached, (item) => {
+                return item[this.uniqueProp];
+            });
+
+            this.$emit('move', ids.join(','), target[this.uniqueProp], strategy);
+
+            if ( this.disableMove ) {
+                return;
+            }
+
+            let cacheBatches = this.getCachedBatches();
+
+            let targetOrder = Num.int(target[this.orderProp].slice(0, -1).join('') ||
+                target[this.indexProp] + 1);
+
+            let batchedBefore = Obj.filter(Any.vals(cacheBatches).reverse(), (batch) => {
+                return Num.int(batch['_key']) >= targetOrder;
+            });
+
+            let batchedAfter = Obj.filter(Any.vals(cacheBatches).reverse(), (batch) => {
+                return Num.int(batch['_key']) < targetOrder;
+            });
+
+            let insertNode = Any.isFunction(this.insertNode) ?
+                this.insertNode(target) : this.insertNode;
+
+            if ( strategy === 'root' && insertNode ) {
+
+                Arr.each(this.veCached, (source) => {
+                    Arr.push(this.veCopy, this.transformDrop(source.item));
+                });
+
+            }
+
+            if ( strategy === 'inner' && insertNode ) {
+
+                let finalParent = Obj.get(this, target[this.pathProp]);
+
+                let finalTarget = Arr.find(finalParent, {
+                    [this.uniqueProp]: target[this.uniqueProp]
+                });
+
+                if ( finalTarget[this.childProp] === undefined ) {
+                    finalTarget[this.childProp] = [];
+                }
+
+                Arr.each(cacheBatches, (batch) => {
+
+                    delete batch['_key'];
+
+                    Arr.each(batch, (source) => {
+
+                        // Add item before last item added, also transform item
+                        Arr.push(finalTarget[this.childProp], this.transformDrop(source.item));
+                    });
+
+                    Arr.each(batch, this.dropItem);
+                });
+
+                Arr.each(this.veCached, (source) => {
+
+                    // Add item before last item added, also transform item
+                    Arr.push(finalTarget[this.childProp], this.transformDrop(source.item));
+                });
+            }
+
+            if ( strategy === 'after' && insertNode ) {
+
+                let delayedItems = [];
+
+                Arr.each(Any.vals(batchedBefore), (batch) => {
+
+                    delete batch['_key'];
+
+                    Arr.each(batch, (source) => {
+                        delayedItems.push(source)
+                    });
+
+                    Arr.each(batch, this.dropItem);
+                });
+
+                Arr.each(Any.vals(delayedItems), (source, count) => {
+
+                    let finalTarget = Obj.get(this, target[this.pathProp]);
+
+                    let finalIndex = Arr.findIndex(finalTarget, {
+                        [this.uniqueProp]: target[this.uniqueProp]
+                    });
+
+                    // Add item before last item added, also transform item
+                    Arr.insert(finalTarget, finalIndex + 1, this.transformDrop(source.item));
+                });
+
+                Arr.each(Any.vals(batchedAfter), (batch) => {
+
+                    delete batch['_key'];
+
+                    Arr.each(batch.reverse(), (source, count) => {
+
+                        let finalTarget = Obj.get(this, target[this.pathProp]);
+
+                        let finalIndex = Arr.findIndex(finalTarget, {
+                            [this.uniqueProp]: target[this.uniqueProp]
+                        });
+
+                        // Add item before last item added, also transform item
+                        Arr.insert(finalTarget, finalIndex + 1, this.transformDrop(source.item));
+                    });
+
+                    Arr.each(batch, this.dropItem);
+
+                });
+
+                Arr.each(this.veCached, (source) => {
+
+                    let finalTarget = Obj.get(this, target[this.pathProp]);
+
+                    let finalIndex = Arr.findIndex(finalTarget, {
+                        [this.uniqueProp]: target[this.uniqueProp]
+                    });
+
+                    // Add item before last item added, also transform item
+                    Arr.insert(finalTarget, finalIndex + 1, this.transformDrop(source.item));
+                });
+            }
+
+            if ( strategy === 'before' && insertNode ) {
+
+                let delayedItems = [];
+
+                Arr.each(Any.vals(batchedBefore), (batch) => {
+
+                    delete batch['_key'];
+
+                    Arr.each(batch.reverse(), (source) => {
+                        delayedItems.push(source)
+                    });
+
+                    Arr.each(batch, this.dropItem);
+                });
+
+                Arr.each(Any.vals(delayedItems).reverse(), (source, count) => {
+
+                    let finalTarget = Obj.get(this, target[this.pathProp]);
+
+                    let finalIndex = Arr.findIndex(finalTarget, {
+                        [this.uniqueProp]: target[this.uniqueProp]
+                    });
+
+                    // Add item before last item added, also transform item
+                    Arr.insert(finalTarget, finalIndex, this.transformDrop(source.item));
+                });
+
+                Arr.each(Any.vals(batchedAfter).reverse(), (batch) => {
+
+                    delete batch['_key'];
+
+                    let finalTarget = Obj.get(this, target[this.pathProp]);
+
+                    let finalIndex = Arr.findIndex(finalTarget, {
+                        [this.uniqueProp]: target[this.uniqueProp]
+                    });
+
+                    Arr.each(batch.reverse(), (source, count) => {
+
+                        // Add item before last item added, also transform item
+                        Arr.insert(finalTarget, finalIndex, this.transformDrop(source.item));
+                    });
+
+                    Arr.each(batch, this.dropItem);
+
+                });
+
+                Arr.each(this.veCached, (source) => {
+
+                    let finalTarget = Obj.get(this, target[this.pathProp]);
+
+                    let finalIndex = Arr.findIndex(finalTarget, {
+                        [this.uniqueProp]: target[this.uniqueProp]
+                    });
+
+                    // Add item before last item added, also transform item
+                    Arr.insert(finalTarget, finalIndex, this.transformDrop(source.item));
+                });
+            }
+
+            Event.fire('draggable.done');
+        },
+
+        getCachedBatches()
+        {
+            let batches = Arr.reduce(this.veSelfCached, (merge, source) => {
+
+                let batchKey = source[this.orderProp].slice(0, -1).join('') ||
+                    source[this.indexProp] + 1;
+
+                if ( ! Obj.has(merge, batchKey) ) {
+                    merge[batchKey] = [];
+                }
+
+                let result = Obj.only(source, [
+                    this.uniqueProp, this.pathProp, this.indexProp
+                ]);
+
+                result['item'] = Obj.clone(source.item);
+
+                merge[batchKey].push(result);
+
+                return merge;
+
+            }, {});
+
+            Arr.map(batches, (batch) => {
+
+                let sorted = Arr.sort(batch, item => item[this.orderProp].join(''));
+
+                return Arr.each(sorted, (item) => Obj.except(item, ['_key']));
+            });
+
+            return Obj.sort(batches, (batch) => {
+                return Arr.first(batch)[this.orderProp].join('');
+            });
+        },
+
+        dropItem(source)
+        {
+            Arr.remove(Obj.get(this, source[this.pathProp]), {
+                [this.uniqueProp]: source[this.uniqueProp]
+            });
+
+            this.veCached = Arr.remove(this.veCached, {
+                [this.uniqueProp]: source[this.uniqueProp]
+            });
+
+            this.veSelfCached = Arr.remove(this.veSelfCached, {
+                [this.uniqueProp]: source[this.uniqueProp]
+            });
+        },
+
+        dropItems()
+        {
+            let removeNode = Any.isFunction(this.removeNode) ?
+                this.removeNode() : this.removeNode;
+
+            if ( removeNode ) {
+
+                Arr.each(this.veSelfCached, (item) => {
+
+                    Arr.remove(Obj.get(this, item[this.pathProp]), {
+                        [this.uniqueProp]: item[this.uniqueProp]
+                    });
+
+                });
+            }
+
+            this.clearItems();
+            this.refreshItems();
+        },
+
+        clearItems()
+        {
+            this.veSelected = [];
+            this.veCached = [];
+            this.veSelfCached = [];
+
+            this.removeDragCounter();
+            this.removeDragIndicator();
+        },
+
+        cacheItems(items)
+        {
+            this.veCached = Arr.each(items, (item) => Obj.clone(item));
+        },
+
+        updateCollapsed()
+        {
+            this.$emit('update:collapsed', this.veCollapsed);
+        },
+
+        collapseItem(id)
+        {
+            if ( ! Any.isString(id) ) {
+                id = id[this.uniqueProp];
+            }
+
+            Arr.toggle(this.veCollapsed, id);
+
+            this.refreshItems();
+        },
+
+        isCollapsed(id)
+        {
+            if ( ! Any.isString(id) ) {
+                id = id[this.uniqueProp];
+            }
+
+            return ! Arr.has(this.veCollapsed, id);
+        },
+
+        updateSelected()
+        {
+            this.$emit('update:selected', this.veSelected);
+        },
+
+        dispatchSelected()
+        {
+            let selected = Arr.each(this.veSelected, (item) => {
+
+                let result = Arr.find(this.veItems, {
+                    [this.uniqueProp]: item
+                });
+
+                result['item'] = Obj.get(this, result[this.pathProp] + '.' +
+                    result[this.indexProp]);
+
+                return result;
+            });
+
+            Event.fire('draggable.start', this.veSelfCached = selected);
+        },
+
+        toggleItem(id, reset = false)
+        {
+            if ( ! Any.isString(id) ) {
+                id = id[this.uniqueProp];
+            }
+
+            if ( reset ) {
+                this.veSelected = [];
+            }
+
+            Arr.toggle(this.veSelected, id);
+
+            this.updateSelected();
+        },
+
+        selectItem(id, reset = false)
+        {
+            if ( ! Any.isString(id) ) {
+                id = id[this.uniqueProp];
+            }
+
+            if ( reset ) {
+                this.veSelected = [];
+            }
+
+            Arr.add(this.veSelected, id);
+
+            this.updateSelected();
+        },
+
+        unselectItem(id)
+        {
+            if ( ! Any.isString(id) ) {
+                id = id[this.uniqueProp];
+            }
+
+            Arr.remove(this.veSelected, id);
+
+            this.updateSelected();
+        },
+
+        canSelect(element)
+        {
+            if ( Any.isString(element) ) {
+                element = Arr.find(this.veItems, {
+                    [this.uniqueProp]: element
+                });
+            }
+
+            if ( ! this.veSelected.length ) {
+                return true;
+            }
+
+            let first = Arr.find(this.veItems, {
+                [this.uniqueProp]: Arr.first(this.veSelected)
+            });
+
+            return element[this.depthProp] === first[this.depthProp];
+        },
+
+        isSelected(id)
+        {
+            if ( ! Any.isString(id) ) {
+                id = id[this.uniqueProp];
+            }
+
+            return Arr.has(this.veSelected, id);
+        },
+
+        canDrag(element)
+        {
+            return true;
+        },
+
+        canDrop(element)
+        {
+            let targetPath = `${element[this.pathProp]}.` +
+                `${element[this.indexProp]}`;
+
+            let selected = Arr.each(this.veSelected, (item) => {
+                return Arr.find(this.veItems, { [this.uniqueProp]: item });
+            });
+
+            let result = Arr.filter(selected, (source) => {
+
+                let sourcePath = `${source[this.pathProp]}.` +
+                    `${source[this.indexProp]}`;
+
+                return targetPath.indexOf(`${sourcePath}.`) !== -1 ||
+                    sourcePath === targetPath;
+            });
+
+            return ! result.length;
+        },
+
+        itemReducer(merge, items, depth = 0, path = 'veCopy', orders = [])
+        {
+            Arr.each(items, (item, index) => {
+
+                let dragObject = {
+                    [this.indexProp]: index,
+                    [this.pathProp]: path,
+                    [this.depthProp]: depth
+                };
+
+                dragObject[this.uniqueProp] = Obj.get(item, this.uniqueProp);
+
+                if ( ! dragObject[this.uniqueProp] ) {
+                    Obj.set(this, `${path}.${index}.${this.uniqueProp}`, dragObject[this.uniqueProp] = UUID());
+                }
+
+                // Order prop to sort on drag
+                dragObject[this.orderProp] = Arr.merge(orders, [index + 1]);
+
+                // Md5 item to check for any changes
+                dragObject[this.keyProp] = Any.md5(dragObject);
+
+
+                Arr.push(merge, dragObject);
+
+                if ( ! Arr.has(this.veCollapsed, dragObject[this.uniqueProp]) ) {
+                    return;
+                }
+
+                merge = this.itemReducer(merge, Obj.get(item, this.childProp, []),
+                    depth + 1, `${path}.${index}.${this.childProp}`, dragObject[this.orderProp]);
+
+            });
+
+            return merge;
+        },
+
+        createDragIndicator()
+        {
+            if ( this.dragIndicator ) {
+                return;
+            }
+
+            this.dragIndicator = Dom.make('div', {
+                classList: ['n-draggable__indicator']
+            });
+
+            this.dragIndicator.attr('data-ignore', true);
+
+            this.dragIndicator.appendTo(this.$el);
+        },
+
+        updateDragIndicator(state = false, top = 0)
+        {
+            if ( ! this.dragIndicator ) {
+                this.createDragIndicator();
+            }
+
+            if ( ! state ) {
+                return this.dragIndicator.css({ visibility: 'hidden' });
+            }
+
+            this.dragIndicator.css({ visibility: 'visible', top: `${top}px` });
+        },
+
+        removeDragIndicator()
+        {
+            if ( this.dragIndicator ) {
+                this.dragIndicator.get(0).remove();
+            }
+
+            delete this.dragIndicator;
+        },
+
+        createDragCounter(event)
+        {
+            if ( this.dragCounter ) {
+                return;
+            }
+
+            this.dragCounter = Dom.make('div', {
+                classList: ['n-draggable__counter']
+            });
+
+            this.dragCounter.html(
+                `<span>${Locale.choice(':count Item|:count Items', this.veSelected.length)}</span>`
+            );
+
+            // Append dragimage to body
+            this.dragCounter.appendTo(document.body);
+
+            // Fix data transfer
+            event.dataTransfer.setData('text/plain', '');
+
+            if ( typeof event.dataTransfer.setDragImage !== 'function' ) {
+                return;
+            }
+
+            // Set finally the drop image
+            event.dataTransfer.setDragImage(this.dragCounter.get(0), 0, 0);
+        },
+
+        removeDragCounter()
+        {
+            if ( this.dragCounter ) {
+                this.dragCounter.get(0).remove();
+            }
+
+            delete this.dragCounter;
+        },
+
+        /**
+         * Event listeners
+         */
+
+        eventDragenter(event)
+        {
+            event.preventDefault();
+
+            if ( Dom.find(event.target).closest(this.$el) ) {
+                this.createDragIndicator(event);
+            }
+        },
+
+        eventDragleave(event)
+        {
+            event.preventDefault();
+
+            if ( Dom.find(event.target).closest(this.$el) ) {
+                this.updateDragIndicator(false);
+            }
+        },
+
+        eventDragend(event)
+        {
+            event.preventDefault();
+
+            if ( Dom.find(event.target).closest(this.$el) ) {
+                this.removeDragIndicator();
+            }
+        },
+
+        eventEmptyDragenter(event)
+        {
+            event.preventDefault();
+        },
+
+        eventEmptyDragover(event)
+        {
+            event.preventDefault();
+
+            Dom.find(this.$el).addClass('n-dragover');
+        },
+
+        eventEmptyDragleave(event)
+        {
+            Dom.find(this.$el).removeClass('n-dragover');
+        },
+
+        eventEmptyDragdrop(event)
+        {
+            event.preventDefault();
+
+            let virtualItem = {
+                [this.indexProp]: 0,
+                [this.orderProp]: [0],
+                [this.uniqueProp]: null
+            };
+
+            this.$emit('dragdrop', event, virtualItem, 'root');
+        }
+
     },
 
     mounted()
     {
-        Event.bind('draggable:start',
-            this.draggableStart, { _uid: this._uid });
+        this.$on('dragstart', this.dispatchSelected);
+        this.$on('dragstart', this.createDragCounter);
+        this.$on('dragstart', this.createDragIndicator);
 
-        Event.bind('draggable:end',
-            this.draggableEnd, { _uid: this._uid });
+        this.$on('dragdrop', this.moveItems);
 
-        Event.bind('draggable:abort',
-            this.draggableAbort, { _uid: this._uid });
+        Event.bind('draggable.start', this.cacheItems);
+        Event.bind('draggable.stop', this.clearItems);
+        Event.bind('draggable.done', this.dropItems);
 
-        Dom.find(document).on('dragend',
-            Any.throttle(this.docDragEnd, 25), { _uid: this._uid });
-
-        Dom.find(document).on('dragover',
-            Any.throttle(this.docDragOver, 25), { _uid: this._uid });
-
-        Dom.find(document).on('dragleave',
-            Any.throttle(this.docDragLeave, 25), { _uid: this._uid });
-
-        Dom.find(document).live('mousedown',
-            '[data-drag-id][selectable="true"]', this.itemMouseDown, { _uid: this._uid });
-
-        Dom.find(document).live('mouseup',
-            '[data-drag-id][selectable="true"]', this.itemMouseUp, { _uid: this._uid });
-
-        Dom.find(document).live('dragstart',
-            '[data-drag-id][draggable="true"]', this.itemDragStart, { _uid: this._uid });
+        Dom.find(document).on('dragenter', this.eventDragenter, { _uid: this._uid });
+        Dom.find(document).on('dragleave', this.eventDragleave, { _uid: this._uid });
+        Dom.find(document).on('dragend', this.eventDragend, { _uid: this._uid });
     },
 
-    beforeDestroy()
+    renderEmpty()
     {
-        Event.unbind('draggable:start',
-            { _uid: this._uid });
-
-        Event.unbind('draggable:end',
-            { _uid: this._uid });
-
-        Event.unbind('draggable:abort',
-            { _uid: this._uid });
-
-        Dom.find(document).off('dragend',
-            null, { _uid: this._uid });
-
-        Dom.find(document).off('dragover',
-            null, { _uid: this._uid });
-
-        Dom.find(document).off('dragleave',
-            null, { _uid: this._uid });
-
-        Dom.find(document).off('mousedown',
-            '[data-drag-id][selectable="true"]', { _uid: this._uid });
-
-        Dom.find(document).off('mouseup',
-            '[data-drag-id][selectable="true"]', { _uid: this._uid });
-
-        Dom.find(document).off('dragstart',
-            '[data-drag-id][draggable="true"]', { _uid: this._uid });
-    },
-
-    render(h)
-    {
-        let className = Arr.clone(this.className);
-
-        if ( this.NDraggable === undefined ) {
-            className.push('n-draggable--root');
-        }
-
-        let items = this.displayItems || this.items;
-
-        if ( Any.isEmpty(items) === true && this.showEmpty === false ) {
+        if ( ! this.showEmpty ) {
             return null;
         }
 
-        let props = {
-            items: items, itemHeight: this.itemHeight, viewportHeight: this.viewportHeight, renderNode: this.renderRow
+        let events = {
+            dragenter: this.eventEmptyDragenter,
+            dragover: this.eventEmptyDragover,
+            dragleave: this.eventEmptyDragleave,
+            dragdrop: this.eventEmptyDragdrop,
+            drop: this.eventEmptyDragdrop
         };
 
         return (
-            <div class={className}>
-                { Any.isEmpty(this.items) === false &&
-                    h('NRenderList', { props })
-                }
-                { Any.isEmpty(this.items) === true && (this.$slots.empty ||
-                    <div class="n-draggable__empty">
-                         <span>
-                             { this.trans('No entries') }
-                         </span>
-                    </div>)
-                }
-                <div ref="indicator" class="n-draggable__indicator">
-                    <span></span>
-                </div>
-                <div ref="placeholder" class="n-draggable__placeholder">
-                    <span>
-                        { this.choice(':count entry|:count entries', this.self.length) }
-                    </span>
-                </div>
+            <div class="n-draggable__empty" on={events}>
+                 <span>{ this.$slots.empty || this.trans('No entries') }</span>
             </div>
         );
+    },
+
+    renderItem(props)
+    {
+        let data = {
+            key: props.value[this.keyProp], props
+        };
+
+        return this.$render('NDraggableItem', data, [
+            this.$scopedSlots.default
+        ]);
+    },
+
+    render($render)
+    {
+        this.$render = $render;
+
+        if ( Any.isEmpty(this.veCopy) ) {
+            return this.ctor('renderEmpty')();
+        }
+
+        let props = Obj.assign(Obj.clone(this.$props), {
+            items: this.veItems,
+            renderNode: this.ctor('renderItem')
+        });
+
+        return this.$render('NVirtualscroller', {
+            class: 'n-draggable', props
+        });
     }
 
 }

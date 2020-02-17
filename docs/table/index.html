@@ -26,7 +26,6 @@
 
         <div v-if="kill === false" class="adapt-height" style="height: 350px; overflow: hidden; padding: 20px;">
             <n-table :items="items" :adapt-height="true" :allow-drop="true">
-                <n-table-column prop="selection" align="center" type="selection" label="Selection" :fixed-width="50"></n-table-column>
                 <n-table-column prop="label" type="string" label="Label" :filter="true" :default-width="200"></n-table-column>
                 <n-table-column prop="id" align="center" type="string" label="ID" :default-width="100"></n-table-column>
             </n-table>
@@ -34,7 +33,6 @@
 
         <div v-if="kill === false" class="adapt-height" style="height: 50vh; overflow: hidden; padding: 20px;">
             <n-table :items="target" :adapt-height="true" :allow-drop="true">
-                <n-table-column prop="selection" align="center" type="selection" label="Selection" :fixed-width="50"></n-table-column>
                 <n-table-column prop="label" type="string" label="Label"></n-table-column>
                 <n-table-column prop="id" align="center" type="string" label="ID"></n-table-column>
                 <n-table-column prop="id" align="center" type="string" label="ID"></n-table-column>
@@ -93,7 +91,7 @@
                             self.target = childGenerator(2000);
                         }, 1000);
 
-                        return { items: childGenerator(10), target: [], kill: false };
+                        return { items: childGenerator(1000), target: [], kill: false };
                     }
                 };
 

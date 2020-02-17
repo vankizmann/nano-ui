@@ -64,7 +64,6 @@ $optiscroll-defaultStyle: true !default;
     display: block;
     position: absolute;
     transform: translate(0%, 0%);
-    transition: transform 100ms ease;
     box-sizing: border-box;
 }
 

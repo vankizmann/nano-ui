@@ -3,7 +3,7 @@ import { virtualScrollDriver } from "dynamic-virtual-scroll"
 
 export default {
 
-    name: 'NRenderList',
+    name: 'NVirtualscroller',
 
     model: {
         prop: 'items'
@@ -37,6 +37,14 @@ export default {
             {
                 return null;
             }
+        },
+
+        bufferItems: {
+            default()
+            {
+                return 8;
+            },
+            type: [Number]
         }
 
     },
@@ -46,17 +54,19 @@ export default {
         bindScroller()
         {
             if ( ! Obj.has(this.$refs, 'viewport.$el') ) {
-                return Any.delay(this.bindScroller);
+                return Any.delay(this.bindScroller, 300);
             }
 
-            this.$refs.viewport.$on('scroll', this.refreshDriver);
+            Dom.find(this.$refs.viewport.$el).on('scroll',
+                Any.framerate(this.refreshDriver, 10));
+
+            Dom.find(this.$refs.viewport.$el).on('scroll',
+                Any.debounce(this.refreshDriver, 30));
         },
 
         refreshDriver()
         {
-            console.log('pe');
-
-            if ( ! this.$refs.viewport ) {
+            if ( ! Obj.has(this.$refs, 'viewport.$el') ) {
                 return;
             }
 
@@ -66,20 +76,27 @@ export default {
                 scrollTop = this.$refs.viewport.$el.scrollTop;
             }
 
+            if ( scrollTop < 0 ) {
+                return;
+            }
+
             let options = {
+                bufferItems: this.bufferItems,
                 totalItems: this.items.length,
-                minRowHeight: this.itemHeight,
                 viewportHeight: this.height,
+                minRowHeight: this.itemHeight,
                 scrollTop: scrollTop,
             };
 
             let newState = virtualScrollDriver(options, this.state, () => this.itemHeight);
 
-            if ( Any.isEqual(newState, this.state) ) {
+            let isSameState = Arr.reduce(newState, (same, val, key) => {
+                return same && this.state[key] === val;
+            }, true);
+
+            if ( isSameState ) {
                 return;
             }
-
-            console.log(newState, this.state);
 
             this.state = newState;
         },
@@ -95,10 +112,10 @@ export default {
             }
 
             if ( this.height === 0 ) {
-                return Any.delay(this.discoverHeight, 100);
+                return Any.delay(this.discoverHeight, 300);
             }
 
-            Any.async(this.refreshDriver);
+            this.refreshDriver();
         }
 
     },
@@ -134,8 +151,15 @@ export default {
     {
         let result = Arr.slice(this.items, start, start + count);
 
-        result = Arr.each(result, (value, key) => {
-            return this.renderNode(this.$render, value, key);
+        result = Arr.each(result, (value, index) => {
+
+            let props = { value, index };
+
+            if ( Any.isString(this.renderNode) ) {
+                return this.$render(this.renderNode, { props })
+            }
+
+            return this.renderNode(props);
         });
 
         return result;
@@ -149,8 +173,13 @@ export default {
             return (
                 <div class="n-render-list">
                     {
-                        Arr.each(this.items, (value, key) => {
-                            return this.renderNode(this.$render, value, key);
+                        Arr.each(this.items, (value, index) => {
+
+                            if ( Any.isString(this.renderNode) ) {
+                                return this.$render(this.renderNode, { props })
+                            }
+
+                            return this.renderNode({ value, index });
                         })
                     }
                 </div>
@@ -172,8 +201,8 @@ export default {
         return (
             <div class="n-render-list">
                 { ! Any.isEmpty(this.state) &&
-                    <NRenderScrollbar ref="viewport" style={style}>
-                        <div style={{ height: targetHeight ? targetHeight + 'px' : 'auto' }}>
+                    <NScrollbar ref="viewport" on={this.$listeners} style={style}>
+                        <div style={{ height: targetHeight ? targetHeight + 'px' : 'auto', overflow: 'hidden', paddingRight: '15px' }}>
                             { ! Any.isEmpty(this.state.topPlaceholderHeight) &&
                                 <div draggable={false} style={{ height: this.state.topPlaceholderHeight + 'px' }}></div>
                             }
@@ -187,7 +216,7 @@ export default {
                                 this.ctor('renderItems')(this.items.length - this.state.lastItemCount, this.state.lastItemCount)
                             }
                         </div>
-                    </NRenderScrollbar>
+                    </NScrollbar>
                 }
             </div>
         );

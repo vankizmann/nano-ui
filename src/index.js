@@ -43,7 +43,8 @@ export function Install(Vue, Icons = {})
     Vue.prototype.icons = Vue.Obj.assign(scope.NanoIcons, Icons);
 
     require('./notification/index');
-    require('./render/index');
+    require('./scrollbar/index');
+    require('./virtualscroller/index');
     require('./draggable/index');
     require('./loader/index');
     require('./form/index');

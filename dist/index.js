@@ -38902,19 +38902,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _src_draggable_draggable_beta__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/draggable/draggable.beta */ "./src/draggable/src/draggable/draggable.beta.js");
+/* harmony import */ var _src_draggable_draggable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/draggable/draggable */ "./src/draggable/src/draggable/draggable.js");
 /* harmony import */ var _src_draggable_item_draggable_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/draggable-item/draggable-item */ "./src/draggable/src/draggable-item/draggable-item.js");
-/* harmony import */ var _src_draggable_tree_draggable_tree__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./src/draggable-tree/draggable-tree */ "./src/draggable/src/draggable-tree/draggable-tree.js");
-/* harmony import */ var _src_draggable_tree_item_draggable_tree_item__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./src/draggable-tree-item/draggable-tree-item */ "./src/draggable/src/draggable-tree-item/draggable-tree-item.js");
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_draggable_draggable_beta__WEBPACK_IMPORTED_MODULE_1__["default"].name, _src_draggable_draggable_beta__WEBPACK_IMPORTED_MODULE_1__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_draggable_draggable__WEBPACK_IMPORTED_MODULE_1__["default"].name, _src_draggable_draggable__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_draggable_item_draggable_item__WEBPACK_IMPORTED_MODULE_2__["default"].name, _src_draggable_item_draggable_item__WEBPACK_IMPORTED_MODULE_2__["default"]);
-
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_draggable_tree_draggable_tree__WEBPACK_IMPORTED_MODULE_3__["default"].name, _src_draggable_tree_draggable_tree__WEBPACK_IMPORTED_MODULE_3__["default"]);
-
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_draggable_tree_item_draggable_tree_item__WEBPACK_IMPORTED_MODULE_4__["default"].name, _src_draggable_tree_item_draggable_tree_item__WEBPACK_IMPORTED_MODULE_4__["default"]);
 
 /***/ }),
 
@@ -39177,372 +39171,21 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/draggable/src/draggable-tree-item/draggable-tree-item.js":
-/*!**********************************************************************!*\
-  !*** ./src/draggable/src/draggable-tree-item/draggable-tree-item.js ***!
-  \**********************************************************************/
+/***/ "./src/draggable/src/draggable/draggable.js":
+/*!**************************************************!*\
+  !*** ./src/draggable/src/draggable/draggable.js ***!
+  \**************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! nano-js */ "nano-js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_0__);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'NDraggableTreeItem',
-  inject: {
-    NDraggableTree: {
-      "default": undefined
-    }
-  },
-  props: {
-    value: {
-      "default": function _default() {
-        return {};
-      },
-      type: [Object]
-    }
-  },
-  computed: {
-    empty: function empty() {
-      return nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(this.value[this.NDraggableTree.childProp]) === true;
-    },
-    selected: function selected() {
-      return nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].last(this.NDraggableTree.cascade) === this.value[this.NDraggableTree.uniqueProp];
-    },
-    expanded: function expanded() {
-      return nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].has(this.NDraggableTree.expanded, this.value[this.NDraggableTree.uniqueProp]);
-    }
-  },
-  methods: {
-    expandItem: function expandItem() {
-      this.$emit('expand', this.value[this.NDraggableTree.uniqueProp]);
-    },
-    cascadeItem: function cascadeItem() {
-      this.$emit('cascade', this.value[this.NDraggableTree.uniqueProp]);
-    }
-  },
-  render: function render(h) {
-    var _this = this;
-
-    var className = ['n-draggable-tree-item'];
-
-    if (this.empty === true) {
-      className.push('n-draggable-tree-item--empty');
-    }
-
-    if (this.selected === true) {
-      className.push('n-draggable-tree-item--selected');
-    }
-
-    if (this.expanded === true) {
-      className.push('n-draggable-tree-item--expanded');
-    }
-
-    var style = {
-      paddingLeft: this.NDraggableTree.depth * this.NDraggableTree.depthOffset + 'px'
-    };
-    return h("div", {
-      "class": className,
-      "style": style,
-      "on": {
-        "click": this.cascadeItem
-      }
-    }, [h("div", {
-      "class": "n-draggable-tree-item__expand",
-      "on": {
-        "click": function click($event) {
-          $event.stopPropagation();
-          return _this.expandItem($event);
-        }
-      }
-    }, [h("span", {
-      "class": this.icons.angleRight
-    })]), h("div", {
-      "class": "n-draggable-tree-item__body"
-    }, [this.$slots["default"] || this.$scopedSlots["default"]({
-      value: this.value,
-      key: this.$vnode.key
-    })])]);
-  }
-});
-
-/***/ }),
-
-/***/ "./src/draggable/src/draggable-tree/draggable-tree.js":
-/*!************************************************************!*\
-  !*** ./src/draggable/src/draggable-tree/draggable-tree.js ***!
-  \************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! nano-js */ "nano-js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _draggable_draggable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../draggable/draggable */ "./src/draggable/src/draggable/draggable.js");
+/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @vue/babel-helper-vue-jsx-merge-props */ "./node_modules/@vue/babel-helper-vue-jsx-merge-props/dist/helper.js");
+/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
 
 
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'NDraggableTree',
-  model: {
-    prop: 'items'
-  },
-  props: {
-    items: {
-      "default": function _default() {
-        return [];
-      },
-      type: [Array]
-    },
-    cascade: {
-      "default": function _default() {
-        return [];
-      },
-      type: [Array]
-    },
-    expanded: {
-      "default": function _default() {
-        return [];
-      }
-    },
-    use: {
-      "default": function _default() {
-        return null;
-      }
-    },
-    useBefore: {
-      "default": function _default() {
-        return null;
-      }
-    },
-    useAfter: {
-      "default": function _default() {
-        return null;
-      }
-    },
-    depth: {
-      "default": function _default() {
-        return 0;
-      },
-      type: [Number]
-    },
-    depthOffset: {
-      "default": function _default() {
-        return 0;
-      },
-      type: [Number]
-    },
-    group: {
-      "default": function _default() {
-        return ['default'];
-      },
-      type: [Array]
-    },
-    safeZone: {
-      "default": function _default() {
-        return function (height) {
-          return height * 0.25;
-        };
-      }
-    },
-    showEmpty: {
-      "default": function _default() {
-        return false;
-      }
-    },
-    itemHeight: {
-      "default": function _default() {
-        return 34;
-      },
-      type: [Number]
-    },
-    viewportHeight: {
-      "default": function _default() {
-        return false;
-      }
-    },
-    uniqueProp: {
-      "default": function _default() {
-        return 'id';
-      }
-    },
-    childProp: {
-      "default": function _default() {
-        return 'children';
-      }
-    },
-    transformDrop: {
-      "default": function _default() {
-        return function (item) {
-          return item;
-        };
-      }
-    },
-    insertNode: {
-      "default": function _default() {
-        return function () {
-          return true;
-        };
-      }
-    },
-    removeNode: {
-      "default": function _default() {
-        return function () {
-          return true;
-        };
-      }
-    },
-    allowSelect: {
-      "default": function _default() {
-        return true;
-      }
-    },
-    allowDrag: {
-      "default": function _default() {
-        return true;
-      }
-    },
-    allowDrop: {
-      "default": function _default() {
-        return true;
-      }
-    },
-    className: {
-      "default": function _default() {
-        return ['n-draggable', 'n-draggable-tree'];
-      }
-    }
-  },
-  watch: {
-    nativeCascade: function nativeCascade() {
-      this.$emit('update:cascade', this.nativeCascade);
-    }
-  },
-  methods: {
-    renderAfter: function renderAfter(h, value) {
-      var _this = this;
-
-      var key = nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].integer(value.key);
-      var item = this.items[key];
-      var events = {
-        input: nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].throttle(function (input) {
-          item[_this.childProp] = input;
-        }, 7),
-        cascade: nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].throttle(function (input) {
-          _this.$emit('cascade', _this.nativeCascade = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].merge([value.value[_this.uniqueProp]], input));
-        }, 7),
-        move: nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].throttle(function () {
-          for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-          }
-
-          _this.$emit.apply(_this, ['move'].concat(args));
-        }, 7)
-      };
-      var props = nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].assign({}, this.$props, {
-        items: item[this.childProp],
-        depth: this.depth + 1
-      });
-      var visible = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].has(this.expanded, value.value[this.uniqueProp]);
-      return nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(item[this.childProp]) === false && visible ? h('NDraggableTree', {
-        key: value.value._dragid,
-        props: props,
-        on: events,
-        scopedSlots: this.$scopedSlots
-      }) : null;
-    },
-    renderDefault: function renderDefault(h, value) {
-      var _this2 = this;
-
-      var key = nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].integer(value.key);
-      var events = {
-        input: nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].throttle(function (input) {
-          _this2.items.splice(key, 1, input);
-        }, 7),
-        cascade: nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].throttle(function (input) {
-          _this2.$emit('cascade', _this2.nativeCascade = [input]);
-        }, 7),
-        expand: nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].throttle(function (input) {
-          nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].toggle(_this2.expanded, input);
-        }, 7)
-      };
-      return h('NDraggableTreeItem', {
-        props: value,
-        on: events
-      }, [this.use === null ? this.$scopedSlots["default"](value) : h(this.use, {
-        props: value,
-        on: events
-      })]);
-    }
-  },
-  provide: function provide() {
-    return {
-      NDraggableTree: this
-    };
-  },
-  data: function data() {
-    return {
-      nativeCascade: this.cascade
-    };
-  },
-  render: function render(h) {
-    var _this3 = this;
-
-    var scopedSlots = {
-      "default": function _default(p) {
-        return _this3.renderDefault(h, p);
-      },
-      after: function after(p) {
-        return _this3.renderAfter(h, p);
-      }
-    };
-    var events = {
-      input: nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].throttle(function () {
-        for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-          args[_key2] = arguments[_key2];
-        }
-
-        _this3.$emit.apply(_this3, ['input'].concat(args));
-      }, 7),
-      move: nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].throttle(function () {
-        for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-          args[_key3] = arguments[_key3];
-        }
-
-        _this3.$emit.apply(_this3, ['move'].concat(args));
-      }, 7)
-    };
-    var props = nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].assign({}, this.$props, {
-      use: null
-    });
-
-    if (this.NDraggableTree) {
-      props.viewportHeight = false;
-    }
-
-    return h('NDraggable', {
-      props: props,
-      on: events,
-      scopedSlots: scopedSlots
-    });
-  }
-});
-
-/***/ }),
-
-/***/ "./src/draggable/src/draggable/draggable.beta.js":
-/*!*******************************************************!*\
-  !*** ./src/draggable/src/draggable/draggable.beta.js ***!
-  \*******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! nano-js */ "nano-js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_0__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
@@ -39589,14 +39232,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     safeZone: {
       "default": function _default() {
         return function (height) {
-          return height * 0.25;
+          return height * 0.51;
         };
       }
     },
     showEmpty: {
       "default": function _default() {
         return true;
-      }
+      },
+      type: [Boolean]
     },
     itemHeight: {
       "default": function _default() {
@@ -39719,7 +39363,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     updateDelay: {
       "default": function _default() {
-        return 1500;
+        return 0;
       },
       type: [Number]
     }
@@ -39730,7 +39374,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       veItems: [],
       veSelected: [],
       veCollapsed: [],
-      veCached: []
+      veCached: [],
+      veSelfCached: []
     };
   },
   provide: function provide() {
@@ -39741,9 +39386,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   beforeMount: function beforeMount() {
     var _this = this;
 
-    this.veCopy = nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].clone(this.items);
-    this.$watch('veCopy', nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].debounce(function () {
-      _this.$emit('input', _this.items = nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].clone(_this.veCopy));
+    this.veCopy = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].clone(this.items);
+    this.$watch('veCopy', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(function () {
+      _this.$emit('input', nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].clone(_this.veCopy));
     }, this.updateDelay), {
       deep: true
     });
@@ -39758,7 +39403,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this2 = this;
 
       var strategy = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'inner';
-      var ids = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(this.veCached, function (item) {
+      var ids = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veCached, function (item) {
         return item[_this2.uniqueProp];
       });
       this.$emit('move', ids.join(','), target[this.uniqueProp], strategy);
@@ -39767,194 +39412,299 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      var insertNode = nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isFunction(this.insertNode) ? this.insertNode(target) : this.insertNode;
+      var cacheBatches = this.getCachedBatches();
+      var targetOrder = nano_js__WEBPACK_IMPORTED_MODULE_1__["Num"]["int"](target[this.orderProp].slice(0, -1).join('') || target[this.indexProp] + 1);
+      var batchedBefore = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].filter(nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].vals(cacheBatches).reverse(), function (batch) {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Num"]["int"](batch['_key']) >= targetOrder;
+      });
+      var batchedAfter = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].filter(nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].vals(cacheBatches).reverse(), function (batch) {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Num"]["int"](batch['_key']) < targetOrder;
+      });
+      var insertNode = nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isFunction(this.insertNode) ? this.insertNode(target) : this.insertNode;
+
+      if (strategy === 'root' && insertNode) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veCached, function (source) {
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].push(_this2.veCopy, _this2.transformDrop(source.item));
+        });
+      }
 
       if (strategy === 'inner' && insertNode) {
-        var finalParent = nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].get(this, target[this.pathProp]);
-        var finalTarget = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].find(finalParent, _defineProperty({}, this.uniqueProp, target[this.uniqueProp]));
+        var finalParent = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this, target[this.pathProp]);
+        var finalTarget = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(finalParent, _defineProperty({}, this.uniqueProp, target[this.uniqueProp]));
 
         if (finalTarget[this.childProp] === undefined) {
           finalTarget[this.childProp] = [];
         }
 
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(this.veCached, function (source) {
-          var dropItem = _this2.dropItemBefore(target, source);
-
-          nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].push(finalTarget[_this2.childProp], _this2.transformDrop(dropItem));
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(cacheBatches, function (batch) {
+          delete batch['_key'];
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch, function (source) {
+            // Add item before last item added, also transform item
+            nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].push(finalTarget[_this2.childProp], _this2.transformDrop(source.item));
+          });
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch, _this2.dropItem);
+        });
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veCached, function (source) {
+          // Add item before last item added, also transform item
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].push(finalTarget[_this2.childProp], _this2.transformDrop(source.item));
         });
       }
 
       if (strategy === 'after' && insertNode) {
-        var _finalTarget = nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].get(this, target[this.pathProp]);
+        var delayedItems = [];
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].vals(batchedBefore), function (batch) {
+          delete batch['_key'];
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch, function (source) {
+            delayedItems.push(source);
+          });
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch, _this2.dropItem);
+        });
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].vals(delayedItems), function (source, count) {
+          var finalTarget = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this2, target[_this2.pathProp]);
+          var finalIndex = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].findIndex(finalTarget, _defineProperty({}, _this2.uniqueProp, target[_this2.uniqueProp])); // Add item before last item added, also transform item
 
-        var finalIndex = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].findIndex(_finalTarget, _defineProperty({}, this.uniqueProp, target[this.uniqueProp]));
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(this.veCached, function (source, count) {
-          var dropItem = _this2.dropItemBefore(target, source); // Add item before last item added, also transform item
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].insert(finalTarget, finalIndex + 1, _this2.transformDrop(source.item));
+        });
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].vals(batchedAfter), function (batch) {
+          delete batch['_key'];
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch.reverse(), function (source, count) {
+            var finalTarget = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this2, target[_this2.pathProp]);
+            var finalIndex = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].findIndex(finalTarget, _defineProperty({}, _this2.uniqueProp, target[_this2.uniqueProp])); // Add item before last item added, also transform item
 
+            nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].insert(finalTarget, finalIndex + 1, _this2.transformDrop(source.item));
+          });
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch, _this2.dropItem);
+        });
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veCached, function (source) {
+          var finalTarget = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this2, target[_this2.pathProp]);
+          var finalIndex = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].findIndex(finalTarget, _defineProperty({}, _this2.uniqueProp, target[_this2.uniqueProp])); // Add item before last item added, also transform item
 
-          nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].insert(_finalTarget, finalIndex + nano_js__WEBPACK_IMPORTED_MODULE_0__["Num"]["int"](count) + 1, _this2.transformDrop(dropItem));
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].insert(finalTarget, finalIndex + 1, _this2.transformDrop(source.item));
         });
       }
 
       if (strategy === 'before' && insertNode) {
-        var _finalTarget2 = nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].get(this, target[this.pathProp]);
+        var _delayedItems = [];
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].vals(batchedBefore), function (batch) {
+          delete batch['_key'];
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch.reverse(), function (source) {
+            _delayedItems.push(source);
+          });
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch, _this2.dropItem);
+        });
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].vals(_delayedItems).reverse(), function (source, count) {
+          var finalTarget = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this2, target[_this2.pathProp]);
+          var finalIndex = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].findIndex(finalTarget, _defineProperty({}, _this2.uniqueProp, target[_this2.uniqueProp])); // Add item before last item added, also transform item
 
-        var _finalIndex = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].findIndex(_finalTarget2, _defineProperty({}, this.uniqueProp, target[this.uniqueProp]));
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].insert(finalTarget, finalIndex, _this2.transformDrop(source.item));
+        });
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].vals(batchedAfter).reverse(), function (batch) {
+          delete batch['_key'];
+          var finalTarget = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this2, target[_this2.pathProp]);
+          var finalIndex = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].findIndex(finalTarget, _defineProperty({}, _this2.uniqueProp, target[_this2.uniqueProp]));
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch.reverse(), function (source, count) {
+            // Add item before last item added, also transform item
+            nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].insert(finalTarget, finalIndex, _this2.transformDrop(source.item));
+          });
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch, _this2.dropItem);
+        });
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veCached, function (source) {
+          var finalTarget = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this2, target[_this2.pathProp]);
+          var finalIndex = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].findIndex(finalTarget, _defineProperty({}, _this2.uniqueProp, target[_this2.uniqueProp])); // Add item before last item added, also transform item
 
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(this.veCached, function (source, count) {
-          var dropItem = _this2.dropItemBefore(target, source); // Add item before last item added, also transform item
-
-
-          nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].insert(_finalTarget2, _finalIndex + nano_js__WEBPACK_IMPORTED_MODULE_0__["Num"]["int"](count), _this2.transformDrop(dropItem));
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].insert(finalTarget, finalIndex, _this2.transformDrop(source.item));
         });
       }
 
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].fire('draggable.done');
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].fire('draggable.done');
     },
-    dropItemBefore: function dropItemBefore(target, source) {
-      var sourceOrder = nano_js__WEBPACK_IMPORTED_MODULE_0__["Num"]["int"](source[this.orderProp].reverse().join(''));
-      var targetOrder = nano_js__WEBPACK_IMPORTED_MODULE_0__["Num"]["int"](target[this.orderProp].reverse().join(''));
-
-      if (sourceOrder < targetOrder) {
-        return source.item;
-      }
-
-      var item = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].clone(source.item);
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].remove(nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].get(this, source[this.pathProp]), _defineProperty({}, this.uniqueProp, source[this.uniqueProp]));
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].remove(this.veSelected, _defineProperty({}, this.uniqueProp, source[this.uniqueProp]));
-      return item;
-    },
-    dropItems: function dropItems() {
+    getCachedBatches: function getCachedBatches() {
       var _this3 = this;
 
-      var removeNode = nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isFunction(this.removeNode) ? this.removeNode() : this.removeNode;
+      var batches = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].reduce(this.veSelfCached, function (merge, source) {
+        var batchKey = source[_this3.orderProp].slice(0, -1).join('') || source[_this3.indexProp] + 1;
+
+        if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].has(merge, batchKey)) {
+          merge[batchKey] = [];
+        }
+
+        var result = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].only(source, [_this3.uniqueProp, _this3.pathProp, _this3.indexProp]);
+        result['item'] = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].clone(source.item);
+        merge[batchKey].push(result);
+        return merge;
+      }, {});
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].map(batches, function (batch) {
+        var sorted = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].sort(batch, function (item) {
+          return item[_this3.orderProp].join('');
+        });
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(sorted, function (item) {
+          return nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].except(item, ['_key']);
+        });
+      });
+      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].sort(batches, function (batch) {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].first(batch)[_this3.orderProp].join('');
+      });
+    },
+    dropItem: function dropItem(source) {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this, source[this.pathProp]), _defineProperty({}, this.uniqueProp, source[this.uniqueProp]));
+      this.veCached = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(this.veCached, _defineProperty({}, this.uniqueProp, source[this.uniqueProp]));
+      this.veSelfCached = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(this.veSelfCached, _defineProperty({}, this.uniqueProp, source[this.uniqueProp]));
+    },
+    dropItems: function dropItems() {
+      var _this4 = this;
+
+      var removeNode = nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isFunction(this.removeNode) ? this.removeNode() : this.removeNode;
 
       if (removeNode) {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(this.veSelected, function (item) {
-          nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].remove(nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].get(_this3, item[_this3.pathProp]), _defineProperty({}, _this3.uniqueProp, item[_this3.uniqueProp]));
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veSelfCached, function (item) {
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this4, item[_this4.pathProp]), _defineProperty({}, _this4.uniqueProp, item[_this4.uniqueProp]));
         });
       }
 
-      this.removeDragCounter();
-      this.removeDragIndicator();
       this.clearItems();
       this.refreshItems();
     },
     clearItems: function clearItems() {
       this.veSelected = [];
       this.veCached = [];
+      this.veSelfCached = [];
+      this.removeDragCounter();
+      this.removeDragIndicator();
     },
     cacheItems: function cacheItems(items) {
-      this.veCached = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(items, function (item) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].clone(item);
+      this.veCached = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(items, function (item) {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].clone(item);
       });
     },
+    updateCollapsed: function updateCollapsed() {
+      this.$emit('update:collapsed', this.veCollapsed);
+    },
     collapseItem: function collapseItem(id) {
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isString(id)) {
+      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isString(id)) {
         id = id[this.uniqueProp];
       }
 
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].has(this.veCollapsed, id)) {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].remove(this.veSelected, _defineProperty({}, this.uniqueProp, id));
-      }
-
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].toggle(this.veCollapsed, id);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].toggle(this.veCollapsed, id);
       this.refreshItems();
     },
     isCollapsed: function isCollapsed(id) {
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isString(id)) {
+      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isString(id)) {
         id = id[this.uniqueProp];
       }
 
-      return !nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].has(this.veCollapsed, id);
+      return !nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(this.veCollapsed, id);
+    },
+    updateSelected: function updateSelected() {
+      this.$emit('update:selected', this.veSelected);
     },
     dispatchSelected: function dispatchSelected() {
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].fire('draggable.start', this.veSelected);
+      var _this5 = this;
+
+      var selected = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veSelected, function (item) {
+        var result = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(_this5.veItems, _defineProperty({}, _this5.uniqueProp, item));
+        result['item'] = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this5, result[_this5.pathProp] + '.' + result[_this5.indexProp]);
+        return result;
+      });
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].fire('draggable.start', this.veSelfCached = selected);
     },
-    toggleItem: function toggleItem(element) {
+    toggleItem: function toggleItem(id) {
       var reset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isString(id)) {
+        id = id[this.uniqueProp];
+      }
 
       if (reset) {
         this.veSelected = [];
       }
 
-      var index = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].findIndex(this.veSelected, _defineProperty({}, this.uniqueProp, element[this.uniqueProp]));
-
-      if (index !== -1) {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].splice(this.veSelected, index);
-      }
-
-      if (index === -1) {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].push(this.veSelected, element);
-      }
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].toggle(this.veSelected, id);
+      this.updateSelected();
     },
-    selectItem: function selectItem(element) {
+    selectItem: function selectItem(id) {
       var reset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isString(id)) {
+        id = id[this.uniqueProp];
+      }
 
       if (reset) {
         this.veSelected = [];
       }
 
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].add(this.veSelected, element, _defineProperty({}, this.uniqueProp, element[this.uniqueProp]));
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(this.veSelected, id);
+      this.updateSelected();
     },
-    unselectItem: function unselectItem(element) {
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].remove(this.veSelected, _defineProperty({}, this.uniqueProp, element[this.uniqueProp]));
+    unselectItem: function unselectItem(id) {
+      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isString(id)) {
+        id = id[this.uniqueProp];
+      }
+
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(this.veSelected, id);
+      this.updateSelected();
     },
     canSelect: function canSelect(element) {
+      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isString(element)) {
+        element = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(this.veItems, _defineProperty({}, this.uniqueProp, element));
+      }
+
       if (!this.veSelected.length) {
         return true;
       }
 
-      var first = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].first(this.veSelected);
+      var first = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(this.veItems, _defineProperty({}, this.uniqueProp, nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].first(this.veSelected)));
       return element[this.depthProp] === first[this.depthProp];
     },
     isSelected: function isSelected(id) {
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isString(id)) {
+      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isString(id)) {
         id = id[this.uniqueProp];
       }
 
-      return nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].has(this.veSelected, _defineProperty({}, this.uniqueProp, id));
+      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(this.veSelected, id);
     },
     canDrag: function canDrag(element) {
       return true;
     },
     canDrop: function canDrop(element) {
-      var _this4 = this;
+      var _this6 = this;
 
       var targetPath = "".concat(element[this.pathProp], ".") + "".concat(element[this.indexProp]);
-      var result = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].filter(this.veSelected, function (source) {
-        var sourcePath = "".concat(source[_this4.pathProp], ".") + "".concat(source[_this4.indexProp]);
+      var selected = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veSelected, function (item) {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(_this6.veItems, _defineProperty({}, _this6.uniqueProp, item));
+      });
+      var result = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].filter(selected, function (source) {
+        var sourcePath = "".concat(source[_this6.pathProp], ".") + "".concat(source[_this6.indexProp]);
         return targetPath.indexOf("".concat(sourcePath, ".")) !== -1 || sourcePath === targetPath;
       });
       return !result.length;
     },
     itemReducer: function itemReducer(merge, items) {
-      var _this5 = this;
+      var _this7 = this;
 
       var depth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
       var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'veCopy';
       var orders = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : [];
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(items, function (item, index) {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(items, function (item, index) {
         var _dragObject;
 
-        var dragObject = (_dragObject = {}, _defineProperty(_dragObject, _this5.indexProp, index), _defineProperty(_dragObject, _this5.pathProp, path), _defineProperty(_dragObject, _this5.depthProp, depth), _dragObject);
-        dragObject[_this5.uniqueProp] = nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].get(item, _this5.uniqueProp);
+        var dragObject = (_dragObject = {}, _defineProperty(_dragObject, _this7.indexProp, index), _defineProperty(_dragObject, _this7.pathProp, path), _defineProperty(_dragObject, _this7.depthProp, depth), _dragObject);
+        dragObject[_this7.uniqueProp] = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, _this7.uniqueProp);
 
-        if (!dragObject[_this5.uniqueProp]) {
-          nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].set(_this5, "".concat(path, ".").concat(index, ".").concat(_this5.uniqueProp), dragObject[_this5.uniqueProp] = Object(nano_js__WEBPACK_IMPORTED_MODULE_0__["UUID"])());
+        if (!dragObject[_this7.uniqueProp]) {
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].set(_this7, "".concat(path, ".").concat(index, ".").concat(_this7.uniqueProp), dragObject[_this7.uniqueProp] = Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])());
         } // Order prop to sort on drag
 
 
-        dragObject[_this5.orderProp] = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].merge(orders, [index + 1]); // Md5 item to check for any changes
+        dragObject[_this7.orderProp] = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].merge(orders, [index + 1]); // Md5 item to check for any changes
 
-        dragObject[_this5.keyProp] = nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].md5(dragObject);
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].push(merge, dragObject);
+        dragObject[_this7.keyProp] = nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].md5(dragObject);
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].push(merge, dragObject);
 
-        if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].has(_this5.veCollapsed, dragObject[_this5.uniqueProp])) {
+        if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(_this7.veCollapsed, dragObject[_this7.uniqueProp])) {
           return;
         }
 
-        merge = _this5.itemReducer(merge, nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].get(item, _this5.childProp, []), depth + 1, "".concat(path, ".").concat(index, ".").concat(_this5.childProp), dragObject[_this5.orderProp]);
+        merge = _this7.itemReducer(merge, nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, _this7.childProp, []), depth + 1, "".concat(path, ".").concat(index, ".").concat(_this7.childProp), dragObject[_this7.orderProp]);
       });
       return merge;
     },
@@ -39963,7 +39713,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      this.dragIndicator = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].make('div', {
+      this.dragIndicator = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].make('div', {
         classList: ['n-draggable__indicator']
       });
       this.dragIndicator.attr('data-ignore', true);
@@ -39979,12 +39729,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (!state) {
         return this.dragIndicator.css({
-          display: 'none'
+          visibility: 'hidden'
         });
       }
 
       this.dragIndicator.css({
-        display: 'block',
+        visibility: 'visible',
         top: "".concat(top, "px")
       });
     },
@@ -40000,10 +39750,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      this.dragCounter = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].make('div', {
+      this.dragCounter = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].make('div', {
         classList: ['n-draggable__counter']
       });
-      this.dragCounter.html("<span>".concat(nano_js__WEBPACK_IMPORTED_MODULE_0__["Locale"].choice(':count Item|:count Items', this.veSelected.length), "</span>")); // Append dragimage to body
+      this.dragCounter.html("<span>".concat(nano_js__WEBPACK_IMPORTED_MODULE_1__["Locale"].choice(':count Item|:count Items', this.veSelected.length), "</span>")); // Append dragimage to body
 
       this.dragCounter.appendTo(document.body); // Fix data transfer
 
@@ -40030,23 +39780,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     eventDragenter: function eventDragenter(event) {
       event.preventDefault();
 
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(event.target).closest(this.$el)) {
+      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(event.target).closest(this.$el)) {
         this.createDragIndicator(event);
       }
     },
     eventDragleave: function eventDragleave(event) {
       event.preventDefault();
 
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(event.target).closest(this.$el)) {
+      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(event.target).closest(this.$el)) {
         this.updateDragIndicator(false);
       }
     },
     eventDragend: function eventDragend(event) {
       event.preventDefault();
 
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(event.target).closest(this.$el)) {
-        this.removeDragIndicator(event);
+      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(event.target).closest(this.$el)) {
+        this.removeDragIndicator();
       }
+    },
+    eventEmptyDragenter: function eventEmptyDragenter(event) {
+      event.preventDefault();
+    },
+    eventEmptyDragover: function eventEmptyDragover(event) {
+      event.preventDefault();
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('n-dragover');
+    },
+    eventEmptyDragleave: function eventEmptyDragleave(event) {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).removeClass('n-dragover');
+    },
+    eventEmptyDragdrop: function eventEmptyDragdrop(event) {
+      var _virtualItem;
+
+      event.preventDefault();
+      var virtualItem = (_virtualItem = {}, _defineProperty(_virtualItem, this.indexProp, 0), _defineProperty(_virtualItem, this.orderProp, [0]), _defineProperty(_virtualItem, this.uniqueProp, null), _virtualItem);
+      this.$emit('dragdrop', event, virtualItem, 'root');
     }
   },
   mounted: function mounted() {
@@ -40054,29 +39821,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.$on('dragstart', this.createDragCounter);
     this.$on('dragstart', this.createDragIndicator);
     this.$on('dragdrop', this.moveItems);
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].bind('draggable.start', this.cacheItems);
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].bind('draggable.stop', this.clearItems);
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].bind('draggable.done', this.dropItems);
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).on('dragenter', this.eventDragenter, {
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].bind('draggable.start', this.cacheItems);
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].bind('draggable.stop', this.clearItems);
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].bind('draggable.done', this.dropItems);
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('dragenter', this.eventDragenter, {
       _uid: this._uid
     });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).on('dragleave', this.eventDragleave, {
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('dragleave', this.eventDragleave, {
       _uid: this._uid
     });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).on('dragend', this.eventDragend, {
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('dragend', this.eventDragend, {
       _uid: this._uid
     });
   },
   renderEmpty: function renderEmpty() {
     var h = this.$createElement;
 
-    if (this.$slots.empty) {
-      return this.$slots.empty;
+    if (!this.showEmpty) {
+      return null;
     }
 
-    return h("div", {
+    var events = {
+      dragenter: this.eventEmptyDragenter,
+      dragover: this.eventEmptyDragover,
+      dragleave: this.eventEmptyDragleave,
+      dragdrop: this.eventEmptyDragdrop,
+      drop: this.eventEmptyDragdrop
+    };
+    return h("div", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
       "class": "n-draggable__empty"
-    }, [h("span", [this.trans('No entries')])]);
+    }, {
+      "on": events
+    }]), [h("span", [this.$slots.empty || this.trans('No entries')])]);
   },
   renderItem: function renderItem(props) {
     var data = {
@@ -40088,800 +39864,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   render: function render($render) {
     this.$render = $render;
 
-    if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(this.veCopy)) {
+    if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.veCopy)) {
       return this.ctor('renderEmpty')();
     }
 
-    var props = nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].assign(nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].clone(this.$props), {
+    var props = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].assign(nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].clone(this.$props), {
       items: this.veItems,
       renderNode: this.ctor('renderItem')
     });
-    return this.$render('NRenderList', {
+    return this.$render('NVirtualscroller', {
       "class": 'n-draggable',
       props: props
     });
-  }
-});
-
-/***/ }),
-
-/***/ "./src/draggable/src/draggable/draggable.js":
-/*!**************************************************!*\
-  !*** ./src/draggable/src/draggable/draggable.js ***!
-  \**************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! nano-js */ "nano-js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_0__);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'NDraggable',
-  model: {
-    prop: 'items'
-  },
-  inject: {
-    NDraggable: {
-      "default": undefined
-    },
-    NDraggableTree: {
-      "default": undefined
-    }
-  },
-  props: {
-    items: {
-      "default": function _default() {
-        return [];
-      }
-    },
-    displayItems: {
-      "default": function _default() {
-        return null;
-      }
-    },
-    renderNode: {
-      "default": function _default() {
-        return null;
-      }
-    },
-    use: {
-      "default": function _default() {
-        return null;
-      }
-    },
-    useBefore: {
-      "default": function _default() {
-        return null;
-      }
-    },
-    useAfter: {
-      "default": function _default() {
-        return null;
-      }
-    },
-    selected: {
-      "default": function _default() {
-        return null;
-      }
-    },
-    depth: {
-      "default": function _default() {
-        return 0;
-      },
-      type: [Number]
-    },
-    group: {
-      "default": function _default() {
-        return ['default'];
-      },
-      type: [Array]
-    },
-    safeZone: {
-      "default": function _default() {
-        return function (height) {
-          return height * 0.51;
-        };
-      }
-    },
-    showEmpty: {
-      "default": function _default() {
-        return true;
-      }
-    },
-    itemHeight: {
-      "default": function _default() {
-        return 34;
-      },
-      type: [Number]
-    },
-    viewportHeight: {
-      "default": function _default() {
-        return false;
-      }
-    },
-    uniqueProp: {
-      "default": function _default() {
-        return 'id';
-      },
-      type: [String]
-    },
-    childProp: {
-      "default": function _default() {
-        return null;
-      }
-    },
-    transformDrop: {
-      "default": function _default() {
-        return function (item) {
-          return item;
-        };
-      }
-    },
-    insertNode: {
-      "default": function _default() {
-        return function () {
-          return true;
-        };
-      }
-    },
-    removeNode: {
-      "default": function _default() {
-        return function () {
-          return true;
-        };
-      }
-    },
-    allowSelect: {
-      "default": function _default() {
-        return function () {
-          return true;
-        };
-      }
-    },
-    allowDrag: {
-      "default": function _default() {
-        return function () {
-          return true;
-        };
-      }
-    },
-    allowDrop: {
-      "default": function _default() {
-        return function () {
-          return true;
-        };
-      }
-    },
-    className: {
-      "default": function _default() {
-        return ['n-draggable'];
-      }
-    }
-  },
-  methods: {
-    draggableStart: function draggableStart(cache, group) {
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].intersect(group, this.group).length === 0) {
-        return;
-      }
-
-      this.cache = cache;
-    },
-    draggableEnd: function draggableEnd(group) {
-      var _this = this;
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].intersect(group, this.group).length === 0) {
-        return;
-      }
-
-      var selected = this.selected || this.nativeSelected;
-
-      if (this.self.length === 0) {
-        return;
-      }
-
-      var items = this.items;
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(selected, function (item) {
-        var removeNode = typeof _this.removeNode === 'function' ? _this.removeNode : function () {
-          return _this.removeNode;
-        };
-
-        if (!removeNode(item)) {
-          return;
-        }
-
-        items = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].remove(items, {
-          _dragid: item._dragid
-        });
-      });
-      this.$emit('update:selected', this.nativeSelected = this.cache = this.self = []);
-      this.$emit('input', items);
-    },
-    draggableAbort: function draggableAbort() {
-      this.cache = this.self = this.nativeSelected = [];
-    },
-    docDragOver: function docDragOver(event) {
-      event.preventDefault();
-      var target = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].location(this.clientX = event.clientX, this.clientY = event.clientY).get(0);
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).inside(this.$refs.indicator)) {
-        return;
-      }
-
-      var dragFrame = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).closest('.n-draggable');
-      var dragItem = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).closest('[data-drag-id]');
-
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(dragFrame).is(this.$el) && !nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(dragItem).isParent(this.$el)) {
-        return this.frameDragLeave(event, this.$el);
-      }
-
-      if (dragItem !== null) {
-        return this.itemDragOver(event, dragItem);
-      }
-
-      this.frameDragOver(event, this.$el);
-    },
-    docDragLeave: function docDragLeave(event) {
-      var target = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].location(event.clientX, event.clientY).get(0);
-      var dragItem = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).closest('[data-drag-id]');
-
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(dragItem).isParent(this.$el)) {
-        return;
-      }
-
-      delete this.clientX;
-      delete this.clientY;
-      this.frameDragLeave(event, this.$el);
-    },
-    docDragEnd: function docDragEnd(event) {
-      var _this2 = this;
-
-      if (event.dataTransfer) {
-        event.dataTransfer.dropEffect = "move";
-      }
-
-      if (this.clientX === undefined || this.clientY === undefined) {
-        return;
-      }
-
-      var target = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].location(this.clientX, this.clientY).first();
-      var dragFrame = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).closest('.n-draggable');
-      var dragItem = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).closest('[data-drag-id]');
-
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(dragFrame).is(this.$el) && !nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(dragItem).isParent(this.$el)) {
-        return;
-      }
-
-      if (dragItem !== null) nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].delay(function () {
-        _this2.itemDragEnd(event, dragItem);
-      }, 14);
-      if (this.items.length === 0) nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].delay(function () {
-        _this2.frameDragEnd(event, _this2.$el);
-      }, 14);
-    },
-    frameDragLeave: function frameDragLeave(event, target) {
-      if (this.$refs.indicator !== undefined) {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$refs.indicator).css({
-          top: -99999 + 'px'
-        });
-      }
-
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).childs('[data-drag-id]').each(function (el) {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(el).removeClass('n-draggable--dragover');
-      });
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).removeClass('n-draggable--dragover');
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find('.n-draggable--selected').removeClass('n-draggable--nodrop');
-    },
-    frameDragEnd: function frameDragEnd(event, target) {
-      var _this3 = this;
-
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).inside(this.$el)) {
-        return;
-      }
-
-      var cache = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].clone(this.cache);
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(cache, function (item, key) {
-        cache[key]['_dragid'] = Object(nano_js__WEBPACK_IMPORTED_MODULE_0__["UUID"])();
-      });
-      var items = this.items;
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(cache, function (item) {
-        items.splice(items.length, 0, _this3.transformDrop(item));
-      });
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).removeClass('n-draggable--dragover');
-      var sources = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(this.selected || this.nativeSelected, function (item) {
-        return item[_this3.uniqueProp];
-      });
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].fire('draggable:end', this.group);
-      this.$emit('move', sources.join(','), null, 'inner');
-    },
-    frameDragOver: function frameDragOver(event, target) {
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).inside(this.$el)) {
-        return;
-      }
-
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$refs.indicator).css({
-        top: -99999 + 'px'
-      });
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$el).childs('[data-drag-id]').each(function (el) {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(el).removeClass('n-draggable--dragover');
-      });
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).addClass('n-draggable--dragover');
-    },
-    itemMouseDown: function itemMouseDown(event, target) {
-      if (event.which !== 1) {
-        return;
-      }
-
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).parent().parent().is(this.$el)) {
-        return;
-      }
-
-      var item = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].find(this.items, {
-        _dragid: nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).attr('data-drag-id')
-      });
-
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(item) && nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(this.nativeSelected)) {
-        return;
-      }
-
-      this.nativeSelected = [nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].clone(item)];
-    },
-    itemMouseUp: function itemMouseUp(event, target) {
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).parent().parent().is(this.$el)) {
-        return;
-      }
-
-      this.nativeSelected = [];
-    },
-    itemDragStart: function itemDragStart(event, target) {
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).inside(this.$el)) {
-        return;
-      }
-
-      var item = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].find(this.items, {
-        _dragid: nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).attr('data-drag-id')
-      });
-
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(item) && nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(this.nativeSelected)) {
-        this.nativeSelected = [nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].clone(item)];
-      }
-
-      var selected = nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(this.selected) ? this.nativeSelected : this.selected;
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(selected) === true) {
-        return;
-      }
-
-      var index = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].findIndex(selected, {
-        _dragid: nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).attr('data-drag-id')
-      });
-
-      if (index === -1) {
-        selected = this.nativeSelected;
-      }
-
-      this.$emit('update:selected', selected);
-
-      if (window.IE === true) {
-        event.dataTransfer.setData('Text', '');
-      } else {
-        event.dataTransfer.setData('text/plain', '');
-      }
-
-      if (typeof event.dataTransfer.setDragImage === "function") {
-        var dragImage = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$refs.placeholder).appendTo(document.body);
-        event.dataTransfer.setDragImage(dragImage.get(0), 0, 0);
-      }
-
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].fire('draggable:start', this.self = selected, this.group);
-    },
-    itemDragOver: function itemDragOver(event, target) {
-      var _this4 = this;
-
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).inside(this.$el)) {
-        return;
-      }
-
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find('.n-draggable--dragover').each(function (el) {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(el).not(target).removeClass('n-draggable--dragover');
-      });
-      var offsetTarget = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).offsetTop(this.$el) - nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).scroll('top', this.$el);
-      var offsetElement = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$el).offsetTop() - nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$el).scroll('top');
-      var height = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).height(),
-          displayHeight = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).height();
-
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).next().attr('data-drag-id')) {
-        displayHeight += nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).next().height();
-      }
-
-      var safeZone = typeof this.safeZone === 'function' ? this.safeZone(height) : this.safeZone;
-      this.move = 'inner';
-
-      if (event.clientY < offsetTarget + offsetElement + safeZone) {
-        this.move = 'before';
-      }
-
-      if (event.clientY > offsetTarget + offsetElement + height - safeZone) {
-        this.move = 'after';
-      }
-
-      var index = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].findIndex(this.items, {
-        _dragid: nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).attr('data-drag-id')
-      });
-
-      if (this.move === 'before') {
-        displayHeight = 0;
-      }
-
-      if (index === 0) {
-        displayHeight += 1;
-      }
-
-      if (index === this.items.length - 1) {
-        displayHeight -= 1;
-      }
-
-      var dest = this.items[index];
-      var rainbow = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(this.cache, function (src) {
-        return typeof _this4.allowDrop === 'function' ? _this4.allowDrop(src, dest, _this4.move, _this4.depth) : _this4.allowDrop;
-      });
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].has(rainbow, false) || this.cache.length === 0) {
-        this.move = 'nodrop';
-      }
-
-      if (this.childProp === null && this.move === 'inner') {
-        this.move = 'nodrop';
-      }
-
-      if (this.move === 'inner') {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$refs.indicator).css({
-          top: -99999 + 'px'
-        });
-      }
-
-      if (this.move === 'nodrop') {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$refs.indicator).css({
-          top: -99999 + 'px'
-        });
-      }
-
-      if (this.move === 'before') {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$refs.indicator).css({
-          top: offsetTarget + displayHeight + 'px'
-        });
-      }
-
-      if (this.move === 'after') {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$refs.indicator).css({
-          top: offsetTarget + displayHeight + 'px'
-        });
-      }
-
-      if (this.move === 'inner') {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).addClass('n-draggable--dragover');
-      } else {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).removeClass('n-draggable--dragover');
-      }
-
-      if (this.move === 'nodrop') {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find('.n-draggable--selected').addClass('n-draggable--nodrop');
-      } else {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find('.n-draggable--selected').removeClass('n-draggable--nodrop');
-      }
-
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$el).removeClass('n-draggable--dragover');
-    },
-    itemDragEnd: function itemDragEnd(event, target) {
-      var _this5 = this;
-
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$refs.indicator).css({
-        top: -99999 + 'px'
-      });
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).removeClass('n-draggable--dragover');
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find('.n-draggable--selected').removeClass('n-draggable--nodrop');
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).inside('.n-draggable--selected')) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].fire('draggable:abort', this.group);
-      }
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).inside('.n-draggable--selected + .n-draggable')) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].fire('draggable:abort', this.group);
-      }
-
-      if (this.move === 'nodrop') {
-        return nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].fire('draggable:abort', this.group);
-      }
-
-      var item = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].find(this.items, {
-        _dragid: nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).attr('data-drag-id')
-      });
-      var rainbow = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(this.cache, function (src) {
-        return typeof _this5.allowDrop === 'function' ? _this5.allowDrop(src, item, _this5.move, _this5.depth) : _this5.allowDrop;
-      });
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].has(rainbow, false) === true) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].fire('draggable:abort', this.group);
-      }
-
-      var index = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].findIndex(this.items, {
-        _dragid: nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).attr('data-drag-id')
-      });
-      var cache = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].clone(this.cache);
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(cache, function (item, key) {
-        cache[key]['_dragid'] = Object(nano_js__WEBPACK_IMPORTED_MODULE_0__["UUID"])();
-      });
-      var insertNode = typeof this.insertNode === 'function' ? this.insertNode : function () {
-        return _this5.insertNode;
-      };
-      var items = this.items;
-
-      if (this.move === 'before' && insertNode) {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(cache, function (_item, count) {
-          _item = _this5.transformDrop(_item);
-
-          if (!insertNode(_item, item)) {
-            return;
-          }
-
-          items.splice(index + nano_js__WEBPACK_IMPORTED_MODULE_0__["Num"]["int"](count), 0, _item);
-        });
-      }
-
-      if (this.move === 'after' && insertNode) {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(cache, function (_item, count) {
-          _item = _this5.transformDrop(_item);
-
-          if (!insertNode(_item, item)) {
-            return;
-          }
-
-          items.splice(index + nano_js__WEBPACK_IMPORTED_MODULE_0__["Num"]["int"](count) + 1, 0, _item);
-        });
-      }
-
-      if (this.move === 'inner' && insertNode) {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(cache, function (_item) {
-          _item = _this5.transformDrop(_item);
-
-          if (!insertNode(_item, item)) {
-            return;
-          }
-
-          items[index][_this5.childProp].splice(items[index][_this5.childProp].length, 0, _item);
-        });
-      }
-
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].fire('draggable:end', this.group);
-      var sources = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(cache, function (item) {
-        return item[_this5.uniqueProp];
-      });
-      this.$emit('move', sources.join(','), item[this.uniqueProp], this.move);
-    },
-    renderRow: function renderRow(h, value, key) {
-      var _this6 = this;
-
-      var realKey = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].findIndex(this.items, {
-        _dragid: value._dragid
-      });
-      value = this.items[realKey];
-      var className = ['n-draggable__item'];
-      var index = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].findIndex(this.selected || this.nativeSelected, {
-        _dragid: value._dragid
-      });
-
-      if (index !== -1) {
-        className.push('n-draggable--selected');
-      }
-
-      var selectable = typeof this.allowSelect === 'function' ? this.allowSelect(value, this.depth) : this.allowSelect;
-      var draggable = typeof this.allowDrag === 'function' ? this.allowDrag(value, this.depth) : this.allowDrag;
-
-      var updateItem = function updateItem(input) {
-        value = input;
-      };
-
-      var updateProp = function updateProp(path) {
-        return function (input) {
-          nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].set(value, path, input);
-        };
-      };
-
-      var props = {
-        value: value,
-        key: key,
-        updateItem: updateItem,
-        updateProp: updateProp
-      };
-      var on = {
-        input: function input(_input) {
-          _this6.$emit('input', nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].set(_this6.items, key, _input));
-        },
-        remove: function remove() {
-          _this6.$emit('input', nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].removeIndex(_this6.items, {
-            _dragid: value._dragid
-          }));
-        },
-        clone: function clone() {
-          var clone = nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].assign({}, value, {
-            _dragid: Object(nano_js__WEBPACK_IMPORTED_MODULE_0__["UUID"])()
-          });
-
-          _this6.$emit('input', nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].insert(_this6.items, key, clone));
-        }
-      };
-      var beforeSlot = [this.$scopedSlots.before ? this.$scopedSlots.before(props) : null];
-
-      if (this.useBefore !== null) {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].append(beforeSlot, h(this.useBefore, {
-          key: value._dragid + '_before',
-          props: props,
-          on: on
-        }));
-      }
-
-      var afterSlot = [this.$scopedSlots.after ? this.$scopedSlots.after(props) : null];
-
-      if (this.useAfter !== null) {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].prepend(afterSlot, h(this.useAfter, {
-          key: value._dragid + '_after',
-          props: props,
-          on: on
-        }));
-      }
-
-      var style = {
-        minHeight: this.itemHeight + 'px'
-      };
-      var finalNode = null;
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isNull(finalNode) && !nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isNull(this.renderNode)) {
-        finalNode = this.renderNode(props);
-      }
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isNull(finalNode) && !nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isNull(this.use)) {
-        finalNode = h(this.use, {
-          key: value._dragid,
-          props: props,
-          on: on
-        });
-      }
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isNull(finalNode)) {
-        finalNode = this.$scopedSlots["default"](props);
-      }
-
-      var defaultSlot = h("div", {
-        "key": value._dragid,
-        "style": style,
-        "class": className,
-        "attrs": {
-          "data-drag-id": value._dragid,
-          "selectable": selectable,
-          "draggable": draggable
-        }
-      }, [finalNode]);
-      return nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].merge(beforeSlot, [defaultSlot], afterSlot);
-    }
-  },
-  data: function data() {
-    return {
-      move: null,
-      nativeSelected: [],
-      self: [],
-      cache: []
-    };
-  },
-  provide: function provide() {
-    return {
-      NDraggable: this
-    };
-  },
-  beforeMount: function beforeMount() {
-    var _this7 = this;
-
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(this.items, function (item, key) {
-      if (item._dragid === undefined) _this7.items[key]['_dragid'] = Object(nano_js__WEBPACK_IMPORTED_MODULE_0__["UUID"])();
-    });
-  },
-  beforeUpdate: function beforeUpdate() {
-    var _this8 = this;
-
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(this.items, function (item, key) {
-      if (item._dragid === undefined) _this8.items[key]['_dragid'] = Object(nano_js__WEBPACK_IMPORTED_MODULE_0__["UUID"])();
-    });
-  },
-  mounted: function mounted() {
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].bind('draggable:start', this.draggableStart, {
-      _uid: this._uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].bind('draggable:end', this.draggableEnd, {
-      _uid: this._uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].bind('draggable:abort', this.draggableAbort, {
-      _uid: this._uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).on('dragend', nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].throttle(this.docDragEnd, 25), {
-      _uid: this._uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).on('dragover', nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].throttle(this.docDragOver, 25), {
-      _uid: this._uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).on('dragleave', nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].throttle(this.docDragLeave, 25), {
-      _uid: this._uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).live('mousedown', '[data-drag-id][selectable="true"]', this.itemMouseDown, {
-      _uid: this._uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).live('mouseup', '[data-drag-id][selectable="true"]', this.itemMouseUp, {
-      _uid: this._uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).live('dragstart', '[data-drag-id][draggable="true"]', this.itemDragStart, {
-      _uid: this._uid
-    });
-  },
-  beforeDestroy: function beforeDestroy() {
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].unbind('draggable:start', {
-      _uid: this._uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].unbind('draggable:end', {
-      _uid: this._uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Event"].unbind('draggable:abort', {
-      _uid: this._uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).off('dragend', null, {
-      _uid: this._uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).off('dragover', null, {
-      _uid: this._uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).off('dragleave', null, {
-      _uid: this._uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).off('mousedown', '[data-drag-id][selectable="true"]', {
-      _uid: this._uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).off('mouseup', '[data-drag-id][selectable="true"]', {
-      _uid: this._uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).off('dragstart', '[data-drag-id][draggable="true"]', {
-      _uid: this._uid
-    });
-  },
-  render: function render(h) {
-    var className = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].clone(this.className);
-
-    if (this.NDraggable === undefined) {
-      className.push('n-draggable--root');
-    }
-
-    var items = this.displayItems || this.items;
-
-    if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(items) === true && this.showEmpty === false) {
-      return null;
-    }
-
-    var props = {
-      items: items,
-      itemHeight: this.itemHeight,
-      viewportHeight: this.viewportHeight,
-      renderNode: this.renderRow
-    };
-    return h("div", {
-      "class": className
-    }, [nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(this.items) === false && h('NRenderList', {
-      props: props
-    }), nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(this.items) === true && (this.$slots.empty || h("div", {
-      "class": "n-draggable__empty"
-    }, [h("span", [this.trans('No entries')])])), h("div", {
-      "ref": "indicator",
-      "class": "n-draggable__indicator"
-    }, [h("span")]), h("div", {
-      "ref": "placeholder",
-      "class": "n-draggable__placeholder"
-    }, [h("span", [this.choice(':count entry|:count entries', this.self.length)])])]);
   }
 });
 
@@ -41758,7 +40752,9 @@ function Install(Vue) {
 
   __webpack_require__(/*! ./notification/index */ "./src/notification/index.js");
 
-  __webpack_require__(/*! ./render/index */ "./src/render/index.js");
+  __webpack_require__(/*! ./scrollbar/index */ "./src/scrollbar/index.js");
+
+  __webpack_require__(/*! ./virtualscroller/index */ "./src/virtualscroller/index.js");
 
   __webpack_require__(/*! ./draggable/index */ "./src/draggable/index.js");
 
@@ -43940,19 +42936,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _src_popover_popover_beta__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/popover/popover.beta */ "./src/popover/src/popover/popover.beta.js");
- // import Popover from './src/popover/popover';
-// Vue.component(Popover.name, Popover);
+/* harmony import */ var _src_popover_popover__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/popover/popover */ "./src/popover/src/popover/popover.js");
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_popover_popover_beta__WEBPACK_IMPORTED_MODULE_1__["default"].name, _src_popover_popover_beta__WEBPACK_IMPORTED_MODULE_1__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_popover_popover__WEBPACK_IMPORTED_MODULE_1__["default"].name, _src_popover_popover__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 /***/ }),
 
-/***/ "./src/popover/src/popover/popover.beta.js":
-/*!*************************************************!*\
-  !*** ./src/popover/src/popover/popover.beta.js ***!
-  \*************************************************/
+/***/ "./src/popover/src/popover/popover.js":
+/*!********************************************!*\
+  !*** ./src/popover/src/popover/popover.js ***!
+  \********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -44388,10 +43382,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/render/index.js":
-/*!*****************************!*\
-  !*** ./src/render/index.js ***!
-  \*****************************/
+/***/ "./src/scrollbar/index.js":
+/*!********************************!*\
+  !*** ./src/scrollbar/index.js ***!
+  \********************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -44399,281 +43393,17 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _src_render_div_render_div__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/render-div/render-div */ "./src/render/src/render-div/render-div.js");
-/* harmony import */ var _src_render_scrollbar_render_scrollbar_beta__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/render-scrollbar/render-scrollbar.beta */ "./src/render/src/render-scrollbar/render-scrollbar.beta.js");
-/* harmony import */ var _src_render_list_render_list_beta2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./src/render-list/render-list.beta2 */ "./src/render/src/render-list/render-list.beta2.js");
+/* harmony import */ var _src_scrollbar_scrollbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/scrollbar/scrollbar */ "./src/scrollbar/src/scrollbar/scrollbar.js");
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_render_div_render_div__WEBPACK_IMPORTED_MODULE_1__["default"].name, _src_render_div_render_div__WEBPACK_IMPORTED_MODULE_1__["default"]);
-
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_render_scrollbar_render_scrollbar_beta__WEBPACK_IMPORTED_MODULE_2__["default"].name, _src_render_scrollbar_render_scrollbar_beta__WEBPACK_IMPORTED_MODULE_2__["default"]);
-
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_render_list_render_list_beta2__WEBPACK_IMPORTED_MODULE_3__["default"].name, _src_render_list_render_list_beta2__WEBPACK_IMPORTED_MODULE_3__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_scrollbar_scrollbar__WEBPACK_IMPORTED_MODULE_1__["default"].name, _src_scrollbar_scrollbar__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 /***/ }),
 
-/***/ "./src/render/src/render-div/render-div.js":
-/*!*************************************************!*\
-  !*** ./src/render/src/render-div/render-div.js ***!
-  \*************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'NRenderDiv',
-  props: {
-    value: {
-      "default": function _default() {
-        return {};
-      },
-      type: [Object]
-    }
-  },
-  render: function render(h) {
-    var _this = this;
-
-    return h("div", [h("NInput", {
-      "attrs": {
-        "size": "smalls"
-      },
-      "model": {
-        value: _this.value.label,
-        callback: function callback($$v) {
-          _this.value.label = $$v;
-        }
-      }
-    })]);
-  }
-});
-
-/***/ }),
-
-/***/ "./src/render/src/render-list/render-list.beta2.js":
-/*!*********************************************************!*\
-  !*** ./src/render/src/render-list/render-list.beta2.js ***!
-  \*********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @vue/babel-helper-vue-jsx-merge-props */ "./node_modules/@vue/babel-helper-vue-jsx-merge-props/dist/helper.js");
-/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var dynamic_virtual_scroll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! dynamic-virtual-scroll */ "./node_modules/dynamic-virtual-scroll/DynamicVirtualScroll.js");
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'NRenderList',
-  model: {
-    prop: 'items'
-  },
-  props: {
-    items: {
-      "default": function _default() {
-        return [];
-      }
-    },
-    itemHeight: {
-      "default": function _default() {
-        return 30;
-      }
-    },
-    viewportHeight: {
-      "default": function _default() {
-        return false;
-      }
-    },
-    renderNode: {
-      "default": function _default() {
-        return null;
-      }
-    },
-    bufferItems: {
-      "default": function _default() {
-        return 8;
-      },
-      type: [Number]
-    }
-  },
-  methods: {
-    bindScroller: function bindScroller() {
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].has(this.$refs, 'viewport.$el')) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.bindScroller, 300);
-      }
-
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.viewport.$el).on('scroll', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.refreshDriver, 10));
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.viewport.$el).on('scroll', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.refreshDriver, 30));
-    },
-    refreshDriver: function refreshDriver() {
-      var _this = this;
-
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].has(this.$refs, 'viewport.$el')) {
-        return;
-      }
-
-      var scrollTop = 0;
-
-      if (this.$refs.viewport.$el) {
-        scrollTop = this.$refs.viewport.$el.scrollTop;
-      }
-
-      if (scrollTop < 0) {
-        return;
-      }
-
-      var options = {
-        bufferItems: this.bufferItems,
-        totalItems: this.items.length,
-        viewportHeight: this.height,
-        minRowHeight: this.itemHeight,
-        scrollTop: scrollTop
-      };
-      var newState = Object(dynamic_virtual_scroll__WEBPACK_IMPORTED_MODULE_2__["virtualScrollDriver"])(options, this.state, function () {
-        return _this.itemHeight;
-      });
-      var isSameState = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].reduce(newState, function (same, val, key) {
-        return same && _this.state[key] === val;
-      }, true);
-
-      if (isSameState) {
-        return;
-      }
-
-      this.state = newState;
-    },
-    discoverHeight: function discoverHeight() {
-      if (this.viewportHeight === true) {
-        this.height = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).parent().height();
-      }
-
-      if (this.viewportHeight === false) {
-        this.height = this.items.length * this.itemHeight;
-      }
-
-      if (this.height === 0) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.discoverHeight, 300);
-      }
-
-      this.refreshDriver();
-    }
-  },
-  data: function data() {
-    var state = {
-      items: this.items
-    };
-    return {
-      height: 0,
-      state: state
-    };
-  },
-  beforeMount: function beforeMount() {
-    if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isBool(this.viewportHeight)) {
-      this.height = this.viewportHeight;
-    }
-  },
-  mounted: function mounted() {
-    this.$watch('items', this.discoverHeight);
-    this.bindScroller();
-    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).observerResize(this.discoverHeight)(this.$el);
-  },
-  renderItems: function renderItems(start, count) {
-    var _this2 = this;
-
-    var result = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].slice(this.items, start, start + count);
-    result = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(result, function (value, index) {
-      var props = {
-        value: value,
-        index: index
-      };
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isString(_this2.renderNode)) {
-        return _this2.$render(_this2.renderNode, {
-          props: props
-        });
-      }
-
-      return _this2.renderNode(props);
-    });
-    return result;
-  },
-  render: function render($render) {
-    var _this3 = this;
-
-    var h = arguments[0];
-    this.$render = $render;
-
-    if (this.viewportHeight === false) {
-      return h("div", {
-        "class": "n-render-list"
-      }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.items, function (value, index) {
-        if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isString(_this3.renderNode)) {
-          return _this3.$render(_this3.renderNode, {
-            props: props
-          });
-        }
-
-        return _this3.renderNode({
-          value: value,
-          index: index
-        });
-      })]);
-    }
-
-    if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.state)) {
-      return h("div", {
-        "class": "n-render-list"
-      });
-    }
-
-    var style = {
-      overflow: 'auto',
-      overflowAnchor: 'none',
-      outline: 'none',
-      height: this.height + 'px'
-    };
-    var targetHeight = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.state, 'targetHeight');
-    return h("div", {
-      "class": "n-render-list"
-    }, [!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.state) && h("NRenderScrollbar", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
-      "ref": "viewport"
-    }, {
-      "on": this.$listeners
-    }, {
-      "style": style
-    }]), [h("div", {
-      "style": {
-        height: targetHeight ? targetHeight + 'px' : 'auto',
-        overflow: 'hidden'
-      }
-    }, [!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.state.topPlaceholderHeight) && h("div", {
-      "attrs": {
-        "draggable": false
-      },
-      "style": {
-        height: this.state.topPlaceholderHeight + 'px'
-      }
-    }), !nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.state.middleItemCount) && this.ctor('renderItems')(this.state.firstMiddleItem, this.state.middleItemCount), !nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.state.middlePlaceholderHeight) && h("div", {
-      "attrs": {
-        "draggable": false
-      },
-      "style": {
-        height: this.state.middlePlaceholderHeight + 'px'
-      }
-    }), !nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.state.lastItemCount) && this.ctor('renderItems')(this.items.length - this.state.lastItemCount, this.state.lastItemCount)])])]);
-  }
-});
-
-/***/ }),
-
-/***/ "./src/render/src/render-scrollbar/render-scrollbar.beta.js":
-/*!******************************************************************!*\
-  !*** ./src/render/src/render-scrollbar/render-scrollbar.beta.js ***!
-  \******************************************************************/
+/***/ "./src/scrollbar/src/scrollbar/scrollbar.js":
+/*!**************************************************!*\
+  !*** ./src/scrollbar/src/scrollbar/scrollbar.js ***!
+  \**************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -44689,7 +43419,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'NRenderScrollbar',
+  name: 'NScrollbar',
   props: {
     options: {
       "default": function _default() {
@@ -45229,7 +43959,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _src_table_table__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/table/table */ "./src/table/src/table/table.js");
+/* harmony import */ var _src_table_table_beta__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/table/table.beta */ "./src/table/src/table/table.beta.js");
 /* harmony import */ var _src_table_column_table_column__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/table-column/table-column */ "./src/table/src/table-column/table-column.js");
 /* harmony import */ var _src_table_cell_types_table_cell_string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./src/table-cell/types/table-cell-string */ "./src/table/src/table-cell/types/table-cell-string.js");
 /* harmony import */ var _src_table_cell_types_table_cell_boolean__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./src/table-cell/types/table-cell-boolean */ "./src/table/src/table-cell/types/table-cell-boolean.js");
@@ -45242,7 +43972,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_table_filter_types_table_filter_option__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./src/table-filter/types/table-filter-option */ "./src/table/src/table-filter/types/table-filter-option.js");
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_table_table__WEBPACK_IMPORTED_MODULE_1__["default"].name, _src_table_table__WEBPACK_IMPORTED_MODULE_1__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_table_table_beta__WEBPACK_IMPORTED_MODULE_1__["default"].name, _src_table_table_beta__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_table_column_table_column__WEBPACK_IMPORTED_MODULE_2__["default"].name, _src_table_column_table_column__WEBPACK_IMPORTED_MODULE_2__["default"]);
 
@@ -46316,578 +45046,20 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/table/src/table/table.js":
-/*!**************************************!*\
-  !*** ./src/table/src/table/table.js ***!
-  \**************************************/
+/***/ "./src/table/src/table/table.beta.js":
+/*!*******************************************!*\
+  !*** ./src/table/src/table/table.beta.js ***!
+  \*******************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @vue/babel-helper-vue-jsx-merge-props */ "./node_modules/@vue/babel-helper-vue-jsx-merge-props/dist/helper.js");
-/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _mixins_src_ctor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/src/ctor */ "./src/mixins/src/ctor.js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! nano-js */ "nano-js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_2__);
-
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
+/* harmony import */ var _draggable_src_draggable_draggable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../draggable/src/draggable/draggable */ "./src/draggable/src/draggable/draggable.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NTable',
-  model: {
-    prop: 'items'
-  },
-  props: {
-    items: {
-      "default": function _default() {
-        return [];
-      }
-    },
-    current: {
-      "default": function _default() {
-        return null;
-      }
-    },
-    visibleColumns: {
-      "default": function _default() {
-        return null;
-      }
-    },
-    uniqueProp: {
-      "default": function _default() {
-        return '_dragid';
-      },
-      type: [String, Array]
-    },
-    itemHeight: {
-      "default": function _default() {
-        return 34;
-      },
-      type: [Number]
-    },
-    adaptHeight: {
-      "default": function _default() {
-        return null;
-      }
-    },
-    selectedKeys: {
-      "default": function _default() {
-        return [];
-      },
-      type: [Array]
-    },
-    sortProp: {
-      "default": function _default() {
-        return 'id';
-      },
-      type: [String]
-    },
-    sortDir: {
-      "default": function _default() {
-        return 'desc';
-      },
-      type: [String]
-    },
-    filterProps: {
-      "default": function _default() {
-        return [];
-      },
-      type: [Array]
-    },
-    group: {
-      "default": function _default() {
-        return ['default'];
-      },
-      type: [Array]
-    },
-    insertNode: {
-      "default": function _default() {
-        return function () {
-          return true;
-        };
-      }
-    },
-    removeNode: {
-      "default": function _default() {
-        return function () {
-          return true;
-        };
-      }
-    },
-    allowDrag: {
-      "default": function _default() {
-        return function () {
-          return true;
-        };
-      }
-    },
-    allowDrop: {
-      "default": function _default() {
-        return function () {
-          return false;
-        };
-      }
-    }
-  },
-  computed: {
-    selected: function selected() {
-      var _this = this;
-
-      var selected = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(this.nativeSelectedKeys, function (key) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].find(_this.items, _defineProperty({}, _this.uniqueProp, key));
-      });
-      return nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].clone(selected);
-    },
-    rowStyle: function rowStyle() {
-      var style = {};
-
-      if (this.itemHeight !== 0) {
-        style.height = nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"].fixed(this.itemHeight);
-      }
-
-      return style;
-    }
-  },
-  methods: _objectSpread({}, _mixins_src_ctor__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    addColumn: function addColumn(column) {
-      this.columns.push(column);
-    },
-    getColumnEl: function getColumnEl(column) {
-      var selector = '[data-column-id="' + column._uid + '"]';
-      return nano_js__WEBPACK_IMPORTED_MODULE_2__["Dom"].find(this.$el).find(selector).get(0);
-    },
-    resizeColumn: function resizeColumn(event, column) {
-      var _this2 = this;
-
-      var target = event.target.parentNode;
-      nano_js__WEBPACK_IMPORTED_MODULE_2__["Dom"].find(document).on('mousemove', nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].throttle(function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        var width = event.clientX - nano_js__WEBPACK_IMPORTED_MODULE_2__["Dom"].find(target).offsetLeft() + nano_js__WEBPACK_IMPORTED_MODULE_2__["Dom"].find(target).scrollLeft(null, window);
-
-        if (column.width !== width) {
-          column.setWidth(width);
-        }
-      }, 10), {
-        _uid: this._uid
-      });
-      nano_js__WEBPACK_IMPORTED_MODULE_2__["Dom"].find(document).on('mouseup', nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].throttle(function () {
-        nano_js__WEBPACK_IMPORTED_MODULE_2__["Dom"].find(document).off('mousemove', null, {
-          _uid: _this2._uid
-        });
-        nano_js__WEBPACK_IMPORTED_MODULE_2__["Dom"].find(document).off('mouseup', null, {
-          _uid: _this2._uid
-        });
-      }, 10), {
-        _uid: this._uid
-      });
-    },
-    sortColumn: function sortColumn(prop) {
-      var direction = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-      var cache = this.nativeSortDir;
-
-      if (cache === 'asc' && this.nativeSortProp === prop) {
-        this.nativeSortDir = 'desc';
-      }
-
-      if (cache === 'desc' && this.nativeSortProp === prop) {
-        this.nativeSortDir = 'asc';
-      }
-
-      if (direction !== null) {
-        this.nativeSortDir = direction;
-      }
-
-      this.nativeSortProp = prop;
-      this.$emit('update:sortDir', this.nativeSortDir);
-      this.$emit('update:sortProp', this.nativeSortProp);
-      this.$emit('sort', this.nativeSortProp, this.nativeSortDir);
-    },
-    filterColumn: function filterColumn(prop, filter) {
-      nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].remove(this.nativeFilterProps, {
-        property: prop
-      });
-      nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].push(this.nativeFilterProps, filter);
-      this.$emit('update:filterProps', this.nativeFilterProps);
-      this.$emit('filter', this.nativeFilterProps);
-    },
-    calculateHeight: function calculateHeight() {
-      this.height = nano_js__WEBPACK_IMPORTED_MODULE_2__["Dom"].find(this.$refs.head).height() + nano_js__WEBPACK_IMPORTED_MODULE_2__["Dom"].find(this.$refs.body).child().height() + 1;
-    },
-    bindObserver: function bindObserver() {
-      var element = this.$el.parentNode;
-
-      if (this.adaptHeight !== true) {
-        element = this.adaptHeight;
-      }
-
-      nano_js__WEBPACK_IMPORTED_MODULE_2__["Dom"].find(element).observerResize(this.updateObserver)(element);
-    },
-    updateObserver: function updateObserver() {
-      var element = this.$el.parentNode;
-
-      if (this.adaptHeight !== true) {
-        element = this.adaptHeight;
-      }
-
-      this.height = nano_js__WEBPACK_IMPORTED_MODULE_2__["Dom"].find(element).innerHeight();
-    },
-    selectPrevious: function selectPrevious() {
-      var _this3 = this;
-
-      var total = this.items.length;
-
-      if (total === 0) {
-        return;
-      }
-
-      var keys = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(this.items, function (item) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_2__["Obj"].get(item, _this3.uniqueProp);
-      });
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].isEmpty(this.currentKey) === true) {
-        return this.currentKey = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].last(keys);
-      }
-
-      var index = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].findIndex(keys, this.currentKey);
-
-      if (index === 0) {
-        return this.currentKey = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].last(keys);
-      }
-
-      this.currentKey = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].get(keys, index - 1);
-    },
-    selectNext: function selectNext() {
-      var _this4 = this;
-
-      var total = this.items.length;
-
-      if (total === 0) {
-        return;
-      }
-
-      var keys = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(this.items, function (item) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_2__["Obj"].get(item, _this4.uniqueProp);
-      });
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].isEmpty(this.currentKey) === true) {
-        return this.currentKey = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].first(keys);
-      }
-
-      var index = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].findIndex(keys, this.currentKey);
-
-      if (index === total - 1) {
-        return this.currentKey = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].first(keys);
-      }
-
-      this.currentKey = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].get(keys, index + 1);
-    },
-    tableKeydown: function tableKeydown(event) {
-      if (event.keyCode === 38 || event.keyCode === 40) {
-        event.preventDefault();
-      }
-
-      if (event.keyCode === 38) {
-        this.selectPrevious();
-      }
-
-      if (event.keyCode === 40) {
-        this.selectNext();
-      }
-    },
-    getVisibleColumns: function getVisibleColumns() {
-      var _this5 = this;
-
-      var visible = [];
-      nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(this.columns, function (column) {
-        if (column.breakpoint <= nano_js__WEBPACK_IMPORTED_MODULE_2__["Dom"].find(_this5.$el).width() && column.visible) {
-          visible.push(column.prop);
-        }
-      });
-      return visible;
-    },
-    clearSelectedKeys: function clearSelectedKeys() {
-      this.nativeSelectedKeys = [];
-    }
-  }),
-  watch: {
-    scroll: function scroll() {
-      nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(this.columns, function (column) {
-        column.setWidth(0, true);
-      });
-    },
-    currentKey: function currentKey() {
-      var current = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].find(this.items, _defineProperty({}, this.uniqueProp, this.currentKey));
-      this.$emit('update:current', current);
-    },
-    selectedKeys: function selectedKeys() {
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].isEqual(this.nativeSelectedKeys, this.selectedKeys)) {
-        this.nativeSelectedKeys = this.selectedKeys;
-      }
-    },
-    nativeSelectedKeys: function nativeSelectedKeys() {
-      this.$emit('update:selectedKeys', this.nativeSelectedKeys);
-    },
-    nativeVisibleColumns: function nativeVisibleColumns() {
-      this.$emit('update:visibleColumns', this.nativeVisibleColumns);
-    }
-  },
-  data: function data() {
-    return {
-      width: 0,
-      height: 0,
-      scroll: false,
-      visible: 0,
-      columns: [],
-      nativeVisibleColumns: [],
-      currentKey: null,
-      nativeSelectedKeys: this.selectedKeys,
-      nativeSortProp: this.sortProp,
-      nativeSortDir: this.sortDir,
-      nativeFilterProps: this.filterProps
-    };
-  },
-  provide: function provide() {
-    return {
-      NTable: this
-    };
-  },
-  mounted: function mounted() {
-    nano_js__WEBPACK_IMPORTED_MODULE_2__["Dom"].find(document).on('keydown', this.tableKeydown, {
-      _uid: this._uid
-    });
-    this.nativeVisibleColumns = this.visibleColumns || this.getVisibleColumns();
-    this.width = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].reduce(this.columns, function (count, column) {
-      return count + column.width;
-    }, 0);
-
-    if (this.adaptHeight === null) {// this.calculateHeight();
-    }
-
-    if (this.adaptHeight !== null && this.adaptHeight !== false) {
-      this.$nextTick(this.bindObserver);
-    }
-  },
-  updated: function updated() {
-    if (this.adaptHeight === null) {// this.calculateHeight();
-    }
-
-    this.scroll = false;
-    this.visible = this.$refs.body.offsetWidth - this.$refs.body.clientWidth;
-  },
-  destroyed: function destroyed() {
-    nano_js__WEBPACK_IMPORTED_MODULE_2__["Dom"].find(document).off('keydown', null, {
-      _uid: this._uid
-    });
-  },
-  renderHeadRow: function renderHeadRow() {
-    var _this6 = this;
-
-    var h = this.$createElement;
-    return h("div", {
-      "class": "n-table__row"
-    }, [nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(this.columns, function (column) {
-      if (nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].has(_this6.nativeVisibleColumns, column.prop) === false) {
-        return null;
-      }
-
-      var className = ['n-table__column', 'n-table__column--' + column.align, 'n-table__column--' + column.type];
-
-      if (column.autosize === true) {
-        className.push('n-table__column--auto');
-      }
-
-      if (column.fixed === true) {
-        className.push('n-table__column--fixed');
-      }
-
-      if (column.resize === true && column.fixedWidth === 0) {
-        className.push('n-table__column--resizable');
-      }
-
-      var filter = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].find(_this6.nativeFilterProps, {
-        property: column.prop
-      });
-
-      if (filter !== null && nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].isEmpty(filter.value) === false) {
-        className.push('n-table__column--filtered');
-      }
-
-      var events = {};
-
-      if (column.resize === true) {
-        events.mousedown = function (e) {
-          return _this6.resizeColumn(e, column);
-        };
-      }
-
-      var resizer = h("div", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
-        "class": "n-table__resizer"
-      }, {
-        "on": events
-      }]), [h("span")]);
-      return h("div", {
-        "class": className,
-        "style": column.style,
-        "attrs": {
-          "data-column-id": column._uid
-        }
-      }, [[column.$scopedSlots.label({
-        column: column
-      }), resizer]]);
-    })]);
-  },
-  renderBodyRow: function renderBodyRow(props) {
-    var _this7 = this;
-
-    var h = this.$createElement;
-    var uniqueValue = nano_js__WEBPACK_IMPORTED_MODULE_2__["Obj"].get(props.value, this.uniqueProp);
-    var className = ['n-table__row', 'n-table__row--' + props.key];
-
-    if (this.currentKey === uniqueValue) {
-      className.push('n-table__row--current');
-    }
-
-    var onClick = function onClick() {
-      _this7.currentKey = uniqueValue;
-    };
-
-    var onDblClick = function onDblClick() {
-      _this7.$emit('row-dblclick', {
-        row: props.value,
-        key: props.key
-      });
-    };
-
-    var rowStyle = nano_js__WEBPACK_IMPORTED_MODULE_2__["Obj"].assign({
-      minHeight: this.itemHeight + 'px'
-    }, this.rowStyle);
-    return h("div", {
-      "class": className,
-      "style": rowStyle,
-      "on": {
-        "click": onClick,
-        "dblclick": onDblClick
-      }
-    }, [nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(this.columns, function (column) {
-      if (nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].has(_this7.nativeVisibleColumns, column.prop) === false) {
-        return null;
-      }
-
-      var className = ['n-table__column', 'n-table__column--' + column.align, 'n-table__column--' + column.type];
-
-      if (column.autosize === true) {
-        className.push('n-table__column--auto');
-      }
-
-      if (column.fixed === true) {
-        className.push('n-table__column--fixed');
-      }
-
-      return h("div", {
-        "class": className,
-        "style": column.style
-      }, [column.$scopedSlots["default"]({
-        column: column,
-        row: props.value,
-        key: props.key
-      })]);
-    })]);
-  },
-  render: function render(h) {
-    var _this8 = this;
-
-    this.h = h;
-    var scopedSlots = {// default: (props) => {
-      //     return this.ctor('renderBodyRow')(props);
-      // }
-    };
-    var emptySlot = h("div", {
-      "class": "n-draggable__empty n-table__empty",
-      "slot": "empty"
-    }, [this.$slots.empty]);
-    var props = {
-      items: this.items,
-      selected: this.selected,
-      itemHeight: this.itemHeight,
-      viewportHeight: this.adaptHeight,
-      group: this.group,
-      insertNode: this.insertNode,
-      removeNode: this.removeNode,
-      allowDrag: this.allowDrag,
-      allowDrop: this.allowDrop,
-      renderNode: this.ctor('renderBodyRow')
-    };
-    var events = {
-      'input': function input() {
-        _this8.nativeSelectedKeys = [];
-      },
-      'update:selected': function updateSelected(selected) {
-        _this8.nativeSelectedKeys = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(selected, function (item) {
-          return item[_this8.uniqueProp];
-        });
-      }
-    };
-    var style = {};
-
-    if (this.height > 0) {
-      style.height = this.height + 'px';
-    }
-
-    var classList = ['n-table'];
-
-    if (this.scroll === true) {
-      classList.push('n-table--scroll');
-    }
-
-    if (this.visible !== 0) {
-      classList.push('n-table--visible');
-    }
-
-    return h("div", {
-      "class": classList
-    }, [h("div", {
-      "ref": "wrapper",
-      "class": "n-table-wrapper",
-      "style": style
-    }, [h("div", {
-      "ref": "head",
-      "class": "n-table__head"
-    }, [this.ctor('renderHeadRow')()]), h("NPopover", {
-      "attrs": {
-        "trigger": "context"
-      }
-    }, [h("NCheckboxGroup", {
-      "model": {
-        value: _this8.nativeVisibleColumns,
-        callback: function callback($$v) {
-          _this8.nativeVisibleColumns = $$v;
-        }
-      }
-    }, [nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(this.columns, function (column) {
-      return h("NCheckbox", {
-        "attrs": {
-          "size": "small",
-          "value": column.prop
-        }
-      }, [column.label]);
-    })])]), h("div", {
-      "ref": "body",
-      "class": "n-table__body"
-    }, [h('NDraggable', {
-      props: props,
-      on: events,
-      scopedSlots: scopedSlots
-    }, [this.$slots.empty && emptySlot])]), this.$slots["default"]])]);
-  }
+  "extends": _draggable_src_draggable_draggable__WEBPACK_IMPORTED_MODULE_0__["default"]
 });
 
 /***/ }),
@@ -47784,46 +45956,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           key = _ref.key;
       return h("div", {
         "class": "n-transfer__item"
-      }, [h("NCheckbox", {
-        "key": nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(value, '_dragid'),
-        "attrs": {
-          "sort": key,
-          "value": nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(value, _this6.uniqueProp)
-        }
-      }), " ", h("span", {
-        "class": "n-transfer__item-title"
-      }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(value, _this6.labelProp)])]);
+      }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(value, _this6.labelProp)]);
     };
 
     var propsSource = {
-      selected: this.selectedSource,
+      // selected: this.selectedSource,
       uniqueProp: this.uniqueProp
     };
-    var eventsSource = {
-      'input': function input() {
-        _this6.selectedKeysSource = [];
-        _this6.selectedKeysTarget = [];
-      },
-      'update:selected': function updateSelected(selected) {
-        _this6.selectedKeysSource = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(selected, function (item) {
-          return item[_this6.uniqueProp];
-        });
-      }
+    var eventsSource = {// 'input': () => {
+      //     this.selectedKeysSource = [];
+      //     this.selectedKeysTarget = [];
+      // },
+      //
+      // 'update:selected': (selected) => {
+      //     this.selectedKeysSource = Arr.each(selected,
+      //         (item) => item[this.uniqueProp]);
+      // }
     };
     var propsTarget = {
-      selected: this.selectedTarget,
+      // selected: this.selectedTarget,
       uniqueProp: this.uniqueProp
     };
-    var eventsTarget = {
-      'input': function input() {
-        _this6.selectedKeysSource = [];
-        _this6.selectedKeysTarget = [];
-      },
-      'update:selected': function updateSelected(selected) {
-        _this6.selectedKeysTarget = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(selected, function (item) {
-          return item[_this6.uniqueProp];
-        });
-      }
+    var eventsTarget = {// 'input': () => {
+      //     this.selectedKeysSource = [];
+      //     this.selectedKeysTarget = [];
+      // },
+      // 'update:selected': (selected) => {
+      //     this.selectedKeysTarget = Arr.each(selected,
+      //         (item) => item[this.uniqueProp]);
+      // }
     };
     var scopedSlots = {
       "default": this.$scopedSlots["default"] || renderLabel
@@ -47848,22 +46009,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "class": "n-transfer"
     }, [h("div", {
       "class": "n-transfer__pane"
-    }, [h("NCheckboxGroup", {
-      "model": {
-        value: _this6.selectedKeysSource,
-        callback: function callback($$v) {
-          _this6.selectedKeysSource = $$v;
-        }
-      }
     }, [h("div", {
       "class": "n-transfer__header"
     }, [h("div", {
       "class": "n-transfer__item"
-    }, [h("NCheckbox", {
-      "attrs": {
-        "global": true
-      }
-    }), " ", h("span", {
+    }, [h("span", {
       "class": "n-transfer__item-title"
     }, [this.sourceLabel]), " ", h("span", {
       "class": "n-transfer__item-count"
@@ -47890,23 +46040,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "class": "n-transfer__body"
     }, [h("NDraggable", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
       "attrs": {
-        "viewportHeight": true,
-        "displayItems": valueSource
-      }
-    }, {
-      "props": propsSource
-    }, {
+        "viewportHeight": true
+      },
       "scopedSlots": scopedSlots
     }, {
       "on": eventsSource
     }, {
+      "attrs": {
+        "renderSelect": true
+      },
       "model": {
         value: _this6.valueSource,
         callback: function callback($$v) {
           _this6.valueSource = $$v;
         }
       }
-    }]))])])]), h("div", {
+    }]))])]), h("div", {
       "class": "n-transfer__controls"
     }, [h("NButton", {
       "attrs": {
@@ -47932,22 +46081,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     })]), h("div", {
       "class": "n-transfer__pane"
-    }, [h("NCheckboxGroup", {
-      "model": {
-        value: _this6.selectedKeysTarget,
-        callback: function callback($$v) {
-          _this6.selectedKeysTarget = $$v;
-        }
-      }
     }, [h("div", {
       "class": "n-transfer__header"
     }, [h("div", {
       "class": "n-transfer__item"
-    }, [h("NCheckbox", {
-      "attrs": {
-        "global": true
-      }
-    }), " ", h("span", {
+    }, [h("span", {
       "class": "n-transfer__item-title"
     }, [this.targetLabel]), " ", h("span", {
       "class": "n-transfer__item-count"
@@ -47968,23 +46106,261 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "class": "n-transfer__body"
     }, [h("NDraggable", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
       "attrs": {
-        "viewportHeight": true,
-        "displayItems": valueTarget
-      }
-    }, {
-      "props": propsTarget
-    }, {
+        "viewportHeight": true
+      },
       "scopedSlots": scopedSlots
     }, {
       "on": eventsTarget
     }, {
+      "attrs": {
+        "renderSelect": true
+      },
       "model": {
         value: _this6.value,
         callback: function callback($$v) {
           _this6.value = $$v;
         }
       }
-    }]))])])])]);
+    }]))])])]);
+  }
+});
+
+/***/ }),
+
+/***/ "./src/virtualscroller/index.js":
+/*!**************************************!*\
+  !*** ./src/virtualscroller/index.js ***!
+  \**************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _src_virtualscroller_virtualscroller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/virtualscroller/virtualscroller */ "./src/virtualscroller/src/virtualscroller/virtualscroller.js");
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_virtualscroller_virtualscroller__WEBPACK_IMPORTED_MODULE_1__["default"].name, _src_virtualscroller_virtualscroller__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+/***/ }),
+
+/***/ "./src/virtualscroller/src/virtualscroller/virtualscroller.js":
+/*!********************************************************************!*\
+  !*** ./src/virtualscroller/src/virtualscroller/virtualscroller.js ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @vue/babel-helper-vue-jsx-merge-props */ "./node_modules/@vue/babel-helper-vue-jsx-merge-props/dist/helper.js");
+/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var dynamic_virtual_scroll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! dynamic-virtual-scroll */ "./node_modules/dynamic-virtual-scroll/DynamicVirtualScroll.js");
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'NVirtualscroller',
+  model: {
+    prop: 'items'
+  },
+  props: {
+    items: {
+      "default": function _default() {
+        return [];
+      }
+    },
+    itemHeight: {
+      "default": function _default() {
+        return 30;
+      }
+    },
+    viewportHeight: {
+      "default": function _default() {
+        return false;
+      }
+    },
+    renderNode: {
+      "default": function _default() {
+        return null;
+      }
+    },
+    bufferItems: {
+      "default": function _default() {
+        return 8;
+      },
+      type: [Number]
+    }
+  },
+  methods: {
+    bindScroller: function bindScroller() {
+      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].has(this.$refs, 'viewport.$el')) {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.bindScroller, 300);
+      }
+
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.viewport.$el).on('scroll', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.refreshDriver, 10));
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.viewport.$el).on('scroll', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.refreshDriver, 30));
+    },
+    refreshDriver: function refreshDriver() {
+      var _this = this;
+
+      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].has(this.$refs, 'viewport.$el')) {
+        return;
+      }
+
+      var scrollTop = 0;
+
+      if (this.$refs.viewport.$el) {
+        scrollTop = this.$refs.viewport.$el.scrollTop;
+      }
+
+      if (scrollTop < 0) {
+        return;
+      }
+
+      var options = {
+        bufferItems: this.bufferItems,
+        totalItems: this.items.length,
+        viewportHeight: this.height,
+        minRowHeight: this.itemHeight,
+        scrollTop: scrollTop
+      };
+      var newState = Object(dynamic_virtual_scroll__WEBPACK_IMPORTED_MODULE_2__["virtualScrollDriver"])(options, this.state, function () {
+        return _this.itemHeight;
+      });
+      var isSameState = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].reduce(newState, function (same, val, key) {
+        return same && _this.state[key] === val;
+      }, true);
+
+      if (isSameState) {
+        return;
+      }
+
+      this.state = newState;
+    },
+    discoverHeight: function discoverHeight() {
+      if (this.viewportHeight === true) {
+        this.height = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).parent().height();
+      }
+
+      if (this.viewportHeight === false) {
+        this.height = this.items.length * this.itemHeight;
+      }
+
+      if (this.height === 0) {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.discoverHeight, 300);
+      }
+
+      this.refreshDriver();
+    }
+  },
+  data: function data() {
+    var state = {
+      items: this.items
+    };
+    return {
+      height: 0,
+      state: state
+    };
+  },
+  beforeMount: function beforeMount() {
+    if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isBool(this.viewportHeight)) {
+      this.height = this.viewportHeight;
+    }
+  },
+  mounted: function mounted() {
+    this.$watch('items', this.discoverHeight);
+    this.bindScroller();
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).observerResize(this.discoverHeight)(this.$el);
+  },
+  renderItems: function renderItems(start, count) {
+    var _this2 = this;
+
+    var result = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].slice(this.items, start, start + count);
+    result = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(result, function (value, index) {
+      var props = {
+        value: value,
+        index: index
+      };
+
+      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isString(_this2.renderNode)) {
+        return _this2.$render(_this2.renderNode, {
+          props: props
+        });
+      }
+
+      return _this2.renderNode(props);
+    });
+    return result;
+  },
+  render: function render($render) {
+    var _this3 = this;
+
+    var h = arguments[0];
+    this.$render = $render;
+
+    if (this.viewportHeight === false) {
+      return h("div", {
+        "class": "n-render-list"
+      }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.items, function (value, index) {
+        if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isString(_this3.renderNode)) {
+          return _this3.$render(_this3.renderNode, {
+            props: props
+          });
+        }
+
+        return _this3.renderNode({
+          value: value,
+          index: index
+        });
+      })]);
+    }
+
+    if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.state)) {
+      return h("div", {
+        "class": "n-render-list"
+      });
+    }
+
+    var style = {
+      overflow: 'auto',
+      overflowAnchor: 'none',
+      outline: 'none',
+      height: this.height + 'px'
+    };
+    var targetHeight = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.state, 'targetHeight');
+    return h("div", {
+      "class": "n-render-list"
+    }, [!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.state) && h("NScrollbar", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
+      "ref": "viewport"
+    }, {
+      "on": this.$listeners
+    }, {
+      "style": style
+    }]), [h("div", {
+      "style": {
+        height: targetHeight ? targetHeight + 'px' : 'auto',
+        overflow: 'hidden',
+        paddingRight: '15px'
+      }
+    }, [!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.state.topPlaceholderHeight) && h("div", {
+      "attrs": {
+        "draggable": false
+      },
+      "style": {
+        height: this.state.topPlaceholderHeight + 'px'
+      }
+    }), !nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.state.middleItemCount) && this.ctor('renderItems')(this.state.firstMiddleItem, this.state.middleItemCount), !nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.state.middlePlaceholderHeight) && h("div", {
+      "attrs": {
+        "draggable": false
+      },
+      "style": {
+        height: this.state.middlePlaceholderHeight + 'px'
+      }
+    }), !nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.state.lastItemCount) && this.ctor('renderItems')(this.items.length - this.state.lastItemCount, this.state.lastItemCount)])])]);
   }
 });
 

@@ -123,6 +123,13 @@ export default {
             }
         },
 
+        renderSelect: {
+            default()
+            {
+                return true;
+            }
+        }
+
     },
 
     computed: {
@@ -585,8 +592,9 @@ export default {
             group: this.group,
             insertNode: this.insertNode,
             removeNode: this.removeNode,
-            allowDrag: this.allowDrag,
-            allowDrop: this.allowDrop,
+            // allowDrag: this.allowDrag,
+            // allowDrop: this.allowDrop,
+            renderSelect: this.renderSelect,
             renderNode: this.ctor('renderBodyRow')
         };
 
