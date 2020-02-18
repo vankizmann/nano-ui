@@ -6,6 +6,10 @@ export default {
 
     inject: {
 
+        NDraggable: {
+            default: undefined
+        },
+
         NTable: {
             default: undefined
         }
@@ -211,7 +215,7 @@ export default {
 
     data()
     {
-        return { width: 0 };
+        return { veVisible: true, width: 0 };
     },
 
     methods: {
@@ -225,11 +229,13 @@ export default {
             let offsetX = Dom.find(this.$refs.column)
                 .offset('left', this.NTable.$el);
 
-            let width = Dom.find(this.$refs.column).width();
+            this.width = Dom.find(this.$refs.column).width();
 
             let style = {
-                left: (width + offsetX) + 'px'
+                left: (this.width + offsetX) + 'px'
             };
+
+            console.log(style);
 
             Dom.find(this.$refs.column).find('[data-resizer]').css(style);
         },
@@ -257,8 +263,11 @@ export default {
             let offsetX = Dom.find(this.NTable.$el)
                 .offset('left');
 
+            let scrollX = Dom.find(this.$refs.column)
+                .scroll('left');
+
             let style = {
-                'left': (this.clientX - offsetX - 2) + 'px'
+                'left': (this.clientX + scrollX - offsetX + 2) + 'px'
             };
 
             Dom.find(this.$refs.column).find('[data-resizer]').css(style);
@@ -271,12 +280,21 @@ export default {
             Dom.find(document).off('mousemove', null, this._uid);
             Dom.find(document).off('mouseup', null, this._uid);
 
+            if ( ! this.clientX ) {
+                return;
+            }
+
             let offsetX = Dom.find(this.$refs.column)
                 .offset('left');
 
-            this.width = this.clientX - offsetX - 2;
+            let scrollX = Dom.find(this.$refs.column)
+                .scroll('left');
+
+            this.width = scrollX + this.clientX - offsetX + 2;
 
             Dom.find(this.$refs.column).removeClass('n-resize');
+
+            delete this.clientX;
 
             this.$nextTick(() => this.NTable.$emit('hook:resized'));
         }
@@ -288,22 +306,38 @@ export default {
         this.NTable.addColumn(this);
 
         this.NTable.$on('hook:resized', this.adjustResizerPosition);
-
         this.NTable.$on('hook:mounted', this.adjustResizerPosition);
+    },
+
+    beforeDestroy()
+    {
+        this.NTable.removeColumn(this);
     },
 
     renderHead()
     {
         let classList = [
-            'n-table-column', !! this.width && 'n-fixed'
+            'n-table-column'
         ];
 
-        if ( ! Arr.findIndex(this.NTable.veColumns, { prop: this.prop }) ) {
+        let index = Arr.findIndex(this.NTable.veColumns, {
+            prop: this.prop
+        });
+
+        if ( ! index ) {
             classList.push('n-first');
         }
 
+        if ( ! this.width && index ) {
+            this.width = this.defaultWidth;
+        }
+
+        if ( this.width ) {
+            classList.push('n-fixed');
+        }
+
         let style = {
-            width: (this.width || this.defaultWidth) + 'px'
+            width: this.width + 'px'
         };
 
         return (
@@ -317,6 +351,11 @@ export default {
 
     renderHeadLabel()
     {
+        let boundryEl = Dom.find(this.NTable.$el)
+            .find('.n-table__inner').get(0);
+
+        console.log(boundryEl);
+
         let labelHtml = (
             <div class="n-table-column__label">
                 { this.label }
@@ -324,7 +363,7 @@ export default {
         );
 
         let tooltipHtml = (
-            <NPopover type="tooltip" boundry={this.NTable.$el}>
+            <NPopover type="tooltip" boundry={boundryEl}>
                 { this.label }
             </NPopover>
         );
@@ -350,18 +389,40 @@ export default {
 
     renderBody(props)
     {
+        let remote = Arr.find(this.NDraggable.veItems, {
+            [this.NDraggable.uniqueProp]: props.value[this.NDraggable.uniqueProp]
+        });
+
         let componentName = 'NTableCell' + Str.ucfirst(this.type);
 
         let classList = [
-            'n-table-column', !! this.width && 'n-fixed'
+            'n-table-column'
         ];
 
-        if ( ! Arr.findIndex(this.NTable.veColumns, { prop: this.prop }) ) {
+        let index = Arr.findIndex(this.NTable.veColumns, {
+            prop: this.prop
+        });
+
+        if ( ! index ) {
             classList.push('n-first');
         }
 
+        if ( ! this.width && index ) {
+            this.width = this.defaultWidth;
+        }
+
+        if ( this.width ) {
+            classList.push('n-fixed');
+        }
+
+        let width = this.width;
+
+        if ( ! index ) {
+            width -= remote.depth * 20;
+        }
+
         let style = {
-            width: (this.width || this.defaultWidth) + 'px'
+            width: width + 'px'
         };
 
         props = Obj.assign(props, { column: this });

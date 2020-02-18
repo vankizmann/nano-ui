@@ -20,6 +20,8 @@ $table-row-height: 40px !default;
     flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
+    margin-right: -1px;
+    margin-bottom: -1px;
 }
 
 .n-table .n-table__inner {

@@ -646,7 +646,7 @@ export default {
                     </NPopover>
                     <div ref="body" class="n-table__body">
                         {
-                            h('NDraggable', { props: props, on: events, scopedSlots }, [
+                            h('NDraggable', { props: props, on: events, scopedSlots, classList }, [
                                 this.$slots.empty && emptySlot
                             ])
                         }

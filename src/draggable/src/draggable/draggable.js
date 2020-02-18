@@ -912,6 +912,8 @@ export default {
                 [this.uniqueProp]: null
             };
 
+            Dom.find(this.$el).removeClass('n-dragover');
+
             this.$emit('dragdrop', event, virtualItem, 'root');
         }
 
@@ -949,7 +951,7 @@ export default {
         };
 
         return (
-            <div class="n-draggable n-empty" on={events}>
+            <div class="n-draggable__empty" on={events}>
                  <span>{ this.$slots.empty || this.trans('No entries') }</span>
             </div>
         );
@@ -970,18 +972,23 @@ export default {
     {
         this.$render = $render;
 
-        if ( Any.isEmpty(this.veCopy) ) {
-            return this.ctor('renderEmpty')();
+        if ( ! this.$slots.empty ) {
+            this.$slots.empty = [this.ctor('renderEmpty')()];
         }
 
-        let props = Obj.assign(Obj.clone(this.$props), {
-            items: this.veItems,
-            renderNode: this.ctor('renderItem')
+        let slots = Arr.each(this.$slots, (slot, name) => {
+            return this.$render('template', { slot: name }, slot);
         });
+
+        let props = Obj.assign(Obj.clone(this.$props), {
+            items: this.veItems, renderNode: this.ctor('renderItem')
+        });
+
+        console.log('!', slots);
 
         return this.$render('NVirtualscroller', {
             class: 'n-draggable', props
-        });
+        }, slots);
     }
 
 }

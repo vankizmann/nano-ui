@@ -158,31 +158,27 @@ export default {
         return result;
     },
 
-    render($render)
+    renderBody()
     {
-        this.$render = $render;
+        if ( ! this.items.length ) {
+            return this.$slots.empty || null;
+        }
 
         if ( this.viewportHeight === false ) {
-            return (
-                <div class="n-render-list">
-                    {
-                        Arr.each(this.items, (value, index) => {
 
-                            if ( Any.isString(this.renderNode) ) {
-                                return this.$render(this.renderNode, { props })
-                            }
+            return Arr.each(this.items, (value, index) => {
 
-                            return this.renderNode({ value, index });
-                        })
-                    }
-                </div>
-            );
+                if ( Any.isString(this.renderNode) ) {
+                    return this.$render(this.renderNode, { value, index })
+                }
+
+                return this.renderNode({ value, index });
+            });
+
         }
 
         if ( Any.isEmpty(this.state) ) {
-            return (
-                <div class="n-render-list"></div>
-            );
+            return null;
         }
 
         let style = {
@@ -192,25 +188,34 @@ export default {
         let targetHeight = Obj.get(this.state, 'targetHeight');
 
         return (
+            <NScrollbar ref="viewport" on={this.$listeners} style={style}>
+                <div style={{ height: targetHeight ? targetHeight + 'px' : 'auto', overflow: 'hidden', paddingRight: '15px' }}>
+                    { ! Any.isEmpty(this.state.topPlaceholderHeight) &&
+                        <div draggable={false} style={{ height: this.state.topPlaceholderHeight + 'px' }}></div>
+                    }
+                    { ! Any.isEmpty(this.state.middleItemCount) &&
+                    this.ctor('renderItems')(this.state.firstMiddleItem, this.state.middleItemCount)
+                    }
+                    { ! Any.isEmpty(this.state.middlePlaceholderHeight) &&
+                        <div draggable={false} style={{ height: this.state.middlePlaceholderHeight + 'px' }}></div>
+                    }
+                    { ! Any.isEmpty(this.state.lastItemCount) &&
+                        this.ctor('renderItems')(this.items.length - this.state.lastItemCount, this.state.lastItemCount)
+                    }
+                </div>
+            </NScrollbar>
+        );
+    },
+
+    render($render)
+    {
+        this.$render = $render;
+
+        return (
             <div class="n-render-list">
-                { ! Any.isEmpty(this.state) &&
-                    <NScrollbar ref="viewport" on={this.$listeners} style={style}>
-                        <div style={{ height: targetHeight ? targetHeight + 'px' : 'auto', overflow: 'hidden', paddingRight: '15px' }}>
-                            { ! Any.isEmpty(this.state.topPlaceholderHeight) &&
-                                <div draggable={false} style={{ height: this.state.topPlaceholderHeight + 'px' }}></div>
-                            }
-                            { ! Any.isEmpty(this.state.middleItemCount) &&
-                                this.ctor('renderItems')(this.state.firstMiddleItem, this.state.middleItemCount)
-                            }
-                            { ! Any.isEmpty(this.state.middlePlaceholderHeight) &&
-                                <div draggable={false} style={{ height: this.state.middlePlaceholderHeight + 'px' }}></div>
-                            }
-                            { ! Any.isEmpty(this.state.lastItemCount) &&
-                                this.ctor('renderItems')(this.items.length - this.state.lastItemCount, this.state.lastItemCount)
-                            }
-                        </div>
-                    </NScrollbar>
-                }
+                { this.$slots.before || null }
+                { this.ctor('renderBody')() }
+                { this.$slots.default || null }
             </div>
         );
     }

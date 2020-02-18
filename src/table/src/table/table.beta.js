@@ -236,6 +236,13 @@ export default {
             });
         },
 
+        removeColumn(column)
+        {
+            Arr.remove(this.veColumns, {
+                prop: column.prop
+            });
+        },
+
         toggleSelected()
         {
             this.$refs.list.toggleAllItems(
@@ -328,13 +335,26 @@ export default {
             height: this.viewportHeight + 'px'
         };
 
+        let slots = Arr.each(this.$slots, (slot, name) => {
+            return this.$render('template', { slot: name }, slot);
+        });
+
+        let passes = {
+            on: this.$listeners, scopedSlots: this.$scopedSlots
+        };
+
+        console.log(slots);
+
+        let draggableHtml = this.$render('NDraggable', {
+            ref: 'list', class: 'n-table__body', props, ...passes
+        }, slots);
+
         return (
             <div class="n-table" style={style}>
                 <NScrollbar class="n-table__wrap">
                     <div class="n-table__inner">
                         { this.ctor('renderHead')() }
-                        <NDraggable ref="list" class="n-table__body" props={props} on={this.$listeners} />
-                        { this.$slots.default }
+                        { draggableHtml }
                     </div>
                 </NScrollbar>
             </div>

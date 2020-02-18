@@ -13,22 +13,22 @@ $draggable-placeholder-size: 13px !default;
  * Empty field
  */
 
-.n-draggable.n-empty {
+.n-draggable__empty {
     flex: 1 1 auto;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.n-draggable.n-empty span {
+.n-draggable__empty span {
     color: $--color-info;
 }
 
-.n-draggable.n-empty.n-dragover {
+.n-draggable.n-dragover > .n-draggable__empty {
     background: rgba($color-primary, 0.15);
 }
 
-.n-draggable.n-empty.n-nodrop {
+.n-draggable.n-nodrop > .n-draggable__empty {
     background: rgba($color-danger, 0.15);
 }
 

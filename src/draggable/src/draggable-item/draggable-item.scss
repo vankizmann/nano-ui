@@ -27,6 +27,10 @@
     transition: background 0ms;
 }
 
+.n-draggable-item__spacer {
+    flex: 0 0 auto;
+}
+
 .n-draggable-item__collapse,
 .n-draggable-item__select {
     cursor: pointer;
