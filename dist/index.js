@@ -59026,6 +59026,8 @@ __webpack_require__.r(__webpack_exports__);
       "class": "n-table",
       "style": style
     }, [h("NScrollbar", {
+      "class": "n-table__wrap"
+    }, [h("div", {
       "class": "n-table__inner"
     }, [this.ctor('renderHead')(), h("NDraggable", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
       "ref": "list",
@@ -59034,7 +59036,7 @@ __webpack_require__.r(__webpack_exports__);
       "props": props
     }, {}, {
       "on": this.$listeners
-    }])), this.$slots["default"]])]);
+    }])), this.$slots["default"]])])]);
   }
 });
 

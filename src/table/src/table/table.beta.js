@@ -330,10 +330,12 @@ export default {
 
         return (
             <div class="n-table" style={style}>
-                <NScrollbar class="n-table__inner">
-                    { this.ctor('renderHead')() }
-                    <NDraggable ref="list" class="n-table__body" props={props} on={this.$listeners} />
-                    { this.$slots.default }
+                <NScrollbar class="n-table__wrap">
+                    <div class="n-table__inner">
+                        { this.ctor('renderHead')() }
+                        <NDraggable ref="list" class="n-table__body" props={props} on={this.$listeners} />
+                        { this.$slots.default }
+                    </div>
                 </NScrollbar>
             </div>
         );

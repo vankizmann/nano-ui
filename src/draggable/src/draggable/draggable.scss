@@ -32,6 +32,10 @@ $draggable-placeholder-size: 13px !default;
     background: rgba($color-danger, 0.15);
 }
 
+.n-draggable__spacer {
+    flex: 0 0 auto;
+}
+
 .n-draggable__indicator {
     pointer-events: none;
     z-index: 99999;

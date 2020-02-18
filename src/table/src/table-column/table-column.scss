@@ -47,6 +47,7 @@
 
 .n-table-column__resizer:hover  {
     opacity: 1;
+    transition: opacity 200ms 200ms;
 }
 
 .n-resize .n-table-column__resizer {

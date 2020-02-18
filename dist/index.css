@@ -403,6 +403,10 @@
 .n-draggable.n-empty.n-nodrop {
   background: rgba(253, 47, 81, 0.15); }
 
+.n-draggable__spacer {
+  -webkit-box-flex: 0;
+          flex: 0 0 auto; }
+
 .n-draggable__indicator {
   pointer-events: none;
   z-index: 99999;
@@ -2920,7 +2924,21 @@
 .n-table .n-render-list {
   width: auto; }
 
+.n-table .n-table__wrap {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row;
+  -webkit-box-align: stretch;
+          align-items: stretch;
+  -webkit-box-pack: stretch;
+          justify-content: stretch; }
+
 .n-table .n-table__inner {
+  min-width: 0;
+  -webkit-box-flex: 1;
+          flex: 1 0 auto;
   display: -webkit-box;
   display: flex;
   -webkit-box-orient: vertical;
@@ -3010,7 +3028,9 @@
   transition: opacity 200ms; }
 
 .n-table-column__resizer:hover {
-  opacity: 1; }
+  opacity: 1;
+  -webkit-transition: opacity 200ms 200ms;
+  transition: opacity 200ms 200ms; }
 
 .n-resize .n-table-column__resizer {
   z-index: 9000;

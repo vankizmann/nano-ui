@@ -15,7 +15,16 @@ $table-row-height: 40px !default;
     width: auto;
 }
 
+.n-table .n-table__wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
 .n-table .n-table__inner {
+    min-width: 0;
+    flex: 1 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: stretch;
