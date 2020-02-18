@@ -42,14 +42,6 @@ export default {
             type: [String]
         },
 
-        basis: {
-            default()
-            {
-                return 1;
-            },
-            type: [Number]
-        },
-
         align: {
             default()
             {
@@ -138,31 +130,24 @@ export default {
             type: [String]
         },
 
-        defaultWidth: {
+        width: {
             default()
             {
-                return 100;
-            }
-        },
-
-        fixedWidth: {
-            default()
-            {
-                return 0;
+                return 140;
             }
         },
 
         minWidth: {
             default()
             {
-                return this.fixedWidth || this.defaultWidth;
+                return this.width;
             }
         },
 
         maxWidth: {
             default()
             {
-                return this.fixedWidth || 0;
+                return 0;
             }
         },
 
@@ -215,7 +200,7 @@ export default {
 
     data()
     {
-        return { veVisible: true, width: 0 };
+        return { veVisible: true, veWidth: 0 };
     },
 
     methods: {
@@ -226,16 +211,11 @@ export default {
                 return Any.delay(this.adjustResizerPosition, 500);
             }
 
-            let offsetX = Dom.find(this.$refs.column)
-                .offset('left', this.NTable.$el);
-
-            this.width = Dom.find(this.$refs.column).width();
+            this.veWidth = Dom.find(this.$refs.column).width();
 
             let style = {
-                left: (this.width + offsetX) + 'px'
+                left: this.veWidth + 'px'
             };
-
-            console.log(style);
 
             Dom.find(this.$refs.column).find('[data-resizer]').css(style);
         },
@@ -248,10 +228,10 @@ export default {
             Dom.find(this.$refs.column).addClass('n-resize');
 
             Dom.find(document).on('mousemove',
-                Any.framerate(this.eventResizerMousemove), this._uid);
+                Any.framerate(this.eventResizerMousemove, 30), this._uid);
 
             Dom.find(document).on('mouseup',
-                Any.framerate(this.eventResizerMouseup), this._uid);
+                Any.framerate(this.eventResizerMouseup, 30), this._uid);
         },
 
         eventResizerMousemove(event)
@@ -260,14 +240,24 @@ export default {
 
             event.preventDefault();
 
-            let offsetX = Dom.find(this.NTable.$el)
+            let offsetX = Dom.find(this.$refs.column)
                 .offset('left');
 
             let scrollX = Dom.find(this.$refs.column)
                 .scroll('left');
 
+            let targetWidth = (this.clientX + scrollX - offsetX);
+
+            if ( this.minWidth ) {
+                targetWidth = Math.max(targetWidth, this.minWidth)
+            }
+
+            if ( this.maxWidth ) {
+                targetWidth = Math.min(targetWidth, this.maxWidth)
+            }
+
             let style = {
-                'left': (this.clientX + scrollX - offsetX + 2) + 'px'
+                'left': targetWidth + 'px'
             };
 
             Dom.find(this.$refs.column).find('[data-resizer]').css(style);
@@ -290,7 +280,17 @@ export default {
             let scrollX = Dom.find(this.$refs.column)
                 .scroll('left');
 
-            this.width = scrollX + this.clientX - offsetX + 2;
+            let targetWidth = (this.clientX + scrollX - offsetX);
+
+            if ( this.minWidth ) {
+                targetWidth = Math.max(targetWidth, this.minWidth)
+            }
+
+            if ( this.maxWidth ) {
+                targetWidth = Math.min(targetWidth, this.maxWidth)
+            }
+
+            this.veWidth = targetWidth;
 
             Dom.find(this.$refs.column).removeClass('n-resize');
 
@@ -317,7 +317,7 @@ export default {
     renderHead()
     {
         let classList = [
-            'n-table-column'
+            'n-table-column', 'n-' + this.align
         ];
 
         let index = Arr.findIndex(this.NTable.veColumns, {
@@ -328,16 +328,16 @@ export default {
             classList.push('n-first');
         }
 
-        if ( ! this.width && index ) {
-            this.width = this.defaultWidth;
+        if ( ! this.veWidth && index ) {
+            this.veWidth = this.defaultWidth;
         }
 
-        if ( this.width ) {
+        if ( this.veWidth ) {
             classList.push('n-fixed');
         }
 
         let style = {
-            width: this.width + 'px'
+            width: this.veWidth + 'px', minWidth: this.minWidth + 'px'
         };
 
         return (
@@ -351,10 +351,9 @@ export default {
 
     renderHeadLabel()
     {
-        let boundryEl = Dom.find(this.NTable.$el)
-            .find('.n-table__inner').get(0);
-
-        console.log(boundryEl);
+        if ( ! this.boundryEl ) {
+            this.boundryEl = Dom.find(this.NTable.$el).find('.n-table__inner').get(0);
+        }
 
         let labelHtml = (
             <div class="n-table-column__label">
@@ -363,7 +362,7 @@ export default {
         );
 
         let tooltipHtml = (
-            <NPopover type="tooltip" boundry={boundryEl}>
+            <NPopover type="tooltip" boundry={this.boundryEl}>
                 { this.label }
             </NPopover>
         );
@@ -373,7 +372,24 @@ export default {
 
     renderHeadFilter()
     {
-        return null;
+        if ( ! this.filter ) {
+            return null;
+        }
+
+        let componentName = 'NTableFilter' + Str.ucfirst(this.type);
+
+        let props = {
+            column: this
+        };
+
+        return [
+            <div class="n-table-column__filter">
+                <span class={this.icons.angleDown}></span>
+            </div>,
+            <NPopover class="n-popover-filter" trigger="click" boundry={this.boundryEl}>
+                { this.$render(componentName, { slot: 'raw', props }) }
+            </NPopover>
+        ];
     },
 
     renderHeadResizer()
@@ -396,7 +412,7 @@ export default {
         let componentName = 'NTableCell' + Str.ucfirst(this.type);
 
         let classList = [
-            'n-table-column'
+            'n-table-column', 'n-' + this.align
         ];
 
         let index = Arr.findIndex(this.NTable.veColumns, {
@@ -407,15 +423,15 @@ export default {
             classList.push('n-first');
         }
 
-        if ( ! this.width && index ) {
-            this.width = this.defaultWidth;
+        if ( ! this.veWidth && index ) {
+            this.veWidth = this.defaultWidth;
         }
 
-        if ( this.width ) {
+        if ( this.veWidth ) {
             classList.push('n-fixed');
         }
 
-        let width = this.width;
+        let width = this.veWidth;
 
         if ( ! index ) {
             width -= remote.depth * 20;

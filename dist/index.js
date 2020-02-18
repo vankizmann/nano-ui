@@ -39477,7 +39477,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
           nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch, _this.dropItem);
         });
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].vals(delayedItems), function (source, count) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].vals(delayedItems), function (source) {
           var finalTarget = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this, target[_this.pathProp]);
           var finalIndex = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].findIndex(finalTarget, _defineProperty({}, _this.uniqueProp, target[_this.uniqueProp])); // Add item before last item added, also transform item
 
@@ -39485,7 +39485,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].vals(batchedAfter), function (batch) {
           delete batch['_key'];
-          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch.reverse(), function (source, count) {
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch.reverse(), function (source) {
             var finalTarget = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this, target[_this.pathProp]);
             var finalIndex = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].findIndex(finalTarget, _defineProperty({}, _this.uniqueProp, target[_this.uniqueProp])); // Add item before last item added, also transform item
 
@@ -39493,7 +39493,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
           nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch, _this.dropItem);
         });
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veCached, function (source) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veCached.reverse(), function (source) {
           var finalTarget = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this, target[_this.pathProp]);
           var finalIndex = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].findIndex(finalTarget, _defineProperty({}, _this.uniqueProp, target[_this.uniqueProp])); // Add item before last item added, also transform item
 
@@ -39510,7 +39510,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
           nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch, _this.dropItem);
         });
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].vals(_delayedItems).reverse(), function (source, count) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].vals(_delayedItems).reverse(), function (source) {
           var finalTarget = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this, target[_this.pathProp]);
           var finalIndex = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].findIndex(finalTarget, _defineProperty({}, _this.uniqueProp, target[_this.uniqueProp])); // Add item before last item added, also transform item
 
@@ -39520,7 +39520,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           delete batch['_key'];
           var finalTarget = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this, target[_this.pathProp]);
           var finalIndex = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].findIndex(finalTarget, _defineProperty({}, _this.uniqueProp, target[_this.uniqueProp]));
-          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch.reverse(), function (source, count) {
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch.reverse(), function (source) {
             // Add item before last item added, also transform item
             nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].insert(finalTarget, finalIndex, _this.transformDrop(source.item));
           });
@@ -39758,10 +39758,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].push(merge, dragObject);
 
         if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(_this9.veCollapsed, dragObject[_this9.uniqueProp])) {
+          console.log('reducer without childs');
           return;
         }
 
-        merge = _this9.itemReducer(merge, nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, _this9.childProp, []), depth + 1, "".concat(path, ".").concat(index, ".").concat(_this9.childProp), dragObject[_this9.orderProp]);
+        _this9.itemReducer(merge, nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, _this9.childProp, []), depth + 1, "".concat(path, ".").concat(index, ".").concat(_this9.childProp), dragObject[_this9.orderProp]);
+
+        console.log('reducer with childs');
       });
       return merge;
     },
@@ -39937,7 +39940,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       items: this.veItems,
       renderNode: this.ctor('renderItem')
     });
-    console.log('!', slots);
     return this.$render('NVirtualscroller', {
       "class": 'n-draggable',
       props: props
@@ -40747,10 +40749,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.$watch('form', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.updateForm, 10), {
+    this.$watch('form', this.updateForm, {
       deep: true
     });
-    this.$watch('errors', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.updateErrors, 10), {
+    this.$watch('errors', this.updateErrors, {
       deep: true
     });
   },
@@ -44095,7 +44097,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   render: function render() {
     var h = arguments[0];
     return h("div", {
-      "class": "n-table__cell"
+      "class": "n-table-cell"
     }, [h("span", [this.input])]);
   }
 });
@@ -44121,7 +44123,7 @@ __webpack_require__.r(__webpack_exports__);
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_0__["default"],
   render: function render() {
     var h = arguments[0];
-    var className = ['n-table__cell', 'n-table__cell--' + this.column.type];
+    var className = ['n-table-cell', 'n-table-cell--' + this.column.type];
     return h("div", {
       "class": className
     }, [h("span", [nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].convertBoolean(this.input, this.column.trueText, this.column.falseText)])]);
@@ -44149,7 +44151,7 @@ __webpack_require__.r(__webpack_exports__);
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_0__["default"],
   render: function render() {
     var h = arguments[0];
-    var className = ['n-table__cell', 'n-table__cell--' + this.column.type];
+    var className = ['n-table-cell', 'n-table-cell--' + this.column.type];
     return h("div", {
       "class": className
     }, [h("span", [nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].convertDatetime(this.input, this.column.datetimeFormat, this.column.emptyText)])]);
@@ -44174,7 +44176,7 @@ __webpack_require__.r(__webpack_exports__);
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_0__["default"],
   render: function render() {
     var h = arguments[0];
-    var className = ['n-table__cell', 'n-table__cell--' + this.column.type];
+    var className = ['n-table-cell', 'n-table-cell--' + this.column.type];
     return h("div", {
       "class": className
     }, [h("span", {
@@ -44213,7 +44215,7 @@ __webpack_require__.r(__webpack_exports__);
         $index: index
       };
     });
-    var className = ['n-table__cell', 'n-table__cell--' + this.column.type];
+    var className = ['n-table-cell', 'n-table-cell--' + this.column.type];
     return h("div", {
       "class": className
     }, [h("span", [nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isArray(this.input) ? [this.input] : this.input, function (value) {
@@ -44246,7 +44248,7 @@ __webpack_require__.r(__webpack_exports__);
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_0__["default"],
   render: function render() {
     var h = arguments[0];
-    var className = ['n-table__cell', 'n-table__cell--' + this.column.type];
+    var className = ['n-table-cell', 'n-table-cell--' + this.column.type];
     return h("div", {
       "class": className
     }, [h("span", [nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].convertString(this.input, this.column.emptyText)])]);
@@ -44301,12 +44303,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return 'string';
       },
       type: [String]
-    },
-    basis: {
-      "default": function _default() {
-        return 1;
-      },
-      type: [Number]
     },
     align: {
       "default": function _default() {
@@ -44374,24 +44370,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       type: [String]
     },
-    defaultWidth: {
+    width: {
       "default": function _default() {
-        return 100;
-      }
-    },
-    fixedWidth: {
-      "default": function _default() {
-        return 0;
+        return 140;
       }
     },
     minWidth: {
       "default": function _default() {
-        return this.fixedWidth || this.defaultWidth;
+        return this.width;
       }
     },
     maxWidth: {
       "default": function _default() {
-        return this.fixedWidth || 0;
+        return 0;
       }
     },
     emptyText: {
@@ -44433,7 +44424,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       veVisible: true,
-      width: 0
+      veWidth: 0
     };
   },
   methods: {
@@ -44442,28 +44433,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.adjustResizerPosition, 500);
       }
 
-      var offsetX = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.column).offset('left', this.NTable.$el);
-      this.width = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.column).width();
+      this.veWidth = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.column).width();
       var style = {
-        left: this.width + offsetX + 'px'
+        left: this.veWidth + 'px'
       };
-      console.log(style);
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.column).find('[data-resizer]').css(style);
     },
     eventResizerMousedown: function eventResizerMousedown(event) {
       event.preventDefault();
       event.stopPropagation();
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.column).addClass('n-resize');
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mousemove', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.eventResizerMousemove), this._uid);
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mouseup', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.eventResizerMouseup), this._uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mousemove', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.eventResizerMousemove, 30), this._uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mouseup', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.eventResizerMouseup, 30), this._uid);
     },
     eventResizerMousemove: function eventResizerMousemove(event) {
       this.clientX = event.clientX;
       event.preventDefault();
-      var offsetX = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.NTable.$el).offset('left');
+      var offsetX = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.column).offset('left');
       var scrollX = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.column).scroll('left');
+      var targetWidth = this.clientX + scrollX - offsetX;
+
+      if (this.minWidth) {
+        targetWidth = Math.max(targetWidth, this.minWidth);
+      }
+
+      if (this.maxWidth) {
+        targetWidth = Math.min(targetWidth, this.maxWidth);
+      }
+
       var style = {
-        'left': this.clientX + scrollX - offsetX + 2 + 'px'
+        'left': targetWidth + 'px'
       };
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.column).find('[data-resizer]').css(style);
     },
@@ -44480,7 +44479,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var offsetX = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.column).offset('left');
       var scrollX = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.column).scroll('left');
-      this.width = scrollX + this.clientX - offsetX + 2;
+      var targetWidth = this.clientX + scrollX - offsetX;
+
+      if (this.minWidth) {
+        targetWidth = Math.max(targetWidth, this.minWidth);
+      }
+
+      if (this.maxWidth) {
+        targetWidth = Math.min(targetWidth, this.maxWidth);
+      }
+
+      this.veWidth = targetWidth;
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.column).removeClass('n-resize');
       delete this.clientX;
       this.$nextTick(function () {
@@ -44498,7 +44507,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   renderHead: function renderHead() {
     var h = this.$createElement;
-    var classList = ['n-table-column'];
+    var classList = ['n-table-column', 'n-' + this.align];
     var index = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].findIndex(this.NTable.veColumns, {
       prop: this.prop
     });
@@ -44507,16 +44516,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       classList.push('n-first');
     }
 
-    if (!this.width && index) {
-      this.width = this.defaultWidth;
+    if (!this.veWidth && index) {
+      this.veWidth = this.defaultWidth;
     }
 
-    if (this.width) {
+    if (this.veWidth) {
       classList.push('n-fixed');
     }
 
     var style = {
-      width: this.width + 'px'
+      width: this.veWidth + 'px',
+      minWidth: this.minWidth + 'px'
     };
     return h("div", {
       "ref": "column",
@@ -44526,21 +44536,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   renderHeadLabel: function renderHeadLabel() {
     var h = this.$createElement;
-    var boundryEl = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.NTable.$el).find('.n-table__inner').get(0);
-    console.log(boundryEl);
+
+    if (!this.boundryEl) {
+      this.boundryEl = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.NTable.$el).find('.n-table__inner').get(0);
+    }
+
     var labelHtml = h("div", {
       "class": "n-table-column__label"
     }, [this.label]);
     var tooltipHtml = h("NPopover", {
       "attrs": {
         "type": "tooltip",
-        "boundry": boundryEl
+        "boundry": this.boundryEl
       }
     }, [this.label]);
     return [labelHtml, tooltipHtml];
   },
   renderHeadFilter: function renderHeadFilter() {
-    return null;
+    var h = this.$createElement;
+
+    if (!this.filter) {
+      return null;
+    }
+
+    var componentName = 'NTableFilter' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.type);
+    var props = {
+      column: this
+    };
+    return [h("div", {
+      "class": "n-table-column__filter"
+    }, [h("span", {
+      "class": this.icons.angleDown
+    })]), h("NPopover", {
+      "class": "n-popover-filter",
+      "attrs": {
+        "trigger": "click",
+        "boundry": this.boundryEl
+      }
+    }, [this.$render(componentName, {
+      slot: 'raw',
+      props: props
+    })])];
   },
   renderHeadResizer: function renderHeadResizer() {
     var h = this.$createElement;
@@ -44560,7 +44596,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var h = this.$createElement;
     var remote = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(this.NDraggable.veItems, _defineProperty({}, this.NDraggable.uniqueProp, props.value[this.NDraggable.uniqueProp]));
     var componentName = 'NTableCell' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.type);
-    var classList = ['n-table-column'];
+    var classList = ['n-table-column', 'n-' + this.align];
     var index = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].findIndex(this.NTable.veColumns, {
       prop: this.prop
     });
@@ -44569,15 +44605,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       classList.push('n-first');
     }
 
-    if (!this.width && index) {
-      this.width = this.defaultWidth;
+    if (!this.veWidth && index) {
+      this.veWidth = this.defaultWidth;
     }
 
-    if (this.width) {
+    if (this.veWidth) {
       classList.push('n-fixed');
     }
 
-    var width = this.width;
+    var width = this.veWidth;
 
     if (!index) {
       width -= remote.depth * 20;
@@ -44637,22 +44673,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: _objectSpread({}, _mixins_src_ctor__WEBPACK_IMPORTED_MODULE_0__["default"], {
     getFilterProps: function getFilterProps(defaults) {
-      var filter = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(this.NTable.filterProps, {
+      var filter = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(this.NTable.veFilter, {
         property: this.column.filterProp
       }, {});
       return nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].assign(defaults, filter);
     },
     changeFilter: function changeFilter() {
-      var prevData = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(this.NTable.filterProps, {
-        property: this.column.filterProp
-      });
-      var data = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].each(this.$data, function (value) {
+      var newData = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].each(this.form, function (value) {
         return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isArray(value) ? value.join(',') : value;
       });
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].md5(prevData) !== nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].md5(data)) {
-        this.column.filterColumn(data);
-      }
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(this.NTable.veFilter, {
+        property: this.column.filterProp
+      });
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].push(this.NTable.veFilter, newData);
     },
     resetFilter: function resetFilter() {// Reset data
     }
@@ -44663,7 +44696,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: this.column.type,
       value: null
     };
-    return this.getFilterProps(defaults);
+    return {
+      form: this.getFilterProps(defaults)
+    };
   },
   mounted: function mounted() {
     this.NTable.$on('reset', this.resetFilter);
@@ -44677,7 +44712,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "attrs": {
         "type": "link",
         "size": "small",
-        "disabled": nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.value)
+        "disabled": nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.form.value)
       },
       "on": {
         "click": this.resetFilter
@@ -44969,18 +45004,21 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _table_filter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../table-filter */ "./src/table/src/table-filter/table-filter.js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @vue/babel-helper-vue-jsx-merge-props */ "./node_modules/@vue/babel-helper-vue-jsx-merge-props/dist/helper.js");
+/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _table_filter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../table-filter */ "./src/table/src/table-filter/table-filter.js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NTableFilterString',
-  "extends": _table_filter__WEBPACK_IMPORTED_MODULE_0__["default"],
+  "extends": _table_filter__WEBPACK_IMPORTED_MODULE_1__["default"],
   methods: {
     resetFilter: function resetFilter() {
-      this.value = null;
-      this.operator = 'li';
+      this.form.value = null;
+      this.form.operator = 'li';
     }
   },
   data: function data() {
@@ -44990,27 +45028,31 @@ __webpack_require__.r(__webpack_exports__);
       value: null,
       operator: 'li'
     };
-    return this.getFilterProps(defaults);
+    return {
+      form: this.getFilterProps(defaults)
+    };
   },
   renderForm: function renderForm() {
     var _this = this;
 
     var h = this.$createElement;
-    return h("NForm", {
+    var events = {
+      change: this.changeFilter
+    };
+    return h("NForm", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
       "attrs": {
-        "form": this.$data
-      },
-      "on": {
-        "change": nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.changeFilter)
+        "form": this.form
       }
-    }, [h("NFormItem", [h("NInput", {
+    }, {
+      "on": events
+    }]), [h("NFormItem", [h("NInput", {
       "attrs": {
         "size": "small"
       },
       "model": {
-        value: _this.value,
+        value: _this.form.value,
         callback: function callback($$v) {
-          _this.value = $$v;
+          _this.form.value = $$v;
         }
       }
     })]), h("NFormItem", [h("NSelect", {
@@ -45018,9 +45060,9 @@ __webpack_require__.r(__webpack_exports__);
         "size": "small"
       },
       "model": {
-        value: _this.operator,
+        value: _this.form.operator,
         callback: function callback($$v) {
-          _this.operator = $$v;
+          _this.form.operator = $$v;
         }
       }
     }, [h("NSelectOption", {
@@ -45250,7 +45292,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      veColumns: []
+      veColumns: [],
+      veFilter: []
     };
   },
   methods: {
@@ -45322,12 +45365,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var columnHtml = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veColumns, function (column) {
       return column.ctor('renderHead')();
     });
-    var style = {
-      minHeight: this.itemHeight + 'px'
-    };
     return h("div", {
-      "class": "n-table__head",
-      "style": style
+      "class": "n-table__head"
     }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].merge(defaultRender, columnHtml)]);
   },
   render: function render($render) {
@@ -45350,7 +45389,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       on: this.$listeners,
       scopedSlots: this.$scopedSlots
     };
-    console.log(slots);
     var draggableHtml = this.$render('NDraggable', _objectSpread({
       ref: 'list',
       "class": 'n-table__body',

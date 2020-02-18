@@ -2,6 +2,7 @@
 
 
 .n-table-column {
+    position: relative;
     flex: 0 0 auto;
     display: flex;
     flex-direction: row;
@@ -23,23 +24,34 @@
 }
 
 .n-table-column.n-fixed {
-    flex: 0 0 auto;
+    flex: 0 1 auto;
 }
 
 .n-table-column__label {
     flex: 1 1 auto;
 }
 
+.n-table-column.n-left .n-table-column__label {
+    text-align: left;
+}
+
+.n-table-column.n-center .n-table-column__label {
+    text-align: center;
+}
+
+.n-table-column.n-right .n-table-column__label {
+    text-align: right;
+}
+
 .n-table-column__resizer {
     cursor: col-resize;
-    z-index: 300;
     position: absolute;
     flex: 0 0 auto;
     top: 0;
     left: 0;
-    width: 4px;
+    width: 6px;
     height: 100%;
-    margin-left: -4px;
+    margin-left: -6px;
     background: rgba($color-black, 0.3);
     opacity: 0;
     transition: opacity 200ms;
@@ -54,6 +66,13 @@
     z-index: 9000;
     opacity: 1;
 }
+
+
+
+
+
+
+
 
 .n-table__body .n-table__column--image {
     position: relative;

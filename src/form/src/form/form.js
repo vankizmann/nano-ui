@@ -71,8 +71,8 @@ export default {
 
     mounted()
     {
-        this.$watch('form', Any.debounce(this.updateForm, 10), { deep: true });
-        this.$watch('errors', Any.debounce(this.updateErrors, 10), { deep: true });
+        this.$watch('form', this.updateForm, { deep: true });
+        this.$watch('errors', this.updateErrors, { deep: true });
     },
 
     render(h)

@@ -25,7 +25,7 @@ export default {
 
         getFilterProps(defaults)
         {
-            let filter = Arr.find(this.NTable.filterProps, {
+            let filter = Arr.find(this.NTable.veFilter, {
                 property: this.column.filterProp
             }, {});
 
@@ -34,17 +34,15 @@ export default {
 
         changeFilter()
         {
-            let prevData = Arr.find(this.NTable.filterProps, {
-                property: this.column.filterProp
-            });
-
-            let data = Obj.each(this.$data, (value) => {
+            let newData = Obj.each(this.form, (value) => {
                 return Any.isArray(value) ? value.join(',') : value;
             });
 
-            if ( Any.md5(prevData) !== Any.md5(data) ) {
-                this.column.filterColumn(data);
-            }
+            Arr.remove(this.NTable.veFilter, {
+                property: this.column.filterProp
+            });
+
+            Arr.push(this.NTable.veFilter, newData);
         },
 
         resetFilter()
@@ -60,7 +58,9 @@ export default {
             property: this.column.filterProp, type: this.column.type, value: null
         };
 
-        return this.getFilterProps(defaults);
+        return {
+            form: this.getFilterProps(defaults)
+        };
     },
 
     mounted()
@@ -76,7 +76,7 @@ export default {
     renderReset()
     {
         return (
-            <NButton type="link" size="small" disabled={Any.isEmpty(this.value)} vOn:click={this.resetFilter}>
+            <NButton type="link" size="small" disabled={Any.isEmpty(this.form.value)} vOn:click={this.resetFilter}>
                 {this.trans('Reset')}
             </NButton>
         );

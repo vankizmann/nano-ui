@@ -40,7 +40,7 @@ export default {
 
     render()
     {
-        return <div class="n-table__cell">
+        return <div class="n-table-cell">
             <span>{ this.input }</span>
         </div>;
     }

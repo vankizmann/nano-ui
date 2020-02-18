@@ -363,7 +363,7 @@ export default {
                     Arr.each(batch, this.dropItem);
                 });
 
-                Arr.each(Any.vals(delayedItems), (source, count) => {
+                Arr.each(Any.vals(delayedItems), (source) => {
 
                     let finalTarget = Obj.get(this, target[this.pathProp]);
 
@@ -379,7 +379,7 @@ export default {
 
                     delete batch['_key'];
 
-                    Arr.each(batch.reverse(), (source, count) => {
+                    Arr.each(batch.reverse(), (source) => {
 
                         let finalTarget = Obj.get(this, target[this.pathProp]);
 
@@ -395,7 +395,7 @@ export default {
 
                 });
 
-                Arr.each(this.veCached, (source) => {
+                Arr.each(this.veCached.reverse(), (source) => {
 
                     let finalTarget = Obj.get(this, target[this.pathProp]);
 
@@ -423,7 +423,7 @@ export default {
                     Arr.each(batch, this.dropItem);
                 });
 
-                Arr.each(Any.vals(delayedItems).reverse(), (source, count) => {
+                Arr.each(Any.vals(delayedItems).reverse(), (source) => {
 
                     let finalTarget = Obj.get(this, target[this.pathProp]);
 
@@ -445,7 +445,7 @@ export default {
                         [this.uniqueProp]: target[this.uniqueProp]
                     });
 
-                    Arr.each(batch.reverse(), (source, count) => {
+                    Arr.each(batch.reverse(), (source) => {
 
                         // Add item before last item added, also transform item
                         Arr.insert(finalTarget, finalIndex, this.transformDrop(source.item));
@@ -769,11 +769,14 @@ export default {
                 Arr.push(merge, dragObject);
 
                 if ( ! Arr.has(this.veCollapsed, dragObject[this.uniqueProp]) ) {
+                    console.log('reducer without childs');
                     return;
                 }
 
-                merge = this.itemReducer(merge, Obj.get(item, this.childProp, []),
+                this.itemReducer(merge, Obj.get(item, this.childProp, []),
                     depth + 1, `${path}.${index}.${this.childProp}`, dragObject[this.orderProp]);
+
+                console.log('reducer with childs');
 
             });
 
@@ -983,8 +986,6 @@ export default {
         let props = Obj.assign(Obj.clone(this.$props), {
             items: this.veItems, renderNode: this.ctor('renderItem')
         });
-
-        console.log('!', slots);
 
         return this.$render('NVirtualscroller', {
             class: 'n-draggable', props

@@ -224,7 +224,7 @@ export default {
 
     data()
     {
-        return { veColumns: [] }
+        return { veColumns: [], veFilter: [] }
     },
 
     methods: {
@@ -312,12 +312,8 @@ export default {
             return column.ctor('renderHead')();
         });
 
-        let style = {
-            minHeight: this.itemHeight + 'px'
-        };
-
         return (
-            <div class="n-table__head" style={style}>
+            <div class="n-table__head">
                 { Arr.merge(defaultRender, columnHtml) }
             </div>
         );
@@ -342,8 +338,6 @@ export default {
         let passes = {
             on: this.$listeners, scopedSlots: this.$scopedSlots
         };
-
-        console.log(slots);
 
         let draggableHtml = this.$render('NDraggable', {
             ref: 'list', class: 'n-table__body', props, ...passes

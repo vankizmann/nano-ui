@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Nano UI Table</title>
 
-    <!--<link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">-->
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="../../dist/index.css">
     <link rel="stylesheet" href="../style.css">
@@ -24,16 +24,16 @@
             <n-button @click="kill = true">Kill all instances</n-button>
         </div>
 
-        <div v-if="kill === false" class="adapt-height" style=" overflow: hidden; padding: 20px;">
+        <div v-if="kill === false" class="adapt-height" style="overflow: hidden; padding: 20px;">
             <div>
                 <n-table v-model="items" :viewport-height="350" :render-collapse="true" :render-select="true">
                     <n-table-column prop="label" type="string" label="Label" :filter="true" :default-width="200"></n-table-column>
-                    <n-table-column prop="id" align="center" type="string" label="ID" :default-width="100"></n-table-column>
+                    <n-table-column prop="id" align="center" type="string" label="ID" :default-width="250"></n-table-column>
                 </n-table>
             </div>
         </div>
 
-        <div v-if="kill === false" class="adapt-height" style=" overflow: hidden; padding: 20px;">
+        <div v-if="kill === false" class="adapt-height" style="overflow: hidden; padding: 20px;">
             <n-table v-model="target" :viewport-height="true" style="height: 50vh;">
                 <n-table-column prop="label" type="string" label="Label"></n-table-column>
                 <n-table-column prop="id" align="center" type="string" label="ID"></n-table-column>
@@ -88,7 +88,7 @@
                                 };
 
                                 if ( current < depth ) {
-                                    item.children = childGenerator(10, depth, current + 1);
+                                    item.children = childGenerator(count > 10 ? 10 : count, depth, current + 1);
                                 }
 
                                 return item;
@@ -99,15 +99,15 @@
 
                         let self = this;
 
-                        // setTimeout(function () {
-                        //     self.items = childGenerator(30);
-                        // }, 1000);
+                        setTimeout(function () {
+                            self.items = childGenerator(5, 7);
+                        }, 1000);
 
-                        // setTimeout(function () {
-                        //     self.target = childGenerator(200, 1);
-                        // }, 1000);
+                        setTimeout(function () {
+                            self.target = childGenerator(200, 1);
+                        }, 1000);
 
-                        return { items: childGenerator(100, 1), target: [], kill: false };
+                        return { items: [], target: [], kill: false };
                     }
                 };
 

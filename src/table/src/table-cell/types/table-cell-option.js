@@ -17,7 +17,7 @@ export default {
         });
 
         let className = [
-            'n-table__cell', 'n-table__cell--' + this.column.type
+            'n-table-cell', 'n-table-cell--' + this.column.type
         ];
 
         return <div class={className}>

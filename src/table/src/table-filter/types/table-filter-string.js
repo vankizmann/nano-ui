@@ -11,8 +11,8 @@ export default {
 
         resetFilter()
         {
-            this.value = null;
-            this.operator = 'li';
+            this.form.value = null;
+            this.form.operator = 'li';
         }
 
     },
@@ -23,18 +23,22 @@ export default {
             property: this.column.filterProp, type: this.column.type, value: null, operator: 'li'
         };
 
-        return this.getFilterProps(defaults);
+        return { form: this.getFilterProps(defaults) };
     },
 
     renderForm()
     {
+        let events = {
+            change: this.changeFilter
+        };
+
         return (
-            <NForm form={this.$data} vOn:change={Any.debounce(this.changeFilter)}>
+            <NForm form={this.form} on={events}>
                 <NFormItem>
-                    <NInput size="small" vModel={this.value}/>
+                    <NInput size="small" vModel={this.form.value}/>
                 </NFormItem>
                 <NFormItem>
-                    <NSelect size="small" vModel={this.operator}>
+                    <NSelect size="small" vModel={this.form.operator}>
                         <NSelectOption value="li" label={this.trans('Includes value')} />
                         <NSelectOption value="nl" label={this.trans('Excludes value')} />
                         <NSelectOption value="eq" label={this.trans('Equal value')} />
