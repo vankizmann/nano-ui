@@ -6,13 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Nano UI Table</title>
 
-    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <!--<link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="../../dist/index.css">
     <link rel="stylesheet" href="../style.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
-    <script src="https://vankizmann.github.io/nano-js/dist/nano-js.js"></script>
+    <script src="../../node_modules/vue/dist/vue.min.js"></script>
+    <script src="../../node_modules/nano-js/dist/nano-js.js"></script>
     <script src="../../dist/index.js"></script>
 
 </head>
@@ -24,22 +24,24 @@
             <n-button @click="kill = true">Kill all instances</n-button>
         </div>
 
-        <div v-if="kill === false" class="adapt-height" style="height: 350px; overflow: hidden; padding: 20px;">
-            <n-table :items="items" :adapt-height="true" :allow-drop="true">
-                <n-table-column prop="label" type="string" label="Label" :filter="true" :default-width="200"></n-table-column>
-                <n-table-column prop="id" align="center" type="string" label="ID" :default-width="100"></n-table-column>
-            </n-table>
+        <div v-if="kill === false" class="adapt-height" style=" overflow: hidden; padding: 20px;">
+            <div>
+                <n-table v-model="items" :viewport-height="350" :render-collapse="true" :render-select="false">
+                    <n-table-column prop="label" type="string" label="Label" :filter="true" :default-width="200"></n-table-column>
+                    <n-table-column prop="id" align="center" type="string" label="ID" :default-width="100"></n-table-column>
+                </n-table>
+            </div>
         </div>
 
-        <div v-if="kill === false" class="adapt-height" style="height: 50vh; overflow: hidden; padding: 20px;">
-            <n-table :items="target" :adapt-height="true" :allow-drop="true">
+        <div v-if="kill === false" class="adapt-height" style=" overflow: hidden; padding: 20px;">
+            <n-table v-model="target" :viewport-height="true" style="height: 50vh;">
                 <n-table-column prop="label" type="string" label="Label"></n-table-column>
                 <n-table-column prop="id" align="center" type="string" label="ID"></n-table-column>
-                <n-table-column prop="id" align="center" type="string" label="ID"></n-table-column>
-                <n-table-column prop="id" align="center" type="string" label="ID"></n-table-column>
-                <n-table-column prop="id" align="center" type="string" label="ID"></n-table-column>
-                <n-table-column prop="id" align="center" type="string" label="ID"></n-table-column>
-                <n-table-column prop="id" align="center" type="string" label="ID"></n-table-column>
+                <n-table-column prop="id1" align="center" type="string" label="ID"></n-table-column>
+                <n-table-column prop="id2" align="center" type="string" label="ID"></n-table-column>
+                <n-table-column prop="id3" align="center" type="string" label="ID"></n-table-column>
+                <n-table-column prop="id4" align="center" type="string" label="ID"></n-table-column>
+                <n-table-column prop="id5" align="center" type="string" label="ID"></n-table-column>
             </n-table>
         </div>
 
@@ -59,21 +61,35 @@
 
                         let total = 0;
 
-                        let childGenerator = function (count) {
+                        let childGenerator = function (count, depth, current) {
 
                             if ( count === undefined ) {
-                                count = 300;
+                                count = 3;
+                            }
+
+                            if ( depth === undefined ) {
+                                depth = 2;
+                            }
+
+                            if ( current === undefined ) {
+                                current = 1;
                             }
 
                             let children = Array(count).fill(null);
 
                             Nano.Arr.map(children, function (item) {
 
-                                total ++;
+                                total++;
 
                                 item = {
-                                    label: 'Item ' + total, id: 'id-' + total
+                                    label: 'Item ' + total,
+                                    id: 'value-' + total,
+                                    children: []
                                 };
+
+                                if ( current < depth ) {
+                                    item.children = childGenerator(10, depth, current + 1);
+                                }
 
                                 return item;
                             });
@@ -87,11 +103,11 @@
                         //     self.items = childGenerator(30);
                         // }, 1000);
 
-                        setTimeout(function () {
-                            self.target = childGenerator(2000);
-                        }, 1000);
+                        // setTimeout(function () {
+                        //     self.target = childGenerator(200, 1);
+                        // }, 1000);
 
-                        return { items: childGenerator(1000), target: [], kill: false };
+                        return { items: childGenerator(100, 1), target: [], kill: false };
                     }
                 };
 

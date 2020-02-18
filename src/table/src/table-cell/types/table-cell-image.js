@@ -13,7 +13,7 @@ export default {
         ];
 
         return <div class={className}>
-            <span style={'background-image: url(\'' + this.value + '\');'} />
+            <span style={'background-image: url(\'' + this.input + '\');'} />
         </div>;
     }
 

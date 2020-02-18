@@ -58,10 +58,10 @@ export default {
             }
 
             Dom.find(this.$refs.viewport.$el).on('scroll',
-                Any.framerate(this.refreshDriver, 10));
+                Any.framerate(this.refreshDriver, 15));
 
             Dom.find(this.$refs.viewport.$el).on('scroll',
-                Any.debounce(this.refreshDriver, 30));
+                Any.debounce(this.refreshDriver, 60));
         },
 
         refreshDriver()
@@ -103,11 +103,11 @@ export default {
 
         discoverHeight()
         {
-            if ( this.viewportHeight === true ) {
-                this.height = Dom.find(this.$el).parent().height();
+            if ( this.viewportHeight ) {
+                this.height = Dom.find(this.$el).height();
             }
 
-            if ( this.viewportHeight === false ) {
+            if ( ! this.viewportHeight ) {
                 this.height = this.items.length * this.itemHeight;
             }
 
@@ -129,13 +129,6 @@ export default {
         return {
             height: 0, state
         };
-    },
-
-    beforeMount()
-    {
-        if ( ! Any.isBool(this.viewportHeight) ) {
-            this.height = this.viewportHeight;
-        }
     },
 
     mounted()

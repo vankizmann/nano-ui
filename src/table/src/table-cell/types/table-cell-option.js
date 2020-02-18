@@ -9,8 +9,8 @@ export default {
 
     render()
     {
-        let options = typeof this.column.options === 'function' ?
-            this.column.options(this.row) : this.column.options;
+        let options = Any.isFunction(this.column.options) ?
+            this.column.options(this.value) : this.column.options;
 
         options = Arr.map(Arr.clone(options), (value, index) => {
             return { $value: value, $index: index };
@@ -23,7 +23,7 @@ export default {
         return <div class={className}>
             <span>
                 {
-                    Arr.each(! Any.isArray(this.value) ? [this.value] : this.value, (value) => {
+                    Arr.each(! Any.isArray(this.input) ? [this.input] : this.input, (value) => {
 
                         let option = Arr.find(options, (item) => {
                             return Any.string(Obj.get(item, this.column.optionsValue)) === Any.string(value);

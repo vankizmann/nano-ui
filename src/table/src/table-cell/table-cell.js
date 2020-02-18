@@ -17,7 +17,7 @@ export default {
             required: true
         },
 
-        row: {
+        value: {
             required: true
         },
 
@@ -25,9 +25,9 @@ export default {
 
     computed: {
 
-        value()
+        input()
         {
-            return Obj.get(this.row, this.column.prop);
+            return Obj.get(this.value, this.column.prop);
         }
 
     },
@@ -41,7 +41,7 @@ export default {
     render()
     {
         return <div class="n-table__cell">
-            <span>{ this.value }</span>
+            <span>{ this.input }</span>
         </div>;
     }
 

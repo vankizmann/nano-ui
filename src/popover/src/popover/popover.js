@@ -406,19 +406,20 @@ export default {
 
     mounted()
     {
+        this._ev = { _uid: this._uid };
 
         if ( this.trigger === 'hover' ) {
-            Dom.find(document).on('mousemove', Any.debounce(this.eventMousemove), { _uid: this._uid });
+            Dom.find(document).on('mousemove', Any.debounce(this.eventMousemove), this._ev);
         }
 
         if ( this.trigger === 'click' ) {
-            Dom.find(document).on('mousedown', this.eventMousedown, { _uid: this._uid });
-            Dom.find(document).on('click', this.eventMouseup, { _uid: this._uid });
+            Dom.find(document).on('mousedown', this.eventMousedown, this._ev);
+            Dom.find(document).on('click', this.eventMouseup, this._ev);
         }
 
         if ( this.trigger === 'context' ) {
-            Dom.find(document).on('contextmenu', this.eventContextmenu, { _uid: this._uid });
-            Dom.find(document).on('mousedown', this.eventMousedown, { _uid: this._uid });
+            Dom.find(document).on('contextmenu', this.eventContextmenu, this._ev);
+            Dom.find(document).on('mousedown', this.eventMousedown, this._ev);
         }
 
         this.target = Dom.find(this.$el).previous().get(0);
@@ -429,7 +430,7 @@ export default {
 
         this.parent = null;
 
-        if ( Any.isEmpty(this.boundry) ) {
+        if ( ! Any.isEmpty(this.boundry) ) {
             this.parent = Dom.find(this.boundry).get(0);
         }
 
@@ -446,14 +447,11 @@ export default {
 
     beforeDestroy()
     {
-        Dom.find(document).off('mousedown',
-            null, { _uid: this._uid });
-
-        Dom.find(document).off('mousemove',
-            null, { _uid: this._uid });
-
-        Dom.find(document).off('contextmenu',
-            null, { _uid: this._uid });
+        Dom.find(document).on('mousemove', null, this._ev);
+        Dom.find(document).on('mousedown', null, this._ev);
+        Dom.find(document).on('click', null, this._ev);
+        Dom.find(document).on('contextmenu', null, this._ev);
+        Dom.find(document).on('mousedown', null, this._ev);
 
         this.$el.remove();
     },

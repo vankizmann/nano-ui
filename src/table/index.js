@@ -3,7 +3,7 @@ import Vue from "vue";
 import Table from './src/table/table.beta';
 Vue.component(Table.name, Table);
 
-import TableColumn from './src/table-column/table-column';
+import TableColumn from './src/table-column/table-column.beta';
 Vue.component(TableColumn.name, TableColumn);
 
 import TableCellString from './src/table-cell/types/table-cell-string';

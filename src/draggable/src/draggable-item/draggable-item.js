@@ -190,33 +190,42 @@ export default {
             value: this.item
         };
 
+        let renderNode = null;
+
         if ( Any.isFunction(this.NDraggable.renderNode) ) {
-            return (
-                <td>
-                    { this.NDraggable.renderNode(props) }
-                </td>
-            );
+            renderNode = this.NDraggable.renderNode(props);
         }
 
         if ( Any.isString(this.NDraggable.renderNode) ) {
-            return (
-                <td>
-                    { this.$render(this.NDraggable.renderNode, { props }) }
-                </td>
-            );
+            renderNode = this.$render(this.NDraggable.renderNode, { props })
         }
 
-        return (
-            <td>{ this.$scopedSlots.default(props) }</td>
-        );
+        if ( Any.isEmpty(renderNode) ) {
+            renderNode = this.$scopedSlots.default(props);
+        }
+
+        let attrs = {
+            width: '100%'
+        };
+
+        return this.NDraggable.wrapNode ?
+            this.$render('div', { attrs }, [renderNode]) : renderNode;
     },
 
     renderSpacer()
     {
+        if ( ! this[this.NDraggable.depthProp] ) {
+            return null;
+        }
+
+        let style = {
+            width: (this.depth * 20) + 'px'
+        };
+
         return (
-            <td class="n-draggable-item__spacer" align="center" width={this.depth * 20}>
+            <div class="n-draggable-item__spacer" style={style}>
                 { /* SPACER */}
-            </td>
+            </div>
         )
     },
 
@@ -230,13 +239,13 @@ export default {
             this.NDraggable.childProp, []).length;
 
         return (
-            <td class="n-draggable-item__collapse" align="center" width={25}>
+            <div class="n-draggable-item__collapse">
                 { !! childsLength &&
                     <div on={{ click: this.collapse }}>
                         <i class={ window.NanoIcons.angleRight }></i>
                     </div>
                 }
-            </td>
+            </div>
         )
     },
 
@@ -250,9 +259,9 @@ export default {
             this.NDraggable.canSelect(this);
 
         return (
-            <td class="n-draggable-item__select" align="center" width={25}>
+            <div class="n-draggable-item__select">
                 <NCheckbox key={UUID()} size="small" disabled={!allowSelect} checked={this.NDraggable.isSelected(this)} onInput={this.select} />
-            </td>
+            </div>
         )
     },
 
@@ -271,6 +280,10 @@ export default {
             drop: this.eventDragdrop
         };
 
+        let style = {
+            height: this.NDraggable.itemHeight + 'px'
+        };
+
         let classList = [
             'n-draggable-item'
         ];
@@ -287,14 +300,12 @@ export default {
             this.NDraggable.allowDrag(this);
 
         return (
-            <table class={classList} width="100%" height={this.NDraggable.itemHeight} on={events} data-id={this.id} draggable={draggable}>
-                <tr>
-                    { this.ctor('renderSpacer')() }
-                    { this.ctor('renderCollapse')() }
-                    { this.ctor('renderSelect')() }
-                    { this.ctor('renderNode')() }
-                </tr>
-            </table>
+            <div class={classList} style={style} on={events} data-id={this.id} draggable={draggable}>
+                { this.ctor('renderSpacer')() }
+                { this.ctor('renderCollapse')() }
+                { this.ctor('renderSelect')() }
+                { this.ctor('renderNode')() }
+            </div>
         )
     }
 

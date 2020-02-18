@@ -8,18 +8,6 @@ export default {
         prop: 'items'
     },
 
-    inject: {
-
-        NDraggable: {
-            default: undefined
-        },
-
-        NDraggableTree: {
-            default: undefined
-        }
-
-    },
-
     props: {
 
         items: {
@@ -210,6 +198,14 @@ export default {
             }
         },
 
+        wrapNode: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         bufferItems: {
             default()
             {
@@ -221,7 +217,7 @@ export default {
         updateDelay: {
             default()
             {
-                return 0;
+                return 1000;
             },
             type: [Number]
         }
@@ -244,18 +240,40 @@ export default {
 
     beforeMount()
     {
-        this.veCopy = Obj.clone(this.items);
+        this.$watch('veCopy', Any.debounce(this.exportItems,
+            this.updateDelay), { deep: true });
 
-        this.$watch('veCopy', Any.debounce(() => {
-            this.$emit('input', Obj.clone(this.veCopy));
-        }, this.updateDelay), { deep: true });
+        this.$watch('items', Any.debounce(this.importItems,
+            this.updateDelay));
 
-        this.refreshItems();
+        this.importItems();
 
         this.initialized = true;
     },
 
     methods: {
+
+        exportItems()
+        {
+            if ( Any.md5(this.items) === Any.md5(this.veCopy) ) {
+                return;
+            }
+
+            this.$emit('input', this.veCopy);
+        },
+
+        importItems(items = null)
+        {
+            items = items || this.items;
+
+            if ( Any.md5(items) === Any.md5(this.veCopy) ) {
+                return;
+            }
+
+            this.veCopy = Obj.clone(items);
+
+            this.refreshItems();
+        },
 
         refreshItems()
         {
@@ -600,6 +618,19 @@ export default {
             this.updateSelected();
         },
 
+        toggleAllItems(reset = true)
+        {
+            if ( reset ) {
+                this.veSelected = [];
+            }
+
+            Arr.each(this.veItems, (item) => {
+                Arr.toggle(this.veSelected, item[this.uniqueProp]);
+            });
+
+            this.updateSelected();
+        },
+
         selectItem(id, reset = false)
         {
             if ( ! Any.isString(id) ) {
@@ -615,6 +646,14 @@ export default {
             this.updateSelected();
         },
 
+        selectAllItems()
+        {
+            this.veSelected = Arr.each(this.veItems,
+                (item) =>  item[this.uniqueProp]);
+
+            this.updateSelected();
+        },
+
         unselectItem(id)
         {
             if ( ! Any.isString(id) ) {
@@ -622,6 +661,14 @@ export default {
             }
 
             Arr.remove(this.veSelected, id);
+
+            this.updateSelected();
+        },
+
+        unselectAllItems()
+        {
+            this.veSelected = Arr.each(this.veItems,
+                (item) =>  item[this.uniqueProp]);
 
             this.updateSelected();
         },
@@ -652,6 +699,22 @@ export default {
             }
 
             return Arr.has(this.veSelected, id);
+        },
+
+        isAllSelected()
+        {
+            return this.veSelected.length === this.veItems.length &&
+                !! this.veItems.length;
+        },
+
+        isSelectable()
+        {
+            return !! this.veItems.length;
+        },
+
+        isIntermediate()
+        {
+            return ! this.isAllSelected() && !! this.veSelected.length;
         },
 
         canDrag(element)
@@ -886,7 +949,7 @@ export default {
         };
 
         return (
-            <div class="n-draggable__empty" on={events}>
+            <div class="n-draggable n-empty" on={events}>
                  <span>{ this.$slots.empty || this.trans('No entries') }</span>
             </div>
         );
