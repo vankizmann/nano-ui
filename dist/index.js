@@ -46594,9 +46594,10 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (this.height === 0) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.discoverHeight, 300);
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.discoverHeight, 500);
       }
 
+      console.log('refresh driver');
       this.refreshDriver();
     }
   },

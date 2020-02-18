@@ -103,6 +103,7 @@ export default {
 
         discoverHeight()
         {
+
             if ( this.viewportHeight ) {
                 this.height = Dom.find(this.$el).height();
             }
@@ -112,8 +113,10 @@ export default {
             }
 
             if ( this.height === 0 ) {
-                return Any.delay(this.discoverHeight, 300);
+                return Any.delay(this.discoverHeight, 500);
             }
+
+            console.log('refresh driver');
 
             this.refreshDriver();
         }
