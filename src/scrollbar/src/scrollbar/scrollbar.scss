@@ -1,12 +1,5 @@
 @import "../../../root/vars";
 
-$optiscroll-forceScrollbarV: false !default;
-$optiscroll-forceScrollbarH: false !default;
-$optiscroll-supportRtl: true !default;
-$optiscroll-defaultStyle: true !default;
-
-@import "~optiscroll/scss/optiscroll";
-
 .n-scrollbar {
     position: relative;
     overflow: auto;
@@ -74,7 +67,7 @@ $optiscroll-defaultStyle: true !default;
  *  even when content is not longer enough.
  */
 
-@if $optiscroll-forceScrollbarV {
+@if false {
     .n-scrollbar-content:before {
         content: '';
         position: absolute;
@@ -88,7 +81,7 @@ $optiscroll-defaultStyle: true !default;
 }
 
 
-@if $optiscroll-forceScrollbarH {
+@if false {
     .n-scrollbar-content:before {
         content: '';
         position: absolute;
