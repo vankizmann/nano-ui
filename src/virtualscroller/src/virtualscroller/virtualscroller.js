@@ -135,7 +135,7 @@ export default {
     {
         this.$watch('items', this.discoverHeight);
 
-        this.bindScroller();
+        // this.bindScroller();
 
         Dom.find(this.$el).observerResize(this.discoverHeight)(this.$el);
     },
@@ -174,10 +174,14 @@ export default {
             overflow: 'auto', overflowAnchor: 'none', outline: 'none', height: this.height + 'px'
         };
 
+        let events = {
+            scroll: Any.framerate(this.refreshDriver, 30)
+        };
+
         let targetHeight = Obj.get(this.state, 'targetHeight');
 
         return (
-            <NScrollbar ref="viewport" on={this.$listeners} style={style}>
+            <NScrollbar ref="viewport" on={events} style={style}>
                 <div style={{ height: targetHeight ? targetHeight + 'px' : 'auto', overflow: 'hidden', paddingRight: '15px' }}>
                     { ! Any.isEmpty(this.state.topPlaceholderHeight) &&
                         <div draggable={false} style={{ height: this.state.topPlaceholderHeight + 'px' }}></div>

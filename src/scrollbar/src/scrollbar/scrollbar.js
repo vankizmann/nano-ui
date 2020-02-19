@@ -29,6 +29,12 @@ export default {
         Dom.find(this.$el).parent().addClass('n-scrollbar');
     },
 
+    beforeDestroy()
+    {
+        this.optiscroll.destroy();
+
+        Dom.find(this.$el).parent().removeClass('n-scrollbar');
+    },
 
     render()
     {
