@@ -986,7 +986,7 @@ export default {
         });
 
         return this.$render('NVirtualscroller', {
-            key: Any.md5(this._uid), class: 'n-draggable', props
+            class: 'n-draggable', props
         }, slots);
     }
 

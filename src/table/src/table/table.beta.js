@@ -278,16 +278,15 @@ export default {
         let props = {
             checked: false,
             intermediate: false,
-            disabled: false
+            disabled: ! this.items.length
         };
 
         let uniqueKey = UUID();
 
-        if ( this.$refs.list ) {
+        if ( this.$refs.list && this.items.length ) {
 
             props['checked'] = this.$refs.list.isAllSelected();
             props['intermediate'] = this.$refs.list.isIntermediate();
-            props['disabled'] = ! this.$refs.list.isSelectable();
 
             uniqueKey = Any.md5(this.$refs.list.veSelected);
         }
