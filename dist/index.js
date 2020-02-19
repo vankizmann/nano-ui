@@ -38943,8 +38943,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    item: function item() {
-      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.NDraggable, "".concat(this[this.NDraggable.pathProp], ".") + "".concat(this[this.NDraggable.indexProp]));
+    veItem: function veItem() {
+      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.NDraggable, this[this.NDraggable.pathProp] + '.' + this[this.NDraggable.indexProp]);
     }
   },
   data: function data() {
@@ -38971,7 +38971,7 @@ __webpack_require__.r(__webpack_exports__);
         finalPositon = parentY;
       }
 
-      var allowDropAfter = this.NDraggable.isCollapsed(this) || !nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.item, this.NDraggable.childProp, []).length;
+      var allowDropAfter = this.NDraggable.isCollapsed(this) || !nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.veItem, this.NDraggable.childProp, []).length;
 
       if (clientY < safeZone && allowDropAfter) {
         finalStrategy = 'after';
@@ -39000,7 +39000,7 @@ __webpack_require__.r(__webpack_exports__);
      * Event listeners
      */
     eventClick: function eventClick(event) {
-      console.log('click0', this.item);
+      console.log('click0', this.veItem);
     },
     eventDragstart: function eventDragstart(event) {
       this.NDraggable.selectItem(this, !this.NDraggable.isSelected(this));
@@ -39054,7 +39054,7 @@ __webpack_require__.r(__webpack_exports__);
   renderNode: function renderNode() {
     var props = {
       index: this[this.NDraggable.indexProp],
-      value: this.item
+      value: this.veItem
     };
     var renderNode = null;
 
@@ -39101,7 +39101,7 @@ __webpack_require__.r(__webpack_exports__);
       return;
     }
 
-    var childsLength = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.item, this.NDraggable.childProp, []).length;
+    var childsLength = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.veItem, this.NDraggable.childProp, []).length;
     return h("div", {
       "class": "n-draggable-item__collapse"
     }, [!!childsLength && h("div", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{}, {
@@ -39648,7 +39648,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.veSelected = [];
       }
 
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veItems, function (item) {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veCopy, function (item) {
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].toggle(_this5.veSelected, item[_this5.uniqueProp]);
       });
       this.updateSelected();
@@ -39670,7 +39670,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     selectAllItems: function selectAllItems() {
       var _this6 = this;
 
-      this.veSelected = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veItems, function (item) {
+      this.veSelected = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veCopy, function (item) {
         return item[_this6.uniqueProp];
       });
       this.updateSelected();
@@ -39686,7 +39686,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     unselectAllItems: function unselectAllItems() {
       var _this7 = this;
 
-      this.veSelected = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veItems, function (item) {
+      this.veSelected = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veCopy, function (item) {
         return item[_this7.uniqueProp];
       });
       this.updateSelected();
@@ -43485,10 +43485,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     optiscroll__WEBPACK_IMPORTED_MODULE_2___default.a.globalSettings.checkFrequency = 750;
-    optiscroll__WEBPACK_IMPORTED_MODULE_2___default.a.globalSettings.scrollMinUpdateInterval = 32;
+    optiscroll__WEBPACK_IMPORTED_MODULE_2___default.a.globalSettings.scrollMinUpdateInterval = 64;
     this.optiscroll = new optiscroll__WEBPACK_IMPORTED_MODULE_2___default.a(this.$el.parentNode, {
       classPrefix: 'n-scrollbar-',
-      wrapContent: false
+      wrapContent: false,
+      preventParentScroll: true,
+      forceScrollbars: true
     });
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).parent().addClass('n-scrollbar');
   },
@@ -46545,35 +46547,32 @@ __webpack_require__.r(__webpack_exports__);
     },
     bufferItems: {
       "default": function _default() {
-        return 8;
+        return 14;
       },
       type: [Number]
     }
   },
   methods: {
-    bindScroller: function bindScroller() {
-      if (!this.$refs.viewport) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.bindScroller, 100);
-      }
-
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.viewport.$el).on('scroll', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.refreshDriver, 15));
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.viewport.$el).on('scroll', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.refreshDriver, 60));
-    },
     refreshDriver: function refreshDriver() {
       var _this = this;
+
+      var forceUpdate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
       if (!this.$refs.viewport) {
         return;
       }
 
-      var scrollTop = 0;
+      var scrollTop = 0,
+          scrollFix = this.scrollFix || scrollTop;
 
       if (this.$refs.viewport) {
         scrollTop = this.$refs.viewport.$el.scrollTop;
       }
 
-      if (scrollTop < 0) {
-        return;
+      var scrollBuffer = this.bufferItems / 1.65 * this.itemHeight;
+
+      if (scrollTop > scrollFix + scrollBuffer || scrollTop < scrollFix - scrollBuffer) {
+        scrollFix = scrollTop;
       }
 
       var options = {
@@ -46583,18 +46582,16 @@ __webpack_require__.r(__webpack_exports__);
         minRowHeight: this.itemHeight,
         scrollTop: scrollTop
       };
-      var newState = Object(dynamic_virtual_scroll__WEBPACK_IMPORTED_MODULE_2__["virtualScrollDriver"])(options, this.state, function () {
-        return _this.itemHeight;
-      });
-      var isSameState = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].reduce(newState, function (same, val, key) {
-        return same && _this.state[key] === val;
-      }, true);
 
-      if (isSameState) {
+      if (this.scrollFix === scrollFix && !forceUpdate) {
         return;
       }
 
-      this.state = newState;
+      this.scrollFix = scrollFix;
+      this.state = Object(dynamic_virtual_scroll__WEBPACK_IMPORTED_MODULE_2__["virtualScrollDriver"])(options, this.state, function () {
+        return _this.itemHeight;
+      });
+      this.veUpdate++;
     },
     discoverHeight: function discoverHeight() {
       if (this.viewportHeight) {
@@ -46609,35 +46606,45 @@ __webpack_require__.r(__webpack_exports__);
         return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.discoverHeight, 100);
       }
 
-      this.refreshDriver();
+      this.refreshDriver(true);
+    },
+    eventScroll: function eventScroll() {
+      this.refreshDriver(false);
     }
   },
   data: function data() {
-    var state = {
-      items: this.items
-    };
     return {
       height: 0,
-      state: state
+      scrollFix: -1,
+      veUpdate: 0
+    };
+  },
+  beforeMount: function beforeMount() {
+    this.state = {
+      items: nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].make(this.items.length)
     };
   },
   mounted: function mounted() {
-    this.$watch('items', this.discoverHeight); // this.bindScroller();
+    var _this2 = this;
 
+    this.$watch('items', this.discoverHeight);
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).on('scrollstop', function () {
+      return _this2.refreshDriver(true);
+    });
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).observerResize(this.discoverHeight)(this.$el);
   },
   renderItems: function renderItems(start, count) {
-    var _this2 = this;
+    var _this3 = this;
 
     return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.items.slice(start, start + count), function (value, index) {
-      return _this2.renderNode({
+      return _this3.renderNode({
         value: value,
         index: index
       });
     });
   },
   renderBody: function renderBody() {
-    var _this3 = this;
+    var _this4 = this;
 
     var h = this.$createElement;
 
@@ -46647,24 +46654,14 @@ __webpack_require__.r(__webpack_exports__);
 
     if (this.viewportHeight === false) {
       return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.items, function (value, index) {
-        if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isString(_this3.renderNode)) {
-          return _this3.$render(_this3.renderNode, {
-            value: value,
-            index: index
-          });
-        }
-
-        return _this3.renderNode({
+        return _this4.renderNode({
           value: value,
           index: index
         });
       });
     }
 
-    if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.state)) {
-      return null;
-    }
-
+    var targetHeight = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.state, 'targetHeight');
     var style = {
       overflow: 'auto',
       overflowAnchor: 'none',
@@ -46672,9 +46669,8 @@ __webpack_require__.r(__webpack_exports__);
       height: this.height + 'px'
     };
     var events = {
-      scroll: nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.refreshDriver, 30)
+      scroll: nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.eventScroll, 45)
     };
-    var targetHeight = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.state, 'targetHeight');
     return h("NScrollbar", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
       "ref": "viewport"
     }, {
@@ -46682,10 +46678,10 @@ __webpack_require__.r(__webpack_exports__);
     }, {
       "style": style
     }]), [h("div", {
+      "key": this.veUpdate,
       "style": {
         height: targetHeight ? targetHeight + 'px' : 'auto',
-        overflow: 'hidden',
-        paddingRight: '15px'
+        overflow: 'hidden'
       }
     }, [!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.state.topPlaceholderHeight) && h("div", {
       "attrs": {

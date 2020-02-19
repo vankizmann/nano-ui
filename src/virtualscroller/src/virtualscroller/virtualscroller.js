@@ -42,7 +42,7 @@ export default {
         bufferItems: {
             default()
             {
-                return 8;
+                return 14;
             },
             type: [Number]
         }
@@ -51,33 +51,22 @@ export default {
 
     methods: {
 
-        bindScroller()
-        {
-            if ( ! this.$refs.viewport ) {
-                return Any.delay(this.bindScroller, 100);
-            }
-
-            Dom.find(this.$refs.viewport.$el).on('scroll',
-                Any.framerate(this.refreshDriver, 15));
-
-            Dom.find(this.$refs.viewport.$el).on('scroll',
-                Any.debounce(this.refreshDriver, 60));
-        },
-
-        refreshDriver()
+        refreshDriver(forceUpdate = false)
         {
             if ( ! this.$refs.viewport ) {
                 return;
             }
 
-            let scrollTop = 0;
+            let scrollTop = 0, scrollFix = this.scrollFix || scrollTop;
 
             if ( this.$refs.viewport ) {
                 scrollTop = this.$refs.viewport.$el.scrollTop;
             }
 
-            if ( scrollTop < 0 ) {
-                return;
+            let scrollBuffer = (this.bufferItems / 1.65 * this.itemHeight);
+
+            if ( scrollTop > scrollFix + scrollBuffer || scrollTop < scrollFix - scrollBuffer ) {
+                scrollFix = scrollTop;
             }
 
             let options = {
@@ -88,17 +77,18 @@ export default {
                 scrollTop: scrollTop,
             };
 
-            let newState = virtualScrollDriver(options, this.state, () => this.itemHeight);
 
-            let isSameState = Arr.reduce(newState, (same, val, key) => {
-                return same && this.state[key] === val;
-            }, true);
-
-            if ( isSameState ) {
+            if ( this.scrollFix === scrollFix && ! forceUpdate ) {
                 return;
             }
 
-            this.state = newState;
+            this.scrollFix = scrollFix;
+
+            this.state = virtualScrollDriver(options, this.state, () => {
+                return this.itemHeight;
+            });
+
+            this.veUpdate++;
         },
 
         discoverHeight()
@@ -115,19 +105,27 @@ export default {
                 return Any.delay(this.discoverHeight, 100);
             }
 
-            this.refreshDriver();
+            this.refreshDriver(true);
+        },
+
+        eventScroll()
+        {
+            this.refreshDriver(false);
         }
 
     },
 
     data()
     {
-        let state = {
-            items: this.items
-        };
-
         return {
-            height: 0, state
+            height: 0, scrollFix: -1, veUpdate: 0
+        };
+    },
+
+    beforeMount()
+    {
+        this.state = {
+            items: Arr.make(this.items.length)
         };
     },
 
@@ -135,7 +133,7 @@ export default {
     {
         this.$watch('items', this.discoverHeight);
 
-        // this.bindScroller();
+        Dom.find(this.$el).on('scrollstop', () => this.refreshDriver(true));
 
         Dom.find(this.$el).observerResize(this.discoverHeight)(this.$el);
     },
@@ -154,35 +152,24 @@ export default {
         }
 
         if ( this.viewportHeight === false ) {
-
             return Arr.each(this.items, (value, index) => {
-
-                if ( Any.isString(this.renderNode) ) {
-                    return this.$render(this.renderNode, { value, index })
-                }
-
                 return this.renderNode({ value, index });
             });
-
         }
 
-        if ( Any.isEmpty(this.state) ) {
-            return null;
-        }
+        let targetHeight = Obj.get(this.state, 'targetHeight');
 
         let style = {
             overflow: 'auto', overflowAnchor: 'none', outline: 'none', height: this.height + 'px'
         };
 
         let events = {
-            scroll: Any.framerate(this.refreshDriver, 30)
+            scroll: Any.framerate(this.eventScroll, 45)
         };
-
-        let targetHeight = Obj.get(this.state, 'targetHeight');
 
         return (
             <NScrollbar ref="viewport" on={events} style={style}>
-                <div style={{ height: targetHeight ? targetHeight + 'px' : 'auto', overflow: 'hidden', paddingRight: '15px' }}>
+                <div key={this.veUpdate} style={{ height: targetHeight ? targetHeight + 'px' : 'auto', overflow: 'hidden' }}>
                     { ! Any.isEmpty(this.state.topPlaceholderHeight) &&
                         <div draggable={false} style={{ height: this.state.topPlaceholderHeight + 'px' }}></div>
                     }

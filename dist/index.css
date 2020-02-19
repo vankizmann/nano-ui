@@ -123,8 +123,11 @@
 
 .n-scrollbar {
   position: relative;
-  overflow: auto;
+  overflow: hidden;
   -webkit-overflow-scrolling: touch; }
+
+.n-scrollbar::-webkit-scrollbar {
+  display: none; }
 
 .n-scrollbar.is-enabled {
   overflow: hidden; }
@@ -2500,6 +2503,9 @@
 .n-table .n-table__body {
   min-width: 0;
   flex: 1 0 auto; }
+
+.n-table .n-table__body .n-draggable-item {
+  padding-right: 15px; }
 
 .n-table .n-table__body .n-scrollbar-v {
   right: 1px; }

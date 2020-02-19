@@ -20,10 +20,10 @@ export default {
     mounted()
     {
         Optiscroll.globalSettings.checkFrequency = 750;
-        Optiscroll.globalSettings.scrollMinUpdateInterval = 32;
+        Optiscroll.globalSettings.scrollMinUpdateInterval = 64;
 
         this.optiscroll = new Optiscroll(this.$el.parentNode, {
-            classPrefix: 'n-scrollbar-', wrapContent: false
+            classPrefix: 'n-scrollbar-', wrapContent: false, preventParentScroll: true, forceScrollbars: true
         });
 
         Dom.find(this.$el).parent().addClass('n-scrollbar');
@@ -38,7 +38,11 @@ export default {
 
     render()
     {
-        return (<div on={this.$listeners}>{ this.$slots.default }</div>);
+        return (
+            <div on={this.$listeners}>
+                { this.$slots.default }
+            </div>
+        );
     }
 
 }

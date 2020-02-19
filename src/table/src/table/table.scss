@@ -49,6 +49,10 @@ $table-row-height: 40px !default;
     flex: 1 0 auto;
 }
 
+.n-table .n-table__body .n-draggable-item {
+    padding-right: 15px;
+}
+
 .n-table .n-table__body .n-scrollbar-v {
     right: 1px;
 }

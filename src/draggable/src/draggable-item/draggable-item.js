@@ -25,10 +25,10 @@ export default {
 
     computed: {
 
-        item()
+        veItem()
         {
-            return Obj.get(this.NDraggable, `${this[this.NDraggable.pathProp]}.` +
-                `${this[this.NDraggable.indexProp]}`);
+            return Obj.get(this.NDraggable, this[this.NDraggable.pathProp] +
+                '.' + this[this.NDraggable.indexProp]);
         }
 
     },
@@ -69,7 +69,7 @@ export default {
             }
 
             let allowDropAfter = this.NDraggable.isCollapsed(this) ||
-                ! Obj.get(this.item, this.NDraggable.childProp, []).length;
+                ! Obj.get(this.veItem, this.NDraggable.childProp, []).length;
 
             if ( clientY < safeZone && allowDropAfter ) {
 
@@ -112,7 +112,7 @@ export default {
 
         eventClick(event)
         {
-            console.log('click0', this.item);
+            console.log('click0', this.veItem);
         },
 
         eventDragstart(event)
@@ -187,7 +187,7 @@ export default {
     {
         let props = {
             index: this[this.NDraggable.indexProp],
-            value: this.item
+            value: this.veItem
         };
 
         let renderNode = null;
@@ -235,7 +235,7 @@ export default {
             return;
         }
 
-        let childsLength = Obj.get(this.item,
+        let childsLength = Obj.get(this.veItem,
             this.NDraggable.childProp, []).length;
 
         return (

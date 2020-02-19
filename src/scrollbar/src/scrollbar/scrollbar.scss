@@ -2,8 +2,12 @@
 
 .n-scrollbar {
     position: relative;
-    overflow: auto;
+    overflow: hidden;
     -webkit-overflow-scrolling: touch;
+}
+
+.n-scrollbar::-webkit-scrollbar {
+    display: none;
 }
 
 .n-scrollbar.is-enabled {

@@ -624,7 +624,7 @@ export default {
                 this.veSelected = [];
             }
 
-            Arr.each(this.veItems, (item) => {
+            Arr.each(this.veCopy, (item) => {
                 Arr.toggle(this.veSelected, item[this.uniqueProp]);
             });
 
@@ -648,7 +648,7 @@ export default {
 
         selectAllItems()
         {
-            this.veSelected = Arr.each(this.veItems,
+            this.veSelected = Arr.each(this.veCopy,
                 (item) =>  item[this.uniqueProp]);
 
             this.updateSelected();
@@ -667,7 +667,7 @@ export default {
 
         unselectAllItems()
         {
-            this.veSelected = Arr.each(this.veItems,
+            this.veSelected = Arr.each(this.veCopy,
                 (item) =>  item[this.uniqueProp]);
 
             this.updateSelected();
