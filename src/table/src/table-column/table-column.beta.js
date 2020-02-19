@@ -405,8 +405,10 @@ export default {
 
     renderBody(props)
     {
-        let remote = Arr.find(this.NDraggable.veItems, {
-            [this.NDraggable.uniqueProp]: props.value[this.NDraggable.uniqueProp]
+        let NDraggable = this.NTable.$refs.list;
+
+        let remote = Arr.find(NDraggable.veItems, {
+            [NDraggable.uniqueProp]: props.value[NDraggable.uniqueProp]
         });
 
         let componentName = 'NTableCell' + Str.ucfirst(this.type);
@@ -423,11 +425,7 @@ export default {
             classList.push('n-first');
         }
 
-        if ( ! this.veWidth && index ) {
-            this.veWidth = this.defaultWidth;
-        }
-
-        if ( this.veWidth ) {
+        if ( index ) {
             classList.push('n-fixed');
         }
 
@@ -440,6 +438,10 @@ export default {
         let style = {
             width: width + 'px'
         };
+
+        if ( index ) {
+            style.minWidth = this.minWidth + 'px';
+        }
 
         props = Obj.assign(props, { column: this });
 

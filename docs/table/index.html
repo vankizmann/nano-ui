@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../../dist/index.css">
     <link rel="stylesheet" href="../style.css">
 
+    <script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.1/dist/ResizeObserver.min.js"></script>
     <script src="../../node_modules/vue/dist/vue.min.js"></script>
     <script src="../../node_modules/nano-js/dist/nano-js.js"></script>
     <script src="../../dist/index.js"></script>
@@ -28,6 +29,7 @@
             <div>
                 <n-table v-model="items" :viewport-height="350" :render-collapse="true" :render-select="true">
                     <n-table-column prop="label" type="string" label="Label" :filter="true" :default-width="200"></n-table-column>
+                    <n-table-column prop="date" type="datetime" label="Date" :default-width="250"></n-table-column>
                     <n-table-column prop="id" align="center" type="string" label="ID" :default-width="250"></n-table-column>
                 </n-table>
             </div>
@@ -84,6 +86,7 @@
                                 item = {
                                     label: 'Item ' + total,
                                     id: 'value-' + total,
+                                    date: Nano.Now.make('now').format('Y-m-d'),
                                     children: []
                                 };
 
@@ -99,15 +102,15 @@
 
                         let self = this;
 
-                        setTimeout(function () {
-                            self.items = childGenerator(5, 7);
-                        }, 1000);
+                        // setTimeout(function () {
+                        //     self.items = childGenerator(5, 7);
+                        // }, 100);
 
                         setTimeout(function () {
                             self.target = childGenerator(200, 1);
-                        }, 1000);
+                        }, 2000);
 
-                        return { items: [], target: [], kill: false };
+                        return { items: childGenerator(10, 4), target: [], kill: false };
                     }
                 };
 

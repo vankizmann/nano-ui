@@ -756,7 +756,8 @@ export default {
                 dragObject[this.uniqueProp] = Obj.get(item, this.uniqueProp);
 
                 if ( ! dragObject[this.uniqueProp] ) {
-                    Obj.set(this, `${path}.${index}.${this.uniqueProp}`, dragObject[this.uniqueProp] = UUID());
+                    Obj.set(this, path + '.' + index + '.' + this.uniqueProp,
+                        dragObject[this.uniqueProp] = UUID());
                 }
 
                 // Order prop to sort on drag
@@ -769,14 +770,11 @@ export default {
                 Arr.push(merge, dragObject);
 
                 if ( ! Arr.has(this.veCollapsed, dragObject[this.uniqueProp]) ) {
-                    console.log('reducer without childs');
                     return;
                 }
 
                 this.itemReducer(merge, Obj.get(item, this.childProp, []),
                     depth + 1, `${path}.${index}.${this.childProp}`, dragObject[this.orderProp]);
-
-                console.log('reducer with childs');
 
             });
 
@@ -988,7 +986,7 @@ export default {
         });
 
         return this.$render('NVirtualscroller', {
-            class: 'n-draggable', props
+            key: Any.md5(this._uid), class: 'n-draggable', props
         }, slots);
     }
 

@@ -53,8 +53,8 @@ export default {
 
         bindScroller()
         {
-            if ( ! Obj.has(this.$refs, 'viewport.$el') ) {
-                return Any.delay(this.bindScroller, 300);
+            if ( ! this.$refs.viewport ) {
+                return Any.delay(this.bindScroller, 100);
             }
 
             Dom.find(this.$refs.viewport.$el).on('scroll',
@@ -66,13 +66,13 @@ export default {
 
         refreshDriver()
         {
-            if ( ! Obj.has(this.$refs, 'viewport.$el') ) {
+            if ( ! this.$refs.viewport ) {
                 return;
             }
 
             let scrollTop = 0;
 
-            if ( this.$refs.viewport.$el ) {
+            if ( this.$refs.viewport ) {
                 scrollTop = this.$refs.viewport.$el.scrollTop;
             }
 
@@ -103,7 +103,6 @@ export default {
 
         discoverHeight()
         {
-
             if ( this.viewportHeight ) {
                 this.height = Dom.find(this.$el).height();
             }
@@ -113,10 +112,8 @@ export default {
             }
 
             if ( this.height === 0 ) {
-                return Any.delay(this.discoverHeight, 500);
+                return Any.delay(this.discoverHeight, 100);
             }
-
-            console.log('refresh driver');
 
             this.refreshDriver();
         }
@@ -145,20 +142,9 @@ export default {
 
     renderItems(start, count)
     {
-        let result = Arr.slice(this.items, start, start + count);
-
-        result = Arr.each(result, (value, index) => {
-
-            let props = { value, index };
-
-            if ( Any.isString(this.renderNode) ) {
-                return this.$render(this.renderNode, { props })
-            }
-
-            return this.renderNode(props);
+        return Arr.each(this.items.slice(start, start + count), (value, index) => {
+            return this.renderNode({ value, index });
         });
-
-        return result;
     },
 
     renderBody()
@@ -197,7 +183,7 @@ export default {
                         <div draggable={false} style={{ height: this.state.topPlaceholderHeight + 'px' }}></div>
                     }
                     { ! Any.isEmpty(this.state.middleItemCount) &&
-                    this.ctor('renderItems')(this.state.firstMiddleItem, this.state.middleItemCount)
+                        this.ctor('renderItems')(this.state.firstMiddleItem, this.state.middleItemCount)
                     }
                     { ! Any.isEmpty(this.state.middlePlaceholderHeight) &&
                         <div draggable={false} style={{ height: this.state.middlePlaceholderHeight + 'px' }}></div>

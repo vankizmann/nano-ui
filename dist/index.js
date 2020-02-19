@@ -39748,7 +39748,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         dragObject[_this9.uniqueProp] = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, _this9.uniqueProp);
 
         if (!dragObject[_this9.uniqueProp]) {
-          nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].set(_this9, "".concat(path, ".").concat(index, ".").concat(_this9.uniqueProp), dragObject[_this9.uniqueProp] = Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])());
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].set(_this9, path + '.' + index + '.' + _this9.uniqueProp, dragObject[_this9.uniqueProp] = Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])());
         } // Order prop to sort on drag
 
 
@@ -39758,13 +39758,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].push(merge, dragObject);
 
         if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(_this9.veCollapsed, dragObject[_this9.uniqueProp])) {
-          console.log('reducer without childs');
           return;
         }
 
         _this9.itemReducer(merge, nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, _this9.childProp, []), depth + 1, "".concat(path, ".").concat(index, ".").concat(_this9.childProp), dragObject[_this9.orderProp]);
-
-        console.log('reducer with childs');
       });
       return merge;
     },
@@ -39941,6 +39938,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       renderNode: this.ctor('renderItem')
     });
     return this.$render('NVirtualscroller', {
+      key: nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].md5(this._uid),
       "class": 'n-draggable',
       props: props
     }, slots);
@@ -44594,7 +44592,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   renderBody: function renderBody(props) {
     var h = this.$createElement;
-    var remote = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(this.NDraggable.veItems, _defineProperty({}, this.NDraggable.uniqueProp, props.value[this.NDraggable.uniqueProp]));
+    var NDraggable = this.NTable.$refs.list;
+    var remote = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(NDraggable.veItems, _defineProperty({}, NDraggable.uniqueProp, props.value[NDraggable.uniqueProp]));
     var componentName = 'NTableCell' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.type);
     var classList = ['n-table-column', 'n-' + this.align];
     var index = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].findIndex(this.NTable.veColumns, {
@@ -44605,11 +44604,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       classList.push('n-first');
     }
 
-    if (!this.veWidth && index) {
-      this.veWidth = this.defaultWidth;
-    }
-
-    if (this.veWidth) {
+    if (index) {
       classList.push('n-fixed');
     }
 
@@ -44622,6 +44617,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var style = {
       width: width + 'px'
     };
+
+    if (index) {
+      style.minWidth = this.minWidth + 'px';
+    }
+
     props = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].assign(props, {
       column: this
     });
@@ -45112,6 +45112,14 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NTable',
@@ -45337,17 +45345,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       intermediate: false,
       disabled: false
     };
+    var uniqueKey = Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])();
 
     if (this.$refs.list) {
       props['checked'] = this.$refs.list.isAllSelected();
       props['intermediate'] = this.$refs.list.isIntermediate();
       props['disabled'] = !this.$refs.list.isSelectable();
+      uniqueKey = nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].md5(this.$refs.list.veSelected);
     }
 
     return h("div", {
       "class": "n-draggable-item__select"
     }, [h("NCheckbox", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
-      "key": Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])()
+      "key": uniqueKey
     }, {
       "props": props
     }, {}, {
@@ -45367,7 +45377,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     });
     return h("div", {
       "class": "n-table__head"
-    }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].merge(defaultRender, columnHtml)]);
+    }, [[defaultRender].concat(_toConsumableArray(columnHtml))]);
   },
   render: function render($render) {
     var _this = this;
@@ -45401,7 +45411,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "class": "n-table__wrap"
     }, [h("div", {
       "class": "n-table__inner"
-    }, [this.ctor('renderHead')(), draggableHtml])])]);
+    }, [[this.ctor('renderHead')(), draggableHtml]])])]);
   }
 });
 
@@ -46540,8 +46550,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     bindScroller: function bindScroller() {
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].has(this.$refs, 'viewport.$el')) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.bindScroller, 300);
+      if (!this.$refs.viewport) {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.bindScroller, 100);
       }
 
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.viewport.$el).on('scroll', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.refreshDriver, 15));
@@ -46550,13 +46560,13 @@ __webpack_require__.r(__webpack_exports__);
     refreshDriver: function refreshDriver() {
       var _this = this;
 
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].has(this.$refs, 'viewport.$el')) {
+      if (!this.$refs.viewport) {
         return;
       }
 
       var scrollTop = 0;
 
-      if (this.$refs.viewport.$el) {
+      if (this.$refs.viewport) {
         scrollTop = this.$refs.viewport.$el.scrollTop;
       }
 
@@ -46594,10 +46604,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (this.height === 0) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.discoverHeight, 500);
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.discoverHeight, 100);
       }
 
-      console.log('refresh driver');
       this.refreshDriver();
     }
   },
@@ -46618,22 +46627,12 @@ __webpack_require__.r(__webpack_exports__);
   renderItems: function renderItems(start, count) {
     var _this2 = this;
 
-    var result = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].slice(this.items, start, start + count);
-    result = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(result, function (value, index) {
-      var props = {
+    return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.items.slice(start, start + count), function (value, index) {
+      return _this2.renderNode({
         value: value,
         index: index
-      };
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isString(_this2.renderNode)) {
-        return _this2.$render(_this2.renderNode, {
-          props: props
-        });
-      }
-
-      return _this2.renderNode(props);
+      });
     });
-    return result;
   },
   renderBody: function renderBody() {
     var _this3 = this;

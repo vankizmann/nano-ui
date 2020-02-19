@@ -281,15 +281,20 @@ export default {
             disabled: false
         };
 
+        let uniqueKey = UUID();
+
         if ( this.$refs.list ) {
+
             props['checked'] = this.$refs.list.isAllSelected();
             props['intermediate'] = this.$refs.list.isIntermediate();
             props['disabled'] = ! this.$refs.list.isSelectable();
+
+            uniqueKey = Any.md5(this.$refs.list.veSelected);
         }
 
         return (
             <div class="n-draggable-item__select">
-                <NCheckbox key={UUID()} props={props} on={events} />
+                <NCheckbox key={uniqueKey} props={props} on={events} />
             </div>
         )
     },
@@ -314,7 +319,7 @@ export default {
 
         return (
             <div class="n-table__head">
-                { Arr.merge(defaultRender, columnHtml) }
+                { [defaultRender, ...columnHtml] }
             </div>
         );
     },
@@ -347,8 +352,7 @@ export default {
             <div class="n-table" style={style}>
                 <NScrollbar class="n-table__wrap">
                     <div class="n-table__inner">
-                        { this.ctor('renderHead')() }
-                        { draggableHtml }
+                        { [this.ctor('renderHead')(), draggableHtml] }
                     </div>
                 </NScrollbar>
             </div>
