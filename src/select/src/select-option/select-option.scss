@@ -16,7 +16,7 @@ $select-option-padding: 6px 12px !default;
 }
 
 .n-select-option:hover {
-    background: $--color-background;
+    background: rgba($color-gray-50, 0.15);
 }
 
 .n-select-option.n-select-option--current {

@@ -246,7 +246,7 @@ export default {
         toggleSelected()
         {
             this.$refs.list.toggleAllItems(
-                this.$refs.list.isIntermediate()
+                this.$refs.list.isIntermediate(true)
             );
         }
 
@@ -285,8 +285,8 @@ export default {
 
         if ( this.$refs.list && this.items.length ) {
 
-            props['checked'] = this.$refs.list.isAllSelected();
-            props['intermediate'] = this.$refs.list.isIntermediate();
+            props['checked'] = this.$refs.list.isAllSelected(true);
+            props['intermediate'] = this.$refs.list.isIntermediate(true);
 
             uniqueKey = Any.md5(this.$refs.list.veSelected);
         }
@@ -295,7 +295,7 @@ export default {
             <div class="n-draggable-item__select">
                 <NCheckbox key={uniqueKey} props={props} on={events} />
             </div>
-        )
+        );
     },
 
     renderBody(props)

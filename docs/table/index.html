@@ -29,7 +29,7 @@
         <div v-if="kill === false" class="adapt-height" style="overflow: hidden; padding: 20px;">
             <div>
                 <n-table v-model="items" :viewport-height="350" :render-collapse="true" :render-select="true">
-                    <n-table-column prop="label" type="string" label="Label" :filter="true" :default-width="200"></n-table-column>
+                    <n-table-column prop="label" type="string" label="Label" :sort="true" :filter="true" :default-width="200"></n-table-column>
                     <n-table-column prop="date" type="datetime" label="Date" :default-width="250"></n-table-column>
                     <n-table-column prop="id" align="center" type="string" label="ID" :default-width="250"></n-table-column>
                 </n-table>

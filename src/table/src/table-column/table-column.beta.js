@@ -205,6 +205,11 @@ export default {
 
     methods: {
 
+        sortByColumn()
+        {
+            console.log('sort me');
+        },
+
         adjustResizerPosition()
         {
             if ( ! this.$refs.column ) {
@@ -320,6 +325,12 @@ export default {
             'n-table-column', 'n-' + this.align
         ];
 
+        if ( this.sort ) {
+            classList.push('is-sortable');
+        }
+
+        classList.push('is-desc');
+
         let index = Arr.findIndex(this.NTable.veColumns, {
             prop: this.prop
         });
@@ -342,6 +353,7 @@ export default {
 
         return (
             <div ref="column" class={classList} style={style}>
+                { this.ctor('renderHeadSort')() }
                 { this.ctor('renderHeadLabel')() }
                 { this.ctor('renderHeadFilter')() }
                 { this.ctor('renderHeadResizer')() }
@@ -368,6 +380,23 @@ export default {
         );
 
         return [labelHtml, tooltipHtml];
+    },
+
+    renderHeadSort()
+    {
+        if ( ! this.sort ) {
+            return null;
+        }
+
+        let events = {
+            click: this.sortByColumn
+        };
+
+        return (
+            <div class="n-table-column__sort" on={events}>
+                <div></div>
+            </div>
+        )
     },
 
     renderHeadFilter()
@@ -425,7 +454,7 @@ export default {
             classList.push('n-first');
         }
 
-        if ( index ) {
+        if ( this.veWidth ) {
             classList.push('n-fixed');
         }
 

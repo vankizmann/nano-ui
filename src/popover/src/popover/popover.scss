@@ -23,7 +23,7 @@ $popover-tooltip-padding: 3px 9px !default;
     max-width: 280px !important;
 }
 
-.n-popover__frame {
+.n-popover .n-popover__frame {
     width: 100%;
     display: inline-flex;
     flex-direction: column;
@@ -36,11 +36,19 @@ $popover-tooltip-padding: 3px 9px !default;
     box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
 }
 
+.n-inverse .n-popover.n-popover--default > .n-popover__frame {
+    background: $--color-gray-95;
+}
+
 .n-popover.n-popover--select > .n-popover__frame {
     font-size: $popover-default-size;
     background: $--color-white;
     border-radius: $radius-medium;
     box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+}
+
+.n-inverse .n-popover.n-popover--select > .n-popover__frame {
+    background: $--color-gray-95;
 }
 
 .n-popover.n-popover--cascader > .n-popover__frame {
@@ -50,6 +58,10 @@ $popover-tooltip-padding: 3px 9px !default;
     box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
 }
 
+.n-inverse .n-popover.n-popover--cascader > .n-popover__frame {
+    background: $--color-gray-95;
+}
+
 .n-popover.n-popover--datepicker > .n-popover__frame {
     font-size: $popover-default-size;
     background: $--color-white;
@@ -57,11 +69,20 @@ $popover-tooltip-padding: 3px 9px !default;
     box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
 }
 
+.n-inverse .n-popover.n-popover--datepicker > .n-popover__frame {
+    background: $--color-gray-95;
+}
+
 .n-popover.n-popover--timepicker > .n-popover__frame {
     font-size: $popover-default-size;
     background: $--color-white;
     border-radius: $radius-medium;
     box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+}
+
+
+.n-inverse .n-popover.n-popover--timepicker > .n-popover__frame {
+    background: $--color-gray-95;
 }
 
 .n-popover.n-popover--tooltip > .n-popover__frame {
@@ -79,6 +100,10 @@ $popover-tooltip-padding: 3px 9px !default;
 .n-popover.n-popover--default > .n-popover__frame > .n-popover__header {
     padding: $popover-default-padding;
     border-bottom: 1px solid $--color-gray-10;
+}
+
+.n-inverse .n-popover.n-popover--default > .n-popover__frame > .n-popover__header {
+    border-bottom-color: $--color-gray-90;
 }
 
 .n-popover.n-popover--select > .n-popover__frame > .n-popover__header {
@@ -114,9 +139,17 @@ $popover-tooltip-padding: 3px 9px !default;
     border-top: 1px solid $--color-gray-10;
 }
 
+.n-inverse .n-popover.n-popover--default > .n-popover__frame > .n-popover__footer {
+    border-top-color: $--color-gray-90;
+}
+
 .n-popover.n-popover--select > .n-popover__frame > .n-popover__footer {
     padding: $popover-select-padding;
     border-top: 1px solid $--color-gray-10;
+}
+
+.n-inverse .n-popover.n-popover--select > .n-popover__frame > .n-popover__footer {
+    border-top-color: $--color-gray-90;
 }
 
 .n-popover.n-popover--tooltip > .n-popover__frame > .n-popover__footer {
@@ -141,7 +174,11 @@ $popover-tooltip-padding: 3px 9px !default;
 
 .n-popover-option:not(.n-button__wrapper):hover,
 .n-popover-option.n-button__wrapper > .n-button.n-button--link:hover {
-    background: $--color-background;
+    background: rgba($color-gray-50, 0.15);
+}
+
+.n-inverse .n-popover.n-popover--default > .n-popover__frame > .n-popover__footer {
+    border-top-color: $--color-gray-90;
 }
 
 .n-popover-option.n-disabled {

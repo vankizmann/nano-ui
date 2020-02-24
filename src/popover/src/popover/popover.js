@@ -399,27 +399,24 @@ export default {
         return options;
     },
 
-    created()
-    {
-        this._uuid = UUID();
-    },
-
     mounted()
     {
-        this._ev = { _uid: this._uid };
+        let $event = {
+            id: this._uid
+        };
 
         if ( this.trigger === 'hover' ) {
-            Dom.find(document).on('mousemove', Any.debounce(this.eventMousemove), this._ev);
+            Dom.find(document).on('mousemove', Any.debounce(this.eventMousemove), $event);
         }
 
         if ( this.trigger === 'click' ) {
-            Dom.find(document).on('mousedown', this.eventMousedown, this._ev);
-            Dom.find(document).on('click', this.eventMouseup, this._ev);
+            Dom.find(document).on('mousedown', this.eventMousedown, $event);
+            Dom.find(document).on('click', this.eventMouseup, $event);
         }
 
         if ( this.trigger === 'context' ) {
-            Dom.find(document).on('contextmenu', this.eventContextmenu, this._ev);
-            Dom.find(document).on('mousedown', this.eventMousedown, this._ev);
+            Dom.find(document).on('contextmenu', this.eventContextmenu, $event);
+            Dom.find(document).on('mousedown', this.eventMousedown, $event);
         }
 
         this.target = Dom.find(this.$el).previous().get(0);
@@ -447,11 +444,23 @@ export default {
 
     beforeDestroy()
     {
-        Dom.find(document).on('mousemove', null, this._ev);
-        Dom.find(document).on('mousedown', null, this._ev);
-        Dom.find(document).on('click', null, this._ev);
-        Dom.find(document).on('contextmenu', null, this._ev);
-        Dom.find(document).on('mousedown', null, this._ev);
+        let $event = {
+            id: this._uid
+        };
+
+        if ( this.trigger === 'hover' ) {
+            Dom.find(document).off('mousemove', null, $event);
+        }
+
+        if ( this.trigger === 'click' ) {
+            Dom.find(document).off('mousedown', null, $event);
+            Dom.find(document).off('click', null, $event);
+        }
+
+        if ( this.trigger === 'context' ) {
+            Dom.find(document).off('contextmenu', null, $event);
+            Dom.find(document).off('mousedown', null, $event);
+        }
 
         this.$el.remove();
     },

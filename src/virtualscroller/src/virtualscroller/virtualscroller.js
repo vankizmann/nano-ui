@@ -111,6 +111,11 @@ export default {
         eventScroll()
         {
             this.refreshDriver(false);
+        },
+
+        eventScrollstop()
+        {
+            this.refreshDriver(true);
         }
 
     },
@@ -133,9 +138,22 @@ export default {
     {
         this.$watch('items', this.discoverHeight);
 
-        Dom.find(this.$el).on('scrollstop', () => this.refreshDriver(true));
+        let ident = {
+            _uid: this._uid
+        };
+
+        Dom.find(this.$el).on('scrollstop', this.eventScrollstop, ident);
 
         Dom.find(this.$el).observerResize(this.discoverHeight)(this.$el);
+    },
+
+    beforeDestroy()
+    {
+        let ident = {
+            _uid: this._uid
+        };
+
+        Dom.find(this.$el).off('scrollstop', null, ident);
     },
 
     renderItems(start, count)

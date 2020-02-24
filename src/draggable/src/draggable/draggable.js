@@ -701,10 +701,16 @@ export default {
             return Arr.has(this.veSelected, id);
         },
 
-        isAllSelected()
+        isAllSelected(onlyFirstDepth = false)
         {
-            return this.veSelected.length === this.veItems.length &&
-                !! this.veItems.length;
+            let items = onlyFirstDepth ?
+                this.veCopy : this.veItems;
+
+            let selected = Arr.reduce(items, (merge, item) => {
+                return Arr.has(this.veSelected, item[this.uniqueProp]);
+            }, true);
+
+            return selected && !! items.length;
         },
 
         isSelectable()
@@ -712,9 +718,10 @@ export default {
             return !! this.veItems.length;
         },
 
-        isIntermediate()
+        isIntermediate(onlyFirstDepth = false)
         {
-            return ! this.isAllSelected() && !! this.veSelected.length;
+            return ! this.isAllSelected(onlyFirstDepth)
+                && !! this.veSelected.length;
         },
 
         canDrag(element)
@@ -724,8 +731,8 @@ export default {
 
         canDrop(element)
         {
-            let targetPath = `${element[this.pathProp]}.` +
-                `${element[this.indexProp]}`;
+            let targetPath = element[this.pathProp] + '.' +
+                element[this.indexProp];
 
             let selected = Arr.each(this.veSelected, (item) => {
                 return Arr.find(this.veItems, { [this.uniqueProp]: item });
@@ -733,8 +740,8 @@ export default {
 
             let result = Arr.filter(selected, (source) => {
 
-                let sourcePath = `${source[this.pathProp]}.` +
-                    `${source[this.indexProp]}`;
+                let sourcePath =  source[this.pathProp] + '.' +
+                    source[this.indexProp];
 
                 return targetPath.indexOf(`${sourcePath}.`) !== -1 ||
                     sourcePath === targetPath;
@@ -928,13 +935,32 @@ export default {
 
         this.$on('dragdrop', this.moveItems);
 
-        Event.bind('draggable.start', this.cacheItems);
-        Event.bind('draggable.stop', this.clearItems);
-        Event.bind('draggable.done', this.dropItems);
+        let ident = {
+            _uid: this._uid
+        };
 
-        Dom.find(document).on('dragenter', this.eventDragenter, { _uid: this._uid });
-        Dom.find(document).on('dragleave', this.eventDragleave, { _uid: this._uid });
-        Dom.find(document).on('dragend', this.eventDragend, { _uid: this._uid });
+        Event.bind('draggable.start', this.cacheItems, ident);
+        Event.bind('draggable.stop', this.clearItems, ident);
+        Event.bind('draggable.done', this.dropItems, ident);
+
+        Dom.find(document).on('dragenter', this.eventDragenter, ident);
+        Dom.find(document).on('dragleave', this.eventDragleave, ident);
+        Dom.find(document).on('dragend', this.eventDragend, ident);
+    },
+
+    beforeDestroy()
+    {
+        let ident = {
+            _uid: this._uid
+        };
+
+        Event.unbind('draggable.start', ident);
+        Event.unbind('draggable.stop', ident);
+        Event.unbind('draggable.done', ident);
+
+        Dom.find(document).off('dragenter', null, ident);
+        Dom.find(document).off('dragleave', null, ident);
+        Dom.find(document).off('dragend', null, ident);
     },
 
     renderEmpty()

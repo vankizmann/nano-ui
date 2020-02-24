@@ -13,15 +13,15 @@ $draggable-placeholder-size: 13px !default;
  * Empty field
  */
 
-.n-draggable__empty {
+.n-draggable .n-draggable__empty {
     flex: 1 1 auto;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.n-draggable__empty span {
-    color: $--color-info;
+.n-draggable .n-draggable__empty span {
+    color: $--color-gray-50;
 }
 
 .n-draggable.n-dragover > .n-draggable__empty {
@@ -32,11 +32,7 @@ $draggable-placeholder-size: 13px !default;
     background: rgba($color-danger, 0.15);
 }
 
-.n-draggable__spacer {
-    flex: 0 0 auto;
-}
-
-.n-draggable__indicator {
+.n-draggable .n-draggable__indicator {
     pointer-events: none;
     z-index: 99999;
     position: absolute;

@@ -29,55 +29,57 @@
             <n-checkbox v-model="hide"></n-checkbox>
         </n-form-item>
 
-        <div v-if="!hide" id="test" style="position: relative !important; background: #eee; height: 300px; overflow: auto;">
-            <div style="position: relative !important; padding: 20px; text-align: right">
-                <n-button type="primary" refs="toggle">
-                    Popover 01
-                </n-button>
-                <n-popover trigger="hover" position="left-end" :width="300">
-                    <n-input v-model="test"></n-input>
-                </n-popover>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <n-button type="warning">
-                    Popover 02
-                </n-button>
-                <n-popover trigger="hover" position="right-center">
-                    Hello 2!
-                </n-popover>
-            </div>
+        <div v-if="!hide" id="test" style="position: relative !important; background: #eee; height: 300px; overflow: hidden;">
+            <n-scrollbar>
+                <div>
+                    <n-button type="primary" refs="toggle">
+                        Popover 01
+                    </n-button>
+                    <n-popover trigger="hover" position="left-end" :width="300">
+                        <n-input v-model="test"></n-input>
+                    </n-popover>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <n-button type="warning">
+                        Popover 02
+                    </n-button>
+                    <n-popover trigger="hover" position="right-center">
+                        Hello 2!
+                    </n-popover>
+                </div>
+            </n-scrollbar>
         </div>
     </n-form>
 </div>
@@ -89,7 +91,7 @@
 
         var config = {
             data: function() {
-                return { test: 'Foo', hide: true };
+                return { test: 'Foo', hide: false };
             }
         };
 
