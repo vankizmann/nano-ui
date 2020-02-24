@@ -43134,7 +43134,7 @@ __webpack_require__.r(__webpack_exports__);
     refresh: function refresh() {
       var style = {};
 
-      if (this.$el === null) {
+      if (!this.$el) {
         return {
           display: 'none'
         };
@@ -43144,6 +43144,10 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.trigger !== 'context') {
         clientX -= nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.target).scroll('left', this.parent);
+      }
+
+      if (this.parent === document.body) {
+        clientX -= nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document.body).scroll('left');
       }
 
       if (this.trigger === 'context') {
@@ -43156,20 +43160,25 @@ __webpack_require__.r(__webpack_exports__);
         clientY -= nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.target).scroll('top', this.parent);
       }
 
+      if (this.parent === document.body) {
+        clientY -= nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document.body).scroll('top');
+      }
+
       if (this.trigger === 'context') {
         clientY = this.clientY - nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.parent).offset('top');
       }
 
       var height = this.trigger === 'context' ? 0 : nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.target).height();
       var width = this.trigger === 'context' ? 0 : nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.target).width();
-      var reset = {
-        'max-width': this.width ? this.width + 'px' : 'auto'
-      };
+      var popoverWidth = this.width;
 
-      if (this.width) {
-        reset.width = this.width + 'px';
+      if (popoverWidth === '100%') {
+        popoverWidth = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.target).width();
       }
 
+      var reset = {
+        width: popoverWidth ? popoverWidth + 'px' : 'auto'
+      };
       var nodeWidth = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$el).realWidth(reset);
       var nodeHeight = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$el).realHeight(reset);
 
@@ -43277,7 +43286,7 @@ __webpack_require__.r(__webpack_exports__);
       });
 
       if (this.trigger !== 'context') {
-        pseudo['max-width'] = this.width ? this.width + 'px' : 'auto';
+        pseudo.width = popoverWidth ? popoverWidth + 'px' : 'auto';
       }
 
       if (!this.veVisible && !this.visible) {
@@ -43301,12 +43310,15 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$emit('input', this.veVisible = result);
     },
-    eventMouseup: function eventMouseup(event, el) {
-      if (this.disabled || this.veVisible) {
+    eventClick: function eventClick(event, el) {
+      this.clientX = event.clientX;
+      this.clientY = event.clientY;
+
+      if (event.which !== 1) {
         return;
       }
 
-      if (event.which !== 1) {
+      if (this.disabled) {
         return;
       }
 
@@ -43314,18 +43326,18 @@ __webpack_require__.r(__webpack_exports__);
           source = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(el).closest(this.$el);
       var result = !!target || !!source;
 
-      if (this.veVisible === result) {
-        return;
+      if (result && this.veVisible) {
+        result = !this.closeInside;
       }
 
-      if (!this.closeInside && !!source) {
-        result = true;
+      if (this.veVisible !== result) {
+        this.$emit('input', this.veVisible = result);
       }
 
-      this.$emit('input', this.veVisible = result);
+      event.preventDefault();
     },
     eventContextmenu: function eventContextmenu(event, el) {
-      if (this.disabled || this.veVisible) {
+      if (this.disabled) {
         return;
       }
 
@@ -43337,6 +43349,10 @@ __webpack_require__.r(__webpack_exports__);
           source = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(el).closest(this.$el);
       var result = !!target || !!source;
 
+      if (result && this.veVisible) {
+        result = !this.closeInside;
+      }
+
       if (result) {
         event.preventDefault();
       }
@@ -43347,25 +43363,9 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$emit('input', this.veVisible = result);
     },
-    eventMousedown: function eventMousedown(event, el) {
+    eventMousedown: function eventMousedown(event) {
       this.clientX = event.clientX;
       this.clientY = event.clientY;
-
-      if (!this.veVisible) {
-        return;
-      }
-
-      var target = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(el).closest(this.target),
-          source = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(el).closest(this.$el);
-      var result = !!target || !!source;
-
-      if (!this.closeInside && result) {
-        return;
-      }
-
-      event.preventDefault();
-      event.stopPropagation();
-      this.$emit('input', this.veVisible = false);
     }
   },
   data: function data() {
@@ -43391,13 +43391,12 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     if (this.trigger === 'click') {
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).on('mousedown', this.eventMousedown, $event);
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).on('click', this.eventMouseup, $event);
+      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).on('click', this.eventClick, $event);
     }
 
     if (this.trigger === 'context') {
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).on('contextmenu', this.eventContextmenu, $event);
       nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).on('mousedown', this.eventMousedown, $event);
+      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).on('contextmenu', this.eventContextmenu, $event);
     }
 
     this.target = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$el).previous().get(0);
@@ -43445,15 +43444,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   render: function render() {
     var h = arguments[0];
-    var className = ['n-popover', 'n-popover--beta', 'n-popover--' + this.type, 'n-popover--' + this.position];
-    var style = this.style;
-
-    if (this.width) {
-      style.width = this.width + 'px';
-    }
-
+    var classList = ['n-popover', 'n-popover--' + this.type, 'n-popover--' + this.position];
     return h("div", {
-      "class": className,
+      "class": classList,
       "style": this.style
     }, [this.$slots.raw || h("div", {
       "class": "n-popover__frame"
@@ -43513,6 +43506,12 @@ __webpack_require__.r(__webpack_exports__);
         return {};
       },
       type: [Object]
+    },
+    height: {
+      "default": function _default() {
+        return false;
+      },
+      type: [Boolean]
     }
   },
   mounted: function mounted() {
@@ -43524,6 +43523,13 @@ __webpack_require__.r(__webpack_exports__);
       preventParentScroll: true,
       forceScrollbars: true
     });
+
+    if (this.height) {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).parent().css({
+        height: this.height + 'px'
+      });
+    }
+
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).parent().addClass('n-scrollbar');
   },
   beforeDestroy: function beforeDestroy() {
@@ -43551,11 +43557,11 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _src_select_select__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/select/select */ "./src/select/src/select/select.js");
+/* harmony import */ var _src_select_select_beta__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/select/select.beta */ "./src/select/src/select/select.beta.js");
 /* harmony import */ var _src_select_option_select_option__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/select-option/select-option */ "./src/select/src/select-option/select-option.js");
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_select_select__WEBPACK_IMPORTED_MODULE_1__["default"].name, _src_select_select__WEBPACK_IMPORTED_MODULE_1__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_select_select_beta__WEBPACK_IMPORTED_MODULE_1__["default"].name, _src_select_select_beta__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_select_option_select_option__WEBPACK_IMPORTED_MODULE_2__["default"].name, _src_select_option_select_option__WEBPACK_IMPORTED_MODULE_2__["default"]);
 
@@ -43570,8 +43576,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_select_option_select_o
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! nano-js */ "nano-js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @vue/babel-helper-vue-jsx-merge-props */ "./node_modules/@vue/babel-helper-vue-jsx-merge-props/dist/helper.js");
+/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NSelectOption',
@@ -43607,11 +43616,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     realValue: function realValue() {
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(this.prop)) {
+      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.prop)) {
         return this.value;
       }
 
-      return nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].get(this.value, this.prop);
+      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.value, this.prop);
     }
   },
   methods: {
@@ -43623,7 +43632,7 @@ __webpack_require__.r(__webpack_exports__);
     render: function render(h, current) {
       var className = ['n-select-option'];
 
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].has(this.NSelect.nativeSelected, this.realValue)) {
+      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(this.NSelect.nativeSelected, this.realValue)) {
         className.push('n-select-option--active');
       }
 
@@ -43654,31 +43663,69 @@ __webpack_require__.r(__webpack_exports__);
   destroyed: function destroyed() {
     this.NSelect.removeOption(this);
   },
-  render: function render(h) {
+  renderOption: function renderOption() {
+    var _this = this;
+
+    var h = this.$createElement;
+    var classList = ['n-select-option'];
+
+    if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(this.NSelect.veValue, this.value)) {
+      classList.push('n-select-option--active');
+    }
+
+    if (this.disabled === true) {
+      classList.push('n-select-option--disabled');
+    } // if ( current === true ) {
+    //     classList.push('n-select-option--current');
+    // }
+
+
+    var events = {};
+
+    if (!this.disabled) {
+      events.click = function () {
+        return _this.NSelect.toggleOption(_this.value);
+      };
+    }
+
+    return h("div", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
+      "class": classList
+    }, {
+      "on": events
+    }]), [this.$slots["default"] || this.label]);
+  },
+  render: function render($render) {
+    this.$render = $render;
     return null;
   }
 });
 
 /***/ }),
 
-/***/ "./src/select/src/select/select.js":
-/*!*****************************************!*\
-  !*** ./src/select/src/select/select.js ***!
-  \*****************************************/
+/***/ "./src/select/src/select/select.beta.js":
+/*!**********************************************!*\
+  !*** ./src/select/src/select/select.beta.js ***!
+  \**********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! nano-js */ "nano-js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @vue/babel-helper-vue-jsx-merge-props */ "./node_modules/@vue/babel-helper-vue-jsx-merge-props/dist/helper.js");
+/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NSelect',
   props: {
     value: {
       "default": function _default() {
-        return null;
+        return this.multiple ? [] : null;
       }
     },
     clearValue: {
@@ -43745,168 +43792,23 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var options = this.options;
-      options = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].filter(options, function (option) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_0__["Str"].has(option.label, _this.search);
+      options = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].filter(options, function (option) {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].has(option.label, _this.search);
       });
       return options;
     },
     nativeValue: function nativeValue() {
-      return this.multiple ? this.nativeSelected : nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].first(this.nativeSelected);
-    }
-  },
-  methods: {
-    clearNativeSelected: function clearNativeSelected() {
-      this.nativeSelected = [];
-      this.$emit('input', this.clearValue);
-    },
-    solveNativeSelected: function solveNativeSelected() {
-      var selected = this.getSelected(this.value);
-
-      if (selected === null) {
-        return;
-      }
-
-      this.nativeSelected = selected;
-    },
-    getSelected: function getSelected(value) {
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isArray(value) === false) {
-        value = [value];
-      }
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEqual(this.nativeSelected, value)) {
-        return null;
-      }
-
-      value = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].filter(value, function (selected) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(selected) === false;
-      });
-      return value;
-    },
-    addOption: function addOption(option) {
-      this.options.push(option);
-    },
-    removeOption: function removeOption(option) {
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].remove(this.options, {
-        _uid: option._uid
-      });
-    },
-    toggleOption: function toggleOption(value) {
-      this.search = '';
-
-      if (this.multiple === false) {
-        this.visible = false;
-      }
-
-      if (this.multiple === false) {
-        this.nativeSelected = [];
-      }
-
-      if (this.multiple === true) {
-        this.$refs.input.focus();
-      }
-
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].toggle(this.nativeSelected, value);
-      this.$emit('input', this.nativeValue);
-    },
-    selectCurrent: function selectCurrent() {
-      if (this.current === null) {
-        return;
-      }
-
-      var option = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].get(this.filteredOptions, this.current);
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(option) === true) {
-        return;
-      }
-
-      if (option.disabled === true) {
-        return;
-      }
-
-      this.toggleOption(option.realValue);
-    },
-    selectPrevious: function selectPrevious() {
-      var total = this.filteredOptions.length;
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(this.current) === true) {
-        return this.current = total - 1;
-      }
-
-      if (this.current === 0) {
-        return this.current = total - 1;
-      }
-
-      this.current--;
-    },
-    selectNext: function selectNext() {
-      var total = this.filteredOptions.length;
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(this.current) === true) {
-        return this.current = 0;
-      }
-
-      if (this.current === total - 1) {
-        return this.current = 0;
-      }
-
-      this.current++;
-    },
-    searchOptions: function searchOptions(event) {
-      this.search = event.target.value;
-    },
-    focusInput: function focusInput() {
-      this.focus = true;
-      this.visible = true;
-    },
-    focusoutInput: function focusoutInput() {
-      this.focus = false;
-    },
-    keydownInput: function keydownInput(event) {
-      if (event.keyCode === 9) {
-        this.search = '';
-      }
-
-      var createOption = this.allowCreate === true && this.current === null && this.search !== '';
-
-      if (event.keyCode === 13 && createOption === true) {
-        this.toggleOption(this.search);
-      }
-
-      if (event.keyCode === 13 && createOption === false) {
-        this.selectCurrent();
-      }
-
-      if (event.keyCode === 38) {
-        this.selectPrevious();
-      }
-
-      if (event.keyCode === 40) {
-        this.selectNext();
-      }
-
-      if (event.keyCode === 9 || event.keyCode === 27) {
-        return this.visible = false;
-      }
-
-      this.visible = true;
-    }
-  },
-  watch: {
-    value: {
-      handler: 'solveNativeSelected'
-    },
-    search: function search() {
-      this.current = null;
+      return this.multiple ? this.nativeSelected : nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].first(this.nativeSelected);
     }
   },
   data: function data() {
     return {
-      focus: false,
-      visible: false,
-      search: '',
-      current: null,
-      options: [],
-      nativeSelected: []
+      veValue: this.value,
+      veFocus: false,
+      veOpen: false,
+      veSearch: '',
+      veIndex: null,
+      veOptions: []
     };
   },
   provide: function provide() {
@@ -43914,128 +43816,201 @@ __webpack_require__.r(__webpack_exports__);
       NSelect: this
     };
   },
-  beforeMount: function beforeMount() {
-    this.solveNativeSelected();
-  },
-  updated: function updated() {
-    if (this.focus === false && this.visible === false) {
-      this.search = '';
-    }
-  },
-  render: function render(h) {
-    var _this2 = this;
-
-    var className = ['n-select', 'n-select--' + this.size];
-
-    if (this.disabled === true) {
-      className.push('n-select--disabled');
-    }
-
-    var options = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(this.filteredOptions, function (option, index) {
-      return option.render(h, nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].integer(index) === _this2.current);
-    });
-    var labels = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(this.nativeSelected, function (selected) {
-      return nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].find(_this2.options, {
-        realValue: selected
-      }, {
-        label: _this2.allowCreate ? selected : _this2.undefinedText,
-        realValue: selected
+  methods: {
+    addOption: function addOption(option) {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(this.veOptions, option, {
+        value: option.value
       });
-    });
-    var placeholder = '';
-
-    if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(labels) === true) {
-      placeholder = this.placeholder;
-    }
-
-    var option = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].find(this.options, {
-      realValue: nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].first(this.nativeSelected)
-    });
-
-    if (option !== null && this.multiple === false && this.focus === true && this.allowCreate === false) {
-      placeholder = option.label.trim();
-    }
-
-    if (option === null && this.multiple === false && this.focus === true && this.allowCreate === true) {
-      placeholder = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].first(this.nativeSelected);
-    }
-
-    var hideItems = nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(placeholder) === false || this.focus === true && this.multiple === false || this.search !== '' && this.multiple === false;
-    return h("div", {
-      "class": ['n-select__wrapper', this.disabled && 'n-disabled']
-    }, [h("div", {
-      "class": className,
-      "on": {
-        "click": function click() {
-          return _this2.$refs.input.focus();
-        }
-      }
-    }, [this.clearable === true && this.disabled === false && this.nativeSelected.length !== 0 && h("div", {
-      "class": "n-select__clear",
-      "on": {
-        "mousedown": this.clearNativeSelected
-      }
-    }, [h("span", {
-      "class": this.icons.times
-    })]), h("div", {
-      "class": "n-select__label"
-    }, [nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(labels) === false && hideItems === false && nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(labels, function (option) {
-      var className = ['n-select__item'];
-
-      if (_this2.multiple === true) {
-        className.push('n-select__item--multiple');
+    },
+    removeOption: function removeOption(option) {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(this.veOptions, {
+        value: option.value
+      });
+    },
+    toggleOption: function toggleOption(value) {
+      if (!this.multiple) {
+        return this.$emit('input', this.veValue = value);
       }
 
-      var clickEvent = function clickEvent() {
-        _this2.toggleOption(option.realValue);
-      };
+      this.$emit('input', nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].toggle(this.veValue, value));
+    },
+    getOptionLabel: function getOptionLabel(value) {
+      var option = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(this.veOptions, {
+        value: value
+      });
 
-      return h("span", {
-        "class": className
-      }, [option.label, " ", _this2.multiple && h("i", {
-        "on": {
-          "click": clickEvent
-        },
-        "class": _this2.icons.times
-      })]);
-    }), h("input", {
+      if (!option) {
+        return this.undefinedText;
+      }
+
+      return option.label;
+    },
+    eventUpdateSearch: function eventUpdateSearch(event) {
+      this.veSearch = event.target.value;
+    },
+    eventFocusSearch: function eventFocusSearch(event) {
+      this.veFocus = true;
+    },
+    eventBlurSearch: function eventBlurSearch(event) {
+      if (this.veOpen) {
+        this.$refs.input.focus();
+      }
+    },
+    eventKeydownSearch: function eventKeydownSearch(event) {// this.veSearch = event.target.value;
+    },
+    eventFocusInput: function eventFocusInput() {
+      if (this.$refs.input) {
+        this.$refs.input.focus();
+      }
+    },
+    eventPopoverInput: function eventPopoverInput(input) {
+      this.veOpen = input;
+      this.veSearch = '';
+    }
+  },
+  renderLabelInput: function renderLabelInput() {
+    var h = this.$createElement;
+    var events = {
+      input: this.eventUpdateSearch,
+      focus: this.eventFocusSearch,
+      blur: this.eventBlurSearch,
+      keydown: this.eventKeydownSearch
+    };
+    var attrs = {
+      disabled: this.disabled
+    };
+
+    if (!this.multiple && this.veFocus) {
+      attrs.placeholder = this.getOptionLabel(this.veValue);
+    }
+
+    if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.veValue) && !nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isNull(this.veValue)) {
+      attrs.placeholder = this.placeholder;
+    }
+
+    return h("input", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
       "ref": "input",
       "class": "n-select__input",
       "attrs": {
-        "type": "text",
-        "placeholder": placeholder,
-        "disabled": this.disabled
+        "type": "text"
       },
       "domProps": {
-        "value": this.search
-      },
-      "on": {
-        "input": this.searchOptions,
-        "focus": this.focusInput,
-        "focusout": this.focusoutInput,
-        "keydown": this.keydownInput
+        "value": this.veSearch
       }
-    })]), h("div", {
-      "class": "n-select__arrow"
-    }, [h("span", {
-      "class": this.icons.angleDown
-    })])]), h("NPopover", {
+    }, {
+      "on": events
+    }, {}, {
+      "attrs": attrs
+    }]));
+  },
+  renderLabelItem: function renderLabelItem(value) {
+    var _this2 = this;
+
+    var h = this.$createElement;
+
+    if (!this.multiple && this.veFocus) {
+      return null;
+    }
+
+    var classList = ['n-select__item'];
+
+    if (this.multiple) {
+      classList.push('n-select__item--multiple');
+    }
+
+    var events = {
+      click: function click() {
+        return _this2.toggleOption(value);
+      }
+    };
+    return h("span", {
+      "class": classList
+    }, [this.getOptionLabel(value), " ", this.multiple && h("i", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{}, {
+      "on": events
+    }, {
+      "class": this.icons.times
+    }]))]);
+  },
+  renderLabel: function renderLabel() {
+    var _this3 = this;
+
+    var h = this.$createElement;
+    var values = this.veValue;
+
+    if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isArray(values)) {
+      values = [values];
+    }
+
+    return h("div", {
+      "class": "n-select__label"
+    }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(values, function (value) {
+      return _this3.ctor('renderLabelItem')(value);
+    }), this.ctor('renderLabelInput')()]);
+  },
+  renderDisplay: function renderDisplay() {
+    var h = this.$createElement;
+    var classList = ['n-select', 'n-select--' + this.size];
+
+    if (this.disabled) {
+      classList.push('n-select--disabled');
+    }
+
+    var events = {
+      click: this.eventFocusInput
+    };
+    return h("div", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
+      "class": classList
+    }, {
+      "on": events
+    }]), [this.ctor('renderLabel')()]);
+  },
+  renderOptions: function renderOptions() {
+    var h = this.$createElement;
+
+    if (!this.veOptions.length) {
+      return h("div", [this.emptyText]);
+    }
+
+    return h("div", [nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veOptions, function (option) {
+      return option.ctor('renderOption')();
+    })]);
+  },
+  renderPopover: function renderPopover() {
+    var h = this.$createElement;
+    var props = {
+      visible: this.veOpen,
+      type: 'select',
+      trigger: 'click',
+      width: '100%',
+      closeInside: !this.multiple,
+      disabled: this.disabled,
+      position: this.position
+    };
+    var events = {
+      input: this.eventPopoverInput
+    };
+    return h("NPopover", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{}, {
+      "props": props
+    }, {}, {
+      "on": events
+    }, {
       "attrs": {
-        "trigger": "click",
-        "type": "select",
-        "position": this.position,
-        "disabled": this.disabled,
-        "closeInside": false
-      },
-      "model": {
-        value: _this2.visible,
-        callback: function callback($$v) {
-          _this2.visible = $$v;
-        }
+        "window": true
       }
-    }, [nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(options) === false ? options : h("div", {
-      "class": "n-select__empty"
-    }, [this.emptyText])]), this.$slots["default"]]);
+    }]), [this.ctor('renderOptions')()]);
+  },
+  render: function render($render) {
+    var h = arguments[0];
+    this.$render = $render;
+    var classList = ['n-select_wrapper'];
+
+    if (this.disabled) {
+      classList.push('n-disabled');
+    }
+
+    return h("div", {
+      "class": classList
+    }, [this.ctor('renderDisplay')(), this.ctor('renderPopover')(), this.$slots["default"]]);
   }
 });
 
@@ -44483,7 +44458,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     eventResizerMousedown: function eventResizerMousedown(event) {
       event.preventDefault();
-      event.stopPropagation();
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.column).addClass('n-resize');
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mousemove', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.eventResizerMousemove, 30), this._uid);
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mouseup', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.eventResizerMouseup, 30), this._uid);
@@ -44575,19 +44549,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       width: this.veWidth + 'px',
       minWidth: this.minWidth + 'px'
     };
-    var events = {};
-
-    if (this.sort && this.NTable.sortOnLabel) {
-      events.click = this.sortByColumn;
-    }
-
-    return h("div", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
+    return h("div", {
       "ref": "column",
       "class": classList,
       "style": style
-    }, {
-      "on": events
-    }]), [this.ctor('renderHeadSort')(), this.ctor('renderHeadLabel')(), this.ctor('renderHeadFilter')(), this.ctor('renderHeadResizer')()]);
+    }, [this.ctor('renderHeadSort')(), this.ctor('renderHeadLabel')(), this.ctor('renderHeadFilter')(), this.ctor('renderHeadResizer')()]);
   },
   renderHeadLabel: function renderHeadLabel() {
     var h = this.$createElement;
@@ -44596,9 +44562,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.boundryEl = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.NTable.$el).find('.n-table__inner').get(0);
     }
 
-    var labelHtml = h("div", {
+    var events = {};
+
+    if (this.sort && this.NTable.sortOnLabel) {
+      events.click = this.sortByColumn;
+    }
+
+    var labelHtml = h("div", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
       "class": "n-table-column__label"
-    }, [this.label]);
+    }, {
+      "on": events
+    }]), [this.label]);
     var tooltipHtml = h("NPopover", {
       "attrs": {
         "type": "tooltip",
@@ -44639,9 +44613,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
     return [h("div", {
       "class": "n-table-column__filter"
-    }, [h("span", {
+    }, [h("div", [h("span", {
       "class": this.icons.angleDown
-    })]), h("NPopover", {
+    })])]), h("NPopover", {
       "class": "n-popover-filter",
       "attrs": {
         "trigger": "click",

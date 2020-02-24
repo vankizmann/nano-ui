@@ -112,8 +112,41 @@ export default {
         this.NSelect.removeOption(this);
     },
 
-    render(h)
+    renderOption()
     {
+        let classList = [
+            'n-select-option'
+        ];
+
+        if ( Arr.has(this.NSelect.veValue, this.value) ) {
+            classList.push('n-select-option--active');
+        }
+
+        if ( this.disabled === true ) {
+            classList.push('n-select-option--disabled');
+        }
+
+        // if ( current === true ) {
+        //     classList.push('n-select-option--current');
+        // }
+
+        let events = {};
+
+        if ( ! this.disabled ) {
+            events.click = () => this.NSelect.toggleOption(this.value);
+        }
+
+        return (
+            <div class={classList} on={events}>
+                {this.$slots.default || this.label}
+            </div>
+        );
+    },
+
+    render($render)
+    {
+        this.$render = $render;
+
         return null;
     }
 

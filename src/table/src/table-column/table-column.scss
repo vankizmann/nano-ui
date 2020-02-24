@@ -99,6 +99,26 @@
     text-align: right;
 }
 
+.n-table .n-table-column .n-table-column__filter {
+    flex: 0 0 auto;
+    margin-left: 5px;
+}
+
+.n-table .n-table-column .n-table-column__filter > div {
+    cursor: pointer;
+    display: block;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    color: $--color-gray-75;
+    background: $color-gray-05;
+}
+
+.n-inverse .n-table .n-table-column .n-table-column__filter > div {
+    color: $--color-gray-25;
+    background: $color-gray-95;
+}
+
 .n-table .n-table-column .n-table-column__resizer {
     cursor: col-resize;
     position: absolute;

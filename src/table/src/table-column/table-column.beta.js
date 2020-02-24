@@ -230,7 +230,6 @@ export default {
         eventResizerMousedown(event)
         {
             event.preventDefault();
-            event.stopPropagation();
 
             Dom.find(this.$refs.column).addClass('n-resize');
 
@@ -351,14 +350,8 @@ export default {
             width: this.veWidth + 'px', minWidth: this.minWidth + 'px'
         };
 
-        let events = {};
-
-        if ( this.sort && this.NTable.sortOnLabel ) {
-            events.click = this.sortByColumn;
-        }
-
         return (
-            <div ref="column" class={classList} style={style} on={events}>
+            <div ref="column" class={classList} style={style}>
                 { this.ctor('renderHeadSort')() }
                 { this.ctor('renderHeadLabel')() }
                 { this.ctor('renderHeadFilter')() }
@@ -373,8 +366,14 @@ export default {
             this.boundryEl = Dom.find(this.NTable.$el).find('.n-table__inner').get(0);
         }
 
+        let events = {};
+
+        if ( this.sort && this.NTable.sortOnLabel ) {
+            events.click = this.sortByColumn;
+        }
+
         let labelHtml = (
-            <div class="n-table-column__label">
+            <div class="n-table-column__label" on={events}>
                 { this.label }
             </div>
         );
@@ -421,7 +420,7 @@ export default {
 
         return [
             <div class="n-table-column__filter">
-                <span class={this.icons.angleDown}></span>
+                <div><span class={this.icons.angleDown}></span></div>
             </div>,
             <NPopover class="n-popover-filter" trigger="click" boundry={this.boundryEl}>
                 { this.$render(componentName, { slot: 'raw', props }) }

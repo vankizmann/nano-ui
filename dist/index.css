@@ -2633,6 +2633,23 @@
 .n-table .n-table-column.n-right .n-table-column__label {
   text-align: right; }
 
+.n-table .n-table-column .n-table-column__filter {
+  flex: 0 0 auto;
+  margin-left: 5px; }
+
+.n-table .n-table-column .n-table-column__filter > div {
+  cursor: pointer;
+  display: block;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  color: #54595f;
+  background: #f4f4f4; }
+
+.n-inverse .n-table .n-table-column .n-table-column__filter > div {
+  color: #c6c8ca;
+  background: #262d34; }
+
 .n-table .n-table-column .n-table-column__resizer {
   cursor: col-resize;
   position: absolute;

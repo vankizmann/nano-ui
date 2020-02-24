@@ -129,7 +129,7 @@ export default {
         {
             let style = {};
 
-            if ( this.$el === null ) {
+            if ( ! this.$el ) {
                 return { display: 'none' };
             }
 
@@ -137,6 +137,10 @@ export default {
 
             if ( this.trigger !== 'context' ) {
                 clientX -= Dom.find(this.target).scroll('left', this.parent);
+            }
+
+            if ( this.parent === document.body ) {
+                clientX -= Dom.find(document.body).scroll('left');
             }
 
             if ( this.trigger === 'context' ) {
@@ -149,6 +153,10 @@ export default {
                 clientY -= Dom.find(this.target).scroll('top', this.parent);
             }
 
+            if ( this.parent === document.body ) {
+                clientY -= Dom.find(document.body).scroll('top');
+            }
+
             if ( this.trigger === 'context' ) {
                 clientY = this.clientY - Dom.find(this.parent).offset('top');
             }
@@ -159,13 +167,15 @@ export default {
             let width = this.trigger === 'context' ?
                 0 : Dom.find(this.target).width();
 
-            let reset = {
-                'max-width': this.width ? (this.width + 'px') : 'auto'
-            };
+            let popoverWidth = this.width;
 
-            if ( this.width ) {
-                reset.width = this.width + 'px';
+            if ( popoverWidth === '100%' ) {
+                popoverWidth = Dom.find(this.target).width();
             }
+
+            let reset = {
+                width: popoverWidth ? (popoverWidth + 'px') : 'auto'
+            };
 
             let nodeWidth = Dom.find(this.$el).realWidth(reset);
             let nodeHeight = Dom.find(this.$el).realHeight(reset);
@@ -280,7 +290,7 @@ export default {
             let pseudo = Obj.map(Obj.clone(style), (prop) => prop + 'px');
 
             if ( this.trigger !== 'context' ) {
-                pseudo['max-width'] = this.width ? (this.width + 'px') : 'auto';
+                pseudo.width = popoverWidth ? (popoverWidth + 'px') : 'auto';
             }
 
             if ( ! this.veVisible && ! this.visible ) {
@@ -308,13 +318,16 @@ export default {
             this.$emit('input', this.veVisible = result);
         },
 
-        eventMouseup(event, el)
+        eventClick(event, el)
         {
-            if ( this.disabled || this.veVisible ) {
+            this.clientX = event.clientX;
+            this.clientY = event.clientY;
+
+            if ( event.which !== 1 ) {
                 return;
             }
 
-            if ( event.which !== 1 ) {
+            if ( this.disabled ) {
                 return;
             }
 
@@ -323,20 +336,20 @@ export default {
 
             let result = !! target || !! source;
 
-            if ( this.veVisible === result ) {
-                return;
+            if ( result && this.veVisible ) {
+                result = ! this.closeInside;
             }
 
-            if ( ! this.closeInside && !! source ) {
-                result = true;
+            if ( this.veVisible !== result ) {
+                this.$emit('input', this.veVisible = result);
             }
 
-            this.$emit('input', this.veVisible = result);
+            event.preventDefault();
         },
 
         eventContextmenu(event, el)
         {
-            if ( this.disabled || this.veVisible ) {
+            if ( this.disabled ) {
                 return;
             }
 
@@ -349,6 +362,10 @@ export default {
 
             let result = !! target || !! source;
 
+            if ( result && this.veVisible ) {
+                result = ! this.closeInside;
+            }
+
             if ( result ) {
                 event.preventDefault();
             }
@@ -360,28 +377,10 @@ export default {
             this.$emit('input', this.veVisible = result);
         },
 
-        eventMousedown(event, el)
+        eventMousedown(event)
         {
             this.clientX = event.clientX;
             this.clientY = event.clientY;
-
-            if ( ! this.veVisible ) {
-                return;
-            }
-
-            let target = Dom.find(el).closest(this.target),
-                source = Dom.find(el).closest(this.$el);
-
-            let result = !! target || !! source;
-
-            if ( ! this.closeInside && result ) {
-                return;
-            }
-
-            event.preventDefault();
-            event.stopPropagation();
-
-            this.$emit('input', this.veVisible = false);
         }
 
     },
@@ -410,13 +409,12 @@ export default {
         }
 
         if ( this.trigger === 'click' ) {
-            Dom.find(document).on('mousedown', this.eventMousedown, $event);
-            Dom.find(document).on('click', this.eventMouseup, $event);
+            Dom.find(document).on('click', this.eventClick, $event);
         }
 
         if ( this.trigger === 'context' ) {
-            Dom.find(document).on('contextmenu', this.eventContextmenu, $event);
             Dom.find(document).on('mousedown', this.eventMousedown, $event);
+            Dom.find(document).on('contextmenu', this.eventContextmenu, $event);
         }
 
         this.target = Dom.find(this.$el).previous().get(0);
@@ -467,21 +465,14 @@ export default {
 
     render()
     {
-        let className = [
+        let classList = [
             'n-popover',
-            'n-popover--beta',
             'n-popover--' + this.type,
             'n-popover--' + this.position
         ];
 
-        let style = this.style;
-
-        if ( this.width ) {
-            style.width = this.width + 'px';
-        }
-
         return (
-            <div class={className} style={this.style}>
+            <div class={classList} style={this.style}>
                 { this.$slots.raw ||
                     <div class="n-popover__frame">
                         { this.$slots.header &&

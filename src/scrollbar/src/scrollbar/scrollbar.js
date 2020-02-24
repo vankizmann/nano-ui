@@ -13,6 +13,14 @@ export default {
                 return {};
             },
             type: [Object]
+        },
+
+        height: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
         }
 
     },
@@ -25,6 +33,10 @@ export default {
         this.optiscroll = new Optiscroll(this.$el.parentNode, {
             classPrefix: 'n-scrollbar-', wrapContent: false, preventParentScroll: true, forceScrollbars: true
         });
+
+        if ( this.height ) {
+            Dom.find(this.$el).parent().css({ height: this.height + 'px' });
+        }
 
         Dom.find(this.$el).parent().addClass('n-scrollbar');
     },

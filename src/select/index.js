@@ -1,6 +1,6 @@
 import Vue from "vue";
 
-import Select from './src/select/select';
+import Select from './src/select/select.beta';
 Vue.component(Select.name, Select);
 
 import SelectOption from './src/select-option/select-option';
