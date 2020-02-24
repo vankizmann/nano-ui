@@ -205,9 +205,11 @@ export default {
 
     methods: {
 
-        sortByColumn()
+        sortByColumn(event)
         {
-            console.log('sort me');
+            if ( ! Dom.find(event.target).closest('.n-table-column__filter') ) {
+                this.NTable.sortByColumn(this.prop);
+            }
         },
 
         adjustResizerPosition()
@@ -325,11 +327,9 @@ export default {
             'n-table-column', 'n-' + this.align
         ];
 
-        if ( this.sort ) {
-            classList.push('is-sortable');
+        if ( this.NTable.veSortProp === this.prop ) {
+            classList.push('is-sorted is-' + this.NTable.veSortDir);
         }
-
-        classList.push('is-desc');
 
         let index = Arr.findIndex(this.NTable.veColumns, {
             prop: this.prop
@@ -351,8 +351,14 @@ export default {
             width: this.veWidth + 'px', minWidth: this.minWidth + 'px'
         };
 
+        let events = {};
+
+        if ( this.sort && this.NTable.sortOnLabel ) {
+            events.click = this.sortByColumn;
+        }
+
         return (
-            <div ref="column" class={classList} style={style}>
+            <div ref="column" class={classList} style={style} on={events}>
                 { this.ctor('renderHeadSort')() }
                 { this.ctor('renderHeadLabel')() }
                 { this.ctor('renderHeadFilter')() }
@@ -388,9 +394,11 @@ export default {
             return null;
         }
 
-        let events = {
-            click: this.sortByColumn
-        };
+        let events = {};
+
+        if ( this.sort && this.NTable.sortOnLabel ) {
+            events.click = this.sortByColumn;
+        }
 
         return (
             <div class="n-table-column__sort" on={events}>

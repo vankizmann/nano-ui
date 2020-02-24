@@ -17,13 +17,6 @@ export default {
             }
         },
 
-        displayItems: {
-            default()
-            {
-                return null;
-            }
-        },
-
         renderNode: {
             default()
             {
@@ -32,6 +25,13 @@ export default {
         },
 
         selected: {
+            default()
+            {
+                return [];
+            }
+        },
+
+        collapsed: {
             default()
             {
                 return [];
@@ -206,28 +206,41 @@ export default {
             type: [Boolean]
         },
 
-        bufferItems: {
-            default()
-            {
-                return 8;
-            },
-            type: [Number]
-        },
-
         updateDelay: {
             default()
             {
                 return 1000;
             },
             type: [Number]
-        }
+        },
+
+        preloadItems: {
+            default()
+            {
+                return 12;
+            },
+            type: [Number]
+        },
+
+        bufferItems: {
+            default()
+            {
+                return 40;
+            },
+            type: [Number]
+        },
 
     },
 
     data()
     {
         return {
-            veCopy: [], veItems: [], veSelected: [], veCollapsed: [], veCached: [], veSelfCached: []
+            veCopy: [],
+            veItems: [],
+            veCached: [],
+            veSelfCached: [],
+            veSelected: this.selected,
+            veCollapsed: this.collapsed,
         };
     },
 

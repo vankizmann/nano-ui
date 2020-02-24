@@ -200,7 +200,7 @@ export default {
             renderNode = this.$render(this.NDraggable.renderNode, { props })
         }
 
-        if ( Any.isEmpty(renderNode) ) {
+        if ( Any.isEmpty(renderNode) && this.$scopedSlots.default ) {
             renderNode = this.$scopedSlots.default(props);
         }
 

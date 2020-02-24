@@ -25,7 +25,7 @@ export default {
 
         getFilterProps(defaults)
         {
-            let filter = Arr.find(this.NTable.veFilter, {
+            let filter = Arr.find(this.NTable.veFilterProps, {
                 property: this.column.filterProp
             }, {});
 
@@ -38,11 +38,11 @@ export default {
                 return Any.isArray(value) ? value.join(',') : value;
             });
 
-            Arr.remove(this.NTable.veFilter, {
+            Arr.remove(this.NTable.veFilterProps, {
                 property: this.column.filterProp
             });
 
-            Arr.push(this.NTable.veFilter, newData);
+            Arr.push(this.NTable.veFilterProps, newData);
         },
 
         resetFilter()

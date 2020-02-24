@@ -1,18 +1,18 @@
 @import "../../../root/vars";
 
-.n-render-list {
+.n-virtualscroller {
     position: relative;
     width: 100%;
     overflow: hidden;
 }
 
-.n-render-list > div::-webkit-scrollbar,
-.n-render-list > div::-webkit-scrollbar {
+.n-virtualscroller > div::-webkit-scrollbar,
+.n-virtualscroller > div::-webkit-scrollbar {
     width: 0;
     height: 0;
 }
 
-.n-render-list > .n-render-list__scrollbar-x {
+.n-virtualscroller > .n-virtualscroller__scrollbar-x {
     z-index: 10;
     position: absolute;
     left: 0;
@@ -25,11 +25,11 @@
     transition: opacity 0.15s;
 }
 
-.n-render-list.n-render-list--x:hover > .n-render-list__scrollbar-x {
+.n-virtualscroller.n-virtualscroller--x:hover > .n-virtualscroller__scrollbar-x {
     opacity: 1;
 }
 
-.n-render-list__scrollbar-y {
+.n-virtualscroller__scrollbar-y {
     z-index: 10;
     position: absolute;
     top: 0;
@@ -42,6 +42,6 @@
     transition: opacity 0.15s;
 }
 
-.n-render-list.n-render-list--y:hover > .n-render-list__scrollbar-y {
+.n-virtualscroller.n-virtualscroller--y:hover > .n-virtualscroller__scrollbar-y {
     opacity: 1;
 }

@@ -17,18 +17,50 @@ export default {
             }
         },
 
-        displayItems: {
-            default()
-            {
-                return null;
-            }
-        },
-
         selected: {
             default()
             {
                 return [];
             }
+        },
+
+        collapsed: {
+            default()
+            {
+                return [];
+            }
+        },
+
+        sortProp: {
+            default()
+            {
+                return 'id';
+            },
+            type: [String]
+        },
+
+        sortDir: {
+            default()
+            {
+                return 'desc';
+            },
+            type: [String]
+        },
+
+        sortOnLabel: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
+        filterProps: {
+            default()
+            {
+                return [];
+            },
+            type: [Array]
         },
 
         group: {
@@ -199,21 +231,29 @@ export default {
             type: [Boolean]
         },
 
-        bufferItems: {
-            default()
-            {
-                return 8;
-            },
-            type: [Number]
-        },
-
         updateDelay: {
             default()
             {
                 return 0;
             },
             type: [Number]
-        }
+        },
+
+        preloadItems: {
+            default()
+            {
+                return 12;
+            },
+            type: [Number]
+        },
+
+        bufferItems: {
+            default()
+            {
+                return 40;
+            },
+            type: [Number]
+        },
 
     },
 
@@ -224,7 +264,12 @@ export default {
 
     data()
     {
-        return { veColumns: [], veFilter: [] }
+        return {
+            veColumns: [],
+            veFilterProps: this.filterProps,
+            veSortProp: this.sortProp,
+            veSortDir: this.sortDir,
+        }
     },
 
     methods: {
@@ -241,6 +286,29 @@ export default {
             Arr.remove(this.veColumns, {
                 prop: column.prop
             });
+        },
+
+        sortByColumn(prop)
+        {
+            let dir = this.veSortDir;
+
+            if ( prop === this.veSortProp && this.veSortDir === 'desc' ) {
+                dir = 'asc';
+            }
+
+            if ( prop === this.veSortProp && this.veSortDir === 'asc' ) {
+                dir = 'desc';
+            }
+
+            if ( this.veSortDir !== dir ) {
+                this.$emit('update:sortDir', this.veSortDir = dir);
+            }
+
+            if ( this.veSortProp !== prop ) {
+                this.$emit('update:sortProp', this.veSortProp = prop);
+            }
+
+            this.$emit('sort', this.veSortProp, this.veSortDir);
         },
 
         toggleSelected()

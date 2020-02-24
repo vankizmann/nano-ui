@@ -42,7 +42,15 @@ export default {
         bufferItems: {
             default()
             {
-                return 14;
+                return 8;
+            },
+            type: [Number]
+        },
+
+        frameRate: {
+            default()
+            {
+                return 10;
             },
             type: [Number]
         }
@@ -51,10 +59,40 @@ export default {
 
     methods: {
 
-        refreshDriver(forceUpdate = false)
+        limitedRefreshDriver(forceUpdate = false, overrideBuffer = false)
+        {
+            let framerateTimer = (val = null) => {
+
+                if ( ! Any.isEmpty(val) ) {
+                    this.refreshDriverFramerate = val;
+                }
+
+                return this.refreshDriverFramerate;
+            };
+
+            Any.framerate(() => {
+
+                clearTimeout(this.refreshDriverDebounce);
+
+                this.refreshDriverDebounce = setTimeout(() => {
+                    this.refreshDriver(forceUpdate, overrideBuffer);
+                }, (1000 / this.frameRate) + 50);
+
+                this.refreshDriver(forceUpdate, overrideBuffer);
+
+            }, this.frameRate, framerateTimer)();
+        },
+
+        refreshDriver(forceUpdate = false, overrideBuffer = false)
         {
             if ( ! this.$refs.viewport ) {
                 return;
+            }
+
+            this.latestBufferItems = this.latestBufferItems || this.bufferItems;
+
+            if ( overrideBuffer ) {
+                this.latestBufferItems = this.bufferItems / 2;
             }
 
             let scrollTop = 0, scrollFix = this.scrollFix || scrollTop;
@@ -63,20 +101,19 @@ export default {
                 scrollTop = this.$refs.viewport.$el.scrollTop;
             }
 
-            let scrollBuffer = (this.bufferItems / 1.65 * this.itemHeight);
+            let scrollBuffer = (this.latestBufferItems / 2 * this.itemHeight);
 
             if ( scrollTop > scrollFix + scrollBuffer || scrollTop < scrollFix - scrollBuffer ) {
                 scrollFix = scrollTop;
             }
 
             let options = {
-                bufferItems: this.bufferItems,
+                bufferItems: this.latestBufferItems,
                 totalItems: this.items.length,
                 viewportHeight: this.height,
                 minRowHeight: this.itemHeight,
                 scrollTop: scrollTop,
             };
-
 
             if ( this.scrollFix === scrollFix && ! forceUpdate ) {
                 return;
@@ -84,9 +121,21 @@ export default {
 
             this.scrollFix = scrollFix;
 
-            this.state = virtualScrollDriver(options, this.state, () => {
+            let newState = virtualScrollDriver(options, this.state, () => {
                 return this.itemHeight;
             });
+
+            let isEqualState = Arr.reduce(Any.keys(newState), (merge, key) => {
+                return merge && this.state[key] === newState[key];
+            }, true);
+
+            this.state = newState;
+
+            if ( isEqualState ) {
+                return;
+            }
+
+            console.log('update');
 
             this.veUpdate++;
         },
@@ -105,17 +154,17 @@ export default {
                 return Any.delay(this.discoverHeight, 100);
             }
 
-            this.refreshDriver(true);
+            Any.async(() => this.limitedRefreshDriver(true, false));
         },
 
         eventScroll()
         {
-            this.refreshDriver(false);
+            Any.async(() => this.limitedRefreshDriver(false, false));
         },
 
         eventScrollstop()
         {
-            this.refreshDriver(true);
+            Any.async(() => this.limitedRefreshDriver(false, false));
         }
 
     },
@@ -182,7 +231,7 @@ export default {
         };
 
         let events = {
-            scroll: Any.framerate(this.eventScroll, 45)
+            scroll: this.eventScroll
         };
 
         return (
@@ -210,7 +259,7 @@ export default {
         this.$render = $render;
 
         return (
-            <div class="n-render-list">
+            <div class="n-virtualscroller">
                 { this.$slots.before || null }
                 { this.ctor('renderBody')() }
                 { this.$slots.default || null }
