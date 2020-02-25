@@ -36,6 +36,14 @@ export default {
             type: [String]
         },
 
+        window: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         multiple: {
             default()
             {
@@ -493,7 +501,8 @@ export default {
             width: '100%',
             disabled: this.disabled,
             position: this.position,
-            contain: false,
+            window: this.window,
+            contain: this.window,
         };
 
         let events = {

@@ -10,13 +10,9 @@ $popover-tooltip-size: 12px !default;
 $popover-tooltip-padding: 3px 9px !default;
 
 .n-popover {
-    z-index: 1000;
-    position: fixed;
-    padding: 3px;
-}
-
-.n-popover.n-popover--beta {
+    z-index: 10000;
     position: absolute;
+    padding: 3px;
 }
 
 .n-popover.n-popover--select {
