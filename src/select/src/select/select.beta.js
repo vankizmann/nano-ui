@@ -493,6 +493,7 @@ export default {
             width: '100%',
             disabled: this.disabled,
             position: this.position,
+            contain: false,
         };
 
         let events = {
@@ -500,7 +501,7 @@ export default {
         };
 
         return (
-            <NPopover ref="popover" props={props} on={events} window={true}>
+            <NPopover ref="popover" props={props} on={events}>
                 { this.ctor('renderOptions')() }
             </NPopover>
         );
@@ -511,7 +512,7 @@ export default {
         this.$render = $render;
 
         let classList = [
-            'n-select_wrapper'
+            'n-select__wrapper'
         ];
 
         if ( this.disabled ) {

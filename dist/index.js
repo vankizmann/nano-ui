@@ -43079,6 +43079,12 @@ __webpack_require__.r(__webpack_exports__);
         return null;
       }
     },
+    contain: {
+      "default": function _default() {
+        return true;
+      },
+      type: [Boolean]
+    },
     window: {
       "default": function _default() {
         return false;
@@ -43251,7 +43257,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
-      if (this.trigger !== 'context' && this.position.match(/^(top|bottom)-(start|center|end)$/)) {
+      if (this.trigger !== 'context' && this.position.match(/^(top|bottom)-/) && this.contain) {
         if (style.left < 0) {
           style.left = 0;
         }
@@ -43269,7 +43275,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
-      if (this.trigger !== 'context' && this.position.match(/^(left|right)-(start|center|end)$/)) {
+      if (this.trigger !== 'context' && this.position.match(/^(left|right)-/) && this.contain) {
         if (style.top < 0) {
           style.top = 0;
         }
@@ -44132,7 +44138,8 @@ __webpack_require__.r(__webpack_exports__);
       trigger: 'click',
       width: '100%',
       disabled: this.disabled,
-      position: this.position
+      position: this.position,
+      contain: false
     };
     var events = {
       input: this.eventPopoverInput
@@ -44143,16 +44150,12 @@ __webpack_require__.r(__webpack_exports__);
       "props": props
     }, {}, {
       "on": events
-    }, {
-      "attrs": {
-        "window": true
-      }
     }]), [this.ctor('renderOptions')()]);
   },
   render: function render($render) {
     var h = arguments[0];
     this.$render = $render;
-    var classList = ['n-select_wrapper'];
+    var classList = ['n-select__wrapper'];
 
     if (this.disabled) {
       classList.push('n-disabled');

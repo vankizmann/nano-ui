@@ -49,6 +49,14 @@ export default {
             },
         },
 
+        contain: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         window: {
             default()
             {
@@ -251,7 +259,7 @@ export default {
 
             }
 
-            if ( this.trigger !== 'context' && this.position.match(/^(top|bottom)-(start|center|end)$/) ) {
+            if ( this.trigger !== 'context' && this.position.match(/^(top|bottom)-/) && this.contain ) {
 
                 if ( style.left < 0 ) {
                     style.left = 0;
@@ -271,7 +279,7 @@ export default {
 
             }
 
-            if ( this.trigger !== 'context' && this.position.match(/^(left|right)-(start|center|end)$/) ) {
+            if ( this.trigger !== 'context' && this.position.match(/^(left|right)-/) && this.contain ) {
 
                 if ( style.top < 0 ) {
                     style.top = 0;
