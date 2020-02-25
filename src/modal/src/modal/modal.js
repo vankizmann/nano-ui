@@ -220,6 +220,11 @@ export default {
         this.node = this.$el;
     },
 
+    beforeDestroy()
+    {
+        this.$el.remove();
+    },
+
     destroyed()
     {
         Dom.find(document.body).off('mousedown',

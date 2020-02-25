@@ -112,7 +112,7 @@ export default {
         this.NSelect.removeOption(this);
     },
 
-    renderOption()
+    renderOption(index)
     {
         let classList = [
             'n-select-option'
@@ -126,14 +126,14 @@ export default {
             classList.push('n-select-option--disabled');
         }
 
-        // if ( current === true ) {
-        //     classList.push('n-select-option--current');
-        // }
+        if ( this.NSelect.veIndex === index ) {
+            classList.push('n-select-option--current');
+        }
 
         let events = {};
 
         if ( ! this.disabled ) {
-            events.click = () => this.NSelect.toggleOption(this.value);
+            events.click = (event) => this.NSelect.toggleOption(this.value, event);
         }
 
         return (

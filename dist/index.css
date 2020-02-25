@@ -86,40 +86,51 @@
   width: 100%;
   overflow: hidden; }
 
-.n-virtualscroller > div::-webkit-scrollbar,
-.n-virtualscroller > div::-webkit-scrollbar {
-  width: 0;
-  height: 0; }
+.n-virtualscroller__item {
+  position: relative; }
 
-.n-virtualscroller > .n-virtualscroller__scrollbar-x {
-  z-index: 10;
+.n-virtualscroller__item:before {
+  content: '\00a0';
   position: absolute;
-  left: 0;
-  bottom: 5px;
-  width: 0;
-  height: 8px;
-  background: rgba(27, 34, 41, 0.3);
-  border-radius: 500px;
-  opacity: 0;
-  transition: opacity 0.15s; }
+  top: 50%;
+  left: 10px;
+  right: 10px;
+  display: block;
+  width: 100%;
+  max-width: 210px;
+  height: 60%;
+  max-height: 12px;
+  transform: translateY(-50%);
+  background: linear-gradient(30deg, rgba(141, 145, 148, 0.2) 0%, rgba(141, 145, 148, 0.1) 50%, rgba(141, 145, 148, 0.2) 100%);
+  background-size: 400% 400%;
+  -webkit-animation: VirtualGhostElement 2s linear infinite;
+          animation: VirtualGhostElement 2s linear infinite; }
 
-.n-virtualscroller.n-virtualscroller--x:hover > .n-virtualscroller__scrollbar-x {
-  opacity: 1; }
+.n-virtualscroller__item:nth-child(2n):before {
+  max-width: 260px;
+  -webkit-animation: VirtualGhostElement 2s 0.5s linear infinite;
+          animation: VirtualGhostElement 2s 0.5s linear infinite; }
 
-.n-virtualscroller__scrollbar-y {
-  z-index: 10;
-  position: absolute;
-  top: 0;
-  right: 5px;
-  width: 8px;
-  height: 0;
-  background: rgba(27, 34, 41, 0.3);
-  border-radius: 500px;
-  opacity: 0;
-  transition: opacity 0.15s; }
+.n-virtualscroller__item:nth-child(5n):before {
+  max-width: 180px;
+  -webkit-animation: VirtualGhostElement 2s 1s linear infinite;
+          animation: VirtualGhostElement 2s 1s linear infinite; }
 
-.n-virtualscroller.n-virtualscroller--y:hover > .n-virtualscroller__scrollbar-y {
-  opacity: 1; }
+@-webkit-keyframes VirtualGhostElement {
+  0% {
+    background-position: 0 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0 50%; } }
+
+@keyframes VirtualGhostElement {
+  0% {
+    background-position: 0 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0 50%; } }
 
 .n-scrollbar {
   position: relative;
@@ -2182,6 +2193,9 @@
 .n-popover.n-popover--beta {
   position: absolute; }
 
+.n-popover.n-popover--select {
+  width: 100%; }
+
 .n-popover.n-popover--tooltip {
   max-width: 280px !important; }
 
@@ -2543,7 +2557,8 @@
 .n-table .n-table__body.n-empty {
   flex: 1 1 auto; }
 
-.n-table .n-table__body .n-draggable-item {
+.n-table .n-table__body .n-draggable-item,
+.n-table .n-table__body .n-virtualscroller__item {
   border-bottom: 1px solid #e8e9ea; }
 
 .n-inverse .n-table .n-table__body .n-draggable-item {

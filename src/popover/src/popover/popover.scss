@@ -19,6 +19,10 @@ $popover-tooltip-padding: 3px 9px !default;
     position: absolute;
 }
 
+.n-popover.n-popover--select {
+    width: 100%;
+}
+
 .n-popover.n-popover--tooltip {
     max-width: 280px !important;
 }

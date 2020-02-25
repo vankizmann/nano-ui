@@ -1,4 +1,4 @@
-import { Str, Arr, Any, Locale } from "nano-js";
+import { Str, Arr, Any, Locale, Dom } from "nano-js";
 
 export default {
 
@@ -118,11 +118,11 @@ export default {
     {
         return {
             veValue: this.value,
-            veFocus: false,
             veOpen: false,
             veSearch: '',
-            veIndex: null,
-            veOptions: []
+            veIndex: -1,
+            veOptions: [],
+            veSearched: []
         };
     },
 
@@ -133,7 +133,23 @@ export default {
         };
     },
 
+    watch: {
+
+        value()
+        {
+            if ( this.veValue !== this.value ) {
+                this.veValue = this.value;
+            }
+        },
+
+    },
+
     methods: {
+
+        clear()
+        {
+            this.$emit('input', this.veValue = this.clearValue);
+        },
 
         addOption(option)
         {
@@ -149,10 +165,39 @@ export default {
             });
         },
 
-        toggleOption(value)
+        searchOptions()
         {
+            if ( Any.isEmpty(this.veSearch) ) {
+                return this.veSearched = this.veOptions;
+            }
+
+            let searchRegex = new RegExp(this.veSearch);
+
+            this.veSearched = Arr.filter(this.veOptions, (option) => {
+                return option.label.match(searchRegex);
+            });
+        },
+
+        toggleOption(value, event)
+        {
+            if ( Any.isEmpty(value) ) {
+                return;
+            }
+
+            if ( event ) {
+                event.stopPropagation();
+            }
+
+            if ( ! this.multiple ) {
+                this.$refs.popover.close();
+            }
+
             if ( ! this.multiple ) {
                 return this.$emit('input', this.veValue = value);
+            }
+
+            if ( ! Any.isArray(this.veValue) && this.multiple ) {
+                this.veValue = [];
             }
 
             this.$emit('input', Arr.toggle(this.veValue, value));
@@ -162,25 +207,95 @@ export default {
         {
             let option = Arr.find(this.veOptions, { value });
 
-            if ( ! option ) {
+            if ( ! option && this.allowCreate ) {
+                return value;
+            }
+
+            if ( ! option && ! this.allowCreate ) {
                 return this.undefinedText;
             }
 
             return option.label;
         },
 
+        openSelect()
+        {
+            this.veOpen = true;
+
+            if ( ! this.veOpen ) {
+                this.$refs.input.focus();
+            }
+
+            this.veIndex = -1;
+        },
+
+        closeSelect()
+        {
+            this.veOpen = false;
+
+            if ( ! this.veOpen ) {
+                this.$refs.input.blur();
+            }
+
+            this.veIndex = -1;
+        },
+
+        selectPrev()
+        {
+            let newIndex = this.veIndex - 1;
+
+            if ( newIndex < 0 ) {
+                newIndex = this.veOptions.length - 1;
+            }
+
+            this.veIndex = newIndex;
+        },
+
+        selectNext()
+        {
+            let newIndex = this.veIndex + 1;
+
+            if ( newIndex > this.veOptions.length - 1 ) {
+                newIndex = 0;
+            }
+
+            this.veIndex = newIndex;
+        },
+
+        toggleSelected()
+        {
+            let selected = Arr.get(this.veSearched, this.veIndex);
+
+            if ( this.veSearched.length === 1 ) {
+                selected = Arr.get(this.veSearched, 0);
+                this.veSearch = '';
+            }
+
+            if ( ! selected ) {
+                return;
+            }
+
+            this.toggleOption(selected.value);
+        },
+
         eventUpdateSearch(event)
         {
             this.veSearch = event.target.value;
+
+            this.veIndex = -1;
         },
 
         eventFocusSearch(event)
         {
-            this.veFocus = true;
+            this.openSelect();
         },
 
         eventBlurSearch(event)
         {
+            if ( ! this.veOpen ) {
+                this.veSearch = '';
+            }
+
             if ( this.veOpen ) {
                 this.$refs.input.focus();
             }
@@ -188,22 +303,48 @@ export default {
 
         eventKeydownSearch(event)
         {
-            // this.veSearch = event.target.value;
-        },
+            if ( event.which === 13 ) {
 
-        eventFocusInput()
-        {
-            if ( this.$refs.input ) {
-                this.$refs.input.focus();
+                if ( ! this.allowCreate || this.veIndex !== -1 ) {
+                    this.toggleSelected();
+                }
+
+                if ( this.allowCreate && this.veIndex === -1 ) {
+                    this.toggleOption(this.veSearch);
+                    this.veSearch = '';
+                }
+
+            }
+
+            if ( event.which === 38 ) {
+                this.selectPrev();
+            }
+
+            if ( event.which === 40 ) {
+                this.selectNext();
+            }
+
+            if ( event.which === 9 || event.which === 27 ) {
+                this.$refs.popover.close();
             }
         },
 
         eventPopoverInput(input)
         {
-            this.veOpen = input;
-            this.veSearch = '';
+            if ( input ) {
+                this.$refs.input.focus();
+            }
+
+            input ? this.openSelect() : this.closeSelect();
         }
 
+    },
+
+    beforeMount()
+    {
+        this.$watch('veSearch', this.searchOptions);
+
+        this.searchOptions();
     },
 
     renderLabelInput()
@@ -219,11 +360,11 @@ export default {
             disabled: this.disabled
         };
 
-        if ( ! this.multiple && this.veFocus ) {
+        if ( ! this.multiple && this.veOpen ) {
             attrs.placeholder = this.getOptionLabel(this.veValue);
         }
 
-        if ( Any.isEmpty(this.veValue) && ! Any.isNull(this.veValue) ) {
+        if ( Any.isEmpty(this.veValue) && ! Any.isNumber(this.veValue) ) {
             attrs.placeholder = this.placeholder;
         }
 
@@ -232,9 +373,30 @@ export default {
         );
     },
 
+    renderLabelClear()
+    {
+        if ( ! this.clearable ) {
+            return null;
+        }
+
+        let events = {
+            click: this.clear
+        };
+
+        return (
+            <div class="n-select__clear" on={events}>
+                <span class={this.icons.times}></span>
+            </div>
+        );
+    },
+
     renderLabelItem(value)
     {
-        if ( ! this.multiple && this.veFocus ) {
+        if ( ! this.multiple && this.veOpen ) {
+            return null;
+        }
+
+        if ( Any.isEmpty(this.veValue) && ! Any.isNumber(this.veValue) ) {
             return null;
         }
 
@@ -257,6 +419,15 @@ export default {
         );
     },
 
+    renderLabelAngle()
+    {
+        return (
+            <div class="n-select__arrow">
+                <span class={this.icons.angleDown}></span>
+            </div>
+        );
+    },
+
     renderLabel()
     {
         let values = this.veValue;
@@ -267,12 +438,14 @@ export default {
 
         return (
             <div class="n-select__label">
+                { this.ctor('renderLabelClear')() }
                 {
                     Arr.each(values, (value) => {
                         return this.ctor('renderLabelItem')(value)
                     })
                 }
                 { this.ctor('renderLabelInput')() }
+                { this.ctor('renderLabelAngle')() }
             </div>
         );
     },
@@ -287,12 +460,8 @@ export default {
             classList.push('n-select--disabled')
         }
 
-        let events = {
-            click: this.eventFocusInput
-        };
-
         return (
-            <div class={classList} on={events}>
+            <div class={classList}>
                 { this.ctor('renderLabel')() }
             </div>
         );
@@ -300,15 +469,15 @@ export default {
 
     renderOptions()
     {
-        if ( ! this.veOptions.length ) {
-            return <div>{this.emptyText}</div>;
+        if ( ! this.veSearched.length ) {
+            return <div class="n-select__empty">{this.emptyText}</div>;
         }
 
         return (
             <div>
                 {
-                    Arr.each(this.veOptions, (option) => {
-                        return option.ctor('renderOption')();
+                    Arr.each(this.veSearched, (option, index) => {
+                        return option.ctor('renderOption')(index);
                     })
                 }
             </div>
@@ -322,7 +491,6 @@ export default {
             type: 'select',
             trigger: 'click',
             width: '100%',
-            closeInside: ! this.multiple,
             disabled: this.disabled,
             position: this.position,
         };
@@ -332,7 +500,7 @@ export default {
         };
 
         return (
-            <NPopover props={props} on={events} window={true}>
+            <NPopover ref="popover" props={props} on={events} window={true}>
                 { this.ctor('renderOptions')() }
             </NPopover>
         );

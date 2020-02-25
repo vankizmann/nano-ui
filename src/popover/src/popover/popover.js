@@ -96,7 +96,7 @@ export default {
 
         visible()
         {
-            if ( ! Any.isEqual(this.veVisible, this.visible) ) {
+            if ( this.veVisible !== this.visible ) {
                 this.veVisible = this.visible;
             }
         },
@@ -129,7 +129,7 @@ export default {
         {
             let style = {};
 
-            if ( ! this.$el ) {
+            if ( this.$el === null ) {
                 return { display: 'none' };
             }
 
@@ -139,12 +139,12 @@ export default {
                 clientX -= Dom.find(this.target).scroll('left', this.parent);
             }
 
-            if ( this.parent === document.body ) {
-                clientX -= Dom.find(document.body).scroll('left');
-            }
-
             if ( this.trigger === 'context' ) {
                 clientX = this.clientX - Dom.find(this.parent).offset('left');
+            }
+
+            if ( this.parent === document.body ) {
+                // clientX += Dom.find(document.body).scroll('left');
             }
 
             let clientY = Dom.find(this.target).offset('top', this.parent);
@@ -153,12 +153,12 @@ export default {
                 clientY -= Dom.find(this.target).scroll('top', this.parent);
             }
 
-            if ( this.parent === document.body ) {
-                clientY -= Dom.find(document.body).scroll('top');
-            }
-
             if ( this.trigger === 'context' ) {
                 clientY = this.clientY - Dom.find(this.parent).offset('top');
+            }
+
+            if ( this.parent === document.body ) {
+                // clientY += Dom.find(document.body).scroll('top');
             }
 
             let height = this.trigger === 'context' ?
@@ -167,15 +167,19 @@ export default {
             let width = this.trigger === 'context' ?
                 0 : Dom.find(this.target).width();
 
-            let popoverWidth = this.width;
+            let realWidth = this.width;
 
-            if ( popoverWidth === '100%' ) {
-                popoverWidth = Dom.find(this.target).width();
+            if ( realWidth === '100%' ) {
+                realWidth = Dom.find(this.target).width();
             }
 
             let reset = {
-                width: popoverWidth ? (popoverWidth + 'px') : 'auto'
+                'max-width': realWidth ? (realWidth + 'px') : 'auto'
             };
+
+            if ( this.width ) {
+                reset.width = this.width + 'px';
+            }
 
             let nodeWidth = Dom.find(this.$el).realWidth(reset);
             let nodeHeight = Dom.find(this.$el).realHeight(reset);
@@ -290,7 +294,7 @@ export default {
             let pseudo = Obj.map(Obj.clone(style), (prop) => prop + 'px');
 
             if ( this.trigger !== 'context' ) {
-                pseudo.width = popoverWidth ? (popoverWidth + 'px') : 'auto';
+                pseudo['max-width'] = realWidth ? (realWidth + 'px') : 'auto';
             }
 
             if ( ! this.veVisible && ! this.visible ) {
@@ -345,6 +349,7 @@ export default {
             }
 
             event.preventDefault();
+            event.stopPropagation();
         },
 
         eventContextmenu(event, el)
@@ -401,7 +406,7 @@ export default {
     mounted()
     {
         let $event = {
-            id: this._uid
+            _uid: this._uid
         };
 
         if ( this.trigger === 'hover' ) {
@@ -443,36 +448,34 @@ export default {
     beforeDestroy()
     {
         let $event = {
-            id: this._uid
+            _uid: this._uid
         };
 
-        if ( this.trigger === 'hover' ) {
-            Dom.find(document).off('mousemove', null, $event);
-        }
-
-        if ( this.trigger === 'click' ) {
-            Dom.find(document).off('mousedown', null, $event);
-            Dom.find(document).off('click', null, $event);
-        }
-
-        if ( this.trigger === 'context' ) {
-            Dom.find(document).off('contextmenu', null, $event);
-            Dom.find(document).off('mousedown', null, $event);
-        }
+        Dom.find(document).off('mousemove', null, $event);
+        Dom.find(document).off('click', null, $event);
+        Dom.find(document).off('cofftextmenu', null, $event);
+        Dom.find(document).off('mousedown', null, $event);
 
         this.$el.remove();
     },
 
     render()
     {
-        let classList = [
+        let className = [
             'n-popover',
+            'n-popover--beta',
             'n-popover--' + this.type,
             'n-popover--' + this.position
         ];
 
+        let style = this.style;
+
+        if ( this.width ) {
+            style.width = this.width + 'px';
+        }
+
         return (
-            <div class={classList} style={this.style}>
+            <div class={className} style={this.style}>
                 { this.$slots.raw ||
                     <div class="n-popover__frame">
                         { this.$slots.header &&
