@@ -23,8 +23,7 @@ export default {
             default()
             {
                 return 0;
-            },
-            type: [Number]
+            }
         },
 
         disabled: {
@@ -74,6 +73,14 @@ export default {
         },
 
         type: {
+            default()
+            {
+                return 'default';
+            },
+            type: [String]
+        },
+
+        size: {
             default()
             {
                 return 'default';
@@ -355,9 +362,6 @@ export default {
             if ( this.veVisible !== result ) {
                 this.$emit('input', this.veVisible = result);
             }
-
-            event.preventDefault();
-            event.stopPropagation();
         },
 
         eventContextmenu(event, el)
@@ -461,7 +465,7 @@ export default {
 
         Dom.find(document).off('mousemove', null, $event);
         Dom.find(document).off('click', null, $event);
-        Dom.find(document).off('cofftextmenu', null, $event);
+        Dom.find(document).off('contextmenu', null, $event);
         Dom.find(document).off('mousedown', null, $event);
 
         this.$el.remove();
@@ -471,7 +475,7 @@ export default {
     {
         let className = [
             'n-popover',
-            'n-popover--beta',
+            'n-popover--' + this.size,
             'n-popover--' + this.type,
             'n-popover--' + this.position
         ];

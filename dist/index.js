@@ -43060,8 +43060,7 @@ __webpack_require__.r(__webpack_exports__);
     width: {
       "default": function _default() {
         return 0;
-      },
-      type: [Number]
+      }
     },
     disabled: {
       "default": function _default() {
@@ -43098,6 +43097,12 @@ __webpack_require__.r(__webpack_exports__);
       type: [String]
     },
     type: {
+      "default": function _default() {
+        return 'default';
+      },
+      type: [String]
+    },
+    size: {
       "default": function _default() {
         return 'default';
       },
@@ -43345,9 +43350,6 @@ __webpack_require__.r(__webpack_exports__);
       if (this.veVisible !== result) {
         this.$emit('input', this.veVisible = result);
       }
-
-      event.preventDefault();
-      event.stopPropagation();
     },
     eventContextmenu: function eventContextmenu(event, el) {
       if (this.disabled) {
@@ -43440,13 +43442,13 @@ __webpack_require__.r(__webpack_exports__);
     };
     nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).off('mousemove', null, $event);
     nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).off('click', null, $event);
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).off('cofftextmenu', null, $event);
+    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).off('contextmenu', null, $event);
     nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document).off('mousedown', null, $event);
     this.$el.remove();
   },
   render: function render() {
     var h = arguments[0];
-    var className = ['n-popover', 'n-popover--beta', 'n-popover--' + this.type, 'n-popover--' + this.position];
+    var className = ['n-popover', 'n-popover--' + this.size, 'n-popover--' + this.type, 'n-popover--' + this.position];
     var style = this.style;
 
     if (this.width) {
@@ -43623,47 +43625,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    realValue: function realValue() {
+    veValue: function veValue() {
       if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.prop)) {
         return this.value;
       }
 
       return nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.value, this.prop);
     }
-  },
-  methods: {
-    change: function change() {
-      if (this.disabled === false) {
-        this.NSelect.toggleOption(this.realValue);
-      }
-    },
-    render: function render(h, current) {
-      var className = ['n-select-option'];
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(this.NSelect.nativeSelected, this.realValue)) {
-        className.push('n-select-option--active');
-      }
-
-      if (this.disabled === true) {
-        className.push('n-select-option--disabled');
-      }
-
-      if (current === true) {
-        className.push('n-select-option--current');
-      }
-
-      return h("div", {
-        "class": className,
-        "on": {
-          "click": this.change
-        }
-      }, [this.$slots["default"] || this.label]);
-    }
-  },
-  data: function data() {
-    return {
-      width: 0
-    };
   },
   beforeMount: function beforeMount() {
     this.NSelect.addOption(this);
@@ -43675,25 +43643,25 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     var h = this.$createElement;
-    var classList = ['n-select-option'];
+    var classList = ['n-popover-option'];
 
     if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(this.NSelect.veValue, this.value)) {
-      classList.push('n-select-option--active');
+      classList.push('n-popover-option--active');
     }
 
     if (this.disabled === true) {
-      classList.push('n-select-option--disabled');
+      classList.push('n-popover-option--disabled');
     }
 
     if (this.NSelect.veIndex === index) {
-      classList.push('n-select-option--current');
+      classList.push('n-popover-option--current');
     }
 
     var events = {};
 
     if (!this.disabled) {
       events.click = function (event) {
-        return _this.NSelect.toggleOption(_this.value, event);
+        return _this.NSelect.toggleOption(_this.veValue, event);
       };
     }
 
@@ -43753,6 +43721,12 @@ __webpack_require__.r(__webpack_exports__);
         return 'bottom-center';
       },
       type: [String]
+    },
+    window: {
+      "default": function _default() {
+        return false;
+      },
+      type: [Boolean]
     },
     multiple: {
       "default": function _default() {
@@ -43838,12 +43812,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     addOption: function addOption(option) {
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(this.veOptions, option, {
-        value: option.value
+        veValue: option.veValue
       });
     },
     removeOption: function removeOption(option) {
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(this.veOptions, {
-        value: option.value
+        veValue: option.veValue
       });
     },
     searchOptions: function searchOptions() {
@@ -43942,7 +43916,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      this.toggleOption(selected.value);
+      this.toggleOption(selected.veValue);
     },
     eventUpdateSearch: function eventUpdateSearch(event) {
       this.veSearch = event.target.value;
@@ -44054,10 +44028,6 @@ __webpack_require__.r(__webpack_exports__);
 
     var h = this.$createElement;
 
-    if (!this.multiple && this.veOpen) {
-      return null;
-    }
-
     if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.veValue) && !nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isNumber(this.veValue)) {
       return null;
     }
@@ -44068,13 +44038,20 @@ __webpack_require__.r(__webpack_exports__);
       classList.push('n-select__item--multiple');
     }
 
+    var style = {};
+
+    if (!this.multiple && this.veOpen) {
+      style.display = 'none';
+    }
+
     var events = {
       click: function click() {
         return _this2.toggleOption(value);
       }
     };
     return h("span", {
-      "class": classList
+      "class": classList,
+      "style": style
     }, [this.getOptionLabel(value), " ", this.multiple && h("i", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{}, {
       "on": events
     }, {
@@ -44137,9 +44114,11 @@ __webpack_require__.r(__webpack_exports__);
       type: 'select',
       trigger: 'click',
       width: '100%',
+      size: this.size,
       disabled: this.disabled,
       position: this.position,
-      contain: false
+      window: this.window,
+      contain: this.window
     };
     var events = {
       input: this.eventPopoverInput

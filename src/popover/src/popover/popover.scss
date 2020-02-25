@@ -9,6 +9,8 @@ $popover-select-padding: 3px 0 !default;
 $popover-tooltip-size: 12px !default;
 $popover-tooltip-padding: 3px 9px !default;
 
+$popover-option-size: 15px !default;
+
 .n-popover {
     z-index: 10000;
     position: absolute;
@@ -164,8 +166,21 @@ $popover-tooltip-padding: 3px 9px !default;
 
 .n-popover-option:not(.n-button__wrapper),
 .n-popover-option.n-button__wrapper > .n-button.n-button--link {
-    padding: $popover-default-padding;
+    font-size: $popover-option-size;
+    padding: $popover-option-size * 0.4  $popover-option-size;
     transition: background 0.15s;
+}
+
+.n-popover.n-popover--small .n-popover-option:not(.n-button__wrapper),
+.n-popover.n-popover--small .n-popover-option.n-button__wrapper > .n-button.n-button--link {
+    font-size: $popover-option-size * 0.875;
+    padding: $popover-option-size * 0.4 * 0.875  $popover-option-size * 0.875;
+}
+
+.n-popover.n-popover--large .n-popover-option:not(.n-button__wrapper),
+.n-popover.n-popover--large .n-popover-option.n-button__wrapper > .n-button.n-button--link {
+    font-size: $popover-option-size * 1.125;
+    padding: $popover-option-size * 0.4 * 1.125  $popover-option-size * 1.125;
 }
 
 .n-popover-option.n-button__wrapper > .n-button.n-button--link {

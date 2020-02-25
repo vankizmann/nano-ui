@@ -162,14 +162,14 @@ export default {
         addOption(option)
         {
             Arr.add(this.veOptions, option, {
-                value: option.value
+                veValue: option.veValue
             });
         },
 
         removeOption(option)
         {
             Arr.remove(this.veOptions, {
-                value: option.value
+                veValue: option.veValue
             });
         },
 
@@ -283,7 +283,7 @@ export default {
                 return;
             }
 
-            this.toggleOption(selected.value);
+            this.toggleOption(selected.veValue);
         },
 
         eventUpdateSearch(event)
@@ -400,10 +400,6 @@ export default {
 
     renderLabelItem(value)
     {
-        if ( ! this.multiple && this.veOpen ) {
-            return null;
-        }
-
         if ( Any.isEmpty(this.veValue) && ! Any.isNumber(this.veValue) ) {
             return null;
         }
@@ -416,12 +412,18 @@ export default {
             classList.push('n-select__item--multiple');
         }
 
+        let style = {};
+
+        if ( ! this.multiple && this.veOpen ) {
+            style.display = 'none';
+        }
+
         let events = {
             click: () => this.toggleOption(value)
         };
 
         return (
-            <span class={classList}>
+            <span class={classList} style={style}>
                 { this.getOptionLabel(value) } { this.multiple && <i on={events} class={this.icons.times}></i>}
             </span>
         );
@@ -499,6 +501,7 @@ export default {
             type: 'select',
             trigger: 'click',
             width: '100%',
+            size: this.size,
             disabled: this.disabled,
             position: this.position,
             window: this.window,

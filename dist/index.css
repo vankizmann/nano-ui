@@ -2186,12 +2186,9 @@
   overflow: hidden; }
 
 .n-popover {
-  z-index: 1000;
-  position: fixed;
+  z-index: 10000;
+  position: absolute;
   padding: 3px; }
-
-.n-popover.n-popover--beta {
-  position: absolute; }
 
 .n-popover.n-popover--select {
   width: 100%; }
@@ -2311,8 +2308,19 @@
 
 .n-popover-option:not(.n-button__wrapper),
 .n-popover-option.n-button__wrapper > .n-button.n-button--link {
-  padding: 9px 12px;
+  font-size: 15px;
+  padding: 6px 15px;
   transition: background 0.15s; }
+
+.n-popover.n-popover--small .n-popover-option:not(.n-button__wrapper),
+.n-popover.n-popover--small .n-popover-option.n-button__wrapper > .n-button.n-button--link {
+  font-size: 13.125px;
+  padding: 5.25px 13.125px; }
+
+.n-popover.n-popover--large .n-popover-option:not(.n-button__wrapper),
+.n-popover.n-popover--large .n-popover-option.n-button__wrapper > .n-button.n-button--link {
+  font-size: 16.875px;
+  padding: 6.75px 16.875px; }
 
 .n-popover-option.n-button__wrapper > .n-button.n-button--link {
   justify-content: flex-start; }

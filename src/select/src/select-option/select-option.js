@@ -49,7 +49,7 @@ export default {
 
     computed: {
 
-        realValue()
+        veValue()
         {
             if ( Any.isEmpty(this.prop) ) {
                 return this.value;
@@ -58,48 +58,6 @@ export default {
             return Obj.get(this.value, this.prop);
         }
 
-    },
-
-    methods: {
-
-        change()
-        {
-            if ( this.disabled === false ) {
-                this.NSelect.toggleOption(this.realValue);
-            }
-        },
-
-        render(h, current)
-        {
-            let className = [
-                'n-select-option'
-            ];
-
-            if ( Arr.has(this.NSelect.nativeSelected, this.realValue) ) {
-                className.push('n-select-option--active');
-            }
-
-            if ( this.disabled === true ) {
-                className.push('n-select-option--disabled');
-            }
-
-            if ( current === true ) {
-                className.push('n-select-option--current');
-            }
-
-            return (
-                <div class={className} onClick={this.change}>
-                    {this.$slots.default || this.label}
-                </div>
-            );
-        }
-    },
-
-    data()
-    {
-        return {
-            width: 0
-        };
     },
 
     beforeMount()
@@ -115,30 +73,30 @@ export default {
     renderOption(index)
     {
         let classList = [
-            'n-select-option'
+            'n-popover-option'
         ];
 
         if ( Arr.has(this.NSelect.veValue, this.value) ) {
-            classList.push('n-select-option--active');
+            classList.push('n-popover-option--active');
         }
 
         if ( this.disabled === true ) {
-            classList.push('n-select-option--disabled');
+            classList.push('n-popover-option--disabled');
         }
 
         if ( this.NSelect.veIndex === index ) {
-            classList.push('n-select-option--current');
+            classList.push('n-popover-option--current');
         }
 
         let events = {};
 
         if ( ! this.disabled ) {
-            events.click = (event) => this.NSelect.toggleOption(this.value, event);
+            events.click = (event) => this.NSelect.toggleOption(this.veValue, event);
         }
 
         return (
             <div class={classList} on={events}>
-                {this.$slots.default || this.label}
+                { this.$slots.default || this.label }
             </div>
         );
     },
