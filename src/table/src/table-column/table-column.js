@@ -130,24 +130,31 @@ export default {
             type: [String]
         },
 
+        fixedWidth: {
+            default()
+            {
+                return 0;
+            }
+        },
+
         width: {
             default()
             {
-                return 140;
+                return this.fixedWidth || 140;
             }
         },
 
         minWidth: {
             default()
             {
-                return this.width;
+                return this.fixedWidth || 50;
             }
         },
 
         maxWidth: {
             default()
             {
-                return 0;
+                return this.fixedWidth || 600;
             }
         },
 

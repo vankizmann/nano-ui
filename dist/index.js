@@ -44620,19 +44620,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       type: [String]
     },
+    fixedWidth: {
+      "default": function _default() {
+        return 0;
+      }
+    },
     width: {
       "default": function _default() {
-        return 140;
+        return this.fixedWidth || 140;
       }
     },
     minWidth: {
       "default": function _default() {
-        return this.width;
+        return this.fixedWidth || 50;
       }
     },
     maxWidth: {
       "default": function _default() {
-        return 0;
+        return this.fixedWidth || 600;
       }
     },
     emptyText: {
