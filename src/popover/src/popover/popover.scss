@@ -43,6 +43,8 @@ $popover-option-size: 14px !default;
 }
 
 .n-popover.n-popover--select > .n-popover__frame {
+    max-height: 210px;
+    overflow: auto;
     font-size: $popover-default-size;
     background: $--color-white;
     border-radius: $radius-medium;

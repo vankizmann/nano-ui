@@ -51,6 +51,12 @@
                 <n-select-option value="mike">Mike</n-select-option>
                 <n-select-option value="alex">Alex</n-select-option>
                 <n-select-option value="hans">Hans</n-select-option>
+                <n-select-option value="mike1">Mike</n-select-option>
+                <n-select-option value="alex2">Alex</n-select-option>
+                <n-select-option value="hans3">Hans</n-select-option>
+                <n-select-option value="mike4">Mike</n-select-option>
+                <n-select-option value="alex5">Alex</n-select-option>
+                <n-select-option value="hans6">Hans</n-select-option>
             </n-select>
         </n-form-item>
 
@@ -103,6 +109,24 @@
         <n-form-item label="Object">
             <pre>{{ form }}</pre>
         </n-form-item>
+
+        <div style="height: 600px; overflow-y: scroll; background: #efefef;">
+            <div style="padding: 800px 0;">
+                <n-form-item label="Default">
+                    <n-select v-model="form.name" size="default">
+                        <n-select-option value="mike">Mike</n-select-option>
+                        <n-select-option value="alex">Alex</n-select-option>
+                        <n-select-option value="hans">Hans</n-select-option>
+                        <n-select-option value="mike1">Mike</n-select-option>
+                        <n-select-option value="alex2">Alex</n-select-option>
+                        <n-select-option value="hans3">Hans</n-select-option>
+                        <n-select-option value="mike4">Mike</n-select-option>
+                        <n-select-option value="alex5">Alex</n-select-option>
+                        <n-select-option value="hans6">Hans</n-select-option>
+                    </n-select>
+                </n-form-item>
+            </div>
+        </div>
 
     </n-form>
 </div>

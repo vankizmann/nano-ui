@@ -25,7 +25,7 @@ export default {
             },
         },
 
-        boundry: {
+        boundary: {
             default()
             {
                 return document.body;

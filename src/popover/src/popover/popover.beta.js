@@ -245,6 +245,9 @@ export default {
             // Get target offsets to adjust padding or margin
             let offset = Dom.find(this.target).offset(null, this.parent);
 
+            // Get target scroll offset to adjust padding or margin
+            let scroll = Dom.find(this.target).scroll(null, this.parent);
+
 
             if ( this.trigger === 'context' ) {
 
@@ -277,7 +280,7 @@ export default {
                 }
 
                 if ( style.top + nodeHeight > parentHeight ) {
-                    style.top = parentHeight - height - nodeHeight - offset.bottom;
+                    style.top = offset.top - scroll.top - nodeHeight;
                 }
 
                 if ( style.top - nodeHeight < 0 ) {
@@ -297,7 +300,7 @@ export default {
                 }
 
                 if ( style.left + nodeWidth > parentWidth ) {
-                    style.left = parentWidth - width - nodeWidth - offset.right;
+                    style.left = offset.left - scroll.left - nodeWidth;
                 }
 
                 if ( style.left - nodeWidth < 0 ) {

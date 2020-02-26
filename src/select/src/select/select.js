@@ -101,27 +101,6 @@ export default {
 
     },
 
-    computed: {
-
-        filteredOptions()
-        {
-            let options = this.options;
-
-            options = Arr.filter(options, (option) => {
-                return Str.has(option.label, this.search);
-            });
-
-            return options;
-        },
-
-        nativeValue()
-        {
-            return this.multiple ? this.nativeSelected :
-                Arr.first(this.nativeSelected);
-        }
-
-    },
-
     data()
     {
         return {

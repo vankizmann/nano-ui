@@ -362,8 +362,8 @@ export default {
 
     renderHeadLabel()
     {
-        if ( ! this.boundryEl ) {
-            this.boundryEl = Dom.find(this.NTable.$el)
+        if ( ! this.boundaryEl ) {
+            this.boundaryEl = Dom.find(this.NTable.$el)
                 .find('.n-table__inner').get(0);
         }
 
@@ -380,7 +380,7 @@ export default {
         );
 
         let tooltipHtml = (
-            <NPopover type="tooltip" boundry={this.boundryEl}>
+            <NPopover type="tooltip" boundary={this.boundaryEl}>
                 { this.label }
             </NPopover>
         );
@@ -423,7 +423,7 @@ export default {
             <div class="n-table-column__filter">
                 <div><span class={this.icons.angleDown}></span></div>
             </div>,
-            <NPopover class="n-popover-filter" trigger="click" boundry={this.boundryEl}>
+            <NPopover class="n-popover-filter" trigger="click" boundary={this.boundaryEl}>
                 { this.$render(componentName, { slot: 'raw', props }) }
             </NPopover>
         ];

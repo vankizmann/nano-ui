@@ -38030,7 +38030,7 @@ __webpack_require__.r(__webpack_exports__);
         return null;
       }
     },
-    boundry: {
+    boundary: {
       "default": function _default() {
         return document.body;
       }
@@ -42449,7 +42449,7 @@ __webpack_require__.r(__webpack_exports__);
         return null;
       }
     },
-    boundry: {
+    boundary: {
       "default": function _default() {
         return document.body;
       }
@@ -43119,17 +43119,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _src_popover_popover__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/popover/popover */ "./src/popover/src/popover/popover.js");
+/* harmony import */ var _src_popover_popover_beta__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/popover/popover.beta */ "./src/popover/src/popover/popover.beta.js");
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_popover_popover__WEBPACK_IMPORTED_MODULE_1__["default"].name, _src_popover_popover__WEBPACK_IMPORTED_MODULE_1__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_popover_popover_beta__WEBPACK_IMPORTED_MODULE_1__["default"].name, _src_popover_popover_beta__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 /***/ }),
 
-/***/ "./src/popover/src/popover/popover.js":
-/*!********************************************!*\
-  !*** ./src/popover/src/popover/popover.js ***!
-  \********************************************/
+/***/ "./src/popover/src/popover/popover.beta.js":
+/*!*************************************************!*\
+  !*** ./src/popover/src/popover/popover.beta.js ***!
+  \*************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -43166,7 +43166,7 @@ __webpack_require__.r(__webpack_exports__);
         return null;
       }
     },
-    boundry: {
+    boundary: {
       "default": function _default() {
         return null;
       }
@@ -43335,7 +43335,9 @@ __webpack_require__.r(__webpack_exports__);
       var parentWidth = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.parent).width();
       var parentHeight = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.parent).height(); // Get target offsets to adjust padding or margin
 
-      var offset = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.target).offset(null, this.parent);
+      var offset = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.target).offset(null, this.parent); // Get target scroll offset to adjust padding or margin
+
+      var scroll = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.target).scroll(null, this.parent);
 
       if (this.trigger === 'context') {
         if (style.left < 0) {
@@ -43365,7 +43367,7 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         if (style.top + nodeHeight > parentHeight) {
-          style.top = parentHeight - height - nodeHeight - offset.bottom;
+          style.top = offset.top - scroll.top - nodeHeight;
         }
 
         if (style.top - nodeHeight < 0) {
@@ -43383,7 +43385,7 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         if (style.left + nodeWidth > parentWidth) {
-          style.left = parentWidth - width - nodeWidth - offset.right;
+          style.left = offset.left - scroll.left - nodeWidth;
         }
 
         if (style.left - nodeWidth < 0) {
@@ -43515,8 +43517,8 @@ __webpack_require__.r(__webpack_exports__);
 
     this.parent = null;
 
-    if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(this.boundry)) {
-      this.parent = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.boundry).get(0);
+    if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(this.boundary)) {
+      this.parent = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.boundary).get(0);
     }
 
     if (this.window) {
@@ -43863,20 +43865,6 @@ __webpack_require__.r(__webpack_exports__);
       type: [Boolean]
     }
   },
-  computed: {
-    filteredOptions: function filteredOptions() {
-      var _this = this;
-
-      var options = this.options;
-      options = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].filter(options, function (option) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].has(option.label, _this.search);
-      });
-      return options;
-    },
-    nativeValue: function nativeValue() {
-      return this.multiple ? this.nativeSelected : nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].first(this.nativeSelected);
-    }
-  },
   data: function data() {
     return {
       veValue: this.value,
@@ -44117,7 +44105,7 @@ __webpack_require__.r(__webpack_exports__);
     })]);
   },
   renderLabelItem: function renderLabelItem(value) {
-    var _this2 = this;
+    var _this = this;
 
     var h = this.$createElement;
 
@@ -44139,7 +44127,7 @@ __webpack_require__.r(__webpack_exports__);
 
     var events = {
       click: function click() {
-        return _this2.toggleOption(value);
+        return _this.toggleOption(value);
       }
     };
     return h("span", {
@@ -44160,7 +44148,7 @@ __webpack_require__.r(__webpack_exports__);
     })]);
   },
   renderLabel: function renderLabel() {
-    var _this3 = this;
+    var _this2 = this;
 
     var h = this.$createElement;
     var values = this.veValue;
@@ -44172,7 +44160,7 @@ __webpack_require__.r(__webpack_exports__);
     return h("div", {
       "class": "n-select__label"
     }, [this.ctor('renderLabelClear')(), nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(values, function (value) {
-      return _this3.ctor('renderLabelItem')(value);
+      return _this2.ctor('renderLabelItem')(value);
     }), this.ctor('renderLabelInput')(), this.ctor('renderLabelAngle')()]);
   },
   renderDisplay: function renderDisplay() {
@@ -44783,8 +44771,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   renderHeadLabel: function renderHeadLabel() {
     var h = this.$createElement;
 
-    if (!this.boundryEl) {
-      this.boundryEl = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.NTable.$el).find('.n-table__inner').get(0);
+    if (!this.boundaryEl) {
+      this.boundaryEl = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.NTable.$el).find('.n-table__inner').get(0);
     }
 
     var events = {};
@@ -44801,7 +44789,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var tooltipHtml = h("NPopover", {
       "attrs": {
         "type": "tooltip",
-        "boundry": this.boundryEl
+        "boundary": this.boundaryEl
       }
     }, [this.label]);
     return [labelHtml, tooltipHtml];
@@ -44844,7 +44832,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "class": "n-popover-filter",
       "attrs": {
         "trigger": "click",
-        "boundry": this.boundryEl
+        "boundary": this.boundaryEl
       }
     }, [this.$render(componentName, {
       slot: 'raw',

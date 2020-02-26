@@ -1072,22 +1072,6 @@
   display: inline-flex;
   width: 100%; }
 
-.n-select__wrapper .n-popover {
-  max-height: 280px;
-  display: inline-flex;
-  flex-direction: row;
-  text-align: left;
-  overflow-y: hidden; }
-
-.n-select__wrapper .n-popover.n-popover--select {
-  width: 100% !important; }
-
-.n-select__wrapper .n-popover .n-popover__frame {
-  flex: 0 0 auto; }
-
-.n-select__wrapper .n-popover .n-popover__body {
-  overflow-y: auto; }
-
 .n-select {
   flex: 1 1 auto;
   min-width: 0;
@@ -2198,6 +2182,8 @@
   background: #262d34; }
 
 .n-popover.n-popover--select > .n-popover__frame {
+  max-height: 210px;
+  overflow: auto;
   font-size: 14px;
   background: #ffffff;
   border-radius: 2px;
