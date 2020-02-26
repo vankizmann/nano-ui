@@ -43212,6 +43212,12 @@ __webpack_require__.r(__webpack_exports__);
         return false;
       },
       type: [Boolean]
+    },
+    updateInterval: {
+      "default": function _default() {
+        return 150;
+      },
+      type: [Number]
     }
   },
   watch: {
@@ -43239,12 +43245,23 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('input', this.veVisible = false);
     },
     refresh: function refresh() {
+      var _this = this;
+
       var style = {};
 
-      if (this.$el === null) {
+      if (!this.$el) {
         return {
           display: 'none'
         };
+      }
+
+      var rect = this.$el.getBoundingClientRect();
+      var isInViewport = rect.top >= 0 && rect.bottom <= nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(window).height() && rect.left >= 0 && rect.right <= nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(window).width();
+
+      if (!isInViewport && this.veVisible) {
+        this.$nextTick(function () {
+          return _this.$emit('input', _this.veVisible = false);
+        });
       }
 
       var clientX = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.target).offset('left', this.parent);
@@ -43492,6 +43509,18 @@ __webpack_require__.r(__webpack_exports__);
     return options;
   },
   mounted: function mounted() {
+    var _this2 = this;
+
+    this.$watch('veVisible', function () {
+      if (_this2.veVisible) {
+        _this2.refreshInterval = setInterval(_this2.refresh, _this2.updateInterval);
+      }
+
+      if (!_this2.veVisible) {
+        clearInterval(_this2.refreshInterval);
+      } // this.refresh();
+
+    });
     var $event = {
       _uid: this._uid
     };

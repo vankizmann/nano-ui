@@ -105,6 +105,14 @@ export default {
             type: [Boolean]
         },
 
+        updateInterval: {
+            default()
+            {
+                return 150;
+            },
+            type: [Number]
+        }
+
     },
 
     watch: {
@@ -144,8 +152,17 @@ export default {
         {
             let style = {};
 
-            if ( this.$el === null ) {
+            if ( ! this.$el ) {
                 return { display: 'none' };
+            }
+
+            let rect = this.$el.getBoundingClientRect();
+
+            let isInViewport = rect.top >= 0 && rect.bottom <= Dom.find(window).height() &&
+                rect.left >= 0 && rect.right <= Dom.find(window).width();
+
+            if ( ! isInViewport && this.veVisible ) {
+                this.$nextTick(() => this.$emit('input', this.veVisible = false));
             }
 
             let clientX = Dom.find(this.target).offset('left', this.parent);
@@ -420,6 +437,19 @@ export default {
 
     mounted()
     {
+        this.$watch('veVisible', () => {
+
+            if ( this.veVisible ) {
+                this.refreshInterval = setInterval(this.refresh, this.updateInterval);
+            }
+
+            if ( ! this.veVisible ) {
+                clearInterval(this.refreshInterval);
+            }
+
+            // this.refresh();
+        });
+
         let $event = {
             _uid: this._uid
         };
