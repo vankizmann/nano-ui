@@ -28,10 +28,10 @@
 
         <div v-if="kill === false" class="adapt-height" style="overflow: hidden; padding: 20px;">
             <div>
-                <n-table v-model="items" :viewport-height="350" :render-collapse="true" :render-select="true">
+                <n-table v-model="items" :viewport-height="350" :render-expand="true" :render-select="true">
                     <n-table-column prop="label" type="string" label="Label" :sort="true" :filter="true" :default-width="200"></n-table-column>
-                    <n-table-column prop="date" type="datetime" label="Date" :default-width="250"></n-table-column>
-                    <n-table-column prop="id" align="center" type="string" :sort="true" label="ID" :default-width="250"></n-table-column>
+                    <n-table-column prop="date" type="datetime" label="Date" :filter="true" :default-width="250"></n-table-column>
+                    <n-table-column prop="id" align="center" type="string" :sort="true" :filter="true" label="ID" :default-width="250"></n-table-column>
                 </n-table>
             </div>
         </div>
@@ -87,7 +87,7 @@
                                 item = {
                                     label: 'Item ' + total,
                                     id: 'value-' + total,
-                                    date: Nano.Now.make('now').format('Y-m-d'),
+                                    date: new Date,
                                     children: []
                                 };
 

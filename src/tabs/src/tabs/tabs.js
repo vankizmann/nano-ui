@@ -1,16 +1,19 @@
-import { UUID, Num, Arr, Obj, Any, Dom, Locale } from "nano-js";
+import { Arr, Dom } from "nano-js";
 
 export default {
 
     name: 'NTabs',
 
-    model: {
-        prop: 'current'
+    provide()
+    {
+        return {
+            NTabs: this
+        };
     },
 
     props: {
 
-        current: {
+        value: {
             default()
             {
                 return 'default';
@@ -20,122 +23,131 @@ export default {
 
     },
 
+    data()
+    {
+        return {
+            width: 0, offset: 0, veTabs: [], veValue: this.value
+        };
+    },
+
     methods: {
-
-        getTab()
-        {
-            let isset = Arr.find(this.tabs, {
-                name: this.current
-            });
-
-            if ( isset !== null ) {
-                return this.nativeCurrent = this.current;
-            }
-
-            let tab = Arr.first(this.tabs);
-
-            this.nativeCurrent = tab.name
-        },
 
         addTab(tab)
         {
-            this.tabs.push(tab);
+            Arr.add(this.veTabs, tab, {
+                name: tab.name
+            });
         },
 
         removeTab(tab)
         {
-            Arr.remove(this.tabs, {
-                _uid: tab._uid
+            Arr.remove(this.veTabs, {
+                name: tab.name
             });
+        },
+
+        getTab()
+        {
+            let currentTab = Arr.find(this.veTabs, {
+                name: this.current
+            });
+
+            if ( ! currentTab ) {
+                currentTab = Arr.first(this.veTabs);
+            }
+
+            if ( currentTab.name === this.veValue ) {
+                return;
+            }
+
+            this.$emit('input', this.veValue = currentTab.name);
         },
 
         changeTab(tab)
         {
-            this.$emit('input', this.nativeCurrent = tab);
+            this.$emit('input', this.veValue = tab);
         }
 
-    },
-
-    provide()
-    {
-        return {
-            NTabs: this
-        };
-    },
-
-    data()
-    {
-        return {
-            width: 0, offset: 0, tabs: [], nativeCurrent: this.current
-        };
     },
 
     watch: {
 
-        tabs: {
-            handler: 'getTab'
+        value()
+        {
+            if ( this.value !== this.veValue ) {
+                this.veValue = this.value;
+            }
         }
 
     },
 
+    mounted()
+    {
+        this.getTab();
+    },
+
     updated()
     {
-        let width = Dom.find(this.$el)
-            .find('.n-tabs__tab--current').width();
+        let width = Dom.find(this.$el).find('.n-active')
+            .width();
 
         this.width = width < 0 ? 0 : width;
 
-        let offset = Dom.find(this.$el)
-            .find('.n-tabs__tab--current').offsetLeft(this.$el);
+        let offset = Dom.find(this.$el).find('.n-active')
+            .offset('left', this.$el);
 
         this.offset = offset < 0 ? 0 : offset;
     },
 
-    render()
+    renderHeaderIndicator()
     {
         let style = {
-            maxWidth: this.width + 'px', left: this.offset + 'px'
+            maxWidth: this.width + 'px',
+            left: this.offset + 'px'
         };
 
         return (
-            <div class="n-tabs">
-                { this.tabs.length > 1 &&
-                    <div class="n-tabs__header">
-                        <div class="n-tabs__header-inner">
-                            {
-                                Arr.each(Arr.sort(this.tabs, 'sort'), (tab) => {
+            <div class="n-tabs__indicator" style={style}>
+                <span></span>
+            </div>
+        );
+    },
 
-                                    let className = [
-                                        'n-tabs__tab'
-                                    ];
+    renderHeader()
+    {
+        if ( ! this.veTabs.length ) {
+            return null;
+        }
 
-                                    if ( this.nativeCurrent === tab.name ) {
-                                        className.push('n-tabs__tab--current');
-                                    }
+        let headerItems = Arr.each(Arr.sort(this.veTabs, 'sort'), (tab) => {
+            return tab.ctor('renderHeader')()
+        });
 
-                                    return (
-                                        <div class={className} vOn:click={() => this.changeTab(tab.name)}>
-                                            { tab.icon &&
-                                                <div class="n-tabs__tab-icon">
-                                                    <span class={tab.icon}></span>
-                                                </div>
-                                            }
-                                            <div class="n-tabs__tab-label">
-                                               <span>{ tab.$slots.label || tab.label }</span>
-                                            </div>
-                                        </div>
-                                    );
-                                })
-                            }
-                            <div class="n-tabs__indicator" style={style}>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                }
-                <div class="n-tabs__body">
-                    { this.$slots.default }
+        return (
+            <div class="n-tabs__header">
+                <div class="n-tabs__header-inner">
+                    { [headerItems, this.ctor('renderHeaderIndicator')()] }
                 </div>
+            </div>
+        );
+    },
+
+    renderBody()
+    {
+        return (
+            <div class="n-tabs__body">
+                {this.$slots.default}
+            </div>
+        );
+    },
+
+    render()
+    {
+
+        return (
+            <div class="n-tabs">
+                { this.ctor('renderHeader')() }
+                { this.ctor('renderBody')() }
             </div>
         );
     }

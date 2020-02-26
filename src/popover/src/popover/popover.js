@@ -272,7 +272,7 @@ export default {
                     style.left = 0;
                 }
 
-                if ( style.left > parentWidth ) {
+                if ( style.left + nodeWidth > parentWidth ) {
                     style.left = parentWidth - nodeWidth;
                 }
 
@@ -292,7 +292,7 @@ export default {
                     style.top = 0;
                 }
 
-                if ( style.top > parentHeight ) {
+                if ( style.top + nodeHeight > parentHeight ) {
                     style.top = parentHeight - nodeHeight;
                 }
 

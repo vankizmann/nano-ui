@@ -31,7 +31,7 @@
     flex: 0 0 auto;
 }
 
-.n-draggable-item__collapse,
+.n-draggable-item__expand,
 .n-draggable-item__select {
     flex: 0 0 auto;
     width: 30px;
@@ -41,7 +41,7 @@
     justify-content: center;
 }
 
-.n-draggable-item__collapse > div,
+.n-draggable-item__expand > div,
 .n-draggable-item__select > div {
     cursor: pointer;
     width: 20px;
@@ -51,6 +51,6 @@
     align-items: center;
     justify-content: center;
 }
-.n-draggable-item:not(.n-collapsed) .n-draggable-item__collapse > div {
+.n-draggable-item:not(.n-expanded) .n-draggable-item__expand > div {
     transform: rotate(90deg);
 }

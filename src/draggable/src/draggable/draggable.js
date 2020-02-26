@@ -31,7 +31,7 @@ export default {
             }
         },
 
-        collapsed: {
+        expanded: {
             default()
             {
                 return [];
@@ -140,7 +140,7 @@ export default {
             type: [Boolean]
         },
 
-        renderCollapse: {
+        renderExpand: {
             default()
             {
                 return false;
@@ -240,7 +240,7 @@ export default {
             veCached: [],
             veSelfCached: [],
             veSelected: this.selected,
-            veCollapsed: this.collapsed,
+            veExpanded: this.expanded,
         };
     },
 
@@ -569,29 +569,29 @@ export default {
             this.veCached = Arr.each(items, (item) => Obj.clone(item));
         },
 
-        updateCollapsed()
+        updateExpanded()
         {
-            this.$emit('update:collapsed', this.veCollapsed);
+            this.$emit('update:expanded', this.veExpanded);
         },
 
-        collapseItem(id)
+        expandItem(id)
         {
             if ( ! Any.isString(id) ) {
                 id = id[this.uniqueProp];
             }
 
-            Arr.toggle(this.veCollapsed, id);
+            Arr.toggle(this.veExpanded, id);
 
             this.refreshItems();
         },
 
-        isCollapsed(id)
+        isExpanded(id)
         {
             if ( ! Any.isString(id) ) {
                 id = id[this.uniqueProp];
             }
 
-            return ! Arr.has(this.veCollapsed, id);
+            return ! Arr.has(this.veExpanded, id);
         },
 
         updateSelected()
@@ -789,7 +789,7 @@ export default {
 
                 Arr.push(merge, dragObject);
 
-                if ( ! Arr.has(this.veCollapsed, dragObject[this.uniqueProp]) ) {
+                if ( ! Arr.has(this.veExpanded, dragObject[this.uniqueProp]) ) {
                     return;
                 }
 

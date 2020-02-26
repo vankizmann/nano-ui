@@ -1,4 +1,4 @@
-import { Str, Arr, Any, Locale } from "nano-js";
+import { Str, Arr, Any, Locale, Dom } from "nano-js";
 
 export default {
 
@@ -9,7 +9,7 @@ export default {
         value: {
             default()
             {
-                return null;
+                return this.multiple ? [] : null;
             },
         },
 
@@ -34,6 +34,14 @@ export default {
                 return 'bottom-center';
             },
             type: [String]
+        },
+
+        window: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
         },
 
         multiple: {
@@ -114,195 +122,15 @@ export default {
 
     },
 
-    methods: {
-
-        clearNativeSelected()
-        {
-            this.nativeSelected = [];
-
-            this.$emit('input', this.clearValue);
-        },
-
-        solveNativeSelected()
-        {
-            let selected = this.getSelected(this.value);
-
-            if ( selected === null ) {
-                return;
-            }
-
-            this.nativeSelected = selected;
-        },
-
-        getSelected(value)
-        {
-            if ( Any.isArray(value) === false ) {
-                value = [value];
-            }
-
-            if ( Any.isEqual(this.nativeSelected, value) ) {
-                return null;
-            }
-
-            value = Arr.filter(value, (selected) => {
-                return Any.isEmpty(selected) === false;
-            });
-
-            return value;
-        },
-
-        addOption(option)
-        {
-            this.options.push(option);
-        },
-
-        removeOption(option)
-        {
-            Arr.remove(this.options, { _uid: option._uid });
-        },
-
-        toggleOption(value)
-        {
-            this.search = '';
-
-            if ( this.multiple === false ) {
-                this.visible = false;
-            }
-
-            if ( this.multiple === false ) {
-                this.nativeSelected = [];
-            }
-
-            if ( this.multiple === true ) {
-                this.$refs.input.focus();
-            }
-
-            Arr.toggle(this.nativeSelected, value);
-
-            this.$emit('input', this.nativeValue);
-        },
-
-        selectCurrent()
-        {
-            if ( this.current === null ) {
-                return;
-            }
-
-            let option = Arr.get(this.filteredOptions, this.current);
-
-            if ( Any.isEmpty(option) === true ) {
-                return;
-            }
-
-            if ( option.disabled === true ) {
-                return;
-            }
-
-            this.toggleOption(option.realValue);
-        },
-
-        selectPrevious()
-        {
-            let total = this.filteredOptions.length;
-
-            if ( Any.isEmpty(this.current) === true ) {
-                return this.current = total - 1;
-            }
-
-            if ( this.current === 0 ) {
-                return this.current = total - 1;
-            }
-
-            this.current--;
-        },
-
-        selectNext()
-        {
-            let total = this.filteredOptions.length;
-
-            if ( Any.isEmpty(this.current) === true ) {
-                return this.current = 0;
-            }
-
-            if ( this.current === total - 1 ) {
-                return this.current = 0;
-            }
-
-            this.current++;
-        },
-
-        searchOptions(event)
-        {
-            this.search = event.target.value;
-        },
-
-        focusInput()
-        {
-            this.focus = true;
-            this.visible = true;
-        },
-
-        focusoutInput()
-        {
-            this.focus = false;
-        },
-
-        keydownInput(event)
-        {
-            if ( event.keyCode === 9 ) {
-                this.search = '';
-            }
-
-            let createOption = this.allowCreate === true &&
-                this.current === null && this.search !== '';
-
-            if ( event.keyCode === 13 && createOption === true ) {
-                this.toggleOption(this.search);
-            }
-
-            if ( event.keyCode === 13 && createOption === false ) {
-                this.selectCurrent();
-            }
-
-            if ( event.keyCode === 38 ) {
-                this.selectPrevious();
-            }
-
-            if ( event.keyCode === 40 ) {
-                this.selectNext();
-            }
-
-            if ( event.keyCode === 9 || event.keyCode === 27 ) {
-                return this.visible = false;
-            }
-
-            this.visible = true;
-        }
-
-    },
-
-    watch: {
-
-        value: {
-            handler: 'solveNativeSelected'
-        },
-
-        search()
-        {
-            this.current = null;
-        }
-
-    },
-
     data()
     {
         return {
-            focus: false,
-            visible: false,
-            search: '',
-            current: null,
-            options: [],
-            nativeSelected: []
+            veValue: this.value,
+            veOpen: false,
+            veSearch: '',
+            veIndex: -1,
+            veOptions: [],
+            veSearched: []
         };
     },
 
@@ -313,109 +141,400 @@ export default {
         };
     },
 
+    watch: {
+
+        value()
+        {
+            if ( this.veValue !== this.value ) {
+                this.veValue = this.value;
+            }
+        },
+
+    },
+
+    methods: {
+
+        clear()
+        {
+            this.$emit('input', this.veValue = this.clearValue);
+        },
+
+        addOption(option)
+        {
+            Arr.add(this.veOptions, option, {
+                veValue: option.veValue
+            });
+        },
+
+        removeOption(option)
+        {
+            Arr.remove(this.veOptions, {
+                veValue: option.veValue
+            });
+        },
+
+        searchOptions()
+        {
+            if ( Any.isEmpty(this.veSearch) ) {
+                return this.veSearched = this.veOptions;
+            }
+
+            let searchRegex = new RegExp(this.veSearch);
+
+            this.veSearched = Arr.filter(this.veOptions, (option) => {
+                return option.label.match(searchRegex);
+            });
+        },
+
+        toggleOption(value, event)
+        {
+            if ( Any.isEmpty(value) ) {
+                return;
+            }
+
+            if ( event ) {
+                event.stopPropagation();
+            }
+
+            if ( ! this.multiple ) {
+                this.$refs.popover.close();
+            }
+
+            if ( ! this.multiple ) {
+                return this.$emit('input', this.veValue = value);
+            }
+
+            if ( ! Any.isArray(this.veValue) && this.multiple ) {
+                this.veValue = [];
+            }
+
+            this.$emit('input', Arr.toggle(this.veValue, value));
+        },
+
+        getOptionLabel(value)
+        {
+            let option = Arr.find(this.veOptions, { value });
+
+            if ( ! option && this.allowCreate ) {
+                return value;
+            }
+
+            if ( ! option && ! this.allowCreate ) {
+                return this.undefinedText;
+            }
+
+            return option.label;
+        },
+
+        openSelect()
+        {
+            this.veOpen = true;
+
+            if ( ! this.veOpen ) {
+                this.$refs.input.focus();
+            }
+
+            this.veIndex = -1;
+        },
+
+        closeSelect()
+        {
+            this.veOpen = false;
+
+            if ( ! this.veOpen ) {
+                this.$refs.input.blur();
+            }
+
+            this.veIndex = -1;
+        },
+
+        selectPrev()
+        {
+            let newIndex = this.veIndex - 1;
+
+            if ( newIndex < 0 ) {
+                newIndex = this.veOptions.length - 1;
+            }
+
+            this.veIndex = newIndex;
+        },
+
+        selectNext()
+        {
+            let newIndex = this.veIndex + 1;
+
+            if ( newIndex > this.veOptions.length - 1 ) {
+                newIndex = 0;
+            }
+
+            this.veIndex = newIndex;
+        },
+
+        toggleSelected()
+        {
+            let selected = Arr.get(this.veSearched, this.veIndex);
+
+            if ( this.veSearched.length === 1 ) {
+                selected = Arr.get(this.veSearched, 0);
+                this.veSearch = '';
+            }
+
+            if ( ! selected ) {
+                return;
+            }
+
+            this.toggleOption(selected.veValue);
+        },
+
+        eventUpdateSearch(event)
+        {
+            this.veSearch = event.target.value;
+
+            this.veIndex = -1;
+        },
+
+        eventFocusSearch(event)
+        {
+            this.openSelect();
+        },
+
+        eventBlurSearch(event)
+        {
+            if ( ! this.veOpen ) {
+                this.veSearch = '';
+            }
+
+            if ( this.veOpen ) {
+                this.$refs.input.focus();
+            }
+        },
+
+        eventKeydownSearch(event)
+        {
+            if ( event.which === 13 ) {
+
+                if ( ! this.allowCreate || this.veIndex !== -1 ) {
+                    this.toggleSelected();
+                }
+
+                if ( this.allowCreate && this.veIndex === -1 ) {
+                    this.toggleOption(this.veSearch);
+                    this.veSearch = '';
+                }
+
+            }
+
+            if ( event.which === 38 ) {
+                this.selectPrev();
+            }
+
+            if ( event.which === 40 ) {
+                this.selectNext();
+            }
+
+            if ( event.which === 9 || event.which === 27 ) {
+                this.$refs.popover.close();
+            }
+        },
+
+        eventPopoverInput(input)
+        {
+            if ( input ) {
+                this.$refs.input.focus();
+            }
+
+            input ? this.openSelect() : this.closeSelect();
+        }
+
+    },
+
     beforeMount()
     {
-        this.solveNativeSelected();
+        this.$watch('veSearch', this.searchOptions);
+
+        this.searchOptions();
     },
 
-    updated()
+    renderLabelInput()
     {
-        if ( this.focus === false && this.visible === false ) {
-            this.search = '';
+        let events = {
+            input: this.eventUpdateSearch,
+            focus: this.eventFocusSearch,
+            blur: this.eventBlurSearch,
+            keydown: this.eventKeydownSearch,
+        };
+
+        let attrs = {
+            disabled: this.disabled
+        };
+
+        if ( ! this.multiple && this.veOpen ) {
+            attrs.placeholder = this.getOptionLabel(this.veValue);
         }
+
+        if ( Any.isEmpty(this.veValue) && ! Any.isNumber(this.veValue) ) {
+            attrs.placeholder = this.placeholder;
+        }
+
+        return (
+            <input ref="input" class="n-select__input" type="text" value={this.veSearch} on={events} attrs={attrs} />
+        );
     },
 
-    render(h)
+    renderLabelClear()
     {
-        let className = [
+        if ( ! this.clearable ) {
+            return null;
+        }
+
+        let events = {
+            click: this.clear
+        };
+
+        return (
+            <div class="n-select__clear" on={events}>
+                <span class={this.icons.times}></span>
+            </div>
+        );
+    },
+
+    renderLabelItem(value)
+    {
+        if ( Any.isEmpty(this.veValue) && ! Any.isNumber(this.veValue) ) {
+            return null;
+        }
+
+        let classList = [
+            'n-select__item'
+        ];
+
+        if ( this.multiple ) {
+            classList.push('n-select__item--multiple');
+        }
+
+        let style = {};
+
+        if ( ! this.multiple && this.veOpen ) {
+            style.display = 'none';
+        }
+
+        let events = {
+            click: () => this.toggleOption(value)
+        };
+
+        return (
+            <span class={classList} style={style}>
+                { this.getOptionLabel(value) } { this.multiple && <i on={events} class={this.icons.times}></i>}
+            </span>
+        );
+    },
+
+    renderLabelAngle()
+    {
+        return (
+            <div class="n-select__arrow">
+                <span class={this.icons.angleDown}></span>
+            </div>
+        );
+    },
+
+    renderLabel()
+    {
+        let values = this.veValue;
+
+        if ( ! Any.isArray(values) ) {
+            values = [values];
+        }
+
+        return (
+            <div class="n-select__label">
+                { this.ctor('renderLabelClear')() }
+                {
+                    Arr.each(values, (value) => {
+                        return this.ctor('renderLabelItem')(value)
+                    })
+                }
+                { this.ctor('renderLabelInput')() }
+                { this.ctor('renderLabelAngle')() }
+            </div>
+        );
+    },
+
+    renderDisplay()
+    {
+        let classList = [
             'n-select', 'n-select--' + this.size
         ];
 
-        if ( this.disabled === true ) {
-            className.push('n-select--disabled');
+        if ( this.disabled ) {
+            classList.push('n-select--disabled')
         }
-
-        let options = Arr.each(this.filteredOptions, (option, index) => {
-            return option.render(h, Any.integer(index) === this.current);
-        });
-
-        let labels = Arr.each(this.nativeSelected, (selected) => {
-            return Arr.find(this.options, { realValue: selected }, {
-                label: this.allowCreate ? selected : this.undefinedText, realValue: selected
-            });
-        });
-
-        let placeholder = '';
-
-        if ( Any.isEmpty(labels) === true ) {
-            placeholder = this.placeholder;
-        }
-
-        let option = Arr.find(this.options, {
-            realValue: Arr.first(this.nativeSelected)
-        });
-
-        if (
-            option !== null && this.multiple === false &&
-            this.focus === true && this.allowCreate === false
-        ) {
-            placeholder = option.label.trim();
-        }
-
-        if (
-            option === null && this.multiple === false &&
-            this.focus === true && this.allowCreate === true
-        ) {
-            placeholder = Arr.first(this.nativeSelected);
-        }
-
-        let hideItems = Any.isEmpty(placeholder) === false ||
-            (this.focus === true && this.multiple === false) ||
-            (this.search !== '' && this.multiple === false);
 
         return (
-            <div class={['n-select__wrapper', this.disabled && 'n-disabled']}>
-                <div class={className} onClick={() => this.$refs.input.focus()}>
-                    { ( this.clearable === true && this.disabled === false && this.nativeSelected.length !== 0 ) &&
-                        <div class="n-select__clear" vOn:mousedown={this.clearNativeSelected}>
-                            <span class={this.icons.times}></span>
-                        </div>
-                    }
-                    <div class="n-select__label">
+            <div class={classList}>
+                { this.ctor('renderLabel')() }
+            </div>
+        );
+    },
 
-                        { ( Any.isEmpty(labels) === false && hideItems === false ) &&
-                            Arr.each(labels, (option) => {
+    renderOptions()
+    {
+        if ( ! this.veSearched.length ) {
+            return <div class="n-select__empty">{this.emptyText}</div>;
+        }
 
-                                let className = [
-                                    'n-select__item'
-                                ];
+        return (
+            <div>
+                {
+                    Arr.each(this.veSearched, (option, index) => {
+                        return option.ctor('renderOption')(index);
+                    })
+                }
+            </div>
+        )
+    },
 
-                                if ( this.multiple === true ) {
-                                    className.push('n-select__item--multiple');
-                                }
+    renderPopover()
+    {
+        let props = {
+            visible: this.veOpen,
+            type: 'select',
+            trigger: 'click',
+            width: '100%',
+            size: this.size,
+            disabled: this.disabled,
+            position: this.position,
+            window: this.window,
+            contain: this.window,
+        };
 
-                                let clickEvent = () => {
-                                    this.toggleOption(option.realValue);
-                                };
+        let events = {
+            input: this.eventPopoverInput
+        };
 
-                                return (
-                                    <span class={className}>
-                                        {option.label} { this.multiple && <i onClick={clickEvent} class={this.icons.times}></i>}
-                                    </span>
-                                );
-                            })
-                        }
+        return (
+            <NPopover ref="popover" props={props} on={events}>
+                { this.ctor('renderOptions')() }
+            </NPopover>
+        );
+    },
 
-                        <input ref="input" class="n-select__input" type="text" value={this.search} placeholder={placeholder} disabled={this.disabled} onInput={this.searchOptions} onFocus={this.focusInput} onFocusout={this.focusoutInput} onKeydown={this.keydownInput} />
+    render($render)
+    {
+        this.$render = $render;
 
-                    </div>
-                    <div class="n-select__arrow">
-                        <span class={this.icons.angleDown}></span>
-                    </div>
-                </div>
-                <NPopover vModel={this.visible} trigger="click" type="select" position={this.position} disabled={this.disabled} closeInside={!this.multiple}>
-                    { Any.isEmpty(options) === false ? options : <div class="n-select__empty">{ this.emptyText }</div> }
-                </NPopover>
+        let classList = [
+            'n-select__wrapper'
+        ];
+
+        if ( this.disabled ) {
+            classList.push('n-disabled');
+        }
+
+        return (
+            <div class={classList}>
+                { this.ctor('renderDisplay')() }
+                { this.ctor('renderPopover')() }
                 { this.$slots.default }
             </div>
         );

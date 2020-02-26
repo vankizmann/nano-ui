@@ -1,4 +1,4 @@
-import { UUID, Num, Obj, Any, Locale } from "nano-js";
+import { Any } from "nano-js";
 
 export default {
 
@@ -10,6 +10,13 @@ export default {
             default: undefined
         }
 
+    },
+
+    provide()
+    {
+        return {
+            NTabsItem: this
+        };
     },
 
     props: {
@@ -62,10 +69,10 @@ export default {
             type: [Boolean]
         },
 
-        keepAlive: {
+        keep: {
             default()
             {
-                return true;
+                return false;
             },
             type: [Boolean]
         }
@@ -75,71 +82,108 @@ export default {
 
     methods: {
 
-        checkInitialized()
+        changeTab()
         {
-            if ( this.NTabs.nativeCurrent === this.name ) {
-                this.initialized = true;
-            }
+            this.NTabs.changeTab(this.name);
         }
 
-    },
-
-    provide()
-    {
-        return {
-            NTabsItem: this
-        };
     },
 
     data()
     {
         return {
-            initialized: false
+            veInit: false
         }
     },
 
     beforeMount()
     {
         this.NTabs.addTab(this);
-        this.checkInitialized();
     },
 
-    mounted()
-    {
-        this.NTabs.$watch('nativeCurrent', this.checkInitialized);
-    },
-
-    destroyed()
+    beforeDestroy()
     {
         this.NTabs.removeTab(this);
     },
 
+    renderHeaderIcon()
+    {
+        if ( ! this.$slots.icon && ! this.icon ) {
+            return null;
+        }
+
+        return (
+            <div class="n-tabs__tab-icon">
+                { this.$slots.icon || <i class={this.icon}></i> }
+            </div>
+        );
+    },
+
+    renderHeaderLabel()
+    {
+        return (
+            <div class="n-tabs__tab-label">
+                { this.$slots.label || <span>{this.label}</span> }
+            </div>
+        );
+    },
+
+    renderHeader()
+    {
+        let classList = [
+            'n-tabs__tab'
+        ];
+
+        if ( this.NTabs.veValue === this.name ) {
+            classList.push('n-active');
+        }
+
+        let events = {
+            click: () => this.changeTab(this.name)
+        };
+
+        return (
+            <div class={classList} on={events}>
+                { this.ctor('renderHeaderIcon')() }
+                { this.ctor('renderHeaderLabel')() }
+            </div>
+        );
+    },
+
     render()
     {
-        if ( this.NTabs.nativeCurrent !== this.name && this.keepAlive === false ) {
+        let renderBody = this.NTabs.veValue === this.name;
+
+        if ( this.NTabs.veValue !== this.name && this.keep ) {
+            renderBody = this.veInit;
+        }
+
+        if ( this.NTabs.veValue !== this.name && this.preload ) {
+            renderBody = true;
+        }
+
+        if ( ! renderBody ) {
             return null;
         }
 
-        if ( this.preload === false && this.initialized === false ) {
-            return null;
+        if ( this.raw === true ) {
+            return this.$slots.default;
         }
 
-        let className = [
+        this.veInit = true;
+
+        let classList = [
             'n-tabs-item'
         ];
 
-        if ( this.raw === true ) {
-            className.push('n-tabs-item--raw');
-        }
-
         let style = {};
 
-        if ( this.NTabs.nativeCurrent !== this.name ) {
+        if ( this.NTabs.veValue !== this.name ) {
             style.display = 'none';
         }
 
         return (
-            <div class={className} style={style}>
+            <div class={classList} style={style}>
                 { this.$slots.default }
             </div>
         );

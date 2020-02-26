@@ -26,20 +26,17 @@
         </n-form-item>
 
         <n-form-item label="List">
-            <div style="display: block; border: 2px solid #000;">
-                <div>
-                    <n-draggable style="height: 500px; overflow: hidden;" :items="form.value" :viewport-height="true" :render-expand="true" :render-select="true">
-                        <div slot-scope="props" style="line-height: 32px;">
-                            {{ props.value.label }}
-                        </div>
-                    </n-draggable>
-                </div>
-            </div>
-
-        <n-form-item v-if="false" label="Tree">
-            <n-draggable-tree :items="form.value" unique-prop="id" :cascade.sync="form.cascade">
-                <div slot-scope="props">{{ props.value.label }}</div>
-            </n-draggable-tree>
+            <n-tabs>
+                <n-tabs-item label="Hallo" name="default">
+                    Hallo
+                </n-tabs-item>
+                <n-tabs-item label="Keep" name="keep" :keep="true">
+                    Keep
+                </n-tabs-item>
+                <n-tabs-item label="Test" name="test" :preload="true">
+                    Test
+                </n-tabs-item>
+            </n-tabs>
         </n-form-item>
 
     </n-form>

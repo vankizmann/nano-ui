@@ -28,10 +28,13 @@ export default {
     mounted()
     {
         Optiscroll.globalSettings.checkFrequency = 750;
-        Optiscroll.globalSettings.scrollMinUpdateInterval = 64;
+        Optiscroll.globalSettings.scrollMinUpdateInterval = 32;
 
         this.optiscroll = new Optiscroll(this.$el.parentNode, {
-            classPrefix: 'n-scrollbar-', wrapContent: false, preventParentScroll: true, forceScrollbars: true
+            classPrefix: 'n-scrollbar-',
+            minTrackSize: 10,
+            wrapContent: false,
+            preventParentScroll: true,
         });
 
         if ( this.height ) {

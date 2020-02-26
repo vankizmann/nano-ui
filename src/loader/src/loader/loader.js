@@ -4,6 +4,10 @@ export default {
 
     name: 'NLoader',
 
+    model: {
+        prop: 'visible'
+    },
+
     inject: {
 
         NLoader: {
@@ -12,8 +16,11 @@ export default {
 
     },
 
-    model: {
-        prop: 'visible'
+    provide()
+    {
+        return {
+            NLoader: this
+        };
     },
 
     props: {
@@ -36,28 +43,23 @@ export default {
 
     },
 
-    provide()
+    render($render)
     {
-        return {
-            NLoader: this
-        };
-    },
+        this.$render = $render;
 
-    render(h)
-    {
-        let className = [
+        let classList = [
             'n-loader', 'n-loader--' + this.size
         ];
 
-        let parentVisible = this.NLoader !== undefined &&
-            this.NLoader.visible === true;
+        let parentVisible = this.NLoader &&
+            this.NLoader.visible;
 
-        if ( this.visible === true && parentVisible === false ) {
-            className.push('n-loader--active');
+        if ( this.visible && ! parentVisible ) {
+            classList.push('n-loader--active');
         }
 
         return (
-            <div class={className}>
+            <div class={classList}>
                 { this.$slots.default }
             </div>
         );

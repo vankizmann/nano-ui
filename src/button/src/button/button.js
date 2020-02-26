@@ -91,7 +91,9 @@ export default {
     render(h)
     {
         let className = [
-            'n-button', 'n-button--' + this.type, 'n-button--' + this.size
+            'n-button',
+            'n-button--' + this.size,
+            'n-button--' + this.type,
         ];
 
         if ( Any.isEmpty(this.icon) === false ) {

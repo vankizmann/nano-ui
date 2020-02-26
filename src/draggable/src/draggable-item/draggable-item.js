@@ -68,7 +68,7 @@ export default {
                 finalPositon = parentY;
             }
 
-            let allowDropAfter = this.NDraggable.isCollapsed(this) ||
+            let allowDropAfter = this.NDraggable.isExpanded(this) ||
                 ! Obj.get(this.veItem, this.NDraggable.childProp, []).length;
 
             if ( clientY < safeZone && allowDropAfter ) {
@@ -96,9 +96,9 @@ export default {
             this.strategy = finalStrategy;
         },
 
-        collapse(event)
+        expand(event)
         {
-            this.NDraggable.collapseItem(this);
+            this.NDraggable.expandItem(this);
         },
 
         select(event)
@@ -112,7 +112,12 @@ export default {
 
         eventClick(event)
         {
-            console.log('click0', this.veItem);
+            this.NDraggable.$emit('row-click', this);
+        },
+
+        eventDblclick(event)
+        {
+            this.NDraggable.$emit('row-dblclick', this);
         },
 
         eventDragstart(event)
@@ -229,20 +234,20 @@ export default {
         )
     },
 
-    renderCollapse()
+    renderExpand()
     {
-        if ( ! this.NDraggable.renderCollapse ) {
+        if ( ! this.NDraggable.renderExpand ) {
             return;
         }
 
-        let childsLength = Obj.get(this.veItem,
+        let childLength = Obj.get(this.veItem,
             this.NDraggable.childProp, []).length;
 
         return (
-            <div class="n-draggable-item__collapse">
-                { !! childsLength &&
-                    <div on={{ click: this.collapse }}>
-                        <i class={ window.NanoIcons.angleRight }></i>
+            <div class="n-draggable-item__expand">
+                { !! childLength &&
+                    <div on={{ click: this.expand }}>
+                        <i class={ this.icons.angleRight }></i>
                     </div>
                 }
             </div>
@@ -258,9 +263,11 @@ export default {
         let allowSelect = this.NDraggable.allowSelect(this) &&
             this.NDraggable.canSelect(this);
 
+        let isChecked = this.NDraggable.isSelected(this);
+
         return (
             <div class="n-draggable-item__select">
-                <NCheckbox key={UUID()} size="small" disabled={!allowSelect} checked={this.NDraggable.isSelected(this)} onInput={this.select} />
+                <NCheckbox key={UUID()} size="small" disabled={!allowSelect} checked={isChecked} onInput={this.select} />
             </div>
         )
     },
@@ -270,7 +277,8 @@ export default {
         this.$render = $render;
 
         let events = {
-            click: this.eventClick,
+            // click: this.eventClick,
+            dblclick: this.eventDblclick,
             dragstart: this.eventDragstart,
             dragenter: this.eventDragenter,
             dragover: this.eventDragover,
@@ -292,8 +300,8 @@ export default {
             classList.push('n-selected');
         }
 
-        if ( this.NDraggable.isCollapsed(this) ) {
-            classList.push('n-collapsed');
+        if ( this.NDraggable.isExpanded(this) ) {
+            classList.push('n-expanded');
         }
 
         let draggable = this.NDraggable.allowSelect(this) &&
@@ -302,7 +310,7 @@ export default {
         return (
             <div class={classList} style={style} on={events} data-id={this.id} draggable={draggable}>
                 { this.ctor('renderSpacer')() }
-                { this.ctor('renderCollapse')() }
+                { this.ctor('renderExpand')() }
                 { this.ctor('renderSelect')() }
                 { this.ctor('renderNode')() }
             </div>

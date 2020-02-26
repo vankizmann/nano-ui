@@ -1,11 +1,14 @@
-import CtorMixin from "../../../mixins/src/ctor";
-import { UUID, Num, Arr, Obj, Dom, Any, Str } from "nano-js";
+import { Any, Arr, Obj, Str, Dom } from "nano-js";
 
 export default {
 
     name: 'NTableColumn',
 
     inject: {
+
+        NDraggable: {
+            default: undefined
+        },
 
         NTable: {
             default: undefined
@@ -37,14 +40,6 @@ export default {
                 return 'string';
             },
             type: [String]
-        },
-
-        basis: {
-            default()
-            {
-                return 1;
-            },
-            type: [Number]
         },
 
         align: {
@@ -135,31 +130,24 @@ export default {
             type: [String]
         },
 
-        defaultWidth: {
+        width: {
             default()
             {
-                return 100;
-            }
-        },
-
-        fixedWidth: {
-            default()
-            {
-                return 0;
+                return 140;
             }
         },
 
         minWidth: {
             default()
             {
-                return this.fixedWidth || this.defaultWidth;
+                return this.width;
             }
         },
 
         maxWidth: {
             default()
             {
-                return this.fixedWidth || 0;
+                return 0;
             }
         },
 
@@ -205,227 +193,310 @@ export default {
 
     },
 
-    computed: {
-
-        style()
-        {
-            let width = this.width || this.defaultWidth;
-
-            let style = {
-                'width': Num.fixed(width) + 'px'
-            };
-
-            if ( this.minWidth !== 0 ) {
-                style['minWidth'] = Num.fixed(this.minWidth) + 'px'
-            }
-
-            if ( this.maxWidth !== 0 ) {
-                style['maxWidth'] = Num.fixed(this.maxWidth) + 'px'
-            }
-
-            if ( this.fixedWidth !== 0 ) {
-                style['width'] = Num.fixed(this.fixedWidth) + 'px'
-            }
-
-            return style;
-        },
-
-        fixed()
-        {
-            return this.fixedWidth !== 0;
-        },
-
-        autosize()
-        {
-            return this.width === 0;
-        }
-
-    },
-
-    methods: {
-
-        ...CtorMixin,
-
-        sortColumn()
-        {
-            this.NTable.sortColumn(this.sortProp);
-        },
-
-        filterColumn(filter)
-        {
-            this.NTable.filterColumn(this.filterProp, filter);
-        },
-
-        getWidth()
-        {
-            let el = this.NTable.getColumnEl(this);
-
-            let width = Dom.find(el).width();
-
-            if ( width !== 0 && width === this.width ) {
-                return;
-            }
-
-            this.setWidth(width);
-        },
-
-        setWidth(width, force = false)
-        {
-            if ( force === true ) {
-                return this.width = width;
-            }
-
-            if ( this.fixedWidth !== 0 ) {
-                return this.width = this.fixedWidth;
-            }
-
-            let minWidth = Math.max(width, this.minWidth);
-
-            if ( minWidth !== width && minWidth !== 0 ) {
-                return this.width = minWidth;
-            }
-
-            let maxWidth = Math.min(width, this.maxWidth);
-
-            if ( maxWidth !== width && maxWidth !== 0 ) {
-                return this.width = maxWidth;
-            }
-
-            this.width = width;
-        }
-
+    provide()
+    {
+        return { NTableColumn: this };
     },
 
     data()
     {
-        return {
-            width: 0
-        };
+        return { veVisible: true, veWidth: 0 };
     },
 
-    beforeMount()
-    {
-        this.NTable.addColumn(this);
+    methods: {
+
+        sortByColumn(event)
+        {
+            if ( ! Dom.find(event.target).closest('.n-table-column__filter') ) {
+                this.NTable.sortByColumn(this.prop);
+            }
+        },
+
+        adjustResizerPosition()
+        {
+            if ( ! this.$refs.column ) {
+                return Any.delay(this.adjustResizerPosition, 500);
+            }
+
+            this.veWidth = Dom.find(this.$refs.column).width();
+
+            let style = {
+                left: this.veWidth + 'px'
+            };
+
+            Dom.find(this.$refs.column).find('[data-resizer]').css(style);
+        },
+
+        eventResizerMousedown(event)
+        {
+            event.preventDefault();
+
+            Dom.find(this.$refs.column).addClass('n-resize');
+
+            Dom.find(document).on('mousemove',
+                Any.framerate(this.eventResizerMousemove, 30), this._uid);
+
+            Dom.find(document).on('mouseup',
+                Any.framerate(this.eventResizerMouseup, 30), this._uid);
+        },
+
+        eventResizerMousemove(event)
+        {
+            this.clientX = event.clientX;
+
+            event.preventDefault();
+
+            let offsetX = Dom.find(this.$refs.column)
+                .offset('left');
+
+            let scrollX = Dom.find(this.$refs.column)
+                .scroll('left');
+
+            let targetWidth = (this.clientX + scrollX - offsetX);
+
+            if ( this.minWidth ) {
+                targetWidth = Math.max(targetWidth, this.minWidth)
+            }
+
+            if ( this.maxWidth ) {
+                targetWidth = Math.min(targetWidth, this.maxWidth)
+            }
+
+            let style = {
+                'left': targetWidth + 'px'
+            };
+
+            Dom.find(this.$refs.column).find('[data-resizer]').css(style);
+        },
+
+        eventResizerMouseup(event)
+        {
+            event.preventDefault();
+
+            Dom.find(document).off('mousemove', null, this._uid);
+            Dom.find(document).off('mouseup', null, this._uid);
+
+            if ( ! this.clientX ) {
+                return;
+            }
+
+            let offsetX = Dom.find(this.$refs.column)
+                .offset('left');
+
+            let scrollX = Dom.find(this.$refs.column)
+                .scroll('left');
+
+            let targetWidth = (this.clientX + scrollX - offsetX);
+
+            if ( this.minWidth ) {
+                targetWidth = Math.max(targetWidth, this.minWidth)
+            }
+
+            if ( this.maxWidth ) {
+                targetWidth = Math.min(targetWidth, this.maxWidth)
+            }
+
+            this.veWidth = targetWidth;
+
+            Dom.find(this.$refs.column).removeClass('n-resize');
+
+            delete this.clientX;
+
+            this.$nextTick(() => this.NTable.$emit('hook:resized'));
+        }
+
     },
 
     mounted()
     {
-        this.NTable.$on('hook:updated', Any.debounce(this.getWidth));
+        this.NTable.addColumn(this);
+
+        this.NTable.$on('hook:resized', this.adjustResizerPosition);
+        this.NTable.$on('hook:mounted', this.adjustResizerPosition);
     },
 
-    renderLabel({ column })
+    beforeDestroy()
     {
-        if ( this.type === 'selection' ) {
+        this.NTable.removeColumn(this);
+    },
 
-            let checked = false;
-
-            if ( this.NTable.items.length !== 0 ) {
-                checked = this.NTable.nativeSelectedKeys.length === this.NTable.items.length;
-            }
-
-            let intermediate = false;
-
-            if ( this.NTable.nativeSelectedKeys.length !== 0 ) {
-                intermediate = this.NTable.nativeSelectedKeys.length !== this.NTable.items.length;
-            }
-
-            let onInput = () => {
-                this.NTable.nativeSelectedKeys = checked ? [] :
-                    Arr.each(this.NTable.items, (item) => Obj.get(item, this.NTable.uniqueProp));
-            };
-
-            return (<NCheckbox key={UUID()} intermediate={intermediate} checked={checked} onInput={() => onInput()} />);
-        }
-
-        let className = [
-            'n-table-filter'
+    renderHead()
+    {
+        let classList = [
+            'n-table-column', 'n-' + this.align
         ];
 
-        if ( this.NTable.sortProp === this.sortProp ) {
-            className.push('n-table-filter--' + this.NTable.sortDir);
+        if ( this.NTable.veSortProp === this.prop ) {
+            classList.push('is-sorted is-' + this.NTable.veSortDir);
         }
 
-        return <div class={className}>
+        let index = Arr.findIndex(this.NTable.veColumns, {
+            prop: this.prop
+        });
 
-            { this.sort === true &&
-                <div class="n-table-filter__sort" onClick={this.sortColumn}>
-                    <span></span>
-                </div>
-            }
+        if ( ! index ) {
+            classList.push('n-first');
+        }
 
-            <div class="n-table-filter__label">
-                <span>{this.label}</span>
+        if ( ! this.veWidth && index ) {
+            this.veWidth = this.defaultWidth;
+        }
+
+        if ( this.veWidth ) {
+            classList.push('n-fixed');
+        }
+
+        let style = {
+            width: this.veWidth + 'px', minWidth: this.minWidth + 'px'
+        };
+
+        return (
+            <div ref="column" class={classList} style={style}>
+                { this.ctor('renderHeadSort')() }
+                { this.ctor('renderHeadLabel')() }
+                { this.ctor('renderHeadFilter')() }
+                { this.ctor('renderHeadResizer')() }
             </div>
-
-            <NPopover class="n-popover-label" type="tooltip" trigger="hover" boundry={this.NTable.$el}>
-                <span>{this.label}</span>
-            </NPopover>
-
-            { this.filter === true &&
-                this.ctor('renderFilter')({ column })
-            }
-
-        </div>;
+        );
     },
 
-    renderFilter({ column })
+    renderHeadLabel()
     {
-        let name = 'NTableFilter' + Str.ucfirst(this.type);
+        if ( ! this.boundryEl ) {
+            this.boundryEl = Dom.find(this.NTable.$el)
+                .find('.n-table__inner').get(0);
+        }
+
+        let events = {};
+
+        if ( this.sort && this.NTable.sortOnLabel ) {
+            events.click = this.sortByColumn;
+        }
+
+        let labelHtml = (
+            <div class="n-table-column__label" on={events}>
+                { this.label }
+            </div>
+        );
+
+        let tooltipHtml = (
+            <NPopover type="tooltip" boundry={this.boundryEl}>
+                { this.label }
+            </NPopover>
+        );
+
+        return [labelHtml, tooltipHtml];
+    },
+
+    renderHeadSort()
+    {
+        if ( ! this.sort ) {
+            return null;
+        }
+
+        let events = {};
+
+        if ( this.sort && ! this.NTable.sortOnLabel ) {
+            events.click = this.sortByColumn;
+        }
+
+        return (
+            <div class="n-table-column__sort" on={events}>
+                <div></div>
+            </div>
+        )
+    },
+
+    renderHeadFilter()
+    {
+        if ( ! this.filter ) {
+            return null;
+        }
+
+        let componentName = 'NTableFilter' + Str.ucfirst(this.type);
+
+        let props = {
+            column: this
+        };
 
         return [
-            <div class="n-table-filter__filter">
-                <span class={this.icons.angleDown}></span>
+            <div class="n-table-column__filter">
+                <div><span class={this.icons.angleDown}></span></div>
             </div>,
-            <NPopover class="n-popover-filter" type="default" trigger="click" boundry={this.NTable.$el}>
-                {
-                    this.h(name, {
-                        slot: 'raw', props: { column }
-                    })
-                }
+            <NPopover class="n-popover-filter" trigger="click" boundry={this.boundryEl}>
+                { this.$render(componentName, { slot: 'raw', props }) }
             </NPopover>
         ];
     },
 
-    renderBody({ column, row, key })
+    renderHeadResizer()
     {
-        let prop = Obj.get(row, this.NTable.uniqueProp);
+        let events = {
+            mousedown: this.eventResizerMousedown
+        };
 
-        if ( this.type === 'selection' ) {
-
-            let checked = Arr.has(this.NTable.nativeSelectedKeys, prop);
-
-            let onInput = () => {
-                Arr.toggle(this.NTable.nativeSelectedKeys, prop);
-            };
-
-            return <NCheckbox key={prop} sort={key} checked={checked} onInput={onInput} />;
-        }
-
-        return this.ctor('renderCell')({ column, row, key });
+        return (
+            <div class="n-table-column__resizer" data-resizer="true" on={events}></div>
+        );
     },
 
-    renderCell({ column, row, key })
+    renderBody(props)
     {
-        let name = 'NTableCell' + Str.ucfirst(this.type);
+        if ( ! this.veWidth ) {
+            return;
+        }
 
-        return this.h(name, {
-            props: { column, row, key }
+        let NDraggable = this.NTable.$refs.list;
+
+        let remote = Arr.find(NDraggable.veItems, {
+            [NDraggable.uniqueProp]: props.value[NDraggable.uniqueProp]
         });
+
+        let componentName = 'NTableCell' + Str.ucfirst(this.type);
+
+        let classList = [
+            'n-table-column', 'n-' + this.align
+        ];
+
+        let index = Arr.findIndex(this.NTable.veColumns, {
+            prop: this.prop
+        });
+
+        if ( ! index ) {
+            classList.push('n-first');
+        }
+
+        if ( this.veWidth ) {
+            classList.push('n-fixed');
+        }
+
+        let width = this.veWidth;
+
+        if ( ! index ) {
+            width -= remote.depth * 20;
+        }
+
+        let style = {
+            width: width + 'px'
+        };
+
+        if ( index ) {
+            style.minWidth = this.minWidth + 'px';
+        }
+
+        props = Obj.assign(props, { column: this });
+
+        return (
+            <div class={classList} style={style}>
+                { this.$render(componentName, { props }) }
+            </div>
+        );
     },
 
-    render(h)
+    render($render)
     {
-        this.h = h;
-
-        if ( ! this.$scopedSlots.label ) {
-            this.$scopedSlots.label = this.ctor('renderLabel');
-        }
-
-        if ( ! this.$scopedSlots.default ) {
-            this.$scopedSlots.default = this.ctor('renderBody');
-        }
+        this.$render = $render;
 
         return null;
     }
-
 }
