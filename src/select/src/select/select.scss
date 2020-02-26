@@ -111,6 +111,11 @@ $select-empty-padding: 6px 12px !default;
     line-height: ($select-height * 1.125) - 6;
 }
 
+.n-select__items {
+    max-height: 210px;
+    overflow: auto;
+}
+
 .n-select__item {
     display: inline-flex;
     flex-direction: row;

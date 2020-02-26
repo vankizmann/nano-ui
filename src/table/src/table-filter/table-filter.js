@@ -84,13 +84,15 @@ export default {
 
     render()
     {
-        return <div class="n-popover__frame">
-            <div class="n-popover__body">
-                { this.ctor('renderForm') && this.ctor('renderForm')() }
+        return (
+            <div class="n-popover__frame">
+                <div class="n-popover__body">
+                    { this.ctor('renderForm') && this.ctor('renderForm')() }
+                </div>
+                <div class="n-popover__footer n-text-right">
+                    { this.ctor('renderReset') && this.ctor('renderReset')() }
+                </div>
             </div>
-            <div class="n-popover__footer n-text-right">
-                { this.ctor('renderReset') && this.ctor('renderReset')() }
-            </div>
-        </div>;
+        );
     }
 }

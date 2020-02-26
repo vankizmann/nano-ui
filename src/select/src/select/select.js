@@ -36,6 +36,13 @@ export default {
             type: [String]
         },
 
+        boundary: {
+            default()
+            {
+                return null;
+            }
+        },
+
         window: {
             default()
             {
@@ -292,13 +299,13 @@ export default {
         {
             if ( event.which === 13 ) {
 
-                if ( ! this.allowCreate || this.veIndex !== -1 ) {
-                    this.toggleSelected();
-                }
-
                 if ( this.allowCreate && this.veIndex === -1 ) {
                     this.toggleOption(this.veSearch);
                     this.veSearch = '';
+                }
+
+                if ( ! this.allowCreate || this.veIndex !== -1 ) {
+                    this.toggleSelected();
                 }
 
             }
@@ -463,13 +470,13 @@ export default {
         }
 
         return (
-            <div>
+            <NScrollbar class="n-select__items" relative={true}>
                 {
                     Arr.each(this.veSearched, (option, index) => {
                         return option.ctor('renderOption')(index);
                     })
                 }
-            </div>
+            </NScrollbar>
         )
     },
 
@@ -483,8 +490,8 @@ export default {
             size: this.size,
             disabled: this.disabled,
             position: this.position,
-            window: this.window,
-            contain: this.window,
+            boundary: this.boundary,
+            window: ! this.boundary,
         };
 
         let events = {

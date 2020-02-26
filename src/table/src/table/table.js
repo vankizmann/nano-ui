@@ -415,7 +415,7 @@ export default {
 
         return (
             <div class="n-table" style={style}>
-                <NScrollbar class="n-table__wrap">
+                <NScrollbar class="n-table__wrap" relative={!this.viewportHeight}>
                     <div class="n-table__inner">
                         { [this.ctor('renderHead')(), draggableHtml] }
                     </div>

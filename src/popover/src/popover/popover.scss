@@ -4,7 +4,7 @@ $popover-default-size: 14px !default;
 $popover-default-padding: 9px 12px !default;
 
 $popover-select-size: 13px !default;
-$popover-select-padding: 3px 0 !default;
+$popover-select-padding: 0 !default;
 
 $popover-tooltip-size: 12px !default;
 $popover-tooltip-padding: 3px 9px !default;
@@ -15,6 +15,7 @@ $popover-option-size: 14px !default;
     z-index: 10000;
     position: absolute;
     padding: 3px;
+    display: inline-flex;
 }
 
 .n-popover.n-popover--select {
@@ -43,8 +44,6 @@ $popover-option-size: 14px !default;
 }
 
 .n-popover.n-popover--select > .n-popover__frame {
-    max-height: 210px;
-    overflow: auto;
     font-size: $popover-default-size;
     background: $--color-white;
     border-radius: $radius-medium;

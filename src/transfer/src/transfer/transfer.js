@@ -199,14 +199,19 @@ export default {
             disabled: ! this.veSource.length
         };
 
+        let uniqueKey = UUID();
+
         if ( this.$refs.source && this.veSource.length ) {
+
             props['checked'] = this.$refs.source.isAllSelected(true);
             props['intermediate'] = this.$refs.source.isIntermediate(true);
+
+            uniqueKey = Any.md5(this.$refs.source.veSelected);
         }
 
         return (
             <div class="n-transfer__select">
-                <NCheckbox key={UUID()} props={props} on={events} />
+                <NCheckbox key={uniqueKey} props={props} on={events} />
             </div>
         );
     },
@@ -295,14 +300,19 @@ export default {
             disabled: ! this.veTarget.length
         };
 
+        let uniqueKey = UUID();
+
         if ( this.$refs.target && this.veTarget.length ) {
+
             props['checked'] = this.$refs.target.isAllSelected(true);
             props['intermediate'] = this.$refs.target.isIntermediate(true);
+
+            uniqueKey = Any.md5(this.$refs.target.veSelected);
         }
 
         return (
             <div class="n-transfer__select">
-                <NCheckbox key={UUID()} props={props} on={events} />
+                <NCheckbox key={uniqueKey} props={props} on={events} />
             </div>
         );
     },

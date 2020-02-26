@@ -9,6 +9,21 @@ export default {
         prop: 'visible'
     },
 
+    inject: {
+
+        NPopover: {
+            default: undefined
+        }
+
+    },
+
+    provide()
+    {
+        return {
+            NPopover: this
+        };
+    },
+
     props: {
 
         visible: {
@@ -150,25 +165,20 @@ export default {
 
         refresh()
         {
+            if ( ! window.zIndex ) {
+                window.zIndex = 9000;
+            }
+
             let style = {};
 
             if ( ! this.$el ) {
                 return { display: 'none' };
             }
 
-            let rect = this.target.getBoundingClientRect();
-
-            let isInViewport = rect.top >= 0 && rect.bottom <= Dom.find(window).height() &&
-                rect.left >= 0 && rect.right <= Dom.find(window).width();
-
-            if ( ! isInViewport && this.veVisible ) {
-                this.$nextTick(() => this.$emit('input', this.veVisible = false));
-            }
-
             let clientX = Dom.find(this.target).offset('left', this.parent);
 
             if ( this.trigger !== 'context' ) {
-                clientX -= Dom.find(this.target).scroll('left', this.parent);
+                // clientX -= Dom.find(this.target).scroll('left', this.parent);
             }
 
             if ( this.trigger === 'context' ) {
@@ -182,7 +192,7 @@ export default {
             let clientY = Dom.find(this.target).offset('top', this.parent);
 
             if ( this.trigger !== 'context' ) {
-                clientY -= Dom.find(this.target).scroll('top', this.parent);
+                // clientY -= Dom.find(this.target).scroll('top', this.parent);
             }
 
             if ( this.trigger === 'context' ) {
@@ -272,16 +282,16 @@ export default {
                     style.left = 0;
                 }
 
-                if ( style.left + nodeWidth > parentWidth ) {
-                    style.left = parentWidth - nodeWidth;
+                if ( style.left + nodeWidth > this.parent.scrollWidth ) {
+                    style.left = offset.left - scroll.left - nodeWidth;
                 }
 
                 if ( style.top < 0 ) {
                     style.top = 0;
                 }
 
-                if ( style.top + nodeHeight > parentHeight ) {
-                    style.top = parentHeight - nodeHeight;
+                if ( style.top + nodeHeight > this.parent.scrollHeight ) {
+                    style.top = offset.top - scroll.top - nodeHeight;
                 }
 
             }
@@ -292,11 +302,11 @@ export default {
                     style.left = 0;
                 }
 
-                if ( style.left + nodeWidth > parentWidth ) {
-                    style.left = parentWidth - nodeWidth;
+                if ( style.left + nodeWidth > this.parent.scrollWidth ) {
+                    style.left = offset.left - scroll.left - nodeWidth;
                 }
 
-                if ( style.top + nodeHeight > parentHeight ) {
+                if ( style.top + nodeHeight > this.parent.scrollHeight ) {
                     style.top = offset.top - scroll.top - nodeHeight;
                 }
 
@@ -335,6 +345,8 @@ export default {
             if ( ! this.veVisible && ! this.visible ) {
                 pseudo.display = 'none';
             }
+
+            pseudo['z-index'] = window.zIndex++;
 
             return this.style = pseudo;
         },
@@ -437,19 +449,6 @@ export default {
 
     mounted()
     {
-        this.$watch('veVisible', () => {
-
-            if ( this.veVisible ) {
-                this.refreshInterval = setInterval(this.refresh, this.updateInterval);
-            }
-
-            if ( ! this.veVisible ) {
-                clearInterval(this.refreshInterval);
-            }
-
-            // this.refresh();
-        });
-
         let $event = {
             _uid: this._uid
         };
@@ -473,21 +472,24 @@ export default {
             this.target = Dom.find(this.$el).parent().find(this.selector).get(0);
         }
 
-        this.parent = null;
+        this.parent = Obj.get(this.NPopover, 'boundary');
 
-        if ( ! Any.isEmpty(this.boundary) ) {
+        if ( this.boundary && ! this.parent ) {
             this.parent = Dom.find(this.boundary).get(0);
         }
 
-        if ( this.window ) {
-            this.parent = document.body;
+        if ( this.window && ! this.parent ) {
+            this.parent = Dom.find(this.$el).closestScrollable();
         }
 
         if ( this.parent ) {
-            return Dom.find(this.parent).append(this.$el);
+            Dom.find(this.parent).append(this.$el);
         }
 
-        this.parent = Dom.find(this.target).parent().get(0);
+        if ( ! this.parent ) {
+            this.parent = Dom.find(this.target).parent().get(0);
+        }
+
     },
 
     beforeDestroy()

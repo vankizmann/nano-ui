@@ -15,7 +15,7 @@ export default {
             type: [Object]
         },
 
-        height: {
+        relative: {
             default()
             {
                 return false;
@@ -25,30 +25,65 @@ export default {
 
     },
 
-    mounted()
-    {
-        Optiscroll.globalSettings.checkFrequency = 750;
-        Optiscroll.globalSettings.scrollMinUpdateInterval = 32;
+    methods: {
 
-        this.optiscroll = new Optiscroll(this.$el.parentNode, {
-            classPrefix: 'n-scrollbar-',
-            minTrackSize: 10,
-            wrapContent: false,
-            preventParentScroll: true,
-        });
+        initialize()
+        {
+            if ( this.optiscroll ) {
+                this.destroy();
+            }
 
-        if ( this.height ) {
-            Dom.find(this.$el).parent().css({ height: this.height + 'px' });
+            Optiscroll.globalSettings.checkFrequency = 750;
+            Optiscroll.globalSettings.scrollMinUpdateInterval = 32;
+
+            this.optiscroll = new Optiscroll(this.$el.parentNode, {
+                classPrefix: 'n-scrollbar-',
+                minTrackSize: 10,
+                wrapContent: false,
+                preventParentScroll: true,
+            });
+
+            if ( this.relative ) {
+                Dom.find(this.$el).parent().addClass('n-relative');
+            }
+
+            Dom.find(this.$el).parent().addClass('n-scrollbar');
+        },
+
+        destroy()
+        {
+            if ( ! this.optiscroll ) {
+                return;
+            }
+
+            this.optiscroll.destroy();
+
+            delete this.optiscroll;
+
+            Dom.find(this.$el).parent().removeClass('n-scrollbar');
+        },
+
+        refresh()
+        {
+            if ( ! Dom.find(this.$el).parent().hasClass('is-enabled') ) {
+                this.initialize();
+            }
         }
 
-        Dom.find(this.$el).parent().addClass('n-scrollbar');
+    },
+
+    mounted()
+    {
+        this.$parent.$on('hook:updated', this.refresh);
+
+        this.initialize();
     },
 
     beforeDestroy()
     {
-        this.optiscroll.destroy();
+        this.$parent.$off('hook:updated');
 
-        Dom.find(this.$el).parent().removeClass('n-scrollbar');
+        this.destroy();
     },
 
     render()

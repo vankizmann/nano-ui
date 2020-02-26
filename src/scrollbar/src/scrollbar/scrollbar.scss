@@ -9,14 +9,25 @@
 }
 
 .n-scrollbar.is-enabled > .n-scrollbar-content {
+    z-index: 1;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.n-scrollbar.is-enabled.n-relative > .n-scrollbar-content {
+    position: relative;
+    width: calc(100% + 15px);
+    height: calc(100% + 15px);
+    margin-top: -15px;
+    margin-left: -15px;
+}
+
+.n-scrollbar.is-enabled:not(.n-relative) > .n-scrollbar-content {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
 }
 
 
@@ -113,14 +124,14 @@
     height: 6px;
 }
 
-.n-scrollbar > .n-scrollbar-v,
-.n-scrollbar > .n-scrollbar-h {
+.n-scrollbar-v,
+.n-scrollbar-h {
     opacity: 0;
     transition: opacity 200ms;
 }
 
-.n-scrollbar:hover > .n-scrollbar-v,
-.n-scrollbar:hover > .n-scrollbar-h {
+.n-scrollbar.is-enabled:hover > .n-scrollbar-v,
+.n-scrollbar.is-enabled:hover > .n-scrollbar-h {
     opacity: 1;
 }
 

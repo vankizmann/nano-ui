@@ -26,14 +26,13 @@
     border-left-color: $--color-gray-90;
 }
 
-.n-table .n-table-column.n-first {
-    flex: 1 0 auto;
-}
-
 .n-table .n-table-column.n-fixed {
     flex: 0 1 auto;
 }
 
+.n-table .n-table-column.n-fluid {
+    flex: 1 1 auto;
+}
 
 .n-table .n-table-column .n-table-column__sort {
     flex: 0 0 auto;

@@ -130,6 +130,14 @@ export default {
             type: [String]
         },
 
+        fluid: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         fixedWidth: {
             default()
             {
@@ -147,7 +155,7 @@ export default {
         minWidth: {
             default()
             {
-                return this.fixedWidth || 50;
+                return this.fixedWidth || 120;
             }
         },
 
@@ -202,15 +210,37 @@ export default {
 
     provide()
     {
-        return { NTableColumn: this };
+        return {
+            NTableColumn: this
+        };
     },
 
     data()
     {
-        return { veVisible: true, veWidth: 0 };
+        return {
+            veVisible: true, veWidth: 0, veFluid: this.fluid
+        };
     },
 
     methods: {
+
+        bindAdaptWidth()
+        {
+            if ( ! this.veVisible ) {
+                return;
+            }
+
+            if ( ! this.$refs.column ) {
+                return Any.delay(this.bindAdaptWidth, 500);
+            }
+
+            // Disable fluid after fist run
+            this.veFluid = false;
+
+            // Adopt column width
+            this.veWidth = Dom.find(this.$refs.column)
+                .width();
+        },
 
         sortByColumn(event)
         {
@@ -314,12 +344,17 @@ export default {
 
     },
 
-    mounted()
+    beforeMount()
     {
         this.NTable.addColumn(this);
+    },
 
+    mounted()
+    {
         this.NTable.$on('hook:resized', this.adjustResizerPosition);
         this.NTable.$on('hook:mounted', this.adjustResizerPosition);
+
+        this.bindAdaptWidth()
     },
 
     beforeDestroy()
@@ -337,24 +372,24 @@ export default {
             classList.push('is-sorted is-' + this.NTable.veSortDir);
         }
 
-        let index = Arr.findIndex(this.NTable.veColumns, {
-            prop: this.prop
-        });
-
-        if ( ! index ) {
-            classList.push('n-first');
-        }
-
-        if ( ! this.veWidth && index ) {
-            this.veWidth = this.defaultWidth;
+        if ( this.veFluid ) {
+            classList.push('n-fluid');
         }
 
         if ( this.veWidth ) {
             classList.push('n-fixed');
         }
 
+        let width = this.veWidth;
+
+        if ( ! this.veWidth ) {
+            width = this.width;
+        }
+
         let style = {
-            width: this.veWidth + 'px', minWidth: this.minWidth + 'px'
+            width: width + 'px',
+            minWidth: this.minWidth + 'px',
+            maxWidth: this.maxWidth + 'px'
         };
 
         return (
@@ -465,17 +500,17 @@ export default {
             'n-table-column', 'n-' + this.align
         ];
 
-        let index = Arr.findIndex(this.NTable.veColumns, {
-            prop: this.prop
-        });
-
-        if ( ! index ) {
-            classList.push('n-first');
+        if ( this.veFluid ) {
+            classList.push('n-fluid');
         }
 
         if ( this.veWidth ) {
             classList.push('n-fixed');
         }
+
+        let index = Arr.findIndex(this.NTable.veColumns, {
+            prop: this.prop
+        });
 
         let width = this.veWidth;
 
@@ -484,7 +519,7 @@ export default {
         }
 
         let style = {
-            width: width + 'px'
+            width: width + 'px',
         };
 
         if ( index ) {
