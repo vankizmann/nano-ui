@@ -39709,6 +39709,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       var first = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(this.veItems, _defineProperty({}, this.uniqueProp, nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].first(this.veSelected)));
+
+      if (!first || !element) {
+        return false;
+      }
+
       return element[this.depthProp] === first[this.depthProp];
     },
     isSelected: function isSelected(id) {

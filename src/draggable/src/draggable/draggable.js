@@ -701,6 +701,10 @@ export default {
                 [this.uniqueProp]: Arr.first(this.veSelected)
             });
 
+            if ( ! first || ! element ) {
+                return false;
+            }
+
             return element[this.depthProp] === first[this.depthProp];
         },
 
