@@ -85,6 +85,9 @@
 .n-table .n-table-column .n-table-column__label {
     cursor: default;
     flex: 1 1 auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .n-table .n-table-column.n-left .n-table-column__label {

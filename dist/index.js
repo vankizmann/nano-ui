@@ -43817,7 +43817,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     window: {
       "default": function _default() {
-        return false;
+        return true;
       },
       type: [Boolean]
     },
