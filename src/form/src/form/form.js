@@ -1,4 +1,4 @@
-import { UUID, Num, Obj, Any, Locale } from "nano-js";
+import { UUID, Num, Arr, Obj, Any, Locale } from "nano-js";
 
 export default {
 
@@ -40,7 +40,16 @@ export default {
 
         addItem(item)
         {
-            this.items.push(item);
+            Arr.add(this.items, item, {
+                _uid: item._uid
+            });
+        },
+
+        removeItem(item)
+        {
+            Arr.remove(this.items,{
+                _uid: item._uid
+            });
         },
 
         updateForm()
@@ -75,10 +84,17 @@ export default {
         this.$watch('errors', this.updateErrors, { deep: true });
     },
 
-    render(h)
+    render($render)
     {
+        this.$render = $render;
+
+        let classList = [
+            'n-form',
+            'n-form--' + this.align
+        ];
+
         return (
-            <form class={['n-form', 'n-form--' + this.align]} on={this.$listeners}>
+            <form class={classList} on={this.$listeners}>
                 {this.$slots.default}
             </form>
         );

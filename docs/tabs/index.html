@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Nano UI Draggable</title>
+    <title>Nano UI Tabs</title>
 
     <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
@@ -27,10 +27,10 @@
 
         <n-form-item label="List">
             <n-tabs>
-                <n-tabs-item label="Hallo" name="default">
+                <n-tabs-item label="Hallo" name="default" icon="fa fa-ghost">
                     Hallo
                 </n-tabs-item>
-                <n-tabs-item label="Keep" name="keep" :keep="true">
+                <n-tabs-item label="Keep" name="keep" :keep="true" icon="fa fa-cat">
                     Keep
                 </n-tabs-item>
                 <n-tabs-item label="Test" name="test" :preload="true">

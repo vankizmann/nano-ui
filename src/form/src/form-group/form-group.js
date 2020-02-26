@@ -93,8 +93,10 @@ export default {
 
     },
 
-    render(h)
+    render($render)
     {
+        this.$render = $render;
+
         let classList = [
             'n-form-group', 'n-form--' + this.align
         ];

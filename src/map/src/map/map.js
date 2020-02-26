@@ -45,31 +45,35 @@ export default {
 
     data()
     {
-        return { map: null };
+        return { veMap: null };
     },
 
     mounted()
     {
-        this.map = new Map(this.$el, { lat: this.lat, lng: this.lng, zoom: this.zoom });
+        this.veMap = new Map(this.$el, {
+            lat: this.lat, lng: this.lng, zoom: this.zoom
+        });
     },
 
     methods: {
 
         getMap()
         {
-            return this.map;
+            return this.veMap;
         },
 
     },
 
-    render(h)
+    render($render)
     {
-        let className = [
+        this.$render = $render;
+
+        let classList = [
             'n-map'
         ];
 
         return (
-            <div class={className}>
+            <div class={classList}>
                 { this.$slots.default }
             </div>
         );

@@ -33,7 +33,7 @@ export default {
         label: {
             default()
             {
-                return this.$slots.label;
+                return '';
             },
             type: [String]
         },
@@ -41,7 +41,7 @@ export default {
         tooltip: {
             default()
             {
-                return this.$slots.tooltip
+                return '';
             },
             type: [String]
         },
@@ -52,7 +52,15 @@ export default {
                 return 'right-center';
             },
             type: [String]
-        }
+        },
+
+        tooltipWindow: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
 
     },
 
@@ -60,13 +68,13 @@ export default {
 
         focusInput()
         {
-            let el = Dom.find(this.$el).find('input');
+            let $input = Dom.find(this.$el).find('input');
 
-            if ( el.empty() ) {
+            if ( $input.empty() ) {
                 return;
             }
 
-            el.get(0).focus();
+            $input.get(0).focus();
         },
 
         gotoInput()
@@ -102,21 +110,69 @@ export default {
         this.NForm.$on('errors', this.gotoInput);
     },
 
-    render(h)
+    beforeDestroy()
     {
-        return <div class="n-form-item">
-            { (this.label || this.$slots.label) &&
-                <div class="n-form-item__label">
-                    <label vOn:click={this.focusInput}>{this.label}</label>
-                    { this.tooltip && <NPopover type="tooltip" position={this.tooltipPosition}>{ this.tooltip }</NPopover> }
-                </div>
-            }
-            <div class="n-form-item__input">
-                { this.$slots.default }
+        this.NForm.removeItem(this);
+    },
+
+    renderTooltip()
+    {
+        if ( ! this.tooltip && ! this.$slots.tooltip ) {
+            return null;
+        }
+
+        let props = {
+            position: this.tooltipPosition,
+            window: this.tooltipWindow,
+            contain: this.tooltipWindow
+        };
+
+        return (
+            <NPopover type="tooltip" props={props}>
+                { this.$slots.tooltip || this.tooltip }
+            </NPopover>
+        );
+    },
+
+    renderLabel()
+    {
+        if ( ! this.label && ! this.$slots.label ) {
+            return null;
+        }
+
+        return (
+            <div class="n-form-item__label">
+                <label vOn:click={this.focusInput}>
+                    { this.$slots.label || this.label }
+                </label>
+                { this.ctor('renderTooltip')() }
             </div>
+        )
+    },
+
+    renderError()
+    {
+        if ( ! Obj.has(this.NForm.errors, this.prop) ) {
+            return null;
+        }
+
+        return (
             <div class="n-form-item__error">
                 { Obj.get(this.NForm.errors, this.prop) }
             </div>
+        );
+    },
+
+    render($render)
+    {
+        this.$render = $render;
+
+        return <div class="n-form-item">
+            { this.ctor('renderLabel')() }
+            <div class="n-form-item__input">
+                { this.$slots.default }
+            </div>
+            { this.ctor('renderError')() }
         </div>;
     }
 }

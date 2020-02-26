@@ -32,7 +32,7 @@ export default {
         label: {
             default()
             {
-                return '';
+                return this.$slots.default[0].text;
             },
             type: [String]
         },

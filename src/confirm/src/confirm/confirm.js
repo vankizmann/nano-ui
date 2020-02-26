@@ -74,37 +74,37 @@ export default {
 
     },
 
-    watch: {
-
-        visible()
-        {
-            this.nativeVisible = this.visible;
-        }
-
+    data()
+    {
+        return {
+            veVisible: this.visible
+        };
     },
 
     methods: {
 
         abort()
         {
-            this.$emit('input', this.nativeVisible = false);
+            this.$emit('input', this.veVisible = false);
             this.$emit('abort');
         },
 
         confirm()
         {
-            this.$emit('input', this.nativeVisible = false);
+            this.$emit('input', this.veVisible = false);
             this.$emit('confirm');
         }
 
 
     },
 
-    data()
-    {
-        return {
-            nativeVisible: this.visible
-        };
+    watch: {
+
+        visible()
+        {
+            this.veVisible = this.visible;
+        }
+
     },
 
     render()
@@ -114,7 +114,7 @@ export default {
         ];
 
         return (
-            <NModal type="confirm" vModel={this.nativeVisible} selector={this.selector} width={this.width} position={this.position} closable={this.closable}>
+            <NModal type="confirm" vModel={this.veVisible} selector={this.selector} width={this.width} position={this.position} closable={this.closable}>
                 <template slot="raw">
                     <div class={className}>
                         <div class="n-confirm__icon">

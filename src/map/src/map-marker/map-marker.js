@@ -50,15 +50,15 @@ export default {
 
     data()
     {
-        return { uid: UUID(), marker: null };
+        return { veID: UUID(), veMarker: null };
     },
 
     methods: {
 
         updateMarkerPosition()
         {
-            this.$emit('update:lat', this.marker.marker.getPosition().lat());
-            this.$emit('update:lng', this.marker.marker.getPosition().lng());
+            this.$emit('update:lat', this.veMarker.marker.getPosition().lat());
+            this.$emit('update:lng', this.veMarker.marker.getPosition().lng());
         },
 
         initializeMarker()
@@ -71,22 +71,22 @@ export default {
                 options.html = this.$el.innerHTML;
             }
 
-            this.marker = this.NMap.getMap().createMarker(this.uid, options);
+            this.veMarker = this.NMap.getMap().createMarker(this.veID, options);
 
-            this.marker.marker.addListener('position_changed',
+            this.veMarker.marker.addListener('position_changed',
                 Any.debounce(this.updateMarkerPosition));
 
-            this.marker.marker.addListener('dragstart',
-                () => this.$emit('dragstart', this.marker));
+            this.veMarker.marker.addListener('dragstart',
+                () => this.$emit('dragstart', this.veMarker));
 
-            this.marker.marker.addListener('dragend',
-                () => this.$emit('dragend', this.marker));
+            this.veMarker.marker.addListener('dragend',
+                () => this.$emit('dragend', this.veMarker));
 
-            this.marker.marker.addListener('mouseover',
-                () => this.$emit('mouseenter', this.marker));
+            this.veMarker.marker.addListener('mouseover',
+                () => this.$emit('mouseenter', this.veMarker));
 
-            this.marker.marker.addListener('mouseout',
-                () => this.$emit('mouseleave', this.marker));
+            this.veMarker.marker.addListener('mouseout',
+                () => this.$emit('mouseleave', this.veMarker));
         },
 
         setMarkerByAddress(address)
@@ -99,7 +99,7 @@ export default {
                 this.Notify(this.trans('Address not found.'), 'danger');
             };
 
-            this.NMap.getMap().setMarkerByAddress(this.uid, address)
+            this.NMap.getMap().setMarkerByAddress(this.veID, address)
                 .then(successClosure, errorClosure);
         }
 
@@ -112,7 +112,11 @@ export default {
 
     render(h)
     {
-        return (<div style="display: none;">{this.$slots.default}</div>);
+        return (
+            <div style="display: none;">
+                { this.$slots.default }
+            </div>
+        );
     }
 
 }

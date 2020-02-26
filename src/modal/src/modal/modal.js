@@ -116,12 +116,12 @@ export default {
 
         visible()
         {
-            this.nativeVisible = this.visible;
+            this.veVisible = this.visible;
         },
 
-        nativeVisible()
+        veVisible()
         {
-            if ( this.nativeVisible === true ) {
+            if ( this.veVisible === true ) {
 
                 let interval = setInterval(() => {
 
@@ -138,7 +138,7 @@ export default {
                 Dom.find(this.element).addClass('n-modal--open');
             }
 
-            if ( this.nativeVisible === false ) {
+            if ( this.veVisible === false ) {
                 Dom.find(this.element).removeClass('n-modal--open');
             }
         }
@@ -164,10 +164,10 @@ export default {
             }
 
             if ( Any.isEmpty(element) === false ) {
-                return this.$emit('input', this.nativeVisible = true);
+                return this.$emit('input', this.veVisible = true);
             }
 
-            if ( this.nativeVisible === false ) {
+            if ( this.veVisible === false ) {
                 return;
             }
 
@@ -185,7 +185,7 @@ export default {
                 return;
             }
 
-            this.$emit('input', this.nativeVisible = false);
+            this.$emit('input', this.veVisible = false);
         },
 
     },
@@ -193,7 +193,7 @@ export default {
     data()
     {
         return {
-            node: null, nativeVisible: this.visible
+            node: null, veVisible: this.visible
         };
     },
 
@@ -209,7 +209,7 @@ export default {
         }
 
         this.$on('close', () => {
-            this.$emit('input', this.nativeVisible = false);
+            this.$emit('input', this.veVisible = false);
         });
 
         Dom.find(document.body).append(this.$el);
@@ -231,50 +231,76 @@ export default {
             null, { _uid: this._uid });
     },
 
-    render(h)
+    renderClose()
     {
-        if ( this.visible === false && this.nativeVisible === false ) {
+        if ( ! this.closable ) {
             return null;
         }
 
-        let className = [
-            'n-modal', 'n-modal--' + this.type, 'n-modal--' + this.position
+        return (
+            <div ref="close" class="n-modal__close">
+                <span class={this.icons.times}></span>
+            </div>
+        );
+    },
+
+    renderHeader()
+    {
+        if ( ! this.$slots.header && ! this.title ) {
+            return null;
+        }
+
+        return (
+            <div class="n-modal__header">
+                { [this.$slots.header || this.title, this.ctor('renderClose')()] }
+            </div>
+        );
+    },
+
+    renderFooter()
+    {
+        if ( ! this.$slots.footer ) {
+            return null;
+        }
+
+        return (
+            <div class="n-modal__footer">
+                { this.$slots.footer }
+            </div>
+        );
+    },
+
+    render($render)
+    {
+        this.$render = $render;
+
+        if ( ! this.visible && ! this.veVisible ) {
+            return null;
+        }
+
+        let classList = [
+            'n-modal',
+            'n-modal--' + this.type,
+            'n-modal--' + this.position
         ];
 
         if ( this.closable === true ) {
-            className.push('n-modal--closable');
+            classList.push('n-closable');
         }
 
         let style = {
             width: this.width, height: this.height
         };
 
-        if ( ! this.$slots.header && ! Any.isEmpty(this.title) ) {
-            this.$slots.header = this.title;
-        }
-
         return (
-            <div class={className}>
+            <div class={classList}>
                 { ! this.$slots.raw &&
                     <div class="n-modal__frame" style={style}>
-                        { this.$slots.header &&
-                            <div class="n-modal__header">
-                                { this.$slots.header }
-                                { this.closable === true &&
-                                    <div ref="close" class="n-modal__close">
-                                        <span class={this.icons.times}></span>
-                                    </div>
-                                }
-                            </div>
-                        }
+                        { this.ctor('renderHeader')() }
                         <div class="n-modal__body">
                             { this.$slots.default }
                         </div>
-                        { this.$slots.footer &&
-                            <div class="n-modal__footer">
-                                { this.$slots.footer }
-                            </div>
-                        }
+                        { this.ctor('renderFooter')() }
                     </div>
                 }
                 { this.$slots.raw &&
