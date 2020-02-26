@@ -115,7 +115,7 @@ export default {
 
     renderHeader()
     {
-        if ( ! this.veTabs.length ) {
+        if ( this.veTabs.length <= 1 ) {
             return null;
         }
 

@@ -260,8 +260,6 @@ export default {
             this.updateDelay));
 
         this.importItems();
-
-        this.initialized = true;
     },
 
     methods: {
@@ -552,6 +550,8 @@ export default {
 
             this.clearItems();
             this.refreshItems();
+
+            this.$emit('moved', this.veCopy);
         },
 
         clearItems()
@@ -662,7 +662,7 @@ export default {
         selectAllItems()
         {
             this.veSelected = Arr.each(this.veCopy,
-                (item) =>  item[this.uniqueProp]);
+                (item) => item[this.uniqueProp]);
 
             this.updateSelected();
         },
@@ -680,8 +680,7 @@ export default {
 
         unselectAllItems()
         {
-            this.veSelected = Arr.each(this.veCopy,
-                (item) =>  item[this.uniqueProp]);
+            this.veSelected = [];
 
             this.updateSelected();
         },

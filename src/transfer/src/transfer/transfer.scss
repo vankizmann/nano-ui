@@ -50,7 +50,7 @@
 }
 
 .n-inverse .n-transfer__pane {
-    border-color: $--color-gray-70;
+    border-color: $--color-gray-90;
 }
 
 .n-transfer__header {
@@ -59,22 +59,27 @@
     flex-direction: row;
     align-items: center;
     width: 100%;
-    height: 48px;
+    min-height: 48px;
+    padding: 8px 14px;
     border-bottom: 1px solid $--color-gray-10;
 }
 
 .n-inverse .n-transfer__header {
-    border-bottom-color: $--color-gray-70;
+    border-bottom-color: $--color-gray-90;
 }
 
-.n-transfer__header .n-transfer__item {
-    font-size: 17px;
+.n-transfer__header .n-transfer__title{
+    font-size: 16px;
 }
 
 .n-transfer__search {
     flex: 0 0 auto;
     width: 100%;
     border-bottom: 1px solid $--color-gray-10;
+}
+
+.n-inverse .n-transfer__search {
+    border-bottom-color: $--color-gray-90;
 }
 
 .n-transfer__search .n-input {

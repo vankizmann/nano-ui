@@ -117,12 +117,6 @@
 .n-scrollbar > .n-scrollbar-h {
     opacity: 0;
     transition: opacity 200ms;
-    //background: rgba($color-black, 0.15);
-}
-
-.n-inverse .n-scrollbar > .n-scrollbar-v,
-.n-inverse .n-scrollbar > .n-scrollbar-h {
-    background: rgba($color-white, 0.15);
 }
 
 .n-scrollbar:hover > .n-scrollbar-v,

@@ -344,8 +344,6 @@ export default {
         };
 
         let props = {
-            checked: false,
-            intermediate: false,
             disabled: ! this.items.length
         };
 

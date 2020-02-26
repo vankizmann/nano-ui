@@ -39404,7 +39404,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     });
     this.$watch('items', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.importItems, this.updateDelay));
     this.importItems();
-    this.initialized = true;
   },
   methods: {
     exportItems: function exportItems() {
@@ -39592,6 +39591,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.clearItems();
       this.refreshItems();
+      this.$emit('moved', this.veCopy);
     },
     clearItems: function clearItems() {
       this.veSelected = [];
@@ -39695,11 +39695,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.updateSelected();
     },
     unselectAllItems: function unselectAllItems() {
-      var _this7 = this;
-
-      this.veSelected = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veCopy, function (item) {
-        return item[_this7.uniqueProp];
-      });
+      this.veSelected = [];
       this.updateSelected();
     },
     canSelect: function canSelect(element) {
@@ -39722,12 +39718,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(this.veSelected, id);
     },
     isAllSelected: function isAllSelected() {
-      var _this8 = this;
+      var _this7 = this;
 
       var onlyFirstDepth = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       var items = onlyFirstDepth ? this.veCopy : this.veItems;
       var selected = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].reduce(items, function (merge, item) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(_this8.veSelected, item[_this8.uniqueProp]);
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(_this7.veSelected, item[_this7.uniqueProp]);
       }, true);
       return selected && !!items.length;
     },
@@ -39742,20 +39738,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return true;
     },
     canDrop: function canDrop(element) {
-      var _this9 = this;
+      var _this8 = this;
 
       var targetPath = element[this.pathProp] + '.' + element[this.indexProp];
       var selected = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veSelected, function (item) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(_this9.veItems, _defineProperty({}, _this9.uniqueProp, item));
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(_this8.veItems, _defineProperty({}, _this8.uniqueProp, item));
       });
       var result = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].filter(selected, function (source) {
-        var sourcePath = source[_this9.pathProp] + '.' + source[_this9.indexProp];
+        var sourcePath = source[_this8.pathProp] + '.' + source[_this8.indexProp];
         return targetPath.indexOf("".concat(sourcePath, ".")) !== -1 || sourcePath === targetPath;
       });
       return !result.length;
     },
     itemReducer: function itemReducer(merge, items) {
-      var _this10 = this;
+      var _this9 = this;
 
       var depth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
       var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'veCopy';
@@ -39763,24 +39759,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(items, function (item, index) {
         var _dragObject;
 
-        var dragObject = (_dragObject = {}, _defineProperty(_dragObject, _this10.indexProp, index), _defineProperty(_dragObject, _this10.pathProp, path), _defineProperty(_dragObject, _this10.depthProp, depth), _dragObject);
-        dragObject[_this10.uniqueProp] = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, _this10.uniqueProp);
+        var dragObject = (_dragObject = {}, _defineProperty(_dragObject, _this9.indexProp, index), _defineProperty(_dragObject, _this9.pathProp, path), _defineProperty(_dragObject, _this9.depthProp, depth), _dragObject);
+        dragObject[_this9.uniqueProp] = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, _this9.uniqueProp);
 
-        if (!dragObject[_this10.uniqueProp]) {
-          nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].set(_this10, path + '.' + index + '.' + _this10.uniqueProp, dragObject[_this10.uniqueProp] = Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])());
+        if (!dragObject[_this9.uniqueProp]) {
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].set(_this9, path + '.' + index + '.' + _this9.uniqueProp, dragObject[_this9.uniqueProp] = Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])());
         } // Order prop to sort on drag
 
 
-        dragObject[_this10.orderProp] = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].merge(orders, [index + 1]); // Md5 item to check for any changes
+        dragObject[_this9.orderProp] = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].merge(orders, [index + 1]); // Md5 item to check for any changes
 
-        dragObject[_this10.keyProp] = nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].md5(dragObject);
+        dragObject[_this9.keyProp] = nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].md5(dragObject);
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].push(merge, dragObject);
 
-        if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(_this10.veExpanded, dragObject[_this10.uniqueProp])) {
+        if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(_this9.veExpanded, dragObject[_this9.uniqueProp])) {
           return;
         }
 
-        _this10.itemReducer(merge, nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, _this10.childProp, []), depth + 1, "".concat(path, ".").concat(index, ".").concat(_this10.childProp), dragObject[_this10.orderProp]);
+        _this9.itemReducer(merge, nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, _this9.childProp, []), depth + 1, "".concat(path, ".").concat(index, ".").concat(_this9.childProp), dragObject[_this9.orderProp]);
       });
       return merge;
     },
@@ -39947,7 +39943,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return this.$render('NDraggableItem', data, [this.$scopedSlots["default"]]);
   },
   render: function render($render) {
-    var _this11 = this;
+    var _this10 = this;
 
     this.$render = $render;
 
@@ -39956,7 +39952,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
 
     var slots = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.$slots, function (slot, name) {
-      return _this11.$render('template', {
+      return _this10.$render('template', {
         slot: name
       }, slot);
     });
@@ -45691,8 +45687,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       input: this.toggleSelected
     };
     var props = {
-      checked: false,
-      intermediate: false,
       disabled: !this.items.length
     };
     var uniqueKey = Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])();
@@ -46046,7 +46040,7 @@ __webpack_require__.r(__webpack_exports__);
   renderHeader: function renderHeader() {
     var h = this.$createElement;
 
-    if (!this.veTabs.length) {
+    if (this.veTabs.length <= 1) {
       return null;
     }
 
@@ -46589,6 +46583,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
@@ -46633,243 +46633,359 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   computed: {
-    selectedSource: function selectedSource() {
+    veSource: function veSource() {
       var _this = this;
 
-      var selected = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.selectedKeysSource, function (key) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(_this.valueSource, _defineProperty({}, _this.uniqueProp, key));
+      var source = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].filter(this.items, function (item) {
+        return !nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(_this.value, _defineProperty({}, _this.uniqueProp, item[_this.uniqueProp]));
       });
-      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].clone(selected);
+
+      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.veSourceSearch)) {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].clone(source);
+      }
+
+      var searchPattern = new RegExp(this.veSourceSearch);
+      source = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].filter(source, function (item) {
+        return item[_this.labelProp].match(searchPattern);
+      });
+      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].clone(source);
     },
-    selectedTarget: function selectedTarget() {
+    veTarget: function veTarget() {
       var _this2 = this;
 
-      var selected = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.selectedKeysTarget, function (key) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(_this2.value, _defineProperty({}, _this2.uniqueProp, key));
+      var target = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].filter(this.items, function (item) {
+        return !!nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(_this2.value, _defineProperty({}, _this2.uniqueProp, item[_this2.uniqueProp]));
       });
-      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].clone(selected);
-    }
-  },
-  methods: {
-    moveToSource: function moveToSource() {
-      var _this3 = this;
 
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.selectedTarget, function (target) {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(_this3.value, _defineProperty({}, _this3.uniqueProp, nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(target, _this3.uniqueProp)));
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(_this3.valueSource, target);
-      });
-      this.selectedKeysSource = [];
-      this.selectedKeysTarget = [];
-    },
-    moveToTarget: function moveToTarget() {
-      var _this4 = this;
+      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.veTargetSearch)) {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].clone(target);
+      }
 
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.selectedSource, function (source) {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(_this4.valueSource, _defineProperty({}, _this4.uniqueProp, nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(source, _this4.uniqueProp)));
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(_this4.value, source);
+      var searchPattern = new RegExp(this.veTargetSearch);
+      target = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].filter(target, function (item) {
+        return item[_this2.labelProp].match(searchPattern);
       });
-      this.selectedKeysSource = [];
-      this.selectedKeysTarget = [];
-    },
-    getSourceValue: function getSourceValue() {
-      var _this5 = this;
-
-      this.valueSource = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].filter(this.items, function (item) {
-        var index = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].findIndex(_this5.value, _defineProperty({}, _this5.uniqueProp, nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, _this5.uniqueProp)));
-        return index === -1;
-      });
+      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].clone(target);
     }
   },
   data: function data() {
     return {
-      valueSource: [],
-      selectedKeysSource: [],
-      searchSource: '',
-      selectedKeysTarget: [],
-      searchTarget: ''
+      veID: Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])(),
+      veSourceSearch: '',
+      veTargetSearch: ''
     };
   },
-  beforeMount: function beforeMount() {
-    this.getSourceValue();
-    this.$watch('items', this.getSourceValue);
-    this.$watch('value', this.getSourceValue);
-  },
-  render: function render() {
-    var _this6 = this;
+  methods: {
+    moveItemsTarget: function moveItemsTarget(items) {
+      var _this3 = this;
 
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(items.split(','), function (source) {
+        var item = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(_this3.items, _defineProperty({}, _this3.uniqueProp, source));
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(_this3.value, item, _defineProperty({}, _this3.uniqueProp, source));
+      });
+      this.$emit('input', this.value);
+    },
+    moveItemsSource: function moveItemsSource(items) {
+      var _this4 = this;
+
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(items.split(','), function (source) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(_this4.value, _defineProperty({}, _this4.uniqueProp, source));
+      });
+      this.$emit('input', this.value);
+    },
+    moveToSource: function moveToSource() {
+      var _this5 = this;
+
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.$refs.target.veSelected, function (target) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(_this5.value, _defineProperty({}, _this5.uniqueProp, target));
+      });
+      this.$refs.target.unselectAllItems();
+      this.$emit('input', this.value);
+    },
+    moveToTarget: function moveToTarget() {
+      var _this6 = this;
+
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.$refs.source.veSelected, function (source) {
+        var item = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(_this6.items, _defineProperty({}, _this6.uniqueProp, source));
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(_this6.value, item, source, _defineProperty({}, _this6.uniqueProp, source));
+      });
+      this.$refs.source.unselectAllItems();
+      this.$emit('input', this.value);
+    },
+    toggleSourceSelected: function toggleSourceSelected() {
+      this.$refs.source.toggleAllItems(this.$refs.source.isIntermediate(true));
+    },
+    toggleTargetSelected: function toggleTargetSelected() {
+      this.$refs.target.toggleAllItems(this.$refs.target.isIntermediate(true));
+    }
+  },
+  renderSourceSelect: function renderSourceSelect() {
+    var h = this.$createElement;
+    var events = {
+      input: this.toggleSourceSelected
+    };
+    var props = {
+      disabled: !this.veSource.length
+    };
+
+    if (this.$refs.source && this.items.length) {
+      props['checked'] = this.$refs.source.isAllSelected(true);
+      props['intermediate'] = this.$refs.source.isIntermediate(true);
+    }
+
+    return h("div", {
+      "class": "n-transfer__select"
+    }, [h("NCheckbox", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
+      "key": Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])()
+    }, {
+      "props": props
+    }, {}, {
+      "on": events
+    }]))]);
+  },
+  renderSourceTitle: function renderSourceTitle() {
+    var h = this.$createElement;
+    var labelHtml = h("span", {
+      "class": "n-transfer__item-title"
+    }, [this.sourceLabel]);
+    var counterHtml = h("span", {
+      "key": Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])(),
+      "class": "n-transfer__item-count"
+    }, [this.veSource.length]);
+    return h("div", {
+      "class": "n-transfer__title"
+    }, [[labelHtml, counterHtml]]);
+  },
+  renderSourceHeader: function renderSourceHeader() {
+    var h = this.$createElement;
+    return h("div", {
+      "class": "n-transfer__header"
+    }, [this.ctor('renderSourceSelect')(), this.ctor('renderSourceTitle')()]);
+  },
+  renderSourceSearch: function renderSourceSearch() {
+    var _this7 = this;
+
+    var h = this.$createElement;
+    var props = {
+      placeholder: this.trans('Search item'),
+      icon: this.icons.times,
+      iconDisabled: !this.veSourceSearch
+    };
+    var events = {
+      iconClick: function iconClick() {
+        return _this7.veSourceSearch = '';
+      },
+      input: function input() {
+        return _this7.$refs.source.unselectAllItems();
+      }
+    };
+    return h("div", {
+      "class": "n-transfer__search"
+    }, [h("NInput", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{}, {
+      "props": props
+    }, {}, {
+      "on": events
+    }, {
+      "model": {
+        value: _this7.veSourceSearch,
+        callback: function callback($$v) {
+          _this7.veSourceSearch = $$v;
+        }
+      }
+    }]))]);
+  },
+  renderSourceBody: function renderSourceBody() {
+    var h = this.$createElement;
+    var props = {
+      group: [this.veID],
+      items: this.veSource,
+      renderSelect: true,
+      viewportHeight: true,
+      disableMove: true,
+      updateDelay: 100,
+      renderNode: this.ctor('renderNode')
+    };
+    var events = {
+      move: this.moveItemsSource
+    };
+    return h("div", {
+      "class": "n-transfer__body"
+    }, [h("NDraggable", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
+      "ref": "source"
+    }, {
+      "props": props
+    }, {}, {
+      "on": events
+    }]))]);
+  },
+  renderTargetSelect: function renderTargetSelect() {
+    var h = this.$createElement;
+    var events = {
+      input: this.toggleTargetSelected
+    };
+    var props = {
+      disabled: !this.veTarget.length
+    };
+
+    if (this.$refs.source && this.items.length) {
+      props['checked'] = this.$refs.target.isAllSelected(true);
+      props['intermediate'] = this.$refs.target.isIntermediate(true);
+    }
+
+    return h("div", {
+      "class": "n-transfer__select"
+    }, [h("NCheckbox", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
+      "key": Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])()
+    }, {
+      "props": props
+    }, {}, {
+      "on": events
+    }]))]);
+  },
+  renderTargetTitle: function renderTargetTitle() {
+    var h = this.$createElement;
+    var labelHtml = h("span", {
+      "class": "n-transfer__item-title"
+    }, [this.targetLabel]);
+    var counterHtml = h("span", {
+      "key": Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])(),
+      "class": "n-transfer__item-count"
+    }, [this.veTarget.length]);
+    return h("div", {
+      "class": "n-transfer__title"
+    }, [[labelHtml, counterHtml]]);
+  },
+  renderTargetHeader: function renderTargetHeader() {
+    var h = this.$createElement;
+    return h("div", {
+      "class": "n-transfer__header"
+    }, [this.ctor('renderTargetSelect')(), this.ctor('renderTargetTitle')()]);
+  },
+  renderTargetSearch: function renderTargetSearch() {
+    var _this8 = this;
+
+    var h = this.$createElement;
+    var props = {
+      placeholder: this.trans('Search item'),
+      icon: this.icons.times,
+      iconDisabled: !this.veTargetSearch
+    };
+    var events = {
+      iconClick: function iconClick() {
+        return _this8.veTargetSearch = '';
+      },
+      input: function input() {
+        return _this8.$refs.target.unselectAllItems();
+      }
+    };
+    return h("div", {
+      "class": "n-transfer__search"
+    }, [h("NInput", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{}, {
+      "props": props
+    }, {}, {
+      "on": events
+    }, {
+      "model": {
+        value: _this8.veTargetSearch,
+        callback: function callback($$v) {
+          _this8.veTargetSearch = $$v;
+        }
+      }
+    }]))]);
+  },
+  renderTargetBody: function renderTargetBody() {
+    var h = this.$createElement;
+    var props = {
+      group: [this.veID],
+      items: this.veTarget,
+      renderSelect: true,
+      viewportHeight: true,
+      disableMove: true,
+      updateDelay: 100,
+      renderNode: this.ctor('renderNode')
+    };
+    var events = {
+      move: this.moveItemsTarget
+    };
+    return h("div", {
+      "class": "n-transfer__body"
+    }, [h("NDraggable", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
+      "ref": "target"
+    }, {
+      "props": props
+    }, {}, {
+      "on": events
+    }]))]);
+  },
+  renderNode: function renderNode(props) {
+    var h = this.$createElement;
+
+    if (this.$scopedSlots["default"]) {
+      return this.$scopedSlots["default"](props);
+    }
+
+    return h("div", {
+      "class": "n-transfer__item"
+    }, [props.value[this.labelProp]]);
+  },
+  renderMoveSource: function renderMoveSource() {
+    var h = this.$createElement;
+    var events = {
+      click: this.moveToTarget
+    };
+    var props = {
+      square: true,
+      disabled: true,
+      icon: this.icons.angleRight
+    };
+
+    if (this.$refs.source) {
+      props.disabled = !this.$refs.source.veSelected.length;
+    }
+
+    return h("NButton", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
+      "key": Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])()
+    }, {
+      "props": props
+    }, {}, {
+      "on": events
+    }]));
+  },
+  renderMoveTarget: function renderMoveTarget() {
+    var h = this.$createElement;
+    var events = {
+      click: this.moveToSource
+    };
+    var props = {
+      square: true,
+      disabled: true,
+      icon: this.icons.angleLeft
+    };
+
+    if (this.$refs.target) {
+      props.disabled = !this.$refs.target.veSelected.length;
+    }
+
+    return h("NButton", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
+      "key": Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])()
+    }, {
+      "props": props
+    }, {}, {
+      "on": events
+    }]));
+  },
+  render: function render($render) {
     var h = arguments[0];
-
-    var renderLabel = function renderLabel(_ref) {
-      var value = _ref.value,
-          key = _ref.key;
-      return h("div", {
-        "class": "n-transfer__item"
-      }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(value, _this6.labelProp)]);
-    };
-
-    var propsSource = {
-      // selected: this.selectedSource,
-      uniqueProp: this.uniqueProp
-    };
-    var eventsSource = {// 'input': () => {
-      //     this.selectedKeysSource = [];
-      //     this.selectedKeysTarget = [];
-      // },
-      //
-      // 'update:selected': (selected) => {
-      //     this.selectedKeysSource = Arr.each(selected,
-      //         (item) => item[this.uniqueProp]);
-      // }
-    };
-    var propsTarget = {
-      // selected: this.selectedTarget,
-      uniqueProp: this.uniqueProp
-    };
-    var eventsTarget = {// 'input': () => {
-      //     this.selectedKeysSource = [];
-      //     this.selectedKeysTarget = [];
-      // },
-      // 'update:selected': (selected) => {
-      //     this.selectedKeysTarget = Arr.each(selected,
-      //         (item) => item[this.uniqueProp]);
-      // }
-    };
-    var scopedSlots = {
-      "default": this.$scopedSlots["default"] || renderLabel
-    };
-    var valueSource = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].filter(this.valueSource, function (item) {
-      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(_this6.searchSource)) {
-        return true;
-      }
-
-      var regex = new RegExp(nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].regexEscape(_this6.searchSource), 'ig');
-      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, _this6.labelProp).match(regex);
-    });
-    var valueTarget = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].filter(this.value, function (item) {
-      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(_this6.searchTarget)) {
-        return true;
-      }
-
-      var regex = new RegExp(nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].regexEscape(_this6.searchTarget), 'ig');
-      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, _this6.labelProp).match(regex);
-    });
+    this.$render = $render;
     return h("div", {
       "class": "n-transfer"
     }, [h("div", {
       "class": "n-transfer__pane"
-    }, [h("div", {
-      "class": "n-transfer__header"
-    }, [h("div", {
-      "class": "n-transfer__item"
-    }, [h("span", {
-      "class": "n-transfer__item-title"
-    }, [this.sourceLabel]), " ", h("span", {
-      "class": "n-transfer__item-count"
-    }, [this.valueSource.length])])]), h("div", {
-      "class": "n-transfer__search"
-    }, [h("NInput", {
-      "attrs": {
-        "placeholder": this.trans('Search item'),
-        "icon": this.icons.times,
-        "iconDisabled": nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.searchSource)
-      },
-      "model": {
-        value: _this6.searchSource,
-        callback: function callback($$v) {
-          _this6.searchSource = $$v;
-        }
-      },
-      "on": {
-        "iconClick": function iconClick() {
-          return _this6.searchSource = '';
-        }
-      }
-    })]), h("div", {
-      "class": "n-transfer__body"
-    }, [h("NDraggable", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
-      "attrs": {
-        "viewportHeight": true
-      },
-      "scopedSlots": scopedSlots
-    }, {
-      "on": eventsSource
-    }, {
-      "attrs": {
-        "renderSelect": true
-      },
-      "model": {
-        value: _this6.valueSource,
-        callback: function callback($$v) {
-          _this6.valueSource = $$v;
-        }
-      }
-    }]))])]), h("div", {
+    }, [this.ctor('renderSourceHeader')(), this.ctor('renderSourceSearch')(), this.ctor('renderSourceBody')()]), h("div", {
       "class": "n-transfer__controls"
-    }, [h("NButton", {
-      "attrs": {
-        "square": true,
-        "disabled": this.selectedKeysSource.length === 0,
-        "icon": this.icons.angleRight
-      },
-      "on": {
-        "click": function click() {
-          return _this6.moveToTarget();
-        }
-      }
-    }), h("NButton", {
-      "attrs": {
-        "square": true,
-        "disabled": this.selectedKeysTarget.length === 0,
-        "icon": this.icons.angleLeft
-      },
-      "on": {
-        "click": function click() {
-          return _this6.moveToSource();
-        }
-      }
-    })]), h("div", {
+    }, [this.ctor('renderMoveSource')(), this.ctor('renderMoveTarget')()]), h("div", {
       "class": "n-transfer__pane"
-    }, [h("div", {
-      "class": "n-transfer__header"
-    }, [h("div", {
-      "class": "n-transfer__item"
-    }, [h("span", {
-      "class": "n-transfer__item-title"
-    }, [this.targetLabel]), " ", h("span", {
-      "class": "n-transfer__item-count"
-    }, [this.value.length])])]), h("div", {
-      "class": "n-transfer__search"
-    }, [h("NInput", {
-      "attrs": {
-        "placeholder": this.trans('Search item'),
-        "icon": this.icons.times
-      },
-      "model": {
-        value: _this6.searchTarget,
-        callback: function callback($$v) {
-          _this6.searchTarget = $$v;
-        }
-      }
-    })]), h("div", {
-      "class": "n-transfer__body"
-    }, [h("NDraggable", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
-      "attrs": {
-        "viewportHeight": true
-      },
-      "scopedSlots": scopedSlots
-    }, {
-      "on": eventsTarget
-    }, {
-      "attrs": {
-        "renderSelect": true
-      },
-      "model": {
-        value: _this6.value,
-        callback: function callback($$v) {
-          _this6.value = $$v;
-        }
-      }
-    }]))])])]);
+    }, [this.ctor('renderTargetHeader')(), this.ctor('renderTargetSearch')(), this.ctor('renderTargetBody')()])]);
   }
 });
 

@@ -1,4 +1,4 @@
-import { Str, Arr, Obj, Any } from "nano-js";
+import { Str, Arr, Obj, Any, UUID } from "nano-js";
 
 export default {
 
@@ -58,199 +58,395 @@ export default {
 
     computed: {
 
-        selectedSource()
+        veSource()
         {
-            let selected = Arr.each(this.selectedKeysSource, (key) => {
-                return Arr.find(this.valueSource, { [this.uniqueProp]: key });
+            let source = Arr.filter(this.items, (item) => {
+                return ! Arr.find(this.value, { [this.uniqueProp]: item[this.uniqueProp] });
             });
 
-            return Arr.clone(selected);
+            if ( Any.isEmpty(this.veSourceSearch) ) {
+                return Arr.clone(source);
+            }
+
+            let searchPattern = new RegExp(this.veSourceSearch);
+
+            source = Arr.filter(source, (item) => {
+                return item[this.labelProp].match(searchPattern);
+            });
+
+            return Arr.clone(source);
         },
 
-        selectedTarget()
+        veTarget()
         {
-            let selected = Arr.each(this.selectedKeysTarget, (key) => {
-                return Arr.find(this.value, { [this.uniqueProp]: key });
+            let target = Arr.filter(this.items, (item) => {
+                return !! Arr.find(this.value, { [this.uniqueProp]: item[this.uniqueProp] });
             });
 
-            return Arr.clone(selected);
+            if ( Any.isEmpty(this.veTargetSearch) ) {
+                return Arr.clone(target);
+            }
+
+            let searchPattern = new RegExp(this.veTargetSearch);
+
+            target = Arr.filter(target, (item) => {
+                return item[this.labelProp].match(searchPattern);
+            });
+
+            return Arr.clone(target);
         }
 
+    },
+    data()
+    {
+        return {
+            veID: UUID(),
+            veSourceSearch: '',
+            veTargetSearch: '',
+        };
     },
 
     methods: {
 
-        moveToSource()
+        moveItemsTarget(items)
         {
-            Arr.each(this.selectedTarget, (target) => {
+            Arr.each(items.split(','), (source) => {
 
-                Arr.remove(this.value, {
-                    [this.uniqueProp]: Obj.get(target, this.uniqueProp)
+                let item = Arr.find(this.items, {
+                    [this.uniqueProp]: source
                 });
 
-                Arr.add(this.valueSource, target);
+                Arr.add(this.value, item, {
+                    [this.uniqueProp]: source
+                });
+
             });
 
-            this.selectedKeysSource = [];
-            this.selectedKeysTarget = [];
+            this.$emit('input', this.value);
+        },
+
+        moveItemsSource(items)
+        {
+            Arr.each(items.split(','), (source) => {
+
+                Arr.remove(this.value, {
+                    [this.uniqueProp]: source
+                });
+
+            });
+
+            this.$emit('input', this.value);
+        },
+
+        moveToSource()
+        {
+            Arr.each(this.$refs.target.veSelected, (target) => {
+
+                Arr.remove(this.value, {
+                    [this.uniqueProp]: target
+                });
+
+            });
+
+            this.$refs.target.unselectAllItems();
+
+            this.$emit('input', this.value);
         },
 
         moveToTarget()
         {
-            Arr.each(this.selectedSource, (source) => {
+            Arr.each(this.$refs.source.veSelected, (source) => {
 
-                Arr.remove(this.valueSource, {
-                    [this.uniqueProp]: Obj.get(source, this.uniqueProp)
+                let item = Arr.find(this.items, {
+                    [this.uniqueProp]: source
                 });
 
-                Arr.add(this.value, source);
+                Arr.add(this.value, item, source, {
+                    [this.uniqueProp]: source
+                });
+
             });
 
-            this.selectedKeysSource = [];
-            this.selectedKeysTarget = [];
+            this.$refs.source.unselectAllItems();
+
+            this.$emit('input', this.value);
         },
 
-        getSourceValue()
+        toggleSourceSelected()
         {
-            this.valueSource = Arr.filter(this.items, (item) => {
+            this.$refs.source.toggleAllItems(
+                this.$refs.source.isIntermediate(true)
+            );
+        },
 
-                let index = Arr.findIndex(this.value, {
-                    [this.uniqueProp]: Obj.get(item, this.uniqueProp)
-                });
+        toggleTargetSelected()
+        {
+            this.$refs.target.toggleAllItems(
+                this.$refs.target.isIntermediate(true)
+            );
+        },
 
-                return index === -1;
-            });
+    },
+
+    renderSourceSelect()
+    {
+        let events = {
+            input: this.toggleSourceSelected
+        };
+
+        let props = {
+            disabled: ! this.veSource.length
+        };
+
+        if ( this.$refs.source && this.items.length ) {
+            props['checked'] = this.$refs.source.isAllSelected(true);
+            props['intermediate'] = this.$refs.source.isIntermediate(true);
         }
 
+        return (
+            <div class="n-transfer__select">
+                <NCheckbox key={UUID()} props={props} on={events} />
+            </div>
+        );
     },
 
-    data()
+    renderSourceTitle()
     {
-        return {
-            valueSource: [],
-            selectedKeysSource: [],
-            searchSource: '',
-            selectedKeysTarget: [],
-            searchTarget: ''
-        };
+        let labelHtml = (
+            <span class="n-transfer__item-title">
+                { this.sourceLabel }
+            </span>
+        );
+
+        let counterHtml = (
+            <span key={UUID()} class="n-transfer__item-count">
+                { this.veSource.length }
+            </span>
+        );
+
+        return (
+            <div class="n-transfer__title">
+                { [labelHtml, counterHtml] }
+            </div>
+        );
     },
 
-    beforeMount()
+    renderSourceHeader()
     {
-        this.getSourceValue();
-
-        this.$watch('items', this.getSourceValue);
-        this.$watch('value', this.getSourceValue);
+        return (
+            <div class="n-transfer__header">
+                { this.ctor('renderSourceSelect')() }
+                { this.ctor('renderSourceTitle')() }
+            </div>
+        );
     },
 
-    render()
+    renderSourceSearch()
     {
-
-        let renderLabel = ({ value, key }) => {
-            return (
-                <div class="n-transfer__item">{ Obj.get(value, this.labelProp) }</div>
-            );
+        let props = {
+            placeholder: this.trans('Search item'),
+            icon: this.icons.times,
+            iconDisabled: ! this.veSourceSearch
         };
 
-        let propsSource = {
-            // selected: this.selectedSource,
-            uniqueProp: this.uniqueProp
+        let events = {
+            iconClick: () => this.veSourceSearch = '',
+            input: () => this.$refs.source.unselectAllItems()
         };
 
-        let eventsSource = {
+        return (
+            <div class="n-transfer__search">
+                <NInput vModel={this.veSourceSearch} props={props} on={events} />
+            </div>
+        )
+    },
 
-            // 'input': () => {
-            //     this.selectedKeysSource = [];
-            //     this.selectedKeysTarget = [];
-            // },
-            //
-            // 'update:selected': (selected) => {
-            //     this.selectedKeysSource = Arr.each(selected,
-            //         (item) => item[this.uniqueProp]);
-            // }
-
+    renderSourceBody()
+    {
+        let props = {
+            group: [this.veID],
+            items: this.veSource,
+            renderSelect: true,
+            viewportHeight: true,
+            disableMove: true,
+            updateDelay: 100,
+            renderNode: this.ctor('renderNode'),
         };
 
-        let propsTarget = {
-            // selected: this.selectedTarget,
-            uniqueProp: this.uniqueProp
+        let events = {
+            move: this.moveItemsSource
         };
 
-        let eventsTarget = {
+        return (
+            <div class="n-transfer__body">
+                <NDraggable ref="source" props={props} on={events} />
+            </div>
+        );
+    },
 
-            // 'input': () => {
-            //     this.selectedKeysSource = [];
-            //     this.selectedKeysTarget = [];
-            // },
-
-            // 'update:selected': (selected) => {
-            //     this.selectedKeysTarget = Arr.each(selected,
-            //         (item) => item[this.uniqueProp]);
-            // }
-
+    renderTargetSelect()
+    {
+        let events = {
+            input: this.toggleTargetSelected
         };
 
-        let scopedSlots = {
-            default: this.$scopedSlots.default || renderLabel
+        let props = {
+            disabled: ! this.veTarget.length
         };
 
-        let valueSource = Arr.filter(this.valueSource, (item) => {
+        if ( this.$refs.source && this.items.length ) {
+            props['checked'] = this.$refs.target.isAllSelected(true);
+            props['intermediate'] = this.$refs.target.isIntermediate(true);
+        }
 
-            if ( Any.isEmpty(this.searchSource) ) {
-                return true;
-            }
+        return (
+            <div class="n-transfer__select">
+                <NCheckbox key={UUID()} props={props} on={events} />
+            </div>
+        );
+    },
 
-            let regex = new RegExp(
-                Str.regexEscape(this.searchSource)
-            , 'ig');
+    renderTargetTitle()
+    {
+        let labelHtml = (
+            <span class="n-transfer__item-title">
+                { this.targetLabel }
+            </span>
+        );
 
-            return Obj.get(item, this.labelProp).match(regex);
-        });
+        let counterHtml = (
+            <span key={UUID()} class="n-transfer__item-count">
+                { this.veTarget.length }
+            </span>
+        );
 
-        let valueTarget = Arr.filter(this.value, (item) => {
+        return (
+            <div class="n-transfer__title">
+                { [labelHtml, counterHtml] }
+            </div>
+        );
+    },
 
-            if ( Any.isEmpty(this.searchTarget) ) {
-                return true;
-            }
+    renderTargetHeader()
+    {
+        return (
+            <div class="n-transfer__header">
+                { this.ctor('renderTargetSelect')() }
+                { this.ctor('renderTargetTitle')() }
+            </div>
+        );
+    },
 
-            let regex = new RegExp(
-                Str.regexEscape(this.searchTarget)
-            , 'ig');
+    renderTargetSearch()
+    {
+        let props = {
+            placeholder: this.trans('Search item'),
+            icon: this.icons.times,
+            iconDisabled: ! this.veTargetSearch
+        };
 
-            return Obj.get(item, this.labelProp).match(regex);
-        });
+        let events = {
+            iconClick: () => this.veTargetSearch = '',
+            input: () => this.$refs.target.unselectAllItems()
+        };
+
+        return (
+            <div class="n-transfer__search">
+                <NInput vModel={this.veTargetSearch} props={props} on={events} />
+            </div>
+        )
+    },
+
+    renderTargetBody()
+    {
+        let props = {
+            group: [this.veID],
+            items: this.veTarget,
+            renderSelect: true,
+            viewportHeight: true,
+            disableMove: true,
+            updateDelay: 100,
+            renderNode: this.ctor('renderNode'),
+        };
+
+        let events = {
+            move: this.moveItemsTarget
+        };
+
+        return (
+            <div class="n-transfer__body">
+                <NDraggable ref="target" props={props} on={events} />
+            </div>
+        );
+    },
+
+    renderNode(props)
+    {
+        if ( this.$scopedSlots.default ) {
+            return this.$scopedSlots.default(props);
+        }
+        return (
+            <div class="n-transfer__item">{ props.value[this.labelProp] }</div>
+        );
+    },
+
+    renderMoveSource()
+    {
+        let events = {
+            click: this.moveToTarget
+        };
+
+        let props = {
+            square: true,  disabled: true, icon: this.icons.angleRight
+        };
+
+        if ( this.$refs.source ) {
+            props.disabled = ! this.$refs.source.veSelected.length;
+        }
+
+        return (
+            <NButton key={UUID()} props={props} on={events} />
+        );
+    },
+
+    renderMoveTarget()
+    {
+        let events = {
+            click: this.moveToSource
+        };
+
+        let props = {
+            square: true,  disabled: true, icon: this.icons.angleLeft
+        };
+
+        if ( this.$refs.target ) {
+            props.disabled = ! this.$refs.target.veSelected.length;
+        }
+
+        return (
+            <NButton key={UUID()} props={props} on={events} />
+        );
+    },
+
+    render($render)
+    {
+        this.$render = $render;
 
         return (
             <div class="n-transfer">
                 <div class="n-transfer__pane">
-                    <div class="n-transfer__header">
-                        <div class="n-transfer__item">
-                            <span class="n-transfer__item-title">{ this.sourceLabel }</span> <span class="n-transfer__item-count">{ this.valueSource.length }</span>
-                        </div>
-                    </div>
-                    <div class="n-transfer__search">
-                        <NInput vModel={this.searchSource} placeholder={this.trans('Search item')} icon={this.icons.times} iconDisabled={Any.isEmpty(this.searchSource)} vOn:iconClick={() => this.searchSource = ''} />
-                    </div>
-                    <div class="n-transfer__body">
-                        <NDraggable vModel={this.valueSource} viewportHeight={true} scopedSlots={scopedSlots} on={eventsSource} renderSelect={true} />
-                    </div>
+                    { this.ctor('renderSourceHeader')() }
+                    { this.ctor('renderSourceSearch')() }
+                    { this.ctor('renderSourceBody')() }
                 </div>
                 <div class="n-transfer__controls">
-                    <NButton square={true} disabled={this.selectedKeysSource.length === 0} icon={this.icons.angleRight} vOn:click={() => this.moveToTarget()} />
-                    <NButton square={true} disabled={this.selectedKeysTarget.length === 0} icon={this.icons.angleLeft} vOn:click={() => this.moveToSource()} />
+                    { this.ctor('renderMoveSource')() }
+                    { this.ctor('renderMoveTarget')() }
                 </div>
                 <div class="n-transfer__pane">
-                    <div class="n-transfer__header">
-                        <div class="n-transfer__item">
-                            <span class="n-transfer__item-title">{ this.targetLabel }</span> <span class="n-transfer__item-count">{this.value.length}</span>
-                        </div>
-                    </div>
-                    <div class="n-transfer__search">
-                        <NInput vModel={this.searchTarget} placeholder={this.trans('Search item')} icon={this.icons.times} />
-                    </div>
-                    <div class="n-transfer__body">
-                        <NDraggable vModel={this.value} viewportHeight={true} scopedSlots={scopedSlots} on={eventsTarget} renderSelect={true} />
-                    </div>
+                    { this.ctor('renderTargetHeader')() }
+                    { this.ctor('renderTargetSearch')() }
+                    { this.ctor('renderTargetBody')() }
                 </div>
             </div>
         );
