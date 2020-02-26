@@ -46637,7 +46637,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       var source = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].filter(this.items, function (item) {
-        return !nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(_this.value, _defineProperty({}, _this.uniqueProp, item[_this.uniqueProp]));
+        return !nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(_this.veValue, _defineProperty({}, _this.uniqueProp, item[_this.uniqueProp]));
       });
 
       if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.veSourceSearch)) {
@@ -46654,7 +46654,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this2 = this;
 
       var target = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].filter(this.items, function (item) {
-        return !!nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(_this2.value, _defineProperty({}, _this2.uniqueProp, item[_this2.uniqueProp]));
+        return !!nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(_this2.veValue, _defineProperty({}, _this2.uniqueProp, item[_this2.uniqueProp]));
       });
 
       if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.veTargetSearch)) {
@@ -46671,6 +46671,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       veID: Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])(),
+      veValue: this.value,
       veSourceSearch: '',
       veTargetSearch: ''
     };
@@ -46681,36 +46682,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(items.split(','), function (source) {
         var item = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(_this3.items, _defineProperty({}, _this3.uniqueProp, source));
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(_this3.value, item, _defineProperty({}, _this3.uniqueProp, source));
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(_this3.veValue, item, _defineProperty({}, _this3.uniqueProp, source));
       });
-      this.$emit('input', this.value);
+      this.$emit('input', this.veValue);
     },
     moveItemsSource: function moveItemsSource(items) {
       var _this4 = this;
 
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(items.split(','), function (source) {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(_this4.value, _defineProperty({}, _this4.uniqueProp, source));
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(_this4.veValue, _defineProperty({}, _this4.uniqueProp, source));
       });
-      this.$emit('input', this.value);
+      this.$emit('input', this.veValue);
     },
     moveToSource: function moveToSource() {
       var _this5 = this;
 
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.$refs.target.veSelected, function (target) {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(_this5.value, _defineProperty({}, _this5.uniqueProp, target));
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(_this5.veValue, _defineProperty({}, _this5.uniqueProp, target));
       });
       this.$refs.target.unselectAllItems();
-      this.$emit('input', this.value);
+      this.$emit('input', this.veValue);
     },
     moveToTarget: function moveToTarget() {
       var _this6 = this;
 
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.$refs.source.veSelected, function (source) {
         var item = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(_this6.items, _defineProperty({}, _this6.uniqueProp, source));
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(_this6.value, item, source, _defineProperty({}, _this6.uniqueProp, source));
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(_this6.veValue, item, source, _defineProperty({}, _this6.uniqueProp, source));
       });
       this.$refs.source.unselectAllItems();
-      this.$emit('input', this.value);
+      this.$emit('input', this.veValue);
     },
     toggleSourceSelected: function toggleSourceSelected() {
       this.$refs.source.toggleAllItems(this.$refs.source.isIntermediate(true));

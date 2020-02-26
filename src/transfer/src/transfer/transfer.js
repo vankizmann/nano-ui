@@ -61,7 +61,7 @@ export default {
         veSource()
         {
             let source = Arr.filter(this.items, (item) => {
-                return ! Arr.find(this.value, { [this.uniqueProp]: item[this.uniqueProp] });
+                return ! Arr.find(this.veValue, { [this.uniqueProp]: item[this.uniqueProp] });
             });
 
             if ( Any.isEmpty(this.veSourceSearch) ) {
@@ -80,7 +80,7 @@ export default {
         veTarget()
         {
             let target = Arr.filter(this.items, (item) => {
-                return !! Arr.find(this.value, { [this.uniqueProp]: item[this.uniqueProp] });
+                return !! Arr.find(this.veValue, { [this.uniqueProp]: item[this.uniqueProp] });
             });
 
             if ( Any.isEmpty(this.veTargetSearch) ) {
@@ -101,6 +101,7 @@ export default {
     {
         return {
             veID: UUID(),
+            veValue: this.value,
             veSourceSearch: '',
             veTargetSearch: '',
         };
@@ -116,33 +117,33 @@ export default {
                     [this.uniqueProp]: source
                 });
 
-                Arr.add(this.value, item, {
+                Arr.add(this.veValue, item, {
                     [this.uniqueProp]: source
                 });
 
             });
 
-            this.$emit('input', this.value);
+            this.$emit('input', this.veValue);
         },
 
         moveItemsSource(items)
         {
             Arr.each(items.split(','), (source) => {
 
-                Arr.remove(this.value, {
+                Arr.remove(this.veValue, {
                     [this.uniqueProp]: source
                 });
 
             });
 
-            this.$emit('input', this.value);
+            this.$emit('input', this.veValue);
         },
 
         moveToSource()
         {
             Arr.each(this.$refs.target.veSelected, (target) => {
 
-                Arr.remove(this.value, {
+                Arr.remove(this.veValue, {
                     [this.uniqueProp]: target
                 });
 
@@ -150,7 +151,7 @@ export default {
 
             this.$refs.target.unselectAllItems();
 
-            this.$emit('input', this.value);
+            this.$emit('input', this.veValue);
         },
 
         moveToTarget()
@@ -161,7 +162,7 @@ export default {
                     [this.uniqueProp]: source
                 });
 
-                Arr.add(this.value, item, source, {
+                Arr.add(this.veValue, item, source, {
                     [this.uniqueProp]: source
                 });
 
@@ -169,7 +170,7 @@ export default {
 
             this.$refs.source.unselectAllItems();
 
-            this.$emit('input', this.value);
+            this.$emit('input', this.veValue);
         },
 
         toggleSourceSelected()
