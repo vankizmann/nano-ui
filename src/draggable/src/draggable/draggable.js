@@ -209,7 +209,7 @@ export default {
         updateDelay: {
             default()
             {
-                return 1000;
+                return 100;
             },
             type: [Number]
         },

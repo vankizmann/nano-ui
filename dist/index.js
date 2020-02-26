@@ -39367,7 +39367,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     updateDelay: {
       "default": function _default() {
-        return 1000;
+        return 100;
       },
       type: [Number]
     },
