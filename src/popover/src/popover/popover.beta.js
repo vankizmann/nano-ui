@@ -108,7 +108,7 @@ export default {
         updateInterval: {
             default()
             {
-                return 150;
+                return 1000 / 15;
             },
             type: [Number]
         }
@@ -156,7 +156,7 @@ export default {
                 return { display: 'none' };
             }
 
-            let rect = this.$el.getBoundingClientRect();
+            let rect = this.target.getBoundingClientRect();
 
             let isInViewport = rect.top >= 0 && rect.bottom <= Dom.find(window).height() &&
                 rect.left >= 0 && rect.right <= Dom.find(window).width();

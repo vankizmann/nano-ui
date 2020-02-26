@@ -43215,7 +43215,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateInterval: {
       "default": function _default() {
-        return 150;
+        return 1000 / 15;
       },
       type: [Number]
     }
@@ -43255,7 +43255,7 @@ __webpack_require__.r(__webpack_exports__);
         };
       }
 
-      var rect = this.$el.getBoundingClientRect();
+      var rect = this.target.getBoundingClientRect();
       var isInViewport = rect.top >= 0 && rect.bottom <= nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(window).height() && rect.left >= 0 && rect.right <= nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(window).width();
 
       if (!isInViewport && this.veVisible) {
