@@ -39076,7 +39076,8 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     var attrs = {
-      width: '100%'
+      width: '100%',
+      flex: '1 1 auto'
     };
     return this.NDraggable.wrapNode ? this.$render('div', {
       attrs: attrs
@@ -39360,7 +39361,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     wrapNode: {
       "default": function _default() {
-        return true;
+        return false;
       },
       type: [Boolean]
     },
