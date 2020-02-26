@@ -44921,7 +44921,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return h("div", {
       "class": classList,
       "style": style
-    }, [this.$render(componentName, {
+    }, [this.scopedSlots["default"] ? this.scopedSlots["default"](props) : this.$render(componentName, {
       props: props
     })]);
   },

@@ -488,7 +488,7 @@ export default {
 
         return (
             <div class={classList} style={style}>
-                { this.$render(componentName, { props }) }
+                { this.scopedSlots.default ? this.scopedSlots.default(props) : this.$render(componentName, { props }) }
             </div>
         );
     },
