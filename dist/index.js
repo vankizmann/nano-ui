@@ -39723,7 +39723,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var onlyFirstDepth = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       var items = onlyFirstDepth ? this.veCopy : this.veItems;
       var selected = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].reduce(items, function (merge, item) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(_this7.veSelected, item[_this7.uniqueProp]);
+        return merge && nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(_this7.veSelected, item[_this7.uniqueProp]);
       }, true);
       return selected && !!items.length;
     },
@@ -46729,7 +46729,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       disabled: !this.veSource.length
     };
 
-    if (this.$refs.source && this.items.length) {
+    if (this.$refs.source && this.veSource.length) {
       props['checked'] = this.$refs.source.isAllSelected(true);
       props['intermediate'] = this.$refs.source.isIntermediate(true);
     }
@@ -46828,7 +46828,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       disabled: !this.veTarget.length
     };
 
-    if (this.$refs.source && this.items.length) {
+    if (this.$refs.target && this.veTarget.length) {
       props['checked'] = this.$refs.target.isAllSelected(true);
       props['intermediate'] = this.$refs.target.isIntermediate(true);
     }

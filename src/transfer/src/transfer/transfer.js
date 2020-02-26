@@ -199,7 +199,7 @@ export default {
             disabled: ! this.veSource.length
         };
 
-        if ( this.$refs.source && this.items.length ) {
+        if ( this.$refs.source && this.veSource.length ) {
             props['checked'] = this.$refs.source.isAllSelected(true);
             props['intermediate'] = this.$refs.source.isIntermediate(true);
         }
@@ -295,7 +295,7 @@ export default {
             disabled: ! this.veTarget.length
         };
 
-        if ( this.$refs.source && this.items.length ) {
+        if ( this.$refs.target && this.veTarget.length ) {
             props['checked'] = this.$refs.target.isAllSelected(true);
             props['intermediate'] = this.$refs.target.isIntermediate(true);
         }

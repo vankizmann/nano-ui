@@ -719,7 +719,7 @@ export default {
                 this.veCopy : this.veItems;
 
             let selected = Arr.reduce(items, (merge, item) => {
-                return Arr.has(this.veSelected, item[this.uniqueProp]);
+                return merge && Arr.has(this.veSelected, item[this.uniqueProp]);
             }, true);
 
             return selected && !! items.length;
