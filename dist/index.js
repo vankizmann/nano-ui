@@ -41669,15 +41669,46 @@ __webpack_require__.r(__webpack_exports__);
         return 'default';
       },
       type: [String]
+    },
+    minTime: {
+      "default": function _default() {
+        return 1000;
+      },
+      type: [Number]
+    }
+  },
+  data: function data() {
+    return {
+      veVisible: this.visible,
+      veTiming: Date.now()
+    };
+  },
+  methods: {
+    startTimer: function startTimer() {
+      this.veTiming = Date.now();
+    },
+    stopTimer: function stopTimer() {
+      var timing = Date.now() - this.veTiming;
+
+      if (timing < this.minTime) {
+        return nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].delay(this.stopTimer, this.minTime - timing + 10);
+      }
+
+      this.veVisible = this.visible;
+    }
+  },
+  watch: {
+    visible: function visible() {
+      this.visible ? this.startTimer() : this.stopTimer();
     }
   },
   render: function render($render) {
     var h = arguments[0];
     this.$render = $render;
     var classList = ['n-loader', 'n-loader--' + this.size];
-    var parentVisible = this.NLoader && this.NLoader.visible;
+    var parentVisible = this.NLoader && this.NLoader.veVisible;
 
-    if (this.visible && !parentVisible) {
+    if (this.veVisible && !parentVisible) {
       classList.push('n-loader--active');
     }
 

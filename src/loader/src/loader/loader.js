@@ -39,6 +39,50 @@ export default {
                 return 'default';
             },
             type: [String]
+        },
+
+        minTime: {
+            default()
+            {
+                return 1000;
+            },
+            type: [Number]
+        }
+
+    },
+
+    data()
+    {
+        return {
+            veVisible: this.visible, veTiming: Date.now()
+        };
+    },
+
+    methods: {
+
+        startTimer()
+        {
+            this.veTiming = Date.now();
+        },
+
+        stopTimer()
+        {
+            let timing = Date.now() - this.veTiming;
+
+            if ( timing < this.minTime ) {
+                return Any.delay(this.stopTimer, this.minTime - timing + 10);
+            }
+
+            this.veVisible = this.visible;
+        }
+
+    },
+
+    watch: {
+
+        visible()
+        {
+            this.visible ? this.startTimer() : this.stopTimer();
         }
 
     },
@@ -52,9 +96,9 @@ export default {
         ];
 
         let parentVisible = this.NLoader &&
-            this.NLoader.visible;
+            this.NLoader.veVisible;
 
-        if ( this.visible && ! parentVisible ) {
+        if ( this.veVisible && ! parentVisible ) {
             classList.push('n-loader--active');
         }
 
