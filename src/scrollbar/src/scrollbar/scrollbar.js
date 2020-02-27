@@ -31,11 +31,11 @@ export default {
         {
             let styles = Dom.find(this.$el).css(), addStyle = {};
 
-            if ( styles.bottom && this.relative ) {
+            if ( styles.bottom ) {
                 addStyle['margin-top'] = '-15px';
             }
 
-            if ( styles.right && this.relative ) {
+            if ( styles.right ) {
                 addStyle['margin-left'] = '-15px';
             }
 
@@ -71,11 +71,13 @@ export default {
                 _uid: this._uid
             };
 
-            Dom.find(this.$el).on('sizechange', Any.debounce(this.adjustScrollbars), $event);
+            if ( this.relative ) {
+                Dom.find(this.$el).on('sizechange', Any.debounce(this.adjustScrollbars), $event);
+                this.adjustScrollbars();
+            }
 
             Dom.find(this.$el).parent().addClass('n-scrollbar');
 
-            this.adjustScrollbars();
         },
 
         destroy()

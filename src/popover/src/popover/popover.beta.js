@@ -282,7 +282,7 @@ export default {
                     style.left = 0;
                 }
 
-                if ( style.left + nodeWidth > this.parent.scrollWidth ) {
+                if ( style.left + nodeWidth > this.parent.clientWidth ) {
                     style.left = offset.left - scroll.left - nodeWidth;
                 }
 
@@ -290,8 +290,8 @@ export default {
                     style.top = 0;
                 }
 
-                if ( style.top + nodeHeight > this.parent.scrollHeight ) {
-                    style.top = offset.top - scroll.top - nodeHeight;
+                if ( style.top + nodeHeight > this.parent.clientHeight ) {
+                    style.top = this.parent.clientHeight - nodeHeight;
                 }
 
             }
@@ -302,11 +302,11 @@ export default {
                     style.left = 0;
                 }
 
-                if ( style.left + nodeWidth > this.parent.scrollWidth ) {
-                    style.left = offset.left - scroll.left - nodeWidth;
+                if ( style.left + nodeWidth > this.parent.clientWidth ) {
+                    style.left = this.parent.clientWidth - nodeWidth;
                 }
 
-                if ( style.top + nodeHeight > this.parent.scrollHeight ) {
+                if ( style.top + nodeHeight > this.parent.clientHeight ) {
                     style.top = offset.top - scroll.top - nodeHeight;
                 }
 

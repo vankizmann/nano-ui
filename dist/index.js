@@ -43364,7 +43364,7 @@ __webpack_require__.r(__webpack_exports__);
           style.left = 0;
         }
 
-        if (style.left + nodeWidth > this.parent.scrollWidth) {
+        if (style.left + nodeWidth > this.parent.clientWidth) {
           style.left = offset.left - scroll.left - nodeWidth;
         }
 
@@ -43372,8 +43372,8 @@ __webpack_require__.r(__webpack_exports__);
           style.top = 0;
         }
 
-        if (style.top + nodeHeight > this.parent.scrollHeight) {
-          style.top = offset.top - scroll.top - nodeHeight;
+        if (style.top + nodeHeight > this.parent.clientHeight) {
+          style.top = this.parent.clientHeight - nodeHeight;
         }
       }
 
@@ -43382,11 +43382,11 @@ __webpack_require__.r(__webpack_exports__);
           style.left = 0;
         }
 
-        if (style.left + nodeWidth > this.parent.scrollWidth) {
-          style.left = offset.left - scroll.left - nodeWidth;
+        if (style.left + nodeWidth > this.parent.clientWidth) {
+          style.left = this.parent.clientWidth - nodeWidth;
         }
 
-        if (style.top + nodeHeight > this.parent.scrollHeight) {
+        if (style.top + nodeHeight > this.parent.clientHeight) {
           style.top = offset.top - scroll.top - nodeHeight;
         }
 
@@ -43647,11 +43647,11 @@ __webpack_require__.r(__webpack_exports__);
       var styles = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).css(),
           addStyle = {};
 
-      if (styles.bottom && this.relative) {
+      if (styles.bottom) {
         addStyle['margin-top'] = '-15px';
       }
 
-      if (styles.right && this.relative) {
+      if (styles.right) {
         addStyle['margin-left'] = '-15px';
       }
 
@@ -43683,9 +43683,13 @@ __webpack_require__.r(__webpack_exports__);
       var $event = {
         _uid: this._uid
       };
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).on('sizechange', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.adjustScrollbars), $event);
+
+      if (this.relative) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).on('sizechange', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.adjustScrollbars), $event);
+        this.adjustScrollbars();
+      }
+
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).parent().addClass('n-scrollbar');
-      this.adjustScrollbars();
     },
     destroy: function destroy() {
       if (!this.optiscroll) {
