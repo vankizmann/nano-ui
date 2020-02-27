@@ -27,6 +27,25 @@ export default {
 
     methods: {
 
+        adjustScrollbars()
+        {
+            let styles = Dom.find(this.$el).css(), addStyle = {};
+
+            if ( styles.bottom && this.relative ) {
+                addStyle['margin-top'] = '-15px';
+            }
+
+            if ( styles.right && this.relative ) {
+                addStyle['margin-left'] = '-15px';
+            }
+
+            if ( Any.isEmpty(addStyle) ) {
+                return;
+            }
+
+            Dom.find(this.$el).css(addStyle);
+        },
+
         initialize()
         {
             if ( this.optiscroll ) {
@@ -48,7 +67,15 @@ export default {
                 Dom.find(this.$el).parent().addClass('n-relative');
             }
 
+            let $event = {
+                _uid: this._uid
+            };
+
+            Dom.find(this.$el).on('sizechange', Any.debounce(this.adjustScrollbars), $event);
+
             Dom.find(this.$el).parent().addClass('n-scrollbar');
+
+            this.adjustScrollbars();
         },
 
         destroy()
@@ -61,6 +88,11 @@ export default {
 
             delete this.optiscroll;
 
+            let $event = {
+                _uid: this._uid
+            };
+
+            Dom.find(this.$el).off('sizechange', null, $event);
             Dom.find(this.$el).parent().removeClass('n-scrollbar');
         },
 

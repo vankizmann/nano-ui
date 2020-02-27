@@ -43643,6 +43643,24 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    adjustScrollbars: function adjustScrollbars() {
+      var styles = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).css(),
+          addStyle = {};
+
+      if (styles.bottom && this.relative) {
+        addStyle['margin-top'] = '-15px';
+      }
+
+      if (styles.right && this.relative) {
+        addStyle['margin-left'] = '-15px';
+      }
+
+      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(addStyle)) {
+        return;
+      }
+
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).css(addStyle);
+    },
     initialize: function initialize() {
       if (this.optiscroll) {
         this.destroy();
@@ -43662,7 +43680,12 @@ __webpack_require__.r(__webpack_exports__);
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).parent().addClass('n-relative');
       }
 
+      var $event = {
+        _uid: this._uid
+      };
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).on('sizechange', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.adjustScrollbars), $event);
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).parent().addClass('n-scrollbar');
+      this.adjustScrollbars();
     },
     destroy: function destroy() {
       if (!this.optiscroll) {
@@ -43671,6 +43694,10 @@ __webpack_require__.r(__webpack_exports__);
 
       this.optiscroll.destroy();
       delete this.optiscroll;
+      var $event = {
+        _uid: this._uid
+      };
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).off('sizechange', null, $event);
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).parent().removeClass('n-scrollbar');
     },
     refresh: function refresh() {

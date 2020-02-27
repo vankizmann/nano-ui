@@ -143,14 +143,10 @@
 .n-scrollbar.is-enabled > .n-scrollbar-content {
   z-index: 1;
   overflow: scroll;
-  -webkit-overflow-scrolling: touch;
-  right: -15px; }
+  -webkit-overflow-scrolling: touch; }
 
 .n-scrollbar.is-enabled.n-relative > .n-scrollbar-content {
-  position: relative;
-  width: calc(100% + 15px);
-  height: calc(100% + 15px);
-  margin-left: -15px; }
+  position: relative; }
 
 .n-scrollbar.is-enabled:not(.n-relative) > .n-scrollbar-content {
   position: absolute;
