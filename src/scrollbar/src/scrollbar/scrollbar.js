@@ -41,6 +41,7 @@ export default {
                 minTrackSize: 10,
                 wrapContent: false,
                 preventParentScroll: true,
+                forceScrollbars: true
             });
 
             if ( this.relative ) {
