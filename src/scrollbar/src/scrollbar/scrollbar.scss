@@ -12,6 +12,8 @@
     z-index: 1;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
+    right: -15px;
+    bottom: -15px;
 }
 
 .n-scrollbar.is-enabled.n-relative > .n-scrollbar-content {
