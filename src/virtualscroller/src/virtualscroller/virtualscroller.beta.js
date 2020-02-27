@@ -226,11 +226,9 @@ export default {
 
         return Arr.each(items, (value, index) => {
 
-            if ( index < bufferStart || index > bufferEnd ) {
-                return (<div key={`${this._uid}-${index}`} class="n-virtualscroller__item" style={{ height: this.itemHeight + 'px' }}></div>);
-            }
+            let ghost = index < bufferStart || index > bufferEnd;
 
-            return this.renderNode({ value, index });
+            return this.renderNode({ value, index, ghost });
         });
     },
 

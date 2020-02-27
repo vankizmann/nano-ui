@@ -38940,6 +38940,12 @@ __webpack_require__.r(__webpack_exports__);
       "default": function _default() {
         return {};
       }
+    },
+    ghost: {
+      "default": function _default() {
+        return true;
+      },
+      type: [Boolean]
     }
   },
   computed: {
@@ -39158,6 +39164,10 @@ __webpack_require__.r(__webpack_exports__);
     };
     var classList = ['n-draggable-item'];
 
+    if (this.ghost) {
+      classList.push('n-ghost');
+    }
+
     if (this.NDraggable.isSelected(this)) {
       classList.push('n-selected');
     }
@@ -39177,7 +39187,7 @@ __webpack_require__.r(__webpack_exports__);
         "data-id": this.id,
         "draggable": draggable
       }
-    }]), [this.ctor('renderSpacer')(), this.ctor('renderExpand')(), this.ctor('renderSelect')(), this.ctor('renderNode')()]);
+    }]), [!this.ghost && [this.ctor('renderSpacer')(), this.ctor('renderExpand')(), this.ctor('renderSelect')(), this.ctor('renderNode')()]]);
   }
 });
 
@@ -47304,26 +47314,17 @@ __webpack_require__.r(__webpack_exports__);
   renderItems: function renderItems() {
     var _this = this;
 
-    var h = this.$createElement;
     var items = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].slice(nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].vals(this.items), this.state.startBuffer, this.state.endBuffer); // Get buffer end
 
     var bufferStart = this.state.startIndex - this.state.startBuffer; // Get buffer start
 
     var bufferEnd = bufferStart + this.state.itemsCount;
     return nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(items, function (value, index) {
-      if (index < bufferStart || index > bufferEnd) {
-        return h("div", {
-          "key": "".concat(_this._uid, "-").concat(index),
-          "class": "n-virtualscroller__item",
-          "style": {
-            height: _this.itemHeight + 'px'
-          }
-        });
-      }
-
+      var ghost = index < bufferStart || index > bufferEnd;
       return _this.renderNode({
         value: value,
-        index: index
+        index: index,
+        ghost: ghost
       });
     });
   },

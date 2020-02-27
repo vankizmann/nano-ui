@@ -21,6 +21,14 @@ export default {
             }
         },
 
+        ghost: {
+            default()
+            {
+                return true
+            },
+            type: [Boolean]
+        }
+
     },
 
     computed: {
@@ -296,6 +304,10 @@ export default {
             'n-draggable-item'
         ];
 
+        if ( this.ghost ) {
+            classList.push('n-ghost');
+        }
+
         if ( this.NDraggable.isSelected(this) ) {
             classList.push('n-selected');
         }
@@ -309,10 +321,9 @@ export default {
 
         return (
             <div class={classList} style={style} on={events} data-id={this.id} draggable={draggable}>
-                { this.ctor('renderSpacer')() }
-                { this.ctor('renderExpand')() }
-                { this.ctor('renderSelect')() }
-                { this.ctor('renderNode')() }
+                { ! this.ghost && [
+                    this.ctor('renderSpacer')(), this.ctor('renderExpand')(), this.ctor('renderSelect')(), this.ctor('renderNode')()
+                ] }
             </div>
         )
     }
