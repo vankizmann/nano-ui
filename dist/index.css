@@ -2741,6 +2741,17 @@
 .n-table-column.n-right .n-table-cell {
   text-align: right; }
 
+.n-table-cell.n-table-cell--image {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch; }
+
 .n-table-filter {
   position: relative;
   display: flex;
