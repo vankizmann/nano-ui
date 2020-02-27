@@ -212,14 +212,14 @@ export default {
         allowDrag: {
             default()
             {
-                return () => true;
+                return () => false;
             }
         },
 
         allowDrop: {
             default()
             {
-                return () => true;
+                return () => false;
             }
         },
 
@@ -234,7 +234,7 @@ export default {
         updateDelay: {
             default()
             {
-                return 0;
+                return 100;
             },
             type: [Number]
         },
