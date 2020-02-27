@@ -58,7 +58,7 @@ export default {
         frameRate: {
             default()
             {
-                return 5;
+                return 30;
             },
             type: [Number]
         }
@@ -113,17 +113,17 @@ export default {
                 endBufferDiff = this.state.endBuffer;
             }
 
-            let startIndexDiff = Math.abs(this.state.startIndex - startIndex);
-
-            if ( startIndexDiff < Math.round(this.preloadItems / 3) && startIndex !== 0 ) {
-                startIndex = this.state.startIndex;
-            }
-
-            let endIndexDiff = Math.abs(this.state.endIndex - endIndex);
-
-            if ( endIndexDiff < Math.round(this.bufferItems / 3) && endIndex !== this.bufferItems.length ) {
-                endIndex = this.state.endIndex;
-            }
+            // let startIndexDiff = Math.abs(this.state.startIndex - startIndex);
+            //
+            // if ( startIndexDiff < Math.round(this.preloadItems / 3) && startIndex !== 0 ) {
+            //     startIndex = this.state.startIndex;
+            // }
+            //
+            // let endIndexDiff = Math.abs(this.state.endIndex - endIndex);
+            //
+            // if ( endIndexDiff < Math.round(this.bufferItems / 3) && endIndex !== this.bufferItems.length ) {
+            //     endIndex = this.state.endIndex;
+            // }
 
             let itemsCount = Math.floor(this.height / this.itemHeight) +
                 this.preloadItems;
@@ -161,12 +161,12 @@ export default {
 
         eventScroll()
         {
-            this.refreshDriver();
+            Any.async(this.refreshDriver);
         },
 
         eventScrollstop()
         {
-            this.refreshDriver();
+            Any.async(this.refreshDriver);
         }
 
     },

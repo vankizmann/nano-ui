@@ -528,9 +528,11 @@ export default {
 
         props = Obj.assign(props, { column: this });
 
+        let key = `${this.prop}-${props.value[this.NTable.uniqueProp]}`;
+
         return (
             <div class={classList} style={style}>
-                { this.$scopedSlots.default ? this.$scopedSlots.default(props) : this.$render(componentName, { props }) }
+                { this.$scopedSlots.default ? this.$scopedSlots.default(props) : this.$render(componentName, { key, props }) }
             </div>
         );
     },

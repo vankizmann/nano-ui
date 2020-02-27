@@ -53,7 +53,7 @@ export default {
             }
 
             Optiscroll.globalSettings.checkFrequency = 750;
-            Optiscroll.globalSettings.scrollMinUpdateInterval = 32;
+            Optiscroll.globalSettings.scrollMinUpdateInterval = 64;
 
             this.optiscroll = new Optiscroll(this.$el.parentNode, {
                 classPrefix: 'n-scrollbar-',

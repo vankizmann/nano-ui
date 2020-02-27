@@ -43686,7 +43686,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       optiscroll__WEBPACK_IMPORTED_MODULE_2___default.a.globalSettings.checkFrequency = 750;
-      optiscroll__WEBPACK_IMPORTED_MODULE_2___default.a.globalSettings.scrollMinUpdateInterval = 32;
+      optiscroll__WEBPACK_IMPORTED_MODULE_2___default.a.globalSettings.scrollMinUpdateInterval = 64;
       this.optiscroll = new optiscroll__WEBPACK_IMPORTED_MODULE_2___default.a(this.$el.parentNode, {
         classPrefix: 'n-scrollbar-',
         minTrackSize: 10,
@@ -45028,10 +45028,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     props = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].assign(props, {
       column: this
     });
+    var key = "".concat(this.prop, "-").concat(props.value[this.NTable.uniqueProp]);
     return h("div", {
       "class": classList,
       "style": style
     }, [this.$scopedSlots["default"] ? this.$scopedSlots["default"](props) : this.$render(componentName, {
+      key: key,
       props: props
     })]);
   },
@@ -47182,7 +47184,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     frameRate: {
       "default": function _default() {
-        return 5;
+        return 30;
       },
       type: [Number]
     }
@@ -47228,19 +47230,18 @@ __webpack_require__.r(__webpack_exports__);
 
       if (endBufferDiff < Math.round(this.bufferItems / 3)) {
         endBufferDiff = this.state.endBuffer;
-      }
+      } // let startIndexDiff = Math.abs(this.state.startIndex - startIndex);
+      //
+      // if ( startIndexDiff < Math.round(this.preloadItems / 3) && startIndex !== 0 ) {
+      //     startIndex = this.state.startIndex;
+      // }
+      //
+      // let endIndexDiff = Math.abs(this.state.endIndex - endIndex);
+      //
+      // if ( endIndexDiff < Math.round(this.bufferItems / 3) && endIndex !== this.bufferItems.length ) {
+      //     endIndex = this.state.endIndex;
+      // }
 
-      var startIndexDiff = Math.abs(this.state.startIndex - startIndex);
-
-      if (startIndexDiff < Math.round(this.preloadItems / 3) && startIndex !== 0) {
-        startIndex = this.state.startIndex;
-      }
-
-      var endIndexDiff = Math.abs(this.state.endIndex - endIndex);
-
-      if (endIndexDiff < Math.round(this.bufferItems / 3) && endIndex !== this.bufferItems.length) {
-        endIndex = this.state.endIndex;
-      }
 
       var itemsCount = Math.floor(this.height / this.itemHeight) + this.preloadItems;
       var newState = {
@@ -47275,10 +47276,10 @@ __webpack_require__.r(__webpack_exports__);
       nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].async(this.refreshDriver);
     },
     eventScroll: function eventScroll() {
-      this.refreshDriver();
+      nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].async(this.refreshDriver);
     },
     eventScrollstop: function eventScrollstop() {
-      this.refreshDriver();
+      nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].async(this.refreshDriver);
     }
   },
   data: function data() {
