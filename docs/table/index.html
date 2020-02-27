@@ -28,7 +28,7 @@
 
         <div v-if="kill === false" class="adapt-height" style="overflow: hidden; padding: 20px;">
             <div>
-                <n-table v-model="items" :item-height="100" :viewport-height="false" :render-expand="true" :render-select="true">
+                <n-table v-model="items" :item-height="100" :viewport-height="600" :render-expand="true" :render-select="true">
                     <n-table-column prop="label" type="string" label="Label" :fluid="true" :sort="true" :width="100"></n-table-column>
                     <n-table-column prop="image" type="image" label="Image" :sort="true" :filter="true" :default-width="200"></n-table-column>
                     <n-table-column prop="date" type="datetime" label="Date" :filter="true" :default-width="250"></n-table-column>
@@ -88,7 +88,7 @@
                                 item = {
                                     label: 'Item ' + total,
                                     id: 'value-' + total,
-                                    image: 'https://api.adorable.io/avatars/285/' + total,
+                                    image: 'https://picsum.photos/100/100?' + total,
                                     date: new Date,
                                     children: []
                                 };
@@ -113,7 +113,7 @@
                             self.target = childGenerator(200, 1);
                         }, 2000);
 
-                        return { items: childGenerator(10, 4), target: [], kill: false };
+                        return { items: childGenerator(100, 2), target: [], kill: false };
                     }
                 };
 

@@ -42,7 +42,7 @@ export default {
         preloadItems: {
             default()
             {
-                return 12;
+                return 6;
             },
             type: [Number]
         },
@@ -50,7 +50,7 @@ export default {
         bufferItems: {
             default()
             {
-                return 40;
+                return 30;
             },
             type: [Number]
         },
@@ -201,7 +201,7 @@ export default {
         return Arr.each(items, (value, index) => {
 
             if ( index < bufferStart || index > bufferEnd ) {
-                return (<div class="n-virtualscroller__item" style={{ height: this.itemHeight + 'px' }}></div>);
+                return (<div key={`${this._uid}-${index}`} class="n-virtualscroller__item" style={{ height: this.itemHeight + 'px' }}></div>);
             }
 
             return this.renderNode({ value, index });
