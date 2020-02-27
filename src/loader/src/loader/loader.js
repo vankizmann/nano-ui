@@ -63,6 +63,7 @@ export default {
         startTimer()
         {
             this.veTiming = Date.now();
+            this.veVisible = this.visible;
         },
 
         stopTimer()

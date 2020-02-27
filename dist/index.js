@@ -41686,6 +41686,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     startTimer: function startTimer() {
       this.veTiming = Date.now();
+      this.veVisible = this.visible;
     },
     stopTimer: function stopTimer() {
       var timing = Date.now() - this.veTiming;
