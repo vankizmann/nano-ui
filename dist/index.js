@@ -45995,11 +45995,12 @@ __webpack_require__.r(__webpack_exports__);
       return null;
     }
 
-    if (this.raw === true) {
+    this.veInit = true;
+
+    if (this.raw) {
       return this.$slots["default"];
     }
 
-    this.veInit = true;
     var classList = ['n-tabs-item'];
     var style = {};
 

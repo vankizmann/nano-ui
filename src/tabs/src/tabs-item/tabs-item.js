@@ -166,11 +166,11 @@ export default {
             return null;
         }
 
-        if ( this.raw === true ) {
+        this.veInit = true;
+
+        if ( this.raw ) {
             return this.$slots.default;
         }
-
-        this.veInit = true;
 
         let classList = [
             'n-tabs-item'
