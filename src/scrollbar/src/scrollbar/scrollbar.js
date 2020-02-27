@@ -117,8 +117,11 @@ export default {
     beforeDestroy()
     {
         this.$parent.$off('hook:updated');
+    },
 
-        this.destroy();
+    destroyed()
+    {
+        Any.delay(this.destroy, 500);
     },
 
     render()

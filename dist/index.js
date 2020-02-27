@@ -42431,8 +42431,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_modal_modal__WEBPACK_I
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! nano-js */ "nano-js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @vue/babel-helper-vue-jsx-merge-props */ "./node_modules/@vue/babel-helper-vue-jsx-merge-props/dist/helper.js");
+/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NModal',
@@ -42499,119 +42502,62 @@ __webpack_require__.r(__webpack_exports__);
       type: [Boolean]
     }
   },
-  computed: {
-    parent: function parent() {
-      return nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$el || this.node).parent().get(0);
-    },
-    element: function element() {
-      if (this.selector === false) {
-        return null;
-      }
-
-      if (this.selector === null) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$el || this.node).previous().get(0);
-      }
-
-      return nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.parent).find(this.selector).get(0);
-    }
-  },
   watch: {
     visible: function visible() {
-      this.veVisible = this.visible;
-    },
-    veVisible: function veVisible() {
-      var _this = this;
-
-      if (this.veVisible === true) {
-        var interval = setInterval(function () {
-          if (!(_this.$el || _this.node)) {
-            return;
-          } // Clear interval
-
-
-          clearInterval(interval);
-          nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(_this.$el || _this.node).addClass('n-modal--open');
-        }, 100);
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.element).addClass('n-modal--open');
-      }
-
-      if (this.veVisible === false) {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.element).removeClass('n-modal--open');
+      if (this.visible !== this.veVisible) {
+        this.veVisible = this.visible;
       }
     }
   },
   methods: {
-    clickTrigger: function clickTrigger(event, target) {
+    close: function close(event) {
+      event.stopPropagation();
+      this.$emit('input', this.veVisible = false);
+    },
+    eventClick: function eventClick(event, target) {
       if (event.which !== 1) {
         return;
       }
 
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).inside(this.parent)) {
-        return;
+      var result = !!nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(target).closest(this.target) || this.veVisible;
+
+      if (this.veVisible && this.closable) {
+        result = !nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(target).closest(this.$refs.backdrop);
       }
 
-      var element = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).closest(this.element);
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(element).hasClass('n-disabled')) {
-        return;
+      if (result !== this.veVisible) {
+        this.$emit('input', this.veVisible = !!result);
       }
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(element) === false) {
-        return this.$emit('input', this.veVisible = true);
-      }
-
-      if (this.veVisible === false) {
-        return;
-      }
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).closest(this.$refs.close)) {
-        return this.$emit('close');
-      }
-
-      var content = nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$el || this.node).child().get(0);
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(target).closest(content)) {
-        return;
-      }
-
-      if (this.closeOutside === false) {
-        return;
-      }
-
-      this.$emit('input', this.veVisible = false);
     }
   },
   data: function data() {
     return {
-      node: null,
+      target: null,
       veVisible: this.visible
     };
   },
   mounted: function mounted() {
-    var _this2 = this;
-
-    this.node = this.$el;
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document.body).on('mousedown', nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].throttle(this.clickTrigger, 150), {
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).on('click', this.eventClick, {
       _uid: this._uid
     });
 
-    if (this.$listeners.close !== undefined) {
-      return;
+    if (!this.$listeners.close) {
+      this.$on('close', this.close);
     }
 
-    this.$on('close', function () {
-      _this2.$emit('input', _this2.veVisible = false);
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document.body).append(this.$el);
-  },
-  updated: function updated() {
-    this.node = this.$el;
+    this.target = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).previous().get(0);
+
+    if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.selector)) {
+      this.target = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).parent().find(this.selector).get(0);
+    }
+
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).append(this.$el);
   },
   beforeDestroy: function beforeDestroy() {
     this.$el.remove();
   },
   destroyed: function destroyed() {
-    nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(document.body).off('mousedown', null, {
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).off('click', null, {
       _uid: this._uid
     });
   },
@@ -42622,10 +42568,14 @@ __webpack_require__.r(__webpack_exports__);
       return null;
     }
 
-    return h("div", {
-      "ref": "close",
+    var events = {
+      click: this.close
+    };
+    return h("div", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
       "class": "n-modal__close"
-    }, [h("span", {
+    }, {
+      "on": events
+    }]), [h("span", {
       "class": this.icons.times
     })]);
   },
@@ -42651,35 +42601,62 @@ __webpack_require__.r(__webpack_exports__);
       "class": "n-modal__footer"
     }, [this.$slots.footer]);
   },
-  render: function render($render) {
-    var h = arguments[0];
-    this.$render = $render;
-
-    if (!this.visible && !this.veVisible) {
-      return null;
-    }
-
-    var classList = ['n-modal', 'n-modal--' + this.type, 'n-modal--' + this.position];
-
-    if (this.closable === true) {
-      classList.push('n-closable');
-    }
-
+  renderBody: function renderBody() {
+    var h = this.$createElement;
     var style = {
       width: this.width,
       height: this.height
     };
+    var rawHtml = h("div", {
+      "key": Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])(),
+      "class": "n-modal__frame",
+      "style": style
+    }, [this.$slots.raw]);
+
+    if (this.$slots.raw) {
+      return rawHtml;
+    }
+
     return h("div", {
-      "class": classList
-    }, [!this.$slots.raw && h("div", {
+      "key": Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])(),
       "class": "n-modal__frame",
       "style": style
     }, [this.ctor('renderHeader')(), h("div", {
       "class": "n-modal__body"
-    }, [this.$slots["default"]]), this.ctor('renderFooter')()]), this.$slots.raw && h("div", {
-      "class": "n-modal__frame",
-      "style": style
-    }, [this.$slots.raw])]);
+    }, [h("NScrollbar", {
+      "class": "n-modal__wrap",
+      "attrs": {
+        "relative": true
+      }
+    }, [this.$slots["default"]])]), this.ctor('renderFooter')()]);
+  },
+  renderModal: function renderModal() {
+    var h = this.$createElement;
+    var classList = ['n-modal', 'n-modal--' + this.type, 'n-modal--' + this.position];
+
+    if (this.veVisible) {
+      classList.push('n-open');
+    }
+
+    if (this.closable) {
+      classList.push('n-closable');
+    }
+
+    return h("div", {
+      "class": classList
+    }, [h("transition", {
+      "attrs": {
+        "name": "n-modal",
+        "mode": "out-in"
+      }
+    }, [this.veVisible ? this.ctor('renderBody')() : null]), h("div", {
+      "ref": "backdrop",
+      "class": "n-modal__backdrop"
+    })]);
+  },
+  render: function render($render) {
+    this.$render = $render;
+    return this.ctor('renderModal')();
   }
 });
 
@@ -43716,7 +43693,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   beforeDestroy: function beforeDestroy() {
     this.$parent.$off('hook:updated');
-    this.destroy();
+  },
+  destroyed: function destroyed() {
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.destroy, 500);
   },
   render: function render() {
     var h = arguments[0];
