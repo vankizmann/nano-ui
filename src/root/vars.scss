@@ -1,6 +1,9 @@
 $color-white:           #ffffff !default;
 $color-black:           #1b2229 !default;
 
+$color-light:           #F4F6FA !default;
+$color-dark:            #2F3236 !default;
+
 $color-gray-05:         mix($color-black, $color-white, 0.05 * 100%) !default;
 $color-gray-10:         mix($color-black, $color-white, 0.10 * 100%) !default;
 $color-gray-15:         mix($color-black, $color-white, 0.15 * 100%) !default;
