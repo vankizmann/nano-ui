@@ -327,6 +327,12 @@
   align-items: center;
   justify-content: center; }
 
+.n-draggable-item__expand > div {
+  color: #6b6f74; }
+
+.n-inverse .n-draggable-item__expand > div {
+  color: #afb2b4; }
+
 .n-draggable-item:not(.n-expanded) .n-draggable-item__expand > div {
   transform: rotate(90deg); }
 
