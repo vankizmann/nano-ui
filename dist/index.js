@@ -47296,6 +47296,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       state: state,
       height: 0,
+      veInit: false,
       veUpdate: 0
     };
   },
@@ -47307,6 +47308,7 @@ __webpack_require__.r(__webpack_exports__);
     nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$el).on('scroll', nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].framerate(this.eventScroll, this.frameRate), ident);
     nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$el).on('scrollstop', nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].debounce(this.eventScrollstop, 50), ident);
     nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$el).observerResize(this.discoverHeight)(this.$el);
+    this.veInit = true;
   },
   beforeDestroy: function beforeDestroy() {
     var ident = {
@@ -47337,6 +47339,10 @@ __webpack_require__.r(__webpack_exports__);
     var _this2 = this;
 
     var h = this.$createElement;
+
+    if (!this.veInit) {
+      return null;
+    }
 
     if (!this.items.length) {
       return this.$slots.empty || null;

@@ -182,7 +182,7 @@ export default {
         };
 
         return {
-            state, height: 0, veUpdate: 0
+            state, height: 0, veInit: false, veUpdate: 0
         };
     },
 
@@ -201,6 +201,8 @@ export default {
             Any.debounce(this.eventScrollstop, 50), ident);
 
         Dom.find(this.$el).observerResize(this.discoverHeight)(this.$el);
+
+        this.veInit = true;
     },
 
     beforeDestroy()
@@ -236,6 +238,10 @@ export default {
 
     renderBody()
     {
+        if ( ! this.veInit ) {
+            return null;
+        }
+
         if ( ! this.items.length ) {
             return this.$slots.empty || null;
         }
