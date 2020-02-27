@@ -44736,7 +44736,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (!this.$refs.column) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.bindAdaptWidth, 50);
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.bindAdaptWidth, 10);
       } // Disable fluid after fist run
 
 
