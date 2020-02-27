@@ -50,7 +50,7 @@ export default {
         bufferItems: {
             default()
             {
-                return 60;
+                return 20;
             },
             type: [Number]
         },
@@ -75,27 +75,37 @@ export default {
 
             let scrollTop = this.$refs.viewport.$el.scrollTop;
 
-            let startIndex = Math.floor(scrollTop / this.itemHeight) -
-                (this.preloadItems / 2);
+            let startIndex = Math.floor(scrollTop / this.itemHeight);
 
             if ( startIndex < 0 ) {
                 startIndex = 0;
             }
 
-            let startBuffer = startIndex - (this.bufferItems / 2);
+            let startPreload = Math.floor(startIndex - (this.preloadItems / 2));
+
+            if ( startPreload < 0 ) {
+                startPreload = 0;
+            }
+
+            let startBuffer = Math.floor(startPreload - (this.bufferItems / 2));
 
             if ( startBuffer < 0 ) {
                 startBuffer = 0;
             }
 
-            let endIndex = Math.floor((scrollTop + this.height) / this.itemHeight) +
-                (this.preloadItems / 2);
+            let endIndex = Math.ceil((scrollTop + this.height) / this.itemHeight);
 
             if ( endIndex > this.items.length ) {
                 endIndex = this.items.length;
             }
 
-            let endBuffer = endIndex + (this.bufferItems / 2);
+            let endPreload = Math.ceil(endIndex + (this.preloadItems / 2));
+
+            if ( endPreload > this.items.length ) {
+                endPreload = this.items.length;
+            }
+
+            let endBuffer = Math.ceil(endPreload + (this.bufferItems / 2));
 
             if ( endBuffer > this.items.length ) {
                 endBuffer = this.items.length;
@@ -103,32 +113,21 @@ export default {
 
             let startBufferDiff = Math.abs(this.state.startBuffer - startBuffer);
 
-            if ( startBufferDiff < Math.round(this.bufferItems / 3) ) {
+            if ( startBufferDiff < Math.round(this.bufferItems / 2) ) {
                 startBufferDiff = this.state.startBuffer;
             }
 
             let endBufferDiff = Math.abs(this.state.endBuffer - endBuffer);
 
-            if ( endBufferDiff < Math.round(this.bufferItems / 3) ) {
+            if ( endBufferDiff < Math.round(this.bufferItems / 2) ) {
                 endBufferDiff = this.state.endBuffer;
             }
 
-            // let startIndexDiff = Math.abs(this.state.startIndex - startIndex);
-            //
-            // if ( startIndexDiff < Math.round(this.preloadItems / 3) && startIndex !== 0 ) {
-            //     startIndex = this.state.startIndex;
-            // }
-            //
-            // let endIndexDiff = Math.abs(this.state.endIndex - endIndex);
-            //
-            // if ( endIndexDiff < Math.round(this.bufferItems / 3) && endIndex !== this.bufferItems.length ) {
-            //     endIndex = this.state.endIndex;
-            // }
+            let itemsCount = Math.floor(this.height / this.itemHeight);
 
-            let itemsCount = Math.floor(this.height / this.itemHeight) +
-                this.preloadItems;
-
-            let newState = { startIndex, startBuffer, endIndex, endBuffer, itemsCount };
+            let newState = {
+                startIndex, startPreload, startBuffer, endIndex, endPreload, endBuffer
+            };
 
             let isSameState = newState.startIndex === this.state.startIndex &&
                 newState.endIndex === this.state.endIndex;
@@ -174,11 +173,12 @@ export default {
     data()
     {
         let state = {
-            startIndex: -1000,
-            startBuffer: -1000,
+            startIndex: 0,
+            startPreload: 0,
+            startBuffer: 0,
             endIndex: 0,
-            endBuffer: 0,
-            itemsCount: 0
+            endPreload: 0,
+            endBuffer: 0
         };
 
         return {
@@ -219,10 +219,12 @@ export default {
             this.state.startBuffer, this.state.endBuffer);
 
         // Get buffer end
-        let bufferStart = this.state.startIndex - this.state.startBuffer;
+        let bufferStart = this.state.startPreload - this.state.startBuffer;
 
         // Get buffer start
-        let bufferEnd = bufferStart + this.state.itemsCount;
+        let bufferEnd = this.state.endPreload - this.state.startBuffer;
+
+        console.log(bufferStart, bufferEnd);
 
         return Arr.each(items, (value, index) => {
 

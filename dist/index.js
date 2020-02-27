@@ -39383,13 +39383,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     preloadItems: {
       "default": function _default() {
-        return 12;
+        return 20;
       },
       type: [Number]
     },
     bufferItems: {
       "default": function _default() {
-        return 40;
+        return 20;
       },
       type: [Number]
     }
@@ -43686,7 +43686,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       optiscroll__WEBPACK_IMPORTED_MODULE_2___default.a.globalSettings.checkFrequency = 750;
-      optiscroll__WEBPACK_IMPORTED_MODULE_2___default.a.globalSettings.scrollMinUpdateInterval = 64;
+      optiscroll__WEBPACK_IMPORTED_MODULE_2___default.a.globalSettings.scrollMinUpdateInterval = 16;
       this.optiscroll = new optiscroll__WEBPACK_IMPORTED_MODULE_2___default.a(this.$el.parentNode, {
         classPrefix: 'n-scrollbar-',
         minTrackSize: 10,
@@ -45717,13 +45717,13 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     },
     preloadItems: {
       "default": function _default() {
-        return 12;
+        return 30;
       },
       type: [Number]
     },
     bufferItems: {
       "default": function _default() {
-        return 40;
+        return 30;
       },
       type: [Number]
     }
@@ -47178,7 +47178,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     bufferItems: {
       "default": function _default() {
-        return 60;
+        return 20;
       },
       type: [Number]
     },
@@ -47196,25 +47196,37 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       var scrollTop = this.$refs.viewport.$el.scrollTop;
-      var startIndex = Math.floor(scrollTop / this.itemHeight) - this.preloadItems / 2;
+      var startIndex = Math.floor(scrollTop / this.itemHeight);
 
       if (startIndex < 0) {
         startIndex = 0;
       }
 
-      var startBuffer = startIndex - this.bufferItems / 2;
+      var startPreload = Math.floor(startIndex - this.preloadItems / 2);
+
+      if (startPreload < 0) {
+        startPreload = 0;
+      }
+
+      var startBuffer = Math.floor(startPreload - this.bufferItems / 2);
 
       if (startBuffer < 0) {
         startBuffer = 0;
       }
 
-      var endIndex = Math.floor((scrollTop + this.height) / this.itemHeight) + this.preloadItems / 2;
+      var endIndex = Math.ceil((scrollTop + this.height) / this.itemHeight);
 
       if (endIndex > this.items.length) {
         endIndex = this.items.length;
       }
 
-      var endBuffer = endIndex + this.bufferItems / 2;
+      var endPreload = Math.ceil(endIndex + this.preloadItems / 2);
+
+      if (endPreload > this.items.length) {
+        endPreload = this.items.length;
+      }
+
+      var endBuffer = Math.ceil(endPreload + this.bufferItems / 2);
 
       if (endBuffer > this.items.length) {
         endBuffer = this.items.length;
@@ -47222,34 +47234,24 @@ __webpack_require__.r(__webpack_exports__);
 
       var startBufferDiff = Math.abs(this.state.startBuffer - startBuffer);
 
-      if (startBufferDiff < Math.round(this.bufferItems / 3)) {
+      if (startBufferDiff < Math.round(this.bufferItems / 2)) {
         startBufferDiff = this.state.startBuffer;
       }
 
       var endBufferDiff = Math.abs(this.state.endBuffer - endBuffer);
 
-      if (endBufferDiff < Math.round(this.bufferItems / 3)) {
+      if (endBufferDiff < Math.round(this.bufferItems / 2)) {
         endBufferDiff = this.state.endBuffer;
-      } // let startIndexDiff = Math.abs(this.state.startIndex - startIndex);
-      //
-      // if ( startIndexDiff < Math.round(this.preloadItems / 3) && startIndex !== 0 ) {
-      //     startIndex = this.state.startIndex;
-      // }
-      //
-      // let endIndexDiff = Math.abs(this.state.endIndex - endIndex);
-      //
-      // if ( endIndexDiff < Math.round(this.bufferItems / 3) && endIndex !== this.bufferItems.length ) {
-      //     endIndex = this.state.endIndex;
-      // }
+      }
 
-
-      var itemsCount = Math.floor(this.height / this.itemHeight) + this.preloadItems;
+      var itemsCount = Math.floor(this.height / this.itemHeight);
       var newState = {
         startIndex: startIndex,
+        startPreload: startPreload,
         startBuffer: startBuffer,
         endIndex: endIndex,
-        endBuffer: endBuffer,
-        itemsCount: itemsCount
+        endPreload: endPreload,
+        endBuffer: endBuffer
       };
       var isSameState = newState.startIndex === this.state.startIndex && newState.endIndex === this.state.endIndex;
 
@@ -47284,11 +47286,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     var state = {
-      startIndex: -1000,
-      startBuffer: -1000,
+      startIndex: 0,
+      startPreload: 0,
+      startBuffer: 0,
       endIndex: 0,
-      endBuffer: 0,
-      itemsCount: 0
+      endPreload: 0,
+      endBuffer: 0
     };
     return {
       state: state,
@@ -47317,9 +47320,10 @@ __webpack_require__.r(__webpack_exports__);
 
     var items = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].slice(nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].vals(this.items), this.state.startBuffer, this.state.endBuffer); // Get buffer end
 
-    var bufferStart = this.state.startIndex - this.state.startBuffer; // Get buffer start
+    var bufferStart = this.state.startPreload - this.state.startBuffer; // Get buffer start
 
-    var bufferEnd = bufferStart + this.state.itemsCount;
+    var bufferEnd = this.state.endPreload - this.state.startBuffer;
+    console.log(bufferStart, bufferEnd);
     return nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(items, function (value, index) {
       var ghost = index < bufferStart || index > bufferEnd;
       return _this.renderNode({
