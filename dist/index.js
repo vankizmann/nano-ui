@@ -45996,12 +45996,12 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     this.veInit = true;
+    var classList = ['n-tabs-item'];
 
     if (this.raw) {
-      return this.$slots["default"];
+      classList.push('n-raw');
     }
 
-    var classList = ['n-tabs-item'];
     var style = {};
 
     if (this.NTabs.veValue !== this.name) {

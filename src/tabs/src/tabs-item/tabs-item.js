@@ -168,13 +168,13 @@ export default {
 
         this.veInit = true;
 
-        if ( this.raw ) {
-            return this.$slots.default;
-        }
-
         let classList = [
             'n-tabs-item'
         ];
+
+        if ( this.raw ) {
+            classList.push('n-raw');
+        }
 
         let style = {};
 
