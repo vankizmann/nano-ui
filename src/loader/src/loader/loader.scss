@@ -7,15 +7,6 @@ $tooltip-border: 3px !default;
     position: relative;
 }
 
-@keyframes n-spinner {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
 .n-loader:before {
     content: '\00a0';
     z-index: 900;
@@ -24,7 +15,7 @@ $tooltip-border: 3px !default;
     border-radius: 500px;
     border: 2px solid $--color-primary;
     border-bottom-color: transparent;
-    animation: n-spinner 1s linear infinite;
+    animation: LoadingSpinner 1s linear infinite;
 }
 
 .n-loader.n-loader--active:before {
@@ -64,6 +55,19 @@ $tooltip-border: 3px !default;
     background: rgba($color-white, 0.7);
 }
 
+.n-inverse .n-loader:after {
+    background: rgba($color-black, 0.7);
+}
+
 .n-loader.n-loader--active:after {
     display: block;
+}
+
+@keyframes LoadingSpinner {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }

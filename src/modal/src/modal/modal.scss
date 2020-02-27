@@ -36,6 +36,10 @@ $modal-default-padding: 14px 22px !default;
     box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
 }
 
+.n-inverse .n-modal__frame {
+    background: $--color-black;
+}
+
 .n-modal.n-modal--open > .n-modal__frame {
     opacity: 1;
     transform: none;

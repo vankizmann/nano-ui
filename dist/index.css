@@ -333,18 +333,6 @@
 .n-loader {
   position: relative; }
 
-@-webkit-keyframes n-spinner {
-  from {
-    transform: rotate(0deg); }
-  to {
-    transform: rotate(360deg); } }
-
-@keyframes n-spinner {
-  from {
-    transform: rotate(0deg); }
-  to {
-    transform: rotate(360deg); } }
-
 .n-loader:before {
   content: '\00a0';
   z-index: 900;
@@ -353,8 +341,8 @@
   border-radius: 500px;
   border: 2px solid #2877FA;
   border-bottom-color: transparent;
-  -webkit-animation: n-spinner 1s linear infinite;
-          animation: n-spinner 1s linear infinite; }
+  -webkit-animation: LoadingSpinner 1s linear infinite;
+          animation: LoadingSpinner 1s linear infinite; }
 
 .n-loader.n-loader--active:before {
   display: block; }
@@ -388,8 +376,23 @@
   height: 100%;
   background: rgba(255, 255, 255, 0.7); }
 
+.n-inverse .n-loader:after {
+  background: rgba(27, 34, 41, 0.7); }
+
 .n-loader.n-loader--active:after {
   display: block; }
+
+@-webkit-keyframes LoadingSpinner {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
+
+@keyframes LoadingSpinner {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
 
 .n-form-group {
   position: relative; }
@@ -2349,6 +2352,9 @@
   transform: translateY(30px);
   transition: transform 0.6s, opacity 0.6s;
   box-shadow: 0 1px 3px 1px rgba(27, 34, 41, 0.15); }
+
+.n-inverse .n-modal__frame {
+  background: #1b2229; }
 
 .n-modal.n-modal--open > .n-modal__frame {
   opacity: 1;
