@@ -44465,12 +44465,11 @@ __webpack_require__.r(__webpack_exports__);
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_0__["default"],
   render: function render() {
     var h = arguments[0];
-    var className = ['n-table-cell', 'n-table-cell--' + this.column.type];
+    var classList = ['n-table-cell', 'n-table-cell--' + this.column.type];
     return h("div", {
-      "class": className
-    }, [h("span", {
+      "class": classList,
       "style": 'background-image: url(\'' + this.input + '\');'
-    })]);
+    });
   }
 });
 

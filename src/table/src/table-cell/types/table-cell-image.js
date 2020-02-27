@@ -8,13 +8,15 @@ export default {
 
     render()
     {
-        let className = [
+        let classList = [
             'n-table-cell', 'n-table-cell--' + this.column.type
         ];
 
-        return <div class={className}>
-            <span style={'background-image: url(\'' + this.input + '\');'} />
-        </div>;
+        return (
+            <div class={classList} style={'background-image: url(\'' + this.input + '\');'}>
+                { /* No content :) */ }
+            </div>
+        );
     }
 
 }

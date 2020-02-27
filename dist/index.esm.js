@@ -1201,7 +1201,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _tab
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _table_cell__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../table-cell */ \"./src/table/src/table-cell/table-cell.js\");\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  name: 'NTableCellImage',\n  \"extends\": _table_cell__WEBPACK_IMPORTED_MODULE_0__[\"default\"],\n  render: function render() {\n    var h = arguments[0];\n    var className = ['n-table-cell', 'n-table-cell--' + this.column.type];\n    return h(\"div\", {\n      \"class\": className\n    }, [h(\"span\", {\n      \"style\": 'background-image: url(\\'' + this.input + '\\');'\n    })]);\n  }\n});\n\n//# sourceURL=webpack://nano-ui/./src/table/src/table-cell/types/table-cell-image.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _table_cell__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../table-cell */ \"./src/table/src/table-cell/table-cell.js\");\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  name: 'NTableCellImage',\n  \"extends\": _table_cell__WEBPACK_IMPORTED_MODULE_0__[\"default\"],\n  render: function render() {\n    var h = arguments[0];\n    var classList = ['n-table-cell', 'n-table-cell--' + this.column.type];\n    return h(\"div\", {\n      \"class\": classList,\n      \"style\": 'background-image: url(\\'' + this.input + '\\');'\n    });\n  }\n});\n\n//# sourceURL=webpack://nano-ui/./src/table/src/table-cell/types/table-cell-image.js?");
 
 /***/ }),
 
