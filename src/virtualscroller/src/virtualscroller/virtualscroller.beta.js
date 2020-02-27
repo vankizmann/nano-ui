@@ -42,7 +42,7 @@ export default {
         preloadItems: {
             default()
             {
-                return 12;
+                return 20;
             },
             type: [Number]
         },
@@ -50,7 +50,7 @@ export default {
         bufferItems: {
             default()
             {
-                return 30;
+                return 60;
             },
             type: [Number]
         },
@@ -103,25 +103,25 @@ export default {
 
             let startBufferDiff = Math.abs(this.state.startBuffer - startBuffer);
 
-            if ( startBufferDiff < (this.bufferItems / 4) ) {
+            if ( startBufferDiff < Math.round(this.bufferItems / 3) ) {
                 startBufferDiff = this.state.startBuffer;
             }
 
             let endBufferDiff = Math.abs(this.state.endBuffer - endBuffer);
 
-            if ( endBufferDiff < (this.bufferItems / 4) ) {
+            if ( endBufferDiff < Math.round(this.bufferItems / 3) ) {
                 endBufferDiff = this.state.endBuffer;
             }
 
             let startIndexDiff = Math.abs(this.state.startIndex - startIndex);
 
-            if ( startIndexDiff < (this.preloadItems / 4) ) {
+            if ( startIndexDiff < Math.round(this.preloadItems / 3) && startIndex !== 0 ) {
                 startIndex = this.state.startIndex;
             }
 
             let endIndexDiff = Math.abs(this.state.endIndex - endIndex);
 
-            if ( endIndexDiff < (this.bufferItems / 4) ) {
+            if ( endIndexDiff < Math.round(this.bufferItems / 3) && endIndex !== this.bufferItems.length ) {
                 endIndex = this.state.endIndex;
             }
 
@@ -161,12 +161,12 @@ export default {
 
         eventScroll()
         {
-            Any.async(this.refreshDriver);
+            this.refreshDriver();
         },
 
         eventScrollstop()
         {
-            Any.async(this.refreshDriver);
+            this.refreshDriver();
         }
 
     },
@@ -174,8 +174,8 @@ export default {
     data()
     {
         let state = {
-            startIndex: 0,
-            startBuffer: 0,
+            startIndex: -1000,
+            startBuffer: -1000,
             endIndex: 0,
             endBuffer: 0,
             itemsCount: 0

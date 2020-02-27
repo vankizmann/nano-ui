@@ -47160,13 +47160,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     preloadItems: {
       "default": function _default() {
-        return 12;
+        return 20;
       },
       type: [Number]
     },
     bufferItems: {
       "default": function _default() {
-        return 30;
+        return 60;
       },
       type: [Number]
     },
@@ -47210,25 +47210,25 @@ __webpack_require__.r(__webpack_exports__);
 
       var startBufferDiff = Math.abs(this.state.startBuffer - startBuffer);
 
-      if (startBufferDiff < this.bufferItems / 4) {
+      if (startBufferDiff < Math.round(this.bufferItems / 3)) {
         startBufferDiff = this.state.startBuffer;
       }
 
       var endBufferDiff = Math.abs(this.state.endBuffer - endBuffer);
 
-      if (endBufferDiff < this.bufferItems / 4) {
+      if (endBufferDiff < Math.round(this.bufferItems / 3)) {
         endBufferDiff = this.state.endBuffer;
       }
 
       var startIndexDiff = Math.abs(this.state.startIndex - startIndex);
 
-      if (startIndexDiff < this.preloadItems / 4) {
+      if (startIndexDiff < Math.round(this.preloadItems / 3) && startIndex !== 0) {
         startIndex = this.state.startIndex;
       }
 
       var endIndexDiff = Math.abs(this.state.endIndex - endIndex);
 
-      if (endIndexDiff < this.bufferItems / 4) {
+      if (endIndexDiff < Math.round(this.bufferItems / 3) && endIndex !== this.bufferItems.length) {
         endIndex = this.state.endIndex;
       }
 
@@ -47265,16 +47265,16 @@ __webpack_require__.r(__webpack_exports__);
       nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].async(this.refreshDriver);
     },
     eventScroll: function eventScroll() {
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].async(this.refreshDriver);
+      this.refreshDriver();
     },
     eventScrollstop: function eventScrollstop() {
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].async(this.refreshDriver);
+      this.refreshDriver();
     }
   },
   data: function data() {
     var state = {
-      startIndex: 0,
-      startBuffer: 0,
+      startIndex: -1000,
+      startBuffer: -1000,
       endIndex: 0,
       endBuffer: 0,
       itemsCount: 0
