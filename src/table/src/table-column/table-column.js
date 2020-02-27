@@ -231,7 +231,7 @@ export default {
             }
 
             if ( ! this.$refs.column ) {
-                return Any.delay(this.bindAdaptWidth, 500);
+                return Any.delay(this.bindAdaptWidth, 50);
             }
 
             // Disable fluid after fist run
