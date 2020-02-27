@@ -31,6 +31,10 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-color: $--color-gray-05;
 }
 
 //.n-table-cell > span {

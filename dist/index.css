@@ -2750,7 +2750,11 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  justify-content: stretch; }
+  justify-content: stretch;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-color: #f4f4f4; }
 
 .n-table-filter {
   position: relative;
