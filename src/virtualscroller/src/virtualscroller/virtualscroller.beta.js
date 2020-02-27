@@ -42,7 +42,7 @@ export default {
         preloadItems: {
             default()
             {
-                return 6;
+                return 12;
             },
             type: [Number]
         },
@@ -58,7 +58,7 @@ export default {
         frameRate: {
             default()
             {
-                return 15;
+                return 5;
             },
             type: [Number]
         }
@@ -101,17 +101,43 @@ export default {
                 endBuffer = this.items.length;
             }
 
+            let startBufferDiff = Math.abs(this.state.startBuffer - startBuffer);
+
+            if ( startBufferDiff < (this.bufferItems / 4) ) {
+                startBufferDiff = this.state.startBuffer;
+            }
+
+            let endBufferDiff = Math.abs(this.state.endBuffer - endBuffer);
+
+            if ( endBufferDiff < (this.bufferItems / 4) ) {
+                endBufferDiff = this.state.endBuffer;
+            }
+
+            let startIndexDiff = Math.abs(this.state.startIndex - startIndex);
+
+            if ( startIndexDiff < (this.preloadItems / 4) ) {
+                startIndex = this.state.startIndex;
+            }
+
+            let endIndexDiff = Math.abs(this.state.endIndex - endIndex);
+
+            if ( endIndexDiff < (this.bufferItems / 4) ) {
+                endIndex = this.state.endIndex;
+            }
+
             let itemsCount = Math.floor(this.height / this.itemHeight) +
                 this.preloadItems;
 
             let newState = { startIndex, startBuffer, endIndex, endBuffer, itemsCount };
 
-            if (
-                newState.startIndex === this.state.startIndex &&
-                newState.endIndex === this.state.endIndex
-            ) {
+            let isSameState = newState.startIndex === this.state.startIndex &&
+                newState.endIndex === this.state.endIndex;
+
+            if ( isSameState ) {
                 return;
             }
+
+            console.log('update');
 
             this.state = newState;
         },
