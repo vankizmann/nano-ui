@@ -148,7 +148,7 @@ export default {
         width: {
             default()
             {
-                return this.fixedWidth || 140;
+                return this.fixedWidth || 170;
             }
         },
 
@@ -162,7 +162,7 @@ export default {
         maxWidth: {
             default()
             {
-                return this.fixedWidth || 600;
+                return this.fixedWidth || 9999;
             }
         },
 

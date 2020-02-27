@@ -44695,7 +44695,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     width: {
       "default": function _default() {
-        return this.fixedWidth || 140;
+        return this.fixedWidth || 170;
       }
     },
     minWidth: {
@@ -44705,7 +44705,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     maxWidth: {
       "default": function _default() {
-        return this.fixedWidth || 600;
+        return this.fixedWidth || 9999;
       }
     },
     emptyText: {
