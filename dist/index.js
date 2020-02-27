@@ -43654,7 +43654,8 @@ __webpack_require__.r(__webpack_exports__);
         classPrefix: 'n-scrollbar-',
         minTrackSize: 10,
         wrapContent: false,
-        preventParentScroll: true
+        preventParentScroll: true,
+        forceScrollbars: true
       });
 
       if (this.relative) {

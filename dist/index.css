@@ -144,14 +144,12 @@
   z-index: 1;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
-  right: -15px;
-  bottom: -15px; }
+  right: -15px; }
 
 .n-scrollbar.is-enabled.n-relative > .n-scrollbar-content {
   position: relative;
   width: calc(100% + 15px);
   height: calc(100% + 15px);
-  margin-top: -15px;
   margin-left: -15px; }
 
 .n-scrollbar.is-enabled:not(.n-relative) > .n-scrollbar-content {

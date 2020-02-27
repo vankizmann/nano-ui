@@ -40,7 +40,8 @@ export default {
                 classPrefix: 'n-scrollbar-',
                 minTrackSize: 10,
                 wrapContent: false,
-                preventParentScroll: true
+                preventParentScroll: true,
+                forceScrollbars: true
             });
 
             if ( this.relative ) {
