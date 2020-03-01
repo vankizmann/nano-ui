@@ -45,16 +45,16 @@ $button-ratio: 0.3 !default;
     border-color: $--color-gray-15;
 }
 
-.n-button.n-button--disabled {
+.n-disabled .n-button {
     opacity: 0.6;
     cursor: not-allowed;
 }
 
-.n-button.n-button--icon .n-icon.n-icon--left {
+.n-button.n-button--icon .n-icon.n-icon--before {
     margin-right: $button-size * 0.45;
 }
 
-.n-button.n-button--icon .n-icon.n-icon--right {
+.n-button.n-button--icon .n-icon.n-icon--after {
     margin-left: $button-size * 0.45;
 }
 
@@ -116,9 +116,9 @@ $button-ratio: 0.3 !default;
     border-color: transparent;
 }
 
-.n-button.n-button--disabled.n-button--input:hover,
-.n-button.n-button--disabled.n-button--input:focus,
-.n-button.n-button--disabled.n-button--input:active {
+.n-disabled .n-button.n-button--input:hover,
+.n-disabled .n-button.n-button--input:focus,
+.n-disabled .n-button.n-button--input:active {
     color: $--color-gray-40;
 }
 
@@ -190,9 +190,9 @@ $button-ratio: 0.3 !default;
     font-size: $button-size * 1.125;
 }
 
-.n-button.n-button--disabled.n-button--link,
-.n-button.n-button--disabled.n-button--link:hover,
-.n-button.n-button--disabled.n-button--link:focus {
+.n-disabled .n-button.n-button--link,
+.n-disabled .n-button.n-button--link:hover,
+.n-disabled .n-button.n-button--link:focus {
     color: $--color-gray-40;
 }
 
@@ -217,9 +217,9 @@ $button-ratio: 0.3 !default;
     border-color: $--color-primary-dark;
 }
 
-.n-button.n-button--disabled.n-button--primary:not(.n-button--link),
-.n-button.n-button--disabled.n-button--primary:not(.n-button--link):hover,
-.n-button.n-button--disabled.n-button--primary:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--primary:not(.n-button--link),
+.n-disabled .n-button.n-button--primary:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--primary:not(.n-button--link):focus {
     background: $--color-primary;
     border-color: $--color-primary;
 }
@@ -241,9 +241,9 @@ $button-ratio: 0.3 !default;
     border-color: rgba($color-primary, 0.25);
 }
 
-.n-button.n-button--outline.n-button--disabled.n-button--primary:not(.n-button--link),
-.n-button.n-button--outline.n-button--disabled.n-button--primary:not(.n-button--link):hover,
-.n-button.n-button--outline.n-button--disabled.n-button--primary:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--outline.n-button--primary:not(.n-button--link),
+.n-disabled .n-button.n-button--outline.n-button--primary:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--outline.n-button--primary:not(.n-button--link):focus {
     background: rgba($color-primary, 0.10);
     border-color: rgba($color-primary, 0.25);
 }
@@ -258,12 +258,6 @@ $button-ratio: 0.3 !default;
     border-color: $--color-gray-15;
 }
 
-.n-inverse .n-button.n-button--secondary:not(.n-button--link) {
-    color:  $--color-white;
-    background: transparent;
-    border-color: $--color-gray-75;
-}
-
 .n-button.n-button--secondary:not(.n-button--link):hover,
 .n-button.n-button--secondary:not(.n-button--link):focus {
     color: $--color-secondary;
@@ -276,20 +270,12 @@ $button-ratio: 0.3 !default;
     border-color: $--color-secondary-dark;
 }
 
-.n-button.n-button--disabled.n-button--secondary:not(.n-button--link),
-.n-button.n-button--disabled.n-button--secondary:not(.n-button--link):hover,
-.n-button.n-button--disabled.n-button--secondary:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--secondary:not(.n-button--link),
+.n-disabled .n-button.n-button--secondary:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--secondary:not(.n-button--link):focus {
     color: $--color-black;
     background: transparent;
     border-color: $--color-gray-15;
-}
-
-.n-inverse .n-button.n-button--disabled.n-button--secondary:not(.n-button--link),
-.n-inverse .n-button.n-button--disabled.n-button--secondary:not(.n-button--link):hover,
-.n-inverse .n-button.n-button--disabled.n-button--secondary:not(.n-button--link):focus {
-    color: $--color-white;
-    background: transparent;
-    border-color: $--color-gray-75;
 }
 
 /**
@@ -302,12 +288,6 @@ $button-ratio: 0.3 !default;
     border-color: rgba($color-gray-50, 0.25);
 }
 
-.n-inverse .n-button.n-button--outline.n-button--secondary:not(.n-button--link) {
-    color: $--color-white;
-    background: rgba($color-black, 0.25);
-    border-color: rgba($color-gray-50, 0.25);
-}
-
 .n-button.n-button--outline.n-button--secondary:not(.n-button--link):hover,
 .n-button.n-button--outline.n-button--secondary:not(.n-button--link):focus,
 .n-button.n-button--outline.n-button--secondary:not(.n-button--link):active {
@@ -316,19 +296,11 @@ $button-ratio: 0.3 !default;
     border-color: rgba($color-primary, 0.25);
 }
 
-.n-button.n-button--outline.n-button--disabled.n-button--secondary:not(.n-button--link),
-.n-button.n-button--outline.n-button--disabled.n-button--secondary:not(.n-button--link):hover,
-.n-button.n-button--outline.n-button--disabled.n-button--secondary:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--outline.n-button--secondary:not(.n-button--link),
+.n-disabled .n-button.n-button--outline.n-button--secondary:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--outline.n-button--secondary:not(.n-button--link):focus {
     color: $--color-black;
     background: rgba($color-gray-50, 0.25);
-    border-color: rgba($color-gray-50, 0.25);
-}
-
-.n-inverse .n-button.n-button--outline.n-button--disabled.n-button--secondary:not(.n-button--link),
-.n-inverse .n-button.n-button--outline.n-button--disabled.n-button--secondary:not(.n-button--link):hover,
-.n-inverse .n-button.n-button--outline.n-button--disabled.n-button--secondary:not(.n-button--link):focus {
-    color: $--color-white;
-    background: rgba($color-black, 0.25);
     border-color: rgba($color-gray-50, 0.25);
 }
 
@@ -353,9 +325,9 @@ $button-ratio: 0.3 !default;
     border-color: $--color-success-dark;
 }
 
-.n-button.n-button--disabled.n-button--success:not(.n-button--link),
-.n-button.n-button--disabled.n-button--success:not(.n-button--link):hover,
-.n-button.n-button--disabled.n-button--success:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--success:not(.n-button--link),
+.n-disabled .n-button.n-button--success:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--success:not(.n-button--link):focus {
     background: $--color-success-lighter;
     border-color: $--color-success-lighter;
 }
@@ -377,9 +349,9 @@ $button-ratio: 0.3 !default;
     border-color: rgba($color-success, 0.25);
 }
 
-.n-button.n-button--outline.n-button--disabled.n-button--success:not(.n-button--link),
-.n-button.n-button--outline.n-button--disabled.n-button--success:not(.n-button--link):hover,
-.n-button.n-button--outline.n-button--disabled.n-button--success:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--outline.n-button--success:not(.n-button--link),
+.n-disabled .n-button.n-button--outline.n-button--success:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--outline.n-button--success:not(.n-button--link):focus {
     background: rgba($color-success, 0.10);
     border-color: rgba($color-success, 0.25);
 }
@@ -405,9 +377,9 @@ $button-ratio: 0.3 !default;
     border-color: $--color-warning-dark;
 }
 
-.n-button.n-button--disabled.n-button--warning:not(.n-button--link),
-.n-button.n-button--disabled.n-button--warning:not(.n-button--link):hover,
-.n-button.n-button--disabled.n-button--warning:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--warning:not(.n-button--link),
+.n-disabled .n-button.n-button--warning:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--warning:not(.n-button--link):focus {
     background: $--color-warning-lighter;
     border-color: $--color-warning-lighter;
 }
@@ -429,9 +401,9 @@ $button-ratio: 0.3 !default;
     border-color: rgba($color-warning, 0.25);
 }
 
-.n-button.n-button--outline.n-button--disabled.n-button--warning:not(.n-button--link),
-.n-button.n-button--outline.n-button--disabled.n-button--warning:not(.n-button--link):hover,
-.n-button.n-button--outline.n-button--disabled.n-button--warning:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--outline.n-button--warning:not(.n-button--link),
+.n-disabled .n-button.n-button--outline.n-button--warning:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--outline.n-button--warning:not(.n-button--link):focus {
     background: rgba($color-warning, 0.10);
     border-color: rgba($color-warning, 0.25);
 }
@@ -457,9 +429,9 @@ $button-ratio: 0.3 !default;
     border-color: $--color-danger-dark;
 }
 
-.n-button.n-button--disabled.n-button--danger:not(.n-button--link),
-.n-button.n-button--disabled.n-button--danger:not(.n-button--link):hover,
-.n-button.n-button--disabled.n-button--danger:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--danger:not(.n-button--link),
+.n-disabled .n-button.n-button--danger:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--danger:not(.n-button--link):focus {
     background: $--color-danger-lighter;
     border-color: $--color-danger-lighter;
 }
@@ -481,9 +453,9 @@ $button-ratio: 0.3 !default;
     border-color: rgba($color-danger, 0.25);
 }
 
-.n-button.n-button--outline.n-button--disabled.n-button--danger:not(.n-button--link),
-.n-button.n-button--outline.n-button--disabled.n-button--danger:not(.n-button--link):hover,
-.n-button.n-button--outline.n-button--disabled.n-button--danger:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--outline.n-button--danger:not(.n-button--link),
+.n-disabled .n-button.n-button--outline.n-button--danger:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--outline.n-button--danger:not(.n-button--link):focus {
     background: rgba($color-danger, 0.10);
     border-color: rgba($color-danger, 0.25);
 }
@@ -509,9 +481,9 @@ $button-ratio: 0.3 !default;
     border-color: $--color-info-dark;
 }
 
-.n-button.n-button--disabled.n-button--info:not(.n-button--link),
-.n-button.n-button--disabled.n-button--info:not(.n-button--link):hover,
-.n-button.n-button--disabled.n-button--info:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--info:not(.n-button--link),
+.n-disabled .n-button.n-button--info:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--info:not(.n-button--link):focus {
     background: $--color-info-lighter;
     border-color: $--color-info-lighter;
 }
@@ -533,9 +505,9 @@ $button-ratio: 0.3 !default;
     border-color: rgba($color-info, 0.25);
 }
 
-.n-button.n-button--outline.n-button--disabled.n-button--info:not(.n-button--link),
-.n-button.n-button--outline.n-button--disabled.n-button--info:not(.n-button--link):hover,
-.n-button.n-button--outline.n-button--disabled.n-button--info:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--outline.n-button--info:not(.n-button--link),
+.n-disabled .n-button.n-button--outline.n-button--info:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--outline.n-button--info:not(.n-button--link):focus {
     background: rgba($color-info, 0.10);
     border-color: rgba($color-info, 0.25);
 }

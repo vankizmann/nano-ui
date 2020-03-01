@@ -145,6 +145,10 @@ export default {
 
         eventDragover(event)
         {
+            if ( ! this.NDraggable.veCached.length ) {
+                return;
+            }
+
             event.preventDefault();
 
             if ( this.dragoverFrames === undefined ) {
@@ -285,7 +289,7 @@ export default {
         this.$render = $render;
 
         let events = {
-            // click: this.eventClick,
+            click: this.eventClick,
             dblclick: this.eventDblclick,
             dragstart: this.eventDragstart,
             dragenter: this.eventDragenter,

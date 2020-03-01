@@ -9,15 +9,14 @@ export default {
         icon: {
             default()
             {
-                return '';
-            },
-            type: [String]
+                return null;
+            }
         },
 
         iconPosition: {
             default()
             {
-                return 'left';
+                return 'before';
             },
             type: [String]
         },
@@ -88,66 +87,88 @@ export default {
 
     },
 
-    render(h)
+    renderIcon()
     {
-        let className = [
+        if ( ! this.icon ) {
+            return null;
+        }
+
+        let classList = [
+            'n-icon',
+            'n-icon--' + this.iconPosition,
+            this.icon
+        ];
+
+        return (
+            <span class={classList}></span>
+        );
+    },
+
+    renderButton()
+    {
+        let classList = [
             'n-button',
             'n-button--' + this.size,
             'n-button--' + this.type,
         ];
 
-        if ( Any.isEmpty(this.icon) === false ) {
-            className.push('n-button--icon');
+        if ( this.icon ) {
+            classList.push('n-button--icon');
         }
 
-        if ( this.link === true ) {
-            className.push('n-button--link');
+        if ( this.link ) {
+            classList.push('n-button--link');
         }
 
-        if ( this.square === true ) {
-            className.push('n-button--square');
+        if ( this.square ) {
+            classList.push('n-button--square');
         }
 
-        if ( this.round === true ) {
-            className.push('n-button--round');
+        if ( this.round ) {
+            classList.push('n-button--round');
         }
 
-        if ( this.outline === true ) {
-            className.push('n-button--outline');
+        if ( this.outline ) {
+            classList.push('n-button--outline');
         }
 
-        if ( this.disabled === true ) {
-            className.push('n-button--disabled');
-        }
-
-        let domProps = {
+        let attrs = {
             type: this.nativeType,
             disabled: this.disabled
         };
 
         let events = {};
 
-        if ( this.disabled === false ) {
-            Obj.assign(events, this.$listeners)
+        if ( ! this.disabled ) {
+            events = Obj.assign({}, this.$listeners);
         }
 
-        let icon = null;
+        return (
+            <button class={classList} attrs={attrs} on={events}>
+                { this.iconPosition === 'before' && this.ctor('renderIcon')() }
+                { this.$slots.default && <span>{ this.$slots.default }</span> }
+                { this.iconPosition === 'after' && this.ctor('renderIcon')() }
+            </button>
+        )
+    },
 
-        if ( ! Any.isEmpty(this.icon) ) {
-            icon = <span class={'n-icon n-icon--' + this.iconPosition + ' ' + this.icon}></span>
+    render($render)
+    {
+        this.$render = $render;
+
+        let classList = [
+            'n-button__wrapper'
+        ];
+
+        if ( this.disabled ) {
+            classList.push('n-disabled');
         }
 
-        let element = h('button', {
-            class: className, domProps: domProps, on: events
-        }, [
-            this.iconPosition === 'left' && icon,
-            this.$slots.default && <span>{ this.$slots.default }</span>,
-            this.iconPosition === 'right' && icon,
-        ]);
-
-        return <div class={['n-button__wrapper', this.disabled && 'n-disabled']}>
-            { element }
-        </div>;
+        return (
+            <div class={classList}>
+                { this.ctor('renderButton')() }
+            </div>
+        );
     }
 
 }

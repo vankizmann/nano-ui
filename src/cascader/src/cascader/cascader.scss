@@ -22,6 +22,11 @@ $cascader-option-padding: 6px 12px !default;
     max-width: 100% !important;
 }
 
+.n-cascader__items {
+    max-height: 210px;
+    overflow: auto;
+}
+
 .n-cascader__wrapper .n-popover .n-popover {
     margin-top: -6px;
 }
@@ -49,14 +54,8 @@ $cascader-option-padding: 6px 12px !default;
     transition: 0.15s border;
 }
 
-.n-inverse .n-cascader {
-    border-color: $--color-gray-80;
-    background: $--color-black;
-    color: $--color-white;
-}
-
 .n-cascader:hover,
-.n-cascader.n-popover--open {
+.n-cascader.n-open {
     border: 1px solid $--color-primary;
 }
 
@@ -177,7 +176,6 @@ $cascader-option-padding: 6px 12px !default;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    max-height: 280px;
     width: 200px;
     border-left: 1px solid $--color-gray-10;
 }

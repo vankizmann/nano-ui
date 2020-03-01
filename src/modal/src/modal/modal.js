@@ -86,6 +86,22 @@ export default {
                 return this.closable;
             },
             type: [Boolean]
+        },
+
+        transitionModal: {
+            default()
+            {
+                return 'n-fade-up';
+            },
+            type: [String]
+        },
+
+        transitionBackdrop: {
+            default()
+            {
+                return 'n-fade';
+            },
+            type: [String]
         }
 
     },
@@ -108,6 +124,18 @@ export default {
             event.stopPropagation();
 
             this.$emit('input', this.veVisible = false);
+        },
+
+        addClass() {
+            Dom.find(this.$el).addClass('n-open');
+            Dom.find(this.target).addClass('n-open');
+            Dom.find(document.body).addClass('n-open');
+        },
+
+        removeClass() {
+            Dom.find(this.$el).removeClass('n-open');
+            Dom.find(this.target).removeClass('n-open');
+            Dom.find(document.body).removeClass('n-open');
         },
 
         eventClick(event, target)
@@ -239,6 +267,13 @@ export default {
         )
     },
 
+    renderBackdrop()
+    {
+        return (
+            <div ref="backdrop" key={UUID()} class="n-modal__backdrop"></div>
+        )
+    },
+
     renderModal()
     {
         let classList = [
@@ -247,20 +282,23 @@ export default {
             'n-modal--' + this.position
         ];
 
-        if ( this.veVisible ) {
-            classList.push('n-open');
-        }
-
         if ( this.closable ) {
             classList.push('n-closable');
         }
 
+        let events = {
+            'beforeEnter': this.addClass,
+            'afterLeave': this.removeClass
+        };
+
         return (
             <div class={classList}>
-                <transition name="n-modal" mode="out-in">
+                <transition name={this.transitionModal} mode="out-in">
                     { this.veVisible ? this.ctor('renderBody')() : null }
                 </transition>
-                <div ref="backdrop" class="n-modal__backdrop"></div>
+                <transition name={this.transitionBackdrop} mode="out-in" on={events}>
+                    { this.veVisible ? this.ctor('renderBackdrop')() : null }
+                </transition>
             </div>
         );
     },

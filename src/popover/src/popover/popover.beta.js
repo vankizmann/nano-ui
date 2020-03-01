@@ -141,17 +141,7 @@ export default {
 
         veVisible()
         {
-            if ( this.veVisible === true ) {
-                Dom.find(this.$el).addClass('n-popover--open');
-                Dom.find(this.target).addClass('n-popover--open');
-            }
-
-            if ( this.veVisible === false ) {
-                Dom.find(this.$el).removeClass('n-popover--open');
-                Dom.find(this.target).removeClass('n-popover--open');
-            }
-
-            this.refresh();
+            this.$nextTick(this.refresh);
         }
 
     },
@@ -165,15 +155,15 @@ export default {
 
         refresh()
         {
+            if ( ! this.veVisible ) {
+                return this.style;
+            }
+
             if ( ! window.zIndex ) {
                 window.zIndex = 9000;
             }
 
             let style = {};
-
-            if ( ! this.$el ) {
-                return { display: 'none' };
-            }
 
             let clientX = Dom.find(this.target).offset('left', this.parent);
 
@@ -275,6 +265,13 @@ export default {
             // Get target scroll offset to adjust padding or margin
             let scroll = Dom.find(this.target).scroll(null, this.parent);
 
+            let parentInnerWidth = 0, parentInnerHeight = 0;
+
+            Dom.find(this.$el).actual(() => {
+                parentInnerWidth = this.parent.scrollWidth;
+                parentInnerHeight = this.parent.scrollHeight;
+            }, { display: 'none' });
+
 
             if ( this.trigger === 'context' ) {
 
@@ -302,12 +299,12 @@ export default {
                     style.left = 0;
                 }
 
-                if ( style.left + nodeWidth > this.parent.clientWidth ) {
-                    style.left = this.parent.clientWidth - nodeWidth;
+                if ( style.left + nodeWidth > parentInnerWidth ) {
+                    style.left = parentInnerWidth - nodeWidth;
                 }
 
-                if ( style.top + nodeHeight > this.parent.clientHeight ) {
-                    style.top = offset.top - scroll.top - nodeHeight;
+                if ( style.top + nodeHeight > parentInnerHeight ) {
+                    style.top = offset.top - nodeHeight;
                 }
 
                 if ( style.top - nodeHeight < 0 ) {
@@ -342,13 +339,19 @@ export default {
                 pseudo['max-width'] = realWidth ? (realWidth + 'px') : 'auto';
             }
 
-            if ( ! this.veVisible && ! this.visible ) {
-                pseudo.display = 'none';
-            }
-
             pseudo['z-index'] = window.zIndex++;
 
             return this.style = pseudo;
+        },
+
+        addClass() {
+            Dom.find(this.$el).addClass('n-open');
+            Dom.find(this.target).addClass('n-open');
+        },
+
+        removeClass() {
+            Dom.find(this.$el).removeClass('n-open');
+            Dom.find(this.target).removeClass('n-open');
         },
 
         eventMousemove(event, el)
@@ -506,6 +509,31 @@ export default {
         this.$el.remove();
     },
 
+    renderBody()
+    {
+        if ( this.$slots.raw ) {
+            return this.$slots.raw;
+        }
+
+        return (
+            <div class="n-popover__frame">
+                { this.$slots.header &&
+                    <div class="n-popover__header">
+                        {this.$slots.header}
+                    </div>
+                }
+                <div class="n-popover__body">
+                    {this.$slots.default}
+                </div>
+                { this.$slots.footer &&
+                    <div class="n-popover__footer">
+                        {this.$slots.footer}
+                    </div>
+                }
+            </div>
+        );
+    },
+
     render()
     {
         let className = [
@@ -521,25 +549,16 @@ export default {
             style.width = this.width + 'px';
         }
 
+        let events = {
+            beforeEnter: this.addClass,
+            afterLeave: this.removeClass
+        };
+
         return (
             <div class={className} style={this.style}>
-                { this.$slots.raw ||
-                    <div class="n-popover__frame">
-                        { this.$slots.header &&
-                            <div class="n-popover__header">
-                                {this.$slots.header}
-                            </div>
-                        }
-                        <div class="n-popover__body">
-                            {this.$slots.default}
-                        </div>
-                        { this.$slots.footer &&
-                            <div class="n-popover__footer">
-                                {this.$slots.footer}
-                            </div>
-                        }
-                    </div>
-                }
+                <transition name="n-fade-fast" mode="out-in" on={events}>
+                    { this.veVisible ? this.ctor('renderBody')() : null }
+                </transition>
             </div>
         );
     }

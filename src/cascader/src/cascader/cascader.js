@@ -106,7 +106,7 @@ export default {
 
         toggleHover(cascade)
         {
-            Any.debounce((value) => this.hoverCascade = value, 50, this)(cascade);
+            Any.debounce((value) => this.hoverCascade = value, 50)(cascade);
         },
 
         toggleSelect(cascade)

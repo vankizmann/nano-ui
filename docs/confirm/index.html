@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI Confirm</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../../dist/index.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+    <script src="https://vankizmann.github.io/nano-js/dist/nano-js.js"></script>
+    <script src="../../dist/index.js"></script>
+
+</head>
+<body style="position: relative;">
+
+<div id="app">
+    <div class="n-form">
+
+
+        <n-button type="primary">
+            Confirm
+        </n-button>
+        <n-confirm type="primary">
+            Hello 01!
+        </n-confirm>
+
+        <n-button type="success">
+            Confirm
+        </n-button>
+        <n-confirm type="success">
+            Hello 01!
+        </n-confirm>
+
+        <n-button type="warning">
+            Confirm
+        </n-button>
+        <n-confirm type="warning">
+            Hello 01!
+        </n-confirm>
+
+        <n-button type="danger">
+            Confirm
+        </n-button>
+        <n-confirm type="danger" :closable="true">
+            Hello 01!
+        </n-confirm>
+    </div>
+</div>
+
+<script>
+    Nano.Dom.ready(function () {
+
+        Vue.config.devtools = true;
+
+        var config = {
+            data: function() {
+                return { };
+            }
+        };
+
+        window.App = new Vue(config).$mount('#app');
+
+    });
+</script>
+</body>
+</html>

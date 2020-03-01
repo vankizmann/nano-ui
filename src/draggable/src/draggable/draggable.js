@@ -564,9 +564,11 @@ export default {
             this.removeDragIndicator();
         },
 
-        cacheItems(items)
+        cacheItems(items, group = [])
         {
-            this.veCached = Arr.each(items, (item) => Obj.clone(item));
+            if ( Arr.intersect(group, this.group).length ) {
+                this.veCached = Arr.each(items, (item) => Obj.clone(item));
+            }
         },
 
         updateExpanded()
@@ -613,7 +615,8 @@ export default {
                 return result;
             });
 
-            Event.fire('draggable.start', this.veSelfCached = selected);
+            Event.fire('draggable.start', this.veSelfCached = selected,
+                this.group);
         },
 
         toggleItem(id, reset = false)

@@ -110,6 +110,7 @@ export default {
     mounted()
     {
         this.$parent.$on('hook:updated', this.refresh);
+        this.$parent.$on('hook:destroyed', this.destroy);
 
         this.initialize();
     },
@@ -117,11 +118,7 @@ export default {
     beforeDestroy()
     {
         this.$parent.$off('hook:updated');
-    },
-
-    destroyed()
-    {
-        Any.delay(this.destroy, 500);
+        this.$parent.$off('hook:destroyed');
     },
 
     render()

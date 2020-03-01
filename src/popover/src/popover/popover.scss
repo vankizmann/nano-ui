@@ -6,6 +6,9 @@ $popover-default-padding: 9px 12px !default;
 $popover-select-size: 13px !default;
 $popover-select-padding: 0 !default;
 
+$popover-cascader-size: 13px !default;
+$popover-cascader-padding: 0 !default;
+
 $popover-tooltip-size: 12px !default;
 $popover-tooltip-padding: 3px 9px !default;
 
@@ -15,6 +18,10 @@ $popover-option-size: 14px !default;
     z-index: 10000;
     position: absolute;
     padding: 3px;
+    display: none;
+}
+
+.n-popover.n-open {
     display: inline-flex;
 }
 
@@ -55,7 +62,7 @@ $popover-option-size: 14px !default;
 }
 
 .n-popover.n-popover--cascader > .n-popover__frame {
-    font-size: $popover-default-size;
+    font-size: $popover-cascader-size;
     background: $--color-white;
     border-radius: $radius-medium;
     box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
@@ -113,6 +120,10 @@ $popover-option-size: 14px !default;
     padding: $popover-select-padding;
 }
 
+.n-popover.n-popover--cascader > .n-popover__frame > .n-popover__header {
+    padding: $popover-cascader-padding;
+}
+
 .n-popover.n-popover--tooltip > .n-popover__frame > .n-popover__header {
     padding: $popover-tooltip-padding;
 }
@@ -127,6 +138,10 @@ $popover-option-size: 14px !default;
 
 .n-popover.n-popover--select > .n-popover__frame > .n-popover__body {
     padding: $popover-select-padding;
+}
+
+.n-popover.n-popover--cascader > .n-popover__frame > .n-popover__body {
+    padding: $popover-cascader-padding;
 }
 
 .n-popover.n-popover--tooltip > .n-popover__frame > .n-popover__body {

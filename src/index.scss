@@ -1,5 +1,6 @@
-@import "./notification/index";
+@import "./root/transition";
 
+@import "./notification/index";
 @import "./virtualscroller/index";
 @import "./scrollbar/index";
 @import "./draggable/index";

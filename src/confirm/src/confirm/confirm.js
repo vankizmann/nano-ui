@@ -1,4 +1,4 @@
-import { Locale } from "nano-js";
+import { Obj, Locale } from "nano-js";
 
 export default {
 
@@ -67,7 +67,7 @@ export default {
         closable: {
             default()
             {
-                return false;
+                return true;
             },
             type: [Boolean]
         }
@@ -83,18 +83,22 @@ export default {
 
     methods: {
 
-        abort()
+        abort(event)
         {
-            this.$emit('input', this.veVisible = false);
+            this.$refs.modal.close(event);
             this.$emit('abort');
         },
 
-        confirm()
+        confirm(event)
         {
-            this.$emit('input', this.veVisible = false);
+            this.$refs.modal.close(event);
             this.$emit('confirm');
-        }
+        },
 
+        eventInput(value)
+        {
+            this.$emit('input', this.veVisible = value);
+        }
 
     },
 
@@ -102,51 +106,74 @@ export default {
 
         visible()
         {
-            this.veVisible = this.visible;
+            if ( this.visible !== this.veVisible ) {
+                this.veVisible = this.visible;
+            }
         }
 
     },
 
+    renderIcon()
+    {
+        return (
+            <div class="n-confirm__icon">
+                <span class={this.icons[this.type]}></span>
+            </div>
+        );
+    },
+
+    renderBody()
+    {
+        return (
+            <div class="n-confirm__body">
+                {this.$slots.default || this.trans('Are you sure?')}
+            </div>
+        );
+    },
+
+    renderAction()
+    {
+        return (
+            <div class="n-confirm__actions">
+                <NButton size={this.size} type="secondary" vOn:click={this.abort}>
+                    {this.trans('Abort')}
+                </NButton>
+                <NButton size={this.size} type={this.type} vOn:click={this.confirm}>
+                    {this.trans('Confirm')}
+                </NButton>
+            </div>
+        );
+    },
+
     render()
     {
-        let className = [
-            'n-confirm', 'n-confirm--' + this.type, 'n-confirm--' + this.size
+        let classList = [
+            'n-confirm',
+            'n-confirm--' + this.type,
+            'n-confirm--' + this.size
         ];
 
+        let props = {
+            type: 'confirm',
+            visible: this.veVisible,
+            selector: this.selector,
+            width: this.width,
+            position: this.position,
+            closable: this.closable
+        };
+
+        let events = Obj.clone(this.$listeners);
+
+        // Override input listener
+        events['input'] = this.eventInput;
+
         return (
-            <NModal type="confirm" vModel={this.veVisible} selector={this.selector} width={this.width} position={this.position} closable={this.closable}>
-                <template slot="raw">
-                    <div class={className}>
-                        <div class="n-confirm__icon">
-                            { this.type === 'primary' &&
-                                <span class={this.icons.primary}></span>
-                            }
-                            { this.type === 'success' &&
-                                <span class={this.icons.success}></span>
-                            }
-                            { this.type === 'warning' &&
-                                <span class={this.icons.warning}></span>
-                            }
-                            { this.type === 'danger' &&
-                                <span class={this.icons.danger}></span>
-                            }
-                            { this.type === 'info' &&
-                            <span class={this.icons.info}></span>
-                            }
-                        </div>
-                        <div class="n-confirm__body">
-                            { this.$slots.default || this.trans('Are you sure?') }
-                        </div>
-                        <div class="n-confirm__actions">
-                            <NButton size={this.size} type="secondary" vOn:click={this.abort}>
-                                { this.trans('Abort') }
-                            </NButton>
-                            <NButton size={this.size} type={this.type} vOn:click={this.confirm}>
-                                { this.trans('Confirm') }
-                            </NButton>
-                        </div>
-                    </div>
-                </template>
+            <NModal ref="modal" props={props} events={events}>
+                <div slot="raw" class={classList}>
+                    { this.ctor('renderIcon')() }
+                    { this.ctor('renderBody')() }
+                    { this.ctor('renderAction')() }
+                </div>
             </NModal>
         );
     }

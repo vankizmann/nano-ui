@@ -1,5 +1,5 @@
 import CtorMixin from "../../../mixins/src/ctor";
-import { Arr, Obj, Any, Locale } from "nano-js";
+import { Arr, Obj, Any, UUID } from "nano-js";
 
 export default {
 
@@ -76,7 +76,7 @@ export default {
     renderReset()
     {
         return (
-            <NButton type="link" size="small" disabled={Any.isEmpty(this.form.value)} vOn:click={this.resetFilter}>
+            <NButton key={UUID()} type="link" size="small" disabled={Any.isEmpty(this.form.value)} vOn:click={this.resetFilter}>
                 {this.trans('Reset')}
             </NButton>
         );

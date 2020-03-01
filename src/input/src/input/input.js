@@ -16,9 +16,16 @@ export default {
         icon: {
             default()
             {
-                return '';
+                return null;
+            }
+        },
+
+        iconPosition: {
+            default()
+            {
+                return 'after';
             },
-            type: [String]
+            type: [Boolean]
         },
 
         iconDisabled: {
@@ -73,78 +80,112 @@ export default {
 
     watch: {
 
-        value(value)
+        value()
         {
-            this.nativeValue = value;
+            if ( this.value !== this.veValue ) {
+                this.veValue = this.value;
+            }
         }
 
     },
 
     methods: {
 
+        eventIconClick(event)
+        {
+            this.$emit('icon-click', event);
+        },
+
+        eventInput(event)
+        {
+            this.$emit('input', event.target.value);
+        }
+
     },
 
     data()
     {
         return {
-            nativeValue: this.value || ''
+            veValue: this.value || ''
         };
     },
 
-    render(h)
+    renderIcon()
     {
-        let className = [
-            'n-input', 'n-input--' + this.size
-        ];
-
-        if ( this.disabled === true ) {
-            className.push('n-input--disabled');
+        if ( ! this.icon ) {
+            return null;
         }
 
-        if ( this.round === true ) {
-            className.push('n-input--round');
-        }
-
-        if ( Any.isEmpty(this.icon) === false ) {
-            className.push('n-input--icon');
-        }
-
-        let props = {
-            value: this.nativeValue
+        let events = {
+            click: this.eventIconClick
         };
 
-        let domProps = {
-            value: this.nativeValue,
+        let props = {
+            type: 'input',
+            icon: this.icon,
+            disabled: this.iconDisabled,
+        };
+
+        return (
+            <NButton props={props} on={events} />
+        );
+    },
+
+    renderInput()
+    {
+        let classList = [
+            'n-input',
+            'n-input--' + this.size
+        ];
+
+        if ( this.round ) {
+            classList.push('n-input--round');
+        }
+
+        if ( this.icon ) {
+            classList.push('n-input--icon');
+            classList.push('n-input--icon-' + this.iconPosition);
+        }
+
+        let attrs = {
+            value: this.veValue,
             type: this.nativeType,
             disabled: this.disabled,
             placeholder: this.placeholder
         };
 
-        let events = Obj.assign({}, this.$listeners, {
-            input: (event) => this.$emit('input', event.target.value)
-        });
+        let events = {};
 
-        let element = h('input', {
-            class: className, props: props, domProps: domProps, on: events
-        });
-
-        let icon = null;
-
-        let iconClick = () => {
-            this.$emit('iconClick'); this.$emit('icon-click');
-        };
-
-        if ( Any.isEmpty(this.icon) === false ) {
-            icon = (
-                <NButton type="input" disabled={this.iconDisabled} vOn:click={iconClick}>
-                    <span class={this.icon}></span>
-                </NButton>
-            );
+        if ( ! this.disabled ) {
+            events = Obj.assign({}, this.$listeners);
         }
 
-        return <div class={['n-input__wrapper', this.disabled && 'n-disabled']}>
-            { [element, icon] }
-        </div>;
+        events.input = this.eventInput;
+
+        return (
+            <input class={classList} attrs={attrs} on={events} />
+        )
+    },
+
+    render($render)
+    {
+        this.$render = $render;
+
+        let classList = [
+            'n-input__wrapper'
+        ];
+
+        if ( this.disabled ) {
+            classList.push('n-disabled');
+        }
+
+        return (
+            <div class={classList}>
+                { this.iconPosition === 'before' && this.ctor('renderIcon')() }
+                { this.ctor('renderInput')() }
+                { this.iconPosition === 'after' && this.ctor('renderIcon')() }
+            </div>
+        );
     }
 
 }

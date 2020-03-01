@@ -2,6 +2,10 @@
 
 $modal-default-padding: 14px 22px !default;
 
+body.n-open {
+    overflow: hidden;
+}
+
 .n-modal {
     z-index: 2000;
     position: fixed;
@@ -163,12 +167,4 @@ $modal-default-padding: 14px 22px !default;
 
 .n-modal__close:hover span {
     color: $--color-gray-40;
-}
-
-.n-modal-enter-active, .n-modal-leave-active {
-    transition: transform 600ms 150ms, opacity 600ms 150ms;
-}
-.n-modal-enter, .n-modal-leave-to {
-    opacity: 0;
-    transform: translateY(30px);
 }

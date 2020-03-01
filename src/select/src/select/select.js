@@ -276,6 +276,8 @@ export default {
         {
             this.veSearch = event.target.value;
 
+            this.$nextTick(this.$refs.popover.refresh);
+
             this.veIndex = -1;
         },
 

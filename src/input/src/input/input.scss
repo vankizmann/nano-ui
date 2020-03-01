@@ -27,15 +27,19 @@ $input-height: 34px !default;
     padding: 0 $input-height * 0.6;
 }
 
-.n-inverse .n-input {
-    border-color: $--color-gray-80;
-    background: $--color-black;
-    color: $--color-white;
-}
-
 .n-input:hover,
 .n-input:focus {
     border: 1px solid $--color-primary;
+}
+
+.n-disabled .n-input {
+    cursor: not-allowed;
+    background: $--color-gray-05;
+}
+
+.n-disabled .n-input:hover,
+.n-disabled .n-input:focus {
+    border-color: $--color-gray-15;
 }
 
 .n-input.n-input--small {
@@ -58,38 +62,31 @@ $input-height: 34px !default;
     padding: 0 $input-height * 0.6 * 1.125;
 }
 
-.n-input.n-input--icon {
+.n-input.n-input--icon.n-input--icon-before {
+    padding-left: $input-height;
+}
+
+.n-input.n-input--icon.n-input--icon-after {
     padding-right: $input-height;
 }
 
-.n-input.n-input--icon.n-input--small {
+.n-input.n-input--icon.n-input--icon-before.n-input--small {
+    padding-left: $input-height * 0.875;
+}
+
+.n-input.n-input--icon.n-input--icon-after.n-input--small {
     padding-right: $input-height * 0.875;
 }
 
-.n-input.n-input--icon.n-input--large {
+.n-input.n-input--icon.n-input--icon-before.n-input--large {
+    padding-left: $input-height * 1.125;
+}
+
+.n-input.n-input--icon.n-input--icon-after.n-input--large {
     padding-right: $input-height * 1.125;
 }
 
-.n-input.n-input--disabled {
-    cursor: not-allowed;
-    background: $--color-gray-05;
-}
-
-.n-inverse .n-input.n-input--disabled {
-    background: $--color-gray-90;
-}
-
-.n-input.n-input--disabled:hover,
-.n-input.n-input--disabled:focus {
-    border-color: $--color-gray-15;
-}
-
-.n-inverse .n-input.n-input--disabled:hover,
-.n-inverse .n-input.n-input--disabled:focus {
-    border-color: $--color-gray-80;
-}
-
-.n-input__wrapper .n-button__wrapper {
+.n-input__wrapper > .n-button__wrapper {
     position: absolute;
     top: 0;
     right: 0;
