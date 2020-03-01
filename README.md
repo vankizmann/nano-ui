@@ -1,6 +1,6 @@
 <p align="center"><img width="100" src="https://vankizmann.github.io/nano-ui/nano.png" alt="nano.ui"></p>
 
-## nano.ui
+<h2 align="center">nano.ui 0.1.0</h2>
 
 ### Done and reworked
 - [Draggable](./docs/draggable/index.html)
