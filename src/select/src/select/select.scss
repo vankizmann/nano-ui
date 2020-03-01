@@ -26,14 +26,8 @@ $select-empty-padding: 6px 12px !default;
     transition: 0.15s border;
 }
 
-.n-inverse .n-select {
-    border-color: $--color-gray-80;
-    background: $--color-black;
-    color: $--color-white;
-}
-
 .n-select:hover,
-.n-select.n-popover--open {
+.n-select.n-open {
     border: 1px solid $--color-primary;
 }
 
@@ -55,26 +49,24 @@ $select-empty-padding: 6px 12px !default;
     min-height: $select-height * 1.125;
 }
 
-.n-select.n-select--disabled,
-.n-select.n-select--disabled:hover {
+.n-disabled .n-select,
+.n-disabled .n-select:hover {
     cursor: not-allowed;
     background: $--color-gray-05;
     border-color: $--color-gray-15;
 }
 
-.n-inverse .n-select.n-select--disabled,
-.n-inverse .n-select.n-select--disabled:hover {
-    background: $--color-gray-90;
-    border-color: $--color-gray-80;
-}
-
 .n-select__label {
+    position: relative;
+    overflow: hidden;
     flex: 1 1 auto;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     align-items: center;
-    position: relative;
+}
+
+.n-select.n-select--multiple .n-select__label {
+    flex-wrap: wrap;
 }
 
 .n-select__input {
@@ -86,10 +78,6 @@ $select-empty-padding: 6px 12px !default;
     border: 0;
     background: transparent;
     color: $--color-black;
-}
-
-.n-inverse .n-select__input {
-    color: $color-white;
 }
 
 .n-select.n-select--disabled .n-select__input {
@@ -113,7 +101,6 @@ $select-empty-padding: 6px 12px !default;
 
 .n-select__items {
      max-height: 210px;
-     overflow: auto;
  }
 
 .n-select__item {
@@ -122,33 +109,38 @@ $select-empty-padding: 6px 12px !default;
     align-items: center;
 }
 
-.n-select__item.n-select__item--multiple {
-    background: $--color-gray-10;
+.n-select:not(.n-select--multiple) .n-select__item {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.n-select.n-select--multiple .n-select__item {
+    color: $--color-white;
+    background: $--color-primary;
     padding: $select-item-padding;
     border-radius: $radius-small;
 }
 
-.n-inverse .n-select__item.n-select__item--multiple {
-    background: $--color-gray-80;
-}
-
-.n-select.n-select--default .n-select__item.n-select__item--multiple {
+.n-select.n-select--default.n-select--multiple .n-select__item {
     font-size: $select-size * 0.825;
     margin: 3px 6px 3px 0;
 }
 
-.n-select.n-select--small .n-select__item.n-select__item--multiple {
+.n-select.n-select--small.n-select--multiple .n-select__item {
     font-size: $select-size * 0.825 * 0.875;
     margin: 2px 5px 2px 0;
 }
 
-.n-select.n-select--large .n-select__item.n-select__item--multiple {
+.n-select.n-select--large.n-select--multiple .n-select__item {
     font-size: $select-size * 0.825 * 1.125;
     margin: 4px 7px 4px 0;
 }
 
 .n-select__item i {
-    color: $--color-gray-50;
+    opacity: 0.8;
     margin-left: 4px;
 }
 
@@ -164,12 +156,7 @@ $select-empty-padding: 6px 12px !default;
     background: $--color-gray-10;
     border-radius: 500px;
     transition: color 0.3s, background 0.3s;
-    margin: 0 8px 0 -4px;
-}
-
-.n-inverse .n-select__clear {
-    color: $--color-gray-50;
-    background: $--color-gray-80;
+    margin: 0 8px 0 0;
 }
 
 .n-select__clear:hover {
@@ -177,19 +164,15 @@ $select-empty-padding: 6px 12px !default;
     background: $--color-gray-15;
 }
 
-.n-inverse .n-select__clear:hover {
-    color: $--color-gray-20;
-    background: $--color-gray-75;
-}
-
-.n-select__arrow {
+.n-select__angle {
+    padding-left: 6px;
     margin-left: auto;
     color: $--color-gray-40;
     transform-style: preserve-3d;
     transition: transform 0.6s;
 }
 
-.n-select.n-popover--open .n-select__arrow {
+.n-select.n-open .n-select__angle {
     transform: rotateX(180deg);
 }
 

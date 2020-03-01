@@ -77,15 +77,15 @@ export default {
         ];
 
         if ( Arr.has(this.NSelect.veValue, this.value) ) {
-            classList.push('n-popover-option--active');
+            classList.push('n-active');
         }
 
-        if ( this.disabled === true ) {
-            classList.push('n-popover-option--disabled');
+        if ( this.disabled ) {
+            classList.push('n-disabled');
         }
 
         if ( this.NSelect.veIndex === index ) {
-            classList.push('n-popover-option--current');
+            classList.push('n-current');
         }
 
         let events = {};

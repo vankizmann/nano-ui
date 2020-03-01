@@ -47,6 +47,10 @@ $confirm-padding: 18px 22px !default;
     color: $--color-danger;
 }
 
+.n-confirm.n-confirm--info .n-confirm__icon {
+    color: $--color-info;
+}
+
 .n-confirm__body {
     width: 100%;
     text-align: center;

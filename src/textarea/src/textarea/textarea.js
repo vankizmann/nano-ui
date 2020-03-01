@@ -75,69 +75,80 @@ export default {
 
         value(value)
         {
-            this.nativeValue = value;
+            if ( this.value !== this.veValue ) {
+                this.veValue = value;
+            }
         }
 
     },
 
     methods: {
 
+        eventInput(event)
+        {
+            this.$emit('input', event.target.value);
+        }
+
     },
 
     data()
     {
         return {
-            nativeValue: this.value || ''
+            veValue: this.value || ''
         };
     },
 
-    render(h)
+    renderInput()
     {
-        let className = [
-            'n-textarea', 'n-textarea--' + this.size
+        let classList = [
+            'n-textarea',
+            'n-textarea--' + this.size
         ];
 
-        if ( this.disabled === true ) {
-            className.push('n-textarea--disabled');
-        }
-
-        if ( Any.isEmpty(this.icon) === false ) {
-            className.push('n-textarea--icon');
-        }
-
-        let props = {
-            value: this.nativeValue
-        };
-
-        let domProps = {
-            value: this.nativeValue,
+        let attrs = {
+            value: this.veValue,
             rows: this.minRows,
             disabled: this.disabled,
             placeholder: this.placeholder
         };
 
         if ( this.maxLength !== 0 ) {
-            domProps.maxLength = this.maxLength;
+            attrs.maxLength = this.maxLength;
         }
 
-        let currentRows = (this.nativeValue.match(/\n/g) ||
-            []).length + 1;
+        let currentRows = (this.veValue.match(/\n/g) || []).length + 1;
 
-        if ( this.autoRows === true && domProps.rows < currentRows ) {
-            domProps.rows = currentRows <= this.maxRows ? currentRows : this.maxRows;
+        if ( this.autoRows && attrs.rows < currentRows ) {
+            attrs.rows = currentRows <= this.maxRows ? currentRows : this.maxRows;
         }
 
-        let events = Obj.assign({}, this.$listeners, {
-            input: (event) => this.$emit('input', event.target.value)
-        });
+        let events = Obj.clone(this.$listeners);
 
-        let element = h('textarea', {
-            class: className, props: props, domProps: domProps, on: events
-        });
+        // Override input event
+        events.input = this.eventInput;
 
-        return <div class={['n-textarea__wrapper', this.disabled && 'n-disabled']}>
-            { element }
-        </div>;
+        return (
+            <textarea class={classList} attrs={attrs} on={events} />
+        );
+    },
+
+    render($render)
+    {
+        this.$render = $render;
+
+        let classList = [
+            'n-textarea__wrapper'
+        ];
+
+        if ( this.disabled ) {
+            classList.push('n-disabled');
+        }
+
+        return (
+            <div class={classList}>
+                { this.ctor('renderInput')() }
+            </div>
+        );
     }
 
 }

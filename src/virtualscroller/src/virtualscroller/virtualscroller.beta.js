@@ -136,8 +136,6 @@ export default {
                 return;
             }
 
-            console.log('update');
-
             this.state = newState;
         },
 
@@ -225,8 +223,6 @@ export default {
 
         // Get buffer start
         let bufferEnd = this.state.endPreload - this.state.startBuffer;
-
-        console.log(bufferStart, bufferEnd);
 
         return Arr.each(items, (value, index) => {
 

@@ -9,14 +9,14 @@ export default {
         value: {
             default()
             {
-                return this.multiple ? [] : null;
+                return null;
             },
         },
 
         clearValue: {
             default()
             {
-                return this.multiple ? [] : null;
+                return null;
             }
         },
 
@@ -41,14 +41,6 @@ export default {
             {
                 return null;
             }
-        },
-
-        window: {
-            default()
-            {
-                return true;
-            },
-            type: [Boolean]
         },
 
         multiple: {
@@ -112,6 +104,7 @@ export default {
     {
         return {
             veValue: this.value,
+            veClearValue: this.clearValue,
             veOpen: false,
             veSearch: '',
             veIndex: -1,
@@ -142,7 +135,7 @@ export default {
 
         clear()
         {
-            this.$emit('input', this.veValue = this.clearValue);
+            this.$emit('input', this.veValue = Arr.clone(this.veClearValue));
         },
 
         addOption(option)
@@ -182,19 +175,23 @@ export default {
                 event.stopPropagation();
             }
 
+            let veValue = this.veValue;
+
             if ( ! this.multiple ) {
                 this.$refs.popover.close();
             }
 
             if ( ! this.multiple ) {
-                return this.$emit('input', this.veValue = value);
+                veValue = value;
             }
 
-            if ( ! Any.isArray(this.veValue) && this.multiple ) {
-                this.veValue = [];
+            if ( this.multiple ) {
+                Arr.toggle(veValue, value);
             }
 
-            this.$emit('input', Arr.toggle(this.veValue, value));
+            if ( this.veValue !== veValue ) {
+                this.$emit('input', this.veValue = veValue);
+            }
         },
 
         getOptionLabel(value)
@@ -216,7 +213,7 @@ export default {
         {
             this.veOpen = true;
 
-            if ( ! this.veOpen ) {
+            if ( ! this.veOpen && this.$refs.input ) {
                 this.$refs.input.focus();
             }
 
@@ -227,7 +224,7 @@ export default {
         {
             this.veOpen = false;
 
-            if ( ! this.veOpen ) {
+            if ( ! this.veOpen && this.$refs.input ) {
                 this.$refs.input.blur();
             }
 
@@ -276,7 +273,7 @@ export default {
         {
             this.veSearch = event.target.value;
 
-            this.$nextTick(this.$refs.popover.refresh);
+            this.$once('hook:updated', this.$refs.popover.refresh);
 
             this.veIndex = -1;
         },
@@ -292,7 +289,7 @@ export default {
                 this.veSearch = '';
             }
 
-            if ( this.veOpen ) {
+            if ( this.veOpen && this.$refs.input ) {
                 this.$refs.input.focus();
             }
         },
@@ -327,13 +324,24 @@ export default {
 
         eventPopoverInput(input)
         {
-            if ( input ) {
+            if ( input && this.$refs.input ) {
                 this.$refs.input.focus();
             }
 
             input ? this.openSelect() : this.closeSelect();
         }
 
+    },
+
+    created()
+    {
+        if ( this.multiple && ! Any.isArray(this.veValue) ) {
+            this.veValue = [];
+        }
+
+        if ( this.multiple && ! Any.isArray(this.veClearValue) ) {
+            this.veClearValue = [];
+        }
     },
 
     beforeMount()
@@ -396,10 +404,6 @@ export default {
             'n-select__item'
         ];
 
-        if ( this.multiple ) {
-            classList.push('n-select__item--multiple');
-        }
-
         let style = {};
 
         if ( ! this.multiple && this.veOpen ) {
@@ -410,9 +414,15 @@ export default {
             click: () => this.toggleOption(value)
         };
 
+        let removeHtml = null;
+
+        if ( this.multiple ) {
+            removeHtml = (<i on={events} class={this.icons.times}></i>);
+        }
+
         return (
             <span class={classList} style={style}>
-                { this.getOptionLabel(value) } { this.multiple && <i on={events} class={this.icons.times}></i>}
+                { [this.getOptionLabel(value), removeHtml] }
             </span>
         );
     },
@@ -420,7 +430,7 @@ export default {
     renderLabelAngle()
     {
         return (
-            <div class="n-select__arrow">
+            <div class="n-select__angle">
                 <span class={this.icons.angleDown}></span>
             </div>
         );
@@ -451,11 +461,12 @@ export default {
     renderDisplay()
     {
         let classList = [
-            'n-select', 'n-select--' + this.size
+            'n-select',
+            'n-select--' + this.size
         ];
 
-        if ( this.disabled ) {
-            classList.push('n-select--disabled')
+        if ( this.multiple ) {
+            classList.push('n-select--multiple');
         }
 
         return (
@@ -468,7 +479,7 @@ export default {
     renderOptions()
     {
         if ( ! this.veSearched.length ) {
-            return <div class="n-select__empty">{this.emptyText}</div>;
+            return (<div class="n-select__empty">{this.emptyText}</div>);
         }
 
         return (

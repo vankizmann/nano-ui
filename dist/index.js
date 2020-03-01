@@ -51094,25 +51094,30 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_cascader_cascader__WEB
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @vue/babel-helper-vue-jsx-merge-props */ "./node_modules/@vue/babel-helper-vue-jsx-merge-props/dist/helper.js");
 /* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _mixins_src_ctor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/src/ctor */ "./src/mixins/src/ctor.js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! nano-js */ "nano-js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
 
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NCascader',
-  model: {
-    prop: 'cascade'
-  },
   props: {
+    value: {
+      "default": function _default() {
+        return [];
+      },
+      type: [Array]
+    },
+    clearValue: {
+      "default": function _default() {
+        return [];
+      },
+      type: [Array]
+    },
     items: {
       "default": function _default() {
         return [];
@@ -51123,12 +51128,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "default": function _default() {
         return null;
       }
-    },
-    cascade: {
-      "default": function _default() {
-        return [];
-      },
-      type: [Array]
     },
     placeholder: {
       "default": function _default() {
@@ -51153,6 +51152,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return 'default';
       },
       type: [String]
+    },
+    position: {
+      "default": function _default() {
+        return 'bottom-start';
+      },
+      type: [String]
+    },
+    boundary: {
+      "default": function _default() {
+        return null;
+      }
     },
     trigger: {
       "default": function _default() {
@@ -51179,194 +51189,236 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: [String]
     }
   },
-  methods: _objectSpread({}, _mixins_src_ctor__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    toggleHover: function toggleHover(cascade) {
-      var _this = this;
-
-      nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].debounce(function (value) {
-        return _this.hoverCascade = value;
-      }, 50)(cascade);
-    },
-    toggleSelect: function toggleSelect(cascade) {
-      var _this2 = this;
-
-      cascade = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].filter(cascade, function (item) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].isEmpty(item) === false;
-      });
-      cascade = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(cascade, function (item) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_2__["Obj"].get(item, _this2.valueProp);
-      });
-      this.visible = false;
-      this.$emit('input', this.nativeCascade = cascade);
-    },
-    solveNativeCascade: function solveNativeCascade() {
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].isArray(this.cascade)) {
-        return;
-      }
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].isEqual(this.nativeCascade, this.cascade)) {
-        return;
-      }
-
-      this.nativeCascade = this.cascade;
-    },
-    clearNativeCascade: function clearNativeCascade() {
-      this.$emit('input', this.nativeCascade = []);
-    },
-    solveSelectedCascade: function solveSelectedCascade() {
-      var _this3 = this;
-
-      var selected = [],
-          items = this.items;
-      nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(this.nativeCascade, function (value) {
-        var item = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].find(items, _defineProperty({}, _this3.valueProp, value));
-        selected.push(item);
-        items = nano_js__WEBPACK_IMPORTED_MODULE_2__["Obj"].get(item, _this3.childProp, []);
-      });
-      this.selectedCascade = selected;
-    }
-  }),
-  watch: {
-    cascade: {
-      handler: 'solveNativeCascade'
-    },
-    nativeCascade: {
-      handler: 'solveSelectedCascade'
-    }
-  },
   data: function data() {
     return {
-      visible: false,
-      timeout: null,
-      hoverCascade: [null],
-      nativeCascade: [],
-      selectedCascade: []
+      veValue: this.value,
+      veHover: this.value,
+      veOpen: false
     };
   },
-  beforeMount: function beforeMount() {
-    this.solveNativeCascade();
-  },
-  renderItem: function renderItem(item, index) {
-    var _this4 = this;
+  methods: {
+    clear: function clear() {
+      this.$emit('input', this.veHover = this.veValue = this.clearValue);
+    },
+    eventPopoverInput: function eventPopoverInput(input) {
+      this.veOpen = input;
+    },
+    eventHover: function eventHover(cascade) {
+      var _this = this;
 
+      this.$once('hook:updated', this.$refs.popover.refresh);
+
+      if (this.trigger !== 'hover') {
+        this.$emit('hover', this.veHover = cascade);
+      } // Hover intend emulation
+
+
+      clearTimeout(this.veDelay);
+      this.veDelay = setTimeout(function () {
+        _this.$emit('hover', _this.veHover = cascade);
+      }, 150);
+    },
+    eventSelect: function eventSelect(cascade) {
+      this.veOpen = false;
+      this.$emit('input', this.veValue = cascade);
+    }
+  },
+  watch: {
+    value: function value() {
+      if (this.value !== this.veValue) {
+        this.veValue = this.value;
+      }
+    }
+  },
+  renderLabelClear: function renderLabelClear() {
     var h = this.$createElement;
 
-    var hoverEvent = function hoverEvent() {
-      var clone = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].slice(_this4.hoverCascade, 0, index + 1);
+    if (!this.clearable || this.disabled) {
+      return null;
+    }
 
-      _this4.toggleHover(nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].merge(clone, [item]));
+    var events = {
+      click: this.clear
     };
+    return h("div", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
+      "class": "n-cascader__clear"
+    }, {
+      "on": events
+    }]), [h("span", {
+      "class": this.icons.times
+    })]);
+  },
+  renderLabelItems: function renderLabelItems() {
+    var _this2 = this;
 
-    var selectEvent = function selectEvent() {
-      var clone = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].slice(_this4.hoverCascade, 0, index + 1);
+    var h = this.$createElement;
+    var items = this.items,
+        renderList = [];
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veValue, function (value) {
+      if (!items) {
+        return;
+      }
 
-      _this4.toggleSelect(nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].merge(clone, [item]));
-    };
+      var item = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(items, _defineProperty({}, _this2.valueProp, value));
+      items = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, _this2.childProp);
+      var itemLabel = h("span", {
+        "class": "n-cascader__item"
+      }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, _this2.labelProp)]);
+      renderList.push(itemLabel);
+    });
+    return renderList;
+  },
+  renderLabelAngle: function renderLabelAngle() {
+    var h = this.$createElement;
+    return h("div", {
+      "class": "n-cascader__angle"
+    }, [h("span", {
+      "class": this.icons.angleDown
+    })]);
+  },
+  renderLabel: function renderLabel() {
+    var h = this.$createElement;
+    return h("div", {
+      "class": "n-cascader__label"
+    }, [!!this.veValue.length && this.ctor('renderLabelItems')(), !this.veValue.length && h("span", {
+      "class": "n-cascader__placeholder"
+    }, [this.placeholder])]);
+  },
+  renderDisplay: function renderDisplay() {
+    var h = this.$createElement;
+    var classList = ['n-cascader', 'n-cascader--' + this.size];
+    return h("div", {
+      "class": classList
+    }, [this.ctor('renderLabelClear')(), this.ctor('renderLabel')(), this.ctor('renderLabelAngle')()]);
+  },
+  renderOption: function renderOption(item) {
+    var _this3 = this;
+
+    var cascade = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+    var h = this.$createElement;
+    var veCascade = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].clone(cascade);
+    veCascade.push(item[this.valueProp]);
+    var classList = ['n-popover-option'];
+
+    if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(this.veValue, item[this.valueProp])) {
+      classList.push('n-active');
+    }
+
+    if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(this.veHover, item[this.valueProp])) {
+      classList.push('n-current');
+    }
 
     var events = {};
 
     if (this.trigger === 'hover') {
-      events.mousemove = hoverEvent;
-      events.click = selectEvent;
+      events.mousemove = function () {
+        return _this3.eventHover(veCascade);
+      };
+
+      events.click = function () {
+        return _this3.eventSelect(veCascade);
+      };
     }
 
     if (this.trigger === 'click') {
-      events.mousedown = hoverEvent;
-      events.dblclick = selectEvent;
+      events.click = function () {
+        return _this3.eventHover(veCascade);
+      };
+
+      events.dblclick = function () {
+        return _this3.eventSelect(veCascade);
+      };
     }
 
-    var value = nano_js__WEBPACK_IMPORTED_MODULE_2__["Obj"].get(item, this.valueProp);
-    var className = ['n-cascader-option'];
-
-    if (nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].has(this.nativeCascade, value)) {
-      className.push('n-cascader-option--active');
-    }
-
-    var childs = nano_js__WEBPACK_IMPORTED_MODULE_2__["Obj"].get(item, this.childProp);
+    var children = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, this.childProp);
     return h("div", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
-      "class": className
+      "class": classList
     }, {
       "on": events
     }]), [h("div", {
       "class": "n-cascader-option__label"
-    }, [h("span", [nano_js__WEBPACK_IMPORTED_MODULE_2__["Obj"].get(item, this.labelProp)])]), nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].isEmpty(childs) === false && h("div", {
+    }, [h("span", [nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, this.labelProp)])]), !nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(children) && h("div", {
       "class": "n-cascader-option__arrow"
     }, [h("span", {
       "class": this.icons.angleRight
     })])]);
   },
-  renderCascade: function renderCascade(cascade, index) {
+  renderOptions: function renderOptions(items) {
+    var _this4 = this;
+
+    var cascade = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+    var h = this.$createElement;
+
+    if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(items)) {
+      return null;
+    }
+
+    return h("div", {
+      "class": "n-cascader__items"
+    }, [h("NScrollbar", {
+      "attrs": {
+        "relative": true
+      }
+    }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(items, function (item) {
+      return _this4.ctor('renderOption')(item, cascade);
+    })])]);
+  },
+  renderCascade: function renderCascade() {
     var _this5 = this;
 
+    var renderList = [this.ctor('renderOptions')(this.items)];
+    var items = this.items,
+        cascade = [];
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veHover, function (value) {
+      if (!items) {
+        return;
+      }
+
+      cascade.push(value);
+      var item = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(items, _defineProperty({}, _this5.valueProp, value));
+      items = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, _this5.childProp);
+
+      var options = _this5.ctor('renderOptions')(items, cascade);
+
+      renderList.push(options);
+    });
+    return renderList;
+  },
+  renderPopover: function renderPopover() {
     var h = this.$createElement;
-    var items = nano_js__WEBPACK_IMPORTED_MODULE_2__["Obj"].get(cascade, this.childProp);
-
-    if (index === 0) {
-      items = this.items;
-    }
-
-    if (nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].isEmpty(items) === true) {
-      return;
-    }
-
-    return h("div", {
-      "class": "n-cascader__options"
-    }, [nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(items, function (item) {
-      return _this5.ctor('renderItem')(item, index);
-    })]);
+    var props = {
+      visible: this.veOpen,
+      type: 'cascader',
+      trigger: 'click',
+      width: '100%',
+      size: this.size,
+      disabled: this.disabled,
+      position: this.position,
+      boundary: this.boundary,
+      window: !this.boundary
+    };
+    var events = {
+      input: this.eventPopoverInput
+    };
+    return h("NPopover", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
+      "ref": "popover"
+    }, {
+      "props": props
+    }, {}, {
+      "on": events
+    }]), [this.ctor('renderCascade')()]);
   },
   render: function render() {
-    var _this6 = this;
-
     var h = arguments[0];
-    var className = ['n-cascader', 'n-cascader--' + this.size];
+    var classList = ['n-cascader__wrapper'];
 
-    if (this.disabled === true) {
-      className.push('n-cascader--disabled');
+    if (this.disabled) {
+      classList.push('n-disabled');
     }
 
     return h("div", {
-      "class": ['n-cascader__wrapper', this.disabled && 'n-disabled']
-    }, [h("div", {
-      "class": className
-    }, [this.clearable === true && this.disabled === false && this.nativeCascade.length !== 0 && h("div", {
-      "class": "n-cascader__clear",
-      "on": {
-        "mousedown": function mousedown($event) {
-          $event.stopPropagation();
-          return _this6.clearNativeCascade($event);
-        }
-      }
-    }, [h("span", {
-      "class": this.icons.times
-    })]), h("div", {
-      "class": "n-cascader__label"
-    }, [this.selectedCascade.length !== 0 && nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(this.selectedCascade, function (item) {
-      return h("span", {
-        "class": "n-cascader__item"
-      }, [nano_js__WEBPACK_IMPORTED_MODULE_2__["Obj"].get(item, _this6.labelProp)]);
-    }), this.selectedCascade.length === 0 && h("span", {
-      "class": "n-cascader__placeholder"
-    }, [this.placeholder])]), h("div", {
-      "class": "n-cascader__arrow"
-    }, [h("span", {
-      "class": this.icons.angleDown
-    })])]), h("NPopover", {
-      "attrs": {
-        "disabled": this.disabled,
-        "type": "cascader",
-        "trigger": "click",
-        "position": "bottom-start"
-      },
-      "model": {
-        value: _this6.visible,
-        callback: function callback($$v) {
-          _this6.visible = $$v;
-        }
-      }
-    }, [nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(this.hoverCascade, function (cascade, index) {
-      return _this6.ctor('renderCascade')(cascade, index);
-    })])]);
+      "class": classList
+    }, [this.ctor('renderDisplay')(), this.ctor('renderPopover')()]);
   }
 });
 
@@ -56786,14 +56838,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_paginator_paginator__W
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _mixins_src_ctor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/src/ctor */ "./src/mixins/src/ctor.js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @vue/babel-helper-vue-jsx-merge-props */ "./node_modules/@vue/babel-helper-vue-jsx-merge-props/dist/helper.js");
+/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_src_ctor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/src/ctor */ "./src/mixins/src/ctor.js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_2__);
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 
 
@@ -56826,148 +56879,271 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     size: {
       "default": function _default() {
         return 'default';
-      }
+      },
+      type: [String]
+    },
+    type: {
+      "default": function _default() {
+        return 'secondary';
+      },
+      type: [String]
     },
     maxPages: {
       "default": function _default() {
         return 7;
       },
       type: [Number]
+    },
+    layout: {
+      "default": function _default() {
+        return ['limit', 'review', 'spacer', 'goto', 'pages'];
+      },
+      type: [Array]
     }
   },
   computed: {
     pages: function pages() {
-      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Num"].ceil(this.total / this.nativeLimit);
+      return nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"].ceil(this.total / this.veLimit);
     }
   },
-  methods: _objectSpread({}, _mixins_src_ctor__WEBPACK_IMPORTED_MODULE_0__["default"], {
+  data: function data() {
+    return {
+      vePage: this.page,
+      veLimit: this.limit
+    };
+  },
+  methods: {
     changePage: function changePage(page) {
-      this.nativePage = page;
+      this.vePage = page;
     },
     updatePaginate: function updatePaginate() {
       var paginate = {
-        page: this.nativePage,
-        limit: this.nativeLimit
+        page: this.vePage,
+        limit: this.veLimit
       };
       this.$emit('paginate', paginate);
+    },
+    eventPageInput: function eventPageInput(value) {
+      this.$emit('update:page', this.vePage = value);
+      this.updatePaginate();
+    },
+    eventLimitInput: function eventLimitInput(value) {
+      this.$emit('update:limit', this.veLimit = value);
+
+      if (this.pages < this.vePage) {
+        this.$emit('update:page', this.vePage = 1);
+      }
+
+      this.updatePaginate();
     }
-  }),
-  data: function data() {
-    return {
-      nativePage: this.page,
-      nativeLimit: this.limit
-    };
   },
-  mounted: function mounted() {
+  watch: {
+    page: function page() {
+      if (this.page !== this.vePage) {
+        this.vePage = this.page;
+      }
+    },
+    limit: function limit() {
+      if (this.limit !== this.veLimit) {
+        this.veLimit = this.limit;
+      }
+    }
+  },
+  renderLimit: function renderLimit() {
     var _this = this;
 
-    this.$watch('nativePage', function (value) {
-      _this.$emit('update:page', value);
-
-      _this.updatePaginate();
+    var h = this.$createElement;
+    var events = {
+      input: this.eventLimitInput
+    };
+    var props = {
+      value: this.veLimit,
+      size: this.size
+    };
+    var optionsHtml = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(this.limitOptions, function (limit) {
+      return h("NSelectOption", {
+        "attrs": {
+          "disabled": limit === _this.veLimit,
+          "value": limit
+        }
+      }, [_this.choice(':count items', limit)]);
     });
-    this.$watch('nativeLimit', function (value) {
-      _this.$emit('update:limit', value);
-
-      _this.updatePaginate();
+    return h("div", {
+      "class": "n-paginator__limit"
+    }, [h("NSelect", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{}, {
+      "props": props
+    }, {}, {
+      "on": events
+    }]), [optionsHtml])]);
+  },
+  renderReview: function renderReview() {
+    var h = this.$createElement;
+    return h("div", {
+      "class": "n-paginator__review"
+    }, [h("span", [this.choice('No items|Total :count item|Total :count items', this.total)])]);
+  },
+  renderSpacer: function renderSpacer() {
+    var h = this.$createElement;
+    return h("div", {
+      "class": "n-paginator__spacer"
     });
   },
-  render: function render() {
+  renderGoto: function renderGoto() {
     var _this2 = this;
+
+    var h = this.$createElement;
+    var events = {
+      input: this.eventPageInput
+    };
+    var props = {
+      value: this.vePage,
+      size: this.size
+    };
+    var optionsHtml = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(Array(this.pages).fill(null), function (value, index) {
+      return h("NSelectOption", {
+        "attrs": {
+          "disabled": nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"]["int"](index) + 1 === _this2.vePage,
+          "value": nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"]["int"](index) + 1
+        }
+      }, [nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"]["int"](index) + 1]);
+    });
+    return h("div", {
+      "class": "n-paginator__goto"
+    }, [h("span", [this.trans('Goto')]), h("NSelect", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{}, {
+      "props": props
+    }, {}, {
+      "on": events
+    }]), [optionsHtml])]);
+  },
+  renderPrev: function renderPrev() {
+    var _this3 = this;
+
+    var h = this.$createElement;
+    var props = {
+      type: this.type,
+      square: true,
+      size: this.size,
+      icon: this.icons.angleLeft
+    };
+
+    if (this.vePage - 1 < 1) {
+      props.disabled = true;
+    }
+
+    var events = {
+      click: function click() {
+        return _this3.eventPageInput(_this3.vePage - 1);
+      }
+    };
+    return h("NButton", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{}, {
+      "props": props
+    }, {}, {
+      "on": events
+    }]));
+  },
+  renderNext: function renderNext() {
+    var _this4 = this;
+
+    var h = this.$createElement;
+    var props = {
+      type: this.type,
+      square: true,
+      size: this.size,
+      icon: this.icons.angleRight
+    };
+
+    if (this.vePage + 1 > this.pages) {
+      props.disabled = true;
+    }
+
+    var events = {
+      click: function click() {
+        return _this4.eventPageInput(_this4.vePage + 1);
+      }
+    };
+    return h("NButton", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{}, {
+      "props": props
+    }, {}, {
+      "on": events
+    }]));
+  },
+  renderPage: function renderPage(index) {
+    var _this5 = this;
+
+    var h = this.$createElement;
+    var page = this.vePage,
+        pages = Math.abs(this.maxPages / 2);
+
+    if (page < pages) {
+      page = pages;
+    }
+
+    var global = Array(this.pages).length;
+
+    if (page > global - pages) {
+      page = global - pages;
+    }
+
+    var current = nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"]["int"](index) + 1;
+
+    if (current < page - pages) {
+      return null;
+    }
+
+    if (current > page + pages) {
+      return null;
+    }
+
+    var props = {
+      type: this.type,
+      square: true,
+      size: this.size
+    };
+
+    if (current === this.vePage) {
+      props.disabled = true;
+    }
+
+    var events = {
+      click: function click() {
+        return _this5.eventPageInput(current);
+      }
+    };
+    return h("NButton", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{}, {
+      "props": props
+    }, {}, {
+      "on": events
+    }]), [current]);
+  },
+  renderPages: function renderPages() {
+    var _this6 = this;
+
+    var h = this.$createElement;
+    return h("div", {
+      "class": "n-paginator__pages"
+    }, [this.ctor('renderPrev')(), nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(Array(this.pages).fill(null), function (empty, index) {
+      return _this6.ctor('renderPage')(index);
+    }), this.ctor('renderNext')()]);
+  },
+  renderSlot: function renderSlot(view) {
+    if (!this.$slots[view]) {
+      return null;
+    }
+
+    return this.$slots[view];
+  },
+  render: function render() {
+    var _this7 = this;
 
     var h = arguments[0];
     var className = ['n-paginator', 'n-paginator--' + this.size];
-    var limitOptions = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.limitOptions, function (limit) {
-      return h("NSelectOption", {
-        "attrs": {
-          "value": limit
-        }
-      }, [_this2.choice(':count items', limit)]);
-    });
     return h("div", {
       "class": className
-    }, [h("div", {
-      "class": "n-paginator__limit"
-    }, [h("NSelect", {
-      "attrs": {
-        "size": this.size,
-        "position": "top-center"
-      },
-      "model": {
-        value: _this2.nativeLimit,
-        callback: function callback($$v) {
-          _this2.nativeLimit = $$v;
-        }
-      }
-    }, [limitOptions])]), h("div", {
-      "class": "n-paginator__review"
-    }, [h("span", [this.choice('No items|Total :count item|Total :count items', this.total)])]), h("div", {
-      "class": "n-paginator__spacer"
-    }, [h("span")]), h("div", {
-      "class": "n-paginator__goto"
-    }, [h("span", [this.trans('Goto')]), h("NSelect", {
-      "attrs": {
-        "size": this.size,
-        "position": "top-center",
-        "undefinedText": "1"
-      },
-      "model": {
-        value: _this2.nativePage,
-        callback: function callback($$v) {
-          _this2.nativePage = $$v;
-        }
-      }
-    }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(Array(this.pages).fill(null), function (empty, index) {
-      return h("NSelectOption", {
-        "attrs": {
-          "value": nano_js__WEBPACK_IMPORTED_MODULE_1__["Num"]["int"](index) + 1
-        }
-      }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Num"]["int"](index) + 1]);
-    })])]), h("div", {
-      "class": "n-paginator__pages"
-    }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(Array(this.pages).fill(null), function (empty, index) {
-      var page = _this2.page,
-          global = Array(_this2.pages).length,
-          pages = _this2.maxPages / 2;
+    }, [nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(this.layout, function (view) {
+      var ctor = _this7.ctor('render' + nano_js__WEBPACK_IMPORTED_MODULE_2__["Str"].ucfirst(view));
 
-      if (page < pages) {
-        page = pages;
-      }
-
-      if (page > global - pages) {
-        page = global - pages;
-      }
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Num"]["int"](index) + 1 < page - pages) {
-        return null;
-      }
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Num"]["int"](index) + 1 > page + pages) {
-        return null;
-      }
-
-      var disabled = false;
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Num"]["int"](index) + 1 === _this2.nativePage) {
-        disabled = true;
-      }
-
-      var changePage = function changePage() {
-        _this2.changePage(nano_js__WEBPACK_IMPORTED_MODULE_1__["Num"]["int"](index) + 1);
-      };
-
-      return h("NButton", {
-        "attrs": {
-          "disabled": disabled,
-          "outline": true,
-          "square": true,
-          "size": _this2.size
-        },
-        "on": {
-          "click": changePage
-        }
-      }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Num"]["int"](index) + 1]);
-    })])]);
+      return ctor ? ctor() : _this7.ctor('renderSlot')(view);
+    })]);
   }
 });
 
@@ -57706,15 +57882,15 @@ __webpack_require__.r(__webpack_exports__);
     var classList = ['n-popover-option'];
 
     if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(this.NSelect.veValue, this.value)) {
-      classList.push('n-popover-option--active');
+      classList.push('n-active');
     }
 
-    if (this.disabled === true) {
-      classList.push('n-popover-option--disabled');
+    if (this.disabled) {
+      classList.push('n-disabled');
     }
 
     if (this.NSelect.veIndex === index) {
-      classList.push('n-popover-option--current');
+      classList.push('n-current');
     }
 
     var events = {};
@@ -57762,12 +57938,12 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     value: {
       "default": function _default() {
-        return this.multiple ? [] : null;
+        return null;
       }
     },
     clearValue: {
       "default": function _default() {
-        return this.multiple ? [] : null;
+        return null;
       }
     },
     size: {
@@ -57786,12 +57962,6 @@ __webpack_require__.r(__webpack_exports__);
       "default": function _default() {
         return null;
       }
-    },
-    window: {
-      "default": function _default() {
-        return true;
-      },
-      type: [Boolean]
     },
     multiple: {
       "default": function _default() {
@@ -57838,6 +58008,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       veValue: this.value,
+      veClearValue: this.clearValue,
       veOpen: false,
       veSearch: '',
       veIndex: -1,
@@ -57859,7 +58030,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     clear: function clear() {
-      this.$emit('input', this.veValue = this.clearValue);
+      this.$emit('input', this.veValue = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].clone(this.veClearValue));
     },
     addOption: function addOption(option) {
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(this.veOptions, option, {
@@ -57890,19 +58061,23 @@ __webpack_require__.r(__webpack_exports__);
         event.stopPropagation();
       }
 
+      var veValue = this.veValue;
+
       if (!this.multiple) {
         this.$refs.popover.close();
       }
 
       if (!this.multiple) {
-        return this.$emit('input', this.veValue = value);
+        veValue = value;
       }
 
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isArray(this.veValue) && this.multiple) {
-        this.veValue = [];
+      if (this.multiple) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].toggle(veValue, value);
       }
 
-      this.$emit('input', nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].toggle(this.veValue, value));
+      if (this.veValue !== veValue) {
+        this.$emit('input', this.veValue = veValue);
+      }
     },
     getOptionLabel: function getOptionLabel(value) {
       var option = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(this.veOptions, {
@@ -57922,7 +58097,7 @@ __webpack_require__.r(__webpack_exports__);
     openSelect: function openSelect() {
       this.veOpen = true;
 
-      if (!this.veOpen) {
+      if (!this.veOpen && this.$refs.input) {
         this.$refs.input.focus();
       }
 
@@ -57931,7 +58106,7 @@ __webpack_require__.r(__webpack_exports__);
     closeSelect: function closeSelect() {
       this.veOpen = false;
 
-      if (!this.veOpen) {
+      if (!this.veOpen && this.$refs.input) {
         this.$refs.input.blur();
       }
 
@@ -57971,7 +58146,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     eventUpdateSearch: function eventUpdateSearch(event) {
       this.veSearch = event.target.value;
-      this.$nextTick(this.$refs.popover.refresh);
+      this.$once('hook:updated', this.$refs.popover.refresh);
       this.veIndex = -1;
     },
     eventFocusSearch: function eventFocusSearch(event) {
@@ -57982,7 +58157,7 @@ __webpack_require__.r(__webpack_exports__);
         this.veSearch = '';
       }
 
-      if (this.veOpen) {
+      if (this.veOpen && this.$refs.input) {
         this.$refs.input.focus();
       }
     },
@@ -58011,11 +58186,20 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     eventPopoverInput: function eventPopoverInput(input) {
-      if (input) {
+      if (input && this.$refs.input) {
         this.$refs.input.focus();
       }
 
       input ? this.openSelect() : this.closeSelect();
+    }
+  },
+  created: function created() {
+    if (this.multiple && !nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isArray(this.veValue)) {
+      this.veValue = [];
+    }
+
+    if (this.multiple && !nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isArray(this.veClearValue)) {
+      this.veClearValue = [];
     }
   },
   beforeMount: function beforeMount() {
@@ -58085,11 +58269,6 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     var classList = ['n-select__item'];
-
-    if (this.multiple) {
-      classList.push('n-select__item--multiple');
-    }
-
     var style = {};
 
     if (!this.multiple && this.veOpen) {
@@ -58101,19 +58280,25 @@ __webpack_require__.r(__webpack_exports__);
         return _this.toggleOption(value);
       }
     };
+    var removeHtml = null;
+
+    if (this.multiple) {
+      removeHtml = h("i", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{}, {
+        "on": events
+      }, {
+        "class": this.icons.times
+      }]));
+    }
+
     return h("span", {
       "class": classList,
       "style": style
-    }, [this.getOptionLabel(value), " ", this.multiple && h("i", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{}, {
-      "on": events
-    }, {
-      "class": this.icons.times
-    }]))]);
+    }, [[this.getOptionLabel(value), removeHtml]]);
   },
   renderLabelAngle: function renderLabelAngle() {
     var h = this.$createElement;
     return h("div", {
-      "class": "n-select__arrow"
+      "class": "n-select__angle"
     }, [h("span", {
       "class": this.icons.angleDown
     })]);
@@ -58138,8 +58323,8 @@ __webpack_require__.r(__webpack_exports__);
     var h = this.$createElement;
     var classList = ['n-select', 'n-select--' + this.size];
 
-    if (this.disabled) {
-      classList.push('n-select--disabled');
+    if (this.multiple) {
+      classList.push('n-select--multiple');
     }
 
     return h("div", {
@@ -60081,8 +60266,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_textarea_textarea__WEB
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! nano-js */ "nano-js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @vue/babel-helper-vue-jsx-merge-props */ "./node_modules/@vue/babel-helper-vue-jsx-merge-props/dist/helper.js");
+/* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NTextarea',
@@ -60137,62 +60325,64 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     value: function value(_value) {
-      this.nativeValue = _value;
+      if (this.value !== this.veValue) {
+        this.veValue = _value;
+      }
     }
   },
-  methods: {},
+  methods: {
+    eventInput: function eventInput(event) {
+      this.$emit('input', event.target.value);
+    }
+  },
   data: function data() {
     return {
-      nativeValue: this.value || ''
+      veValue: this.value || ''
     };
   },
-  render: function render(h) {
-    var _this = this;
-
-    var className = ['n-textarea', 'n-textarea--' + this.size];
-
-    if (this.disabled === true) {
-      className.push('n-textarea--disabled');
-    }
-
-    if (nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(this.icon) === false) {
-      className.push('n-textarea--icon');
-    }
-
-    var props = {
-      value: this.nativeValue
-    };
-    var domProps = {
-      value: this.nativeValue,
+  renderInput: function renderInput() {
+    var h = this.$createElement;
+    var classList = ['n-textarea', 'n-textarea--' + this.size];
+    var attrs = {
+      value: this.veValue,
       rows: this.minRows,
       disabled: this.disabled,
       placeholder: this.placeholder
     };
 
     if (this.maxLength !== 0) {
-      domProps.maxLength = this.maxLength;
+      attrs.maxLength = this.maxLength;
     }
 
-    var currentRows = (this.nativeValue.match(/\n/g) || []).length + 1;
+    var currentRows = (this.veValue.match(/\n/g) || []).length + 1;
 
-    if (this.autoRows === true && domProps.rows < currentRows) {
-      domProps.rows = currentRows <= this.maxRows ? currentRows : this.maxRows;
+    if (this.autoRows && attrs.rows < currentRows) {
+      attrs.rows = currentRows <= this.maxRows ? currentRows : this.maxRows;
     }
 
-    var events = nano_js__WEBPACK_IMPORTED_MODULE_0__["Obj"].assign({}, this.$listeners, {
-      input: function input(event) {
-        return _this.$emit('input', event.target.value);
-      }
-    });
-    var element = h('textarea', {
-      "class": className,
-      props: props,
-      domProps: domProps,
-      on: events
-    });
+    var events = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].clone(this.$listeners); // Override input event
+
+    events.input = this.eventInput;
+    return h("textarea", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
+      "class": classList
+    }, {
+      "attrs": attrs
+    }, {}, {
+      "on": events
+    }]));
+  },
+  render: function render($render) {
+    var h = arguments[0];
+    this.$render = $render;
+    var classList = ['n-textarea__wrapper'];
+
+    if (this.disabled) {
+      classList.push('n-disabled');
+    }
+
     return h("div", {
-      "class": ['n-textarea__wrapper', this.disabled && 'n-disabled']
-    }, [element]);
+      "class": classList
+    }, [this.ctor('renderInput')()]);
   }
 });
 
@@ -61128,7 +61318,6 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      console.log('update');
       this.state = newState;
     },
     discoverHeight: function discoverHeight() {
@@ -61194,7 +61383,6 @@ __webpack_require__.r(__webpack_exports__);
     var bufferStart = this.state.startPreload - this.state.startBuffer; // Get buffer start
 
     var bufferEnd = this.state.endPreload - this.state.startBuffer;
-    console.log(bufferStart, bufferEnd);
     return nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(items, function (value, index) {
       var ghost = index < bufferStart || index > bufferEnd;
       return _this.renderNode({

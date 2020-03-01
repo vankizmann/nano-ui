@@ -17,13 +17,23 @@ $textarea-height: 34px !default;
     background: $--color-white;
     font-size: $textarea-size;
     border: 1px solid $--color-gray-15;
-    border-radius: $radius-small;
+    border-radius: $radius-medium;
     transition: 0.15s border;
 }
 
 .n-textarea:hover,
 .n-textarea:focus {
     border: 1px solid $--color-primary;
+}
+
+.n-disabled .n-textarea {
+    cursor: not-allowed;
+    background: $--color-gray-05;
+}
+
+.n-disabled .n-textarea:hover,
+.n-disabled .n-textarea:focus {
+    border: 1px solid $--color-gray-15;
 }
 
 .n-textarea.n-textarea--small {
@@ -36,14 +46,4 @@ $textarea-height: 34px !default;
     font-size: $textarea-size * 1.125;
     padding: $textarea-height * 0.2 * 1.125 $textarea-height * 0.3 * 1.125;
     min-height: $textarea-height * 1.125;
-}
-
-.n-textarea.n-textarea--disabled {
-    cursor: not-allowed;
-    background: $--color-gray-05;
-}
-
-.n-textarea.n-textarea--disabled:hover,
-.n-textarea.n-textarea--disabled:focus {
-    border: 1px solid $--color-gray-15;
 }

@@ -154,7 +154,8 @@ export default {
             this.NCheckboxGroup.globalIntermediate : this.intermediate;
 
         let className = [
-            'n-checkbox', 'n-checkbox--' + this.size
+            'n-checkbox',
+            'n-checkbox--' + this.size
         ];
 
         if ( checked === true ) {

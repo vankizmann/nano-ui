@@ -45,6 +45,14 @@
             <pre>{{ form }}</pre>
         </n-form-item>
 
+        <div style="height: 600px; overflow-y: scroll; background: #efefef; position: relative;">
+            <div style="padding: 800px 0 80px;">
+                <n-form-item label="Default">
+                    <n-cascader v-model="form.value" :items="items"></n-cascader>
+                </n-form-item>
+            </div>
+        </div>
+
     </n-form>
 </div>
 
