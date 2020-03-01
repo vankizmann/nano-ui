@@ -55300,7 +55300,7 @@ __webpack_require__.r(__webpack_exports__);
       "default": function _default() {
         return 'after';
       },
-      type: [Boolean]
+      type: [String]
     },
     iconDisabled: {
       "default": function _default() {

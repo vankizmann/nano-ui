@@ -25,7 +25,7 @@ export default {
             {
                 return 'after';
             },
-            type: [Boolean]
+            type: [String]
         },
 
         iconDisabled: {
