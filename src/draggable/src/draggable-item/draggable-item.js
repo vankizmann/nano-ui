@@ -295,7 +295,7 @@ export default {
 
         return (
             <div class="n-draggable-item__select">
-                <NCheckbox size="small" disabled={!allowSelect} checked={isChecked} onInput={this.select} />
+                <NCheckbox disabled={!allowSelect} checked={isChecked} onInput={this.select} />
             </div>
         )
     },

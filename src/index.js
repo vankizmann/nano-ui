@@ -10,7 +10,7 @@ if (typeof window !== 'undefined') {
     scope = window;
 }
 
-scope.NanoIcons = {
+let NanoIcons = {
     checked: 'fa fa-check',
     intermediate: 'fa fa-minus',
     clock: 'fa fa-clock',
@@ -27,7 +27,11 @@ scope.NanoIcons = {
     angleLeft: 'fa fa-angle-left',
 };
 
-export function Install(Vue, Icons = {})
+let NanoStyles = {
+    round: false,
+};
+
+export function Install(Vue, Icons = {}, Styles = {})
 {
     if ( scope.Nano === undefined ) {
         return console.error('Nano JS is not available in window scope.');
@@ -40,7 +44,19 @@ export function Install(Vue, Icons = {})
     Vue.prototype.trans = scope.Nano.Locale.trans;
     Vue.prototype.choice = scope.Nano.Locale.choice;
 
-    Vue.prototype.icons = Vue.Obj.assign(scope.NanoIcons, Icons);
+    if ( ! scope.NanoIcons ) {
+        scope.NanoIcons = {};
+    }
+
+    Vue.prototype.icons = Vue.Obj.assign(NanoIcons,
+        scope.NanoIcons, Icons);
+
+    if ( ! scope.NanoStyles ) {
+        scope.NanoStyles = {};
+    }
+
+    Vue.prototype.styles = Vue.Obj.assign(NanoStyles,
+        scope.NanoStyles, Styles);
 
     require('./notification/index');
     require('./scrollbar/index');

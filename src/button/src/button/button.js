@@ -56,7 +56,7 @@ export default {
         round: {
             default()
             {
-                return false;
+                return this.styles.round;
             },
             type: [Boolean]
         },

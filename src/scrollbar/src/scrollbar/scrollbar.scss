@@ -136,13 +136,8 @@
 
 .n-scrollbar-vtrack,
 .n-scrollbar-htrack {
-    background: rgba($color-black, 0.2);
+    background: rgba($color-gray-50, 0.3);
     border-radius: 500px;
-}
-
-.n-inverse .n-scrollbar-vtrack,
-.n-inverse .n-scrollbar-htrack {
-    background: rgba($color-white, 0.2);
 }
 
 .n-scrollbar-vtrack {

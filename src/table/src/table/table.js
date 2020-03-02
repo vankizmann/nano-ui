@@ -242,7 +242,7 @@ export default {
         preloadItems: {
             default()
             {
-                return 30;
+                return 12;
             },
             type: [Number]
         },
@@ -250,7 +250,7 @@ export default {
         bufferItems: {
             default()
             {
-                return 30;
+                return 12;
             },
             type: [Number]
         },
