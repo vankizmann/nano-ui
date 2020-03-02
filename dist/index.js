@@ -40048,6 +40048,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$emit('dragdrop', event, virtualItem, 'root');
     }
   },
+  watch: {
+    selected: function selected() {
+      if (this.selected !== this.veSelected) {
+        this.veSelected = this.selected;
+      }
+    },
+    expanded: function expanded() {
+      if (this.expanded !== this.veExpanded) {
+        this.veExpanded = this.expanded;
+      }
+    }
+  },
   mounted: function mounted() {
     this.$on('dragstart', this.dispatchSelected);
     this.$on('dragstart', this.createDragCounter);

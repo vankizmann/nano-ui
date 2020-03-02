@@ -983,6 +983,24 @@ export default {
 
     },
 
+    watch: {
+
+        selected()
+        {
+            if ( this.selected !== this.veSelected ) {
+                this.veSelected = this.selected;
+            }
+        },
+
+        expanded()
+        {
+            if ( this.expanded !== this.veExpanded ) {
+                this.veExpanded = this.expanded;
+            }
+        }
+
+    },
+
     mounted()
     {
         this.$on('dragstart', this.dispatchSelected);
