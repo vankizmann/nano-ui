@@ -242,7 +242,7 @@ export default {
         preloadItems: {
             default()
             {
-                return 12;
+                return 4;
             },
             type: [Number]
         },
@@ -250,7 +250,7 @@ export default {
         bufferItems: {
             default()
             {
-                return 12;
+                return 14;
             },
             type: [Number]
         },
@@ -347,19 +347,19 @@ export default {
             disabled: ! this.items.length
         };
 
-        let uniqueKey = UUID();
+        // let uniqueKey = UUID();
 
         if ( this.$refs.list && this.items.length ) {
 
             props['checked'] = this.$refs.list.isAllSelected(true);
             props['intermediate'] = this.$refs.list.isIntermediate(true);
 
-            uniqueKey = Any.md5(this.$refs.list.veSelected);
+            // uniqueKey = Any.md5(this.$refs.list.veSelected);
         }
 
         return (
             <div class="n-draggable-item__select">
-                <NCheckbox key={uniqueKey} props={props} on={events} />
+                <NCheckbox props={props} on={events} />
             </div>
         );
     },

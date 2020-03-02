@@ -41,7 +41,7 @@ export default {
         preloadItems: {
             default()
             {
-                return 20;
+                return 4;
             },
             type: [Number]
         },
@@ -49,7 +49,7 @@ export default {
         bufferItems: {
             default()
             {
-                return 20;
+                return 14;
             },
             type: [Number]
         },
@@ -110,18 +110,6 @@ export default {
                 endBuffer = this.items.length;
             }
 
-            let startBufferDiff = Math.abs(this.state.startBuffer - startBuffer);
-
-            if ( startBufferDiff < Math.round(this.bufferItems / 2) ) {
-                startBufferDiff = this.state.startBuffer;
-            }
-
-            let endBufferDiff = Math.abs(this.state.endBuffer - endBuffer);
-
-            if ( endBufferDiff < Math.round(this.bufferItems / 2) ) {
-                endBufferDiff = this.state.endBuffer;
-            }
-
             let newState = {
                 startIndex, startPreload, startBuffer, endIndex, endPreload, endBuffer
             };
@@ -146,7 +134,7 @@ export default {
                 this.height = this.items.length * this.itemHeight;
             }
 
-            if ( this.height === 0 ) {
+            if ( ! this.height ) {
                 return Any.delay(this.discoverHeight, 100);
             }
 
@@ -225,6 +213,10 @@ export default {
 
             let ghost = index < bufferStart || index > bufferEnd;
 
+            // return this.$render('KeepAlive', {}, [
+            //     this.renderNode({ value, index, ghost })
+            // ]);
+
             return this.renderNode({ value, index, ghost });
         });
     },
@@ -241,7 +233,7 @@ export default {
 
         if ( this.viewportHeight === false) {
             return Arr.each(this.items, (value, index) => {
-                return this.renderNode({ value, index });
+                return this.renderNode({ value, index, ghost: false });
             });
         }
 

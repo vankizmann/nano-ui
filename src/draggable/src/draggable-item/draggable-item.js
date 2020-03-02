@@ -304,6 +304,25 @@ export default {
     {
         this.$render = $render;
 
+        let style = {
+            height: this.NDraggable.itemHeight + 'px'
+        };
+
+        if ( this.ghost ) {
+            return (<div class="n-draggable-item n-ghost" style={style} />);
+        }
+
+        let cachedState = Any.md5([
+            this.NDraggable.isSelected(this), this.NDraggable.isExpanded(this)
+        ]);
+
+        if ( this.cachedResult && cachedState === this.cachedState ) {
+            return this.cachedResult;
+        }
+
+        // Chache expanded and selected state
+        this.cachedState = cachedState;
+
         let events = {
             click: this.eventClick,
             dblclick: this.eventDblclick,
@@ -316,21 +335,9 @@ export default {
             drop: this.eventDragdrop
         };
 
-        let style = {
-            height: this.NDraggable.itemHeight + 'px'
-        };
-
         let classList = [
             'n-draggable-item'
         ];
-
-        if ( this.ghost ) {
-            classList.push('n-ghost');
-        }
-
-        if ( this.lazy ) {
-            classList.push('n-lazy');
-        }
 
         if ( this.NDraggable.isSelected(this) ) {
             classList.push('n-selected');
@@ -345,7 +352,7 @@ export default {
         draggable &= Any.isFunction(this.NDraggable.allowDrag) ?
             this.NDraggable.allowDrag(this) : this.NDraggable.allowDrag;
 
-        return (
+        return this.cachedResult = (
             <div class={classList} style={style} on={events} draggable={draggable}>
                 { ! this.ghost && [
                     this.ctor('renderSpacer')(), this.ctor('renderExpand')(), this.ctor('renderSelect')(), this.ctor('renderNode')()

@@ -217,7 +217,7 @@ export default {
         preloadItems: {
             default()
             {
-                return 12;
+                return 4;
             },
             type: [Number]
         },
@@ -225,7 +225,7 @@ export default {
         bufferItems: {
             default()
             {
-                return 12;
+                return 14;
             },
             type: [Number]
         },
@@ -985,12 +985,12 @@ export default {
 
     watch: {
 
-        selected()
-        {
-            if ( Any.md5(this.selected) !== Any.md5(this.veSelected) ) {
-                this.veSelected = this.selected;
-            }
-        },
+        // selected()
+        // {
+        //     if ( Any.md5(this.selected) !== Any.md5(this.veSelected) ) {
+        //         this.veSelected = this.selected;
+        //     }
+        // },
 
         expanded()
         {
