@@ -1,5 +1,4 @@
 import { UUID, Arr, Obj, Num, Dom, Any, Locale, Event } from "nano-js";
-import { virtualScrollDriver } from "dynamic-virtual-scroll"
 
 export default {
 
@@ -122,8 +121,6 @@ export default {
             if ( endBufferDiff < Math.round(this.bufferItems / 2) ) {
                 endBufferDiff = this.state.endBuffer;
             }
-
-            let itemsCount = Math.floor(this.height / this.itemHeight);
 
             let newState = {
                 startIndex, startPreload, startBuffer, endIndex, endPreload, endBuffer

@@ -54,7 +54,7 @@ export default {
     data()
     {
         return {
-            veVisible: this.visible, veTiming: Date.now()
+            veTiming: 0
         };
     },
 
@@ -64,7 +64,7 @@ export default {
         {
             this.veTiming = Date.now();
 
-            Dom.find(this.$el).addClass('n-active');
+            window.requestAnimationFrame(() => Dom.find(this.$el).addClass('n-active'));
         },
 
         stopTimer()
@@ -75,7 +75,7 @@ export default {
                 return Any.delay(this.stopTimer, this.minTime - timing + 10);
             }
 
-            Dom.find(this.$el).removeClass('n-active');
+            window.requestAnimationFrame(() => Dom.find(this.$el).removeClass('n-active'));
         }
 
     },
@@ -91,7 +91,7 @@ export default {
 
     mounted()
     {
-        this.veVisible ? this.startTimer() : this.stopTimer();
+        this.visible ? this.startTimer() : this.stopTimer();
     },
 
     render($render)

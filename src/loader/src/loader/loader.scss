@@ -18,7 +18,7 @@ $tooltip-border: 3px !default;
     animation: LoadingSpinner 1s linear infinite;
 }
 
-.n-loader.n-loader--active:before {
+.n-loader.n-active:before {
     display: block;
 }
 
@@ -59,7 +59,7 @@ $tooltip-border: 3px !default;
     background: rgba($color-black, 0.7);
 }
 
-.n-loader.n-loader--active:after {
+.n-loader.n-active:after {
     display: block;
 }
 

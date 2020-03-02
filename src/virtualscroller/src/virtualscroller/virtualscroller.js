@@ -1,5 +1,4 @@
 import { UUID, Arr, Obj, Num, Dom, Any, Locale, Event } from "nano-js";
-import { virtualScrollDriver } from "dynamic-virtual-scroll"
 
 export default {
 

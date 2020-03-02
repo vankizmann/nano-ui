@@ -329,11 +329,17 @@ export default {
 
         addClass() {
             Dom.find(this.$el).addClass('n-open');
+        },
+
+        addTargetClass() {
             Dom.find(this.target).addClass('n-open');
         },
 
         removeClass() {
             Dom.find(this.$el).removeClass('n-open');
+        },
+
+        removeTargetClass() {
             Dom.find(this.target).removeClass('n-open');
         },
 
@@ -537,7 +543,9 @@ export default {
 
         let events = {
             beforeEnter: this.addClass,
-            afterLeave: this.removeClass
+            afterEnter: this.addTargetClass,
+            beforeLeave: this.removeTargetClass,
+            afterLeave: this.removeClass,
         };
 
         return (

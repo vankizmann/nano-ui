@@ -4,25 +4,24 @@ const autoprefixer = require("autoprefixer");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 let jsExtExport = {
-    mode: "development",
-    entry: ["./src/index.js"],
+    mode: 'development',
+    entry: ['./src/index.js'],
     output: {
-        filename: "index.esm.js",
-        path: path.resolve(__dirname, "dist"),
-        library: "nano-ui",
-        libraryTarget: "umd",
+        filename: 'index.esm.js',
+        path: path.resolve('dist'),
+        library: 'nano-ui',
+        libraryTarget: 'umd',
     },
     module: {
         rules: [
             {
                 test: /.js$/,
                 include: [
-                    path.resolve(__dirname, './src'),
-                    path.resolve(__dirname, './node_modules/dynamic-virtual-scroll')
+                    path.resolve('src'),
                 ],
                 loader: 'babel-loader',
                 options: {
-                    configFile: path.resolve('./babel.config.js')
+                    configFile: path.resolve('babel.config.js')
                 },
             }
         ]
@@ -38,26 +37,25 @@ let jsExtExport = {
 };
 
 let jsWinExport = {
-    mode: "development",
-    entry: ["@babel/polyfill/noConflict", "./src/index.js"],
+    mode: 'development',
+    entry: ['@babel/polyfill/noConflict', './src/index.js'],
     devtool: 'source-map',
     output: {
-        filename: "index.js",
-        path: path.resolve(__dirname, "dist"),
-        library: "nano-ui",
-        libraryTarget: "umd",
+        filename: 'index.js',
+        path: path.resolve('dist'),
+        library: 'nano-ui',
+        libraryTarget: 'umd',
     },
     module: {
         rules: [
             {
                 test: /.js$/,
                 include: [
-                    path.resolve(__dirname, './src'),
-                    path.resolve(__dirname, './node_modules/dynamic-virtual-scroll')
+                    path.resolve('src'),
                 ],
                 loader: 'babel-loader',
                 options: {
-                    configFile: path.resolve('./babel.config.js')
+                    configFile: path.resolve('babel.config.js')
                 },
             }
         ]
@@ -73,18 +71,18 @@ let jsWinExport = {
 };
 
 let cssModernExport = {
-    mode: "development",
-    entry: "./src/index.scss",
+    mode: 'development',
+    entry: './src/index.scss',
     output: {
-        filename: ".ignore.js",
-        path: path.resolve(__dirname, "dist")
+        filename: '.ignore.js',
+        path: path.resolve('dist')
     },
     module: {
         rules: [
             {
                 test: /\.scss$/,
                 include: [
-                    path.resolve(__dirname, './src')
+                    path.resolve('src')
                 ],
                 use: [
                     MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'
@@ -94,7 +92,7 @@ let cssModernExport = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: "index.css"
+            filename: 'index.css'
         }),
         new webpack.LoaderOptionsPlugin({
             options: {
