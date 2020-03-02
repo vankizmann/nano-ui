@@ -46022,14 +46022,14 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     allowDrag: {
       "default": function _default() {
         return function () {
-          return false;
+          return true;
         };
       }
     },
     allowDrop: {
       "default": function _default() {
         return function () {
-          return false;
+          return true;
         };
       }
     },

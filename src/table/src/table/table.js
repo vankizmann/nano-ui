@@ -212,14 +212,14 @@ export default {
         allowDrag: {
             default()
             {
-                return () => false;
+                return () => true;
             }
         },
 
         allowDrop: {
             default()
             {
-                return () => false;
+                return () => true;
             }
         },
 
