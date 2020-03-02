@@ -39749,8 +39749,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].fire('draggable.start', this.veSelfCached = selected, this.group);
     },
     getTarget: function getTarget(data) {
-      var target = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(this.NDraggable.veItems, _defineProperty({}, this.uniqueProp, data));
-      target['item'] = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.NDraggable, target[this.pathProp] + '.' + target[this.indexProp]);
+      var target = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(this.veItems, _defineProperty({}, this.uniqueProp, data));
+      target['item'] = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this, target[this.pathProp] + '.' + target[this.indexProp]);
       return target;
     },
     toggleItem: function toggleItem(id) {

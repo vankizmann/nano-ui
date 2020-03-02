@@ -613,11 +613,11 @@ export default {
 
         getTarget(data)
         {
-            let target = Arr.find(this.NDraggable.veItems, {
+            let target = Arr.find(this.veItems, {
                 [this.uniqueProp]: data
             });
 
-            target['item'] = Obj.get(this.NDraggable, target[this.pathProp] + '.' +
+            target['item'] = Obj.get(this, target[this.pathProp] + '.' +
                 target[this.indexProp]);
 
             return target;
