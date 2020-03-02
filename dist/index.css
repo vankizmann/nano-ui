@@ -1569,16 +1569,13 @@
 .n-cascader-option__label {
   -webkit-box-flex: 1;
           flex: 1 1 auto;
-  padding: 6px 12px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 14px; }
+  white-space: nowrap; }
 
 .n-cascader-option__arrow {
   -webkit-box-flex: 0;
-          flex: 0 0 auto;
-  padding: 6px 12px; }
+          flex: 0 0 auto; }
 
 .n-cascader-option__arrow span {
   font-size: 12.25px;
