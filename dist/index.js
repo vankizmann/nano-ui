@@ -39070,13 +39070,19 @@ __webpack_require__.r(__webpack_exports__);
       if (clientY < safeZone && allowDropAfter) {
         finalStrategy = 'after';
         finalPositon = parentY + this.$el.clientHeight;
-      }
+      } // Does not itself and child
 
-      var target = this.NDraggable.getTarget(this);
-      var allowDropRainbow = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.NDraggable.veCached, function (source) {
-        _this.NDraggable.allowDrop(source, target, finalStrategy);
-      });
-      var allowDrop = this.NDraggable.canDrop(this) && allowDropRainbow;
+
+      var allowDrop = this.NDraggable.canDrop(this);
+
+      if (allowDrop) {
+        // For perfomance optimization only if allowDrop
+        var target = this.NDraggable.getTarget(this);
+        var allowDropRainbow = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.NDraggable.veCached, function (source) {
+          return !!_this.NDraggable.allowDrop(source, target, finalStrategy);
+        });
+        allowDrop &= !nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(allowDropRainbow, false);
+      }
 
       if (!allowDrop) {
         finalStrategy = 'nodrop';
@@ -39748,8 +39754,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].fire('draggable.start', this.veSelfCached = selected, this.group);
     },
-    getTarget: function getTarget(data) {
-      var target = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(this.veItems, _defineProperty({}, this.uniqueProp, data));
+    getTarget: function getTarget(unique) {
+      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isString(unique)) {
+        unique = unique[this.uniqueProp];
+      }
+
+      var target = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(this.veItems, _defineProperty({}, this.uniqueProp, unique));
       target['item'] = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this, target[this.pathProp] + '.' + target[this.indexProp]);
       return target;
     },

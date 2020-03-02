@@ -611,10 +611,14 @@ export default {
                 this.group);
         },
 
-        getTarget(data)
+        getTarget(unique)
         {
+            if ( ! Any.isString(unique) ) {
+                unique = unique[this.uniqueProp];
+            }
+
             let target = Arr.find(this.veItems, {
-                [this.uniqueProp]: data
+                [this.uniqueProp]: unique
             });
 
             target['item'] = Obj.get(this, target[this.pathProp] + '.' +
