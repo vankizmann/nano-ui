@@ -987,14 +987,14 @@ export default {
 
         selected()
         {
-            if ( this.selected !== this.veSelected ) {
+            if ( Any.md5(this.selected) !== Any.md5(this.veSelected) ) {
                 this.veSelected = this.selected;
             }
         },
 
         expanded()
         {
-            if ( this.expanded !== this.veExpanded ) {
+            if ( Any.md5(this.expanded) !== Any.md5(this.veExpanded) ) {
                 this.veExpanded = this.expanded;
             }
         }

@@ -40050,12 +40050,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   watch: {
     selected: function selected() {
-      if (this.selected !== this.veSelected) {
+      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].md5(this.selected) !== nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].md5(this.veSelected)) {
         this.veSelected = this.selected;
       }
     },
     expanded: function expanded() {
-      if (this.expanded !== this.veExpanded) {
+      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].md5(this.expanded) !== nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].md5(this.veExpanded)) {
         this.veExpanded = this.expanded;
       }
     }
