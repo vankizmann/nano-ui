@@ -534,19 +534,20 @@ export default {
 
         dropItems()
         {
-            let removeNode = Any.isFunction(this.removeNode) ?
-                this.removeNode() : this.removeNode;
+            Arr.each(this.veSelfCached, (source) => {
 
-            if ( removeNode ) {
+                let removeNode = Any.isFunction(this.removeNode) ?
+                    this.removeNode(source) : this.removeNode;
 
-                Arr.each(this.veSelfCached, (item) => {
+                if ( ! removeNode ) {
+                    return;
+                }
 
-                    Arr.remove(Obj.get(this, item[this.pathProp]), {
-                        [this.uniqueProp]: item[this.uniqueProp]
-                    });
-
+                Arr.remove(Obj.get(this, source[this.pathProp]), {
+                    [this.uniqueProp]: source[this.uniqueProp]
                 });
-            }
+
+            });
 
             this.clearItems();
             this.refreshItems();

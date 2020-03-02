@@ -39697,14 +39697,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     dropItems: function dropItems() {
       var _this3 = this;
 
-      var removeNode = nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isFunction(this.removeNode) ? this.removeNode() : this.removeNode;
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veSelfCached, function (source) {
+        var removeNode = nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isFunction(_this3.removeNode) ? _this3.removeNode(source) : _this3.removeNode;
 
-      if (removeNode) {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veSelfCached, function (item) {
-          nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this3, item[_this3.pathProp]), _defineProperty({}, _this3.uniqueProp, item[_this3.uniqueProp]));
-        });
-      }
+        if (!removeNode) {
+          return;
+        }
 
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this3, source[_this3.pathProp]), _defineProperty({}, _this3.uniqueProp, source[_this3.uniqueProp]));
+      });
       this.clearItems();
       this.refreshItems();
       this.$emit('moved', this.veCopy);
