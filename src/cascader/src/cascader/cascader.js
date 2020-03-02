@@ -152,7 +152,7 @@ export default {
 
             this.veDelay = setTimeout(() => {
                 this.$emit('hover', this.veHover = cascade);
-            }, 150);
+            }, 75);
         },
 
         eventSelect(cascade)
