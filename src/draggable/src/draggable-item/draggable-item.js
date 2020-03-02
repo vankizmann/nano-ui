@@ -284,8 +284,10 @@ export default {
             return null;
         }
 
-        let allowSelect = this.NDraggable.allowSelect(this) &&
-            this.NDraggable.canSelect(this);
+        let allowSelect = this.NDraggable.canSelect(this);
+
+        allowSelect &= Any.isFunction(this.NDraggable.allowSelect) ?
+            this.NDraggable.allowSelect(this) : this.NDraggable.allowSelect;
 
         let isChecked = this.NDraggable.isSelected(this);
 
@@ -338,8 +340,10 @@ export default {
             classList.push('n-expanded');
         }
 
-        let draggable = this.NDraggable.allowSelect(this) &&
-            this.NDraggable.allowDrag(this);
+        let draggable = this.NDraggable.allowSelect(this);
+
+        draggable &= Any.isFunction(this.NDraggable.allowDrag) ?
+            this.NDraggable.allowDrag(this) : this.NDraggable.allowDrag;
 
         return (
             <div class={classList} style={style} on={events} draggable={draggable}>

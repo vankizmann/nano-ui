@@ -39231,7 +39231,8 @@ __webpack_require__.r(__webpack_exports__);
       return null;
     }
 
-    var allowSelect = this.NDraggable.allowSelect(this) && this.NDraggable.canSelect(this);
+    var allowSelect = this.NDraggable.canSelect(this);
+    allowSelect &= nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isFunction(this.NDraggable.allowSelect) ? this.NDraggable.allowSelect(this) : this.NDraggable.allowSelect;
     var isChecked = this.NDraggable.isSelected(this); // TODO: Decouple is checked from draggable
 
     return h("div", {
@@ -39282,7 +39283,8 @@ __webpack_require__.r(__webpack_exports__);
       classList.push('n-expanded');
     }
 
-    var draggable = this.NDraggable.allowSelect(this) && this.NDraggable.allowDrag(this);
+    var draggable = this.NDraggable.allowSelect(this);
+    draggable &= nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isFunction(this.NDraggable.allowDrag) ? this.NDraggable.allowDrag(this) : this.NDraggable.allowDrag;
     return h("div", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
       "class": classList,
       "style": style
