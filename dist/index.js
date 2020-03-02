@@ -39547,6 +39547,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       var strategy = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'inner';
+      target = this.getTarget(target);
       var ids = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veCached, function (item) {
         return item[_this.uniqueProp];
       });
@@ -39564,15 +39565,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var batchedAfter = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].filter(nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].vals(cacheBatches).reverse(), function (batch) {
         return nano_js__WEBPACK_IMPORTED_MODULE_1__["Num"]["int"](batch['_key']) < targetOrder;
       });
-      var insertNode = nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isFunction(this.insertNode) ? this.insertNode(target) : this.insertNode;
 
-      if (strategy === 'root' && insertNode) {
+      if (strategy === 'root') {
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veCached, function (source) {
+          var insertNode = nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isFunction(_this.insertNode) ? _this.insertNode(source, target) : _this.insertNode;
+
+          if (!insertNode) {
+            return;
+          }
+
           nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].push(_this.veCopy, _this.transformDrop(source.item));
         });
       }
 
-      if (strategy === 'inner' && insertNode) {
+      if (strategy === 'inner') {
         var finalParent = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this, target[this.pathProp]);
         var finalTarget = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(finalParent, _defineProperty({}, this.uniqueProp, target[this.uniqueProp]));
 
@@ -39589,12 +39595,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch, _this.dropItem);
         });
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veCached, function (source) {
-          // Add item before last item added, also transform item
+          var insertNode = nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isFunction(_this.insertNode) ? _this.insertNode(source, target) : _this.insertNode;
+
+          if (!insertNode) {
+            return;
+          } // Add item before last item added, also transform item
+
+
           nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].push(finalTarget[_this.childProp], _this.transformDrop(source.item));
         });
       }
 
-      if (strategy === 'after' && insertNode) {
+      if (strategy === 'after') {
         var delayedItems = [];
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].vals(batchedBefore), function (batch) {
           delete batch['_key'];
@@ -39620,6 +39632,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch, _this.dropItem);
         });
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veCached.reverse(), function (source) {
+          var insertNode = nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isFunction(_this.insertNode) ? _this.insertNode(source, target) : _this.insertNode;
+
+          if (!insertNode) {
+            return;
+          }
+
           var finalTarget = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this, target[_this.pathProp]);
           var finalIndex = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].findIndex(finalTarget, _defineProperty({}, _this.uniqueProp, target[_this.uniqueProp])); // Add item before last item added, also transform item
 
@@ -39627,7 +39645,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       }
 
-      if (strategy === 'before' && insertNode) {
+      if (strategy === 'before') {
         var _delayedItems = [];
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].vals(batchedBefore), function (batch) {
           delete batch['_key'];
@@ -39653,6 +39671,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(batch, _this.dropItem);
         });
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veCached, function (source) {
+          var insertNode = nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isFunction(_this.insertNode) ? _this.insertNode(source, target) : _this.insertNode;
+
+          if (!insertNode) {
+            return;
+          }
+
           var finalTarget = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this, target[_this.pathProp]);
           var finalIndex = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].findIndex(finalTarget, _defineProperty({}, _this.uniqueProp, target[_this.uniqueProp])); // Add item before last item added, also transform item
 

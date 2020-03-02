@@ -293,6 +293,8 @@ export default {
 
         moveItems(event, target, strategy = 'inner')
         {
+            target = this.getTarget(target);
+
             let ids = Arr.each(this.veCached, (item) => {
                 return item[this.uniqueProp];
             });
@@ -316,18 +318,23 @@ export default {
                 return Num.int(batch['_key']) < targetOrder;
             });
 
-            let insertNode = Any.isFunction(this.insertNode) ?
-                this.insertNode(target) : this.insertNode;
-
-            if ( strategy === 'root' && insertNode ) {
+            if ( strategy === 'root' ) {
 
                 Arr.each(this.veCached, (source) => {
+
+                    let insertNode = Any.isFunction(this.insertNode) ?
+                        this.insertNode(source, target) : this.insertNode;
+
+                    if ( ! insertNode ) {
+                        return;
+                    }
+
                     Arr.push(this.veCopy, this.transformDrop(source.item));
                 });
 
             }
 
-            if ( strategy === 'inner' && insertNode ) {
+            if ( strategy === 'inner' ) {
 
                 let finalParent = Obj.get(this, target[this.pathProp]);
 
@@ -354,12 +361,19 @@ export default {
 
                 Arr.each(this.veCached, (source) => {
 
+                    let insertNode = Any.isFunction(this.insertNode) ?
+                        this.insertNode(source, target) : this.insertNode;
+
+                    if ( ! insertNode ) {
+                        return;
+                    }
+
                     // Add item before last item added, also transform item
                     Arr.push(finalTarget[this.childProp], this.transformDrop(source.item));
                 });
             }
 
-            if ( strategy === 'after' && insertNode ) {
+            if ( strategy === 'after' ) {
 
                 let delayedItems = [];
 
@@ -408,6 +422,13 @@ export default {
 
                 Arr.each(this.veCached.reverse(), (source) => {
 
+                    let insertNode = Any.isFunction(this.insertNode) ?
+                        this.insertNode(source, target) : this.insertNode;
+
+                    if ( ! insertNode ) {
+                        return;
+                    }
+
                     let finalTarget = Obj.get(this, target[this.pathProp]);
 
                     let finalIndex = Arr.findIndex(finalTarget, {
@@ -419,7 +440,7 @@ export default {
                 });
             }
 
-            if ( strategy === 'before' && insertNode ) {
+            if ( strategy === 'before' ) {
 
                 let delayedItems = [];
 
@@ -467,6 +488,13 @@ export default {
                 });
 
                 Arr.each(this.veCached, (source) => {
+
+                    let insertNode = Any.isFunction(this.insertNode) ?
+                        this.insertNode(source, target) : this.insertNode;
+
+                    if ( ! insertNode ) {
+                        return;
+                    }
 
                     let finalTarget = Obj.get(this, target[this.pathProp]);
 
