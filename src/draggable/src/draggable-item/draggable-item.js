@@ -24,10 +24,10 @@ export default {
         ghost: {
             default()
             {
-                return true
+                return true;
             },
             type: [Boolean]
-        }
+        },
 
     },
 
@@ -249,7 +249,7 @@ export default {
     renderExpand()
     {
         if ( ! this.NDraggable.renderExpand ) {
-            return;
+            return null;
         }
 
         let childLength = Obj.get(this.veItem,
@@ -269,7 +269,7 @@ export default {
     renderSelect()
     {
         if ( ! this.NDraggable.renderSelect ) {
-            return;
+            return null;
         }
 
         let allowSelect = this.NDraggable.allowSelect(this) &&
@@ -277,9 +277,11 @@ export default {
 
         let isChecked = this.NDraggable.isSelected(this);
 
+        // TODO: Decouple is checked from draggable
+
         return (
             <div class="n-draggable-item__select">
-                <NCheckbox key={UUID()} size="small" disabled={!allowSelect} checked={isChecked} onInput={this.select} />
+                <NCheckbox size="small" disabled={!allowSelect} checked={isChecked} onInput={this.select} />
             </div>
         )
     },
@@ -312,6 +314,10 @@ export default {
             classList.push('n-ghost');
         }
 
+        if ( this.lazy ) {
+            classList.push('n-lazy');
+        }
+
         if ( this.NDraggable.isSelected(this) ) {
             classList.push('n-selected');
         }
@@ -324,7 +330,7 @@ export default {
             this.NDraggable.allowDrag(this);
 
         return (
-            <div class={classList} style={style} on={events} data-id={this.id} draggable={draggable}>
+            <div class={classList} style={style} on={events} draggable={draggable}>
                 { ! this.ghost && [
                     this.ctor('renderSpacer')(), this.ctor('renderExpand')(), this.ctor('renderSelect')(), this.ctor('renderNode')()
                 ] }

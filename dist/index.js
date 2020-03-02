@@ -51755,7 +51755,7 @@ __webpack_require__.r(__webpack_exports__);
   renderLabel: function renderLabel() {
     var h = this.$createElement;
 
-    if (this.$slots["default"] && this.$slots.label) {
+    if (!this.$slots["default"] && !this.$slots.label) {
       return null;
     }
 
@@ -52947,7 +52947,7 @@ __webpack_require__.r(__webpack_exports__);
     var h = this.$createElement;
 
     if (!this.NDraggable.renderExpand) {
-      return;
+      return null;
     }
 
     var childLength = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.veItem, this.NDraggable.childProp, []).length;
@@ -52965,15 +52965,15 @@ __webpack_require__.r(__webpack_exports__);
     var h = this.$createElement;
 
     if (!this.NDraggable.renderSelect) {
-      return;
+      return null;
     }
 
     var allowSelect = this.NDraggable.allowSelect(this) && this.NDraggable.canSelect(this);
-    var isChecked = this.NDraggable.isSelected(this);
+    var isChecked = this.NDraggable.isSelected(this); // TODO: Decouple is checked from draggable
+
     return h("div", {
       "class": "n-draggable-item__select"
     }, [h("NCheckbox", {
-      "key": Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])(),
       "attrs": {
         "size": "small",
         "disabled": !allowSelect,
@@ -53007,6 +53007,10 @@ __webpack_require__.r(__webpack_exports__);
       classList.push('n-ghost');
     }
 
+    if (this.lazy) {
+      classList.push('n-lazy');
+    }
+
     if (this.NDraggable.isSelected(this)) {
       classList.push('n-selected');
     }
@@ -53023,7 +53027,6 @@ __webpack_require__.r(__webpack_exports__);
       "on": events
     }, {
       "attrs": {
-        "data-id": this.id,
         "draggable": draggable
       }
     }]), [!this.ghost && [this.ctor('renderSpacer')(), this.ctor('renderExpand')(), this.ctor('renderSelect')(), this.ctor('renderNode')()]]);

@@ -207,7 +207,7 @@ export default {
 
     renderLabel()
     {
-        if ( this.$slots.default && this.$slots.label ) {
+        if ( ! this.$slots.default && ! this.$slots.label ) {
             return null;
         }
 
@@ -246,11 +246,11 @@ export default {
         }
 
         if ( ! this.veDisabled && this.global ) {
-            events.click = this.eventGlobalClick
+            events.click = this.eventGlobalClick;
         }
 
         if ( ! this.veDisabled && ! this.global ) {
-            events.click = this.eventLocalClick
+            events.click = this.eventLocalClick;
         }
 
         return (
