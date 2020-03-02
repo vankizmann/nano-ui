@@ -603,20 +603,24 @@ export default {
 
         dispatchSelected()
         {
-            let selected = Arr.each(this.veSelected, (item) => {
-
-                let result = Arr.find(this.veItems, {
-                    [this.uniqueProp]: item
-                });
-
-                result['item'] = Obj.get(this, result[this.pathProp] + '.' +
-                    result[this.indexProp]);
-
-                return result;
+            let selected = Arr.each(this.veSelected, (data) => {
+                return this.getTarget(data);
             });
 
             Event.fire('draggable.start', this.veSelfCached = selected,
                 this.group);
+        },
+
+        getTarget(data)
+        {
+            let target = Arr.find(this.NDraggable.veItems, {
+                [this.uniqueProp]: data
+            });
+
+            target['item'] = Obj.get(this.NDraggable, target[this.pathProp] + '.' +
+                target[this.indexProp]);
+
+            return target;
         },
 
         toggleItem(id, reset = false)

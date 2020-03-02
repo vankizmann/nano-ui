@@ -39072,8 +39072,9 @@ __webpack_require__.r(__webpack_exports__);
         finalPositon = parentY + this.$el.clientHeight;
       }
 
+      var target = this.NDraggable.getTarget(this);
       var allowDropRainbow = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.NDraggable.veCached, function (source) {
-        _this.NDraggable.allowDrop(source, _this, finalStrategy);
+        _this.NDraggable.allowDrop(source, target, finalStrategy);
       });
       var allowDrop = this.NDraggable.canDrop(this) && allowDropRainbow;
 
@@ -39742,12 +39743,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     dispatchSelected: function dispatchSelected() {
       var _this4 = this;
 
-      var selected = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veSelected, function (item) {
-        var result = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(_this4.veItems, _defineProperty({}, _this4.uniqueProp, item));
-        result['item'] = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this4, result[_this4.pathProp] + '.' + result[_this4.indexProp]);
-        return result;
+      var selected = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.veSelected, function (data) {
+        return _this4.getTarget(data);
       });
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].fire('draggable.start', this.veSelfCached = selected, this.group);
+    },
+    getTarget: function getTarget(data) {
+      var target = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(this.NDraggable.veItems, _defineProperty({}, this.uniqueProp, data));
+      target['item'] = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.NDraggable, target[this.pathProp] + '.' + target[this.indexProp]);
+      return target;
     },
     toggleItem: function toggleItem(id) {
       var reset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
