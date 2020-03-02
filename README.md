@@ -1,6 +1,6 @@
-<p align="center"><img width="100" src="https://vankizmann.github.io/nano-ui/nano.png" alt="nano.ui"></p>
+<p align="center"><img width="200" src="https://vankizmann.github.io/nano-ui/nano.png" alt="nano.ui"></p>
 
-<h2 align="center">nano.ui 0.1.0</h2>
+<h2 align="center">Version 0.1.0</h2>
 
 ### Done and reworked
 - [Draggable](./docs/draggable/index.html)
@@ -9,8 +9,10 @@
 - [Button](./docs/button/index.html)
 - [Input](./docs/input/index.html)
 - [Textarea](./docs/textarea/index.html)
+- [Checkbox](./docs/checkbox/index.html)
 - [Select](./docs/select/index.html)
 - [Cascader](./docs/cascader/index.html)
+- [Timepicker](./docs/timepicker/index.html)
 - [Transfer](./docs/transfer/index.html)
 - [Form](./docs/form/index.html)
 - [Tabs](./docs/tabs/index.html)
@@ -23,14 +25,14 @@
 - [Map](./docs/map/index.html)
 
 ### In progress
-- [Checkbox](./docs/checkbox/index.html)
-- [Radio](./docs/radio/index.html)
 - [Datepicker](./docs/datepicker/index.html)
-- [Timepicker](./docs/timepicker/index.html)
 - [Matrix](./docs/matrix/index.html)
 - [Info](./docs/info/index.html)
 - [File](./docs/file/index.html)
 - [Filelist](./docs/filelist/index.html)
 
 ### Coming soon
+- [Radio](./docs/radio/index.html)
+- [Number](./docs/number/index.html)
+- [Switch](./docs/switch/index.html)
 - [WYSIWYG](./docs/wysiwyg/index.html)

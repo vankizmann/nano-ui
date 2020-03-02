@@ -4,6 +4,13 @@ export default {
 
     name: 'NCheckboxGroup',
 
+    provide()
+    {
+        return {
+            NCheckboxGroup: this
+        };
+    },
+
     props: {
 
         value: {
@@ -14,7 +21,7 @@ export default {
             type: [Array]
         },
 
-        alignment: {
+        align: {
             default()
             {
                 return 'vertical';
@@ -28,181 +35,150 @@ export default {
 
         globalChecked()
         {
-            let checked = this.checkboxes.filter((checkbox) => {
-                return checkbox.nativeChecked === true;
+            let checked = Arr.filter(this.veCheckboxes, (checkbox) => {
+                return checkbox.veChecked;
             });
 
-            return checked.length !== 0 && checked.length ===
-                Object.keys(this.checkboxes).length;
-        },
-
-        globalDisabled()
-        {
-            return this.checkboxes.length === 0;
+            return this.veCheckboxes.length !== 0 &&
+                checked.length === this.veCheckboxes.length;
         },
 
         globalIntermediate()
         {
-            let checked = this.checkboxes.filter((checkbox) => {
-                return checkbox.nativeChecked === true;
+            let checked = this.veCheckboxes.filter((checkbox) => {
+                return checkbox.veChecked;
             });
 
-            return checked.length !== 0 && checked.length !==
-                Object.keys(this.checkboxes).length;
-        }
+            return checked.length !== 0 &&
+                checked.length !== this.veCheckboxes.length;
+        },
 
+        globalDisabled()
+        {
+            return this.veCheckboxes.length === 0;
+        },
+
+    },
+
+    data()
+    {
+        return {
+            veValue: this.value,
+            veCheckboxes: [],
+            veIndex: -1
+        }
     },
 
     watch: {
 
         value()
         {
-            this.changeValue();
+            if ( this.value !== this.veValue ) {
+                this.veValue = this.value;
+            }
         },
-
-        update()
-        {
-            this.updateValue();
-        }
 
     },
 
     methods: {
 
-        updateValue()
-        {
-            let result = [];
-
-            let checkboxes = Arr.sort(this.checkboxes, 'sort');
-
-            Arr.each(checkboxes, (checkbox) => {
-                if ( checkbox.nativeChecked === true )
-                    result.push(checkbox.value);
-            });
-
-            this.$emit('input', result);
-        },
-
-        changeValue()
-        {
-            Arr.each(this.checkboxes, (checkbox) => {
-                checkbox.nativeChecked = Any.isEmpty(this.value) === false &&
-                    this.value.indexOf(checkbox.value) !== -1;
-            });
-        },
-
         addCheckbox(checkbox)
         {
-            let index = Arr.findIndex(this.checkboxes, {
-                value: checkbox.value
+            this.veIndex = -1;
+
+            Arr.add(this.veCheckboxes, checkbox, {
+                _uid: checkbox._uid
             });
 
-            if ( index !== -1 ) {
-                Arr.removeIndex(this.checkboxes, index);
-            }
-
-            checkbox.$on('input', () => {
-                this.update++;
-            });
-
-            Arr.push(this.checkboxes, checkbox);
+            this.veCheckboxes = Arr.sort(this.veCheckboxes, 'sort');
         },
 
         removeCheckbox(checkbox)
         {
-            let index = Arr.findIndex(this.checkboxes, {
-                value: checkbox.value
+            Arr.remove(this.veCheckboxes, {
+                _uid: checkbox._uid
             });
 
-            if ( index !== -1 ) {
-                Arr.removeIndex(this.checkboxes, index);
-            }
+            this.veIndex = -1;
         },
 
-        toggleCheckbox()
+        toggleCheckbox(checkbox)
         {
-            this.globalChecked === true ? this.checkNone() : this.checkAll();
+            let veIndex = Arr.findIndex(this.veCheckboxes, {
+                _uid: checkbox._uid
+            });
+
+            if ( ! checkbox.veChecked ) {
+                this.veIndex = veIndex;
+            }
+
+            Arr.toggle(this.veValue, checkbox.value);
+        },
+
+        checkCheckbox(checkbox)
+        {
+            Arr.add(this.veValue, checkbox.value);
+        },
+
+        uncheckCheckbox(checkbox)
+        {
+            Arr.remove(this.veValue, checkbox.value);
+        },
+
+        shiftCheckbox(checkbox)
+        {
+            if ( this.veIndex === -1 ) {
+                return this.toggleCheckbox(checkbox);
+            }
+
+            let veIndex = Arr.findIndex(this.veCheckboxes, {
+                _uid: checkbox._uid
+            });
+
+            let checkboxes = this.veCheckboxes.slice(this.veIndex, veIndex + 1);
+
+            if ( veIndex < this.veIndex ) {
+                checkboxes = this.veCheckboxes.slice(veIndex, this.veIndex + 1);
+            }
+
+            Arr.each(checkboxes, (checkbox) => checkbox.check());
+
+            this.veIndex = -1;
+        },
+
+        toggleAll()
+        {
+            this.globalChecked ? this.uncheckAll() : this.checkAll();
         },
 
         checkAll()
         {
-            Arr.each(this.checkboxes, (checkbox) => {
-                this.$nextTick(() => checkbox.$emit('input', true));
-            });
+            Arr.each(this.veCheckboxes, (checkbox) => checkbox.check());
         },
 
-        checkNone()
+        uncheckAll()
         {
-            Arr.each(this.checkboxes, (checkbox) => {
-                this.$nextTick(() => checkbox.$emit('input', false));
-            });
+            Arr.each(this.veCheckboxes, (checkbox) => checkbox.uncheck());
         },
 
-        pushIndex(_uid)
+        isChecked(value)
         {
-            this.index = _uid;
-        },
-
-        shiftIndex(_uid)
-        {
-            let checkboxes = Arr.sort(this.checkboxes, 'sort');
-
-            let start = Arr.findIndex(checkboxes, {
-                _uid: this.index
-            });
-
-            let end = Arr.findIndex(checkboxes, {
-                _uid: _uid
-            });
-
-            if ( start === -1 ) {
-                start = 0;
-            }
-
-            checkboxes = end >= start ? checkboxes.slice(start, end) :
-                checkboxes.slice(end, start);
-
-            Arr.each(checkboxes, (checkbox) => {
-                this.$nextTick(() => checkbox.$emit('input', true));
-            });
+            return Arr.has(this.veValue, value);
         }
 
     },
 
-    provide()
+    render($render)
     {
-        return {
-            NCheckboxGroup: this
-        };
-    },
+        this.$render = $render;
 
-    data()
-    {
-        return {
-            update: 0, checkboxes: [], index: -1
-        }
-    },
-
-    render(h)
-    {
-        let className = [
-            'n-checkbox-group', 'n-checkbox-group--' + this.alignment
+        let classList = [
+            'n-checkbox-group',
+            'n-checkbox-group--' + this.align
         ];
 
-        if ( this.globalChecked === true ) {
-            className.push('n-checkbox-group--checked');
-        }
-
-        if ( this.globalDisabled === true ) {
-            className.push('n-checkbox-group--disabled');
-        }
-
-        if ( this.globalIntermediate === true ) {
-            className.push('n-checkbox-group--intermediate');
-        }
-
         return (
-            <div class={className}>
+            <div class={classList}>
                 {this.$slots.default}
             </div>
         );

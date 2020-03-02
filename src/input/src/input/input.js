@@ -163,7 +163,7 @@ export default {
         events.input = this.eventInput;
 
         return (
-            <input class={classList} attrs={attrs} on={events} />
+            <input value={this.veValue} class={classList} attrs={attrs} on={events} />
         )
     },
 

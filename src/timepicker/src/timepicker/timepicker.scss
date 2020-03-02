@@ -13,11 +13,11 @@ $timepicker-item-height: 35px !default;
     color: $--color-black;
 }
 
-.n-timepicker__wrapper .n-popover {
+.n-popover.n-popover--timepicker {
     display: inline-flex;
     flex-direction: row;
     text-align: left;
-    max-width: 100% !important;
+    min-width: 200px;
 }
 
 .n-timepicker {
@@ -34,25 +34,15 @@ $timepicker-item-height: 35px !default;
     transition: 0.15s border;
 }
 
-.n-inverse .n-timepicker {
-    border-color: $--color-gray-80;
-    background: $--color-black;
-    color: $--color-white;
-}
-
 .n-timepicker:hover,
-.n-timepicker.n-popover--open {
+.n-timepicker.n-open {
     border: 1px solid $--color-primary;
 }
 
-.n-timepicker.n-timepicker--default {
+.n-timepicker {
     font-size: $timepicker-size;
     padding: 0 $timepicker-height * 0.3;
     min-height: $timepicker-height;
-}
-
-.n-timepicker.n-timepicker--clearable {
-    padding-right: $timepicker-height;
 }
 
 .n-timepicker.n-timepicker--small {
@@ -61,31 +51,17 @@ $timepicker-item-height: 35px !default;
     min-height: $timepicker-height * 0.875;
 }
 
-.n-timepicker.n-timepicker--clearable {
-    padding-right: $timepicker-height * 0.875;
-}
-
 .n-timepicker.n-timepicker--large {
     font-size: $timepicker-size * 1.125;
     padding: 0 $timepicker-height * 0.3 * 1.125;
     min-height: $timepicker-height * 1.125;
 }
 
-.n-timepicker.n-timepicker--clearable {
-    padding-right: $timepicker-height * 1.125;
-}
-
-.n-timepicker.n-timepicker--disabled,
-.n-timepicker.n-timepicker--disabled:hover {
+.n-disabled .n-timepicker,
+.n-disabled .n-timepicker:hover {
     cursor: not-allowed;
     background: $--color-gray-05;
     border-color: $--color-gray-15;
-}
-
-.n-inverse .n-timepicker.n-timepicker--disabled,
-.n-inverse .n-timepicker.n-timepicker--disabled:hover {
-    background: $--color-gray-90;
-    border-color: $--color-gray-80;
 }
 
 .n-timepicker .n-button__wrapper {
@@ -118,16 +94,8 @@ $timepicker-item-height: 35px !default;
     padding: 0 $timepicker-height * 0.3;
 }
 
-.n-inverse .n-timepicker__input input {
-    color: $--color-white;
-}
-
-.n-timepicker.n-timepicker--disabled .n-timepicker__input input {
+.n-disabled .n-timepicker .n-timepicker__input input {
     cursor: not-allowed;
-}
-
-.n-timepicker__input.n-timepicker__input--range input {
-    text-align: center;
 }
 
 .n-timepicker__header {
@@ -175,11 +143,11 @@ $timepicker-item-height: 35px !default;
     min-height: 0;
     padding: 5px;
     overflow-y: auto;
-    border-right: 1px solid $--color-gray-10;
 }
 
-.n-timepicker__panel:last-child {
-    border-right: 0;
+.n-timepicker__panel:not(:last-child) {
+    box-sizing: content-box;
+    border-right: 1px solid $--color-gray-10;
 }
 
 .n-timepicker__panel .n-timepicker__item {
@@ -192,14 +160,14 @@ $timepicker-item-height: 35px !default;
     justify-content: center;
     align-items: center;
     height: $timepicker-item-height;
-    border-radius: $radius-small;
+    border-radius: $radius-medium;
 }
 
 .n-timepicker__panel .n-timepicker__item:hover span {
     background: $--color-background;
 }
 
-.n-timepicker__panel .n-timepicker__item.n-timepicker__item--selected span {
+.n-timepicker__panel .n-timepicker__item.n-active span {
     color: $--color-white;
     background: $--color-primary;
 }

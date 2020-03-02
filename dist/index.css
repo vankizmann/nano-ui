@@ -1938,14 +1938,14 @@
   width: 100%;
   color: #1b2229; }
 
-.n-timepicker__wrapper .n-popover {
+.n-popover.n-popover--timepicker {
   display: -webkit-inline-box;
   display: inline-flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
           flex-direction: row;
   text-align: left;
-  max-width: 100% !important; }
+  min-width: 200px; }
 
 .n-timepicker {
   -webkit-box-flex: 1;
@@ -1966,49 +1966,30 @@
   -webkit-transition: 0.15s border;
   transition: 0.15s border; }
 
-.n-inverse .n-timepicker {
-  border-color: #494e54;
-  background: #1b2229;
-  color: #ffffff; }
-
 .n-timepicker:hover,
-.n-timepicker.n-popover--open {
+.n-timepicker.n-open {
   border: 1px solid #2877FA; }
 
-.n-timepicker.n-timepicker--default {
+.n-timepicker {
   font-size: 14px;
   padding: 0 10.2px;
   min-height: 34px; }
-
-.n-timepicker.n-timepicker--clearable {
-  padding-right: 34px; }
 
 .n-timepicker.n-timepicker--small {
   font-size: 12.25px;
   padding: 0 8.925px;
   min-height: 29.75px; }
 
-.n-timepicker.n-timepicker--clearable {
-  padding-right: 29.75px; }
-
 .n-timepicker.n-timepicker--large {
   font-size: 15.75px;
   padding: 0 11.475px;
   min-height: 38.25px; }
 
-.n-timepicker.n-timepicker--clearable {
-  padding-right: 38.25px; }
-
-.n-timepicker.n-timepicker--disabled,
-.n-timepicker.n-timepicker--disabled:hover {
+.n-disabled .n-timepicker,
+.n-disabled .n-timepicker:hover {
   cursor: not-allowed;
   background: #f4f4f4;
   border-color: #dddedf; }
-
-.n-inverse .n-timepicker.n-timepicker--disabled,
-.n-inverse .n-timepicker.n-timepicker--disabled:hover {
-  background: #32383e;
-  border-color: #494e54; }
 
 .n-timepicker .n-button__wrapper {
   position: absolute;
@@ -2038,14 +2019,8 @@
   color: #1b2229;
   padding: 0 10.2px; }
 
-.n-inverse .n-timepicker__input input {
-  color: #ffffff; }
-
-.n-timepicker.n-timepicker--disabled .n-timepicker__input input {
+.n-disabled .n-timepicker .n-timepicker__input input {
   cursor: not-allowed; }
-
-.n-timepicker__input.n-timepicker__input--range input {
-  text-align: center; }
 
 .n-timepicker__header {
   display: -webkit-box;
@@ -2096,11 +2071,11 @@
   height: 200px;
   min-height: 0;
   padding: 5px;
-  overflow-y: auto;
-  border-right: 1px solid #e8e9ea; }
+  overflow-y: auto; }
 
-.n-timepicker__panel:last-child {
-  border-right: 0; }
+.n-timepicker__panel:not(:last-child) {
+  box-sizing: content-box;
+  border-right: 1px solid #e8e9ea; }
 
 .n-timepicker__panel .n-timepicker__item {
   cursor: pointer;
@@ -2114,12 +2089,12 @@
   -webkit-box-align: center;
           align-items: center;
   height: 35px;
-  border-radius: 1px; }
+  border-radius: 2px; }
 
 .n-timepicker__panel .n-timepicker__item:hover span {
   background: #F0F3F7; }
 
-.n-timepicker__panel .n-timepicker__item.n-timepicker__item--selected span {
+.n-timepicker__panel .n-timepicker__item.n-active span {
   color: #ffffff;
   background: #2877FA; }
 
@@ -3376,12 +3351,6 @@ body.n-open {
   font-size: 16.875px; }
 
 /**
- * Checkbox input
- */
-.n-checkbox .n-checkbox__input {
-  display: none; }
-
-/**
  * Checkbox pseudo checkbox
  */
 .n-checkbox .n-checkbox__checkbox {
@@ -3403,21 +3372,13 @@ body.n-open {
   -webkit-transition: background 0.12s, border 0.24s;
   transition: background 0.12s, border 0.24s; }
 
-.n-inverse .n-checkbox .n-checkbox__checkbox {
-  border-color: #494e54;
-  background: #1b2229; }
-
 .n-checkbox:hover .n-checkbox__checkbox {
   border-color: #2877FA; }
 
-.n-checkbox.n-checkbox--disabled .n-checkbox__checkbox {
+.n-checkbox.n-disabled .n-checkbox__checkbox {
   cursor: not-allowed;
   background: #f4f4f4;
   border-color: #dddedf; }
-
-.n-inverse .n-checkbox.n-checkbox--disabled .n-checkbox__checkbox {
-  border-color: #494e54;
-  background: #32383e; }
 
 .n-checkbox.n-checkbox--small .n-checkbox__checkbox {
   font-size: 9.25px;
@@ -3429,16 +3390,16 @@ body.n-open {
   width: 16.875px;
   height: 16.875px; }
 
-.n-checkbox.n-checkbox--intermediate .n-checkbox__checkbox,
-.n-checkbox.n-checkbox--checked .n-checkbox__checkbox {
+.n-checkbox.n-checked .n-checkbox__checkbox,
+.n-checkbox.n-intermediate .n-checkbox__checkbox {
   border-color: #2877FA;
   background: #2877FA; }
 
 .n-checkbox .n-checkbox__checkbox span {
   visibility: hidden; }
 
-.n-checkbox.n-checkbox--intermediate .n-checkbox__checkbox span,
-.n-checkbox.n-checkbox--checked .n-checkbox__checkbox span {
+.n-checkbox.n-checked .n-checkbox__checkbox span,
+.n-checkbox.n-intermediate .n-checkbox__checkbox span {
   visibility: visible; }
 
 /**
@@ -3458,10 +3419,10 @@ body.n-open {
 .n-inverse .n-checkbox .n-checkbox__label {
   color: #ffffff; }
 
-.n-checkbox.n-checkbox--checked .n-checkbox__label {
+.n-checkbox.n-checked .n-checkbox__label {
   color: #2877FA; }
 
-.n-checkbox.n-checkbox--disabled .n-checkbox__label {
+.n-checkbox.n-disabled .n-checkbox__label {
   cursor: not-allowed;
   color: #8d9194; }
 

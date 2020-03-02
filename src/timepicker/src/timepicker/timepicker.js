@@ -1,4 +1,3 @@
-import CtorMixin from "../../../mixins/src/ctor";
 import { Arr, Obj, Now, Any } from "nano-js";
 
 export default {
@@ -32,15 +31,14 @@ export default {
         size: {
             default()
             {
-                return 'default';
-            },
-            type: [String]
+                return null;
+            }
         },
 
         position: {
             default()
             {
-                return 'bottom-center';
+                return 'bottom-start';
             },
             type: [String]
         },
@@ -88,7 +86,7 @@ export default {
         minutesInterval: {
             default()
             {
-                return 10;
+                return 1;
             },
             type: [Number]
         },
@@ -96,7 +94,7 @@ export default {
         secondsInterval: {
             default()
             {
-                return 10;
+                return 1;
             },
             type: [Number]
         }
@@ -107,17 +105,17 @@ export default {
 
         hoursGrid()
         {
-            return this.nativeValue.getHours(this.hoursInterval);
+            return this.veValue.getHours(this.hoursInterval);
         },
 
         minutesGrid()
         {
-            return this.nativeValue.getMinutes(this.minutesInterval);
+            return this.veValue.getMinutes(this.minutesInterval);
         },
 
         secondsGrid()
         {
-            return this.nativeValue.getSeconds(this.secondsInterval);
+            return this.veValue.getSeconds(this.secondsInterval);
         }
 
     },
@@ -126,14 +124,8 @@ export default {
 
         value()
         {
-            let value = Now.make(this.value);
-
-            if ( value.valid() === false ) {
-                return;
-            }
-
-            if ( this.value !== this.nativeValue.format(this.format) ) {
-                this.nativeValue = Now.make(this.value);
+            if ( this.value !== this.veValue.format(this.format) ) {
+                this.veValue = Now.make(this.value);
             }
         }
 
@@ -142,14 +134,54 @@ export default {
     data()
     {
         return {
-            visible: false,
-            nativeValue: Now.make(this.value),
+            veOpen: false,
+            veValue: Now.make(this.value),
         }
     },
 
     methods: {
 
-        ...CtorMixin,
+        eventInput(event)
+        {
+            if ( event.target.value.length !== this.displayFormat.length ) {
+                return;
+            }
+
+            let value = Now.make(event.target.value, this.displayFormat);
+
+            if ( ! value.moment.isValid() ) {
+                return;
+            }
+
+            let moment = this.veValue.moment.set({
+                hour: value.moment.hour(),
+                minute: value.moment.minute(),
+                second: value.moment.second(),
+            });
+
+            this.veValue = Now.make(moment);
+
+            this.$emit('input', this.veValue.format(this.format));
+        },
+
+        eventClear()
+        {
+            this.veValue = Now.make('now');
+
+            this.$emit('input', this.clearValue);
+        },
+
+        eventSelect(now)
+        {
+            this.veValue = now.clone();
+
+            this.$emit('input', this.veValue.format(this.format));
+        },
+
+        eventPopoverInput(value)
+        {
+            this.veOpen = value;
+        },
 
     },
 
@@ -157,13 +189,88 @@ export default {
     {
         return (
             <div class="n-timepicker__toolbar">
-                <div class="n-timepicker__display">
+                <div class="n-timepicker-display">
                     <span class="n-timepicker__time">
-                        { this.nativeValue.format(this.displayFormat) || Now.make('now').format(this.displayFormat) }
+                        { this.veValue.format(this.displayFormat) || this.placeholder }
                     </span>
                 </div>
             </div>
         )
+    },
+
+    renderIcon()
+    {
+        return (
+            <div class="n-timepicker__icon">
+                <span class={this.icons.clock}></span>
+            </div>
+        );
+    },
+
+    renderClear()
+    {
+        if ( ! this.clearable ) {
+            return null;
+        }
+
+        let props = {
+            type: 'input',
+            icon: this.icons.times
+        };
+
+        if ( this.disabled || ! this.value ) {
+            props.disabled = true;
+        }
+
+        let events = {
+            click: this.eventClear
+        };
+
+        return (
+            <NButton props={props} on={events} />
+        );
+    },
+
+    renderInput()
+    {
+        let attrs = {
+            type: 'text',
+            placeholder: this.placeholder,
+            disabled: this.disabled
+        };
+
+        let events = {
+            input: this.eventInput
+        };
+
+        let value = '';
+
+        if ( this.value ) {
+            value = this.veValue.format(this.displayFormat);
+        }
+
+        return (
+            <div class="n-timepicker__input">
+                <input value={value} attrs={attrs} on={events} />
+            </div>
+        );
+    },
+
+
+    renderTimepicker()
+    {
+        let classList = [
+            'n-timepicker',
+            'n-timepicker--' + this.size
+        ];
+
+        return (
+            <div class={classList}>
+                { this.ctor('renderIcon')() }
+                { this.ctor('renderInput')() }
+                { this.ctor('renderClear')() }
+            </div>
+        );
     },
 
     renderHourItem(now)
@@ -172,17 +279,32 @@ export default {
             'n-timepicker__item'
         ];
 
-        if ( now.hour() === this.nativeValue.hour() ) {
-            classList.push('n-timepicker__item--selected');
+        if ( this.veValue.valid() && now.hour() === this.veValue.hour() ) {
+            classList.push('n-active');
         }
 
         let events = {
-            'click': () => this.$emit('input', now.format(this.format))
+            click: () => this.eventSelect(now)
         };
 
         return (
             <div on={events} class={classList}>
                 <span>{ now.format('HH') }</span>
+            </div>
+        );
+    },
+
+    renderHourPanel()
+    {
+        if ( ! this.displayFormat.match('HH') ) {
+            return null;
+        }
+
+        return (
+            <div class="n-timepicker__panel">
+                <NScrollbar>
+                    { Arr.each(this.hoursGrid, this.ctor('renderHourItem')) }
+                </NScrollbar>
             </div>
         );
     },
@@ -193,17 +315,32 @@ export default {
             'n-timepicker__item'
         ];
 
-        if ( now.minute() === this.nativeValue.minute() ) {
-            classList.push('n-timepicker__item--selected');
+        if ( this.veValue.valid() && now.minute() === this.veValue.minute() ) {
+            classList.push('n-active');
         }
 
         let events = {
-            'click': () => this.$emit('input', now.format(this.format))
+            click: () => this.eventSelect(now)
         };
 
         return (
             <div on={events} class={classList}>
                 <span>{ now.format('mm') }</span>
+            </div>
+        );
+    },
+
+    renderMinutePanel()
+    {
+        if ( ! this.displayFormat.match('mm') ) {
+            return null;
+        }
+
+        return (
+            <div class="n-timepicker__panel">
+                <NScrollbar>
+                    { Arr.each(this.minutesGrid, this.ctor('renderMinuteItem')) }
+                </NScrollbar>
             </div>
         );
     },
@@ -214,12 +351,12 @@ export default {
             'n-timepicker__item'
         ];
 
-        if ( now.second() === this.nativeValue.second() ) {
-            classList.push('n-timepicker__item--selected');
+        if ( this.veValue.valid() && now.second() === this.veValue.second() ) {
+            classList.push('n-active');
         }
 
         let events = {
-            'click': () => this.$emit('input', now.format(this.format))
+            click: () => this.eventSelect(now)
         };
 
         return (
@@ -229,91 +366,66 @@ export default {
         );
     },
 
-    renderInput()
+    renderSecondPanel()
     {
-        let classList = [
-            'n-timepicker', 'n-timepicker--' + this.size
-        ];
-
-        if ( this.clearable === true ){
-            classList.push('n-timepicker--clearable');
+        if ( ! this.displayFormat.match('ss') ) {
+            return null;
         }
 
-        if ( this.disabled === true ){
-            classList.push('n-timepicker--disabled');
-        }
+        return (
+            <div class="n-timepicker__panel">
+                <NScrollbar>
+                    { Arr.each(this.secondsGrid, this.ctor('renderSecondItem')) }
+                </NScrollbar>
+            </div>
+        );
+    },
 
-        let inputEvent = (event) => {
-
-            if ( event.target.value.length !== this.displayFormat.length ) {
-                return;
-            }
-
-            let value = Now.make(event.target.value,
-                this.displayFormat);
-
-            if ( value.valid() === false ) {
-                return;
-            }
-
-            value = this.nativeValue.get().set({
-                hour: value.hour(), minute: value.minute(), second: value.second(),
-            });
-
-            this.$emit('input', value.format(this.format));
+    renderPopover()
+    {
+        let props = {
+            type: 'timepicker',
+            trigger: 'click',
+            visible: this.veOpen,
+            size: this.size,
+            position: this.position,
+            disabled: this.disabled
         };
 
-        let clearEvent = () => {
-
-            this.$emit('input', this.clearValue);
-
-            this.visible = false;
+        let events = {
+            input: this.eventPopoverInput
         };
 
         return (
-            <div class={classList}>
-                <div class="n-timepicker__icon">
-                    <span class={this.icons.clock}></span>
+            <NPopover ref="popover" props={props} on={events}>
+                <div class="n-timepicker__time">
+                    <div class="n-timepicker__header">
+                        {this.ctor('renderToolbar')()}
+                    </div>
+                    <div class="n-timepicker__body">
+                        { this.ctor('renderHourPanel')() }
+                        { this.ctor('renderMinutePanel')() }
+                        { this.ctor('renderSecondPanel')() }
+                    </div>
                 </div>
-                <div class="n-timepicker__input">
-                    <input type="text" disabled={this.disabled} value={this.value ? this.nativeValue.format(this.displayFormat) : ''} placeholder={this.placeholder} vOn:input={inputEvent} />
-                </div>
-                { this.clearable &&
-                    <NButton type="input" icon={this.icons.times} disabled={this.disabled || Any.isEmpty(this.value)} vOn:mousedown_stop={clearEvent} />
-                }
-            </div>
+            </NPopover>
         );
     },
 
     render()
     {
+        let classList = [
+            'n-timepicker__wrapper'
+        ];
+
+        if ( this.disabled ){
+            classList.push('n-disabled');
+        }
+
         return (
-            <div class="n-timepicker__wrapper">
-                { this.ctor('renderInput')() }
-                <NPopover ref="modal" vModel={this.visible} trigger="click" type="timepicker" width={200} position={this.position} disabled={this.disabled} closeInside={false}>
-                    <div class="n-timepicker__time">
-                        <div class="n-timepicker__header">
-                            {this.ctor('renderToolbar')()}
-                        </div>
-                        <div class="n-timepicker__body">
-                            { this.displayFormat.match('HH') &&
-                                <div class="n-timepicker__panel">
-                                    { Arr.each(this.hoursGrid, this.ctor('renderHourItem')) }
-                                </div>
-                            }
-                            { this.displayFormat.match('mm') &&
-                                <div class="n-timepicker__panel">
-                                    { Arr.each(this.minutesGrid, this.ctor('renderMinuteItem')) }
-                                </div>
-                            }
-                            { this.displayFormat.match('ss') &&
-                                <div class="n-timepicker__panel">
-                                    { Arr.each(this.secondsGrid, this.ctor('renderSecondItem')) }
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </NPopover>
+            <div class={classList}>
+                { this.ctor('renderTimepicker')() }
+                { this.ctor('renderPopover')() }
             </div>
         );
     }

@@ -67,7 +67,7 @@ export default {
             type: [Boolean]
         },
 
-        rangeSeperator: {
+        rangeSeparator: {
             default()
             {
                 return '-';
@@ -685,7 +685,7 @@ export default {
                     <input type="text" disabled={this.disabled} value={this.nativeArrive.format(this.displayFormat)} placeholder={this.placeholderArrive} vOn:input={arriveEvent} />
                 </div>
                 <span class="n-datepicker__seperator">
-                    <span>{ this.rangeSeperator }</span>
+                    <span>{ this.rangeSeparator }</span>
                 </span>
                 <div class="n-datepicker__input n-datepicker__input--range">
                     <input type="text" disabled={this.disabled} value={this.nativeDepart.format(this.displayFormat)} placeholder={this.placeholderDepart} vOn:input={departEvent} />

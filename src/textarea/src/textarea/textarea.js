@@ -1,4 +1,4 @@
-import { Obj, Any } from "nano-js";
+import {Obj, Any, UUID} from "nano-js";
 
 export default {
 
@@ -128,7 +128,7 @@ export default {
         events.input = this.eventInput;
 
         return (
-            <textarea class={classList} attrs={attrs} on={events} />
+            <textarea value={this.veValue} class={classList} attrs={attrs} on={events} />
         );
     },
 

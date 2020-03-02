@@ -113,6 +113,22 @@ export default {
 
         ...CtorMixin,
 
+        addColumn(column)
+        {
+            let columns = Arr.add(this.columns, column, {
+                _uid: column._uid
+            });
+
+            this.columns = Arr.sort(columns, '_uid');
+        },
+
+        removeColumn(column)
+        {
+            Arr.remove(this.columns, {
+                _uid: column._uid
+            });
+        },
+
         updateValue()
         {
             if ( this.multiple === true && ! Any.isEmpty(this.value) ) {
@@ -150,22 +166,6 @@ export default {
             }
 
             this.height = Dom.find(element).innerHeight();
-        },
-
-        addColumn(column)
-        {
-            let columns = Arr.merge(this.columns, [
-                column
-            ]);
-
-            this.columns = Arr.sort(columns, '_uid');
-        },
-
-        removeColumn(column)
-        {
-            Arr.remove(this.columns, {
-                _uid: column._uid
-            });
         },
 
         toggleRow(row)

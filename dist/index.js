@@ -51459,6 +51459,11 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NCheckboxGroup',
+  provide: function provide() {
+    return {
+      NCheckboxGroup: this
+    };
+  },
   props: {
     value: {
       "default": function _default() {
@@ -51466,7 +51471,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       type: [Array]
     },
-    alignment: {
+    align: {
       "default": function _default() {
         return 'vertical';
       },
@@ -51475,146 +51480,108 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     globalChecked: function globalChecked() {
-      var checked = this.checkboxes.filter(function (checkbox) {
-        return checkbox.nativeChecked === true;
+      var checked = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].filter(this.veCheckboxes, function (checkbox) {
+        return checkbox.veChecked;
       });
-      return checked.length !== 0 && checked.length === Object.keys(this.checkboxes).length;
-    },
-    globalDisabled: function globalDisabled() {
-      return this.checkboxes.length === 0;
+      return this.veCheckboxes.length !== 0 && checked.length === this.veCheckboxes.length;
     },
     globalIntermediate: function globalIntermediate() {
-      var checked = this.checkboxes.filter(function (checkbox) {
-        return checkbox.nativeChecked === true;
+      var checked = this.veCheckboxes.filter(function (checkbox) {
+        return checkbox.veChecked;
       });
-      return checked.length !== 0 && checked.length !== Object.keys(this.checkboxes).length;
+      return checked.length !== 0 && checked.length !== this.veCheckboxes.length;
+    },
+    globalDisabled: function globalDisabled() {
+      return this.veCheckboxes.length === 0;
     }
-  },
-  watch: {
-    value: function value() {
-      this.changeValue();
-    },
-    update: function update() {
-      this.updateValue();
-    }
-  },
-  methods: {
-    updateValue: function updateValue() {
-      var result = [];
-      var checkboxes = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].sort(this.checkboxes, 'sort');
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(checkboxes, function (checkbox) {
-        if (checkbox.nativeChecked === true) result.push(checkbox.value);
-      });
-      this.$emit('input', result);
-    },
-    changeValue: function changeValue() {
-      var _this = this;
-
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(this.checkboxes, function (checkbox) {
-        checkbox.nativeChecked = nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].isEmpty(_this.value) === false && _this.value.indexOf(checkbox.value) !== -1;
-      });
-    },
-    addCheckbox: function addCheckbox(checkbox) {
-      var _this2 = this;
-
-      var index = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].findIndex(this.checkboxes, {
-        value: checkbox.value
-      });
-
-      if (index !== -1) {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].removeIndex(this.checkboxes, index);
-      }
-
-      checkbox.$on('input', function () {
-        _this2.update++;
-      });
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].push(this.checkboxes, checkbox);
-    },
-    removeCheckbox: function removeCheckbox(checkbox) {
-      var index = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].findIndex(this.checkboxes, {
-        value: checkbox.value
-      });
-
-      if (index !== -1) {
-        nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].removeIndex(this.checkboxes, index);
-      }
-    },
-    toggleCheckbox: function toggleCheckbox() {
-      this.globalChecked === true ? this.checkNone() : this.checkAll();
-    },
-    checkAll: function checkAll() {
-      var _this3 = this;
-
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(this.checkboxes, function (checkbox) {
-        _this3.$nextTick(function () {
-          return checkbox.$emit('input', true);
-        });
-      });
-    },
-    checkNone: function checkNone() {
-      var _this4 = this;
-
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(this.checkboxes, function (checkbox) {
-        _this4.$nextTick(function () {
-          return checkbox.$emit('input', false);
-        });
-      });
-    },
-    pushIndex: function pushIndex(_uid) {
-      this.index = _uid;
-    },
-    shiftIndex: function shiftIndex(_uid) {
-      var _this5 = this;
-
-      var checkboxes = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].sort(this.checkboxes, 'sort');
-      var start = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].findIndex(checkboxes, {
-        _uid: this.index
-      });
-      var end = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].findIndex(checkboxes, {
-        _uid: _uid
-      });
-
-      if (start === -1) {
-        start = 0;
-      }
-
-      checkboxes = end >= start ? checkboxes.slice(start, end) : checkboxes.slice(end, start);
-      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(checkboxes, function (checkbox) {
-        _this5.$nextTick(function () {
-          return checkbox.$emit('input', true);
-        });
-      });
-    }
-  },
-  provide: function provide() {
-    return {
-      NCheckboxGroup: this
-    };
   },
   data: function data() {
     return {
-      update: 0,
-      checkboxes: [],
-      index: -1
+      veValue: this.value,
+      veCheckboxes: [],
+      veIndex: -1
     };
   },
-  render: function render(h) {
-    var className = ['n-checkbox-group', 'n-checkbox-group--' + this.alignment];
-
-    if (this.globalChecked === true) {
-      className.push('n-checkbox-group--checked');
+  watch: {
+    value: function value() {
+      if (this.value !== this.veValue) {
+        this.veValue = this.value;
+      }
     }
+  },
+  methods: {
+    addCheckbox: function addCheckbox(checkbox) {
+      this.veIndex = -1;
+      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].add(this.veCheckboxes, checkbox, {
+        _uid: checkbox._uid
+      });
+      this.veCheckboxes = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].sort(this.veCheckboxes, 'sort');
+    },
+    removeCheckbox: function removeCheckbox(checkbox) {
+      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].remove(this.veCheckboxes, {
+        _uid: checkbox._uid
+      });
+      this.veIndex = -1;
+    },
+    toggleCheckbox: function toggleCheckbox(checkbox) {
+      var veIndex = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].findIndex(this.veCheckboxes, {
+        _uid: checkbox._uid
+      });
 
-    if (this.globalDisabled === true) {
-      className.push('n-checkbox-group--disabled');
+      if (!checkbox.veChecked) {
+        this.veIndex = veIndex;
+      }
+
+      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].toggle(this.veValue, checkbox.value);
+    },
+    checkCheckbox: function checkCheckbox(checkbox) {
+      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].add(this.veValue, checkbox.value);
+    },
+    uncheckCheckbox: function uncheckCheckbox(checkbox) {
+      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].remove(this.veValue, checkbox.value);
+    },
+    shiftCheckbox: function shiftCheckbox(checkbox) {
+      if (this.veIndex === -1) {
+        return this.toggleCheckbox(checkbox);
+      }
+
+      var veIndex = nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].findIndex(this.veCheckboxes, {
+        _uid: checkbox._uid
+      });
+      var checkboxes = this.veCheckboxes.slice(this.veIndex, veIndex + 1);
+
+      if (veIndex < this.veIndex) {
+        checkboxes = this.veCheckboxes.slice(veIndex, this.veIndex + 1);
+      }
+
+      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(checkboxes, function (checkbox) {
+        return checkbox.check();
+      });
+      this.veIndex = -1;
+    },
+    toggleAll: function toggleAll() {
+      this.globalChecked ? this.uncheckAll() : this.checkAll();
+    },
+    checkAll: function checkAll() {
+      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(this.veCheckboxes, function (checkbox) {
+        return checkbox.check();
+      });
+    },
+    uncheckAll: function uncheckAll() {
+      nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].each(this.veCheckboxes, function (checkbox) {
+        return checkbox.uncheck();
+      });
+    },
+    isChecked: function isChecked(value) {
+      return nano_js__WEBPACK_IMPORTED_MODULE_0__["Arr"].has(this.veValue, value);
     }
-
-    if (this.globalIntermediate === true) {
-      className.push('n-checkbox-group--intermediate');
-    }
-
+  },
+  render: function render($render) {
+    var h = arguments[0];
+    this.$render = $render;
+    var classList = ['n-checkbox-group', 'n-checkbox-group--' + this.align];
     return h("div", {
-      "class": className
+      "class": classList
     }, [this.$slots["default"]]);
   }
 });
@@ -51649,7 +51616,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     value: {
       "default": function _default() {
-        return '';
+        return null;
       }
     },
     checked: {
@@ -51687,113 +51654,151 @@ __webpack_require__.r(__webpack_exports__);
         return false;
       },
       type: [Boolean]
+    }
+  },
+  computed: {
+    veComputed: function veComputed() {
+      return !this.global ? this.veChecked : this.NCheckboxGroup.globalChecked;
     },
-    sort: {
-      "default": function _default() {
-        return this.$vnode.key;
-      },
-      type: [Number, String]
-    }
-  },
-  methods: {
-    change: function change(event) {
-      if (this.NCheckboxGroup && this.global === true) {
-        return this.NCheckboxGroup.toggleCheckbox();
-      }
-
-      if (this.NCheckboxGroup && event.shiftKey === true) {
-        this.NCheckboxGroup.shiftIndex(this._uid);
-      }
-
-      if (this.NCheckboxGroup && this.global === false) {
-        this.NCheckboxGroup.pushIndex(this._uid);
-      }
-
-      this.$emit('input', !this.nativeChecked);
-    }
-  },
-  watch: {
-    checked: function checked() {
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEqual(this.checked, this.nativeChecked)) {
-        this.nativeChecked = this.checked;
-      }
+    veIntermediate: function veIntermediate() {
+      return !this.global ? this.intermediate : this.NCheckboxGroup.globalIntermediate;
+    },
+    veDisabled: function veDisabled() {
+      return !this.global ? this.disabled : this.NCheckboxGroup.globalDisabled;
     }
   },
   data: function data() {
     return {
-      nativeChecked: this.checked,
-      nativeDisabled: this.disabled
+      veChecked: this.checked
     };
+  },
+  methods: {
+    toggle: function toggle() {
+      this.$emit('input', this.veChecked = !this.veChecked);
+    },
+    check: function check() {
+      if (this.NCheckboxGroup) {
+        this.NCheckboxGroup.checkCheckbox(this);
+      }
+
+      this.$emit('input', this.veChecked = true);
+    },
+    uncheck: function uncheck() {
+      if (this.NCheckboxGroup) {
+        this.NCheckboxGroup.uncheckCheckbox(this);
+      }
+
+      this.$emit('input', this.veChecked = false);
+    },
+    eventLocalClick: function eventLocalClick(event) {
+      if (this.NCheckboxGroup) {
+        event.shiftKey ? this.NCheckboxGroup.shiftCheckbox(this) : this.NCheckboxGroup.toggleCheckbox(this);
+      }
+
+      this.$emit('input', this.veChecked = !this.veChecked);
+    },
+    eventGlobalClick: function eventGlobalClick() {
+      this.NCheckboxGroup.toggleAll();
+    }
+  },
+  watch: {
+    checked: function checked() {
+      if (this.checked !== this.veChecked) {
+        this.veChecked = this.checked;
+      }
+    }
+  },
+  beforeMount: function beforeMount() {
+    if (this.NCheckboxGroup) {
+      this.veChecked = this.NCheckboxGroup.isChecked(this.value);
+    }
   },
   mounted: function mounted() {
     var _this = this;
 
-    if (this.NCheckboxGroup && this.global === false) {
-      this.NCheckboxGroup.addCheckbox(this);
+    if (!this.NCheckboxGroup || this.global) {
+      return;
     }
 
-    if (this.NCheckboxGroup) {
-      this.nativeChecked = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(this.NCheckboxGroup.value, this.value);
-    }
-
-    this.$on('input', function (value) {
-      return _this.nativeChecked = value;
+    this.NCheckboxGroup.$watch('veValue', function () {
+      _this.veChecked = _this.NCheckboxGroup.isChecked(_this.value);
     });
+    this.NCheckboxGroup.addCheckbox(this);
   },
-  destroyed: function destroyed() {
-    if (this.NCheckboxGroup && this.global === false) {
+  beforeDestroy: function beforeDestroy() {
+    if (this.NCheckboxGroup && !this.global) {
       this.NCheckboxGroup.removeCheckbox(this);
     }
   },
-  render: function render(h) {
-    var checked = this.global ? this.NCheckboxGroup.globalChecked : this.nativeChecked;
-    var disabled = this.global ? this.NCheckboxGroup.globalDisabled : this.nativeDisabled;
-    var intermediate = this.global ? this.NCheckboxGroup.globalIntermediate : this.intermediate;
-    var className = ['n-checkbox', 'n-checkbox--' + this.size];
+  renderCheckbox: function renderCheckbox() {
+    var h = this.$createElement;
+    var interHtml = this.$slots.intermediate;
 
-    if (checked === true) {
-      className.push('n-checkbox--checked');
+    if (!interHtml) {
+      interHtml = h("span", {
+        "class": this.icons.intermediate
+      });
     }
 
-    if (disabled === true) {
-      className.push('n-checkbox--disabled');
+    var checkHtml = this.$slots.checked;
+
+    if (!checkHtml) {
+      checkHtml = h("span", {
+        "class": this.icons.checked
+      });
     }
 
-    if (intermediate === true) {
-      className.push('n-checkbox--intermediate');
+    return h("div", {
+      "class": "n-checkbox__checkbox"
+    }, [this.veIntermediate ? interHtml : checkHtml]);
+  },
+  renderLabel: function renderLabel() {
+    var h = this.$createElement;
+
+    if (this.$slots["default"] && this.$slots.label) {
+      return null;
     }
 
-    var attrs = {
-      on: {}
-    };
+    return h("div", {
+      "class": "n-checkbox__label"
+    }, [this.$slots["default"] || this.$slots.label]);
+  },
+  render: function render($render) {
+    var h = arguments[0];
+    this.$render = $render;
+    var classList = ['n-checkbox', 'n-checkbox--' + this.size];
 
-    if (disabled === false) {
-      attrs.on.click = this.change;
+    if (this.veComputed) {
+      classList.push('n-checked');
+    }
+
+    if (this.veIntermediate) {
+      classList.push('n-intermediate');
+    }
+
+    if (this.veDisabled) {
+      classList.push('n-disabled');
+    }
+
+    var events = {};
+
+    if (!this.veDisabled) {
+      events = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].clone(this.$listeners);
+    }
+
+    if (!this.veDisabled && this.global) {
+      events.click = this.eventGlobalClick;
+    }
+
+    if (!this.veDisabled && !this.global) {
+      events.click = this.eventLocalClick;
     }
 
     return h("div", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
-      "class": className
-    }, attrs]), [h("div", {
-      "class": "n-checkbox__checkbox"
-    }, [intermediate === true ? this.$slots.intermediate || h("span", {
-      "class": this.icons.intermediate
-    }) : this.$slots.checked || h("span", {
-      "class": this.icons.checked
-    })]), (this.$slots["default"] || this.$slots.label) && h("div", {
-      "class": "n-checkbox__label"
-    }, [this.$slots["default"] || this.$slots.label]), this.global === false && h("div", {
-      "attrs": {
-        "className": "n-checkbox__input"
-      }
-    }, [h("input", {
-      "attrs": {
-        "type": "hidden",
-        "name": this.name
-      },
-      "domProps": {
-        "value": this.nativeChecked
-      }
-    })])]);
+      "class": classList
+    }, {
+      "on": events
+    }]), [this.ctor('renderCheckbox')(), this.ctor('renderLabel')()]);
   }
 });
 
@@ -52071,7 +52076,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       type: [Boolean]
     },
-    rangeSeperator: {
+    rangeSeparator: {
       "default": function _default() {
         return '-';
       },
@@ -52665,7 +52670,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     })]), h("span", {
       "class": "n-datepicker__seperator"
-    }, [h("span", [this.rangeSeperator])]), h("div", {
+    }, [h("span", [this.rangeSeparator])]), h("div", {
       "class": "n-datepicker__input n-datepicker__input--range"
     }, [h("input", {
       "attrs": {
@@ -55459,6 +55464,9 @@ __webpack_require__.r(__webpack_exports__);
 
     events.input = this.eventInput;
     return h("input", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
+      "domProps": {
+        "value": this.veValue
+      },
       "class": classList
     }, {
       "attrs": attrs
@@ -56019,6 +56027,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   methods: _objectSpread({}, _mixins_src_ctor__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    addColumn: function addColumn(column) {
+      var columns = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(this.columns, column, {
+        _uid: column._uid
+      });
+      this.columns = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].sort(columns, '_uid');
+    },
+    removeColumn: function removeColumn(column) {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(this.columns, {
+        _uid: column._uid
+      });
+    },
     updateValue: function updateValue() {
       if (this.multiple === true && !nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.value)) {
         this.nativeValue = this.value;
@@ -56048,15 +56067,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       this.height = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(element).innerHeight();
-    },
-    addColumn: function addColumn(column) {
-      var columns = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].merge(this.columns, [column]);
-      this.columns = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].sort(columns, '_uid');
-    },
-    removeColumn: function removeColumn(column) {
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(this.columns, {
-        _uid: column._uid
-      });
     },
     toggleRow: function toggleRow(row) {
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].toggle(this.expanded, nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(row, this.uniqueProp));
@@ -57251,9 +57261,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     size: {
       "default": function _default() {
-        return 'default';
-      },
-      type: [String]
+        return null;
+      }
     },
     position: {
       "default": function _default() {
@@ -57302,26 +57311,14 @@ __webpack_require__.r(__webpack_exports__);
       var style = {};
       var clientX = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.target).offset('left', this.parent);
 
-      if (this.trigger !== 'context') {// clientX -= Dom.find(this.target).scroll('left', this.parent);
-      }
-
       if (this.trigger === 'context') {
         clientX = this.clientX - nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.parent).offset('left');
       }
 
-      if (this.parent === document.body) {// clientX += Dom.find(document.body).scroll('left');
-      }
-
       var clientY = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.target).offset('top', this.parent);
-
-      if (this.trigger !== 'context') {// clientY -= Dom.find(this.target).scroll('top', this.parent);
-      }
 
       if (this.trigger === 'context') {
         clientY = this.clientY - nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.parent).offset('top');
-      }
-
-      if (this.parent === document.body) {// clientY += Dom.find(document.body).scroll('top');
       }
 
       var height = this.trigger === 'context' ? 0 : nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.target).height();
@@ -57626,7 +57623,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   render: function render() {
     var h = arguments[0];
-    var className = ['n-popover', 'n-popover--' + this.size, 'n-popover--' + this.type, 'n-popover--' + this.position];
+    var classList = ['n-popover', 'n-popover--' + this.type, 'n-popover--' + this.position];
+
+    if (this.size) {
+      classList.push('n-popover--' + this.size);
+    }
+
     var style = this.style;
 
     if (this.width) {
@@ -57638,7 +57640,7 @@ __webpack_require__.r(__webpack_exports__);
       afterLeave: this.removeClass
     };
     return h("div", {
-      "class": className,
+      "class": classList,
       "style": this.style
     }, [h("transition", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
       "attrs": {
@@ -60364,6 +60366,9 @@ __webpack_require__.r(__webpack_exports__);
 
     events.input = this.eventInput;
     return h("textarea", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
+      "domProps": {
+        "value": this.veValue
+      },
       "class": classList
     }, {
       "attrs": attrs
@@ -60417,18 +60422,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_src_timepicker_timepicker_
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @vue/babel-helper-vue-jsx-merge-props */ "./node_modules/@vue/babel-helper-vue-jsx-merge-props/dist/helper.js");
 /* harmony import */ var _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _mixins_src_ctor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/src/ctor */ "./src/mixins/src/ctor.js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! nano-js */ "nano-js");
-/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -60453,13 +60452,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     size: {
       "default": function _default() {
-        return 'default';
-      },
-      type: [String]
+        return null;
+      }
     },
     position: {
       "default": function _default() {
-        return 'bottom-center';
+        return 'bottom-start';
       },
       type: [String]
     },
@@ -60495,57 +60493,150 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     minutesInterval: {
       "default": function _default() {
-        return 10;
+        return 1;
       },
       type: [Number]
     },
     secondsInterval: {
       "default": function _default() {
-        return 10;
+        return 1;
       },
       type: [Number]
     }
   },
   computed: {
     hoursGrid: function hoursGrid() {
-      return this.nativeValue.getHours(this.hoursInterval);
+      return this.veValue.getHours(this.hoursInterval);
     },
     minutesGrid: function minutesGrid() {
-      return this.nativeValue.getMinutes(this.minutesInterval);
+      return this.veValue.getMinutes(this.minutesInterval);
     },
     secondsGrid: function secondsGrid() {
-      return this.nativeValue.getSeconds(this.secondsInterval);
+      return this.veValue.getSeconds(this.secondsInterval);
     }
   },
   watch: {
     value: function value() {
-      var value = nano_js__WEBPACK_IMPORTED_MODULE_2__["Now"].make(this.value);
-
-      if (value.valid() === false) {
-        return;
-      }
-
-      if (this.value !== this.nativeValue.format(this.format)) {
-        this.nativeValue = nano_js__WEBPACK_IMPORTED_MODULE_2__["Now"].make(this.value);
+      if (this.value !== this.veValue.format(this.format)) {
+        this.veValue = nano_js__WEBPACK_IMPORTED_MODULE_1__["Now"].make(this.value);
       }
     }
   },
   data: function data() {
     return {
-      visible: false,
-      nativeValue: nano_js__WEBPACK_IMPORTED_MODULE_2__["Now"].make(this.value)
+      veOpen: false,
+      veValue: nano_js__WEBPACK_IMPORTED_MODULE_1__["Now"].make(this.value)
     };
   },
-  methods: _objectSpread({}, _mixins_src_ctor__WEBPACK_IMPORTED_MODULE_1__["default"]),
+  methods: {
+    eventInput: function eventInput(event) {
+      if (event.target.value.length !== this.displayFormat.length) {
+        return;
+      }
+
+      var value = nano_js__WEBPACK_IMPORTED_MODULE_1__["Now"].make(event.target.value, this.displayFormat);
+
+      if (!value.moment.isValid()) {
+        return;
+      }
+
+      var moment = this.veValue.moment.set({
+        hour: value.moment.hour(),
+        minute: value.moment.minute(),
+        second: value.moment.second()
+      });
+      this.veValue = nano_js__WEBPACK_IMPORTED_MODULE_1__["Now"].make(moment);
+      this.$emit('input', this.veValue.format(this.format));
+    },
+    eventClear: function eventClear() {
+      this.veValue = nano_js__WEBPACK_IMPORTED_MODULE_1__["Now"].make('now');
+      this.$emit('input', this.clearValue);
+    },
+    eventSelect: function eventSelect(now) {
+      this.veValue = now.clone();
+      this.$emit('input', this.veValue.format(this.format));
+    },
+    eventPopoverInput: function eventPopoverInput(value) {
+      this.veOpen = value;
+    }
+  },
   renderToolbar: function renderToolbar() {
     var h = this.$createElement;
     return h("div", {
       "class": "n-timepicker__toolbar"
     }, [h("div", {
-      "class": "n-timepicker__display"
+      "class": "n-timepicker-display"
     }, [h("span", {
       "class": "n-timepicker__time"
-    }, [this.nativeValue.format(this.displayFormat) || nano_js__WEBPACK_IMPORTED_MODULE_2__["Now"].make('now').format(this.displayFormat)])])]);
+    }, [this.veValue.format(this.displayFormat) || this.placeholder])])]);
+  },
+  renderIcon: function renderIcon() {
+    var h = this.$createElement;
+    return h("div", {
+      "class": "n-timepicker__icon"
+    }, [h("span", {
+      "class": this.icons.clock
+    })]);
+  },
+  renderClear: function renderClear() {
+    var h = this.$createElement;
+
+    if (!this.clearable) {
+      return null;
+    }
+
+    var props = {
+      type: 'input',
+      icon: this.icons.times
+    };
+
+    if (this.disabled || !this.value) {
+      props.disabled = true;
+    }
+
+    var events = {
+      click: this.eventClear
+    };
+    return h("NButton", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{}, {
+      "props": props
+    }, {}, {
+      "on": events
+    }]));
+  },
+  renderInput: function renderInput() {
+    var h = this.$createElement;
+    var attrs = {
+      type: 'text',
+      placeholder: this.placeholder,
+      disabled: this.disabled
+    };
+    var events = {
+      input: this.eventInput
+    };
+    var value = '';
+
+    if (this.value) {
+      value = this.veValue.format(this.displayFormat);
+    }
+
+    return h("div", {
+      "class": "n-timepicker__input"
+    }, [h("input", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
+      "domProps": {
+        "value": value
+      }
+    }, {
+      "attrs": attrs
+    }, {}, {
+      "on": events
+    }]))]);
+  },
+  renderTimepicker: function renderTimepicker() {
+    var h = this.$createElement;
+    var classList = ['n-timepicker', 'n-timepicker--' + this.size];
+    return h("div", {
+      "class": classList
+    }, [this.ctor('renderIcon')(), this.ctor('renderInput')(), this.ctor('renderClear')()]);
   },
   renderHourItem: function renderHourItem(now) {
     var _this = this;
@@ -60553,13 +60644,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var h = this.$createElement;
     var classList = ['n-timepicker__item'];
 
-    if (now.hour() === this.nativeValue.hour()) {
-      classList.push('n-timepicker__item--selected');
+    if (this.veValue.valid() && now.hour() === this.veValue.hour()) {
+      classList.push('n-active');
     }
 
     var events = {
-      'click': function click() {
-        return _this.$emit('input', now.format(_this.format));
+      click: function click() {
+        return _this.eventSelect(now);
       }
     };
     return h("div", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{}, {
@@ -60568,19 +60659,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "class": classList
     }]), [h("span", [now.format('HH')])]);
   },
+  renderHourPanel: function renderHourPanel() {
+    var h = this.$createElement;
+
+    if (!this.displayFormat.match('HH')) {
+      return null;
+    }
+
+    return h("div", {
+      "class": "n-timepicker__panel"
+    }, [h("NScrollbar", [nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.hoursGrid, this.ctor('renderHourItem'))])]);
+  },
   renderMinuteItem: function renderMinuteItem(now) {
     var _this2 = this;
 
     var h = this.$createElement;
     var classList = ['n-timepicker__item'];
 
-    if (now.minute() === this.nativeValue.minute()) {
-      classList.push('n-timepicker__item--selected');
+    if (this.veValue.valid() && now.minute() === this.veValue.minute()) {
+      classList.push('n-active');
     }
 
     var events = {
-      'click': function click() {
-        return _this2.$emit('input', now.format(_this2.format));
+      click: function click() {
+        return _this2.eventSelect(now);
       }
     };
     return h("div", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{}, {
@@ -60589,19 +60691,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "class": classList
     }]), [h("span", [now.format('mm')])]);
   },
+  renderMinutePanel: function renderMinutePanel() {
+    var h = this.$createElement;
+
+    if (!this.displayFormat.match('mm')) {
+      return null;
+    }
+
+    return h("div", {
+      "class": "n-timepicker__panel"
+    }, [h("NScrollbar", [nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.minutesGrid, this.ctor('renderMinuteItem'))])]);
+  },
   renderSecondItem: function renderSecondItem(now) {
     var _this3 = this;
 
     var h = this.$createElement;
     var classList = ['n-timepicker__item'];
 
-    if (now.second() === this.nativeValue.second()) {
-      classList.push('n-timepicker__item--selected');
+    if (this.veValue.valid() && now.second() === this.veValue.second()) {
+      classList.push('n-active');
     }
 
     var events = {
-      'click': function click() {
-        return _this3.$emit('input', now.format(_this3.format));
+      click: function click() {
+        return _this3.eventSelect(now);
       }
     };
     return h("div", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{}, {
@@ -60610,115 +60723,55 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "class": classList
     }]), [h("span", [now.format('ss')])]);
   },
-  renderInput: function renderInput() {
-    var _this4 = this;
-
+  renderSecondPanel: function renderSecondPanel() {
     var h = this.$createElement;
-    var classList = ['n-timepicker', 'n-timepicker--' + this.size];
 
-    if (this.clearable === true) {
-      classList.push('n-timepicker--clearable');
+    if (!this.displayFormat.match('ss')) {
+      return null;
     }
-
-    if (this.disabled === true) {
-      classList.push('n-timepicker--disabled');
-    }
-
-    var inputEvent = function inputEvent(event) {
-      if (event.target.value.length !== _this4.displayFormat.length) {
-        return;
-      }
-
-      var value = nano_js__WEBPACK_IMPORTED_MODULE_2__["Now"].make(event.target.value, _this4.displayFormat);
-
-      if (value.valid() === false) {
-        return;
-      }
-
-      value = _this4.nativeValue.get().set({
-        hour: value.hour(),
-        minute: value.minute(),
-        second: value.second()
-      });
-
-      _this4.$emit('input', value.format(_this4.format));
-    };
-
-    var clearEvent = function clearEvent() {
-      _this4.$emit('input', _this4.clearValue);
-
-      _this4.visible = false;
-    };
 
     return h("div", {
-      "class": classList
-    }, [h("div", {
-      "class": "n-timepicker__icon"
-    }, [h("span", {
-      "class": this.icons.clock
-    })]), h("div", {
-      "class": "n-timepicker__input"
-    }, [h("input", {
-      "attrs": {
-        "type": "text",
-        "disabled": this.disabled,
-        "placeholder": this.placeholder
-      },
-      "domProps": {
-        "value": this.value ? this.nativeValue.format(this.displayFormat) : ''
-      },
-      "on": {
-        "input": inputEvent
-      }
-    })]), this.clearable && h("NButton", {
-      "attrs": {
-        "type": "input",
-        "icon": this.icons.times,
-        "disabled": this.disabled || nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].isEmpty(this.value)
-      },
-      "on": {
-        "mousedown": function mousedown($event) {
-          $event.stopPropagation();
-          return clearEvent($event);
-        }
-      }
-    })]);
+      "class": "n-timepicker__panel"
+    }, [h("NScrollbar", [nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.secondsGrid, this.ctor('renderSecondItem'))])]);
   },
-  render: function render() {
-    var _this5 = this;
-
-    var h = arguments[0];
-    return h("div", {
-      "class": "n-timepicker__wrapper"
-    }, [this.ctor('renderInput')(), h("NPopover", {
-      "ref": "modal",
-      "attrs": {
-        "trigger": "click",
-        "type": "timepicker",
-        "width": 200,
-        "position": this.position,
-        "disabled": this.disabled,
-        "closeInside": false
-      },
-      "model": {
-        value: _this5.visible,
-        callback: function callback($$v) {
-          _this5.visible = $$v;
-        }
-      }
-    }, [h("div", {
+  renderPopover: function renderPopover() {
+    var h = this.$createElement;
+    var props = {
+      type: 'timepicker',
+      trigger: 'click',
+      visible: this.veOpen,
+      size: this.size,
+      position: this.position,
+      disabled: this.disabled
+    };
+    var events = {
+      input: this.eventPopoverInput
+    };
+    return h("NPopover", _vue_babel_helper_vue_jsx_merge_props__WEBPACK_IMPORTED_MODULE_0___default()([{
+      "ref": "popover"
+    }, {
+      "props": props
+    }, {}, {
+      "on": events
+    }]), [h("div", {
       "class": "n-timepicker__time"
     }, [h("div", {
       "class": "n-timepicker__header"
     }, [this.ctor('renderToolbar')()]), h("div", {
       "class": "n-timepicker__body"
-    }, [this.displayFormat.match('HH') && h("div", {
-      "class": "n-timepicker__panel"
-    }, [nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(this.hoursGrid, this.ctor('renderHourItem'))]), this.displayFormat.match('mm') && h("div", {
-      "class": "n-timepicker__panel"
-    }, [nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(this.minutesGrid, this.ctor('renderMinuteItem'))]), this.displayFormat.match('ss') && h("div", {
-      "class": "n-timepicker__panel"
-    }, [nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].each(this.secondsGrid, this.ctor('renderSecondItem'))])])])])]);
+    }, [this.ctor('renderHourPanel')(), this.ctor('renderMinutePanel')(), this.ctor('renderSecondPanel')()])])]);
+  },
+  render: function render() {
+    var h = arguments[0];
+    var classList = ['n-timepicker__wrapper'];
+
+    if (this.disabled) {
+      classList.push('n-disabled');
+    }
+
+    return h("div", {
+      "class": classList
+    }, [this.ctor('renderTimepicker')(), this.ctor('renderPopover')()]);
   }
 });
 

@@ -98,9 +98,8 @@ export default {
         size: {
             default()
             {
-                return 'default';
-            },
-            type: [String]
+                return null;
+            }
         },
 
         position: {
@@ -167,30 +166,14 @@ export default {
 
             let clientX = Dom.find(this.target).offset('left', this.parent);
 
-            if ( this.trigger !== 'context' ) {
-                // clientX -= Dom.find(this.target).scroll('left', this.parent);
-            }
-
             if ( this.trigger === 'context' ) {
                 clientX = this.clientX - Dom.find(this.parent).offset('left');
             }
 
-            if ( this.parent === document.body ) {
-                // clientX += Dom.find(document.body).scroll('left');
-            }
-
             let clientY = Dom.find(this.target).offset('top', this.parent);
-
-            if ( this.trigger !== 'context' ) {
-                // clientY -= Dom.find(this.target).scroll('top', this.parent);
-            }
 
             if ( this.trigger === 'context' ) {
                 clientY = this.clientY - Dom.find(this.parent).offset('top');
-            }
-
-            if ( this.parent === document.body ) {
-                // clientY += Dom.find(document.body).scroll('top');
             }
 
             let height = this.trigger === 'context' ?
@@ -536,12 +519,15 @@ export default {
 
     render()
     {
-        let className = [
+        let classList = [
             'n-popover',
-            'n-popover--' + this.size,
             'n-popover--' + this.type,
             'n-popover--' + this.position
         ];
+
+        if ( this.size ) {
+            classList.push('n-popover--' + this.size);
+        }
 
         let style = this.style;
 
@@ -555,7 +541,7 @@ export default {
         };
 
         return (
-            <div class={className} style={this.style}>
+            <div class={classList} style={this.style}>
                 <transition name="n-fade-fast" mode="out-in" on={events}>
                     { this.veVisible ? this.ctor('renderBody')() : null }
                 </transition>

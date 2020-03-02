@@ -30,14 +30,6 @@ $checkbox-radius: $radius-small !default;
 }
 
 /**
- * Checkbox input
- */
-
-.n-checkbox .n-checkbox__input {
-    display: none;
-}
-
-/**
  * Checkbox pseudo checkbox
  */
 
@@ -56,26 +48,15 @@ $checkbox-radius: $radius-small !default;
     transition: background $transition-short, border $transition-medium;
 }
 
-.n-inverse .n-checkbox .n-checkbox__checkbox {
-    border-color: $--color-gray-80;
-    background: $--color-black;
-}
-
 .n-checkbox:hover .n-checkbox__checkbox {
     border-color: $--color-primary;
 }
 
-.n-checkbox.n-checkbox--disabled .n-checkbox__checkbox {
+.n-checkbox.n-disabled .n-checkbox__checkbox {
     cursor: not-allowed;
     background: $--color-gray-05;
     border-color: $--color-gray-15;
 }
-
-.n-inverse .n-checkbox.n-checkbox--disabled .n-checkbox__checkbox {
-    border-color: $--color-gray-80;
-    background: $--color-gray-90;
-}
-
 
 .n-checkbox.n-checkbox--small .n-checkbox__checkbox {
     font-size: $checkbox-check-size * 0.925;
@@ -89,8 +70,8 @@ $checkbox-radius: $radius-small !default;
     height: $checkbox-height * 1.125;
 }
 
-.n-checkbox.n-checkbox--intermediate .n-checkbox__checkbox,
-.n-checkbox.n-checkbox--checked .n-checkbox__checkbox {
+.n-checkbox.n-checked .n-checkbox__checkbox,
+.n-checkbox.n-intermediate .n-checkbox__checkbox {
     border-color: $--color-primary;
     background: $--color-primary;
 }
@@ -99,8 +80,8 @@ $checkbox-radius: $radius-small !default;
     visibility: hidden;
 }
 
-.n-checkbox.n-checkbox--intermediate .n-checkbox__checkbox span,
-.n-checkbox.n-checkbox--checked .n-checkbox__checkbox span {
+.n-checkbox.n-checked .n-checkbox__checkbox span,
+.n-checkbox.n-intermediate .n-checkbox__checkbox span {
     visibility: visible;
 }
 
@@ -122,10 +103,10 @@ $checkbox-radius: $radius-small !default;
     color: $--color-white;
 }
 
-.n-checkbox.n-checkbox--checked .n-checkbox__label {
+.n-checkbox.n-checked .n-checkbox__label {
     color: $--color-primary;
 }
-.n-checkbox.n-checkbox--disabled .n-checkbox__label {
+.n-checkbox.n-disabled .n-checkbox__label {
     cursor: not-allowed;
     color: $--color-gray-50;
 }

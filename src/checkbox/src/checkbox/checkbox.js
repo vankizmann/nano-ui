@@ -1,4 +1,4 @@
-import { Arr, Any } from "nano-js";
+import { Arr, Obj, Any } from "nano-js";
 
 export default {
 
@@ -21,7 +21,7 @@ export default {
         value: {
             default()
             {
-                return '';
+                return null;
             }
         },
 
@@ -73,44 +73,26 @@ export default {
             type: [Boolean]
         },
 
-        sort: {
-            default()
-            {
-                return this.$vnode.key;
-            },
-            type: [Number, String]
-        }
-
     },
 
-    methods: {
+    computed: {
 
-        change(event)
+        veComputed()
         {
-            if ( this.NCheckboxGroup && this.global === true ) {
-                return this.NCheckboxGroup.toggleCheckbox();
-            }
+            return ! this.global ? this.veChecked :
+                this.NCheckboxGroup.globalChecked;
+        },
 
-            if ( this.NCheckboxGroup && event.shiftKey === true ) {
-                this.NCheckboxGroup.shiftIndex(this._uid);
-            }
-
-            if ( this.NCheckboxGroup && this.global === false ) {
-                this.NCheckboxGroup.pushIndex(this._uid);
-            }
-
-            this.$emit('input', !this.nativeChecked);
-        }
-
-    },
-
-    watch: {
-
-        checked()
+        veIntermediate()
         {
-            if ( ! Any.isEqual(this.checked, this.nativeChecked) ) {
-                this.nativeChecked = this.checked;
-            }
+            return ! this.global ? this.intermediate :
+                this.NCheckboxGroup.globalIntermediate;
+        },
+
+        veDisabled()
+        {
+            return ! this.global ? this.disabled :
+                this.NCheckboxGroup.globalDisabled;
         }
 
     },
@@ -118,84 +100,165 @@ export default {
     data()
     {
         return {
-            nativeChecked: this.checked, nativeDisabled: this.disabled
+            veChecked: this.checked
         };
+    },
+
+    methods: {
+
+        toggle()
+        {
+            this.$emit('input', this.veChecked = ! this.veChecked);
+        },
+
+        check()
+        {
+            if ( this.NCheckboxGroup ) {
+                this.NCheckboxGroup.checkCheckbox(this);
+            }
+
+            this.$emit('input', this.veChecked = true);
+        },
+
+        uncheck()
+        {
+            if ( this.NCheckboxGroup ) {
+                this.NCheckboxGroup.uncheckCheckbox(this);
+            }
+
+            this.$emit('input', this.veChecked = false);
+        },
+
+        eventLocalClick(event)
+        {
+            if ( this.NCheckboxGroup ) {
+                event.shiftKey ? this.NCheckboxGroup.shiftCheckbox(this) :
+                    this.NCheckboxGroup.toggleCheckbox(this);
+            }
+
+            this.$emit('input', this.veChecked = ! this.veChecked);
+        },
+
+        eventGlobalClick()
+        {
+            this.NCheckboxGroup.toggleAll();
+        },
+
+    },
+
+    watch: {
+
+        checked()
+        {
+            if ( this.checked !== this.veChecked ) {
+                this.veChecked = this.checked;
+            }
+        }
+
+    },
+
+    beforeMount()
+    {
+        if ( this.NCheckboxGroup ) {
+            this.veChecked = this.NCheckboxGroup.isChecked(this.value);
+        }
     },
 
     mounted()
     {
-        if ( this.NCheckboxGroup && this.global === false ) {
-            this.NCheckboxGroup.addCheckbox(this);
+        if ( ! this.NCheckboxGroup || this.global ) {
+            return;
         }
 
-        if ( this.NCheckboxGroup ) {
-            this.nativeChecked = Arr.has(this.NCheckboxGroup.value, this.value);
-        }
+        this.NCheckboxGroup.$watch('veValue', () => {
+            this.veChecked = this.NCheckboxGroup.isChecked(this.value);
+        });
 
-        this.$on('input', (value) => this.nativeChecked = value);
+        this.NCheckboxGroup.addCheckbox(this);
     },
 
-    destroyed()
+    beforeDestroy()
     {
-        if ( this.NCheckboxGroup && this.global === false ) {
+        if ( this.NCheckboxGroup && ! this.global ) {
             this.NCheckboxGroup.removeCheckbox(this);
         }
     },
 
-    render(h)
+    renderCheckbox()
     {
-        let checked = this.global ?
-            this.NCheckboxGroup.globalChecked : this.nativeChecked;
+        let interHtml = this.$slots.intermediate;
 
-        let disabled = this.global ?
-            this.NCheckboxGroup.globalDisabled : this.nativeDisabled;
+        if ( ! interHtml )  {
+            interHtml = (<span class={this.icons.intermediate}></span>);
+        }
 
-        let intermediate = this.global ?
-            this.NCheckboxGroup.globalIntermediate : this.intermediate;
+        let checkHtml = this.$slots.checked;
 
-        let className = [
+        if ( ! checkHtml )  {
+            checkHtml = (<span class={this.icons.checked}></span>);
+        }
+
+        return (
+            <div class="n-checkbox__checkbox">
+                { this.veIntermediate ? interHtml : checkHtml }
+            </div>
+        );
+    },
+
+    renderLabel()
+    {
+        if ( this.$slots.default && this.$slots.label ) {
+            return null;
+        }
+
+        return (
+            <div class="n-checkbox__label">
+                { this.$slots.default || this.$slots.label }
+            </div>
+        );
+    },
+
+    render($render)
+    {
+        this.$render = $render;
+
+        let classList = [
             'n-checkbox',
             'n-checkbox--' + this.size
         ];
 
-        if ( checked === true ) {
-            className.push('n-checkbox--checked');
+        if ( this.veComputed ) {
+            classList.push('n-checked');
         }
 
-        if ( disabled === true ) {
-            className.push('n-checkbox--disabled');
+        if ( this.veIntermediate ) {
+            classList.push('n-intermediate');
         }
 
-        if ( intermediate === true ) {
-            className.push('n-checkbox--intermediate');
+        if ( this.veDisabled ) {
+            classList.push('n-disabled');
         }
 
-        let attrs = {
-            on: {}
-        };
+        let events = {};
 
-        if ( disabled === false ) {
-            attrs.on.click = this.change;
+        if ( ! this.veDisabled ) {
+            events = Obj.clone(this.$listeners);
         }
 
-        return (<div class={className} {...attrs}>
-            <div class="n-checkbox__checkbox">
-                { intermediate === true ?
-                    this.$slots.intermediate || <span class={this.icons.intermediate}></span> :
-                    this.$slots.checked || <span class={this.icons.checked}></span>
-                }
+        if ( ! this.veDisabled && this.global ) {
+            events.click = this.eventGlobalClick
+        }
+
+        if ( ! this.veDisabled && ! this.global ) {
+            events.click = this.eventLocalClick
+        }
+
+        return (
+            <div class={classList} on={events}>
+                { this.ctor('renderCheckbox')() }
+                { this.ctor('renderLabel')() }
             </div>
-            { (this.$slots.default || this.$slots.label) &&
-                <div class="n-checkbox__label">
-                    {this.$slots.default || this.$slots.label}
-                </div>
-            }
-            { this.global === false &&
-                <div className="n-checkbox__input">
-                    <input type="hidden" value={this.nativeChecked} name={this.name} />
-                </div>
-            }
-        </div>);
+        );
     }
 
 }
