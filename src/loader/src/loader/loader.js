@@ -1,4 +1,4 @@
-import { UUID, Num, Obj, Any, Locale } from "nano-js";
+import { UUID, Num, Obj, Any, Dom, Locale } from "nano-js";
 
 export default {
 
@@ -63,7 +63,8 @@ export default {
         startTimer()
         {
             this.veTiming = Date.now();
-            this.veVisible = this.visible;
+
+            Dom.find(this.$el).addClass('n-active');
         },
 
         stopTimer()
@@ -74,7 +75,7 @@ export default {
                 return Any.delay(this.stopTimer, this.minTime - timing + 10);
             }
 
-            this.veVisible = this.visible;
+            Dom.find(this.$el).removeClass('n-active');
         }
 
     },
@@ -88,6 +89,11 @@ export default {
 
     },
 
+    mounted()
+    {
+        this.veVisible ? this.startTimer() : this.stopTimer();
+    },
+
     render($render)
     {
         this.$render = $render;
@@ -95,13 +101,6 @@ export default {
         let classList = [
             'n-loader', 'n-loader--' + this.size
         ];
-
-        let parentVisible = this.NLoader &&
-            this.NLoader.veVisible;
-
-        if ( this.veVisible && ! parentVisible ) {
-            classList.push('n-loader--active');
-        }
 
         return (
             <div class={classList}>

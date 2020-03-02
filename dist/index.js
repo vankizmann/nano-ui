@@ -41875,7 +41875,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     startTimer: function startTimer() {
       this.veTiming = Date.now();
-      this.veVisible = this.visible;
+      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$el).addClass('n-active');
     },
     stopTimer: function stopTimer() {
       var timing = Date.now() - this.veTiming;
@@ -41884,7 +41884,7 @@ __webpack_require__.r(__webpack_exports__);
         return nano_js__WEBPACK_IMPORTED_MODULE_0__["Any"].delay(this.stopTimer, this.minTime - timing + 10);
       }
 
-      this.veVisible = this.visible;
+      nano_js__WEBPACK_IMPORTED_MODULE_0__["Dom"].find(this.$el).removeClass('n-active');
     }
   },
   watch: {
@@ -41892,16 +41892,13 @@ __webpack_require__.r(__webpack_exports__);
       this.visible ? this.startTimer() : this.stopTimer();
     }
   },
+  mounted: function mounted() {
+    this.veVisible ? this.startTimer() : this.stopTimer();
+  },
   render: function render($render) {
     var h = arguments[0];
     this.$render = $render;
     var classList = ['n-loader', 'n-loader--' + this.size];
-    var parentVisible = this.NLoader && this.NLoader.veVisible;
-
-    if (this.veVisible && !parentVisible) {
-      classList.push('n-loader--active');
-    }
-
     return h("div", {
       "class": classList
     }, [this.$slots["default"]]);
