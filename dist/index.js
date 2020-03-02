@@ -38220,10 +38220,8 @@ __webpack_require__.r(__webpack_exports__);
       "ref": "modal"
     }, {
       "props": props
-    }, {
-      "attrs": {
-        "events": events
-      }
+    }, {}, {
+      "on": events
     }]), [h("div", {
       "slot": "raw",
       "class": classList

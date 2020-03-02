@@ -168,7 +168,7 @@ export default {
         events['input'] = this.eventInput;
 
         return (
-            <NModal ref="modal" props={props} events={events}>
+            <NModal ref="modal" props={props} on={events}>
                 <div slot="raw" class={classList}>
                     { this.ctor('renderIcon')() }
                     { this.ctor('renderBody')() }
