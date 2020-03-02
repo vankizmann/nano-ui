@@ -86,8 +86,11 @@ export default {
                 finalPositon = parentY + this.$el.clientHeight;
             }
 
-            let allowDrop = this.NDraggable.canDrop(this) &&
-                this.NDraggable.allowDrop(this);
+            let allowDropRainbow = Arr.each(this.NDraggable.veCached, (source) => {
+                this.NDraggable.allowDrop(source, this, finalStrategy);
+            });
+
+            let allowDrop = this.NDraggable.canDrop(this) && allowDropRainbow;
 
             if ( ! allowDrop ) {
 

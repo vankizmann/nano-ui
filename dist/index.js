@@ -39051,6 +39051,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     resolveDragPosition: function resolveDragPosition(eventY) {
+      var _this = this;
+
       var safeZone = this.NDraggable.safeZone(this.$el.clientHeight);
       var targetY = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).offset('top', document) - nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).scroll('top', document);
       var parentY = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).offset('top', this.NDraggable.$el) - nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).scroll('top', this.NDraggable.$el);
@@ -39070,7 +39072,10 @@ __webpack_require__.r(__webpack_exports__);
         finalPositon = parentY + this.$el.clientHeight;
       }
 
-      var allowDrop = this.NDraggable.canDrop(this) && this.NDraggable.allowDrop(this);
+      var allowDropRainbow = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.NDraggable.veCached, function (source) {
+        _this.NDraggable.allowDrop(source, _this, finalStrategy);
+      });
+      var allowDrop = this.NDraggable.canDrop(this) && allowDropRainbow;
 
       if (!allowDrop) {
         finalStrategy = 'nodrop';
@@ -39106,7 +39111,7 @@ __webpack_require__.r(__webpack_exports__);
       return false;
     },
     eventDragover: function eventDragover(event) {
-      var _this = this;
+      var _this2 = this;
 
       if (!this.NDraggable.veCached.length) {
         return;
@@ -39122,10 +39127,10 @@ __webpack_require__.r(__webpack_exports__);
         var val = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
         if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(val)) {
-          _this.dragoverFrames = val;
+          _this2.dragoverFrames = val;
         }
 
-        return _this.dragoverFrames;
+        return _this2.dragoverFrames;
       };
 
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.resolveDragPosition, 10, timer)(event.clientY);

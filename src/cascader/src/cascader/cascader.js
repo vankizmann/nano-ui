@@ -158,6 +158,7 @@ export default {
         eventSelect(cascade)
         {
             this.veOpen = false;
+
             this.$emit('input', this.veValue = cascade);
         },
 
