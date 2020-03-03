@@ -28,7 +28,7 @@
         <n-form-item label="List">
             <div style="display: block; border: 2px solid #000;">
                 <div>
-                    <n-draggable style="height: 500px; overflow: hidden;" :items="form.value" :viewport-height="true" :render-expand="true" :render-select="true">
+                    <n-draggable style="height: 500px; overflow: hidden;" :items="form.value" :viewport-height="true" :render-expand="true" :render-select="false">
                         <div slot-scope="props" style="line-height: 32px;">
                             {{ props.value.label }}
                         </div>
@@ -86,7 +86,7 @@
                             };
 
                             if ( current < depth ) {
-                                item.children = childGenerator(10, depth, current + 1);
+                                item.children = childGenerator(30, depth, current + 1);
                             }
 
                             return item;
@@ -96,7 +96,7 @@
                     };
 
                     var form = {
-                        value: childGenerator(100, 1)
+                        value: childGenerator(4000, 2)
                     };
 
                     return { form: form, inverse: false };

@@ -69,6 +69,14 @@ export default {
             type: [Number]
         },
 
+        itemOffset: {
+            default()
+            {
+                return 30;
+            },
+            type: [Number]
+        },
+
         viewportHeight: {
             default()
             {
@@ -214,18 +222,18 @@ export default {
             type: [Number]
         },
 
-        preloadItems: {
+        bufferItems: {
             default()
             {
-                return 4;
+                return 10;
             },
             type: [Number]
         },
 
-        bufferItems: {
+        threshold: {
             default()
             {
-                return 14;
+                return 100;
             },
             type: [Number]
         },
@@ -239,6 +247,7 @@ export default {
             veItems: [],
             veCached: [],
             veSelfCached: [],
+            veCurrent: null,
             veSelected: this.selected,
             veExpanded: this.expanded,
         };
@@ -307,8 +316,11 @@ export default {
 
             let cacheBatches = this.getCachedBatches();
 
-            let targetOrder = Num.int(target[this.orderProp].slice(0, -1).join('') ||
-                target[this.indexProp] + 1);
+            let targetOrder = target[this.indexProp] + 1;
+
+            if ( target[this.orderProp] && target[this.orderProp].length > 1 ) {
+                targetOrder = Num.int(target[this.orderProp].slice(0, -1).join(''));
+            }
 
             let batchedBefore = Obj.filter(Any.vals(cacheBatches).reverse(), (batch) => {
                 return Num.int(batch['_key']) >= targetOrder;
@@ -614,6 +626,7 @@ export default {
             Arr.toggle(this.veExpanded, id);
 
             this.refreshItems();
+            this.updateExpanded();
         },
 
         isExpanded(id)
@@ -650,10 +663,25 @@ export default {
                 [this.uniqueProp]: unique
             });
 
+            let defaultTarget = {
+                [this.pathProp]: 'veCopy',
+                [this.indexProp]: 0,
+                [this.uniqueProp]: unique,
+            };
+
+            if ( ! target ) {
+                return defaultTarget;
+            }
+
             target['item'] = Obj.get(this, target[this.pathProp] + '.' +
                 target[this.indexProp]);
 
             return target;
+        },
+
+        updateCurrent(unique)
+        {
+            this.$emit('current', this.veCurrent = this.getTarget(unique));
         },
 
         toggleItem(id, reset = false)
@@ -829,7 +857,6 @@ export default {
                 // Md5 item to check for any changes
                 dragObject[this.keyProp] = Any.md5(dragObject);
 
-
                 Arr.push(merge, dragObject);
 
                 if ( ! Arr.has(this.veExpanded, dragObject[this.uniqueProp]) ) {
@@ -972,7 +999,6 @@ export default {
 
             let virtualItem = {
                 [this.indexProp]: 0,
-                [this.orderProp]: [0],
                 [this.uniqueProp]: null
             };
 
@@ -985,24 +1011,36 @@ export default {
 
     watch: {
 
-        // selected()
-        // {
-        //     if ( Any.md5(this.selected) !== Any.md5(this.veSelected) ) {
-        //         this.veSelected = this.selected;
-        //     }
-        // },
+        selected()
+        {
+            let veNewSelected = Obj.clone(this.selected),
+                veOldSelected = Obj.clone(this.veSelected);
+
+            if ( Any.md5(veNewSelected) === Any.md5(veOldSelected) ) {
+                return;
+            }
+
+            this.veSelected = veNewSelected;
+        },
 
         expanded()
         {
-            if ( Any.md5(this.expanded) !== Any.md5(this.veExpanded) ) {
-                this.veExpanded = this.expanded;
+            let veNewExpanded = Obj.clone(this.expanded),
+                veOldExpanded = Obj.clone(this.veExpanded);
+
+            if ( Any.md5(veNewExpanded) === Any.md5(veOldExpanded) ) {
+                return;
             }
+
+            this.veExpanded = veNewExpanded;
         }
 
     },
 
     mounted()
     {
+        this.$on('row-click', this.updateCurrent);
+
         this.$on('dragstart', this.dispatchSelected);
         this.$on('dragstart', this.createDragCounter);
         this.$on('dragstart', this.createDragIndicator);

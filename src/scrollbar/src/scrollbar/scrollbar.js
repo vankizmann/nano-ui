@@ -60,7 +60,7 @@ export default {
                 minTrackSize: 10,
                 wrapContent: false,
                 preventParentScroll: true,
-                forceScrollbars: true
+                forceScrollbars: false
             });
 
             if ( this.relative ) {
@@ -72,7 +72,10 @@ export default {
             };
 
             if ( this.relative ) {
-                Dom.find(this.$el).on('sizechange', Any.debounce(this.adjustScrollbars), $event);
+
+                Dom.find(this.$el).on('sizechange',
+                    Any.debounce(this.adjustScrollbars), $event);
+
                 this.adjustScrollbars();
             }
 

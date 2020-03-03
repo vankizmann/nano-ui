@@ -11,8 +11,8 @@ export default {
 
         resetFilter()
         {
-            this.value = null;
-            this.operator = 'eq';
+            this.form.value = null;
+            this.form.operator = 'eq';
         }
 
     },
@@ -23,17 +23,18 @@ export default {
             property: this.column.filterProp, type: this.column.type, value: null, operator: 'eq'
         };
 
-        return this.getFilterProps(defaults);
+
+        return { form: this.getFilterProps(defaults) };
     },
 
     renderForm()
     {
-        return <NForm vModel={this.$data} vOn:change={Any.debounce(this.changeFilter)}>
+        return <NForm form={this.form} vOn:change={this.changeFilter}>
             <NFormItem>
-                <NDatepicker size="small" vModel={this.value} format="YYYY-MM-DD"/>
+                <NDatepicker size="small" vModel={this.form.value} format="YYYY-MM-DD"/>
             </NFormItem>
             <NFormItem>
-                <NSelect size="small" vModel={this.operator}>
+                <NSelect size="small" vModel={this.form.operator}>
                     <NSelectOption value="eq" label={this.trans('Exact date')} />
                     <NSelectOption value="lt" label={this.trans('Before date')} />
                     <NSelectOption value="gt" label={this.trans('After date')} />

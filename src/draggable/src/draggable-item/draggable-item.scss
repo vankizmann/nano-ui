@@ -13,6 +13,10 @@
     transition: background 0ms 100ms;
 }
 
+.n-draggable-item.n-ghost:after {
+    position: relative;
+}
+
 .n-dragged .n-draggable-item.n-selected {
     opacity: 0.5;
 }
@@ -39,6 +43,10 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+
+.n-draggable-item.n-ghost .n-draggable-item__select {
+    display: none !important;
 }
 
 .n-draggable-item__expand > div,

@@ -21,8 +21,6 @@ export default {
 
     methods: {
 
-        ...CtorMixin,
-
         getFilterProps(defaults)
         {
             let filter = Arr.find(this.NTable.veFilterProps, {
@@ -34,15 +32,36 @@ export default {
 
         changeFilter()
         {
-            let newData = Obj.each(this.form, (value) => {
-                return Any.isArray(value) ? value.join(',') : value;
+            let newData = Obj.map(Obj.clone(this.form), (value) => {
+                return ! Any.isEmpty(value) && Any.isArray(value) ?
+                    value.join(',') : value;
             });
 
-            Arr.remove(this.NTable.veFilterProps, {
+            if ( Any.md5(this.newData) === Any.md5(newData) ) {
+                return;
+            }
+
+            this.newData = newData;
+
+            let filterProps = Arr.clone(this.NTable.veFilterProps);
+
+            console.log(filterProps);
+
+            Arr.replace(filterProps, newData, {
                 property: this.column.filterProp
             });
 
-            Arr.push(this.NTable.veFilterProps, newData);
+            filterProps = Arr.filter(filterProps, (prop) => {
+                return ! Any.isEmpty(prop.value);
+            });
+
+            this.NTable.veFilterProps = filterProps;
+
+            // Update filter event
+            this.NTable.$emit('update:filterProps', this.NTable.veFilterProps);
+
+            // Send filter event
+            this.NTable.$emit('filter', this.NTable.veFilterProps);
         },
 
         resetFilter()
@@ -58,9 +77,7 @@ export default {
             property: this.column.filterProp, type: this.column.type, value: null
         };
 
-        return {
-            form: this.getFilterProps(defaults)
-        };
+        return { form: this.getFilterProps(defaults) };
     },
 
     mounted()

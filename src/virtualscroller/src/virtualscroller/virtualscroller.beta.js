@@ -38,10 +38,10 @@ export default {
             }
         },
 
-        preloadItems: {
+        threshold: {
             default()
             {
-                return 4;
+                return 100;
             },
             type: [Number]
         },
@@ -49,7 +49,7 @@ export default {
         bufferItems: {
             default()
             {
-                return 14;
+                return 10;
             },
             type: [Number]
         },
@@ -74,54 +74,36 @@ export default {
 
             let scrollTop = this.$refs.viewport.$el.scrollTop;
 
-            let startIndex = Math.floor(scrollTop / this.itemHeight);
+            let startIndex = Math.floor(
+                (scrollTop / this.itemHeight) - (this.bufferItems / 2)
+            );
 
             if ( startIndex < 0 ) {
                 startIndex = 0;
             }
 
-            let startPreload = Math.floor(startIndex - (this.preloadItems / 2));
-
-            if ( startPreload < 0 ) {
-                startPreload = 0;
-            }
-
-            let startBuffer = Math.floor(startPreload - (this.bufferItems / 2));
-
-            if ( startBuffer < 0 ) {
-                startBuffer = 0;
-            }
-
-            let endIndex = Math.ceil((scrollTop + this.height) / this.itemHeight);
+            let endIndex = Math.ceil(
+                ((scrollTop + this.height) / this.itemHeight) + (this.bufferItems / 2)
+            );
 
             if ( endIndex > this.items.length ) {
                 endIndex = this.items.length;
             }
 
-            let endPreload = Math.ceil(endIndex + (this.preloadItems / 2));
+            let itemCount = Math.ceil(this.height / this.itemHeight)
+                + this.bufferItems;
 
-            if ( endPreload > this.items.length ) {
-                endPreload = this.items.length;
-            }
-
-            let endBuffer = Math.ceil(endPreload + (this.bufferItems / 2));
-
-            if ( endBuffer > this.items.length ) {
-                endBuffer = this.items.length;
+            if ( endIndex - startIndex < itemCount ) {
+                endIndex = startIndex + itemCount;
             }
 
             let newState = {
-                startIndex, startPreload, startBuffer, endIndex, endPreload, endBuffer
+                startIndex, endIndex
             };
 
-            let isSameState = newState.startIndex === this.state.startIndex &&
-                newState.endIndex === this.state.endIndex;
-
-            if ( isSameState ) {
-                return;
+            if ( ! Any.isEqual(newState, this.state.startIndex) ) {
+                this.state = newState;
             }
-
-            this.state = newState;
         },
 
         discoverHeight()
@@ -135,7 +117,7 @@ export default {
             }
 
             if ( ! this.height ) {
-                return Any.delay(this.discoverHeight, 100);
+                return Any.delay(this.discoverHeight, 50);
             }
 
             Any.async(this.refreshDriver);
@@ -157,15 +139,11 @@ export default {
     {
         let state = {
             startIndex: 0,
-            startPreload: 0,
-            startBuffer: 0,
             endIndex: 0,
-            endPreload: 0,
-            endBuffer: 0
         };
 
         return {
-            state, height: 0, veInit: false, veUpdate: 0
+            state, veInit: false
         };
     },
 
@@ -200,24 +178,18 @@ export default {
 
     renderItems()
     {
-        let items = Arr.slice(Any.vals(this.items),
-            this.state.startBuffer, this.state.endBuffer);
+        return Arr.each(this.items, (value, position) => {
+            return this.renderNode({ value, position });
+        });
+    },
 
-        // Get buffer end
-        let bufferStart = this.state.startPreload - this.state.startBuffer;
+    renderBuffer()
+    {
+        let items = Arr.slice(this.items, this.state.startIndex,
+            this.state.endIndex);
 
-        // Get buffer start
-        let bufferEnd = this.state.endPreload - this.state.startBuffer;
-
-        return Arr.each(items, (value, index) => {
-
-            let ghost = index < bufferStart || index > bufferEnd;
-
-            // return this.$render('KeepAlive', {}, [
-            //     this.renderNode({ value, index, ghost })
-            // ]);
-
-            return this.renderNode({ value, index, ghost });
+        return Arr.each(Any.vals(items), (value, position) => {
+            return this.renderNode({ value, position });
         });
     },
 
@@ -231,23 +203,21 @@ export default {
             return this.$slots.empty || null;
         }
 
-        if ( this.viewportHeight === false) {
-            return Arr.each(this.items, (value, index) => {
-                return this.renderNode({ value, index, ghost: false });
-            });
+        if ( ! this.viewportHeight || this.items.length <= this.threshold ) {
+            return (
+                <NScrollbar ref="viewport">
+                    { this.ctor('renderItems')() }
+                </NScrollbar>
+            );
         }
 
-        let style = {
-            overflow: 'auto', overflowAnchor: 'none', outline: 'none', height: this.height + 'px'
-        };
+        let endIndex =  Math.min(this.items.length, this.state.endIndex);
 
         return (
-            <NScrollbar ref="viewport" style={style}>
-                <div>
-                    <div style={{ height: (this.state.startBuffer * this.itemHeight) + 'px' }}></div>
-                    { this.ctor('renderItems')() }
-                    <div style={{ height: ((this.items.length - this.state.endBuffer) * this.itemHeight) + 'px' }}></div>
-                </div>
+            <NScrollbar ref="viewport">
+                <div style={{ height: (this.state.startIndex * this.itemHeight) + 'px' }}></div>
+                { this.ctor('renderBuffer')() }
+                <div style={{ height: ((this.items.length - endIndex) * this.itemHeight) + 'px' }}></div>
             </NScrollbar>
         );
     },

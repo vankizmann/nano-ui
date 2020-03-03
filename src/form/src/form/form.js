@@ -40,26 +40,38 @@ export default {
 
         addItem(item)
         {
-            Arr.add(this.items, item, {
+            Arr.add(this.veItems, item, {
                 _uid: item._uid
             });
         },
 
         removeItem(item)
         {
-            Arr.remove(this.items,{
+            Arr.remove(this.veItems,{
                 _uid: item._uid
             });
         },
 
         updateForm()
         {
-            this.$emit('change');
+            let veForm = Obj.clone(this.form);
+
+            if ( Any.md5(veForm) !== Any.md5(this.veForm) ) {
+                this.$emit('change');
+            }
+
+            this.veForm = veForm;
         },
 
         updateErrors()
         {
-            this.$emit('errors');
+            let veErrors = Obj.clone(this.errors);
+
+            if ( Any.md5(veErrors) !== Any.md5(this.veErrors) ) {
+                this.$emit('errors');
+            }
+
+            this.veErrors = veErrors;
         }
 
     },
@@ -67,8 +79,8 @@ export default {
     data()
     {
         return {
-            items: []
-        }
+            veItems: []
+        };
     },
 
     provide()

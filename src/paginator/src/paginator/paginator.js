@@ -18,7 +18,7 @@ export default {
         limit: {
             default()
             {
-                return 50;
+                return 100;
             },
             type: [Number]
         },
@@ -26,7 +26,7 @@ export default {
         limitOptions: {
             default()
             {
-                return [25, 50, 100, 250, 500];
+                return [25, 50, 100, 500, 1000, 2500];
             },
         },
 

@@ -239,18 +239,18 @@ export default {
             type: [Number]
         },
 
-        preloadItems: {
+        bufferItems: {
             default()
             {
-                return 4;
+                return 10;
             },
             type: [Number]
         },
 
-        bufferItems: {
+        threshold: {
             default()
             {
-                return 14;
+                return 100;
             },
             type: [Number]
         },
@@ -266,6 +266,7 @@ export default {
     {
         return {
             veColumns: [],
+            veCurrent: null,
             veFilterProps: this.filterProps,
             veSortProp: this.sortProp,
             veSortDir: this.sortDir,
@@ -316,7 +317,7 @@ export default {
             this.$refs.list.toggleAllItems(
                 this.$refs.list.isIntermediate(true)
             );
-        }
+        },
 
     },
 
@@ -347,14 +348,9 @@ export default {
             disabled: ! this.items.length
         };
 
-        // let uniqueKey = UUID();
-
         if ( this.$refs.list && this.items.length ) {
-
             props['checked'] = this.$refs.list.isAllSelected(true);
             props['intermediate'] = this.$refs.list.isIntermediate(true);
-
-            // uniqueKey = Any.md5(this.$refs.list.veSelected);
         }
 
         return (
@@ -406,7 +402,7 @@ export default {
         });
 
         let passes = {
-            on: this.$listeners, scopedSlots: this.$scopedSlots
+            on: Obj.clone(this.$listeners), scopedSlots: this.$scopedSlots
         };
 
         let draggableHtml = this.$render('NDraggable', {

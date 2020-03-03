@@ -11,8 +11,8 @@ export default {
 
         resetFilter()
         {
-            this.value = null;
-            this.operator = 'in';
+            this.form.value = null;
+            this.form.operator = 'in';
         }
 
     },
@@ -23,19 +23,21 @@ export default {
             property: this.column.filterProp, type: this.column.type, value: null, operator: 'in'
         };
 
-        return this.getFilterProps(defaults);
+        return { form: this.getFilterProps(defaults) };
     },
 
     renderForm()
     {
-        return <NForm vModel={this.$data} vOn:change={Any.debounce(this.changeFilter)}>
-            <NFormItem>
-                <NSelect size="small" vModel={this.value}>
-                    <NSelectOption value="1" label={this.column.trueText} />
-                    <NSelectOption value="0" label={this.column.falseText} />
-                </NSelect>
-            </NFormItem>
-        </NForm>;
+        return (
+            <NForm form={this.form} vOn:change={this.changeFilter}>
+                <NFormItem>
+                    <NSelect size="small" vModel={this.form.value}>
+                        <NSelectOption value="1" label={this.column.trueText} />
+                        <NSelectOption value="0" label={this.column.falseText} />
+                    </NSelect>
+                </NFormItem>
+            </NForm>
+        );
     }
 
 }

@@ -62,6 +62,21 @@ $button-ratio: 0.3 !default;
     margin-right: 0;
 }
 
+.n-button.n-button--mini:not(.n-button--link) {
+    font-size: $button-size * 0.725;
+    padding: 0 $button-height * $button-ratio * 0.725;
+    height: $button-height * 0.725;
+}
+
+.n-button.n-button--mini.n-button--round:not(.n-button--link) {
+    padding: 0 $button-height * 0.6 * 0.725;
+}
+
+.n-button.n-button--mini.n-button--square:not(.n-button--link) {
+    width: $button-height * 0.725;
+    padding: 0;
+}
+
 .n-button.n-button--small:not(.n-button--link) {
     font-size: $button-size * 0.875;
     padding: 0 $button-height * $button-ratio * 0.875;

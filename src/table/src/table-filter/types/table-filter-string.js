@@ -28,12 +28,8 @@ export default {
 
     renderForm()
     {
-        let events = {
-            change: this.changeFilter
-        };
-
         return (
-            <NForm form={this.form} on={events}>
+            <NForm form={this.form} vOn:change={this.changeFilter}>
                 <NFormItem>
                     <NInput size="small" vModel={this.form.value}/>
                 </NFormItem>

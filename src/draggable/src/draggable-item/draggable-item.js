@@ -21,12 +21,11 @@ export default {
             }
         },
 
-        ghost: {
+        position: {
             default()
             {
-                return true;
-            },
-            type: [Boolean]
+                return 0;
+            }
         },
 
     },
@@ -43,7 +42,7 @@ export default {
 
     data()
     {
-        return Obj.assign({ strategy: 'nodrop' }, this.value);
+        return Obj.assign({ veInit: false, strategy: 'nodrop' }, this.value);
     },
 
     provide()
@@ -132,11 +131,35 @@ export default {
 
         eventClick(event)
         {
+            let isExpand = Dom.find(event.target).closest(this.$refs.expand);
+
+            if ( this.$refs.expand && isExpand ) {
+                return;
+            }
+
+            let isSelect = Dom.find(event.target).closest(this.$refs.select);
+
+            if ( this.$refs.select && isSelect ) {
+                return;
+            }
+
             this.NDraggable.$emit('row-click', this);
         },
 
         eventDblclick(event)
         {
+            let isExpand = Dom.find(event.target).closest(this.$refs.expand);
+
+            if ( this.$refs.expand && isExpand ) {
+                return;
+            }
+
+            let isSelect = Dom.find(event.target).closest(this.$refs.select);
+
+            if ( this.$refs.select && isSelect ) {
+                return;
+            }
+
             this.NDraggable.$emit('row-dblclick', this);
         },
 
@@ -212,6 +235,11 @@ export default {
 
     },
 
+    mounted()
+    {
+        Any.delay(() => this.veInit = true, 12 * this.position);
+    },
+
     renderNode()
     {
         let props = {
@@ -248,14 +276,14 @@ export default {
         }
 
         let style = {
-            width: (this.depth * 20) + 'px'
+            width: (this.depth * this.NDraggable.itemOffset) + 'px'
         };
 
         return (
             <div class="n-draggable-item__spacer" style={style}>
                 { /* SPACER */}
             </div>
-        )
+        );
     },
 
     renderExpand()
@@ -270,7 +298,7 @@ export default {
         return (
             <div class="n-draggable-item__expand">
                 { !! childLength &&
-                    <div on={{ click: this.expand }}>
+                    <div ref="expand" on={{ click: this.expand }}>
                         <i class={ this.icons.angleRight }></i>
                     </div>
                 }
@@ -294,7 +322,7 @@ export default {
         // TODO: Decouple is checked from draggable
 
         return (
-            <div class="n-draggable-item__select">
+            <div ref="select" class="n-draggable-item__select">
                 <NCheckbox disabled={!allowSelect} checked={isChecked} onInput={this.select} />
             </div>
         )
@@ -307,21 +335,6 @@ export default {
         let style = {
             height: this.NDraggable.itemHeight + 'px'
         };
-
-        if ( this.ghost ) {
-            return (<div class="n-draggable-item n-ghost" style={style} />);
-        }
-
-        let cachedState = Any.md5([
-            this.NDraggable.isSelected(this), this.NDraggable.isExpanded(this)
-        ]);
-
-        if ( this.cachedResult && cachedState === this.cachedState ) {
-            return this.cachedResult;
-        }
-
-        // Chache expanded and selected state
-        this.cachedState = cachedState;
 
         let events = {
             click: this.eventClick,
@@ -347,18 +360,23 @@ export default {
             classList.push('n-expanded');
         }
 
+        if ( ! this.veInit ) {
+            classList.push('n-ghost');
+        }
+
         let draggable = this.NDraggable.allowSelect(this);
 
         draggable &= Any.isFunction(this.NDraggable.allowDrag) ?
             this.NDraggable.allowDrag(this) : this.NDraggable.allowDrag;
 
-        return this.cachedResult = (
+        return (
             <div class={classList} style={style} on={events} draggable={draggable}>
-                { ! this.ghost && [
-                    this.ctor('renderSpacer')(), this.ctor('renderExpand')(), this.ctor('renderSelect')(), this.ctor('renderNode')()
-                ] }
+                { this.ctor('renderSpacer')() }
+                { this.ctor('renderExpand')() }
+                { this.ctor('renderSelect')() }
+                { this.veInit && this.ctor('renderNode')() }
             </div>
-        )
+        );
     }
 
 }

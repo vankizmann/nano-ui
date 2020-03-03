@@ -45,7 +45,6 @@ $checkbox-radius: $radius-small !default;
     color: $--color-white;
     font-size: $checkbox-check-size;
     background: $--color-white;
-    transition: background $transition-short, border $transition-medium;
 }
 
 .n-checkbox:hover .n-checkbox__checkbox {

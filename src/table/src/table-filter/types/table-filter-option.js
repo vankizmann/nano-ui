@@ -11,8 +11,8 @@ export default {
 
         resetFilter()
         {
-            this.value = null;
-            this.operator = 'in';
+            this.form.value = [];
+            this.form.operator = 'in';
         }
 
     },
@@ -20,16 +20,16 @@ export default {
     data()
     {
         let defaults = {
-            property: this.column.filterProp, type: this.column.type, value: null, operator: 'in'
+            property: this.column.filterProp, type: this.column.type, value: [], operator: 'in'
         };
 
-        let options = this.getFilterProps(defaults);
+        let form = this.getFilterProps(defaults);
 
-        if ( ! Any.isArray(options.value) ) {
-            options.value = Any.string(options.value).split(',');
+        if ( ! Any.isArray(form.value) ) {
+            form.value = Any.string(form.value).split(',');
         }
 
-        return options;
+        return { form };
     },
 
     renderForm()
@@ -41,25 +41,27 @@ export default {
             return { $value: options[index], $index: index };
         });
 
-        return <NForm vModel={this.$data} vOn:change={Any.debounce(this.changeFilter)}>
-            <NFormItem>
-                <NCheckboxGroup size="small" vModel={this.value}>
-                    {
-                        Arr.each(options, (option) => {
-                            return <NCheckbox size="small" value={Obj.get(option, this.column.optionsValue)}>
-                                { Obj.get(option, this.column.optionsLabel) }
-                            </NCheckbox>;
-                        })
-                    }
-                </NCheckboxGroup>
-            </NFormItem>
-            <NFormItem>
-                <NSelect size="small" vModel={this.operator}>
-                    <NSelectOption value="in" label={this.trans('Includes value')} />
-                    <NSelectOption value="ni" label={this.trans('Excludes value')} />
-                </NSelect>
-            </NFormItem>
-        </NForm>;
+        return (
+            <NForm form={this.form} vOn:change={this.changeFilter}>
+                <NFormItem>
+                    <NCheckboxGroup size="small" vModel={this.form.value}>
+                        {
+                            Arr.each(options, (option) => {
+                                return <NCheckbox size="small" value={Obj.get(option, this.column.optionsValue)}>
+                                    { Obj.get(option, this.column.optionsLabel) }
+                                </NCheckbox>;
+                            })
+                        }
+                    </NCheckboxGroup>
+                </NFormItem>
+                <NFormItem>
+                    <NSelect size="small" vModel={this.form.operator}>
+                        <NSelectOption value="in" label={this.trans('Includes value')} />
+                        <NSelectOption value="ni" label={this.trans('Excludes value')} />
+                    </NSelect>
+                </NFormItem>
+            </NForm>
+        );
     }
 
 }

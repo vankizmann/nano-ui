@@ -94,7 +94,7 @@
                                 };
 
                                 if ( current < depth ) {
-                                    item.children = childGenerator(count > 10 ? 10 : count, depth, current + 1);
+                                    item.children = childGenerator(count > 3 ? 3 : count, depth, current + 1);
                                 }
 
                                 return item;
