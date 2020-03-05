@@ -158,7 +158,7 @@ export default {
                 return this.veSearched = this.veOptions;
             }
 
-            let searchRegex = new RegExp(this.veSearch);
+            let searchRegex = new RegExp(this.veSearch, 'i');
 
             this.veSearched = Arr.filter(this.veOptions, (option) => {
                 return option.label.match(searchRegex);

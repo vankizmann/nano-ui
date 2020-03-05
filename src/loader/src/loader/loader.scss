@@ -55,10 +55,6 @@ $tooltip-border: 3px !default;
     background: rgba($color-white, 0.7);
 }
 
-.n-inverse .n-loader:after {
-    background: rgba($color-black, 0.7);
-}
-
 .n-loader.n-active:after {
     display: block;
 }

@@ -9,12 +9,13 @@ export default {
     render()
     {
         let classList = [
-            'n-table-cell', 'n-table-cell--' + this.column.type
+            'n-table-cell',
+            'n-table-cell--' + this.column.type
         ];
 
         return (
-            <div class={classList} style={'background-image: url(\'' + this.input + '\');'}>
-                { /* No content :) */ }
+            <div class={classList}>
+                <div style={'background-image: url(\'' + this.input + '\');'} />
             </div>
         );
     }

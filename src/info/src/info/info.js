@@ -1,5 +1,4 @@
 import { Arr, Any, Dom } from "nano-js";
-import CtorMixin from "../../../mixins/src/ctor";
 
 export default {
 
@@ -18,40 +17,34 @@ export default {
             }
         },
 
-        adaptHeight: {
-            default()
-            {
-                return null;
-            }
-        },
+    },
 
+    data()
+    {
+        return {
+            veValue: this.item, veColumns: []
+        };
     },
 
     methods: {
 
-        ...CtorMixin,
+        setValue(value)
+        {
+            this.$emit('input', this.veValue = value);
+        },
 
         addColumn(column)
         {
-            this.columns.push(column);
+            Arr.add(this.veColumns, column, {
+                _uid: column._uid
+            });
         },
 
         removeColumn(column)
         {
-            Arr.remove(this.columns, { _uid: column._uid });
-        },
-
-        bindObserver()
-        {
-            let element = this.$el.parentNode;
-
-            if ( this.adaptHeight !== true ) {
-                element = this.adaptHeight;
-            }
-
-            Dom.find(element).observerResize(() => {
-                this.height = Dom.find(element).height();
-            })(element);
+            Arr.remove(this.veColumns, {
+                _uid: column._uid
+            });
         },
 
     },
@@ -63,48 +56,44 @@ export default {
         };
     },
 
-    data()
+
+    renderBody()
     {
-        return {
-            columns: []
-        };
+        return (
+            <NScrollbar>
+                <div class="n-info__body">
+                    {
+                        Arr.each(this.veColumns, (column, key) => {
+                            return (
+                                <div class="n-info__column">
+                                    { column.$scopedSlots.label({ column, key, item: this.veValue }) }
+                                    { column.$scopedSlots.default({ column, key, item: this.veValue }) }
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+            </NScrollbar>
+        );
     },
 
-    mounted()
+    renderEmpty()
     {
-        if ( this.adaptHeight !== null ) {
-            this.$nextTick(this.bindObserver);
-        }
+        return (
+            <div class="n-info__empty">
+                { this.trans('No entry') }
+            </div>
+        )
     },
 
-    render()
+    render($render)
     {
-        this.h = h;
+        this.$render = $render;
 
         return (
             <div class="n-info">
-                <div ref="wrapper" class="n-info-wrapper">
-                    { Any.isEmpty(this.item) === false &&
-                        <div class="n-info__body">
-                            {
-                                Arr.each(this.columns, (column, key) => {
-                                    return (
-                                        <div class="n-info__column">
-                                            { column.$scopedSlots.label({ column, key, item: this.item } )}
-                                            { column.$scopedSlots.default({ column, key, item: this.item } )}
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
-                    }
-                    { Any.isEmpty(this.item) === true &&
-                        <div class="n-info__empty">
-                            { this.trans('No entry') }
-                        </div>
-                    }
-                    { this.$slots.default }
-                </div>
+                { Any.isEmpty(this.veValue) ? this.ctor('renderEmpty')() : this.ctor('renderBody')() }
+                { this.$slots.default }
             </div>
         );
     }

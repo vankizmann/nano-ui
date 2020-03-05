@@ -7,3 +7,7 @@ $info-column-label-size: 14px !default;
     margin-bottom: 2px;
     font-size: $info-column-label-size;
 }
+
+.n-info-column__value {
+    position: relative;
+}

@@ -95,12 +95,11 @@
 }
 
 .n-transfer__item {
-    padding: 8px 14px;
+    overflow: hidden;
     flex: 1 1 auto;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    line-height: 1.25;
+    padding: 8px 14px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .n-transfer__item-title {

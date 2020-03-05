@@ -68,7 +68,7 @@ export default {
                 return Arr.clone(source);
             }
 
-            let searchPattern = new RegExp(this.veSourceSearch);
+            let searchPattern = new RegExp(this.veSourceSearch, 'i');
 
             source = Arr.filter(source, (item) => {
                 return item[this.labelProp].match(searchPattern);
@@ -87,7 +87,7 @@ export default {
                 return Arr.clone(target);
             }
 
-            let searchPattern = new RegExp(this.veTargetSearch);
+            let searchPattern = new RegExp(this.veTargetSearch, 'i');
 
             target = Arr.filter(target, (item) => {
                 return item[this.labelProp].match(searchPattern);
@@ -199,19 +199,14 @@ export default {
             disabled: ! this.veSource.length
         };
 
-        let uniqueKey = UUID();
-
         if ( this.$refs.source && this.veSource.length ) {
-
             props['checked'] = this.$refs.source.isAllSelected(true);
             props['intermediate'] = this.$refs.source.isIntermediate(true);
-
-            uniqueKey = Any.md5(this.$refs.source.veSelected);
         }
 
         return (
             <div class="n-transfer__select">
-                <NCheckbox key={uniqueKey} props={props} on={events} />
+                <NCheckbox props={props} on={events} />
             </div>
         );
     },
@@ -256,9 +251,10 @@ export default {
         };
 
         let events = {
-            iconClick: () => this.veSourceSearch = '',
             input: () => this.$refs.source.unselectAllItems()
         };
+
+        events['icon-click'] = () => this.veSourceSearch = '';
 
         return (
             <div class="n-transfer__search">
@@ -300,19 +296,14 @@ export default {
             disabled: ! this.veTarget.length
         };
 
-        let uniqueKey = UUID();
-
         if ( this.$refs.target && this.veTarget.length ) {
-
             props['checked'] = this.$refs.target.isAllSelected(true);
             props['intermediate'] = this.$refs.target.isIntermediate(true);
-
-            uniqueKey = Any.md5(this.$refs.target.veSelected);
         }
 
         return (
             <div class="n-transfer__select">
-                <NCheckbox key={uniqueKey} props={props} on={events} />
+                <NCheckbox props={props} on={events} />
             </div>
         );
     },
@@ -357,9 +348,10 @@ export default {
         };
 
         let events = {
-            iconClick: () => this.veTargetSearch = '',
             input: () => this.$refs.target.unselectAllItems()
         };
+
+        events['icon-click'] = () => this.veTargetSearch = '';
 
         return (
             <div class="n-transfer__search">

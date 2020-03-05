@@ -173,6 +173,14 @@ export default {
             type: [Boolean]
         },
 
+        ghostMode: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         transformDrop: {
             default()
             {

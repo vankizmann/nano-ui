@@ -2,6 +2,7 @@
 /**
  * Fade
  */
+
 .n-fade-enter-active, .n-fade-leave-active {
     transition: opacity 400ms ease;
 }
@@ -13,6 +14,7 @@
 /**
  * Fade fast
  */
+
 .n-fade-fast-enter-active, .n-fade-fast-leave-active {
     transition: opacity 150ms ease;
 }
@@ -24,6 +26,7 @@
 /**
  * Fade fast
  */
+
 .n-fade-slow-enter-active, .n-fade-slow-leave-active {
     transition: opacity 600ms ease;
 }
@@ -35,6 +38,7 @@
 /**
  * Fade up
  */
+
 .n-fade-up-enter-active, .n-fade-up-leave-active {
     transition: transform 600ms ease, opacity 600ms ease;
 }

@@ -37,6 +37,7 @@ $table-row-height: 40px !default;
 }
 
 .n-table .n-table__head {
+    position: relative;
     flex: 0 0 auto;
     min-width: 0;
     height: 40px;

@@ -24,6 +24,13 @@ export default {
             }
         },
 
+        current: {
+            default()
+            {
+                return null;
+            }
+        },
+
         selected: {
             default()
             {
@@ -156,6 +163,14 @@ export default {
             type: [Boolean]
         },
 
+        ghostMode: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         transformDrop: {
             default()
             {
@@ -243,11 +258,12 @@ export default {
     data()
     {
         return {
+            veInview: false,
             veCopy: [],
             veItems: [],
             veCached: [],
             veSelfCached: [],
-            veCurrent: null,
+            veCurrent: this.current,
             veSelected: this.selected,
             veExpanded: this.expanded,
         };
@@ -258,17 +274,6 @@ export default {
         return {
             NDraggable: this
         }
-    },
-
-    beforeMount()
-    {
-        this.$watch('veCopy', Any.debounce(this.exportItems,
-            this.updateDelay), { deep: true });
-
-        this.$watch('items', Any.debounce(this.importItems,
-            this.updateDelay));
-
-        this.importItems();
     },
 
     methods: {
@@ -603,6 +608,8 @@ export default {
 
             this.removeDragCounter();
             this.removeDragIndicator();
+
+            this.updateSelected();
         },
 
         cacheItems(items, group = [])
@@ -679,9 +686,136 @@ export default {
             return target;
         },
 
-        updateCurrent(unique)
+        isCurrent(unique)
         {
-            this.$emit('current', this.veCurrent = this.getTarget(unique));
+            if ( ! this.veCurrent ) {
+                return false;
+            }
+
+            if ( ! Any.isString(unique) ) {
+                unique = unique[this.uniqueProp];
+            }
+
+            return this.veCurrent[this.uniqueProp] === unique;
+        },
+
+        updateCurrent()
+        {
+            this.$emit('update:current', this.veCurrent);
+        },
+
+        setCurrent(unique)
+        {
+            this.veCurrent = this.getTarget(unique);
+
+            this.updateCurrent();
+        },
+
+        setDefaultCurrent()
+        {
+            this.veCurrent = this.getTarget(this.veItems[0]);
+
+            this.updateCurrent();
+        },
+
+        currentDblclick()
+        {
+            if ( ! this.veCurrent ) {
+                return null;
+            }
+
+            this.$emit('row-dblclick', this.veCurrent);
+        },
+
+        currentCollapse()
+        {
+            if ( ! this.veCurrent ) {
+                return null;
+            }
+
+            this.expandItem(this.veCurrent);
+        },
+
+        currentPrev()
+        {
+            let index = 0;
+
+            if ( ! this.veCurrent ) {
+                return this.setDefaultCurrent();
+            }
+
+            index = Arr.findIndex(this.veItems, {
+                [this.uniqueProp]: this.veCurrent[this.uniqueProp]
+            });
+
+            index--;
+
+            if ( index < 0 ) {
+                index = this.veItems.length - 1;
+            }
+
+            // Get viewport height
+            let height = Dom.find(this.$el).height();
+
+            // Get scrolltop from virtual scroller
+            let scrollY = this.$refs.vscroller.scrollTop();
+
+            // Row is inview
+            let veInview = scrollY < this.itemHeight * index &&
+                scrollY + height > this.itemHeight * (index + 1);
+
+            if ( ! veInview ) {
+
+                // New scrolltop value
+                scrollX = this.itemHeight * index;
+
+                this.$refs.vscroller.scrollTop(scrollX);
+            }
+
+            this.veCurrent = this.getTarget(this.veItems[index]);
+
+            this.updateCurrent();
+        },
+
+        currentNext()
+        {
+            let index = 0;
+
+            if ( ! this.veCurrent ) {
+                return this.setDefaultCurrent();
+            }
+
+            index = Arr.findIndex(this.veItems, {
+                [this.uniqueProp]: this.veCurrent[this.uniqueProp]
+            });
+
+            index++;
+
+            if ( index > this.veItems.length - 1 ) {
+                index = 0;
+            }
+
+            // Get viewport height
+            let height = Dom.find(this.$el).height();
+
+            // Get scrolltop from virtual scroller
+            let scrollY = this.$refs.vscroller.scrollTop();
+
+            // Row is inview
+            let veInview = scrollY < this.itemHeight * index &&
+                scrollY + height > this.itemHeight * (index + 1);
+
+            if ( ! veInview ) {
+
+                // New scrolltop value
+                scrollX = (this.itemHeight * (index + 1)) - height;
+
+                this.$refs.vscroller.scrollTop(scrollX);
+            }
+
+            this.veCurrent = this.getTarget(this.veItems[index]);
+
+            this.updateCurrent();
         },
 
         toggleItem(id, reset = false)
@@ -896,7 +1030,7 @@ export default {
                 return this.dragIndicator.css({ visibility: 'hidden' });
             }
 
-            this.dragIndicator.css({ visibility: 'visible', top: `${top}px` });
+            this.dragIndicator.css({ visibility: 'visible', transform: `translateY(${top}px)` });
         },
 
         removeDragIndicator()
@@ -1005,6 +1139,38 @@ export default {
             Dom.find(this.$el).removeClass('n-dragover');
 
             this.$emit('dragdrop', event, virtualItem, 'root');
+        },
+
+        eventMousemove(event, target)
+        {
+            this.veInview = Dom.find(target).closest(this.$el);
+        },
+
+        eventKeydown(event)
+        {
+            if ( ! this.veInview ) {
+                return;
+            }
+
+            if ( event.which === 13 ) {
+                event.preventDefault();
+                this.currentDblclick();
+            }
+
+            if ( event.which === 32 ) {
+                event.preventDefault();
+                this.currentCollapse();
+            }
+
+            if ( event.which === 38 ) {
+                event.preventDefault();
+                this.currentPrev();
+            }
+
+            if ( event.which === 40 ) {
+                event.preventDefault();
+                this.currentNext();
+            }
         }
 
     },
@@ -1037,9 +1203,20 @@ export default {
 
     },
 
+    beforeMount()
+    {
+        this.$watch('veCopy', Any.debounce(this.exportItems,
+            this.updateDelay));
+
+        this.$watch('items', Any.debounce(this.importItems,
+            this.updateDelay));
+
+        this.importItems();
+    },
+
     mounted()
     {
-        this.$on('row-click', this.updateCurrent);
+        this.$on('row-click', this.setCurrent);
 
         this.$on('dragstart', this.dispatchSelected);
         this.$on('dragstart', this.createDragCounter);
@@ -1058,6 +1235,9 @@ export default {
         Dom.find(document).on('dragenter', this.eventDragenter, ident);
         Dom.find(document).on('dragleave', this.eventDragleave, ident);
         Dom.find(document).on('dragend', this.eventDragend, ident);
+
+        Dom.find(document).on('mousemove', this.eventMousemove, ident);
+        Dom.find(document).on('keydown', this.eventKeydown, ident);
     },
 
     beforeDestroy()
@@ -1066,6 +1246,12 @@ export default {
             _uid: this._uid
         };
 
+        this.$off('row-click');
+        this.$off('dragstart');
+        this.$off('dragstart');
+        this.$off('dragstart');
+        this.$off('dragdrop');
+
         Event.unbind('draggable.start', ident);
         Event.unbind('draggable.stop', ident);
         Event.unbind('draggable.done', ident);
@@ -1073,6 +1259,9 @@ export default {
         Dom.find(document).off('dragenter', null, ident);
         Dom.find(document).off('dragleave', null, ident);
         Dom.find(document).off('dragend', null, ident);
+
+        Dom.find(document).off('mousemove', null, ident);
+        Dom.find(document).off('keydown', null, ident);
     },
 
     renderEmpty()
@@ -1102,9 +1291,11 @@ export default {
             key: props.value[this.keyProp], props
         };
 
-        return this.$render('NDraggableItem', data, [
-            this.$scopedSlots.default
-        ]);
+        return (
+            this.$render('NDraggableItem', data, [
+                this.$scopedSlots.default
+            ])
+        );
     },
 
     render($render)
@@ -1123,9 +1314,11 @@ export default {
             items: this.veItems, renderNode: this.ctor('renderItem')
         });
 
-        return this.$render('NVirtualscroller', {
-            class: 'n-draggable', props
-        }, slots);
+        return (
+            this.$render('NVirtualscroller', {
+               ref: 'vscroller', class: 'n-draggable', props
+            }, slots)
+        );
     }
 
 }

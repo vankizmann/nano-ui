@@ -3,30 +3,25 @@
 .n-info {
     position: relative;
     width: 100%;
-    overflow: hidden;
-}
-
-.n-info-wrapper {
     display: flex;
     flex-direction: column;
-    min-width: 100%;
-    overflow: hidden;
+    align-items: stretch;
+    justify-content: stretch;
 }
 
 .n-info__body {
-    z-index: 100;
-    position: relative;
-    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    min-width: 100%;
-    overflow-y: auto;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 15px 0;
 }
 
 .n-info__empty {
-    text-align: center;
+    margin: auto;
+    padding: 15px 0;
 }
 
-.n-info__column {
+.n-info__column:not(:last-child) {
     margin-bottom: 14px;
 }

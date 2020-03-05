@@ -237,9 +237,8 @@ export default {
             // Disable fluid after fist run
             this.veFluid = false;
 
-            // Adopt column width
-            this.veWidth = Dom.find(this.$refs.column)
-                .width();
+            // Bind mounted hook to get real sizes
+            this.NTable.$on('hook:mounted', this.$refs.column.refresh);
         },
 
         sortByColumn(event)
@@ -249,95 +248,9 @@ export default {
             }
         },
 
-        adjustResizerPosition()
+        eventResizerInput(value)
         {
-            if ( ! this.$refs.column ) {
-                return Any.delay(this.adjustResizerPosition, 500);
-            }
-
-            this.veWidth = Dom.find(this.$refs.column).width();
-
-            let style = {
-                left: this.veWidth + 'px'
-            };
-
-            Dom.find(this.$refs.column).find('[data-resizer]').css(style);
-        },
-
-        eventResizerMousedown(event)
-        {
-            event.preventDefault();
-
-            Dom.find(this.$refs.column).addClass('n-resize');
-
-            Dom.find(document).on('mousemove',
-                Any.framerate(this.eventResizerMousemove, 30), this._uid);
-
-            Dom.find(document).on('mouseup',
-                Any.framerate(this.eventResizerMouseup, 30), this._uid);
-        },
-
-        eventResizerMousemove(event)
-        {
-            this.clientX = event.clientX;
-
-            event.preventDefault();
-
-            let offsetX = Dom.find(this.$refs.column)
-                .offset('left');
-
-            let scrollX = Dom.find(this.$refs.column)
-                .scroll('left');
-
-            let targetWidth = (this.clientX + scrollX - offsetX);
-
-            if ( this.minWidth ) {
-                targetWidth = Math.max(targetWidth, this.minWidth)
-            }
-
-            if ( this.maxWidth ) {
-                targetWidth = Math.min(targetWidth, this.maxWidth)
-            }
-
-            let style = {
-                'left': targetWidth + 'px'
-            };
-
-            Dom.find(this.$refs.column).find('[data-resizer]').css(style);
-        },
-
-        eventResizerMouseup(event)
-        {
-            event.preventDefault();
-
-            Dom.find(document).off('mousemove', null, this._uid);
-            Dom.find(document).off('mouseup', null, this._uid);
-
-            if ( ! this.clientX ) {
-                return;
-            }
-
-            let offsetX = Dom.find(this.$refs.column)
-                .offset('left');
-
-            let scrollX = Dom.find(this.$refs.column)
-                .scroll('left');
-
-            let targetWidth = (this.clientX + scrollX - offsetX);
-
-            if ( this.minWidth ) {
-                targetWidth = Math.max(targetWidth, this.minWidth)
-            }
-
-            if ( this.maxWidth ) {
-                targetWidth = Math.min(targetWidth, this.maxWidth)
-            }
-
-            this.veWidth = targetWidth;
-
-            Dom.find(this.$refs.column).removeClass('n-resize');
-
-            delete this.clientX;
+            this.veWidth = value;
 
             this.$nextTick(() => this.NTable.$emit('hook:resized'));
         }
@@ -351,9 +264,6 @@ export default {
 
     mounted()
     {
-        this.NTable.$on('hook:resized', this.adjustResizerPosition);
-        this.NTable.$on('hook:mounted', this.adjustResizerPosition);
-
         this.bindAdaptWidth()
     },
 
@@ -392,13 +302,23 @@ export default {
             maxWidth: this.maxWidth + 'px'
         };
 
+        let props = {
+            width: this.veWidth,
+            minWidth: this.minWidth,
+            maxWidth: this.maxWidth,
+            disabled: !! this.fixedWidth,
+        };
+
+        let events = {
+            input: this.eventResizerInput
+        };
+
         return (
-            <div ref="column" class={classList} style={style}>
+            <NResizer ref="column" class={classList} style={style} props={props} on={events}>
                 { this.ctor('renderHeadSort')() }
                 { this.ctor('renderHeadLabel')() }
                 { this.ctor('renderHeadFilter')() }
-                { this.ctor('renderHeadResizer')() }
-            </div>
+            </NResizer>
         );
     },
 
@@ -471,21 +391,10 @@ export default {
         ];
     },
 
-    renderHeadResizer()
-    {
-        let events = {
-            mousedown: this.eventResizerMousedown
-        };
-
-        return (
-            <div class="n-table-column__resizer" data-resizer="true" on={events}></div>
-        );
-    },
-
     renderBody(props)
     {
         if ( ! this.veWidth ) {
-            return;
+            return null;
         }
 
         let NDraggable = this.NTable.$refs.list;

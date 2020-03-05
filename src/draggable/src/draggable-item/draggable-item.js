@@ -143,7 +143,9 @@ export default {
                 return;
             }
 
-            this.NDraggable.$emit('row-click', this);
+            let target = this.NDraggable.getTarget(this);
+
+            this.NDraggable.$emit('row-click', target);
         },
 
         eventDblclick(event)
@@ -160,7 +162,9 @@ export default {
                 return;
             }
 
-            this.NDraggable.$emit('row-dblclick', this);
+            let target = this.NDraggable.getTarget(this);
+
+            this.NDraggable.$emit('row-dblclick', target);
         },
 
         eventDragstart(event)
@@ -199,7 +203,7 @@ export default {
                 return this.dragoverFrames;
             };
 
-            Any.framerate(this.resolveDragPosition, 10, timer)(event.clientY);
+            Any.framerate(this.resolveDragPosition, 30, timer)(event.clientY);
         },
 
         eventDragleave(event)
@@ -237,7 +241,7 @@ export default {
 
     mounted()
     {
-        Any.delay(() => this.veInit = true, 12 * this.position);
+        Any.delay(() => this.veInit = true, 15);
     },
 
     renderNode()
@@ -336,6 +340,10 @@ export default {
             height: this.NDraggable.itemHeight + 'px'
         };
 
+        if ( ! this.NDraggable.ghostMode ) {
+            this.veInit = true;
+        }
+
         let events = {
             click: this.eventClick,
             dblclick: this.eventDblclick,
@@ -356,6 +364,10 @@ export default {
             classList.push('n-selected');
         }
 
+        if ( this.NDraggable.isCurrent(this) ) {
+            classList.push('n-current');
+        }
+
         if ( this.NDraggable.isExpanded(this) ) {
             classList.push('n-expanded');
         }
@@ -370,7 +382,7 @@ export default {
             this.NDraggable.allowDrag(this) : this.NDraggable.allowDrag;
 
         return (
-            <div class={classList} style={style} on={events} draggable={draggable}>
+            <div data-key={this.$vnode.key} class={classList} style={style} on={events} draggable={draggable}>
                 { this.ctor('renderSpacer')() }
                 { this.ctor('renderExpand')() }
                 { this.ctor('renderSelect')() }

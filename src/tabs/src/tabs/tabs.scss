@@ -42,10 +42,11 @@
     position: absolute;
     bottom: -1px;
     left: 0;
-    width: 100%;
+    width: 100px;
     height: 2px;
     background: $--color-primary;
-    transition: all ease 0.3s;
+    transition: transform 0.3s ease;
+    transform-origin: 0 50%;
 }
 
 .n-tabs__tab {

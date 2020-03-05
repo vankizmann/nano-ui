@@ -119,9 +119,16 @@ export default {
 
     methods: {
 
+        open()
+        {
+            this.$emit('input', this.veVisible = true);
+        },
+
         close(event)
         {
-            event.stopPropagation();
+            if ( event ) {
+                event.stopPropagation();
+            }
 
             this.$emit('input', this.veVisible = false);
         },
@@ -186,6 +193,8 @@ export default {
 
     beforeDestroy()
     {
+        this.$off('close');
+
         this.$el.remove();
     },
 

@@ -41,10 +41,18 @@ export default {
             type: [String]
         },
 
-        minTime: {
+        minimum: {
             default()
             {
-                return 1000;
+                return 500;
+            },
+            type: [Number]
+        },
+
+        debounce: {
+            default()
+            {
+                return 500;
             },
             type: [Number]
         }
@@ -64,18 +72,20 @@ export default {
         {
             this.veTiming = Date.now();
 
-            window.requestAnimationFrame(() => Dom.find(this.$el).addClass('n-active'));
+            Dom.find(this.$el).addClass('n-active');
         },
 
         stopTimer()
         {
             let timing = Date.now() - this.veTiming;
 
-            if ( timing < this.minTime ) {
-                return Any.delay(this.stopTimer, this.minTime - timing + 10);
+            if ( timing < this.minimum ) {
+                return Any.delay(this.stopTimer, this.minimum - timing + 10);
             }
 
-            window.requestAnimationFrame(() => Dom.find(this.$el).removeClass('n-active'));
+            Any.delay(() => {
+                Dom.find(this.$el).removeClass('n-active');
+            }, this.debounce);
         }
 
     },

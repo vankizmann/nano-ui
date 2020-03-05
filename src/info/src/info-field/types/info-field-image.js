@@ -8,13 +8,15 @@ export default {
 
     render()
     {
-        let className = [
+        let classList = [
             'n-info__field', 'n-info__field--' + this.column.type
         ];
 
-        return <div class={className}>
-            <img src={this.value} />
-        </div>;
+        return (
+            <div class={classList}>
+                <div style={'background-image: url(\'' + this.value + '\');'} />
+            </div>
+        );
     }
 
 }

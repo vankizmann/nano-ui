@@ -60,6 +60,7 @@ export function Install(Vue, Icons = {}, Styles = {})
 
     require('./notification/index');
     require('./scrollbar/index');
+    require('./resizer/index');
     require('./virtualscroller/index');
     require('./draggable/index');
     require('./loader/index');
@@ -84,7 +85,7 @@ export function Install(Vue, Icons = {}, Styles = {})
     require('./info/index');
     require('./file-list/index');
     require('./map/index');
-    require('./wysiwyg/index');
+    // require('./wysiwyg/index');
 }
 
 if ( scope.Vue !== undefined ) {

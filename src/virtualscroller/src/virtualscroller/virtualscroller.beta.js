@@ -66,6 +66,15 @@ export default {
 
     methods: {
 
+        scrollTop(value = -1)
+        {
+            if ( value !== -1 ) {
+                this.$refs.viewport.$el.scrollTop = value;
+            }
+
+            return this.$refs.viewport.$el.scrollTop;
+        },
+
         refreshDriver()
         {
             if ( ! this.$refs.viewport || ! this.height ) {

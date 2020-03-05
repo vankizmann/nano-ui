@@ -3,6 +3,7 @@
 .n-table-cell {
     position: relative;
     min-width: 0;
+    min-height: 0;
     flex: 1 1 auto;
     overflow: hidden;
     white-space: nowrap;
@@ -22,11 +23,15 @@
 }
 
 .n-table-cell.n-table-cell--image {
+    height: 100%;
+}
+
+.n-table-cell.n-table-cell--image div {
     position: absolute;
     top: 5px;
     bottom: 5px;
-    left: 10px;
-    right: 10px;
+    left: 0;
+    right: 0;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -34,40 +39,5 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    background-color: $--color-gray-05;
+    background-color: rgba($color-gray-50, 0.2);
 }
-
-//.n-table-cell > span {
-//    overflow: hidden;
-//    display: inline-block;
-//}
-
-//.n-table-cell.n-table-cell--image > span {
-//    display: block;
-//    width: 100%;
-//    background-size: contain;
-//    background-repeat: no-repeat;
-//    background-position: 50% 50%;
-//}
-//
-//.n-table-cell.n-table-cell--image > span:before {
-//    content: '\00a0';
-//    display: block;
-//    height: 0;
-//    padding-bottom: 100%;
-//}
-//
-//.n-table__column.n-table__column--left .n-table-cell {
-//    justify-content: flex-start;
-//    text-align: left;
-//}
-//
-//.n-table__column.n-table__column--center .n-table-cell {
-//    justify-content: center;
-//    text-align: center;
-//}
-//
-//.n-table__column.n-table__column--right .n-table-cell {
-//    justify-content: flex-end;
-//    text-align: right;
-//}

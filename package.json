@@ -30,6 +30,7 @@
         "tiptap": "^1.26.0",
         "tiptap-commands": "^1.12.0",
         "tiptap-extensions": "^1.28.0",
+        "uglifyjs-webpack-plugin": "^2.2.0",
         "vue": "^2.6.10",
         "webpack": "^4.39.1",
         "webpack-cli": "^3.3.9"

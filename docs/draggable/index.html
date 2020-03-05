@@ -28,7 +28,7 @@
         <n-form-item label="List">
             <div style="display: block; border: 2px solid #000;">
                 <div>
-                    <n-draggable style="height: 500px; overflow: hidden;" :items="form.value" :viewport-height="true" :render-expand="true" :render-select="false">
+                    <n-draggable style="height: 500px; overflow: hidden;" :items="form.value" :viewport-height="true" :render-expand="true" :render-select="true" :threshold="800">
                         <div slot-scope="props" style="line-height: 32px;">
                             {{ props.value.label }}
                         </div>
@@ -96,7 +96,7 @@
                     };
 
                     var form = {
-                        value: childGenerator(4000, 2)
+                        value: childGenerator(200, 2)
                     };
 
                     return { form: form, inverse: false };

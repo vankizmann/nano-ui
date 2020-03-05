@@ -102,8 +102,7 @@ export default {
     renderHeaderIndicator()
     {
         let style = {
-            maxWidth: this.width + 'px',
-            left: this.offset + 'px'
+            transform: `scaleX(${this.width / 100}) translateX(${this.offset / (this.width / 100)}px)`
         };
 
         return (

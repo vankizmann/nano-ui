@@ -36,7 +36,7 @@ $draggable-placeholder-size: 13px !default;
     pointer-events: none;
     z-index: 99999;
     position: absolute;
-    top: -9999px;
+    top: 0;
     left: 0;
     display: block;
     width: 100%;
@@ -44,6 +44,7 @@ $draggable-placeholder-size: 13px !default;
     margin-top: -1px;
     border-bottom: 1px solid $--color-primary;
     transition: visibility 0ms 100ms;
+    transform: translateY(-9999px);
 }
 
 .n-draggable__counter {
