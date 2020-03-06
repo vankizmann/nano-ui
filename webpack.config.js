@@ -5,7 +5,6 @@ const autoprefixer = require("autoprefixer");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 let jsExtExport = {
-    mode: 'production',
     entry: ['./src/index.js'],
     output: {
         filename: 'index.esm.js',
@@ -56,7 +55,6 @@ let jsExtExport = {
 };
 
 let jsWinExport = {
-    mode: 'production',
     entry: ['@babel/polyfill/noConflict', './src/index.js'],
     devtool: 'source-map',
     output: {

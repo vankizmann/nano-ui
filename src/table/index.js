@@ -21,6 +21,9 @@ Vue.component(TableCellOption.name, TableCellOption);
 import TableCellImage from './src/table-cell/types/table-cell-image';
 Vue.component(TableCellImage.name, TableCellImage);
 
+import TableCellMatrix from './src/table-cell/types/table-cell-matrix';
+Vue.component(TableCellMatrix.name, TableCellMatrix);
+
 import TableFilterString from './src/table-filter/types/table-filter-string';
 Vue.component(TableFilterString.name, TableFilterString);
 

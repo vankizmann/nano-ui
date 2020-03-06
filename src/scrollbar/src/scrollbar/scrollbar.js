@@ -91,6 +91,20 @@ export default {
 
             this.optiscroll.destroy();
 
+            let vtrack = Dom.find(this.$el).parent()
+                .find('.n-scrollbar-v').get();
+
+            if ( vtrack ) {
+                vtrack.remove();
+            }
+
+            let htrack = Dom.find(this.$el).parent()
+                .find('.n-scrollbar-h').get();
+
+            if ( htrack ) {
+                htrack.remove();
+            }
+
             delete this.optiscroll;
 
             let $event = {

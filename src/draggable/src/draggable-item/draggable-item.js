@@ -241,11 +241,16 @@ export default {
 
     mounted()
     {
-        Any.delay(() => this.veInit = true, 15);
+        Any.delay(() => this.veInit = true, 25);
     },
 
     renderNode()
     {
+        // TODO: IDEAS?
+        // if ( this.cachedView ) {
+        //     return this.cachedView;
+        // }
+
         let props = {
             index: this[this.NDraggable.indexProp],
             value: this.veItem
@@ -269,8 +274,9 @@ export default {
             width: '100%', flex: '1 1 auto'
         };
 
-        return this.NDraggable.wrapNode ?
-            this.$render('div', { attrs }, [renderNode]) : renderNode;
+        return this.cachedView = (
+            this.NDraggable.wrapNode ? this.$render('div', { attrs }, [renderNode]) : renderNode
+        );
     },
 
     renderSpacer()
@@ -340,7 +346,10 @@ export default {
             height: this.NDraggable.itemHeight + 'px'
         };
 
-        if ( ! this.NDraggable.ghostMode ) {
+        let isBelowThreshold = this.NDraggable.veItems.length <=
+            this.NDraggable.threshold;
+
+        if ( ! this.NDraggable.ghostMode || isBelowThreshold ) {
             this.veInit = true;
         }
 
@@ -373,11 +382,19 @@ export default {
         }
 
         if ( ! this.veInit ) {
+
             classList.push('n-ghost');
+
+            return (
+                <div class={classList} style={style}>
+                    { this.ctor('renderSpacer')() }
+                </div>
+            );
         }
 
         let draggable = this.NDraggable.allowSelect(this);
 
+        // Is selectable and can be dragged
         draggable &= Any.isFunction(this.NDraggable.allowDrag) ?
             this.NDraggable.allowDrag(this) : this.NDraggable.allowDrag;
 
@@ -386,7 +403,7 @@ export default {
                 { this.ctor('renderSpacer')() }
                 { this.ctor('renderExpand')() }
                 { this.ctor('renderSelect')() }
-                { this.veInit && this.ctor('renderNode')() }
+                { this.ctor('renderNode')() }
             </div>
         );
     }

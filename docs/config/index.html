@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI Draggable</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../../dist/index.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+    <script src="https://vankizmann.github.io/nano-js/dist/nano-js.js"></script>
+    <script src="../../dist/index.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <n-config :value="value" :config="config"></n-config>
+</div>
+
+<script>
+    (function (Nano) {
+
+        'use strict';
+
+        Nano.Dom.ready(function () {
+
+            Vue.config.devtools = true;
+
+            var config = {
+                data: function() {
+
+                    let config = {
+                        'NForm': {
+                            content: {
+                                'NFormItem:1': {
+                                    vIf: function (value) {
+                                        console.log(this);
+                                        return value.test3 === 'two';
+                                    },
+                                    props: {
+                                        label: 'Test 1'
+                                    },
+                                    content: {
+                                        'NInput': {
+                                            model: {
+                                                path: 'test1'
+                                            }
+                                        }
+                                    }
+                                },
+                                'NFormItem:3': {
+                                    props: {
+                                        label: 'Test 3'
+                                    },
+                                    content: {
+                                        'NInput': {
+                                            model: {
+                                                path: 'test3'
+                                            }
+                                        }
+                                    }
+                                },
+                                'NFormItem:2': {
+                                    props: {
+                                        label: 'Test 2'
+                                    },
+                                    content: {
+                                        'NInput': {
+                                            model: {
+                                                path: 'test2'
+                                            }
+                                        }
+                                    }
+                                },
+                            }
+                        }
+                    };
+
+                    return { value: {}, config: config };
+                }
+            };
+
+            window.App = new Vue(config).$mount('#app');
+
+        });
+
+    })(window.Nano);
+</script>
+</body>
+</html>

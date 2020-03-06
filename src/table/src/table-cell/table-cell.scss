@@ -22,11 +22,11 @@
     text-align: right;
 }
 
-.n-table-cell.n-table-cell--image {
+.n-table-column.n-table-column--image .n-table-cell {
     height: 100%;
 }
 
-.n-table-cell.n-table-cell--image div {
+.n-table-column.n-table-column--image div {
     position: absolute;
     top: 5px;
     bottom: 5px;
@@ -40,4 +40,8 @@
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-color: rgba($color-gray-50, 0.2);
+}
+
+.n-table-column.n-table-column--matrix:nth-last-child(2n+1) {
+    background-color: rgba($color-gray-50, 0.1);
 }

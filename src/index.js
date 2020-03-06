@@ -58,6 +58,7 @@ export function Install(Vue, Icons = {}, Styles = {})
     Vue.prototype.styles = Vue.Obj.assign(NanoStyles,
         scope.NanoStyles, Styles);
 
+    require('./config/index');
     require('./notification/index');
     require('./scrollbar/index');
     require('./resizer/index');

@@ -34,6 +34,14 @@ export default {
             type: [String]
         },
 
+        tooltip: {
+            default()
+            {
+                return this.label;
+            },
+            type: [String]
+        },
+
         type: {
             default()
             {
@@ -343,7 +351,7 @@ export default {
 
         let tooltipHtml = (
             <NPopover type="tooltip" boundary={this.boundaryEl}>
-                { this.label }
+                { this.tooltip }
             </NPopover>
         );
 
@@ -406,8 +414,11 @@ export default {
         let componentName = 'NTableCell' + Str.ucfirst(this.type);
 
         let classList = [
-            'n-table-column', 'n-' + this.align
+            'n-table-column',
+            'n-table-column--' + this.type
         ];
+
+        classList.push('n-' + this.align);
 
         if ( this.veFluid ) {
             classList.push('n-fluid');
@@ -424,7 +435,7 @@ export default {
         let width = this.veWidth;
 
         if ( ! index ) {
-            width -= remote.depth * 20;
+            width -= remote.depth * this.NTable.itemOffset;
         }
 
         let style = {
@@ -435,7 +446,11 @@ export default {
             style.minWidth = this.minWidth + 'px';
         }
 
-        props = Obj.assign(props, { column: this });
+        let getTarget = () => {
+            return this.NDraggable.getTarget(props.value);
+        };
+
+        props = Obj.assign(props, { column: this, getTarget });
 
         return (
             <div class={classList} style={style}>

@@ -261,8 +261,6 @@ export default {
             veInview: false,
             veCopy: [],
             veItems: [],
-            veCached: [],
-            veSelfCached: [],
             veCurrent: this.current,
             veSelected: this.selected,
             veExpanded: this.expanded,
@@ -524,6 +522,9 @@ export default {
                 });
             }
 
+            // Indicate update items
+            this.veModified = true;
+
             Event.fire('draggable.done');
         },
 
@@ -592,24 +593,32 @@ export default {
                     [this.uniqueProp]: source[this.uniqueProp]
                 });
 
+                this.veModified = true;
             });
 
-            this.clearItems();
-            this.refreshItems();
-
-            this.$emit('moved', this.veCopy);
+            if ( this.veModified ) {
+                this.refreshItems();
+            }
         },
 
         clearItems()
         {
-            this.veSelected = [];
             this.veCached = [];
             this.veSelfCached = [];
 
+            if ( this.veSelected.length ) {
+                this.veSelected = [];
+                this.updateSelected();
+            }
+
+            if ( this.veModified ) {
+                this.$emit('moved', this.veCopy);
+            }
+
+            this.veModified = false;
+
             this.removeDragCounter();
             this.removeDragIndicator();
-
-            this.updateSelected();
         },
 
         cacheItems(items, group = [])
@@ -656,8 +665,9 @@ export default {
                 return this.getTarget(data);
             });
 
-            Event.fire('draggable.start', this.veSelfCached = selected,
-                this.group);
+            this.veSelfCached = Arr.clone(selected);
+
+            Event.fire('draggable.start', selected, this.group);
         },
 
         getTarget(unique)
@@ -1205,6 +1215,10 @@ export default {
 
     beforeMount()
     {
+        this.veModified = false;
+        this.veCached = [];
+        this.veSelfCached = [];
+
         this.$watch('veCopy', Any.debounce(this.exportItems,
             this.updateDelay));
 

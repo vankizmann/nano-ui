@@ -1,4 +1,3 @@
-import CtorMixin from "../../../mixins/src/ctor";
 import { Arr, Obj, Any, UUID } from "nano-js";
 
 export default {
@@ -44,8 +43,6 @@ export default {
             this.newData = newData;
 
             let filterProps = Arr.clone(this.NTable.veFilterProps);
-
-            console.log(filterProps);
 
             Arr.replace(filterProps, newData, {
                 property: this.column.filterProp

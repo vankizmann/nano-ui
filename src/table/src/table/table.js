@@ -94,6 +94,14 @@ export default {
             type: [Number]
         },
 
+        itemOffset: {
+            default()
+            {
+                return 30;
+            },
+            type: [Number]
+        },
+
         viewportHeight: {
             default()
             {
@@ -286,14 +294,14 @@ export default {
         addColumn(column)
         {
             Arr.add(this.veColumns, column, {
-                prop: column.prop
+                prop: column._uid
             });
         },
 
         removeColumn(column)
         {
             Arr.remove(this.veColumns, {
-                prop: column.prop
+                prop: column._uid
             });
         },
 

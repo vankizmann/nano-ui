@@ -66,6 +66,12 @@ export default {
 
     methods: {
 
+        extendLifecycle()
+        {
+            Arr.each(this.cachedView , (cachedView) =>
+                cachedView.time = Date.now() - 10);
+        },
+
         scrollTop(value = -1)
         {
             if ( value !== -1 ) {
@@ -126,7 +132,7 @@ export default {
             }
 
             if ( ! this.height ) {
-                return Any.delay(this.discoverHeight, 50);
+                return Any.delay(this.discoverHeight, 250);
             }
 
             Any.async(this.refreshDriver);
@@ -156,6 +162,11 @@ export default {
         };
     },
 
+    beforeMount()
+    {
+        this.cachedView = {};
+    },
+
     mounted()
     {
         this.$watch('items', this.discoverHeight);
@@ -166,6 +177,9 @@ export default {
 
         Dom.find(this.$el).on('scroll',
             Any.framerate(this.eventScroll, this.frameRate), ident);
+
+        Dom.find(this.$el).on('scrollstart',
+            Any.throttle(this.extendLifecycle, 50), ident);
 
         Dom.find(this.$el).on('scrollstop',
             Any.debounce(this.eventScrollstop, 50), ident);
@@ -182,13 +196,46 @@ export default {
         };
 
         Dom.find(this.$el).off('scroll', null, ident);
+        Dom.find(this.$el).off('scrollstart', null, ident);
         Dom.find(this.$el).off('scrollstop', null, ident);
+    },
+
+    renderItem(props)
+    {
+        let key = Any.md5(props.value);
+
+        let veCachedView = {
+            time: Date.now(),
+        };
+
+        let cachedView = veCachedView;
+
+        if ( this.cachedView[key] ) {
+            cachedView = this.cachedView[key];
+        }
+
+        let doRerender = veCachedView.time - cachedView.time > 3000 ||
+            veCachedView.time - cachedView.time === 0;
+
+        if ( doRerender ) {
+
+            // Set new timestamp
+            cachedView.time = Date.now();
+
+            // Finally render node
+            cachedView.view = this.renderNode(props);
+        }
+
+        // Override view
+        this.cachedView[key] = cachedView;
+
+        return this.cachedView[key].view;
     },
 
     renderItems()
     {
         return Arr.each(this.items, (value, position) => {
-            return this.renderNode({ value, position });
+            return this.ctor('renderItem')({ value, position });
         });
     },
 
@@ -197,8 +244,8 @@ export default {
         let items = Arr.slice(this.items, this.state.startIndex,
             this.state.endIndex);
 
-        return Arr.each(Any.vals(items), (value, position) => {
-            return this.renderNode({ value, position });
+        return Arr.each(items, (value, position) => {
+            return this.ctor('renderItem')({ value, position });
         });
     },
 

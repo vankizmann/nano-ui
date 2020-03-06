@@ -2711,10 +2711,10 @@ body.n-open {
 .n-table-column.n-right .n-table-cell {
   text-align: right; }
 
-.n-table-cell.n-table-cell--image {
+.n-table-column.n-table-column--image .n-table-cell {
   height: 100%; }
 
-.n-table-cell.n-table-cell--image div {
+.n-table-column.n-table-column--image div {
   position: absolute;
   top: 5px;
   bottom: 5px;
@@ -2728,6 +2728,9 @@ body.n-open {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-color: rgba(141, 145, 148, 0.2); }
+
+.n-table-column.n-table-column--matrix:nth-last-child(2n+1) {
+  background-color: rgba(141, 145, 148, 0.1); }
 
 .n-table-filter {
   position: relative;
