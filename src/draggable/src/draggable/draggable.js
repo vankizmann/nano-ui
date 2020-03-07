@@ -1324,7 +1324,7 @@ export default {
             return this.$render('template', { slot: name }, slot);
         });
 
-        let props = Obj.assign(Obj.clone(this.$props), {
+        let props = Obj.assign({}, this.$props, {
             items: this.veItems, renderNode: this.ctor('renderItem')
         });
 

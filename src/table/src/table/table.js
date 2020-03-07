@@ -405,7 +405,7 @@ export default {
     {
         this.$render = $render;
 
-        let props = Obj.assign(Obj.clone(this.$props), {
+        let props = Obj.assign({}, this.$props, {
             renderNode: this.ctor('renderBody')
         });
 

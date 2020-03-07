@@ -3156,6 +3156,7 @@ body.n-open {
   margin-bottom: -1px; }
 
 .n-table .n-table__inner {
+  overflow: hidden;
   min-width: 0;
   -webkit-box-flex: 1;
           flex: 1 0 auto;

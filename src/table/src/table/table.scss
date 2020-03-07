@@ -29,6 +29,7 @@ $table-row-height: 40px !default;
 }
 
 .n-table .n-table__inner {
+    overflow: hidden;
     min-width: 0;
     flex: 1 0 auto;
     display: flex;
