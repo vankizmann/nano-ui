@@ -89,21 +89,21 @@ export default {
                 return;
             }
 
-            this.optiscroll.destroy();
-
             let vtrack = Dom.find(this.$el).parent()
-                .find('.n-scrollbar-v').get();
+                .find('.n-scrollbar-v').get(0);
 
             if ( vtrack ) {
                 vtrack.remove();
             }
 
             let htrack = Dom.find(this.$el).parent()
-                .find('.n-scrollbar-h').get();
+                .find('.n-scrollbar-h').get(0);
 
             if ( htrack ) {
                 htrack.remove();
             }
+
+            this.optiscroll.destroy();
 
             delete this.optiscroll;
 
