@@ -1,4 +1,4 @@
-import { Arr, Obj, Any, UUID } from "nano-js";
+import {Arr, Obj, Any, UUID, Dom} from "nano-js";
 
 export default {
 
@@ -29,36 +29,52 @@ export default {
             return Obj.assign(defaults, filter);
         },
 
-        changeFilter()
+        applyFilter()
         {
-            let newData = Obj.map(Obj.clone(this.form), (value) => {
-                return ! Any.isEmpty(value) && Any.isArray(value) ?
-                    value.join(',') : value;
-            });
-
-            if ( Any.md5(this.newData) === Any.md5(newData) ) {
+            if ( Any.isNull(this.form.value) ) {
                 return;
             }
 
-            this.newData = newData;
+            let filterData = Obj.clone(this.form);
 
-            let filterProps = Arr.clone(this.NTable.veFilterProps);
+            Obj.map(filterData, (value) => {
+                return Any.isArray(value) ? value.join(',') : value;
+            });
 
-            Arr.replace(filterProps, newData, {
+            Arr.replace(this.NTable.veFilterProps, filterData, {
                 property: this.column.filterProp
             });
 
-            filterProps = Arr.filter(filterProps, (prop) => {
-                return ! Any.isEmpty(prop.value);
-            });
-
-            this.NTable.veFilterProps = filterProps;
-
             // Update filter event
-            this.NTable.$emit('update:filterProps', this.NTable.veFilterProps);
+            this.NTable.$emit('update:filterProps',
+                this.NTable.veFilterProps);
+
+            // Update applied state
+            this.veApplied = true;
 
             // Send filter event
-            this.NTable.$emit('filter', this.NTable.veFilterProps);
+            this.NTable.$emit('filter',
+                this.NTable.veFilterProps);
+        },
+
+        clearFilter()
+        {
+            this.resetFilter();
+
+            Arr.remove(this.NTable.veFilterProps, {
+                property: this.column.filterProp
+            });
+
+            // Update filter event
+            this.NTable.$emit('update:filterProps',
+                this.NTable.veFilterProps);
+
+            // Update applied state
+            this.veApplied = false;
+
+            // Send filter event
+            this.NTable.$emit('filter',
+                this.NTable.veFilterProps);
         },
 
         resetFilter()
@@ -74,7 +90,13 @@ export default {
             property: this.column.filterProp, type: this.column.type, value: null
         };
 
-        return { form: this.getFilterProps(defaults) };
+        let data = {
+            form: this.getFilterProps(defaults)
+        };
+
+        data.veApplied = ! Any.isEmpty(data.form.value);
+
+        return data;
     },
 
     mounted()
@@ -87,26 +109,54 @@ export default {
         return null;
     },
 
+    renderApply()
+    {
+        let props = {
+            type: 'primary',
+            link: true,
+            size: 'small',
+        };
+
+        return (
+            <NButton props={props} vOn:click={this.applyFilter}>
+                { this.trans('Apply') }
+            </NButton>
+        );
+    },
+
     renderReset()
     {
+        let props = {
+            type: 'danger',
+            link: true,
+            size: 'small',
+            disabled: ! this.veApplied,
+        };
+
         return (
-            <NButton key={UUID()} type="link" size="small" disabled={Any.isEmpty(this.form.value)} vOn:click={this.resetFilter}>
-                {this.trans('Reset')}
+            <NButton props={props} vOn:click={this.clearFilter}>
+                { this.trans('Reset') }
             </NButton>
         );
     },
 
     render()
     {
+        if ( ! this.boundaryEl ) {
+            this.boundaryEl = Dom.find(this.NTable.$el)
+                .find('.n-table__inner').get(0);
+        }
+
         return (
-            <div class="n-popover__frame">
-                <div class="n-popover__body">
-                    { this.ctor('renderForm') && this.ctor('renderForm')() }
-                </div>
-                <div class="n-popover__footer n-text-right">
-                    { this.ctor('renderReset') && this.ctor('renderReset')() }
-                </div>
-            </div>
+            <NPopover type="filter" trigger="click" boundary={this.boundaryEl}>
+                <template slot="default">
+                    { this.ctor('renderForm')() }
+                </template>
+                <template slot="footer">
+                    { this.ctor('renderReset')() }
+                    { this.ctor('renderApply')() }
+                </template>
+            </NPopover>
         );
     }
 }

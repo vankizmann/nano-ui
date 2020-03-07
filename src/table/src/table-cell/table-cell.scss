@@ -23,24 +23,38 @@
 }
 
 .n-table-column.n-table-column--image .n-table-cell {
+    position: relative;
     height: 100%;
 }
 
-.n-table-column.n-table-column--image div {
+/**
+ * Image specific styling
+ */
+
+.n-table-column.n-table-column--image {
+    padding: 5px 0;
+}
+
+.n-table-column.n-table-column--image .n-table-cell {
+    position: relative;
+    height: 100%;
+}
+
+.n-table-column.n-table-column--image .n-table-cell > div {
     position: absolute;
-    top: 5px;
-    bottom: 5px;
+    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: stretch;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-color: rgba($color-gray-50, 0.2);
 }
+
+/**
+ * Matrix specific styling
+ */
 
 .n-table-column.n-table-column--matrix:nth-last-child(2n+1) {
     background-color: rgba($color-gray-50, 0.1);

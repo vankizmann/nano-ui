@@ -29,7 +29,7 @@ export default {
     renderForm()
     {
         return (
-            <NForm form={this.form} vOn:change={this.changeFilter}>
+            <NForm form={this.form}>
                 <NFormItem>
                     <NInput size="small" vModel={this.form.value}/>
                 </NFormItem>

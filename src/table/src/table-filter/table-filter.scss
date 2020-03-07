@@ -10,17 +10,6 @@ $table-filter-height: 18px !default;
     width: 100%;
 }
 
-.n-table-filter .n-popover.n-popover--default {
-    width: 100%;
-    min-width: 200px !important;
-    max-width: 260px !important;
-}
-
-.n-table-filter  .n-popover.n-popover--default > .n-popover__frame > .n-popover__body {
-    max-height: 280px;
-    overflow-y: auto;
-}
-
 .n-table-filter__sort {
     cursor: pointer;
     position: relative;
@@ -112,14 +101,26 @@ $table-filter-height: 18px !default;
     background-color: $--color-gray-05;
 }
 
-.n-popover-filter {
+.n-popover.n-popover--filter {
     width: 240px;
 }
 
-.n-popover-filter .n-form-item {
+.n-popover.n-popover--filter .n-form-item {
     margin-bottom: 7px;
 }
 
-.n-popover-filter .n-form-item:last-child {
+.n-popover.n-popover--filter .n-form-item:last-child {
     margin-bottom: 0;
+}
+
+.n-popover.n-popover--filter .n-popover__footer {
+    display: flex;
+}
+
+.n-popover.n-popover--filter .n-popover__footer > div:first-child {
+    margin-right: auto;
+}
+
+.n-popover.n-popover--filter .n-popover__footer > div:last-child {
+    margin-left: auto;
 }

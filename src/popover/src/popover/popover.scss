@@ -29,7 +29,23 @@ $popover-option-size: 14px !default;
     width: 100%;
 }
 
+.n-popover.n-popover--filter {
+    width: 230px;
+    max-width: unset !important;
+}
+
+.n-popover.n-popover--timepicker {
+    width: 200px;
+    max-width: unset !important;
+}
+
+.n-popover.n-popover--datepicker {
+    width: 300px;
+    max-width: unset !important;
+}
+
 .n-popover.n-popover--tooltip {
+    width: auto;
     max-width: 280px !important;
 }
 
@@ -39,15 +55,12 @@ $popover-option-size: 14px !default;
     flex-direction: column;
 }
 
-.n-popover.n-popover--default > .n-popover__frame {
+.n-popover.n-popover--default > .n-popover__frame,
+.n-popover.n-popover--filter > .n-popover__frame {
     font-size: $popover-default-size;
     background: $--color-white;
     border-radius: $radius-medium;
     box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
-}
-
-.n-inverse .n-popover.n-popover--default > .n-popover__frame {
-    background: $--color-gray-95;
 }
 
 .n-popover.n-popover--select > .n-popover__frame {
@@ -57,19 +70,11 @@ $popover-option-size: 14px !default;
     box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
 }
 
-.n-inverse .n-popover.n-popover--select > .n-popover__frame {
-    background: $--color-gray-95;
-}
-
 .n-popover.n-popover--cascader > .n-popover__frame {
     font-size: $popover-cascader-size;
     background: $--color-white;
     border-radius: $radius-medium;
     box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
-}
-
-.n-inverse .n-popover.n-popover--cascader > .n-popover__frame {
-    background: $--color-gray-95;
 }
 
 .n-popover.n-popover--datepicker > .n-popover__frame {
@@ -79,20 +84,11 @@ $popover-option-size: 14px !default;
     box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
 }
 
-.n-inverse .n-popover.n-popover--datepicker > .n-popover__frame {
-    background: $--color-gray-95;
-}
-
 .n-popover.n-popover--timepicker > .n-popover__frame {
     font-size: $popover-default-size;
     background: $--color-white;
     border-radius: $radius-medium;
     box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
-}
-
-
-.n-inverse .n-popover.n-popover--timepicker > .n-popover__frame {
-    background: $--color-gray-95;
 }
 
 .n-popover.n-popover--tooltip > .n-popover__frame {
@@ -107,14 +103,12 @@ $popover-option-size: 14px !default;
     flex: 0 0 auto;
 }
 
-.n-popover.n-popover--default > .n-popover__frame > .n-popover__header {
+.n-popover.n-popover--default > .n-popover__frame > .n-popover__header,
+.n-popover.n-popover--filter > .n-popover__frame > .n-popover__header {
     padding: $popover-default-padding;
     border-bottom: 1px solid $--color-gray-10;
 }
 
-.n-inverse .n-popover.n-popover--default > .n-popover__frame > .n-popover__header {
-    border-bottom-color: $--color-gray-90;
-}
 
 .n-popover.n-popover--select > .n-popover__frame > .n-popover__header {
     padding: $popover-select-padding;
@@ -132,7 +126,8 @@ $popover-option-size: 14px !default;
     flex: 1 1 auto;
 }
 
-.n-popover.n-popover--default > .n-popover__frame > .n-popover__body {
+.n-popover.n-popover--default > .n-popover__frame > .n-popover__body,
+.n-popover.n-popover--filter > .n-popover__frame > .n-popover__body {
     padding: $popover-default-padding;
 }
 
@@ -156,22 +151,15 @@ $popover-option-size: 14px !default;
     flex: 0 0 auto;
 }
 
-.n-popover.n-popover--default > .n-popover__frame > .n-popover__footer {
+.n-popover.n-popover--default > .n-popover__frame > .n-popover__footer,
+.n-popover.n-popover--filter > .n-popover__frame > .n-popover__footer {
     padding: $popover-default-padding;
     border-top: 1px solid $--color-gray-10;
-}
-
-.n-inverse .n-popover.n-popover--default > .n-popover__frame > .n-popover__footer {
-    border-top-color: $--color-gray-90;
 }
 
 .n-popover.n-popover--select > .n-popover__frame > .n-popover__footer {
     padding: $popover-select-padding;
     border-top: 1px solid $--color-gray-10;
-}
-
-.n-inverse .n-popover.n-popover--select > .n-popover__frame > .n-popover__footer {
-    border-top-color: $--color-gray-90;
 }
 
 .n-popover.n-popover--tooltip > .n-popover__frame > .n-popover__footer {

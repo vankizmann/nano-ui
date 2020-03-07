@@ -69,6 +69,8 @@ export function Install(Vue, Icons = {}, Styles = {})
     require('./button/index');
     require('./input/index');
     require('./textarea/index');
+    require('./checkbox/index');
+    require('./radio/index');
     require('./select/index');
     require('./cascader/index');
     require('./datepicker/index');
@@ -81,7 +83,6 @@ export function Install(Vue, Icons = {}, Styles = {})
     require('./confirm/index');
     require('./table/index');
     require('./paginator/index');
-    require('./checkbox/index');
     require('./tabs/index');
     require('./info/index');
     require('./file-list/index');

@@ -29,9 +29,9 @@ export default {
 
     renderForm()
     {
-        return <NForm form={this.form} vOn:change={this.changeFilter}>
+        return <NForm form={this.form}>
             <NFormItem>
-                <NDatepicker size="small" vModel={this.form.value} format="YYYY-MM-DD"/>
+                <NDatepicker size="small" vModel={this.form.value} format2="YYYY-MM-DD"/>
             </NFormItem>
             <NFormItem>
                 <NSelect size="small" vModel={this.form.operator}>

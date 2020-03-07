@@ -1,5 +1,4 @@
-import { Arr, Obj, Str, Now, Any } from "nano-js";
-import CtorMixin from "../../../mixins/src/ctor";
+import { Arr, Obj, Str, Now, Any, UUID } from "nano-js";
 
 export default {
 
@@ -78,9 +77,8 @@ export default {
         size: {
             default()
             {
-                return 'default';
-            },
-            type: [String]
+                return null;
+            }
         },
 
         position: {
@@ -166,17 +164,17 @@ export default {
 
         yearsGrid()
         {
-            return this.tempValue.getYears();
+            return this.veCached.getYears();
         },
 
         monthsGrid()
         {
-            return this.tempValue.getMonths();
+            return this.veCached.getMonths();
         },
 
         datesGrid()
         {
-            return this.tempValue.getDatesGrid();
+            return this.veCached.getDatesGrid();
         }
 
     },
@@ -185,119 +183,289 @@ export default {
 
         value()
         {
-            let value = Now.make(this.value);
-
-            if ( value.valid() === false ) {
-                return;
-            }
-
-            if ( this.value !== this.nativeValue.format(this.format) ) {
-                this.nativeValue = this.tempValue = Now.make(this.value);
+            if ( this.value !== this.veValue.format(this.format) ) {
+                this.veValue = Now.make(this.value);
             }
         },
 
-        tempValue()
-        {
-            this.$nextTick(() => this.$refs.modal.refresh());
-        },
-
-        arrive()
-        {
-            if ( this.arrive !== this.nativeArrive.format(this.format) ) {
-                this.nativeArrive = this.tempArrive = Now.make(this.arrive);
-            }
-        },
-
-        depart()
-        {
-            if ( this.depart !== this.nativeDepart.format(this.format) ) {
-                this.nativeDepart = this.tempDepart = Now.make(this.depart);
-            }
-        },
-
-        visible()
-        {
-            this.nativeRange = [];
-        },
-
-        nativeRange()
-        {
-            if ( this.nativeRange[0] !== undefined ) {
-                this.tempArrive = this.nativeRange[0];
-            }
-
-            if ( this.nativeRange.length !== 2 ) {
-                return;
-            }
-
-            if ( this.nativeRange[0] !== undefined ) {
-                this.nativeArrive = this.nativeRange[0];
-            }
-
-            if ( this.nativeRange[1] !== undefined ) {
-                this.nativeDepart = this.nativeRange[1];
-            }
-
-            this.$emit('update:arrive',
-                this.nativeArrive.format(this.format));
-
-            this.$emit('update:depart',
-                this.nativeDepart.format(this.format));
-
-            this.visible = false;
-        }
+        // tempValue()
+        // {
+        //     // this.$nextTick(() => this.$refs.popover.refresh());
+        // },
+        //
+        // arrive()
+        // {
+        //     if ( this.arrive !== this.nativeArrive.format(this.format) ) {
+        //         this.nativeArrive = this.tempArrive = Now.make(this.arrive);
+        //     }
+        // },
+        //
+        // depart()
+        // {
+        //     if ( this.depart !== this.nativeDepart.format(this.format) ) {
+        //         this.nativeDepart = this.tempDepart = Now.make(this.depart);
+        //     }
+        // },
+        //
+        // visible()
+        // {
+        //     this.nativeRange = [];
+        // },
+        //
+        // nativeRange()
+        // {
+        //     if ( this.nativeRange[0] !== undefined ) {
+        //         this.tempArrive = this.nativeRange[0];
+        //     }
+        //
+        //     if ( this.nativeRange.length !== 2 ) {
+        //         return;
+        //     }
+        //
+        //     if ( this.nativeRange[0] !== undefined ) {
+        //         this.nativeArrive = this.nativeRange[0];
+        //     }
+        //
+        //     if ( this.nativeRange[1] !== undefined ) {
+        //         this.nativeDepart = this.nativeRange[1];
+        //     }
+        //
+        //     this.$emit('update:arrive',
+        //         this.nativeArrive.format(this.format));
+        //
+        //     this.$emit('update:depart',
+        //         this.nativeDepart.format(this.format));
+        //
+        //     this.visible = false;
+        // }
 
     },
 
     data()
     {
         return {
-            nativeView: 'date',
-            visible: false,
-            nativeRange: [],
-            tempArrive: Now.make(this.arrive),
-            nativeArrive: Now.make(this.arrive),
-            tempDepart: Now.make(this.depart),
-            nativeDepart: Now.make(this.depart),
-            tempValue: Now.make(this.value),
-            nativeValue: Now.make(this.value),
+            veView: 'date',
+            veOpen: false,
+            veRanger: null,
+            veTempArrive: null,
+            veTempDepart: null,
+            veValue: Now.make(this.value),
+            veCached: Now.make(this.cached),
+            veArrive: Now.make(this.arrive),
+            veDepart: Now.make(this.depart),
         }
     },
 
     methods: {
 
-        ...CtorMixin,
+        gotoDate()
+        {
+            this.veView = 'date';
+        },
 
+        gotoMonth()
+        {
+            this.veView = 'month';
+        },
+
+        gotoYear()
+        {
+            this.veView = 'year';
+        },
+
+        patchDate(now)
+        {
+            if ( Any.isString(now) ) {
+                now = Now.make(now);
+            }
+
+            // Copy now to cache
+            this.veCached = now.clone();
+
+            // Copy now to value
+            this.veValue = now.clone();
+
+            this.$emit('input', this.veValue.format(this.format));
+
+            this.veOpen = false;
+        },
+
+        patchMonth(now)
+        {
+            if ( Any.isString(now) ) {
+                now = Now.make(now);
+            }
+
+            this.veCached = now.clone();
+
+            this.gotoDate();
+        },
+
+        patchYear(now)
+        {
+            if ( Any.isString(now) ) {
+                now = Now.make(now);
+            }
+
+            this.veCached = now.clone();
+
+            this.gotoMonth();
+        },
+
+        patchRange(now)
+        {
+            if ( this.veTempArrive && ! this.veTempDepart ) {
+                this.veTempDepart = now.clone();
+            }
+
+            if ( ! this.veTempArrive && ! this.veTempDepart ) {
+                this.veTempArrive = now.clone();
+            }
+
+            if ( ! this.veTempArrive || ! this.veTempDepart ) {
+                return;
+            }
+
+            this.veArrive = this.veTempArrive.clone();
+            this.veDepart = this.veTempDepart.clone();
+
+            this.$emit('update:arrive', this.veArrive.format(this.format));
+            this.$emit('update:depart', this.veDepart.format(this.format));
+
+            this.veTempArrive = null;
+            this.veTempDepart = null;
+
+            this.$emit('range', [
+                this.veArrive.format(this.format),
+                this.veDepart.format(this.format)
+            ]);
+
+            this.veOpen = false;
+        },
+
+        printRange(now)
+        {
+            this.veRanger = now.clone();
+        },
+
+        eventClear()
+        {
+            this.$emit('input', this.clearValue);
+        },
+
+        eventInput(event)
+        {
+            let input = event.target.value;
+
+            if ( input.length !== this.displayFormat.length ) {
+                return;
+            }
+
+            let value = Now.make(input, this.displayFormat);
+
+            if ( ! value.moment.isValid() ) {
+                return;
+            }
+
+            let moment = this.veValue.moment.set({
+                year: value.moment.year(),
+                month: value.moment.month(),
+                date: value.moment.date(),
+            });
+
+            this.veCached = Now.make(moment);
+
+            this.veValue = Now.make(moment);
+
+            this.$emit('input', this.veValue.format(this.format));
+        },
+
+        eventPopoverInput(value)
+        {
+            this.veOpen = value;
+        },
+
+        eventStop(event)
+        {
+            event.stopPropagation();
+        }
+
+    },
+
+    renderToolbarPrev(closure)
+    {
+        let props = {
+            link: true,
+            icon: this.icons.angleLeft,
+        };
+
+        let events = {
+            click: closure
+        };
+
+        return (
+            <NButton props={props} on={events} />
+        );
+    },
+
+    renderToolbarNext(closure)
+    {
+        let props = {
+            link: true,
+            icon: this.icons.angleRight,
+        };
+
+        let events = {
+            click: closure
+        };
+
+        return (
+            <NButton props={props} on={events} />
+        );
+    },
+
+    renderToolbarMonth()
+    {
+        let events = {
+            click: this.gotoMonth
+        };
+
+        return (
+            <span class="n-datepicker__month" on={events}>
+                { this.months[this.veCached.month()] }
+            </span>
+        );
+    },
+
+    renderToolbarYear()
+    {
+        let events = {
+            click: this.gotoYear
+        };
+
+        return (
+            <span class="n-datepicker__year" on={events}>
+                { this.veCached.year() }
+            </span>
+        );
     },
 
     renderToolbar({ prev, next })
     {
-        prev = Obj.assign({
-            props: { type: 'link', icon: this.icons.angleLeft, square: true, round: true }
-        }, prev);
-
-        next = Obj.assign({
-            props: { type: 'link', icon: this.icons.angleRight, square: true, round: true }
-        }, next);
-
         return (
             <div class="n-datepicker__toolbar">
                 <div class="n-datepicker__display">
-                    <span class="n-datepicker__month" vOn:click={() => this.nativeView = 'month'}>
-                        {this.months[this.tempValue.month()]}
-                    </span>
-                    <span class="n-datepicker__year" vOn:click={() => this.nativeView = 'year'}>
-                        {this.tempValue.year()}
-                    </span>
+                    { this.ctor('renderToolbarMonth')() }
+                    { this.ctor('renderToolbarYear')() }
                 </div>
                 <div class="n-datepicker__prev">
-                    <NButton {...prev} />
+                    { this.ctor('renderToolbarPrev')(prev) }
                 </div>
                 <div class="n-datepicker__next">
-                    <NButton {...next} />
+                    { this.ctor('renderToolbarNext')(next) }
                 </div>
             </div>
-        )
+        );
     },
 
     renderDateItem(now)
@@ -306,99 +474,143 @@ export default {
             'n-datepicker__day'
         ];
 
-        if ( now.equalDate('now') ) {
-            classList.push('n-datepicker__day--today');
+        if ( now.equalDate(new Date) ) {
+            classList.push('n-today');
         }
 
-        if ( now.equalDate(this.nativeValue) ) {
-            classList.push('n-datepicker__day--selected');
+        if ( now.equal(this.veCached, 'YYYYMMDD') ) {
+            classList.push('n-selected');
         }
 
-        if ( now.month() === this.tempValue.month() ) {
-            classList.push('n-datepicker__day--current');
+        if ( now.month() === this.veCached.month() ) {
+            classList.push('n-current');
         }
 
         let events = {
-            'click': () => {
-                this.$emit('input', now.format(this.format));
-                this.visible = false;
-            }
+            click: () => this.patchDate(now)
         };
 
         return (
-            <div on={events} class={classList}>
+            <div class={classList} on={events}>
                 <span>{ now.format('DD') }</span>
             </div>
         );
     },
 
-    renderDateRangeItem(now)
+    renderRangeDateItem(now)
     {
         let classList = [
             'n-datepicker__day'
         ];
 
         if ( now.equalDate('now') ) {
-            classList.push('n-datepicker__day--today');
+            classList.push('n-today');
         }
 
-        if ( now.month() === this.tempValue.month() ) {
-            classList.push('n-datepicker__day--current');
+        if ( now.month() === this.veCached.month() ) {
+            classList.push('n-current');
         }
 
-        if ( this.nativeRange.length === 0 && now.equalDate(this.nativeArrive) ) {
+        let viewMode = 0;
 
-            if ( ! this.nativeArrive.equalDate(this.nativeDepart) ) {
-                classList.push(this.nativeArrive.before(this.nativeDepart) ?
-                    'n-datepicker__day--arrive' : 'n-datepicker__day--depart');
+        if ( !! this.veTempArrive ) {
+            viewMode++;
+        }
+
+        if ( !! this.veTempDepart ) {
+            viewMode++;
+        }
+
+        if ( viewMode === 0 ) {
+
+            if ( now.between(this.veArrive, this.veDepart) ) {
+                classList.push('n-between');
+                classList.push('n-selected');
             }
 
-            classList.push('n-datepicker__day--selected');
-        }
+            let arriveFirst = this.veArrive.before(this.veDepart);
 
-        if ( this.nativeRange.length === 0 && now.equalDate(this.nativeDepart) ) {
-
-            if ( ! this.nativeDepart.equalDate(this.nativeArrive) ) {
-                classList.push(this.nativeDepart.before(this.nativeArrive) ?
-                    'n-datepicker__day--arrive' : 'n-datepicker__day--depart');
+            if ( now.equalDate(this.veArrive) ) {
+                classList.push(arriveFirst ? 'n-arrive' : 'n-depart');
+                classList.push('n-selected');
             }
 
-            classList.push('n-datepicker__day--selected');
+            if ( now.equalDate(this.veDepart) ) {
+                classList.push(arriveFirst ? 'n-depart' : 'n-arrive');
+                classList.push('n-selected');
+            }
+
         }
 
-        if ( this.nativeRange.length === 1 && now.equalDate(this.tempArrive) && ! now.equalDate(this.tempDepart) ) {
-            classList.push(this.tempArrive.before(this.tempDepart) ?
-                'n-datepicker__day--arrive' : 'n-datepicker__day--depart');
+        if ( viewMode === 1 ) {
+
+            if ( now.between(this.veTempArrive, this.veRanger) ) {
+                classList.push('n-between');
+            }
+
+            let arriveFirst = this.veTempArrive.before(this.veRanger);
+
+            if ( now.equalDate(this.veTempArrive) ) {
+                classList.push(arriveFirst ? 'n-arrive' : 'n-depart');
+            }
+
+            if ( now.equalDate(this.veRanger) ) {
+                classList.push(arriveFirst ? 'n-depart' : 'n-arrive');
+            }
+
         }
 
-        if ( this.nativeRange.length === 1 && now.equalDate(this.tempDepart) && ! now.equalDate(this.tempArrive) ) {
-            classList.push(this.tempDepart.before(this.tempArrive) ?
-                'n-datepicker__day--arrive' : 'n-datepicker__day--depart');
-        }
 
-        if ( this.nativeRange.length === 1 && now.between(this.tempArrive, this.tempDepart) ) {
-            classList.push('n-datepicker__day--between');
-        }
 
-        if ( this.nativeRange.length === 0 && now.between(this.nativeArrive, this.nativeDepart) ) {
-            classList.push('n-datepicker__day--between');
-        }
-
-        if ( this.nativeRange.length === 0 && now.between(this.nativeArrive, this.nativeDepart) ) {
-            classList.push('n-datepicker__day--selected');
-        }
+        // if ( this.veRange.length === 0 && now.equalDate(this.nativeArrive) ) {
+        //
+        //     if ( ! this.nativeArrive.equalDate(this.nativeDepart) ) {
+        //         classList.push(this.nativeArrive.before(this.nativeDepart) ?
+        //             'n-datepicker__day--arrive' : 'n-datepicker__day--depart');
+        //     }
+        //
+        //     classList.push('n-datepicker__day--selected');
+        // }
+        //
+        // if ( this.veRange.length === 0 && now.equalDate(this.nativeDepart) ) {
+        //
+        //     if ( ! this.nativeDepart.equalDate(this.nativeArrive) ) {
+        //         classList.push(this.nativeDepart.before(this.nativeArrive) ?
+        //             'n-datepicker__day--arrive' : 'n-datepicker__day--depart');
+        //     }
+        //
+        //     classList.push('n-datepicker__day--selected');
+        // }
+        //
+        // if ( this.veRange.length === 1 && now.equalDate(this.tempArrive) && ! now.equalDate(this.tempDepart) ) {
+        //     classList.push(this.tempArrive.before(this.tempDepart) ?
+        //         'n-datepicker__day--arrive' : 'n-datepicker__day--depart');
+        // }
+        //
+        // if ( this.veRange.length === 1 && now.equalDate(this.tempDepart) && ! now.equalDate(this.tempArrive) ) {
+        //     classList.push(this.tempDepart.before(this.tempArrive) ?
+        //         'n-datepicker__day--arrive' : 'n-datepicker__day--depart');
+        // }
+        //
+        // if ( this.veRange.length === 1 && now.between(this.tempArrive, this.tempDepart) ) {
+        //     classList.push('n-datepicker__day--between');
+        // }
+        //
+        // if ( this.veRange.length === 0 && now.between(this.nativeArrive, this.nativeDepart) ) {
+        //     classList.push('n-datepicker__day--between');
+        // }
+        //
+        // if ( this.veRange.length === 0 && now.between(this.nativeArrive, this.nativeDepart) ) {
+        //     classList.push('n-datepicker__day--selected');
+        // }
 
         let events = {
-            'click': () => {
-                this.nativeRange.push(now);
-            },
-            'mouseenter': () => {
-                this.tempDepart = now;
-            }
+            click: () => this.patchRange(now),
+            mouseenter: () => this.printRange(now)
         };
 
         return (
-            <div on={events} class={classList}>
+            <div class={classList} on={events}>
                 <span>{ now.format('DD') }</span>
             </div>
         );
@@ -406,44 +618,45 @@ export default {
 
     renderDate()
     {
-        let prev = {
-            on: {
-                click: () => this.tempValue = this.tempValue.prevMonth()
-            }
-        };
+        let prev = () => this.veCached = this.veCached.prevMonth();
+        let next = () => this.veCached = this.veCached.nextMonth();
 
-        let next = {
-            on: {
-                click: () => this.tempValue = this.tempValue.nextMonth()
-            }
-        };
+        let legendDateHtml = (
+            Arr.each(this.weekdays, (day) => {
+                return (
+                    <div class="n-datepicker__day">
+                        <span>{ day }</span>
+                    </div>
+                );
+            })
+        );
+
+        let renderItem = this.ctor('renderDateItem');
+
+        if ( this.range ) {
+            renderItem = this.ctor('renderRangeDateItem');
+        }
+
+        let bodyDateHtml = (
+            Arr.each(Arr.chunk(this.datesGrid, 7), (chunks) => {
+                return (
+                    <div class="n-datepicker__week">
+                        { Arr.each(chunks, renderItem) }
+                    </div>
+                );
+            })
+        );
 
         return (
-            <div class="n-datepicker__dateview">
+            <div class="n-datepicker__dateview" vOn:click={this.eventStop}>
                 <div class="n-datepicker__header">
                     { this.ctor('renderToolbar')({ prev, next }) }
                 </div>
                 <div class="n-datepicker__legend">
-                    {
-                        Arr.each(this.weekdays, (day) => {
-                            return (
-                                <div class="n-datepicker__day">
-                                    <span>{day}</span>
-                                </div>
-                            );
-                        })
-                    }
+                    { legendDateHtml }
                 </div>
                 <div class="n-datepicker__body">
-                    {
-                        Arr.each(Arr.chunk(this.datesGrid, 7), (chunks) => {
-                            return (
-                                <div class="n-datepicker__week">
-                                    { Arr.each(chunks, this.ctor(this.range ? 'renderDateRangeItem' : 'renderDateItem')) }
-                                </div>
-                            );
-                        })
-                    }
+                    { bodyDateHtml }
                 </div>
             </div>
         );
@@ -455,22 +668,20 @@ export default {
             'n-datepicker__month'
         ];
 
-        if ( now.equalDate(this.nativeValue) ) {
-            classList.push('n-datepicker__month--selected');
+        if ( now.equal(this.veCached, 'YYYYMM') ) {
+            classList.push('n-selected');
         }
 
-        if ( now.month() === Now.make().month() ) {
-            classList.push('n-datepicker__month--current');
+        if ( now.month() === Now.make('now').month() ) {
+            classList.push('n-current');
         }
 
         let events = {
-            'click': () => {
-                this.tempValue = now; this.nativeView = 'date';
-            }
+            click: () => this.patchMonth(now)
         };
 
         return (
-            <div on={events} class={classList}>
+            <div class={classList} on={events}>
                 <span>{ this.months[now.month()] }</span>
             </div>
         )
@@ -478,20 +689,11 @@ export default {
 
     renderMonth()
     {
-        let prev = {
-            on: {
-                click: () => this.tempValue = this.tempValue.prevYear()
-            }
-        };
-
-        let next = {
-            on: {
-                click: () => this.tempValue = this.tempValue.nextYear()
-            }
-        };
+        let prev = () => this.veCached = this.veCached.prevYear();
+        let next = () => this.veCached = this.veCached.nextYear();
 
         return (
-            <div class="n-datepicker__monthview">
+            <div class="n-datepicker__monthview" vOn:click={this.eventStop}>
                 <div class="n-datepicker__header">
                     { this.ctor('renderToolbar')({ prev, next }) }
                 </div>
@@ -501,7 +703,7 @@ export default {
                     </div>
                 </div>
                 <div class="n-datepicker__footer">
-                    <NButton type="link" vOn:click={() => this.nativeView = 'date'}>
+                    <NButton type="link" vOn:click={this.gotoDate}>
                         { this.trans('Go back') }
                     </NButton>
                 </div>
@@ -515,23 +717,20 @@ export default {
             'n-datepicker__year'
         ];
 
-        if ( now.equal(this.nativeValue, 'YYYY') ) {
-            classList.push('n-datepicker__year--selected');
+        if ( now.equal(this.veCached, 'YYYY') ) {
+            classList.push('n-selected');
         }
 
-        if ( now.year() === Now.make().year() ) {
-            classList.push('n-datepicker__year--current');
+        if ( now.year() === Now.make('now').year() ) {
+            classList.push('n-current');
         }
-
 
         let events = {
-            'click': () => {
-                this.tempValue = now; this.nativeView = 'month';
-            }
+            click: () => this.patchYear(now)
         };
 
         return (
-            <div on={events} class={classList}>
+            <div class={classList} on={events}>
                 <span>{ now.year() }</span>
             </div>
         )
@@ -539,20 +738,11 @@ export default {
 
     renderYear()
     {
-        let prev = {
-            on: {
-                click: () => this.tempValue = this.tempValue.prevDecade()
-            }
-        };
-
-        let next = {
-            on: {
-                click: () => this.tempValue = this.tempValue.nextDecade()
-            }
-        };
+        let prev = () => this.veCached = this.veCached.prevDecade();
+        let next = () => this.veCached = this.veCached.nextDecade();
 
         return (
-            <div class="n-datepicker__yearview">
+            <div class="n-datepicker__yearview" vOn:click={this.eventStop}>
                 <div class="n-datepicker__header">
                     { this.ctor('renderToolbar')({ prev, next }) }
                 </div>
@@ -562,7 +752,7 @@ export default {
                     </div>
                 </div>
                 <div class="n-datepicker__footer">
-                    <NButton type="link" vOn:click={() => this.nativeView = 'date'}>
+                    <NButton type="link" vOn:click={this.gotoDate}>
                         { this.trans('Go back') }
                     </NButton>
                 </div>
@@ -570,131 +760,188 @@ export default {
         );
     },
 
-    renderInput()
+    renderInputIcon()
     {
-        let classList = [
-            'n-datepicker', 'n-datepicker--' + this.size
-        ];
+        return (
+            <div class="n-datepicker__icon">
+                <span class={this.icons.calendar}></span>
+            </div>
+        );
+    },
 
-        if ( this.clearable === true ){
-            classList.push('n-datepicker--clearable');
+    renderInputClear()
+    {
+        if ( ! this.clearable ) {
+            return null;
         }
 
-        if ( this.disabled === true ){
-            classList.push('n-datepicker--disabled');
-        }
-
-        let inputEvent = (event) => {
-
-            if ( event.target.value.length !== this.displayFormat.length ) {
-                return;
-            }
-
-            let value = Now.make(event.target.value);
-
-            if ( value.valid() === false ) {
-                return;
-            }
-
-            this.$emit('input', value.format(this.format));
+        let props = {
+            type: 'input',
+            icon: this.icons.times,
+            disabled: this.disabled
         };
 
-        let clearEvent = () => {
+        if ( Any.isEmpty(this.value) ) {
+            props.disabled = true;
+        }
 
-            this.$emit('input', this.clearValue);
-
-            this.visible = false;
+        let events = {
+            click: this.eventClear
         };
 
         return (
-            <div class={classList}>
-                <div class="n-datepicker__icon">
-                    <span class={this.icons.calendar}></span>
-                </div>
-                <div class="n-datepicker__input">
-                    <input type="text" disabled={this.disabled} value={this.value ? this.nativeValue.format(this.displayFormat) : ''} placeholder={this.placeholder} vOn:input={inputEvent} />
-                </div>
-                { this.clearable &&
-                    <NButton type="input" icon={this.icons.times} disabled={this.disabled || Any.isEmpty(this.value)} vOn:mousedown_stop={clearEvent} />
-                }
+            <NButton props={props} on={events} />
+        )
+    },
+
+    renderInput()
+    {
+        let classList = [
+            'n-datepicker'
+        ];
+
+        if ( this.size ) {
+            classList.push('n-datepicker--' + this.size);
+        }
+
+        if ( this.clearable ){
+            classList.push('n-clearable');
+        }
+
+        if ( this.disabled ){
+            classList.push('n-disabled');
+        }
+
+        let attrs = {
+            type: 'text',
+            value: '',
+            disabled: this.disabled,
+            placeholder: this.placeholder
+        };
+
+        let renderDisplay = ! Any.isEmpty(this.value);
+
+        if ( Any.isString(this.value) ) {
+            renderDisplay |= this.value.match(/^now/);
+        }
+
+        if ( renderDisplay ) {
+            attrs.value = this.veValue.format(this.displayFormat, true);
+        }
+
+        let events = {
+            input: this.eventInput
+        };
+
+        let inputHtml = (
+            <div class="n-datepicker__input">
+                <input value={attrs.value} attrs={attrs} on={events} />
             </div>
+        );
+
+        return (
+            <div class={classList}>
+                { this.ctor('renderInputIcon')() }
+                { inputHtml }
+                { this.ctor('renderInputClear')() }
+            </div>
+        );
+    },
+
+    renderRangeInputArrive()
+    {
+        let attrs = {
+            type: 'text',
+            value: '',
+            disabled: this.disabled,
+            placeholder: this.placeholderArrive,
+        };
+
+        if ( ! Any.isEmpty(this.arrive) ) {
+            attrs.value = this.veArrive.format(this.displayFormat, true);
+        }
+
+        return (
+            <input value={attrs.value} attrs={attrs} />
+        );
+    },
+
+    renderRangeInputDepart()
+    {
+        let attrs = {
+            type: 'text',
+            value: '',
+            disabled: this.disabled,
+            placeholder: this.placeholderDepart,
+        };
+
+        if ( ! Any.isEmpty(this.depart) ) {
+            attrs.value = this.veDepart.format(this.displayFormat, true);
+        }
+
+        return (
+            <input value={attrs.value} attrs={attrs} />
         );
     },
 
     renderRangeInput()
     {
-
         let classList = [
-            'n-datepicker', 'n-datepicker--' + this.size
+            'n-datepicker',
         ];
 
-        if ( this.clearable === true ){
-            classList.push('n-datepicker--clearable');
+        if ( this.size ) {
+            classList.push('n-datepicker--' + this.size);
         }
 
-        if ( this.disabled === true ){
-            classList.push('n-datepicker--disabled');
+        if ( this.clearable ){
+            classList.push('n-clearable');
         }
 
-        let arriveEvent = (event) => {
-
-            if ( event.target.value.length !== this.displayFormat.length ) {
-                return;
-            }
-
-            let arrive = Now.make(event.target.value);
-
-            if ( arrive.valid() === false ) {
-                return;
-            }
-
-            this.$emit('update:arrive', arrive.format(this.format));
-            this.$emit('update:depart', this.nativeDepart.format(this.format));
-        };
-
-        let departEvent = (event) => {
-
-            if ( event.target.value.length !== this.displayFormat.length ) {
-                return;
-            }
-
-            let depart = Now.make(event.target.value);
-
-            if ( depart.valid() === false ) {
-                return;
-            }
-
-            this.$emit('update:depart', depart.format(this.format));
-            this.$emit('update:arrive', this.nativeArrive.format(this.format));
-        };
-
-        let clearEvent = () => {
-
-            this.$emit('update:arrive', this.clearValue);
-            this.$emit('update:depart', this.clearValue);
-
-            this.visible = false;
-        };
+        if ( this.disabled ){
+            classList.push('n-disabled');
+        }
 
         return (
             <div class={classList}>
-                <div class="n-datepicker__icon">
-                    <span class={this.icons.calendar}></span>
-                </div>
+                { this.ctor('renderInputIcon')() }
                 <div class="n-datepicker__input n-datepicker__input--range">
-                    <input type="text" disabled={this.disabled} value={this.nativeArrive.format(this.displayFormat)} placeholder={this.placeholderArrive} vOn:input={arriveEvent} />
+                    { this.ctor('renderRangeInputArrive')() }
                 </div>
                 <span class="n-datepicker__seperator">
                     <span>{ this.rangeSeparator }</span>
                 </span>
                 <div class="n-datepicker__input n-datepicker__input--range">
-                    <input type="text" disabled={this.disabled} value={this.nativeDepart.format(this.displayFormat)} placeholder={this.placeholderDepart} vOn:input={departEvent} />
+                    { this.ctor('renderRangeInputDepart')() }
                 </div>
-                { this.clearable &&
-                    <NButton type="input" icon={this.icons.times} disabled={this.disabled || Any.isEmpty(this.arrive) && Any.isEmpty(this.depart)} vOn:mtimesusedown_stop={clearEvent} />
-                }
+                { this.ctor('renderInputClear')() }
             </div>
         );
+    },
+
+    renderPopover()
+    {
+        let props = {
+            visible: this.veOpen,
+            type: 'datepicker',
+            trigger: 'click',
+            width: '100%',
+            size: this.size,
+            disabled: this.disabled,
+            position: this.position,
+            boundary: this.boundary,
+            window: ! this.boundary,
+        };
+
+        let events = {
+            input: this.eventPopoverInput
+        };
+
+        return (
+            <NPopover ref="popover" props={props} on={events}>
+                { this.ctor('render' + Str.ucfirst(this.veView))() }
+            </NPopover>
+        )
     },
 
     render()
@@ -702,9 +949,7 @@ export default {
         return (
             <div class="n-datepicker__wrapper">
                 { this.ctor(this.range ? 'renderRangeInput' : 'renderInput')() }
-                <NPopover ref="modal" vModel={this.visible} trigger="click" type="datepicker" width={300} position={this.position} disabled={this.disabled} closeInside={false}>
-                    { this.ctor('render' + Str.ucfirst(this.nativeView))() }
-                </NPopover>
+                { this.ctor('renderPopover')() }
             </div>
         );
     }

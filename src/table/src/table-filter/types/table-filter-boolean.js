@@ -29,7 +29,7 @@ export default {
     renderForm()
     {
         return (
-            <NForm form={this.form} vOn:change={this.changeFilter}>
+            <NForm form={this.form}>
                 <NFormItem>
                     <NSelect size="small" vModel={this.form.value}>
                         <NSelectOption value="1" label={this.column.trueText} />

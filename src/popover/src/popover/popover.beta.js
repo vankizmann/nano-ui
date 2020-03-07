@@ -383,6 +383,10 @@ export default {
                 result = ! this.closeInside;
             }
 
+            if ( target && this.veVisible ) {
+                result = false;
+            }
+
             if ( this.veVisible !== result ) {
                 this.$emit('input', this.veVisible = result);
             }

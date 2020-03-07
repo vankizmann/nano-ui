@@ -38,19 +38,19 @@ let jsExtExport = {
         }
     },
     plugins: [
-        new webpack.LoaderOptionsPlugin({
-            minimize: true,
-            debug: false,
-        }),
-        new UglifyJsPlugin({
-            uglifyOptions: {
-                output: {
-                    comments: false
-                }
-            },
-            exclude: /node_modules/,
-        }),
-        new webpack.optimize.AggressiveMergingPlugin(),
+        // new webpack.LoaderOptionsPlugin({
+        //     minimize: true,
+        //     debug: false,
+        // }),
+        // new UglifyJsPlugin({
+        //     uglifyOptions: {
+        //         output: {
+        //             comments: false
+        //         }
+        //     },
+        //     exclude: /node_modules/,
+        // }),
+        // new webpack.optimize.AggressiveMergingPlugin(),
     ]
 };
 

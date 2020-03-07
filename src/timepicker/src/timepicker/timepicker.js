@@ -35,6 +35,13 @@ export default {
             }
         },
 
+        boundary: {
+            default()
+            {
+                return null;
+            }
+        },
+
         position: {
             default()
             {
@@ -183,6 +190,11 @@ export default {
             this.veOpen = value;
         },
 
+        eventStop(event)
+        {
+            event.stopPropagation();
+        }
+
     },
 
     renderToolbar()
@@ -245,8 +257,8 @@ export default {
 
         let value = '';
 
-        if ( this.value ) {
-            value = this.veValue.format(this.displayFormat);
+        if ( ! Any.isEmpty(this.value) ) {
+            value = this.veValue.format(this.displayFormat, true);
         }
 
         return (
@@ -260,9 +272,12 @@ export default {
     renderTimepicker()
     {
         let classList = [
-            'n-timepicker',
-            'n-timepicker--' + this.size
+            'n-timepicker'
         ];
+
+        if ( this.size ) {
+            classList.push('n-timepicker--' + this.size);
+        }
 
         return (
             <div class={classList}>
@@ -279,7 +294,7 @@ export default {
             'n-timepicker__item'
         ];
 
-        if ( this.veValue.valid() && now.hour() === this.veValue.hour() ) {
+        if ( now.hour() === this.veValue.hour() ) {
             classList.push('n-active');
         }
 
@@ -315,7 +330,7 @@ export default {
             'n-timepicker__item'
         ];
 
-        if ( this.veValue.valid() && now.minute() === this.veValue.minute() ) {
+        if ( now.minute() === this.veValue.minute() ) {
             classList.push('n-active');
         }
 
@@ -351,7 +366,7 @@ export default {
             'n-timepicker__item'
         ];
 
-        if ( this.veValue.valid() && now.second() === this.veValue.second() ) {
+        if ( now.second() === this.veValue.second() ) {
             classList.push('n-active');
         }
 
@@ -384,12 +399,15 @@ export default {
     renderPopover()
     {
         let props = {
+            visible: this.veOpen,
             type: 'timepicker',
             trigger: 'click',
-            visible: this.veOpen,
+            width: '100%',
             size: this.size,
+            disabled: this.disabled,
             position: this.position,
-            disabled: this.disabled
+            boundary: this.boundary,
+            window: ! this.boundary,
         };
 
         let events = {
@@ -398,7 +416,7 @@ export default {
 
         return (
             <NPopover ref="popover" props={props} on={events}>
-                <div class="n-timepicker__time">
+                <div class="n-timepicker__time" vOn:click={this.eventStop}>
                     <div class="n-timepicker__header">
                         {this.ctor('renderToolbar')()}
                     </div>

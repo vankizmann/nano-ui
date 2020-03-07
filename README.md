@@ -10,9 +10,11 @@
 - [Input](./docs/input/index.html)
 - [Textarea](./docs/textarea/index.html)
 - [Checkbox](./docs/checkbox/index.html)
+- [Radio](./docs/radio/index.html)
 - [Select](./docs/select/index.html)
 - [Cascader](./docs/cascader/index.html)
 - [Timepicker](./docs/timepicker/index.html)
+- [Datepicker](./docs/datepicker/index.html)
 - [Transfer](./docs/transfer/index.html)
 - [Form](./docs/form/index.html)
 - [Tabs](./docs/tabs/index.html)
@@ -25,14 +27,12 @@
 - [Map](./docs/map/index.html)
 
 ### In progress
-- [Datepicker](./docs/datepicker/index.html)
+- [Switch](./docs/switch/index.html)
+
+### Coming soon
+- [Number](./docs/number/index.html)
+- [WYSIWYG](./docs/wysiwyg/index.html)
 - [Matrix](./docs/matrix/index.html)
 - [Info](./docs/info/index.html)
 - [File](./docs/file/index.html)
 - [Filelist](./docs/filelist/index.html)
-
-### Coming soon
-- [Radio](./docs/radio/index.html)
-- [Number](./docs/number/index.html)
-- [Switch](./docs/switch/index.html)
-- [WYSIWYG](./docs/wysiwyg/index.html)

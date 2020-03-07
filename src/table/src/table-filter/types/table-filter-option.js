@@ -42,7 +42,7 @@ export default {
         });
 
         return (
-            <NForm form={this.form} vOn:change={this.changeFilter}>
+            <NForm form={this.form}>
                 <NFormItem>
                     <NCheckboxGroup size="small" vModel={this.form.value}>
                         {
