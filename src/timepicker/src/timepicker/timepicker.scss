@@ -3,13 +3,13 @@
 $timepicker-size: 14px !default;
 $timepicker-height: 34px !default;
 
-$timepicker-display-size: 15px !default;
+$timepicker-display-size: 14px !default;
 $timepicker-item-height: 35px !default;
 
 .n-timepicker__wrapper {
     position: relative;
     display: inline-flex;
-    width: 100%;
+    //width: 100%;
     color: $--color-black;
 }
 

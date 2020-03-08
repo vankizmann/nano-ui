@@ -828,22 +828,22 @@
   border-color: #2877FA; }
 
 /**
- * Button primary outline
+ * Button primary plain
  */
-.n-button.n-button--outline.n-button--primary:not(.n-button--link) {
+.n-button.n-button--plain.n-button--primary:not(.n-button--link) {
   color: #2877FA;
   background: rgba(40, 119, 250, 0.1);
   border-color: rgba(40, 119, 250, 0.25); }
 
-.n-button.n-button--outline.n-button--primary:not(.n-button--link):hover,
-.n-button.n-button--outline.n-button--primary:not(.n-button--link):focus,
-.n-button.n-button--outline.n-button--primary:not(.n-button--link):active {
+.n-button.n-button--plain.n-button--primary:not(.n-button--link):hover,
+.n-button.n-button--plain.n-button--primary:not(.n-button--link):focus,
+.n-button.n-button--plain.n-button--primary:not(.n-button--link):active {
   background: rgba(40, 119, 250, 0.2);
   border-color: rgba(40, 119, 250, 0.25); }
 
-.n-disabled .n-button.n-button--outline.n-button--primary:not(.n-button--link),
-.n-disabled .n-button.n-button--outline.n-button--primary:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--outline.n-button--primary:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--plain.n-button--primary:not(.n-button--link),
+.n-disabled .n-button.n-button--plain.n-button--primary:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--plain.n-button--primary:not(.n-button--link):focus {
   background: rgba(40, 119, 250, 0.1);
   border-color: rgba(40, 119, 250, 0.25); }
 
@@ -873,23 +873,23 @@
   border-color: #dddedf; }
 
 /**
- * Button secondary outline
+ * Button secondary plain
  */
-.n-button.n-button--outline.n-button--secondary:not(.n-button--link) {
+.n-button.n-button--plain.n-button--secondary:not(.n-button--link) {
   color: #1b2229;
   background: transparent;
   border-color: rgba(141, 145, 148, 0.25); }
 
-.n-button.n-button--outline.n-button--secondary:not(.n-button--link):hover,
-.n-button.n-button--outline.n-button--secondary:not(.n-button--link):focus,
-.n-button.n-button--outline.n-button--secondary:not(.n-button--link):active {
+.n-button.n-button--plain.n-button--secondary:not(.n-button--link):hover,
+.n-button.n-button--plain.n-button--secondary:not(.n-button--link):focus,
+.n-button.n-button--plain.n-button--secondary:not(.n-button--link):active {
   color: #2877FA;
   background: rgba(40, 119, 250, 0.1);
   border-color: rgba(40, 119, 250, 0.25); }
 
-.n-disabled .n-button.n-button--outline.n-button--secondary:not(.n-button--link),
-.n-disabled .n-button.n-button--outline.n-button--secondary:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--outline.n-button--secondary:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--plain.n-button--secondary:not(.n-button--link),
+.n-disabled .n-button.n-button--plain.n-button--secondary:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--plain.n-button--secondary:not(.n-button--link):focus {
   color: #1b2229;
   background: rgba(141, 145, 148, 0.25);
   border-color: rgba(141, 145, 148, 0.25); }
@@ -918,22 +918,22 @@
   border-color: #68e0a0; }
 
 /**
- * Button success outline
+ * Button success plain
  */
-.n-button.n-button--outline.n-button--success:not(.n-button--link) {
+.n-button.n-button--plain.n-button--success:not(.n-button--link) {
   color: #3ed786;
   background: rgba(62, 215, 134, 0.1);
   border-color: rgba(62, 215, 134, 0.25); }
 
-.n-button.n-button--outline.n-button--success:not(.n-button--link):hover,
-.n-button.n-button--outline.n-button--success:not(.n-button--link):focus,
-.n-button.n-button--outline.n-button--success:not(.n-button--link):active {
+.n-button.n-button--plain.n-button--success:not(.n-button--link):hover,
+.n-button.n-button--plain.n-button--success:not(.n-button--link):focus,
+.n-button.n-button--plain.n-button--success:not(.n-button--link):active {
   background: rgba(62, 215, 134, 0.2);
   border-color: rgba(62, 215, 134, 0.25); }
 
-.n-disabled .n-button.n-button--outline.n-button--success:not(.n-button--link),
-.n-disabled .n-button.n-button--outline.n-button--success:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--outline.n-button--success:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--plain.n-button--success:not(.n-button--link),
+.n-disabled .n-button.n-button--plain.n-button--success:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--plain.n-button--success:not(.n-button--link):focus {
   background: rgba(62, 215, 134, 0.1);
   border-color: rgba(62, 215, 134, 0.25); }
 
@@ -961,22 +961,22 @@
   border-color: #ffc062; }
 
 /**
- * Button warning outline
+ * Button warning plain
  */
-.n-button.n-button--outline.n-button--warning:not(.n-button--link) {
+.n-button.n-button--plain.n-button--warning:not(.n-button--link) {
   color: #ffac2f;
   background: rgba(255, 172, 47, 0.1);
   border-color: rgba(255, 172, 47, 0.25); }
 
-.n-button.n-button--outline.n-button--warning:not(.n-button--link):hover,
-.n-button.n-button--outline.n-button--warning:not(.n-button--link):focus,
-.n-button.n-button--outline.n-button--warning:not(.n-button--link):active {
+.n-button.n-button--plain.n-button--warning:not(.n-button--link):hover,
+.n-button.n-button--plain.n-button--warning:not(.n-button--link):focus,
+.n-button.n-button--plain.n-button--warning:not(.n-button--link):active {
   background: rgba(255, 172, 47, 0.2);
   border-color: rgba(255, 172, 47, 0.25); }
 
-.n-disabled .n-button.n-button--outline.n-button--warning:not(.n-button--link),
-.n-disabled .n-button.n-button--outline.n-button--warning:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--outline.n-button--warning:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--plain.n-button--warning:not(.n-button--link),
+.n-disabled .n-button.n-button--plain.n-button--warning:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--plain.n-button--warning:not(.n-button--link):focus {
   background: rgba(255, 172, 47, 0.1);
   border-color: rgba(255, 172, 47, 0.25); }
 
@@ -1004,22 +1004,22 @@
   border-color: #fd627b; }
 
 /**
- * Button danger outline
+ * Button danger plain
  */
-.n-button.n-button--outline.n-button--danger:not(.n-button--link) {
+.n-button.n-button--plain.n-button--danger:not(.n-button--link) {
   color: #fd2f51;
   background: rgba(253, 47, 81, 0.1);
   border-color: rgba(253, 47, 81, 0.25); }
 
-.n-button.n-button--outline.n-button--danger:not(.n-button--link):hover,
-.n-button.n-button--outline.n-button--danger:not(.n-button--link):focus,
-.n-button.n-button--outline.n-button--danger:not(.n-button--link):active {
+.n-button.n-button--plain.n-button--danger:not(.n-button--link):hover,
+.n-button.n-button--plain.n-button--danger:not(.n-button--link):focus,
+.n-button.n-button--plain.n-button--danger:not(.n-button--link):active {
   background: rgba(253, 47, 81, 0.2);
   border-color: rgba(253, 47, 81, 0.25); }
 
-.n-disabled .n-button.n-button--outline.n-button--danger:not(.n-button--link),
-.n-disabled .n-button.n-button--outline.n-button--danger:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--outline.n-button--danger:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--plain.n-button--danger:not(.n-button--link),
+.n-disabled .n-button.n-button--plain.n-button--danger:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--plain.n-button--danger:not(.n-button--link):focus {
   background: rgba(253, 47, 81, 0.1);
   border-color: rgba(253, 47, 81, 0.25); }
 
@@ -1047,22 +1047,22 @@
   border-color: #66d2f3; }
 
 /**
- * Button info outline
+ * Button info plain
  */
-.n-button.n-button--outline.n-button--info:not(.n-button--link) {
+.n-button.n-button--plain.n-button--info:not(.n-button--link) {
   color: #37C4EF;
   background: rgba(55, 196, 239, 0.1);
   border-color: rgba(55, 196, 239, 0.25); }
 
-.n-button.n-button--outline.n-button--info:not(.n-button--link):hover,
-.n-button.n-button--outline.n-button--info:not(.n-button--link):focus,
-.n-button.n-button--outline.n-button--info:not(.n-button--link):active {
+.n-button.n-button--plain.n-button--info:not(.n-button--link):hover,
+.n-button.n-button--plain.n-button--info:not(.n-button--link):focus,
+.n-button.n-button--plain.n-button--info:not(.n-button--link):active {
   background: rgba(55, 196, 239, 0.2);
   border-color: rgba(55, 196, 239, 0.25); }
 
-.n-disabled .n-button.n-button--outline.n-button--info:not(.n-button--link),
-.n-disabled .n-button.n-button--outline.n-button--info:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--outline.n-button--info:not(.n-button--link):focus {
+.n-disabled .n-button.n-button--plain.n-button--info:not(.n-button--link),
+.n-disabled .n-button.n-button--plain.n-button--info:not(.n-button--link):hover,
+.n-disabled .n-button.n-button--plain.n-button--info:not(.n-button--link):focus {
   background: rgba(55, 196, 239, 0.1);
   border-color: rgba(55, 196, 239, 0.25); }
 
@@ -1976,7 +1976,6 @@
   position: relative;
   display: -webkit-inline-box;
   display: inline-flex;
-  width: 100%;
   color: #1b2229; }
 
 .n-datepicker {
@@ -2008,7 +2007,7 @@
   min-height: 34px; }
 
 .n-datepicker.n-clearable {
-  padding-right: 34px; }
+  padding-right: 20.4px; }
 
 .n-datepicker.n-datepicker--small {
   font-size: 11.375px;
@@ -2016,7 +2015,7 @@
   min-height: 29.75px; }
 
 .n-datepicker.n-clearable {
-  padding-right: 29.75px; }
+  padding-right: 17.85px; }
 
 .n-datepicker.n-datepicker--large {
   font-size: 14.625px;
@@ -2024,7 +2023,7 @@
   min-height: 38.25px; }
 
 .n-datepicker.n-clearable {
-  padding-right: 38.25px; }
+  padding-right: 22.95px; }
 
 .n-datepicker.n-disabled,
 .n-datepicker.n-disabled:hover {
@@ -2138,6 +2137,22 @@
   padding: 7.8px 12px;
   text-align: right;
   border-top: 1px solid #e8e9ea; }
+
+.n-datepicker__dateview .n-datepicker__panels {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row; }
+
+.n-datepicker__dateview .n-datepicker__panel {
+  -webkit-box-flex: 0;
+          flex: 0 0 auto;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column; }
 
 .n-datepicker__dateview .n-datepicker__body {
   padding-top: 0; }
@@ -2313,7 +2328,6 @@
   position: relative;
   display: -webkit-inline-box;
   display: inline-flex;
-  width: 100%;
   color: #1b2229; }
 
 .n-popover.n-popover--timepicker {
@@ -2418,7 +2432,7 @@
           align-items: center;
   -webkit-box-pack: center;
           justify-content: center;
-  font-size: 15px; }
+  font-size: 14px; }
 
 .n-timepicker__prev {
   margin-right: auto; }
@@ -2819,7 +2833,6 @@
   max-width: unset !important; }
 
 .n-popover.n-popover--datepicker {
-  width: 270px;
   max-width: unset !important; }
 
 .n-popover.n-popover--tooltip {

@@ -88,6 +88,14 @@ export default {
             type: [String]
         },
 
+        monthPanels: {
+            default()
+            {
+                return 2;
+            },
+            type: [Number]
+        },
+
         size: {
             default()
             {
@@ -101,6 +109,13 @@ export default {
                 return true;
             },
             type: [Boolean]
+        },
+
+        boundary: {
+            default()
+            {
+                return null;
+            }
         },
 
         position: {
@@ -192,11 +207,6 @@ export default {
         monthsGrid()
         {
             return this.veCached.getMonths();
-        },
-
-        datesGrid()
-        {
-            return this.veCached.getDatesGrid();
         }
 
     },
@@ -407,9 +417,20 @@ export default {
             click: this.gotoMonth
         };
 
+        let monthsHtml = [
+            this.months[this.veCached.month()]
+        ];
+
+        let month = this.veCached.clone()
+            .addMonths(this.monthPanels - 1);
+
+        if ( month.month() !== this.veCached.month() ) {
+            monthsHtml.push(this.months[month.month()]);
+        }
+
         return (
             <span class="n-datepicker__month" on={events}>
-                { this.months[this.veCached.month()] }
+                { monthsHtml.join(' - ') }
             </span>
         );
     },
@@ -420,9 +441,20 @@ export default {
             click: this.gotoYear
         };
 
+        let yearsHtml = [
+            this.veCached.year()
+        ];
+
+        let month = this.veCached.clone()
+            .addMonths(this.monthPanels - 1);
+
+        if ( month.year() !== this.veCached.year() ) {
+            yearsHtml.push(month.year());
+        }
+
         return (
             <span class="n-datepicker__year" on={events}>
-                { this.veCached.year() }
+                { yearsHtml.join(' - ') }
             </span>
         );
     },
@@ -445,7 +477,7 @@ export default {
         );
     },
 
-    renderDateItem(now)
+    renderDateItem(now, month)
     {
         let classList = [
             'n-datepicker__day'
@@ -459,7 +491,7 @@ export default {
             classList.push('n-selected');
         }
 
-        if ( now.month() === this.veCached.month() ) {
+        if ( now.month() === month.month() ) {
             classList.push('n-current');
         }
 
@@ -474,7 +506,7 @@ export default {
         );
     },
 
-    renderRangeDateItem(now)
+    renderRangeDateItem(now, month)
     {
         let classList = [
             'n-datepicker__day'
@@ -484,7 +516,7 @@ export default {
             classList.push('n-today');
         }
 
-        if ( now.month() === this.veCached.month() ) {
+        if ( now.month() === month.month() ) {
             classList.push('n-current');
         }
 
@@ -554,7 +586,7 @@ export default {
         let prev = () => this.veCached = this.veCached.prevMonth();
         let next = () => this.veCached = this.veCached.nextMonth();
 
-        let legendDateHtml = (
+        let legendHtml = (
             Arr.each(this.weekdays, (day) => {
                 return (
                     <div class="n-datepicker__day">
@@ -570,11 +602,30 @@ export default {
             renderItem = this.ctor('renderRangeDateItem');
         }
 
-        let bodyDateHtml = (
-            Arr.each(Arr.chunk(this.datesGrid, 7), (chunks) => {
+        let bodyHtml = (month) => (
+            Arr.each(Arr.chunk(month.getDatesGrid(), 7), (chunks) => {
                 return (
                     <div class="n-datepicker__week">
-                        { Arr.each(chunks, renderItem) }
+                        { Arr.each(chunks, (chunk) => renderItem(chunk, month)) }
+                    </div>
+                );
+            })
+        );
+
+        let panelHtml = (
+            Arr.each(Arr.make(this.monthPanels), (offset) => {
+
+                let month = this.veCached.clone()
+                    .addMonths(offset - 1);
+
+                return (
+                    <div class="n-datepicker__panel">
+                        <div class="n-datepicker__legend">
+                            { legendHtml }
+                        </div>
+                        <div class="n-datepicker__body">
+                            { bodyHtml(month) }
+                        </div>
                     </div>
                 );
             })
@@ -585,11 +636,8 @@ export default {
                 <div class="n-datepicker__header">
                     { this.ctor('renderToolbar')({ prev, next }) }
                 </div>
-                <div class="n-datepicker__legend">
-                    { legendDateHtml }
-                </div>
-                <div class="n-datepicker__body">
-                    { bodyDateHtml }
+                <div class="n-datepicker__panels">
+                    { panelHtml }
                 </div>
             </div>
         );

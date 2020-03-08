@@ -45,7 +45,7 @@ export default {
         position: {
             default()
             {
-                return 'bottom-start';
+                return 'bottom-center';
             },
             type: [String]
         },

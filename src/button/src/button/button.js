@@ -61,7 +61,7 @@ export default {
             type: [Boolean]
         },
 
-        outline: {
+        plain: {
             default()
             {
                 return false;
@@ -128,8 +128,8 @@ export default {
             classList.push('n-button--round');
         }
 
-        if ( this.outline ) {
-            classList.push('n-button--outline');
+        if ( this.plain ) {
+            classList.push('n-button--plain');
         }
 
         let attrs = {

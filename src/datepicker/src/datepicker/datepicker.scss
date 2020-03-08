@@ -10,7 +10,7 @@ $datepicker-day-width: 32px !default;
 .n-datepicker__wrapper {
     position: relative;
     display: inline-flex;
-    width: 100%;
+    //width: 100%;
     color: $--color-black;
 }
 
@@ -40,7 +40,7 @@ $datepicker-day-width: 32px !default;
 }
 
 .n-datepicker.n-clearable {
-    padding-right: $datepicker-height;
+    padding-right: $datepicker-height * 0.6;
 }
 
 .n-datepicker.n-datepicker--small {
@@ -50,7 +50,7 @@ $datepicker-day-width: 32px !default;
 }
 
 .n-datepicker.n-clearable {
-    padding-right: $datepicker-height * 0.875;
+    padding-right: $datepicker-height * 0.6 * 0.875;
 }
 
 .n-datepicker.n-datepicker--large {
@@ -60,7 +60,7 @@ $datepicker-day-width: 32px !default;
 }
 
 .n-datepicker.n-clearable {
-    padding-right: $datepicker-height * 1.125;
+    padding-right: $datepicker-height * 0.6 * 1.125;
 }
 
 .n-datepicker.n-disabled,
@@ -183,6 +183,17 @@ $datepicker-day-width: 32px !default;
     padding: $datepicker-padding * 0.65 $datepicker-padding;
     text-align: right;
     border-top: 1px solid $--color-gray-10;
+}
+
+.n-datepicker__dateview .n-datepicker__panels {
+    display: flex;
+    flex-direction: row;
+}
+
+.n-datepicker__dateview .n-datepicker__panel {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .n-datepicker__dateview .n-datepicker__body {

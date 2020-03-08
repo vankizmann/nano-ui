@@ -1,3 +1,5 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>  
+
 # NButton
 Button with diffrent styles.
 
@@ -9,12 +11,17 @@ Button with diffrent styles.
 **type**  
 default: 'primary'  
 types: String  
-_Button type (primary, secondary, succes, warning, danger, info, link)_
+_Button type (primary, secondary, succes, warning, danger, info)_
+
+**type**  
+default: 'link'  
+types: Boolean  
+_Applies link styling for button_
 
 **size**  
-default: 'default'  
+default: null  
 types: String  
-_Button size (small, default, large)_
+_Button size (mini, small, large)_
 
 **square**  
 default: false  
@@ -26,10 +33,10 @@ default: false
 types: Boolean  
 _If button is rounded_
 
-**outline**  
+**plain**  
 default: false  
 types: Boolean  
-_If button uses outline style_
+_If button uses plain style_
 
 **disabled**  
 default: false  
@@ -41,6 +48,11 @@ default: ''
 types: String  
 _Icon class (fa fa-times)_
 
+**iconPosition**  
+default: 'before'  
+types: String  
+_Icon position (before, after)_
+
 **nativeType**  
 default: 'button'  
 types: String  
@@ -49,7 +61,7 @@ _Native button type (a, button, div etc.)_
 ### Events
 ```javascript
     /* Allows all types which are supported by native type */
-    NDraggable.$on('click', (event) => {
+    NButton.$on('click', (event) => {
         console.log(event);
     });
 ```
