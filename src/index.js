@@ -69,6 +69,7 @@ export function Install(Vue, Icons = {}, Styles = {})
     require('./button/index');
     require('./input/index');
     require('./textarea/index');
+    require('./switch/index');
     require('./checkbox/index');
     require('./radio/index');
     require('./select/index');

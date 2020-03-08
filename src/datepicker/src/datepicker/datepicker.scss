@@ -1,23 +1,17 @@
 @import "../../../root/vars";
 
-$datepicker-size: 14px !default;
+$datepicker-size: 13px !default;
+$datepicker-padding: 12px !default;
 $datepicker-height: 34px !default;
 
-$datepicker-display-size: 15px !default;
-$datepicker-day-width: 35px !default;
+$datepicker-display-size: 14px !default;
+$datepicker-day-width: 32px !default;
 
 .n-datepicker__wrapper {
     position: relative;
     display: inline-flex;
     width: 100%;
     color: $--color-black;
-}
-
-.n-datepicker__wrapper .n-popover {
-    display: inline-flex;
-    flex-direction: row;
-    text-align: left;
-    max-width: 100% !important;
 }
 
 .n-datepicker {
@@ -178,15 +172,15 @@ $datepicker-day-width: 35px !default;
 .n-datepicker__dateview .n-datepicker__legend {
     display: flex;
     flex-direction: row;
-    padding: 5px 10px 0;
+    padding: $datepicker-padding $datepicker-padding * 0.5 0;
 }
 
 .n-datepicker__body {
-    padding: 10px;
+    padding: $datepicker-padding * 0.5;
 }
 
 .n-datepicker__footer {
-    padding: 10px;
+    padding: $datepicker-padding * 0.65 $datepicker-padding;
     text-align: right;
     border-top: 1px solid $--color-gray-10;
 }
@@ -226,7 +220,7 @@ $datepicker-day-width: 35px !default;
     align-items: center;
     width: $datepicker-day-width;
     height: $datepicker-day-width;
-    border-radius: $radius-medium;
+    border-radius: 500px;
     color: $--color-gray-50;
 }
 
@@ -276,7 +270,7 @@ $datepicker-day-width: 35px !default;
 .n-datepicker__body .n-datepicker__week .n-datepicker__day:first-child.n-between span {
     width: $datepicker-day-width + 2 !important;
     padding: 0 2px 0 0 !important;
-    border-radius: $radius-medium 0 0 $radius-medium !important;
+    border-radius: 500px 0 0 500px !important;
 }
 
 .n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child).n-depart:not(.n-arrive),
@@ -288,7 +282,7 @@ $datepicker-day-width: 35px !default;
 .n-datepicker__body .n-datepicker__week .n-datepicker__day:last-child.n-between span {
     width: $datepicker-day-width + 2 !important;
     padding: 0 0 0 2px !important;
-    border-radius: 0 $radius-medium $radius-medium 0 !important;
+    border-radius: 0 500px 500px 0 !important;
 }
 
 .n-datepicker__body .n-datepicker__year {

@@ -9,6 +9,7 @@
 - [Button](./docs/button/index.html)
 - [Input](./docs/input/index.html)
 - [Textarea](./docs/textarea/index.html)
+- [Switch](./docs/switch/index.html)
 - [Checkbox](./docs/checkbox/index.html)
 - [Radio](./docs/radio/index.html)
 - [Select](./docs/select/index.html)
@@ -27,12 +28,11 @@
 - [Map](./docs/map/index.html)
 
 ### In progress
-- [Switch](./docs/switch/index.html)
+- [Matrix](./docs/matrix/index.html)
 
 ### Coming soon
 - [Number](./docs/number/index.html)
 - [WYSIWYG](./docs/wysiwyg/index.html)
-- [Matrix](./docs/matrix/index.html)
 - [Info](./docs/info/index.html)
 - [File](./docs/file/index.html)
 - [Filelist](./docs/filelist/index.html)

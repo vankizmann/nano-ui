@@ -29,6 +29,11 @@ $popover-option-size: 14px !default;
     width: 100%;
 }
 
+.n-popover.n-popover--cascader {
+    width: auto;
+    max-width: unset !important;
+}
+
 .n-popover.n-popover--filter {
     width: 230px;
     max-width: unset !important;
@@ -40,7 +45,7 @@ $popover-option-size: 14px !default;
 }
 
 .n-popover.n-popover--datepicker {
-    width: 300px;
+    width: 270px;
     max-width: unset !important;
 }
 

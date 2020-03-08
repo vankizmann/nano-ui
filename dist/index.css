@@ -550,15 +550,18 @@
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
           flex-direction: row;
+  -webkit-box-align: center;
+          align-items: center;
   padding: 5px 0; }
 
+.n-form-group__label .n-switch,
 .n-form-group__label .n-checkbox {
   -webkit-box-flex: 0;
           flex: 0 0 auto;
   margin-right: 9px; }
 
 .n-form-group__label .n-form-group__label-text {
-  cursor: pointer;
+  cursor: default;
   -webkit-box-flex: 0;
           flex: 0 1 auto;
   margin-right: auto;
@@ -566,9 +569,6 @@
   color: #1b2229;
   -webkit-transition: color 0.15s;
   transition: color 0.15s; }
-
-.n-form-group.n-form-group--checkable .n-form-group__label .n-form-group__label-text:hover {
-  color: #2877FA; }
 
 .n-inverse .n-form-group__label .n-form-group__label-text {
   color: #ffffff; }
@@ -1237,6 +1237,89 @@
   padding: 7.65px 11.475px;
   min-height: 38.25px; }
 
+.n-switch__wrapper {
+  position: relative;
+  display: -webkit-inline-box;
+  display: inline-flex; }
+
+.n-switch {
+  cursor: pointer;
+  position: relative;
+  display: block;
+  width: 40px;
+  height: 20px;
+  border-radius: 2px;
+  background: #dddedf;
+  -webkit-transition: background 400ms ease;
+  transition: background 400ms ease; }
+
+.n-switch.n-switch--round {
+  border-radius: 500px; }
+
+.n-switch.n-switch--primary {
+  background: #2877FA; }
+
+.n-switch.n-switch--success {
+  background: #3ed786; }
+
+.n-switch.n-switch--warning {
+  background: #ffac2f; }
+
+.n-switch.n-switch--danger {
+  background: #fd2f51; }
+
+.n-switch.n-switch--info {
+  background: #37C4EF; }
+
+.n-switch.n-switch--small {
+  width: 35px;
+  height: 17.5px; }
+
+.n-switch.n-switch--large {
+  width: 45px;
+  height: 22.5px; }
+
+.n-switch span {
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  margin-top: -7px;
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  background: #ffffff;
+  -webkit-transition: -webkit-transform 400ms ease;
+  transition: -webkit-transform 400ms ease;
+  transition: transform 400ms ease;
+  transition: transform 400ms ease, -webkit-transform 400ms ease; }
+
+.n-switch.n-switch--small span {
+  left: 2.625px;
+  margin-top: -6.125px;
+  width: 12.25px;
+  height: 12.25px; }
+
+.n-switch.n-switch--large span {
+  left: 3.375px;
+  margin-top: -7.875px;
+  width: 15.75px;
+  height: 15.75px; }
+
+.n-switch.n-switch--round span {
+  border-radius: 500px; }
+
+.n-switch.n-on span {
+  -webkit-transform: translateX(20px);
+          transform: translateX(20px); }
+
+.n-switch.n-switch--small.n-on span {
+  -webkit-transform: translateX(17.5px);
+          transform: translateX(17.5px); }
+
+.n-switch.n-switch--large.n-on span {
+  -webkit-transform: translateX(22.5px);
+          transform: translateX(22.5px); }
+
 /**
  * Checkbox container
  */
@@ -1896,15 +1979,6 @@
   width: 100%;
   color: #1b2229; }
 
-.n-datepicker__wrapper .n-popover {
-  display: -webkit-inline-box;
-  display: inline-flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-          flex-direction: row;
-  text-align: left;
-  max-width: 100% !important; }
-
 .n-datepicker {
   -webkit-box-flex: 1;
           flex: 1 1 auto;
@@ -1929,7 +2003,7 @@
   border: 1px solid #2877FA; }
 
 .n-datepicker {
-  font-size: 14px;
+  font-size: 13px;
   padding: 0 10.2px;
   min-height: 34px; }
 
@@ -1937,7 +2011,7 @@
   padding-right: 34px; }
 
 .n-datepicker.n-datepicker--small {
-  font-size: 12.25px;
+  font-size: 11.375px;
   padding: 0 8.925px;
   min-height: 29.75px; }
 
@@ -1945,7 +2019,7 @@
   padding-right: 29.75px; }
 
 .n-datepicker.n-datepicker--large {
-  font-size: 15.75px;
+  font-size: 14.625px;
   padding: 0 11.475px;
   min-height: 38.25px; }
 
@@ -2018,7 +2092,7 @@
           align-items: center;
   -webkit-box-pack: center;
           justify-content: center;
-  font-size: 15px; }
+  font-size: 14px; }
 
 .n-datepicker__prev .n-button {
   padding: 8px;
@@ -2055,13 +2129,13 @@
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
           flex-direction: row;
-  padding: 5px 10px 0; }
+  padding: 12px 6px 0; }
 
 .n-datepicker__body {
-  padding: 10px; }
+  padding: 6px; }
 
 .n-datepicker__footer {
-  padding: 10px;
+  padding: 7.8px 12px;
   text-align: right;
   border-top: 1px solid #e8e9ea; }
 
@@ -2080,8 +2154,8 @@
           justify-content: center;
   -webkit-box-align: center;
           align-items: center;
-  width: 35px;
-  height: 35px;
+  width: 32px;
+  height: 32px;
   font-weight: bold; }
 
 .n-datepicker__body .n-datepicker__week {
@@ -2104,9 +2178,9 @@
           justify-content: center;
   -webkit-box-align: center;
           align-items: center;
-  width: 35px;
-  height: 35px;
-  border-radius: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 500px;
   color: #8d9194; }
 
 .n-datepicker__body .n-datepicker__week .n-datepicker__day:hover span {
@@ -2135,7 +2209,7 @@
 .n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child):not(:last-child).n-between span,
 .n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child):not(:last-child).n-arrive:not(.n-depart) span,
 .n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child):not(:last-child).n-depart:not(.n-arrive) span {
-  width: 39px;
+  width: 36px;
   padding: 0 2px;
   border-radius: 0; }
 
@@ -2145,9 +2219,9 @@
 
 .n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:last-child).n-arrive:not(.n-depart) span,
 .n-datepicker__body .n-datepicker__week .n-datepicker__day:first-child.n-between span {
-  width: 37px !important;
+  width: 34px !important;
   padding: 0 2px 0 0 !important;
-  border-radius: 2px 0 0 2px !important; }
+  border-radius: 500px 0 0 500px !important; }
 
 .n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child).n-depart:not(.n-arrive),
 .n-datepicker__body .n-datepicker__week .n-datepicker__day:last-child.n-between {
@@ -2155,9 +2229,9 @@
 
 .n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child).n-depart:not(.n-arrive) span,
 .n-datepicker__body .n-datepicker__week .n-datepicker__day:last-child.n-between span {
-  width: 37px !important;
+  width: 34px !important;
   padding: 0 0 0 2px !important;
-  border-radius: 0 2px 2px 0 !important; }
+  border-radius: 0 500px 500px 0 !important; }
 
 .n-datepicker__body .n-datepicker__year {
   display: -webkit-box;
@@ -2184,7 +2258,7 @@
   -webkit-box-align: center;
           align-items: center;
   width: 100%;
-  height: 39.375px;
+  height: 36px;
   border-radius: 2px; }
 
 .n-datepicker__body .n-datepicker__year .n-datepicker__month:hover span {
@@ -2222,7 +2296,7 @@
   -webkit-box-align: center;
           align-items: center;
   width: 100%;
-  height: 39.375px;
+  height: 36px;
   border-radius: 2px; }
 
 .n-datepicker__body .n-datepicker__decade .n-datepicker__year:hover span {
@@ -2732,6 +2806,10 @@
 .n-popover.n-popover--select {
   width: 100%; }
 
+.n-popover.n-popover--cascader {
+  width: auto;
+  max-width: unset !important; }
+
 .n-popover.n-popover--filter {
   width: 230px;
   max-width: unset !important; }
@@ -2741,7 +2819,7 @@
   max-width: unset !important; }
 
 .n-popover.n-popover--datepicker {
-  width: 300px;
+  width: 270px;
   max-width: unset !important; }
 
 .n-popover.n-popover--tooltip {

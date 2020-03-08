@@ -27,10 +27,24 @@ export default {
             }
         },
 
+        clearArrive: {
+            default()
+            {
+                return null;
+            }
+        },
+
         depart: {
             default()
             {
                 return 'now+1day';
+            }
+        },
+
+        clearDepart: {
+            default()
+            {
+                return null;
             }
         },
 
@@ -79,6 +93,14 @@ export default {
             {
                 return null;
             }
+        },
+
+        round: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
         },
 
         position: {
@@ -131,7 +153,7 @@ export default {
                     this.trans('Th'),
                     this.trans('Fr'),
                     this.trans('Sa'),
-                    this.trans('So'),
+                    this.trans('Su'),
                 ]
             },
             type: [Array]
@@ -187,57 +209,6 @@ export default {
                 this.veValue = Now.make(this.value);
             }
         },
-
-        // tempValue()
-        // {
-        //     // this.$nextTick(() => this.$refs.popover.refresh());
-        // },
-        //
-        // arrive()
-        // {
-        //     if ( this.arrive !== this.nativeArrive.format(this.format) ) {
-        //         this.nativeArrive = this.tempArrive = Now.make(this.arrive);
-        //     }
-        // },
-        //
-        // depart()
-        // {
-        //     if ( this.depart !== this.nativeDepart.format(this.format) ) {
-        //         this.nativeDepart = this.tempDepart = Now.make(this.depart);
-        //     }
-        // },
-        //
-        // visible()
-        // {
-        //     this.nativeRange = [];
-        // },
-        //
-        // nativeRange()
-        // {
-        //     if ( this.nativeRange[0] !== undefined ) {
-        //         this.tempArrive = this.nativeRange[0];
-        //     }
-        //
-        //     if ( this.nativeRange.length !== 2 ) {
-        //         return;
-        //     }
-        //
-        //     if ( this.nativeRange[0] !== undefined ) {
-        //         this.nativeArrive = this.nativeRange[0];
-        //     }
-        //
-        //     if ( this.nativeRange[1] !== undefined ) {
-        //         this.nativeDepart = this.nativeRange[1];
-        //     }
-        //
-        //     this.$emit('update:arrive',
-        //         this.nativeArrive.format(this.format));
-        //
-        //     this.$emit('update:depart',
-        //         this.nativeDepart.format(this.format));
-        //
-        //     this.visible = false;
-        // }
 
     },
 
@@ -351,6 +322,12 @@ export default {
         eventClear()
         {
             this.$emit('input', this.clearValue);
+        },
+
+        eventRangeClear()
+        {
+            this.$emit('update:arrive', this.clearArrive);
+            this.$emit('update:depart', this.clearDepart);
         },
 
         eventInput(event)
@@ -474,7 +451,7 @@ export default {
             'n-datepicker__day'
         ];
 
-        if ( now.equalDate(new Date) ) {
+        if ( now.equalDate() ) {
             classList.push('n-today');
         }
 
@@ -559,50 +536,6 @@ export default {
             }
 
         }
-
-
-
-        // if ( this.veRange.length === 0 && now.equalDate(this.nativeArrive) ) {
-        //
-        //     if ( ! this.nativeArrive.equalDate(this.nativeDepart) ) {
-        //         classList.push(this.nativeArrive.before(this.nativeDepart) ?
-        //             'n-datepicker__day--arrive' : 'n-datepicker__day--depart');
-        //     }
-        //
-        //     classList.push('n-datepicker__day--selected');
-        // }
-        //
-        // if ( this.veRange.length === 0 && now.equalDate(this.nativeDepart) ) {
-        //
-        //     if ( ! this.nativeDepart.equalDate(this.nativeArrive) ) {
-        //         classList.push(this.nativeDepart.before(this.nativeArrive) ?
-        //             'n-datepicker__day--arrive' : 'n-datepicker__day--depart');
-        //     }
-        //
-        //     classList.push('n-datepicker__day--selected');
-        // }
-        //
-        // if ( this.veRange.length === 1 && now.equalDate(this.tempArrive) && ! now.equalDate(this.tempDepart) ) {
-        //     classList.push(this.tempArrive.before(this.tempDepart) ?
-        //         'n-datepicker__day--arrive' : 'n-datepicker__day--depart');
-        // }
-        //
-        // if ( this.veRange.length === 1 && now.equalDate(this.tempDepart) && ! now.equalDate(this.tempArrive) ) {
-        //     classList.push(this.tempDepart.before(this.tempArrive) ?
-        //         'n-datepicker__day--arrive' : 'n-datepicker__day--depart');
-        // }
-        //
-        // if ( this.veRange.length === 1 && now.between(this.tempArrive, this.tempDepart) ) {
-        //     classList.push('n-datepicker__day--between');
-        // }
-        //
-        // if ( this.veRange.length === 0 && now.between(this.nativeArrive, this.nativeDepart) ) {
-        //     classList.push('n-datepicker__day--between');
-        // }
-        //
-        // if ( this.veRange.length === 0 && now.between(this.nativeArrive, this.nativeDepart) ) {
-        //     classList.push('n-datepicker__day--selected');
-        // }
 
         let events = {
             click: () => this.patchRange(now),
@@ -703,7 +636,7 @@ export default {
                     </div>
                 </div>
                 <div class="n-datepicker__footer">
-                    <NButton type="link" vOn:click={this.gotoDate}>
+                    <NButton size="small" link={true} vOn:click={this.gotoDate}>
                         { this.trans('Go back') }
                     </NButton>
                 </div>
@@ -752,7 +685,7 @@ export default {
                     </div>
                 </div>
                 <div class="n-datepicker__footer">
-                    <NButton type="link" vOn:click={this.gotoDate}>
+                    <NButton size="small" link={true} vOn:click={this.gotoDate}>
                         { this.trans('Go back') }
                     </NButton>
                 </div>
@@ -802,6 +735,10 @@ export default {
 
         if ( this.size ) {
             classList.push('n-datepicker--' + this.size);
+        }
+
+        if ( this.round ) {
+            classList.push('n-datepicker--round');
         }
 
         if ( this.clearable ){
@@ -884,6 +821,31 @@ export default {
         );
     },
 
+    renderRangeInputClear()
+    {
+        if ( ! this.clearable ) {
+            return null;
+        }
+
+        let props = {
+            type: 'input',
+            icon: this.icons.times,
+            disabled: this.disabled
+        };
+
+        if ( Any.isEmpty(this.value) ) {
+            props.disabled = true;
+        }
+
+        let events = {
+            click: this.eventRangeClear
+        };
+
+        return (
+            <NButton props={props} on={events} />
+        )
+    },
+
     renderRangeInput()
     {
         let classList = [
@@ -892,6 +854,10 @@ export default {
 
         if ( this.size ) {
             classList.push('n-datepicker--' + this.size);
+        }
+
+        if ( this.round ) {
+            classList.push('n-datepicker--round');
         }
 
         if ( this.clearable ){
@@ -914,7 +880,7 @@ export default {
                 <div class="n-datepicker__input n-datepicker__input--range">
                     { this.ctor('renderRangeInputDepart')() }
                 </div>
-                { this.ctor('renderInputClear')() }
+                { this.ctor('renderRangeInputClear')() }
             </div>
         );
     },

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Nano UI Datepicker</title>
+    <title>Nano UI Switch</title>
 
     <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
@@ -19,25 +19,26 @@
 <body>
 
 <div id="app">
-    <n-form :form="form" :class="{ 'n-inverse': inverse }">
+    <n-form :form="form">
 
-        <n-form-item label="Inverse">
-            <n-checkbox v-model="inverse">Inverse</n-checkbox>
+        <n-form-item label="Test">
+            <n-switch v-model="form.test" />
         </n-form-item>
 
         <n-form-item label="Test">
-            <n-button-group>
-                <n-datepicker v-model="form.date" :clearable="true"></n-datepicker>
-                <n-timepicker v-model="form.date" :clearable="true"></n-timepicker>
-            </n-button-group>
+            <n-switch v-model="form.test" size="small" on-type="success" />
         </n-form-item>
 
         <n-form-item label="Test">
-            <n-datepicker :arrive.sync="form.arrive" :depart.sync="form.depart" :range="true" :clearable="true" />
+            <n-switch v-model="form.test" size="large" on-type="warning" />
         </n-form-item>
 
-        <n-form-item label="Object">
-            <pre>{{ form }}</pre>
+        <n-form-item label="Test">
+            <n-switch v-model="form.test" on-type="danger" />
+        </n-form-item>
+
+        <n-form-item label="Test">
+            <n-switch v-model="form.test" on-type="info" />
         </n-form-item>
 
     </n-form>
@@ -49,11 +50,10 @@
         Vue.config.devtools = true;
 
         var config = {
-
             data: function() {
 
                 var form = {
-                    date: 'now+2days', arrive: 'now', depart: 'now+2days'
+                    test: false
                 };
 
                 return {

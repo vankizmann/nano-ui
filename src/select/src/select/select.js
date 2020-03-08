@@ -278,6 +278,14 @@ export default {
             this.veIndex = -1;
         },
 
+        eventClickSearch(event)
+        {
+            event.stopPropagation();
+
+            this.veOpen ? this.closeSelect() :
+                this.openSelect();
+        },
+
         eventFocusSearch(event)
         {
             this.openSelect();
@@ -355,6 +363,7 @@ export default {
     {
         let events = {
             input: this.eventUpdateSearch,
+            click: this.eventClickSearch,
             focus: this.eventFocusSearch,
             blur: this.eventBlurSearch,
             keydown: this.eventKeydownSearch,

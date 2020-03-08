@@ -110,7 +110,7 @@ export default {
                 <div class="n-form-group__legend">
                     <legend class="n-form-group__label">
                         { this.checkable &&
-                            <NCheckbox checked={this.nativeValue} vOn:input={this.toggleValue} />
+                            <NSwitch size="small" value={this.nativeValue} vOn:input={this.toggleValue} />
                         }
                         <div class="n-form-group__label-text" vOn:click={this.toggleValue}>
                             <span>{this.legend}</span>

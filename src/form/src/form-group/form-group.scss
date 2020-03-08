@@ -10,16 +10,18 @@ $form-group-spacing: 18px !default;
 .n-form-group__label {
     display: flex;
     flex-direction: row;
+    align-items: center;
     padding: 5px 0;
 }
 
+.n-form-group__label .n-switch,
 .n-form-group__label .n-checkbox {
     flex: 0 0 auto;
     margin-right: 9px;
 }
 
 .n-form-group__label .n-form-group__label-text {
-    cursor: pointer;
+    cursor: default;
     flex: 0 1 auto;
     margin-right: auto;
     font-size: $form-legend-size;
@@ -28,7 +30,7 @@ $form-group-spacing: 18px !default;
 }
 
 .n-form-group.n-form-group--checkable .n-form-group__label .n-form-group__label-text:hover {
-    color: $--color-primary;
+    //color: $--color-primary;
 }
 
 .n-inverse .n-form-group__label .n-form-group__label-text {
