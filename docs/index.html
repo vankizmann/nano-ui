@@ -36,15 +36,16 @@
       name: 'nano.ui',
       repo: 'https://github.com/vankizmann/nano-ui',
       logo: 'https://vankizmann.github.io/nano-ui/nano.png',
-      basePath: window.location.match(/github/) ? '/nano-ui/docs/' : '/docs/',
-      relativePath: false,
+      basePath: window.location.href.match(/github/) ? '/nano-ui/docs/' : '/docs/',
+      relativePath: true,
       themeColor: '#2877FA',
       autoHeader: true,
       loadSidebar: true,
       plugins: [
         DemoBoxVue.create(jsResources.join("\n"), cssResources, bootCode)
       ]
-    }
+    };
+    console.log(window.$docsify);
   </script>
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
 </body>
