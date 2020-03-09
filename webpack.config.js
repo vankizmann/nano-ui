@@ -107,7 +107,7 @@ let libWinExport = {
 
 let libCssExport = {
     mode: 'development',
-    entry: './src/nano-ui.scss',
+    entry: './src/index.scss',
     output: {
         filename: '.lib.ignore.js',
         path: path.resolve('dist')
@@ -127,7 +127,7 @@ let libCssExport = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'index.css'
+            filename: 'nano-ui.css'
         }),
         new webpack.LoaderOptionsPlugin({
             options: {
