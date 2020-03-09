@@ -1,0 +1,34 @@
+@import "./base";
+
+$--media-steps: (
+    'xs': 'screen and (min-width: 576px)',
+    'sm': 'screen and (min-width: 768px)',
+    'md': 'screen and (min-width: 992px)',
+    'lg': 'screen and (min-width: 1200px)',
+    'xl': 'screen and (min-width: 1440px)'
+) !default;
+
+@mixin media($suffix: '') {
+
+    @if $suffix == '' {
+        $suffix: $suffix !global;
+        @content;
+    }
+
+    @if $suffix == '' {
+        @each $suffix, $breakpoint in $--media-steps {
+            @media #{$breakpoint} {
+                $suffix: \@ + $suffix !global;
+                @content;
+            }
+        }
+    }
+
+    @if $suffix != '' {
+        @media #{map-get($--media-steps, $suffix)} {
+            $suffix: \@ + $suffix !global;
+            @content;
+        }
+    }
+
+}

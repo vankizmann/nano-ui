@@ -1,0 +1,30 @@
+@import "../../../src/root/vars";
+@import "./docsify/vue";
+@import "./mixins/base";
+@import "./mixins/media";
+@import "./mixins/grid";
+@import "./mixins/space";
+
+* {
+    outline: none;
+}
+
+
+html, body {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-variant-numeric: normal;
+    font-feature-settings: normal;
+}
+
+.app-name img {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px auto;
+}
+
+.demo-box {
+    border: 1px solid $color-gray-10;
+    border-radius: $radius-medium;
+    box-shadow: 0 1px 3px rgba($color-black, 0.05);
+}

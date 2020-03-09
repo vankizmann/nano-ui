@@ -4,10 +4,10 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const autoprefixer = require("autoprefixer");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-let jsExtExport = {
+let libEsmExport = {
     entry: ['./src/index.js'],
     output: {
-        filename: 'index.esm.js',
+        filename: 'nano-ui.esm.js',
         path: path.resolve('dist'),
         library: 'nano-ui',
         libraryTarget: 'umd',
@@ -54,11 +54,11 @@ let jsExtExport = {
     ]
 };
 
-let jsWinExport = {
+let libWinExport = {
     entry: ['@babel/polyfill/noConflict', './src/index.js'],
     devtool: 'source-map',
     output: {
-        filename: 'index.js',
+        filename: 'nano-ui.js',
         path: path.resolve('dist'),
         library: 'nano-ui',
         libraryTarget: 'umd',
@@ -105,11 +105,11 @@ let jsWinExport = {
     ]
 };
 
-let cssModernExport = {
+let libCssExport = {
     mode: 'development',
-    entry: './src/index.scss',
+    entry: './src/nano-ui.scss',
     output: {
-        filename: '.ignore.js',
+        filename: '.lib.ignore.js',
         path: path.resolve('dist')
     },
     module: {
@@ -137,7 +137,39 @@ let cssModernExport = {
     ]
 };
 
+let docsCssExport = {
+    mode: 'development',
+    entry: './docs/src/scss/index.scss',
+    output: {
+        filename: '.docs.ignore.js',
+        path: path.resolve('docs/dist')
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(sass|scss)$/,
+                include: [
+                    path.resolve('docs/src')
+                ],
+                use: [
+                    MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'
+                ]
+            }
+        ]
+    },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'index.css'
+        }),
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                postcss: [ autoprefixer() ]
+            }
+        })
+    ]
+};
+
 
 module.exports = [
-    jsWinExport, jsExtExport, cssModernExport
+    libEsmExport, libWinExport, libCssExport, docsCssExport
 ];
