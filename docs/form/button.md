@@ -2,7 +2,7 @@
 layout: default
 title: Button
 nav_order: 1
-has_children: false
+parent: Form
 ---
 
 # Button

@@ -2,7 +2,7 @@
 layout: default
 title: Draggable
 nav_order: 1
-has_children: false
+parent: Data
 ---
 
 # Draggable
