@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Draggable
+title: Tree
 nav_order: 1
 parent: Data
 ---
 
-# Draggable
+# Tree
 Drag and drop list or tree.
 
 ```vue
