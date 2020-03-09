@@ -1976,6 +1976,7 @@
   position: relative;
   display: -webkit-inline-box;
   display: inline-flex;
+  width: 100%;
   color: #1b2229; }
 
 .n-datepicker {
@@ -2031,10 +2032,9 @@
   background: #f4f4f4;
   border-color: #dddedf; }
 
-.n-inverse .n-datepicker.n-disabled,
-.n-inverse .n-datepicker.n-disabled:hover {
-  background: #32383e;
-  border-color: #494e54; }
+.n-datepicker__yearview,
+.n-datepicker__monthview {
+  width: 264px; }
 
 .n-datepicker .n-button__wrapper {
   position: absolute;
@@ -2328,6 +2328,7 @@
   position: relative;
   display: -webkit-inline-box;
   display: inline-flex;
+  width: 100%;
   color: #1b2229; }
 
 .n-popover.n-popover--timepicker {

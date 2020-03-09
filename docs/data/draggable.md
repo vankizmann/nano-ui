@@ -1,3 +1,10 @@
+---
+layout: default
+title: Draggable
+nav_order: 1
+has_children: false
+---
+
 # Draggable
 Drag and drop list or tree.
 

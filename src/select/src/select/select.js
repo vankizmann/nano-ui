@@ -211,9 +211,11 @@ export default {
 
         openSelect()
         {
+            clearTimeout(this.focusDelay);
+
             this.veOpen = true;
 
-            if ( ! this.veOpen && this.$refs.input ) {
+            if ( this.$refs.input ) {
                 this.$refs.input.focus();
             }
 
@@ -222,11 +224,15 @@ export default {
 
         closeSelect()
         {
+            clearTimeout(this.focusDelay);
+
             this.veOpen = false;
 
-            if ( ! this.veOpen && this.$refs.input ) {
+            if ( this.$refs.input ) {
                 this.$refs.input.blur();
             }
+
+            this.veSearch = '';
 
             this.veIndex = -1;
         },
@@ -280,26 +286,29 @@ export default {
 
         eventClickSearch(event)
         {
-            event.stopPropagation();
-
-            this.veOpen ? this.closeSelect() :
-                this.openSelect();
+            // event.preventDefault();
+            // event.stopPropagation();
+            //
+            // this.veOpen ? this.closeSelect() :
+            //     this.openSelect();
         },
 
         eventFocusSearch(event)
         {
-            this.openSelect();
+            this.focusDelay = setTimeout(this.openSelect, 200);
         },
 
         eventBlurSearch(event)
         {
-            if ( ! this.veOpen ) {
-                this.veSearch = '';
-            }
+            clearTimeout(this.focusDelay);
 
-            if ( this.veOpen && this.$refs.input ) {
-                this.$refs.input.focus();
-            }
+            this.focusDelay = setTimeout(() => {
+
+                if ( this.veOpen ) {
+                    this.$refs.input.focus();
+                }
+
+            }, 200);
         },
 
         eventKeydownSearch(event)
@@ -332,10 +341,6 @@ export default {
 
         eventPopoverInput(input)
         {
-            if ( input && this.$refs.input ) {
-                this.$refs.input.focus();
-            }
-
             input ? this.openSelect() : this.closeSelect();
         }
 
@@ -363,13 +368,20 @@ export default {
     {
         let events = {
             input: this.eventUpdateSearch,
-            click: this.eventClickSearch,
+            mousedown: this.eventClickSearch,
             focus: this.eventFocusSearch,
             blur: this.eventBlurSearch,
             keydown: this.eventKeydownSearch,
         };
 
+        let style = {};
+
+        if ( ! this.multiple && ! this.veOpen && ! Any.isEmpty(this.veValue) ) {
+            style.opacity = 0;
+        }
+
         let attrs = {
+            type: 'text',
             disabled: this.disabled
         };
 
@@ -382,7 +394,7 @@ export default {
         }
 
         return (
-            <input ref="input" class="n-select__input" type="text" value={this.veSearch} on={events} attrs={attrs} />
+            <input ref="input" class="n-select__input" style={style} value={this.veSearch} on={events} attrs={attrs} />
         );
     },
 
@@ -416,6 +428,10 @@ export default {
         let style = {};
 
         if ( ! this.multiple && this.veOpen ) {
+            style.display = 'none';
+        }
+
+        if ( ! this.multiple && this.veSearch ) {
             style.display = 'none';
         }
 

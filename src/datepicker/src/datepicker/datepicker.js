@@ -91,7 +91,7 @@ export default {
         monthPanels: {
             default()
             {
-                return 2;
+                return this.range ? 2 : 1;
             },
             type: [Number]
         },
@@ -242,16 +242,22 @@ export default {
         gotoDate()
         {
             this.veView = 'date';
+
+            this.$nextTick(this.$refs.popover.refresh);
         },
 
         gotoMonth()
         {
             this.veView = 'month';
+
+            this.$nextTick(this.$refs.popover.refresh);
         },
 
         gotoYear()
         {
             this.veView = 'year';
+
+            this.$nextTick(this.$refs.popover.refresh);
         },
 
         patchDate(now)

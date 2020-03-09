@@ -10,7 +10,7 @@ $datepicker-day-width: 32px !default;
 .n-datepicker__wrapper {
     position: relative;
     display: inline-flex;
-    //width: 100%;
+    width: 100%;
     color: $--color-black;
 }
 
@@ -70,10 +70,9 @@ $datepicker-day-width: 32px !default;
     border-color: $--color-gray-15;
 }
 
-.n-inverse .n-datepicker.n-disabled,
-.n-inverse .n-datepicker.n-disabled:hover {
-    background: $--color-gray-90;
-    border-color: $--color-gray-80;
+.n-datepicker__yearview,
+.n-datepicker__monthview {
+    width: 264px;
 }
 
 .n-datepicker .n-button__wrapper {

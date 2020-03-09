@@ -1,6 +1,11 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>  
+---
+layout: default
+title: Button
+nav_order: 1
+has_children: false
+---
 
-# NButton
+# Button
 Button with diffrent styles.
 
 ```vue
