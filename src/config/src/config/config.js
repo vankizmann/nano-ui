@@ -75,6 +75,28 @@ export default {
             return value;
         },
 
+        solveEvent(value)
+        {
+            let scope = Obj.assign(this.scope, {
+                $configRefs: this.$refs
+            });
+
+            if ( Any.isFunction(value) ) {
+                return (...args) => value.apply(scope, args);
+            }
+
+            return value;
+        },
+
+        solveContent(value, ...args)
+        {
+            if ( Any.isFunction(value) ) {
+                return value.apply(this.scope, [this.$render, this.veValue, ...args]);
+            }
+
+            return value;
+        },
+
         prepareValue(veModel)
         {
             if ( ! veModel.path ) {
@@ -88,13 +110,20 @@ export default {
             return Obj.get(this.veValue, veModel.path);
         },
 
-        inputClosure(veModel)
+        inputClosure(veModel, closure = null)
         {
             if ( ! veModel.path ) {
                 return () => null;
             }
 
-            return (value) => Obj.set(this.veValue, veModel.path, value);
+            return (value) => {
+
+                if ( closure ) {
+                    closure(value, this.veValue);
+                }
+
+                Obj.set(this.veValue, veModel.path, value);
+            };
         }
 
     },
@@ -112,6 +141,10 @@ export default {
 
     renderLayer(source)
     {
+        if ( ! Any.isPlain(source) ) {
+            return source;
+        }
+
         return Arr.each(source, (setup, component) => {
 
             // Set setup defaults
@@ -139,21 +172,32 @@ export default {
             // Delete model from setup
             delete setup.model;
 
+            // Normalize props
+            setup.props = this.solveValue(setup.props);
+
             // Solve props
             Obj.map(setup.props, (value) => this.solveValue(value));
 
-            // Solve proattrsps
+            // Normalize attrs
+            setup.attrs = this.solveValue(setup.attrs);
+
+            // Solve attrs
             Obj.map(setup.attrs, (value) => this.solveValue(value));
 
-            // Set prop in value or get fallback
-            setup.props[veModel.prop] = this.prepareValue(veModel);
+            // Solve events
+            Obj.map(setup.on, (value) => this.solveEvent(value));
 
-            if ( ! setup.on.input ) {
-                setup.on.input = this.inputClosure(veModel);
+            if ( veModel.path ) {
+
+                // Override input event
+                setup.on.input = this.inputClosure(veModel, setup.on.input);
+
+                // Set prop in value or get fallback
+                setup.props[veModel.prop] = this.prepareValue(veModel);
             }
 
             // Solve conten if is functional
-            let content = this.solveValue(setup.content, setup);
+            let content = this.solveContent(setup.content, setup);
 
             return this.$render(component.replace(/:.*?$/, ''), setup,
                 this.ctor('renderLayer')(content));

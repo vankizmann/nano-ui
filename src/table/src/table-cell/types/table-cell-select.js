@@ -3,13 +3,13 @@ import { Num, Any, Obj, Arr } from "nano-js";
 
 export default {
 
-    name: 'NTableCellMatrix',
+    name: 'NTableCellSelect',
 
     extends: TableCell,
 
     methods: {
 
-        toggleMatrix()
+        toggleSelect()
         {
             let item = Arr.find(this.column.veValue, {
                 [this.NTable.uniqueProp]: this.value[this.NTable.uniqueProp]
@@ -32,7 +32,7 @@ export default {
             this.column.$emit('input', this.column.veValue);
         },
 
-        isChecked()
+        isSelected()
         {
             let item = Arr.find(this.column.veValue, {
                 [this.NTable.uniqueProp]: this.value[this.NTable.uniqueProp]
@@ -65,7 +65,7 @@ export default {
 
         return (
             <div class={classList}>
-                <NCheckbox checked={this.isChecked()} disabled={disabled} vOn:input={this.toggleMatrix} />
+                <NCheckbox checked={this.isSelected()} disabled={disabled} vOn:input={this.toggleSelect} />
             </div>
         );
     }

@@ -18,6 +18,13 @@ export default {
 
     props: {
 
+        value: {
+            default()
+            {
+                return null;
+            }
+        },
+
         prop: {
             default()
             {
@@ -90,12 +97,28 @@ export default {
             type: [Boolean]
         },
 
+        disabled: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean, Function]
+        },
+
         breakpoint: {
             default()
             {
                 return 0;
             },
             type: [Number]
+        },
+
+        matrix: {
+            default()
+            {
+                return 1;
+            },
+            type: [Number, String]
         },
 
         options: {
@@ -226,7 +249,10 @@ export default {
     data()
     {
         return {
-            veVisible: true, veWidth: 0, veFluid: this.fluid
+            veVisible: true,
+            veWidth: 0,
+            veValue: this.value,
+            veFluid: this.fluid,
         };
     },
 
@@ -261,6 +287,17 @@ export default {
             this.veWidth = value;
 
             this.$nextTick(() => this.NTable.$emit('hook:resized'));
+        }
+
+    },
+
+    watch: {
+
+        value()
+        {
+            if ( this.value !== this.veValue ) {
+                this.veValue = this.value;
+            }
         }
 
     },

@@ -45,18 +45,16 @@ export function Install(Vue, Icons = {}, Styles = {})
     Vue.prototype.choice = scope.Nano.Locale.choice;
 
     if ( ! scope.NanoIcons ) {
-        scope.NanoIcons = {};
+        scope.NanoIcons = Nano.Obj.assign(NanoIcons, scope.NanoIcons);
     }
 
-    Vue.prototype.icons = Vue.Obj.assign(NanoIcons,
-        scope.NanoIcons, Icons);
+    Vue.prototype.icons = Vue.Obj.assign(scope.NanoIcons, Icons);
 
     if ( ! scope.NanoStyles ) {
-        scope.NanoStyles = {};
+        scope.NanoStyles = Nano.Obj.assign(NanoStyles, scope.NanoStyles);
     }
 
-    Vue.prototype.styles = Vue.Obj.assign(NanoStyles,
-        scope.NanoStyles, Styles);
+    Vue.prototype.styles = Vue.Obj.assign(scope.NanoStyles, Styles);
 
     require('./config/index');
     require('./notification/index');

@@ -254,7 +254,7 @@ export default {
         };
 
         let rawHtml = (
-            <div key={UUID()} class="n-modal__frame" style={style}>
+            <div key={this.veVisible ? '1' : '0'} class="n-modal__frame" style={style}>
                 { this.$slots.raw }
             </div>
         );
@@ -264,7 +264,7 @@ export default {
         }
 
         return (
-            <div key={UUID()} class="n-modal__frame" style={style}>
+            <div key={this.veVisible ? '1' : '0'} class="n-modal__frame" style={style}>
                 { this.ctor('renderHeader')() }
                 <div class="n-modal__body">
                     <NScrollbar class="n-modal__wrap" relative={true}>
@@ -279,7 +279,7 @@ export default {
     renderBackdrop()
     {
         return (
-            <div ref="backdrop" key={UUID()} class="n-modal__backdrop"></div>
+            <div ref="backdrop" key={this.veVisible ? '1' : '0'} class="n-modal__backdrop"></div>
         )
     },
 

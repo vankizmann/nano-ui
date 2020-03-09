@@ -149,6 +149,7 @@ $popover-option-size: 14px !default;
 }
 
 .n-popover.n-popover--tooltip > .n-popover__frame > .n-popover__body {
+    text-align: center;
     padding: $popover-tooltip-padding;
 }
 

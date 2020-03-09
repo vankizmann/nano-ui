@@ -142,6 +142,29 @@ export default {
         )
     },
 
+    renderLabel()
+    {
+        if ( ! this.$slots.default ) {
+            return null;
+        }
+
+        let classList = [
+            'n-switch__label',
+        ];
+
+        let events = {};
+
+        if ( ! this.disabled ) {
+            events.click = this.eventClick;
+        }
+
+        return (
+            <div class={classList} on={events}>
+                { this.$slots.default }
+            </div>
+        )
+    },
+
     render($render)
     {
         this.$render = $render;
@@ -157,6 +180,7 @@ export default {
         return (
             <div class={classList}>
                 { this.ctor('renderSwitch')() }
+                { this.ctor('renderLabel')() }
             </div>
         );
     }

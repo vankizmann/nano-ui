@@ -95,3 +95,8 @@ $switch-ratio: 0.3 !default;
 .n-switch.n-switch--large.n-on span {
     transform: translateX($switch-height * 1.125);
 }
+
+.n-switch__label {
+    cursor: default;
+    margin-left: 8px;
+}

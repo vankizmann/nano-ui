@@ -125,6 +125,16 @@ export default {
             this.NDraggable.toggleItem(this);
         },
 
+        remove(event)
+        {
+            this.NDraggable.removeItem(this);
+        },
+
+        copy(event)
+        {
+            this.NDraggable.copyItem(this);
+        },
+
         /**
          * Event listeners
          */
@@ -246,14 +256,11 @@ export default {
 
     renderNode()
     {
-        // TODO: IDEAS?
-        // if ( this.cachedView ) {
-        //     return this.cachedView;
-        // }
-
         let props = {
             index: this[this.NDraggable.indexProp],
-            value: this.veItem
+            value: this.veItem,
+            remove: this.remove,
+            copy: this.copy
         };
 
         let renderNode = null;
@@ -274,7 +281,7 @@ export default {
             width: '100%', flex: '1 1 auto'
         };
 
-        return this.cachedView = (
+        return (
             this.NDraggable.wrapNode ? this.$render('div', { attrs }, [renderNode]) : renderNode
         );
     },

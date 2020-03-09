@@ -34,7 +34,7 @@ export default {
 
     renderForm()
     {
-        let options = typeof this.column.options === 'function' ?
+        let options = Any.isFunction(this.column.options) ?
             this.column.options(null) : this.column.options;
 
         options = Arr.map(Any.keys(options), (index) => {

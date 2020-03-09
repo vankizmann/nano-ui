@@ -139,6 +139,14 @@ export default {
             type: [String]
         },
 
+        cascadeProp: {
+            default()
+            {
+                return 'cascade';
+            },
+            type: [String]
+        },
+
         childProp: {
             default()
             {
@@ -828,6 +836,28 @@ export default {
             this.updateCurrent();
         },
 
+        removeItem(value)
+        {
+            let target = Obj.get(this, value[this.pathProp]);
+
+            Arr.removeIndex(target, value[this.indexProp]);
+
+            this.refreshItems();
+        },
+
+        copyItem(value)
+        {
+            let target = Obj.get(this, value[this.pathProp]);
+
+            let item = Obj.assign({}, value.veItem, {
+                [this.uniqueProp]: UUID()
+            });
+
+            Arr.insert(target, value[this.indexProp] + 1, item);
+
+            this.refreshItems();
+        },
+
         toggleItem(id, reset = false)
         {
             if ( ! Any.isString(id) ) {
@@ -978,7 +1008,7 @@ export default {
             return ! result.length;
         },
 
-        itemReducer(merge, items, depth = 0, path = 'veCopy', orders = [])
+        itemReducer(merge, items, depth = 0, path = 'veCopy', orders = [], cascade = [])
         {
             Arr.each(items, (item, index) => {
 
@@ -996,7 +1026,14 @@ export default {
                 }
 
                 // Order prop to sort on drag
-                dragObject[this.orderProp] = Arr.merge(orders, [index + 1]);
+                dragObject[this.orderProp] = Arr.merge(orders, [
+                    index + 1
+                ]);
+
+                // Order prop to sort on drag
+                dragObject[this.cascadeProp] = Arr.merge(cascade, [
+                    dragObject[this.uniqueProp]
+                ]);
 
                 // Md5 item to check for any changes
                 dragObject[this.keyProp] = Any.md5(dragObject);
@@ -1007,8 +1044,15 @@ export default {
                     return;
                 }
 
-                this.itemReducer(merge, Obj.get(item, this.childProp, []),
-                    depth + 1, `${path}.${index}.${this.childProp}`, dragObject[this.orderProp]);
+                let props = [
+                    Obj.get(item, this.childProp, []),
+                    depth + 1,
+                    `${path}.${index}.${this.childProp}`,
+                    dragObject[this.orderProp],
+                    dragObject[this.cascadeProp]
+                ];
+
+                this.itemReducer(merge, ...props);
 
             });
 
