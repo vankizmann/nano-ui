@@ -21,8 +21,6 @@ export default {
             'n-table-cell--' + this.column.type
         ];
 
-        console.log(this.input, options);
-
         return <div class={className}>
             <span>
                 {
