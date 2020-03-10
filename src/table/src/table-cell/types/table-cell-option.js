@@ -24,10 +24,10 @@ export default {
         return <div class={className}>
             <span>
                 {
-                    Arr.each(! Any.isArray(this.input) ? [this.input] : this.input, (value) => {
+                    Arr.each(! Any.isObject(this.input) ? [this.input] : this.input, (value) => {
 
                         let option = Arr.find(options, (item) => {
-                            return Any.string(Obj.get(item, this.column.optionsValue)) === Any.string(value);
+                            return Obj.get(item, this.column.optionsValue) == value;
                         });
 
                         return Obj.get(option, this.column.optionsLabel, this.column.undefinedText);

@@ -103,8 +103,9 @@ export default {
                 return veModel.fallback;
             }
 
+
             if ( ! Obj.has(this.veValue, veModel.path) ) {
-                this.$set(this.veValue, veModel.path, veModel.fallback);
+                this.deepSet(this.veValue, veModel.path, veModel.fallback);
             }
 
             return Obj.get(this.veValue, veModel.path);
@@ -122,8 +123,26 @@ export default {
                     closure(value, this.veValue);
                 }
 
-                Obj.set(this.veValue, veModel.path, value);
+                this.deepSet(this.veValue, veModel.path, value);
             };
+        },
+
+        deepSet(obj, keys, val)
+        {
+            keys = (typeof keys === 'string') ?
+                keys.split('.') : keys;
+
+            let key = keys.shift();
+
+            if ( obj[key] === undefined || obj[key] === null ) {
+                this.$set(obj, key, {});
+            }
+
+            if ( keys.length === 0 ) {
+                return this.$set(obj, key, val);
+            }
+
+            return this.deepSet(obj[key], keys, val);
         }
 
     },

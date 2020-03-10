@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI Chart</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../../dist/nano-ui.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <script src="https://vankizmann.github.io/nano-js/dist/nano-js.js"></script>
+    <script src="../../dist/nano-ui.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <n-form :form="form">
+
+        <n-form-item label="Test">
+            <n-chart />
+        </n-form-item>
+
+    </n-form>
+</div>
+
+<script>
+    Nano.Dom.ready(() => {
+
+        Vue.config.devtools = true;
+
+        var config = {
+            data: function() {
+
+                var form = {
+                    test: false
+                };
+
+                return {
+                    form: form, inverse: false
+                };
+            }
+        };
+
+        window.App = new Vue(config).$mount('#app');
+    })
+</script>
+</body>
+</html>

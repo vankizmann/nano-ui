@@ -22,6 +22,10 @@ $tooltip-border: 3px !default;
     display: block;
 }
 
+.n-loader.n-active .n-loader:before {
+    display: none;
+}
+
 .n-loader.n-loader--default:before {
     top: calc(50% - #{$loader-size / 2});
     left: calc(50% - #{$loader-size / 2});

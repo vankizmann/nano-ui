@@ -57,6 +57,7 @@ export function Install(Vue, Icons = {}, Styles = {})
     Vue.prototype.styles = Vue.Obj.assign(scope.NanoStyles, Styles);
 
     require('./config/index');
+    require('./chart/index');
     require('./notification/index');
     require('./scrollbar/index');
     require('./resizer/index');
@@ -76,7 +77,6 @@ export function Install(Vue, Icons = {}, Styles = {})
     require('./timepicker/index');
     require('./transfer/index');
     require('./file/index');
-    require('./matrix/index');
     require('./popover/index');
     require('./modal/index');
     require('./confirm/index');

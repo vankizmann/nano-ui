@@ -19,7 +19,7 @@ export default {
                 return 'default';
             },
             type: [String]
-        }
+        },
 
     },
 
@@ -46,7 +46,7 @@ export default {
             });
         },
 
-        getTab()
+        getTab(updateEvent = true)
         {
             let currentTab = Arr.find(this.veTabs, {
                 name: this.current
@@ -60,7 +60,9 @@ export default {
                 return;
             }
 
-            this.$emit('input', this.veValue = currentTab.name);
+            if ( updateEvent ) {
+                this.$emit('input', this.veValue = currentTab.name);
+            }
         },
 
         changeTab(tab)
@@ -83,7 +85,7 @@ export default {
 
     mounted()
     {
-        this.getTab();
+        this.getTab(false);
     },
 
     updated()

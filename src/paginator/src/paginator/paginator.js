@@ -200,7 +200,8 @@ export default {
 
         let props = {
             value: this.vePage,
-            size: this.size
+            size: this.size,
+            undefinedText: '1'
         };
 
         let optionsHtml = Arr.each(Array(this.pages).fill(null), (value, index) => {
