@@ -4,6 +4,8 @@ export default {
 
     name: 'NButton',
 
+    inheritAttrs: false,
+
     props: {
 
         icon: {
@@ -132,10 +134,9 @@ export default {
             classList.push('n-button--plain');
         }
 
-        let attrs = {
-            type: this.nativeType,
+        let attrs = Obj.assign({
             disabled: this.disabled
-        };
+        }, this.$attrs);
 
         let events = {};
 
@@ -143,13 +144,17 @@ export default {
             events = Obj.assign({}, this.$listeners);
         }
 
+        let props = {
+            class: classList, attrs: attrs, on: events
+        };
+
         return (
-            <button class={classList} attrs={attrs} on={events}>
-                { this.iconPosition === 'before' && this.ctor('renderIcon')() }
-                { this.$slots.default && <span>{ this.$slots.default }</span> }
-                { this.iconPosition === 'after' && this.ctor('renderIcon')() }
-            </button>
-        )
+            this.$render(this.nativeType, props, [
+                this.iconPosition === 'before' && this.ctor('renderIcon')(),
+                this.$slots.default && (<span>{ this.$slots.default }</span>),
+                this.iconPosition === 'after' && this.ctor('renderIcon')()
+            ])
+        );
     },
 
     render($render)
@@ -165,7 +170,7 @@ export default {
         }
 
         return (
-            <div class={classList}>
+            <div class={classList} attrs={{}}>
                 { this.ctor('renderButton')() }
             </div>
         );

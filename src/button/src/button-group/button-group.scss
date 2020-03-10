@@ -5,12 +5,12 @@
     flex-direction: row;
 }
 
-.n-button-group .n-button__wrapper .n-button,
-.n-button-group .n-input__wrapper .n-input,
-.n-button-group .n-select__wrapper .n-select,
-.n-button-group .n-cascader__wrapper .n-cascader,
-.n-button-group .n-datepicker__wrapper .n-datepicker,
-.n-button-group .n-timepicker__wrapper .n-timepicker {
+.n-button-group .n-button__wrapper,
+.n-button-group .n-input__wrapper,
+.n-button-group .n-select__wrapper,
+.n-button-group .n-cascader__wrapper,
+.n-button-group .n-datepicker__wrapper,
+.n-button-group .n-timepicker__wrapper {
     position: relative;
     margin-left: -1px;
 }
@@ -24,20 +24,13 @@
     border-radius: 0;
 }
 
-.n-button-group .n-button__wrapper .n-button:hover,
-.n-button-group .n-button__wrapper .n-input:hover,
-.n-button-group .n-button__wrapper .n-select:hover,
-.n-button-group .n-cascader__wrapper .n-cascader:hover,
-.n-button-group .n-datepicker__wrapper .n-datepicker:hover,
-.n-button-group .n-timepicker__wrapper .n-timepicker:hover {
+.n-button-group .n-button__wrapper:hover,
+.n-button-group .n-input__wrapper:hover,
+.n-button-group .n-select__wrapper:hover,
+.n-button-group .n-cascader__wrapper:hover,
+.n-button-group .n-datepicker__wrapper:hover,
+.n-button-group .n-timepicker__wrapper:hover {
     z-index: 10;
-}
-
-.n-button-group .n-button__wrapper .n-select.n-popover--open,
-.n-button-group .n-cascader__wrapper .n-cascader.n-popover--open,
-.n-button-group .n-datepicker__wrapper .n-datepicker.n-popover--open,
-.n-button-group .n-timepicker__wrapper .n-timepicker.n-popover--open {
-    z-index: 5;
 }
 
 .n-button-group .n-button__wrapper:first-child:not(:last-child) .n-button,
@@ -46,7 +39,7 @@
 .n-button-group .n-cascader__wrapper:first-child:not(:last-child) .n-cascader,
 .n-button-group .n-datepicker__wrapper:first-child:not(:last-child) .n-datepicker,
 .n-button-group .n-timepicker__wrapper:first-child:not(:last-child) .n-timepicker {
-    border-radius: $radius-small 0 0 $radius-small;
+    border-radius: $radius-medium 0 0 $radius-medium;
     margin-left: 0;
 }
 
@@ -56,7 +49,7 @@
 .n-button-group .n-cascader__wrapper:last-child:not(:first-child) .n-cascader,
 .n-button-group .n-datepicker__wrapper:last-child:not(:first-child) .n-datepicker,
 .n-button-group .n-timepicker__wrapper:last-child:not(:first-child) .n-timepicker {
-    border-radius: 0 $radius-small $radius-small 0;
+    border-radius: 0 $radius-medium $radius-medium 0;
 }
 //
 //.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--primary {

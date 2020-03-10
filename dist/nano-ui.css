@@ -657,7 +657,8 @@
   -webkit-box-pack: center;
           justify-content: center;
   min-width: 0;
-  white-space: nowrap; }
+  white-space: nowrap;
+  text-decoration: none; }
 
 .n-button:not(.n-button--link) {
   padding: 0 10.2px;
@@ -1084,12 +1085,12 @@
   -webkit-box-direction: normal;
           flex-direction: row; }
 
-.n-button-group .n-button__wrapper .n-button,
-.n-button-group .n-input__wrapper .n-input,
-.n-button-group .n-select__wrapper .n-select,
-.n-button-group .n-cascader__wrapper .n-cascader,
-.n-button-group .n-datepicker__wrapper .n-datepicker,
-.n-button-group .n-timepicker__wrapper .n-timepicker {
+.n-button-group .n-button__wrapper,
+.n-button-group .n-input__wrapper,
+.n-button-group .n-select__wrapper,
+.n-button-group .n-cascader__wrapper,
+.n-button-group .n-datepicker__wrapper,
+.n-button-group .n-timepicker__wrapper {
   position: relative;
   margin-left: -1px; }
 
@@ -1101,19 +1102,13 @@
 .n-button-group .n-timepicker__wrapper:not(:first-child):not(:last-child) .n-timepicker {
   border-radius: 0; }
 
-.n-button-group .n-button__wrapper .n-button:hover,
-.n-button-group .n-button__wrapper .n-input:hover,
-.n-button-group .n-button__wrapper .n-select:hover,
-.n-button-group .n-cascader__wrapper .n-cascader:hover,
-.n-button-group .n-datepicker__wrapper .n-datepicker:hover,
-.n-button-group .n-timepicker__wrapper .n-timepicker:hover {
+.n-button-group .n-button__wrapper:hover,
+.n-button-group .n-input__wrapper:hover,
+.n-button-group .n-select__wrapper:hover,
+.n-button-group .n-cascader__wrapper:hover,
+.n-button-group .n-datepicker__wrapper:hover,
+.n-button-group .n-timepicker__wrapper:hover {
   z-index: 10; }
-
-.n-button-group .n-button__wrapper .n-select.n-popover--open,
-.n-button-group .n-cascader__wrapper .n-cascader.n-popover--open,
-.n-button-group .n-datepicker__wrapper .n-datepicker.n-popover--open,
-.n-button-group .n-timepicker__wrapper .n-timepicker.n-popover--open {
-  z-index: 5; }
 
 .n-button-group .n-button__wrapper:first-child:not(:last-child) .n-button,
 .n-button-group .n-input__wrapper:first-child:not(:last-child) .n-input,
@@ -1121,7 +1116,7 @@
 .n-button-group .n-cascader__wrapper:first-child:not(:last-child) .n-cascader,
 .n-button-group .n-datepicker__wrapper:first-child:not(:last-child) .n-datepicker,
 .n-button-group .n-timepicker__wrapper:first-child:not(:last-child) .n-timepicker {
-  border-radius: 1px 0 0 1px;
+  border-radius: 2px 0 0 2px;
   margin-left: 0; }
 
 .n-button-group .n-button__wrapper:last-child:not(:first-child) .n-button,
@@ -1130,7 +1125,7 @@
 .n-button-group .n-cascader__wrapper:last-child:not(:first-child) .n-cascader,
 .n-button-group .n-datepicker__wrapper:last-child:not(:first-child) .n-datepicker,
 .n-button-group .n-timepicker__wrapper:last-child:not(:first-child) .n-timepicker {
-  border-radius: 0 1px 1px 0; }
+  border-radius: 0 2px 2px 0; }
 
 .n-input__wrapper {
   position: relative;
@@ -1168,43 +1163,48 @@
 .n-disabled .n-input:focus {
   border-color: #dddedf; }
 
-.n-input.n-input--small {
+.n-input__wrapper.n-input--small .n-input {
   font-size: 12.25px;
   padding: 0 8.925px;
   height: 29.75px; }
 
-.n-input.n-input--round.n-input--small {
+.n-input__wrapper.n-input--round.n-input--small .n-input {
   padding: 0 17.85px; }
 
-.n-input.n-input--large {
+.n-input__wrapper.n-input--large .n-input {
   font-size: 15.75px;
   padding: 0 11.475px;
   height: 38.25px; }
 
-.n-input.n-input--round.n-input--large {
+.n-input__wrapper.n-input--round.n-input--large .n-input {
   padding: 0 22.95px; }
 
-.n-input.n-input--icon.n-input--icon-before {
+.n-input__wrapper.n-input--icon.n-input--icon-before .n-input {
   padding-left: 34px; }
 
-.n-input.n-input--icon.n-input--icon-after {
+.n-input__wrapper.n-input--icon.n-input--icon-after .n-input {
   padding-right: 34px; }
 
-.n-input.n-input--icon.n-input--icon-before.n-input--small {
+.n-input__wrapper.n-input--icon.n-input--icon-before.n-input--small .n-input {
   padding-left: 29.75px; }
 
-.n-input.n-input--icon.n-input--icon-after.n-input--small {
+.n-input__wrapper.n-input--icon.n-input--icon-after.n-input--small .n-input {
   padding-right: 29.75px; }
 
-.n-input.n-input--icon.n-input--icon-before.n-input--large {
+.n-input__wrapper.n-input--icon.n-input--icon-before.n-input--large .n-input {
   padding-left: 38.25px; }
 
-.n-input.n-input--icon.n-input--icon-after.n-input--large {
+.n-input__wrapper.n-input--icon.n-input--icon-after.n-input--large .n-input {
   padding-right: 38.25px; }
 
 .n-input__wrapper > .n-button__wrapper {
   position: absolute;
-  top: 0;
+  top: 0; }
+
+.n-input__wrapper.n-input--icon.n-input--icon-before > .n-button__wrapper {
+  left: 0; }
+
+.n-input__wrapper.n-input--icon.n-input--icon-after > .n-button__wrapper {
   right: 0; }
 
 .n-textarea__wrapper {

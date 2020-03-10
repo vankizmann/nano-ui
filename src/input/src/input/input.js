@@ -135,17 +135,7 @@ export default {
     {
         let classList = [
             'n-input',
-            'n-input--' + this.size
         ];
-
-        if ( this.round ) {
-            classList.push('n-input--round');
-        }
-
-        if ( this.icon ) {
-            classList.push('n-input--icon');
-            classList.push('n-input--icon-' + this.iconPosition);
-        }
 
         let attrs = {
             value: this.veValue,
@@ -174,6 +164,19 @@ export default {
         let classList = [
             'n-input__wrapper'
         ];
+
+        if ( this.size ) {
+            classList.push('n-input--' + this.size);
+        }
+
+        if ( this.round ) {
+            classList.push('n-input--round');
+        }
+
+        if ( this.icon ) {
+            classList.push('n-input--icon');
+            classList.push('n-input--icon-' + this.iconPosition);
+        }
 
         if ( this.disabled ) {
             classList.push('n-disabled');

@@ -42,52 +42,59 @@ $input-height: 34px !default;
     border-color: $--color-gray-15;
 }
 
-.n-input.n-input--small {
+.n-input__wrapper.n-input--small .n-input {
     font-size: $input-size * 0.875;
     padding: 0 $input-height * 0.3 * 0.875;
     height: $input-height * 0.875;
 }
 
-.n-input.n-input--round.n-input--small {
+.n-input__wrapper.n-input--round.n-input--small .n-input {
     padding: 0 $input-height * 0.6 * 0.875;
 }
 
-.n-input.n-input--large {
+.n-input__wrapper.n-input--large .n-input {
     font-size: $input-size * 1.125;
     padding: 0 $input-height * 0.3 * 1.125;
     height: $input-height * 1.125;
 }
 
-.n-input.n-input--round.n-input--large {
+.n-input__wrapper.n-input--round.n-input--large .n-input {
     padding: 0 $input-height * 0.6 * 1.125;
 }
 
-.n-input.n-input--icon.n-input--icon-before {
+.n-input__wrapper.n-input--icon.n-input--icon-before .n-input {
     padding-left: $input-height;
 }
 
-.n-input.n-input--icon.n-input--icon-after {
+.n-input__wrapper.n-input--icon.n-input--icon-after .n-input {
     padding-right: $input-height;
 }
 
-.n-input.n-input--icon.n-input--icon-before.n-input--small {
+.n-input__wrapper.n-input--icon.n-input--icon-before.n-input--small .n-input {
     padding-left: $input-height * 0.875;
 }
 
-.n-input.n-input--icon.n-input--icon-after.n-input--small {
+.n-input__wrapper.n-input--icon.n-input--icon-after.n-input--small .n-input {
     padding-right: $input-height * 0.875;
 }
 
-.n-input.n-input--icon.n-input--icon-before.n-input--large {
+.n-input__wrapper.n-input--icon.n-input--icon-before.n-input--large .n-input {
     padding-left: $input-height * 1.125;
 }
 
-.n-input.n-input--icon.n-input--icon-after.n-input--large {
+.n-input__wrapper.n-input--icon.n-input--icon-after.n-input--large .n-input {
     padding-right: $input-height * 1.125;
 }
 
 .n-input__wrapper > .n-button__wrapper {
     position: absolute;
     top: 0;
+}
+
+.n-input__wrapper.n-input--icon.n-input--icon-before > .n-button__wrapper {
+    left: 0;
+}
+
+.n-input__wrapper.n-input--icon.n-input--icon-after > .n-button__wrapper {
     right: 0;
 }
