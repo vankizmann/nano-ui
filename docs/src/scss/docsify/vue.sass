@@ -26,8 +26,30 @@ body
   background-color: $color-white
   color: #364149
 
+  ul
+    margin-left: 0 !important
+
   li
     margin: 6px 0 6px 0
+    padding-left: 20px
+
+  ul li
+    position: relative
+
+    &:before
+      content: '\00a0'
+      position: absolute
+      top: 50%
+      left: 4px
+      margin-top: -2px
+      display: block
+      width: 4px
+      height: 4px
+      border-radius: 50%
+      background: transparent
+
+    &.active:before
+      background: var(--theme-color, $color-primary)
 
   ul li a
     color: $color-gray-80
@@ -45,9 +67,7 @@ body
     padding: 0
 
   ul li.active > a
-    border-right: 2px solid
     color: var(--theme-color, $color-primary)
-    font-weight: 600
 
 .app-sub-sidebar
   li

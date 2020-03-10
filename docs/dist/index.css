@@ -217,7 +217,7 @@ main.hidden {
     margin: 0 0 0 15px;
     padding: 0; }
   .sidebar li > p {
-    color: #bbbdbf;
+    color: #a4a7a9;
     font-size: 12px;
     font-weight: bold;
     text-transform: uppercase;
@@ -467,8 +467,26 @@ body {
 .sidebar {
   background-color: #ffffff;
   color: #364149; }
+  .sidebar ul {
+    margin-left: 0 !important; }
   .sidebar li {
-    margin: 6px 0 6px 0; }
+    margin: 6px 0 6px 0;
+    padding-left: 20px; }
+  .sidebar ul li {
+    position: relative; }
+    .sidebar ul li:before {
+      content: '\00a0';
+      position: absolute;
+      top: 50%;
+      left: 4px;
+      margin-top: -2px;
+      display: block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: transparent; }
+    .sidebar ul li.active:before {
+      background: var(--theme-color, #2877FA); }
   .sidebar ul li a {
     color: #494e54;
     font-size: 14px;
@@ -482,9 +500,7 @@ body {
   .sidebar ul li ul {
     padding: 0; }
   .sidebar ul li.active > a {
-    border-right: 2px solid;
-    color: var(--theme-color, #2877FA);
-    font-weight: 600; }
+    color: var(--theme-color, #2877FA); }
 
 .app-sub-sidebar li::before {
   content: '-';
