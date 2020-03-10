@@ -1,1 +1,9 @@
 @import "../../../root/vars";
+
+.n-tabs-item {
+    flex: 1 0 auto;
+}
+
+.n-tabs-item:not(.n-raw) {
+    margin-top: 20px;
+}

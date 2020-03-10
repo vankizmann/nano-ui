@@ -9,7 +9,15 @@ export default {
         points: {
             default()
             {
-                return Arr.make(200).map(() => Num.random(20, 50));
+                return Arr.make(100).map(() => Num.random(0, 100));
+            },
+            type: [Array]
+        },
+
+        lines: {
+            default()
+            {
+                return Arr.make(11).map((index) => (index - 1) * 10);
             },
             type: [Array]
         },
@@ -25,7 +33,7 @@ export default {
         padding: {
             default()
             {
-                return 20;
+                return 15;
             },
             type: [Number]
         },
@@ -33,7 +41,7 @@ export default {
         height: {
             default()
             {
-                return 180;
+                return 240;
             },
             type: [Number]
         },
@@ -45,6 +53,11 @@ export default {
         width()
         {
             return (this.vePoints.length - 1) * this.pointOffset;
+        },
+
+        veHeight()
+        {
+            return this.height - (this.padding * 2);
         }
 
     },
@@ -65,11 +78,13 @@ export default {
         ];
 
         let points = Arr.each(this.vePoints, (point, index) => {
-            return (index * this.pointOffset) + ',' + (this.height / 100 * point);
+            return (index * this.pointOffset) + ',' + (this.height - this.padding - (this.veHeight / 100 * point));
         });
 
         let fillPoints = '0,' + this.height + ' ' + points.join(' ') +
             ' ' + this.width + ',' + this.height;
+
+        console.log(this.lines);
 
         return (
             <div class={classList} style={{ height: this.height + 'px' }}>
@@ -81,10 +96,34 @@ export default {
                                 <stop offset="100%" stop-color="var(--color-stop)" />
                             </linearGradient>
                         </defs>
-                        <g>
-
+                        <g class="n-grid-x">
+                            {
+                                Arr.each(this.lines, (line) => {
+                                    return (
+                                        <polyline fill="none" stroke="none" stroke-width="1" points={'0,' + (this.height - this.padding - (this.veHeight / 100 * line)) + ' ' + this.width  + ',' + (this.height - this.padding - (this.veHeight / 100 * line))}/>
+                                    );
+                                })
+                            }
+                        </g>
+                        <g class="n-grid-y">
+                            {
+                                Arr.each(Arr.slice(this.points, 0, this.points.length - 1), (point, index) => {
+                                    return (
+                                        <polyline fill="none" stroke="none" stroke-width="1" points={(index * this.pointOffset) + ',0 ' + (index  * this.pointOffset) + ',' + this.height} />
+                                    );
+                                })
+                            }
+                        </g>
+                        <g class="n-grid-chart">
                             <polyline fill="none" stroke="none" stroke-width="2" points={points.join(' ')}/>
                             <polygon fill="none" stroke="none" points={fillPoints} />
+                        </g>
+                        <g class="n-grid-dots">
+                            {
+                                Arr.each(this.points, (point, index) => {
+                                    return (<circle fill="none" cy={(this.height - this.padding - (this.veHeight / 100 * point))} cx={index * this.pointOffset} r="3" />)
+                                })
+                            }
                         </g>
                     </svg>
                 </NScrollbar>

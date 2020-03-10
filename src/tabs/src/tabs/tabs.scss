@@ -11,7 +11,6 @@
     width: 100%;
     max-width: 100%;
     overflow-x: auto;
-    margin-bottom: 20px;
 }
 
 .n-tabs__header-inner {
@@ -89,4 +88,6 @@
 .n-tabs__body {
     position: relative;
     flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
 }
