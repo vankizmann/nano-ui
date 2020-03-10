@@ -1,6 +1,10 @@
 # Button
 Button with diffrent styles.
 
+```vue
+<n-button @click="somevar = false">Button text</n-button>
+```
+
 ### Basic buttons
 
 ```html
@@ -226,10 +230,6 @@ Button with diffrent styles.
         export default {} 
     </script>
 
-```
-
-```vue
-<n-button @click="somevar = false">Button text</n-button>
 ```
 
 ### Properties

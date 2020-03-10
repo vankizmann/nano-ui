@@ -1,6 +1,10 @@
 # Input
 Input with diffrent styles.
 
+```vue
+<n-input v-model="text"></n-input>
+```
+
 ### Input
 
 ```html
