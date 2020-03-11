@@ -134,9 +134,11 @@ export default {
             classList.push('n-button--plain');
         }
 
-        let attrs = Obj.assign({
-            disabled: this.disabled
-        }, this.$attrs);
+        let attrs = Obj.except(this.$attrs, [
+            'class', 'style'
+        ]);
+
+        attrs.disabled =this.disabled;
 
         let events = {};
 
@@ -169,8 +171,12 @@ export default {
             classList.push('n-disabled');
         }
 
+        let attrs = Obj.only(this.$attrs, [
+            'class', 'style'
+        ]);
+
         return (
-            <div class={classList} attrs={{}}>
+            <div class={classList} attrs={attrs}>
                 { this.ctor('renderButton')() }
             </div>
         );

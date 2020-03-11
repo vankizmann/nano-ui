@@ -20,27 +20,32 @@ $switch-ratio: 0.3 !default;
     transition: background 400ms ease;
 }
 
+.n-switch__wrapper.n-disabled .n-switch,
+.n-switch__wrapper.n-disabled .n-switch__label {
+    cursor: not-allowed;
+}
+
 .n-switch.n-switch--round {
     border-radius: 500px;
 }
 
-.n-switch.n-switch--primary {
+.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--primary {
     background: $--color-primary;
 }
 
-.n-switch.n-switch--success {
+.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--success {
     background: $--color-success;
 }
 
-.n-switch.n-switch--warning {
+.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--warning {
     background: $--color-warning;
 }
 
-.n-switch.n-switch--danger {
+.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--danger {
     background: $--color-danger;
 }
 
-.n-switch.n-switch--info {
+.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--info {
     background: $--color-info;
 }
 

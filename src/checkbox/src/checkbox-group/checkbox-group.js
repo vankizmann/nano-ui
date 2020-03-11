@@ -24,7 +24,7 @@ export default {
         align: {
             default()
             {
-                return 'vertical';
+                return 'horizontal';
             },
             type: [String]
         }

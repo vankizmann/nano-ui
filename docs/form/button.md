@@ -131,10 +131,17 @@ Button with diffrent styles.
         <div class="grid grid--col grid--20-20">
             <div class="col--1-1">
                 <n-button type="primary" :icon="icons.primary" icon-position="before">Primary</n-button>
-                <n-button type="success" :icon="icons.success" icon-position="after">Success</n-button>
+                <n-button type="success" :icon="icons.success" icon-position="before">Success</n-button>
                 <n-button type="warning" :icon="icons.warning" icon-position="before">Warning</n-button>
-                <n-button type="danger" :icon="icons.danger" icon-position="after">Danger</n-button>
+                <n-button type="danger" :icon="icons.danger" icon-position="before">Danger</n-button>
                 <n-button type="info" :icon="icons.info" icon-position="before">Info</n-button>
+            </div>
+            <div class="col--1-1">
+                <n-button type="primary" :plain="true" :icon="icons.primary" icon-position="after">Primary</n-button>
+                <n-button type="success" :plain="true" :icon="icons.success" icon-position="after">Success</n-button>
+                <n-button type="warning" :plain="true" :icon="icons.warning" icon-position="after">Warning</n-button>
+                <n-button type="danger" :plain="true" :icon="icons.danger" icon-position="after">Danger</n-button>
+                <n-button type="info" :plain="true" :icon="icons.info" icon-position="after">Info</n-button>
             </div>
         </div>
     </template>

@@ -41,14 +41,6 @@ export default {
             type: [Boolean]
         },
 
-        name: {
-            default()
-            {
-                return '';
-            },
-            type: [String]
-        },
-
         size: {
             default()
             {

@@ -11,11 +11,11 @@
 .n-radio-group.n-radio-group--horizontal {
     flex-direction: row;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .n-radio-group.n-radio-group--vertical {
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-start;
 }

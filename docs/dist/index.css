@@ -7627,6 +7627,12 @@ html, body {
   font-variant-numeric: normal;
   font-feature-settings: normal; }
 
+pre.pretty {
+  padding: 15px 20px;
+  background: #1b2229 !important;
+  color: #ffac2f !important;
+  border-radius: 2px !important; }
+
 .app-name img {
   width: 80px;
   height: 80px;

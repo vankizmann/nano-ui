@@ -9,12 +9,18 @@
     outline: none;
 }
 
-
 html, body {
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-variant-numeric: normal;
     font-feature-settings: normal;
+}
+
+pre.pretty {
+    padding: 15px 20px;
+    background: $--color-black !important;
+    color: $--color-warning !important;
+    border-radius: $radius-medium !important;
 }
 
 .app-name img {

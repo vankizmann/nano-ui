@@ -65,7 +65,7 @@ Input with diffrent styles.
 /*vue*/
 
     <template>
-        <div class="grid grid--row grid--20-20">
+        <div class="grid grid--row grid--wrap grid--20-20">
             <div class="col--1-1 col--1-2@md">
                 <n-input v-model="text" icon="fa fa-search" :icon-disabled="!canSearch" icon-position="before" @icon-click="search" />
             </div>
@@ -142,7 +142,6 @@ Input with diffrent styles.
         <div class="grid grid--col grid--20-20">
             <div class="col--1-1">
                 <n-button-group>
-                    <n-input v-model="text" placeholder="Enter text"></n-input>
                     <n-input v-model="text" placeholder="Enter text"></n-input>
                     <n-button icon="fa fa-search">Search</n-button>
                 </n-button-group>

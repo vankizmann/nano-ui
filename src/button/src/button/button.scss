@@ -17,6 +17,7 @@ $button-ratio: 0.3 !default;
     min-width: 0;
     white-space: nowrap;
     text-decoration: none;
+    line-height: $button-size * 1.2;
 }
 
 .n-button:not(.n-button--link) {

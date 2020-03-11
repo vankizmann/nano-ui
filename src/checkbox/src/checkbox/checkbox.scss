@@ -4,7 +4,7 @@ $checkbox-font-size: 15px !default;
 $checkbox-check-size: 10px !default;
 $checkbox-width: 15px !default;
 $checkbox-height: 15px !default;
-$checkbox-radius: $radius-small !default;
+$checkbox-radius: $radius-medium !default;
 
 /**
  * Checkbox container
@@ -42,7 +42,7 @@ $checkbox-radius: $radius-small !default;
     border-radius: $checkbox-radius;
     width: $checkbox-width;
     height: $checkbox-height;
-    color: $--color-white;
+    color: $--color-gray-50;
     font-size: $checkbox-check-size;
     background: $--color-white;
 }
@@ -69,8 +69,9 @@ $checkbox-radius: $radius-small !default;
     height: $checkbox-height * 1.125;
 }
 
-.n-checkbox.n-checked .n-checkbox__checkbox,
-.n-checkbox.n-intermediate .n-checkbox__checkbox {
+.n-checkbox.n-checked:not(.n-disabled) .n-checkbox__checkbox,
+.n-checkbox.n-intermediate:not(.n-disabled) .n-checkbox__checkbox {
+    color: $--color-white;
     border-color: $--color-primary;
     background: $--color-primary;
 }
