@@ -13,7 +13,7 @@ export default {
             let reader = new FileReader();
 
             reader.onload = () => {
-                this.preview = reader.result;
+                this.vePreview = reader.result;
             };
 
             reader.readAsDataURL(this.value.file);
@@ -24,19 +24,21 @@ export default {
     data()
     {
         return {
-            preview: null
+            vePreview: null
         };
     },
 
     mounted()
     {
-        this.getImagePreview();
+        if ( this.renderPreview ) {
+            this.getImagePreview();
+        }
     },
 
     renderPreview()
     {
-        if ( this.preview !== null ) {
-            return (<img src={this.preview} />);
+        if ( this.vePreview ) {
+            return (<img src={this.vePreview} />);
         }
 
         return (<span class="fa fad fa-file-image"></span>);

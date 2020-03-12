@@ -13,7 +13,12 @@ export default {
 
         NPopover: {
             default: undefined
+        },
+
+        NScrollbar: {
+            default: undefined
         }
+
 
     },
 
@@ -433,7 +438,11 @@ export default {
     data()
     {
         let options = {
-            veVisible: this.visible, clientX: 0, clientY: 0, target: null, parent: null
+            veVisible: this.visible,
+            clientX: 0,
+            clientY: 0,
+            target: null,
+            parent: null
         };
 
         options.style = {
@@ -468,7 +477,15 @@ export default {
             this.target = Dom.find(this.$el).parent().find(this.selector).get(0);
         }
 
-        this.parent = Obj.get(this.NPopover, 'boundary');
+        this.parent = null;
+
+        if ( this.NScrollbar ) {
+            this.parent = this.NScrollbar.$el;
+        }
+
+        if ( this.NPopover ) {
+            this.parent = this.NPopover.boundary;
+        }
 
         if ( this.boundary && ! this.parent ) {
             this.parent = Dom.find(this.boundary).get(0);
@@ -485,7 +502,6 @@ export default {
         if ( ! this.parent ) {
             this.parent = Dom.find(this.target).parent().get(0);
         }
-
     },
 
     beforeDestroy()

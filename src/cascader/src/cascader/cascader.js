@@ -141,8 +141,6 @@ export default {
 
         eventHover(cascade)
         {
-            this.$once('hook:updated', this.$refs.popover.refresh);
-
             if ( this.trigger !== 'hover' ) {
                 this.$emit('hover', this.veHover = cascade);
             }
@@ -152,11 +150,15 @@ export default {
 
             this.veDelay = setTimeout(() => {
                 this.$emit('hover', this.veHover = cascade);
-            }, 75);
+            }, 250);
         },
 
-        eventSelect(cascade)
+        eventSelect(event, cascade)
         {
+            if ( event ) {
+                event.stopPropagation();
+            }
+
             this.veOpen = false;
 
             this.$emit('input', this.veValue = cascade);
@@ -282,12 +284,12 @@ export default {
 
         if ( this.trigger === 'hover' ) {
             events.mousemove = () => this.eventHover(veCascade);
-            events.click = () => this.eventSelect(veCascade);
+            events.click = (event) => this.eventSelect(event, veCascade);
         }
 
         if ( this.trigger === 'click' ) {
             events.click = () => this.eventHover(veCascade);
-            events.dblclick = () => this.eventSelect(veCascade);
+            events.dblclick = (event) => this.eventSelect(event, veCascade);
         }
 
         let children = Obj.get(item, this.childProp);

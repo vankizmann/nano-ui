@@ -19,7 +19,16 @@ export default {
             default()
             {
                 return {};
-            }
+            },
+            type: [Object]
+        },
+
+        renderPreview: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
         }
 
     },
@@ -28,28 +37,33 @@ export default {
 
         file()
         {
-            return Obj.get({ $value: this.value }, this.NFileList.fileProp);
+            return Obj.get(this.value, this.NFileList.fileProp);
         },
 
         done()
         {
-            return Obj.get({ $value: this.value }, this.NFileList.doneProp);
+            return Obj.get(this.value, this.NFileList.doneProp);
         },
 
         error()
         {
-            return Obj.get({ $value: this.value }, this.NFileList.errorProp);
+            return Obj.get(this.value, this.NFileList.errorProp);
         },
 
         progress()
         {
-            return Obj.get({ $value: this.value }, this.NFileList.progressProp);
+            return Obj.get(this.value, this.NFileList.progressProp);
         }
 
     },
 
     methods: {
-        ...CtorMixin
+
+        remove()
+        {
+            this.NFileList.removeFile(this.value);
+        }
+
     },
 
     renderPreview()
@@ -61,6 +75,10 @@ export default {
 
     renderName()
     {
+        if ( ! this.file ) {
+            return null;
+        }
+
         return (
             <span>{ this.file.name }</span>
         );
@@ -68,14 +86,18 @@ export default {
 
     renderMeta()
     {
+        if ( ! this.file ) {
+            return null;
+        }
+
         return (
             <span>{ Str.filesize(this.file.size) }</span>
         );
     },
 
-    render()
+    render($render)
     {
-        this.h = h;
+        this.$render = $render;
 
         let classList = [
             'n-file-list-item'
@@ -111,7 +133,7 @@ export default {
                         { this.ctor('renderMeta')() }
                     </div>
                 </div>
-                <a class="n-file-list-item__remove" href="javascript:void(0)" vOn:click={() => this.$emit('remove')}>
+                <a class="n-file-list-item__remove" href="javascript:void(0)" vOn:click={this.remove}>
                     <span class={this.icons.times}></span>
                 </a>
             </div>

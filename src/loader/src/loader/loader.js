@@ -70,6 +70,8 @@ export default {
 
         startTimer()
         {
+            clearTimeout(this.veDelay);
+
             this.veTiming = Date.now();
 
             Dom.find(this.$el).addClass('n-active');
@@ -83,7 +85,7 @@ export default {
                 return Any.delay(this.stopTimer, this.minimum - timing + 10);
             }
 
-            Any.delay(() => {
+            this.veDelay = setTimeout(() => {
                 Dom.find(this.$el).removeClass('n-active');
             }, this.debounce);
         }

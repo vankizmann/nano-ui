@@ -79,6 +79,14 @@ export default {
             type: [Boolean]
         },
 
+        buttonType: {
+            default()
+            {
+                return 'button';
+            },
+            type: [String]
+        },
+
         nativeType: {
             default()
             {
@@ -138,7 +146,8 @@ export default {
             'class', 'style'
         ]);
 
-        attrs.disabled =this.disabled;
+        attrs.disabled = this.disabled;
+        attrs.type = this.buttonType;
 
         let events = {};
 

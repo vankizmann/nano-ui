@@ -284,15 +284,6 @@ export default {
             this.veIndex = -1;
         },
 
-        eventClickSearch(event)
-        {
-            // event.preventDefault();
-            // event.stopPropagation();
-            //
-            // this.veOpen ? this.closeSelect() :
-            //     this.openSelect();
-        },
-
         eventFocusSearch(event)
         {
             this.focusDelay = setTimeout(this.openSelect, 200);
@@ -368,7 +359,6 @@ export default {
     {
         let events = {
             input: this.eventUpdateSearch,
-            mousedown: this.eventClickSearch,
             focus: this.eventFocusSearch,
             blur: this.eventBlurSearch,
             keydown: this.eventKeydownSearch,

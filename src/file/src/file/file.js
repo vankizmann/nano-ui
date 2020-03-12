@@ -88,18 +88,18 @@ export default {
 
         updateFile()
         {
-            this.nativeValue = [...this.$refs.input.files];
+            let veValue = [...this.$refs.input.files];
 
-            this.$emit('input', this.multiple === true ?
-                this.nativeValue : Arr.first(this.nativeValue));
+            if ( ! this.multiple ) {
+                veValue = veValue[0];
+            }
+
+            this.$emit('input', this.veValue = veValue);
         },
 
         clearFile()
         {
-            this.nativeValue = [];
-
-            this.$emit('input', this.multiple === true ?
-                this.nativeValue : null);
+            this.$emit('input', null);
         }
 
     },
@@ -107,62 +107,100 @@ export default {
     data()
     {
         return {
-            nativeValue: []
+            veValue: this.value
         };
     },
 
-    render(h)
+    watch: {
+
+        value()
+        {
+            if ( this.value !== this.veValue ) {
+                this.veValue = this.value;
+            }
+        }
+
+    },
+
+    renderInput()
     {
-        let inputEvents = {
+        let events = {
             'icon-click': this.clearFile
         };
 
-        let inputProps = {
+        let props = {
             size: this.size,
             disabled: true,
-            iconDisabled: Any.isEmpty(this.nativeValue)
+            iconDisabled: Any.isEmpty(this.veValue)
         };
 
-        let text = Locale.choice(':count File|:count Files',
-            this.nativeValue.length);
-
-        if ( this.nativeValue.length !== 0 ) {
-            inputProps.value = this.nativeValue.length === 1 ?
-                Obj.get(this.nativeValue, '0.name', text) : text;
+        if ( ! this.multiple ) {
+            props.value = Obj.get(this.veValue, 'name');
         }
 
-        if ( this.clearable === true ) {
-            inputProps.icon = this.clearableIcon
+        if ( this.multiple ) {
+            props.value = Locale.choice(':count File|:count Files',
+                this.veValue.length);
         }
 
-        let buttonEvents = {
-            'click': this.openContext
+        if ( this.clearable ) {
+            props.icon = this.clearableIcon;
+        }
+
+        return (
+            <NInput props={props} on={events}>
+                { /* Input field for text */ }
+            </NInput>
+        );
+    },
+
+    renderButton()
+    {
+        let events = {
+            click: this.openContext
         };
 
-        let buttonProps = {
+        let props = {
             size: this.size,
             disabled: this.disabled,
             icon: this.icon
         };
 
         return (
-            <div class={['n-file__wrapper', this.disabled && 'n-disabled']}>
+            <NButton props={props} on={events}>
+                {this.buttonText}
+            </NButton>
+        );
+    },
 
-                {/* Input field for text */}
-                <NInput props={inputProps} on={inputEvents}>
+    renderHidden()
+    {
+        let events = {
+            input: this.updateFile
+        };
 
-                </NInput>
+        return (
+            <div class="n-file__input">
+                <input ref="input" type="file" multiple={this.multiple} on={events} />
+            </div>
+        );
+    },
 
-                {/* Select button */}
-                <NButton props={buttonProps} on={buttonEvents}>
-                    {this.buttonText}
-                </NButton>
+    render(h)
+    {
+        let classList = [
+            'n-file__wrapper'
+        ];
 
-                {/* Hidden input field */}
-                <div class="n-file__input">
-                    <input ref="input" type="file" multiple={this.multiple} vOn:input={this.updateFile} />
-                </div>
+        if ( this.disabled ) {
+            classList.push('n-disabled');
+        }
 
+        return (
+            <div class={classList}>
+                { this.ctor('renderInput')() }
+                { this.ctor('renderButton')() }
+                { this.ctor('renderHidden')() }
             </div>
         )
     }

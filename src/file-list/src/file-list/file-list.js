@@ -1,4 +1,4 @@
-import { Arr, Obj } from "nano-js";
+import { Arr, Obj, Any } from "nano-js";
 
 export default {
 
@@ -29,36 +29,41 @@ export default {
         fileProp: {
             default()
             {
-                return '$value.file';
-            }
+                return 'file';
+            },
+            type: [String]
         },
 
         uniqueProp: {
             default()
             {
-                return '$value.id';
-            }
+                return 'id';
+            },
+            type: [String]
         },
 
         doneProp: {
             default()
             {
-                return '$value.done';
-            }
+                return 'done';
+            },
+            type: [String]
         },
 
         errorProp: {
             default()
             {
-                return '$value.error';
-            }
+                return 'error';
+            },
+            type: [String]
         },
 
         progressProp: {
             default()
             {
-                return '$value.progress';
-            }
+                return 'progress';
+            },
+            type: [String]
         },
 
         casts: {
@@ -69,6 +74,22 @@ export default {
                 ];
             },
             type: [Array]
+        },
+
+        defaultCast: {
+            default()
+            {
+                return 'NFileListItem';
+            },
+            type: [String]
+        },
+
+        threshold: {
+            default()
+            {
+                return 20;
+            },
+            type: [Number]
         }
 
     },
@@ -80,37 +101,55 @@ export default {
         };
     },
 
-    render()
-    {
-        let renderNode = (h, value, index) => {
+    methods: {
 
-            let file = Obj.get({ $value: value }, this.fileProp);
+        removeFile(unique)
+        {
+            if ( Any.isString(unique) ) {
+                unique = unique[this.uniqueProp]
+            }
 
-            let component = Arr.find(this.casts, (cast) => {
-                return file.type.match(new RegExp('^' +
-                    cast.match.replace('*', '.*?') + '$'));
+            Arr.remove(this.items, {
+                [this.uniqueProp]: unique
             });
+        }
 
-            let props = {
-                value: value
-            };
+    },
 
-            let events = {
-                remove: () => {
-                    Arr.removeIndex(this.items, index)
-                }
-            };
+    renderFile(value)
+    {
+        let file = Obj.get(value, this.fileProp);
 
-            let key = Obj.get({ $value: value }, this.uniqueProp);
-
-            return (
-                <div class="n-file-list__item">
-                    { h(component ? component.use : 'NFileListItem', { key: key, props: props, on: events }) }
-                </div>
+        let component = Arr.find(this.casts, (cast) => {
+            return file.type.match(
+                new RegExp('^' + cast.match.replace('*', '.*?') + '$')
             );
-        };
+        });
 
-        return <NRenderList class="n-file-list" items={this.items} renderNode={renderNode} />;
+        let props = { value };
+
+        if ( this.threshold ) {
+            props.renderPreview = true;
+        }
+
+        return (
+            this.$render(component ? component.use : 'NFileListItem', {
+                key: value[this.uniqueProp], props: props
+            })
+        );
+    },
+
+    render($render)
+    {
+        this.$render = $render;
+
+        return (
+            <div class="n-file-list__wrapper">
+                <NScrollbar class="n-file-list">
+                    { Arr.each(this.items, this.ctor('renderFile')) }
+                </NScrollbar>
+            </div>
+        );
     }
 
 }

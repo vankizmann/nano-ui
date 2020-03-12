@@ -5,6 +5,13 @@ export default {
 
     name: 'NScrollbar',
 
+    provide()
+    {
+        return {
+            NScrollbar: this
+        };
+    },
+
     props: {
 
         options: {
