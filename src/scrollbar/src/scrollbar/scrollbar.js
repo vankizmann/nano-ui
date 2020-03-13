@@ -110,7 +110,12 @@ export default {
                 return;
             }
 
-            this.optiscroll.destroy();
+            try {
+                this.optiscroll.destroy();
+            } catch (e) {
+                console.error('NScrollbar casualities...');
+            }
+
 
             delete this.optiscroll;
 

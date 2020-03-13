@@ -21,6 +21,14 @@ export default {
             type: [String]
         },
 
+        relative: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
     },
 
     data()

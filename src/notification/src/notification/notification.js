@@ -22,10 +22,11 @@ class Notification {
 
     options = {
         duration: 3500,
+        iconPrimary: scope.NanoIcons.info,
         iconSuccess: scope.NanoIcons.success,
         iconWarning: scope.NanoIcons.warning,
         iconDanger: scope.NanoIcons.danger,
-        iconPrimary: scope.NanoIcons.info
+        iconInfo: scope.NanoIcons.info
     };
 
     constructor(text, type = 'primary', options = {})

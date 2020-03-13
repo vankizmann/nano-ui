@@ -201,10 +201,10 @@ export default {
         let props = {
             value: this.vePage,
             size: this.size,
-            undefinedText: '1'
+            undefinedText: '?'
         };
 
-        let optionsHtml = Arr.each(Array(this.pages).fill(null), (value, index) => {
+        let optionsHtml = Arr.each(Arr.make(this.pages || 1), (value, index) => {
             return (
                 <NSelectOption disabled={Num.int(index) + 1 === this.vePage} value={Num.int(index) + 1}>
                     { Num.int(index) + 1 }
@@ -270,7 +270,9 @@ export default {
 
     renderPage(index)
     {
-        let page = this.vePage, pages = Math.abs(this.maxPages / 2);
+        let page = this.vePage;
+
+        let pages = Math.abs(this.maxPages / 2);
 
         if ( page < pages ) {
             page = pages;
@@ -288,7 +290,7 @@ export default {
             return null;
         }
 
-        if ( current > page + pages ) {
+        if ( current > Math.max(1, page + pages) ) {
             return null;
         }
 
@@ -313,12 +315,11 @@ export default {
 
     renderPages()
     {
-
         return (
             <div class="n-paginator__pages">
                 { this.ctor('renderPrev')() }
                 {
-                    Arr.each(Array(this.pages).fill(null), (empty, index) => {
+                    Arr.each(Arr.make(this.pages || 1), (empty, index) => {
                         return this.ctor('renderPage')(index);
                     })
                 }

@@ -169,7 +169,7 @@ export default {
         this.veInit = true;
 
         let classList = [
-            'n-tabs-item'
+            'n-tabs-item__wrapper'
         ];
 
         if ( this.raw ) {
@@ -184,7 +184,9 @@ export default {
 
         return (
             <div class={classList} style={style}>
-                { this.$slots.default }
+                <NScrollbar class="n-tabs-item" relative={this.NTabs.relative}>
+                    { this.$slots.default }
+                </NScrollbar>
             </div>
         );
     }

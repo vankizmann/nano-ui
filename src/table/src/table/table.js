@@ -335,6 +335,15 @@ export default {
             );
         },
 
+        clearFilters()
+        {
+            this.veFilterProps = [];
+
+            this.$emit('update:filterProps', this.veFilterProps);
+
+            this.$emit('filter', this.veFilterProps);
+        }
+
     },
 
     renderExpand()
