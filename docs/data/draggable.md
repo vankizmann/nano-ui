@@ -4,9 +4,11 @@ Drag and drop list or tree.
 ```html
 /*vue*/
 <template>
-    <n-draggable class="demo-box" :items="items" :render-select="true" style="height: 260px;">
-        <div style="margin: auto 10px;" slot-scope="{ value }">{{ value.title }}</div>
-    </n-draggable>
+    <div>
+        <n-draggable class="demo-box" :items="items" :render-select="true" :viewport-height="260">
+            <div style="margin: auto 10px;" slot-scope="{ value }">{{ value.title }}</div>
+        </n-draggable>
+    </div>
 </template>
 <script>
     export default {

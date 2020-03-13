@@ -34,11 +34,13 @@
     var cssResources = '@import url("//cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css");';
     var bootCode = "var foo = 'bar'";
 
+    var basePath = window.location.href.match(/github/) ? '/nano-ui/docs/' : '/docs/';
+
     window.$docsify = {
       name: 'nano.ui',
       repo: 'https://github.com/vankizmann/nano-ui',
       logo: 'https://vankizmann.github.io/nano-ui/nano.png',
-      basePath: window.location.href.match(/github/) ? '/nano-ui/docs/' : '/docs/',
+      basePath: basePath,
       relativePath: false,
       themeColor: '#2877FA',
       autoHeader: true,

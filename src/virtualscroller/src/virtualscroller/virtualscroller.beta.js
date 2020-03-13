@@ -64,6 +64,22 @@ export default {
 
     },
 
+    computed: {
+
+        isFixedHeight()
+        {
+            return Any.isNumber(this.viewportHeight) ||
+                ! this.viewportHeight;
+        },
+
+        fixedHeight()
+        {
+            return this.viewportHeight ||
+                this.items.length * this.itemHeight;
+        }
+
+    },
+
     methods: {
 
         extendLifecycle()
@@ -83,7 +99,7 @@ export default {
 
         refreshDriver()
         {
-            if ( ! this.$refs.viewport || ! this.height ) {
+            if ( ! this.$refs.viewport || ! this.veHeight ) {
                 return;
             }
 
@@ -97,15 +113,14 @@ export default {
                 startIndex = 0;
             }
 
-            let endIndex = Math.ceil(
-                ((scrollTop + this.height) / this.itemHeight) + (this.bufferItems / 2)
-            );
+            let endIndex = Math.ceil(((scrollTop + this.veHeight) /
+                this.itemHeight) + (this.bufferItems / 2));
 
             if ( endIndex > this.items.length ) {
                 endIndex = this.items.length;
             }
 
-            let itemCount = Math.ceil(this.height / this.itemHeight)
+            let itemCount = Math.ceil(this.veHeight / this.itemHeight)
                 + this.bufferItems;
 
             if ( endIndex - startIndex < itemCount ) {
@@ -123,16 +138,24 @@ export default {
 
         discoverHeight()
         {
-            if ( this.viewportHeight ) {
-                this.height = Dom.find(this.$el).height();
+            if ( this.isFixedHeight ) {
+                this.veHeight = this.fixedHeight;
             }
 
-            if ( ! this.viewportHeight ) {
-                this.height = this.items.length * this.itemHeight;
+            if ( ! this.isFixedHeight ) {
+                this.veHeight = Dom.find(this.$el).height();
             }
 
-            if ( ! this.height ) {
+            if ( ! this.veHeight ) {
                 return Any.delay(this.discoverHeight, 250);
+            }
+
+            let styles = {
+                height: this.fixedHeight + 'px'
+            };
+
+            if ( this.isFixedHeight ) {
+                Dom.find(this.$el).css(styles);
             }
 
             Any.async(this.refreshDriver);
@@ -158,7 +181,7 @@ export default {
         };
 
         return {
-            state, veInit: false
+            state, veInit: false, veHeight: 0
         };
     },
 

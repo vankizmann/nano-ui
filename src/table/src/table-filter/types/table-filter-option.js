@@ -44,7 +44,7 @@ export default {
         return (
             <NForm form={this.form}>
                 <NFormItem>
-                    <NCheckboxGroup size="small" vModel={this.form.value}>
+                    <NCheckboxGroup size="small" align="vertical" vModel={this.form.value}>
                         {
                             Arr.each(options, (option) => {
                                 return <NCheckbox size="small" value={Obj.get(option, this.column.optionsValue)}>

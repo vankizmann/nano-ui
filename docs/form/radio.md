@@ -80,7 +80,7 @@ Radio with diffrent styles.
     <template>
         <div class="grid grid--col grid--20-20">
             <div class="col--1-1">
-            <n-radio-group v-model="checked" align="vertical">
+            <n-radio-group v-model="checked">
                 <n-radio value="berlin" size="small">Berlin</n-radio>
                 <n-radio value="hamburg">Hamburg</n-radio>
                 <n-radio value="munich" size="large">Munich</n-radio>

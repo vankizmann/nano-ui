@@ -74,7 +74,7 @@ export default {
         safeZone: {
             default()
             {
-                return (height) => height * 0.2;
+                return (height) => height * 0.51;
             }
         },
 

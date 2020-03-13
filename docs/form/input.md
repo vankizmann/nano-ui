@@ -10,25 +10,25 @@ Input with diffrent styles.
 ```html
 /*vue*/
 
-    <template>
-        <div class="grid grid--col grid--20-20">
-            <div class="col--1-1">
-                <n-input v-model="text" placeholder="Enter text" />
-            </div>
-            <div class="col--1-1">
-                <n-input v-model="text" placeholder="Enter text" :disabled="true" />
-            </div>
+<template>
+    <div class="grid grid--col grid--20-20">
+        <div class="col--1-1">
+            <n-input v-model="text" placeholder="Enter text" />
         </div>
-    </template>
-    
-    <script>
-        export default {
-            data()
-            {
-                return { text: '' };
-            }
-        } 
-    </script>
+        <div class="col--1-1">
+            <n-input v-model="text" placeholder="Enter text" :disabled="true" />
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data()
+        {
+            return { text: '' };
+        }
+    } 
+</script>
 
 ```
 
@@ -37,25 +37,25 @@ Input with diffrent styles.
 ```html
 /*vue*/
 
-    <template>
-        <div class="grid grid--col grid--20-20">
-            <div class="col--1-1">
-                <n-input v-model="text" placeholder="Enter text" :round="true" />
-            </div>
-            <div class="col--1-1">
-                <n-input v-model="text" placeholder="Enter text" :round="true" :disabled="true" />
-            </div>
+<template>
+    <div class="grid grid--col grid--20-20">
+        <div class="col--1-1">
+            <n-input v-model="text" placeholder="Enter text" :round="true" />
         </div>
-    </template>
-    
-    <script>
-        export default {
-            data()
-            {
-                return { text: '' };
-            }
-        } 
-    </script>
+        <div class="col--1-1">
+            <n-input v-model="text" placeholder="Enter text" :round="true" :disabled="true" />
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data()
+        {
+            return { text: '' };
+        }
+    } 
+</script>
 
 ```
 
@@ -64,47 +64,47 @@ Input with diffrent styles.
 ```html
 /*vue*/
 
-    <template>
-        <div class="grid grid--row grid--wrap grid--20-20">
-            <div class="col--1-1 col--1-2@md">
-                <n-input v-model="text" icon="fa fa-search" :icon-disabled="!canSearch" icon-position="before" @icon-click="search" />
-            </div>
-            <div class="col--1-1 col--1-2@md">
-                <n-input v-model="text" :native-type="type" :icon="eyeIcon" icon-position="after"  @icon-click="toggle" />
-            </div>
+<template>
+    <div class="grid grid--row grid--wrap grid--20-20">
+        <div class="col--1-1 col--1-2@md">
+            <n-input v-model="text" icon="fa fa-search" :icon-disabled="!canSearch" icon-position="before" @icon-click="search" />
         </div>
-    </template>
-    
-    <script>
-        export default {
-            data()
+        <div class="col--1-1 col--1-2@md">
+            <n-input v-model="text" :native-type="type" :icon="eyeIcon" icon-position="after"  @icon-click="toggle" />
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data()
+        {
+            return { type: 'password', text: 'Top secret password' };
+        },
+        computed: {
+            canSearch()
             {
-                return { type: 'password', text: 'Top secret password' };
+                return !! this.text;
             },
-            computed: {
-                canSearch()
-                {
-                    return !! this.text;
-                },
-                eyeIcon()
-                {
-                    return this.type === 'text' ?
-                        'fa fa-eye-slash' : 'fa fa-eye';
-                }
-            },
-            methods: {
-                toggle()
-                {
-                    this.type = this.type === 'text' ?
-                        'password' : 'text';
-                },
-                search()
-                {
-                    window.alert('Search for: ' + this.text);
-                }
+            eyeIcon()
+            {
+                return this.type === 'text' ?
+                    'fa fa-eye-slash' : 'fa fa-eye';
             }
-        } 
-    </script>
+        },
+        methods: {
+            toggle()
+            {
+                this.type = this.type === 'text' ?
+                    'password' : 'text';
+            },
+            search()
+            {
+                window.alert('Search for: ' + this.text);
+            }
+        }
+    } 
+</script>
 
 ```
 
@@ -113,23 +113,23 @@ Input with diffrent styles.
 ```html
 /*vue*/
 
-    <template>
-        <div class="grid grid--col grid--20-20">
-            <div class="col--1-1">
-                <n-input value="Small" size="small" />
-            </div>
-            <div class="col--1-1">
-                <n-input value="Default" />
-            </div>
-            <div class="col--1-1">
-                <n-input value="Large" size="large" />
-            </div>
+<template>
+    <div class="grid grid--col grid--20-20">
+        <div class="col--1-1">
+            <n-input value="Small" size="small" />
         </div>
-    </template>
-    
-    <script>
-        export default {} 
-    </script>
+        <div class="col--1-1">
+            <n-input value="Default" />
+        </div>
+        <div class="col--1-1">
+            <n-input value="Large" size="large" />
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {} 
+</script>
 
 ```
 
@@ -138,25 +138,25 @@ Input with diffrent styles.
 ```html
 /*vue*/
 
-    <template>
-        <div class="grid grid--col grid--20-20">
-            <div class="col--1-1">
-                <n-button-group>
-                    <n-input v-model="text" placeholder="Enter text"></n-input>
-                    <n-button icon="fa fa-search">Search</n-button>
-                </n-button-group>
-            </div>
+<template>
+    <div class="grid grid--col grid--20-20">
+        <div class="col--1-1">
+            <n-button-group>
+                <n-input v-model="text" placeholder="Enter text"></n-input>
+                <n-button icon="fa fa-search">Search</n-button>
+            </n-button-group>
         </div>
-    </template>
-    
-    <script>
-        export default {
-            data()
-            {
-                return { text: '' };
-            }
-        } 
-    </script>
+    </div>
+</template>
+
+<script>
+    export default {
+        data()
+        {
+            return { text: '' };
+        }
+    } 
+</script>
 
 ```
 

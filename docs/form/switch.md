@@ -10,27 +10,27 @@ Checkbox with diffrent styles.
 ```html
 /*vue*/
 
-    <template>
-        <div class="grid grid--col grid--20-20">
-            <div class="col--1-1">
-                <n-switch v-model="value">Accept something</n-switch>
-            </div>
-            <div class="col--1-1">
-                <n-switch v-model="value" :disabled="true">Can't accept me</n-switch>
-            </div>
+<template>
+    <div class="grid grid--col grid--20-20">
+        <div class="col--1-1">
+            <n-switch v-model="value">Accept something</n-switch>
         </div>
-    </template>
-    
-    <script>
-        export default {
-            data()
-            {
-                return {
-                    value: true
-                };
-            }
-        } 
-    </script>
+        <div class="col--1-1">
+            <n-switch v-model="value" :disabled="true">Can't accept me</n-switch>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data()
+        {
+            return {
+                value: true
+            };
+        }
+    } 
+</script>
 
 ```
 
@@ -39,27 +39,27 @@ Checkbox with diffrent styles.
 ```html
 /*vue*/
 
-    <template>
-        <div class="grid grid--col grid--20-20">
-            <div class="col--1-1">
-                <n-switch v-model="value" on-value="foo" off-value="bar">Accept foobar</n-switch>
-            </div>
-            <div class="col--1-1">
-                <pre class="pretty">{{ value }}</pre>
-            </div>
+<template>
+    <div class="grid grid--col grid--20-20">
+        <div class="col--1-1">
+            <n-switch v-model="value" on-value="foo" off-value="bar">Accept foobar</n-switch>
         </div>
-    </template>
-    
-    <script>
-        export default {
-            data()
-            {
-                return {
-                    value: 'foo'
-                };
-            }
-        } 
-    </script>
+        <div class="col--1-1">
+            <pre class="pretty">{{ value }}</pre>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data()
+        {
+            return {
+                value: 'foo'
+            };
+        }
+    } 
+</script>
 
 ```
 
@@ -68,25 +68,24 @@ Checkbox with diffrent styles.
 ```html
 /*vue*/
 
-    <template>
-        <div class="grid grid--col grid--20-20">
-            <div class="col--1-1">
-                <n-switch v-model="value" on-type="success" off-type="danger">Accept me</n-switch>
-            </div>
+<template>
+    <div class="grid grid--col grid--20-20">
+        <div class="col--1-1">
+            <n-switch v-model="value" on-type="success" off-type="danger">Accept me</n-switch>
         </div>
-    </template>
-    
-    <script>
-        export default {
-            data()
-            {
-                return {
-                    value: true
-                };
-            }
-        } 
-    </script>
+    </div>
+</template>
 
+<script>
+    export default {
+        data()
+        {
+            return {
+                value: true
+            };
+        }
+    } 
+</script>
 
 ```
 
@@ -95,30 +94,30 @@ Checkbox with diffrent styles.
 ```html
 /*vue*/
 
-    <template>
-        <div class="grid grid--col grid--20-20">
-            <div class="col--1-1">
-                <n-switch v-model="value" size="small">Accept me</n-switch>
-            </div>
-            <div class="col--1-1">
-                <n-switch v-model="value">Accept me</n-switch>
-            </div>
-            <div class="col--1-1">
-                <n-switch v-model="value" size="large">Accept me</n-switch>
-            </div>
+<template>
+    <div class="grid grid--col grid--20-20">
+        <div class="col--1-1">
+            <n-switch v-model="value" size="small">Accept me</n-switch>
         </div>
-    </template>
-    
-    <script>
-        export default {
-            data()
-            {
-                return {
-                    value: true
-                };
-            }
-        } 
-    </script>
+        <div class="col--1-1">
+            <n-switch v-model="value">Accept me</n-switch>
+        </div>
+        <div class="col--1-1">
+            <n-switch v-model="value" size="large">Accept me</n-switch>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data()
+        {
+            return {
+                value: true
+            };
+        }
+    } 
+</script>
 
 ```
 

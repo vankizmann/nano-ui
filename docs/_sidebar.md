@@ -6,9 +6,7 @@
 
   - [Table](data/table.md)
   - [Paginator](data/paginator.md)
-  - [Tree](data/tree.md)
-  - [List](data/list.md)
-  - [Map](data/map.md)
+  - [Draggable](data/draggable.md)
   - [Virtualscroller](data/virtualscroller.md)
 
 - Form
@@ -33,6 +31,7 @@
   - [Tabs](others/tabs.md)
   - [Popover](others/popover.md)
   - [Modal](others/modal.md)
+  - [Map](data/map.md)
   - [Confirm](others/confirm.md)
   - [Scrollbar](others/scrollbar.md)
   - [Resizer](others/resizer.md)

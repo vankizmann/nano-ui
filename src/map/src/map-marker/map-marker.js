@@ -50,10 +50,20 @@ export default {
 
     data()
     {
-        return { veID: UUID(), veMarker: null };
+        return {
+            veID: UUID(),
+            veMarker: null
+        };
     },
 
     methods: {
+
+        importMarkerPosition()
+        {
+            this.veMarker.marker.setPosition({
+                lat: this.lat, lng: this.lng
+            });
+        },
 
         updateMarkerPosition()
         {
@@ -101,6 +111,20 @@ export default {
 
             this.NMap.getMap().setMarkerByAddress(this.veID, address)
                 .then(successClosure, errorClosure);
+        }
+
+    },
+
+    watch: {
+
+        lat()
+        {
+            this.importMarkerPosition();
+        },
+
+        lng()
+        {
+            this.importMarkerPosition();
         }
 
     },

@@ -10,27 +10,27 @@ Checkbox with diffrent styles.
 ```html
 /*vue*/
 
-    <template>
-        <div class="grid grid--col grid--20-20">
-            <div class="col--1-1">
-                <n-checkbox v-model="checked">Check me</n-checkbox>
-            </div>
-            <div class="col--1-1">
-                <n-checkbox v-model="checked" :disabled="true">Can't check me</n-checkbox>
-            </div>
+<template>
+    <div class="grid grid--col grid--20-20">
+        <div class="col--1-1">
+            <n-checkbox v-model="checked">Check me</n-checkbox>
         </div>
-    </template>
-    
-    <script>
-        export default {
-            data()
-            {
-                return {
-                    checked: true
-                };
-            }
-        } 
-    </script>
+        <div class="col--1-1">
+            <n-checkbox v-model="checked" :disabled="true">Can't check me</n-checkbox>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data()
+        {
+            return {
+                checked: true
+            };
+        }
+    } 
+</script>
 
 ```
 
@@ -39,34 +39,34 @@ Checkbox with diffrent styles.
 ```html
 /*vue*/
 
-    <template>
-            <div class="grid grid--col grid--20-20">
-                <div class="col--1-1">
-                    <n-checkbox-group v-model="checked">
-                        <n-checkbox :global="true">Check all</n-checkbox>
-                        <n-checkbox value="berlin">Berlin</n-checkbox>
-                        <n-checkbox value="hamburg">Hamburg</n-checkbox>
-                        <n-checkbox value="munich">Munich</n-checkbox>
-                        <n-checkbox value="cologne">Cologne</n-checkbox>
-                        <n-checkbox value="frankfurt">Frankfurt</n-checkbox>
-                    </n-checkbox-group>
-                </div>
-                <div class="col--1-1">
-                    <pre class="pretty">{{ checked }}</pre>
-                </div>
-            </div>
-        </template>
-        
-        <script>
-            export default {
-                data()
-                {
-                    return {
-                        checked: ['berlin']
-                    };
-                }
-            } 
-        </script>
+<template>
+    <div class="grid grid--col grid--20-20">
+        <div class="col--1-1">
+            <n-checkbox-group v-model="checked">
+                <n-checkbox :global="true">Check all</n-checkbox>
+                <n-checkbox value="berlin">Berlin</n-checkbox>
+                <n-checkbox value="hamburg">Hamburg</n-checkbox>
+                <n-checkbox value="munich">Munich</n-checkbox>
+                <n-checkbox value="cologne">Cologne</n-checkbox>
+                <n-checkbox value="frankfurt">Frankfurt</n-checkbox>
+            </n-checkbox-group>
+        </div>
+        <div class="col--1-1">
+            <pre class="pretty">{{ checked }}</pre>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data()
+        {
+            return {
+                checked: ['berlin']
+            };
+        }
+    } 
+</script>
 
 ```
 
@@ -75,34 +75,34 @@ Checkbox with diffrent styles.
 ```html
 /*vue*/
 
-    <template>
-        <div class="grid grid--col grid--20-20">
-            <div class="col--1-1">
-                <n-checkbox-group v-model="checked" align="vertical">
-                    <n-checkbox :global="true">Check all</n-checkbox>
-                    <n-checkbox value="berlin">Berlin</n-checkbox>
-                    <n-checkbox value="hamburg">Hamburg</n-checkbox>
-                    <n-checkbox value="munich">Munich</n-checkbox>
-                    <n-checkbox value="cologne">Cologne</n-checkbox>
-                    <n-checkbox value="frankfurt">Frankfurt</n-checkbox>
-                </n-checkbox-group>
-            </div>
-            <div class="col--1-1">
-                <pre class="pretty">{{ checked }}</pre>
-            </div>
+<template>
+    <div class="grid grid--col grid--20-20">
+        <div class="col--1-1">
+            <n-checkbox-group v-model="checked" align="vertical">
+                <n-checkbox :global="true">Check all</n-checkbox>
+                <n-checkbox value="berlin">Berlin</n-checkbox>
+                <n-checkbox value="hamburg">Hamburg</n-checkbox>
+                <n-checkbox value="munich">Munich</n-checkbox>
+                <n-checkbox value="cologne">Cologne</n-checkbox>
+                <n-checkbox value="frankfurt">Frankfurt</n-checkbox>
+            </n-checkbox-group>
         </div>
-    </template>
-    
-    <script>
-        export default {
-            data()
-            {
-                return {
-                    checked: ['berlin']
-                };
-            }
-        } 
-    </script>
+        <div class="col--1-1">
+            <pre class="pretty">{{ checked }}</pre>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data()
+        {
+            return {
+                checked: ['berlin']
+            };
+        }
+    } 
+</script>
 
 ```
 
@@ -111,26 +111,26 @@ Checkbox with diffrent styles.
 ```html
 /*vue*/
 
-    <template>
-        <div class="grid grid--col grid--20-20">
-            <div class="col--1-1">
-                <n-checkbox v-model="checked" size="small">Small</n-checkbox>
-                <n-checkbox v-model="checked">Default</n-checkbox>
-                <n-checkbox v-model="checked" size="large">Large</n-checkbox>
-            </div>
+<template>
+    <div class="grid grid--col grid--20-20">
+        <div class="col--1-1">
+            <n-checkbox v-model="checked" size="small">Small</n-checkbox>
+            <n-checkbox v-model="checked">Default</n-checkbox>
+            <n-checkbox v-model="checked" size="large">Large</n-checkbox>
         </div>
-    </template>
-    
-    <script>
-        export default {
-            data()
-            {
-                return {
-                    checked: true
-                };
-            }
-        } 
-    </script>
+    </div>
+</template>
+
+<script>
+    export default {
+        data()
+        {
+            return {
+                checked: true
+            };
+        }
+    } 
+</script>
 
 ```
 
