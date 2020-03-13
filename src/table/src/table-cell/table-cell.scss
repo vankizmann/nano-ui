@@ -57,5 +57,5 @@
  */
 
 .n-table-column.n-table-column--matrix:nth-last-child(2n+1) {
-    background-color: $--color-gray-05;
+    background-color: rgba($color-dark, 0.05);
 }

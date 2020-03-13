@@ -154,7 +154,7 @@ export default {
             let result = !! Dom.find(target)
                 .closest(this.target) || this.veVisible;
 
-            if ( this.veVisible && this.closable ) {
+            if ( this.veVisible && this.closeOutside ) {
                 result = ! Dom.find(target).closest(this.$refs.backdrop);
             }
 

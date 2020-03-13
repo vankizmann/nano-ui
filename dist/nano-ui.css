@@ -137,9 +137,11 @@
   color: #fd2f51; }
 
 .n-notification__text {
+  overflow: hidden;
   flex: 1 1 auto;
   line-height: 1.2;
-  font-size: 14px; }
+  font-size: 14px;
+  overflow-wrap: break-word; }
 
 .n-scrollbar {
   position: relative; }
@@ -2950,7 +2952,7 @@ body.n-open {
  * Matrix specific styling
  */
 .n-table-column.n-table-column--matrix:nth-last-child(2n+1) {
-  background-color: #f4f4f4; }
+  background-color: rgba(47, 50, 54, 0.05); }
 
 .n-table-filter {
   position: relative;
@@ -3199,6 +3201,9 @@ body.n-open {
 
 .n-tabs-item__wrapper:not(.n-raw) {
   margin-top: 20px; }
+
+.n-tabs-item__wrapper .n-tabs-item {
+  flex: 1 1 auto; }
 
 .n-info {
   position: relative;

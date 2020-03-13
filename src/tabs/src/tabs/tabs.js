@@ -1,4 +1,4 @@
-import { Arr, Dom } from "nano-js";
+import { Arr, Dom, Any } from "nano-js";
 
 export default {
 
@@ -57,11 +57,15 @@ export default {
         getTab(updateEvent = true)
         {
             let currentTab = Arr.find(this.veTabs, {
-                name: this.current
+                name: this.value
             });
 
             if ( ! currentTab ) {
                 currentTab = Arr.first(this.veTabs);
+            }
+
+            if ( ! currentTab ) {
+                return Any.delay(() => this.getTab(updateEvent), 250);
             }
 
             if ( currentTab.name === this.veValue ) {

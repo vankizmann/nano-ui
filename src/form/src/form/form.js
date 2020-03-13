@@ -32,7 +32,23 @@ export default {
                 return 'vertical';
             },
             type: [String]
-        }
+        },
+
+        forceChange: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
+        forceErrors: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
 
     },
 
@@ -52,22 +68,22 @@ export default {
             });
         },
 
-        updateForm()
+        setForm(form)
         {
-            let veForm = Obj.clone(this.form);
+            let veForm = Obj.clone(form);
 
-            if ( Any.md5(veForm) !== Any.md5(this.veForm) ) {
+            if ( Any.md5(veForm) !== Any.md5(this.veForm) || this.forceChange ) {
                 this.$emit('change');
             }
 
             this.veForm = veForm;
         },
 
-        updateErrors()
+        setErrors(errors)
         {
-            let veErrors = Obj.clone(this.errors);
+            let veErrors = Obj.clone(errors);
 
-            if ( Any.md5(veErrors) !== Any.md5(this.veErrors) ) {
+            if ( Any.md5(veErrors) !== Any.md5(this.veErrors) || this.forceErrors ) {
                 this.$emit('errors');
             }
 
@@ -92,8 +108,8 @@ export default {
 
     mounted()
     {
-        this.$watch('form', this.updateForm, { deep: true });
-        this.$watch('errors', this.updateErrors, { deep: true });
+        this.$watch('form', () => this.setForm(this.form), { deep: true });
+        this.$watch('errors', () => this.setErrors(this.errors), { deep: true });
     },
 
     render($render)

@@ -11,3 +11,7 @@
 .n-tabs-item__wrapper:not(.n-raw) {
     margin-top: 20px;
 }
+
+.n-tabs-item__wrapper .n-tabs-item {
+    flex: 1 1 auto;
+}

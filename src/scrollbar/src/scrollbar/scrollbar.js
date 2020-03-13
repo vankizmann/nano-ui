@@ -76,13 +76,19 @@ export default {
             Optiscroll.globalSettings.checkFrequency = 750;
             Optiscroll.globalSettings.scrollMinUpdateInterval = 16;
 
-            this.optiscroll = new Optiscroll(this.$el.parentNode, {
+            let options = {
                 classPrefix: 'n-scrollbar-',
                 minTrackSize: 10,
                 wrapContent: false,
                 preventParentScroll: true,
                 forceScrollbars: false
-            });
+            };
+
+            try {
+                this.optiscroll = new Optiscroll(this.$el.parentNode, options);
+            } catch (e) {
+                console.error('NScrollbar casualities...');
+            }
 
             if ( this.relative ) {
                 Dom.find(this.$el).parent().addClass('n-relative');
