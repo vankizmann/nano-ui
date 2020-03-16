@@ -399,18 +399,22 @@ export default {
 
         eventContextmenu(event, el)
         {
-            if ( this.disabled ) {
-                return;
-            }
+            this.clientX = event.clientX;
+            this.clientY = event.clientY;
 
-            if ( event.which !== 3 ) {
+            if ( this.disabled ) {
                 return;
             }
 
             let target = Dom.find(el).closest(this.target),
                 source = Dom.find(el).closest(this.$el);
 
-            let result = !! target || !! source;
+            if ( ! this.closeInside && source ) {
+                return;
+            }
+
+            let result = (!! target || !! source) &&
+                event.which === 3;
 
             if ( result && this.veVisible ) {
                 result = ! this.closeInside;
@@ -427,10 +431,16 @@ export default {
             this.$emit('input', this.veVisible = result);
         },
 
-        eventMousedown(event)
+        eventMousedown(event, el)
         {
-            this.clientX = event.clientX;
-            this.clientY = event.clientY;
+            let target = Dom.find(el).closest(this.target),
+                source = Dom.find(el).closest(this.$el);
+
+            if ( ! target && ! source ) {
+                return;
+            }
+
+            event.preventDefault();
         }
 
     },
@@ -467,8 +477,8 @@ export default {
         }
 
         if ( this.trigger === 'context' ) {
-            Dom.find(document).on('mousedown', this.eventMousedown, $event);
-            Dom.find(document).on('contextmenu', this.eventContextmenu, $event);
+            Dom.find(document).on('mousedown', this.eventContextmenu, $event);
+            Dom.find(document).on('contextmenu', this.eventMousedown, $event);
         }
 
         this.target = Dom.find(this.$el).previous().get(0);

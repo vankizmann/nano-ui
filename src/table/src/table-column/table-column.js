@@ -249,9 +249,9 @@ export default {
     data()
     {
         return {
-            veVisible: true,
             veWidth: 0,
             veValue: this.value,
+            veVisible: this.visible,
             veFluid: this.fluid,
         };
     },
@@ -260,10 +260,6 @@ export default {
 
         bindAdaptWidth()
         {
-            if ( ! this.veVisible ) {
-                return;
-            }
-
             if ( ! this.$refs.column ) {
                 return Any.delay(this.bindAdaptWidth, 10);
             }
@@ -272,7 +268,21 @@ export default {
             this.veFluid = false;
 
             // Bind mounted hook to get real sizes
-            this.NTable.$on('hook:mounted', this.$refs.column.refresh);
+            this.$refs.column.refresh();
+        },
+
+        detectVisibity()
+        {
+            let visible = this.visible;
+
+            if ( this.breakpoint ) {
+                visible &= this.NTable.$el.innerWidth
+                    > this.breakpoint;
+            }
+
+            if ( visible ) {
+                this.NTable.showColumn(this);
+            }
         },
 
         sortByColumn(event)
@@ -284,7 +294,7 @@ export default {
 
         eventResizerInput(value)
         {
-            this.veWidth = value;
+            this.veWidth = value || this.width;
 
             this.$nextTick(() => this.NTable.$emit('hook:resized'));
         }
@@ -307,11 +317,6 @@ export default {
         this.NTable.addColumn(this);
     },
 
-    mounted()
-    {
-        this.bindAdaptWidth()
-    },
-
     beforeDestroy()
     {
         this.NTable.removeColumn(this);
@@ -324,7 +329,8 @@ export default {
         ];
 
         if ( this.NTable.veSortProp === this.prop ) {
-            classList.push('is-sorted is-' + this.NTable.veSortDir);
+            classList.push('is-sorted');
+            classList.push('is-' + this.NTable.veSortDir);
         }
 
         if ( this.veFluid ) {
@@ -346,6 +352,10 @@ export default {
             minWidth: this.minWidth + 'px',
             maxWidth: this.maxWidth + 'px'
         };
+
+        if ( this.NTable.columnHidden(this) ) {
+            style.display = 'none';
+        }
 
         let props = {
             width: this.veWidth,
@@ -482,6 +492,10 @@ export default {
 
         if ( index ) {
             style.minWidth = this.minWidth + 'px';
+        }
+
+        if ( this.NTable.columnHidden(this) ) {
+            style.display = 'none';
         }
 
         let getTarget = () => {

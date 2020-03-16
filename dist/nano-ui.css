@@ -3259,6 +3259,22 @@ body.n-open {
   background-position: 50% 50%;
   background-color: rgba(141, 145, 148, 0.2); }
 
+.n-file-list__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch; }
+
+.n-file-list__empty {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+
+.n-file-list__empty span {
+  color: #8d9194; }
+
 .n-file-list {
   display: flex;
   flex-direction: row;

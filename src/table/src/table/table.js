@@ -14,21 +14,32 @@ export default {
             default()
             {
                 return [];
-            }
+            },
+            type: [Array]
+        },
+
+        visibleColumns: {
+            default()
+            {
+                return [];
+            },
+            type: [Array]
         },
 
         selected: {
             default()
             {
                 return [];
-            }
+            },
+            type: [Array]
         },
 
         expanded: {
             default()
             {
                 return [];
-            }
+            },
+            type: [Array]
         },
 
         sortProp: {
@@ -286,6 +297,7 @@ export default {
             veFilterProps: this.filterProps,
             veSortProp: this.sortProp,
             veSortDir: this.sortDir,
+            veVisibleColumns: this.visibleColumns,
         }
     },
 
@@ -303,6 +315,37 @@ export default {
             Arr.remove(this.veColumns, {
                 prop: column._uid
             });
+        },
+
+        showColumn(column)
+        {
+            if ( ! Any.isString(column) ) {
+                column = column['prop'];
+            }
+
+            Arr.add(this.veVisibleColumns, column);
+
+            this.$emit('update:visibleColumns', this.veVisibleColumns);
+        },
+
+        hideColumn(column)
+        {
+            if ( ! Any.isString(column) ) {
+                column = column['prop'];
+            }
+
+            Arr.remove(this.veVisibleColumns, column);
+
+            this.$emit('update:visibleColumns', this.veVisibleColumns);
+        },
+
+        columnHidden(column)
+        {
+            if ( ! Any.isString(column) ) {
+                column = column['prop'];
+            }
+
+            return ! Arr.has(this.veVisibleColumns, column);
         },
 
         sortByColumn(prop)
@@ -344,6 +387,17 @@ export default {
             this.$emit('filter', this.veFilterProps);
         }
 
+    },
+
+    mounted()
+    {
+        if ( ! this.veVisibleColumns.length ) {
+            Arr.each(this.veColumns, (column) =>
+                column.detectVisibity());
+        }
+
+        Arr.each(this.veColumns, (column) =>
+            column.bindAdaptWidth());
     },
 
     renderExpand()
@@ -392,6 +446,27 @@ export default {
         });
     },
 
+    renderHeadPopover()
+    {
+        let columnHtml = (
+            Arr.each(this.veColumns, (column) => {
+                return (
+                    <NCheckbox size="small" value={column.prop}>
+                        { column.label }
+                    </NCheckbox>
+                );
+            })
+        );
+
+        return (
+            <NPopover trigger="context" close-inside={false}>
+                <NCheckboxGroup vModel={this.veVisibleColumns} align="vertical">
+                    { columnHtml }
+                </NCheckboxGroup>
+            </NPopover>
+        );
+    },
+
     renderHead()
     {
         let defaultRender = [
@@ -403,11 +478,13 @@ export default {
             return column.ctor('renderHead')();
         });
 
-        return (
+        let headHtml = (
             <div class="n-table__head">
-                { [defaultRender, ...columnHtml] }
+                {[defaultRender, ...columnHtml]}
             </div>
         );
+
+        return [headHtml, this.ctor('renderHeadPopover')()];
     },
 
     render($render)

@@ -1,5 +1,24 @@
 @import "../../../root/vars";
 
+.n-file-list__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.n-file-list__empty {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-file-list__empty span {
+    color: $--color-gray-50;
+}
+
 .n-file-list {
     display: flex;
     flex-direction: row;

@@ -105,7 +105,7 @@ export default {
 
         removeFile(unique)
         {
-            if ( Any.isString(unique) ) {
+            if ( ! Any.isString(unique) ) {
                 unique = unique[this.uniqueProp]
             }
 
@@ -139,15 +139,31 @@ export default {
         );
     },
 
+    renderEmpty()
+    {
+        return (
+            <div class="n-file-list__empty">
+                <span>{ this.$slots.empty || this.trans('No entries') }</span>
+            </div>
+        );
+    },
+
+    renderBody()
+    {
+        return (
+            <NScrollbar class="n-file-list">
+                { Arr.each(this.items, this.ctor('renderFile')) }
+            </NScrollbar>
+        );
+    },
+
     render($render)
     {
         this.$render = $render;
 
         return (
             <div class="n-file-list__wrapper">
-                <NScrollbar class="n-file-list">
-                    { Arr.each(this.items, this.ctor('renderFile')) }
-                </NScrollbar>
+                { this.items.length ? this.ctor('renderBody')() : this.ctor('renderEmpty')() }
             </div>
         );
     }

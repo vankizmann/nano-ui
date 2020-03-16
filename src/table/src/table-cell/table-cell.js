@@ -32,17 +32,13 @@ export default {
 
     },
 
-    methods: {
-
-        ...CtorMixin,
-
-    },
-
     render()
     {
-        return <div class="n-table-cell">
-            <span>{ this.input }</span>
-        </div>;
+        return (
+            <div class="n-table-cell">
+                <span>{ this.input }</span>
+            </div>
+        );
     }
 
 }
