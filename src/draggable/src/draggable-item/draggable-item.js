@@ -331,7 +331,7 @@ export default {
 
         let allowSelect = this.NDraggable.canSelect(this);
 
-        allowSelect &= Any.isFunction(this.NDraggable.allowSelect) ?
+        allowSelect = allowSelect && Any.isFunction(this.NDraggable.allowSelect) ?
             this.NDraggable.allowSelect(this) : this.NDraggable.allowSelect;
 
         let isChecked = this.NDraggable.isSelected(this);
@@ -399,14 +399,14 @@ export default {
             );
         }
 
-        let draggable = this.NDraggable.allowSelect(this);
+        let allowDrag = this.NDraggable.allowSelect(this);
 
         // Is selectable and can be dragged
-        draggable &= Any.isFunction(this.NDraggable.allowDrag) ?
+        allowDrag = allowDrag && Any.isFunction(this.NDraggable.allowDrag) ?
             this.NDraggable.allowDrag(this) : this.NDraggable.allowDrag;
 
         return (
-            <div data-key={this.$vnode.key} class={classList} style={style} on={events} draggable={draggable}>
+            <div data-key={this.$vnode.key} class={classList} style={style} on={events} draggable={allowDrag}>
                 { this.ctor('renderSpacer')() }
                 { this.ctor('renderExpand')() }
                 { this.ctor('renderSelect')() }

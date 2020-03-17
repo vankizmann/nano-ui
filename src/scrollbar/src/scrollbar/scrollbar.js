@@ -59,20 +59,6 @@ export default {
                 this.destroy();
             }
 
-            let vtrack = Dom.find(this.$el).parent()
-                .find('.n-scrollbar-v').get(0);
-
-            if ( vtrack ) {
-                vtrack.remove();
-            }
-
-            let htrack = Dom.find(this.$el).parent()
-                .find('.n-scrollbar-h').get(0);
-
-            if ( htrack ) {
-                htrack.remove();
-            }
-
             Optiscroll.globalSettings.checkFrequency = 750;
             Optiscroll.globalSettings.scrollMinUpdateInterval = 16;
 
@@ -122,6 +108,19 @@ export default {
                 console.error('NScrollbar casualities...');
             }
 
+            let vtrack = Dom.find(this.$el).parent()
+                .find('.n-scrollbar-v').get(0);
+
+            if ( vtrack ) {
+                vtrack.remove();
+            }
+
+            let htrack = Dom.find(this.$el).parent()
+                .find('.n-scrollbar-h').get(0);
+
+            if ( htrack ) {
+                htrack.remove();
+            }
 
             delete this.optiscroll;
 

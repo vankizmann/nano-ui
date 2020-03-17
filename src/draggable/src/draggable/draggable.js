@@ -1185,6 +1185,10 @@ export default {
         {
             event.preventDefault();
 
+            if ( Dom.find(event.target).closest('[data-key]') ) {
+                return;
+            }
+
             let virtualItem = {
                 [this.indexProp]: 0,
                 [this.uniqueProp]: null
@@ -1328,16 +1332,8 @@ export default {
             return null;
         }
 
-        let events = {
-            dragenter: this.eventEmptyDragenter,
-            dragover: this.eventEmptyDragover,
-            dragleave: this.eventEmptyDragleave,
-            dragdrop: this.eventEmptyDragdrop,
-            drop: this.eventEmptyDragdrop
-        };
-
         return (
-            <div class="n-draggable__empty" on={events}>
+            <div class="n-draggable__empty">
                  <span>{ this.$slots.empty || this.trans('No entries') }</span>
             </div>
         );
@@ -1372,9 +1368,17 @@ export default {
             items: this.veItems, renderNode: this.ctor('renderItem')
         });
 
+        let events = {
+            dragenter: this.eventEmptyDragenter,
+            dragover: this.eventEmptyDragover,
+            dragleave: this.eventEmptyDragleave,
+            dragdrop: this.eventEmptyDragdrop,
+            drop: this.eventEmptyDragdrop
+        };
+
         return (
             this.$render('NVirtualscroller', {
-               ref: 'vscroller', class: 'n-draggable', props
+               ref: 'vscroller', class: 'n-draggable', on: events, props: props
             }, slots)
         );
     }

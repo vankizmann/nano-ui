@@ -306,7 +306,7 @@ export default {
         this.$render = $render;
 
         return (
-            <div class="n-virtualscroller">
+            <div class="n-virtualscroller" on={this.$listeners}>
                 { this.$slots.before || null }
                 { this.ctor('renderBody')() }
                 { this.$slots.default || null }

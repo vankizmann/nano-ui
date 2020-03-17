@@ -95,6 +95,10 @@ $notification-icon-size: 15px !default;
     color: $--color-danger;
 }
 
+.n-notification.n-notification--info .n-notification__icon {
+    color: $--color-info;
+}
+
 .n-notification__text {
     overflow: hidden;
     flex: 1 1 auto;
