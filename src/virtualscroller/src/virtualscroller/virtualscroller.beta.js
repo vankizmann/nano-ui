@@ -90,6 +90,10 @@ export default {
 
         scrollTop(value = -1)
         {
+            if ( ! this.$refs.viewport ) {
+                return;
+            }
+
             if ( value !== -1 ) {
                 this.$refs.viewport.$el.scrollTop = value;
             }

@@ -301,6 +301,10 @@ export default {
                 return;
             }
 
+            if ( this.$refs.vscroller ) {
+                this.$refs.vscroller.scrollTop(0);
+            }
+
             this.veCopy = Obj.clone(items);
 
             this.refreshItems();
@@ -702,6 +706,98 @@ export default {
                 target[this.indexProp]);
 
             return target;
+        },
+
+        highlightItem(value, prop = null)
+        {
+            if ( ! prop ) {
+                prop = this.uniqueProp;
+            }
+
+            if ( ! Any.isString(value) ) {
+                value = value[prop];
+            }
+
+            let finalProps = [];
+
+            Arr.recursive(this.items, this.childProp, (item, cascade) => {
+
+                if ( item[prop] !== value ) {
+                    return;
+                }
+
+                finalProps.push(item[this.uniqueProp]);
+
+                let keys = Arr.each(cascade, (sub) => {
+                    return sub[this.uniqueProp];
+                });
+
+                this.veExpanded = Arr.merge(this.veExpanded, keys);
+            });
+
+            if ( ! finalProps.length ) {
+                return;
+            }
+
+            this.updateExpanded();
+            this.refreshItems();
+
+            this.$nextTick(() => {
+                this.highlightTimer(finalProps);
+            });
+        },
+
+        highlightTimer(finalProps = [])
+        {
+            clearTimeout(this.highlightDelay);
+
+            Dom.find(this.$el).find('.n-highlight')
+                .removeClass('n-highlight');
+
+            Arr.each(finalProps, (unique, index) => {
+
+                if ( ! index ) {
+                    this.scrollToItem(unique);
+                }
+
+                Dom.find(this.$el).find(`[data-id="${unique}"]`)
+                    .addClass('n-highlight');
+            });
+
+            this.highlightDelay = setTimeout(() => {
+                Dom.find(this.$el).find('.n-highlight')
+                    .removeClass('n-highlight');
+            }, 5000);
+        },
+
+        scrollToItem(unique)
+        {
+            if ( ! Any.isString(unique) ) {
+                unique = unique[this.uniqueProp];
+            }
+
+            let index = Arr.findIndex(this.veItems, {
+                [this.uniqueProp]: unique
+            });
+
+            // Get viewport height
+            let height = Dom.find(this.$el).height();
+
+            // Get scrolltop from virtual scroller
+            let scrollY = this.$refs.vscroller.scrollTop();
+
+            // Row is inview
+            let veInview = scrollY < this.itemHeight * index &&
+                scrollY + height > this.itemHeight * (index + 1);
+
+            if ( veInview ) {
+                return;
+            }
+
+            // New scrolltop value
+            scrollX = this.itemHeight * index;
+
+            this.$refs.vscroller.scrollTop(scrollX);
         },
 
         isCurrent(unique)
@@ -1185,7 +1281,7 @@ export default {
         {
             event.preventDefault();
 
-            if ( Dom.find(event.target).closest('[data-key]') ) {
+            if ( Dom.find(event.target).closest('[data-id]') ) {
                 return;
             }
 
@@ -1237,26 +1333,16 @@ export default {
 
         selected()
         {
-            let veNewSelected = Obj.clone(this.selected),
-                veOldSelected = Obj.clone(this.veSelected);
-
-            if ( Any.md5(veNewSelected) === Any.md5(veOldSelected) ) {
-                return;
+            if ( Any.md5(this.selected) !== Any.md5(this.veSelected) ) {
+                this.veSelected = Obj.clone(this.selected);
             }
-
-            this.veSelected = veNewSelected;
         },
 
         expanded()
         {
-            let veNewExpanded = Obj.clone(this.expanded),
-                veOldExpanded = Obj.clone(this.veExpanded);
-
-            if ( Any.md5(veNewExpanded) === Any.md5(veOldExpanded) ) {
-                return;
+            if ( Any.md5(this.expanded) !== Any.md5(this.veExpanded) ) {
+                this.veExpanded = Obj.clone(this.expanded);
             }
-
-            this.veExpanded = veNewExpanded;
         }
 
     },

@@ -405,8 +405,11 @@ export default {
         allowDrag = allowDrag && Any.isFunction(this.NDraggable.allowDrag) ?
             this.NDraggable.allowDrag(this) : this.NDraggable.allowDrag;
 
+        // Get unique prop
+        let id = this.value[this.NDraggable.uniqueProp];
+
         return (
-            <div data-key={this.$vnode.key} class={classList} style={style} on={events} draggable={allowDrag}>
+            <div data-id={id} class={classList} style={style} on={events} draggable={allowDrag}>
                 { this.ctor('renderSpacer')() }
                 { this.ctor('renderExpand')() }
                 { this.ctor('renderSelect')() }

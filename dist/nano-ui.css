@@ -420,6 +420,10 @@
   background: rgba(253, 47, 81, 0.1);
   transition: background 0ms; }
 
+.n-draggable-item.n-highlight {
+  background: rgba(255, 172, 47, 0.1);
+  transition: background 0ms; }
+
 .n-draggable-item__spacer {
   flex: 0 0 auto; }
 

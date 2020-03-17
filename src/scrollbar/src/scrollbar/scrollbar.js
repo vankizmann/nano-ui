@@ -70,11 +70,7 @@ export default {
                 forceScrollbars: false
             };
 
-            try {
-                this.optiscroll = new Optiscroll(this.$el.parentNode, options);
-            } catch (e) {
-                console.error('NScrollbar casualities...');
-            }
+            this.optiscroll = new Optiscroll(this.$el.parentNode, options);
 
             if ( this.relative ) {
                 Dom.find(this.$el).parent().addClass('n-relative');
@@ -98,31 +94,11 @@ export default {
 
         destroy()
         {
-            if ( ! this.optiscroll ) {
-                return;
-            }
-
             try {
-                this.optiscroll.destroy();
+                this.optiscroll = this.optiscroll.destroy();
             } catch (e) {
                 console.error('NScrollbar casualities...');
             }
-
-            let vtrack = Dom.find(this.$el).parent()
-                .find('.n-scrollbar-v').get(0);
-
-            if ( vtrack ) {
-                vtrack.remove();
-            }
-
-            let htrack = Dom.find(this.$el).parent()
-                .find('.n-scrollbar-h').get(0);
-
-            if ( htrack ) {
-                htrack.remove();
-            }
-
-            delete this.optiscroll;
 
             let $event = {
                 _uid: this._uid
@@ -151,6 +127,8 @@ export default {
 
     beforeDestroy()
     {
+        this.destroy();
+
         this.$parent.$off('hook:updated');
         this.$parent.$off('hook:destroyed');
     },
