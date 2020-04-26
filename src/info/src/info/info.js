@@ -66,8 +66,8 @@ export default {
                         Arr.each(this.veColumns, (column, key) => {
                             return (
                                 <div class="n-info__column">
-                                    { column.$scopedSlots.label({ column, key, item: this.veValue }) }
-                                    { column.$scopedSlots.default({ column, key, item: this.veValue }) }
+                                    { column.$scopedSlots.label({ column, key, value: this.veValue }) }
+                                    { column.$scopedSlots.default({ column, key, value: this.veValue }) }
                                 </div>
                             )
                         })
