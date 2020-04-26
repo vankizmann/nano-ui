@@ -122,11 +122,11 @@ export default {
         );
     },
 
-    renderBody({ column, item, key })
+    renderBody({ column, value, key })
     {
          return (
              <div class="n-info-column__value">
-                 { this.ctor('renderCell')({ column, item, key }) }
+                 { this.ctor('renderCell')({ column, value, key }) }
              </div>
          );
     },
