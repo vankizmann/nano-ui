@@ -14,7 +14,7 @@ export default {
         ];
 
         return <div class={className}>
-            <span>{ Any.convertString(this.value, this.column.emptyText) }</span>
+            <span>{ Any.convertString(this.veValue, this.column.emptyText) }</span>
         </div>;
     }
 

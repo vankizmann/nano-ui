@@ -14,7 +14,7 @@ export default {
         ];
 
         return <div class={className}>
-            <span>{ Any.convertBoolean(this.value, this.column.trueText, this.column.falseText) }</span>
+            <span>{ Any.convertBoolean(this.veValue, this.column.trueText, this.column.falseText) }</span>
         </div>;
     }
 

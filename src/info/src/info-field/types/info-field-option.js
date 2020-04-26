@@ -10,7 +10,7 @@ export default {
     render()
     {
         let options = typeof this.column.options === 'function' ?
-            this.column.options(this.item) : this.column.options;
+            this.column.options(this.value) : this.column.options;
 
         options = Arr.map(Any.keys(options), (index) => {
             return { $value: options[index], $index: index };
@@ -23,7 +23,7 @@ export default {
         return <div class={className}>
             <span>
                 {
-                    Arr.each(! Any.isArray(this.value) ? [this.value] : this.value, (value) => {
+                    Arr.each(! Any.isArray(this.veValue) ? [this.veValue] : this.veValue, (value) => {
 
                         let option = Arr.find(options, (option) => {
                             return Any.string(Obj.get(option, this.column.optionsValue)) === Any.string(value);

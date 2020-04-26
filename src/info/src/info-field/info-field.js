@@ -17,7 +17,7 @@ export default {
             required: true
         },
 
-        item: {
+        value: {
             required: true
         },
 
@@ -25,9 +25,9 @@ export default {
 
     computed: {
 
-        value()
+        veValue()
         {
-            return Obj.get(this.item, this.column.prop);
+            return Obj.get(this.value, this.column.prop);
         }
 
     },

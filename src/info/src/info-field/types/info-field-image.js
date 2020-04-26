@@ -14,7 +14,7 @@ export default {
 
         return (
             <div class={classList}>
-                <div style={'background-image: url(\'' + this.value + '\');'} />
+                <div style={'background-image: url(\'' + this.veValue + '\');'} />
             </div>
         );
     }
