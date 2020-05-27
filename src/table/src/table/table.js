@@ -120,6 +120,14 @@ export default {
             }
         },
 
+        headerHeight: {
+            default()
+            {
+                return 40;
+            },
+            type: [Number]
+        },
+
         keyProp: {
             default()
             {
@@ -506,6 +514,10 @@ export default {
         let passes = {
             on: Obj.clone(this.$listeners), scopedSlots: this.$scopedSlots
         };
+
+        if ( Any.isNumber(this.viewportHeight) ) {
+            props.viewportHeight = this.viewportHeight - this.headerHeight;
+        }
 
         let draggableHtml = this.$render('NDraggable', {
             ref: 'list', class: 'n-table__body', props, ...passes
