@@ -331,8 +331,8 @@ export default {
 
         let allowSelect = this.NDraggable.canSelect(this);
 
-        allowSelect = allowSelect && Any.isFunction(this.NDraggable.allowSelect) ?
-            this.NDraggable.allowSelect(this) : this.NDraggable.allowSelect;
+        allowSelect = allowSelect && (Any.isFunction(this.NDraggable.allowSelect) ?
+            this.NDraggable.allowSelect(this) : this.NDraggable.allowSelect);
 
         let isChecked = this.NDraggable.isSelected(this);
 
