@@ -336,7 +336,7 @@ export default {
 
         let isChecked = this.NDraggable.isSelected(this);
 
-        // TODO: Decouple is checked from draggable
+        // TODO: Decouple is checked from draggable (Not anynmore?)
 
         return (
             <div ref="select" class="n-draggable-item__select">
