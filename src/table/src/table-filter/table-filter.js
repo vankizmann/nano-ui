@@ -142,7 +142,8 @@ export default {
 
     render()
     {
-        if ( ! this.boundaryEl ) {
+        // Disabled maybe use this at some point
+        if ( ! this.boundaryEl && false ) {
             this.boundaryEl = Dom.find(this.NTable.$el)
                 .find('.n-table__inner').get(0);
         }
