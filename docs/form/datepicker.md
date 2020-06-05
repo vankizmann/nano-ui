@@ -2,7 +2,7 @@
 Datepicker with diffrent styles.
 
 ```vue
-<n-textarea v-model="text"></n-textarea>
+<n-datepicker v-model="text"></n-datepicker>
 ```
 
 ### Datepicker
@@ -25,8 +25,7 @@ Datepicker with diffrent styles.
     export default {
         data()
         {
-            console.log(Nano.Now.make('now+2days').format(undefined, true));
-            return { timestamp: Nano.Now.make('now+2days').format(undefined, true) };
+            return { timestamp: 'now+2days' };
         }
     } 
 </script>
@@ -72,8 +71,8 @@ _Native button type (a, button, div etc.)_
 
 ### Events
 ```javascript
-    /* Allows all types which are supported by native type, but overrides default textarea event */
-    NDraggable.$on('textarea', (value) => {
+    /* Allows all types which are supported by native type, but overrides default datepicker event */
+    NDraggable.$on('datepicker', (value) => {
         console.log(value);
     });
 ```

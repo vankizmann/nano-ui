@@ -1,197 +1,164 @@
 # Cascader
-Cascader with diffrent styles.
-
-```vue
-<n-cascader v-model="value">
-    <n-cascader-option value="foo">Foo</n-cascader-option>
-    <n-cascader-option value="bar">Bar</n-cascader-option>
-</n-cascader>
-```
-
-### Cascader
+Drag and drop list or tree.
 
 ```html
 /*vue*/
-
 <template>
-    <div class="grid grid--col grid--20-20">
-        <div class="col--1-1">
-            <n-cascader v-model="value">
-                <n-cascader-option value="hamburg">Hamburg</n-cascader-option>
-                <n-cascader-option value="berlin">Berlin</n-cascader-option>
-                <n-cascader-option value="frankfurt" :disabled="true">Frankfurt</n-cascader-option>
-                <n-cascader-option value="munich">Munich</n-cascader-option>
-            </n-cascader>
-        </div>
+    <div>
+        <n-cascader v-model="value" :items="items" label-prop="label"></n-cascader>
     </div>
 </template>
-
 <script>
     export default {
-        data()
-        {
-            return { value: null };
+        methods: {
+                    
+            generator(count = 10, depth = 1)
+            {
+                if ( ! depth ) {
+                    return [];
+                }
+                
+                if ( ! this.total ) {
+                    this.total = 0;
+                }
+                
+                return Nano.Arr.each(Nano.Arr.make(count), () => {
+                        
+                    this.total++;
+   
+                    return {
+                        label: 'Item ' + this.total,
+                        value: 'value-' + this.total,
+                        children: this.generator(count, depth - 1)
+                    };
+                })
+            }
+            
+        },
+        data() {
+            return {
+                items: this.generator(10, 2), value: ['value-1']
+            }
         }
-    } 
+    }
 </script>
-
-```
-
-
-### Clearable cascader
-
-```html
-/*vue*/
-
-<template>
-    <div class="grid grid--col grid--20-20">
-        <div class="col--1-1">
-            <n-cascader v-model="value" :clearable="true">
-                <n-cascader-option value="hamburg">Hamburg</n-cascader-option>
-                <n-cascader-option value="berlin">Berlin</n-cascader-option>
-                <n-cascader-option value="frankfurt" :disabled="true">Frankfurt</n-cascader-option>
-                <n-cascader-option value="munich">Munich</n-cascader-option>
-            </n-cascader>
-        </div>
-    </div>
-</template>
-
-<script>
-    export default {
-        data()
-        {
-            return { value: null };
-        }
-    } 
-</script>
-
-```
-
-### Multiple cascader
-
-```html
-/*vue*/
-
-<template>
-    <div class="grid grid--col grid--20-20">
-        <div class="col--1-1">
-            <n-cascader v-model="value" :multiple="true">
-                <n-cascader-option value="hamburg">Hamburg</n-cascader-option>
-                <n-cascader-option value="berlin">Berlin</n-cascader-option>
-                <n-cascader-option value="frankfurt" :disabled="true">Frankfurt</n-cascader-option>
-                <n-cascader-option value="munich">Munich</n-cascader-option>
-            </n-cascader>
-        </div>
-    </div>
-</template>
-
-<script>
-    export default {
-        data()
-        {
-            return { value: null };
-        }
-    } 
-</script>
-
-```
-
-### Create new options
-
-```html
-/*vue*/
-
-<template>
-    <div class="grid grid--col grid--20-20">
-        <div class="col--1-1">
-            <n-cascader v-model="value" :allow-create="true">
-                <n-cascader-option value="hamburg">Hamburg</n-cascader-option>
-                <n-cascader-option value="berlin">Berlin</n-cascader-option>
-                <n-cascader-option value="frankfurt" :disabled="true">Frankfurt</n-cascader-option>
-                <n-cascader-option value="munich">Munich</n-cascader-option>
-            </n-cascader>
-        </div>
-    </div>
-</template>
-
-<script>
-    export default {
-        data()
-        {
-            return { value: null };
-        }
-    } 
-</script>
-
-```
-
-### Cascader group
-
-```html
-/*vue*/
-
-<template>
-    <div class="grid grid--col grid--20-20">
-        <div class="col--1-1">
-            <n-button-group>
-                <n-cascader v-model="value" :options="options" />
-                <n-button icon="fa fa-pen">Edit</n-button>
-            </n-button-group>
-        </div>
-    </div>
-</template>
-
-<script>
-    export default {
-        data()
-        {
-            return { text: '' };
-        }
-    } 
-</script>
-
 ```
 
 ### Properties
-**value**  
+**items**  
+default: []  
+types: Array  
+_All items which will be cascader, needs to hold Objects_
+
+**use**  
 default: null  
 types: String  
-_Cascader value_
+_Component which will be rendered instead of default scoped slot (Cascader)_
 
-**size**  
-default: 'default'  
+**useBefore**  
+default: null  
 types: String  
-_Button size (small, default, large)_
+_Component which will be rendered instead of before scoped slot (Non cascader)_
 
-**round**  
-default: false  
+**useAfter**  
+default: null  
+types: String  
+_Component which will be rendered instead of after scoped slot (Non cascader)_
+
+**selected**  
+default: null  
+types: Array  
+_Array with all selected items can be passed with this prop aswell_
+
+**depth**  
+default: 0  
+types: Number  
+_Current level of depth (used in tree)_
+
+**group**  
+default: ['default']  
+types: Array  
+_Cascader group_
+
+**safezone**  
+default: ['default']  
+types: Number, Function  
+_Safezone for before and after_
+
+```javascript
+/* height: 40px; before: 0-10px; inner: 10-30px; after: 30-40px */
+(height) => height * 0.25;
+```
+
+**showEmpty**  
+default: true  
 types: Boolean  
-_If button is rounded_
+_Render empty field_
 
-**disabled**  
-default: false  
-types: Boolean  
-_If button uses disabled style and mode_
+**itemHeight**  
+default: 34  
+types: Number  
+_Used for render list (loads 25 items in chunks to improve browser reactivity)_
 
-**icon**  
-default: ''  
+**uniqueProp**  
+default: 'id'  
 types: String  
-_Icon class (fa fa-times)_
+_Unique prop for selected list_
 
-**iconDisabled**  
-default: false  
-types: Boolen  
-_If icon button will be disabled_
-
-**nativeType**  
-default: 'button'  
+**childProp**  
+default: null  
 types: String  
-_Native button type (a, button, div etc.)_
+_Children property for tree_
+
+**transformDrop**  
+default: (item) => item  
+types: Function  
+_Transform property on drop_
+
+**insertNode**  
+default: true  
+types: Boolean, Function  
+_Determines if node will be added to list or just emits move_
+
+**removeNode**  
+default: true  
+types: Boolean, Function  
+_Determines if node will be removed from list or just emits move_
+
+**allowSelect**  
+default: (item, depth) => true  
+types: Boolean, Function  
+_Determines if node is selectable_
+
+**allowDrag**  
+default: (item, depth) => true  
+types: Boolean, Function  
+_Determines if node is cascader_
+
+**allowDrop**  
+default: (item, target, move, depth) => true  
+types: Boolean, Function  
+_Determines if node is droppable_
+
+**className**  
+default: ['n-cascader']  
+types: Array  
+_CSS classes for cascader list_
 
 ### Events
 ```javascript
-    /* Allows all types which are supported by native type, but overrides default input event */
-    NDraggable.$on('input', (value) => {
-        console.log(value);
+    /* Emits on data change */
+    NCascader.$on('input', (input) => {
+        console.log(input);
+    });
+    
+    /* Emits on move change */
+    NCascader.$on('input', (source, target, move) => {
+        console.log(source, target, move);
+    });
+    
+    /* Emits on selected change */
+    NCascader.$on('update:selected', (selected) => {
+        console.log(selected);
     });
 ```

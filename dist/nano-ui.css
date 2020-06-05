@@ -2423,7 +2423,8 @@
 .n-popover .n-popover__frame {
   width: 100%;
   display: inline-flex;
-  flex-direction: column; }
+  flex-direction: column;
+  overflow: hidden; }
 
 .n-popover.n-popover--default > .n-popover__frame,
 .n-popover.n-popover--filter > .n-popover__frame {

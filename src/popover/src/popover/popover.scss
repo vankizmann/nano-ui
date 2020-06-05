@@ -58,6 +58,7 @@ $popover-option-size: 14px !default;
     width: 100%;
     display: inline-flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .n-popover.n-popover--default > .n-popover__frame,
