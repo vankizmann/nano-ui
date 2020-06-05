@@ -231,7 +231,7 @@ export default {
             veTempArrive: null,
             veTempDepart: null,
             veValue: Now.make(this.value),
-            veCached: Now.make(this.cached),
+            veCached: Now.make(this.value),
             veArrive: Now.make(this.arrive),
             veDepart: Now.make(this.depart),
         }
