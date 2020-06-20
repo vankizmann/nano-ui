@@ -1,5 +1,7 @@
 @import "../../../root/vars";
 
+$tabs-size: 14px;
+
 .n-tabs {
     display: flex;
     flex-direction: column;
@@ -54,6 +56,12 @@
     align-items: center;
     padding: 14px 16px;
     transition: color 0.15s;
+    font-size: $tabs-size;
+}
+
+.n-tabs.n-tabs--small .n-tabs__tab {
+    font-size: $tabs-size * 0.875;
+    padding: 14px * 0.875 16px * 0.875;
 }
 
 .n-tabs__tab-icon {

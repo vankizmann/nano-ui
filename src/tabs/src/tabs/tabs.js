@@ -29,6 +29,14 @@ export default {
             type: [Boolean]
         },
 
+        size: {
+            default()
+            {
+                return 'default';
+            },
+            type: [String]
+        }
+
     },
 
     data()
@@ -156,9 +164,12 @@ export default {
 
     render()
     {
+        let classList = [
+            'n-tabs', 'n-tabs--' + this.size
+        ];
 
         return (
-            <div class="n-tabs">
+            <div class={classList}>
                 { this.ctor('renderHeader')() }
                 { this.ctor('renderBody')() }
             </div>
