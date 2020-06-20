@@ -18,7 +18,7 @@ export default {
         iconPosition: {
             default()
             {
-                return 'before';
+                return this.NanoStyles.iconPosition;
             },
             type: [String]
         },
