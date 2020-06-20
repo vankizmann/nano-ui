@@ -28,7 +28,7 @@ let NanoIcons = {
 };
 
 let NanoStyles = {
-    iconPosition: 'left',
+    iconPosition: 'before',
 };
 
 export function Install(Vue, Icons = {}, Styles = {})
