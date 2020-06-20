@@ -18,7 +18,7 @@ export default {
         iconPosition: {
             default()
             {
-                return this.NanoStyles.iconPosition;
+                return this.styles.iconPosition;
             },
             type: [String]
         },
