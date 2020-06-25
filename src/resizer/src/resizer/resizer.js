@@ -72,13 +72,13 @@ export default {
         refresh()
         {
             if ( ! this.$el ) {
-                return Any.delay(this.refresh, 200);
+                return Any.delay(this.refresh, 20);
             }
 
             let veWidth = Dom.find(this.$el).width();
 
             if ( this.veWidth ) {
-                return Any.delay(this.refresh, 200);
+                return Any.delay(this.refresh, 20);
             }
 
             this.$emit('input', this.veWidth = veWidth);
