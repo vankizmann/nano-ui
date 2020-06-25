@@ -261,14 +261,14 @@ export default {
         bindAdaptWidth()
         {
             if ( ! this.$refs.column ) {
-                return Any.delay(this.bindAdaptWidth, 100);
+                return Any.delay(this.bindAdaptWidth, 5);
             }
 
             // Disable fluid after fist run
             this.veFluid = false;
 
             // Bind mounted hook to get real sizes
-            this.$refs.column.refresh();
+            this.$nextTick(this.$refs.column.refresh);
         },
 
         detectVisibity()
@@ -294,10 +294,6 @@ export default {
 
         eventResizerInput(value)
         {
-            if ( this.veFluid ) {
-                return;
-            }
-
             this.veWidth = value || this.width;
 
             this.$nextTick(() => this.NTable.$emit('hook:resized'));
