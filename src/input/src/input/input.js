@@ -123,6 +123,7 @@ export default {
         let props = {
             type: 'input',
             icon: this.icon,
+            square: true,
             disabled: this.iconDisabled,
         };
 
