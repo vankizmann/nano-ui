@@ -88,7 +88,8 @@ $input-height: 34px !default;
 
 .n-input__wrapper > .n-button__wrapper {
     position: absolute;
-    top: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .n-input__wrapper.n-input--icon.n-input--icon-before > .n-button__wrapper {

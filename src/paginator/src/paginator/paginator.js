@@ -66,7 +66,7 @@ export default {
             default()
             {
                 return [
-                    'limit', 'review', 'spacer', 'goto', 'pages'
+                    'limit', 'count', 'spacer', 'goto', 'pages'
                 ]
             },
             type: [Array]
@@ -172,10 +172,10 @@ export default {
         );
     },
 
-    renderReview()
+    renderCount()
     {
         return (
-            <div class="n-paginator__review">
+            <div class="n-paginator__count">
                 <span>
                     { this.choice('No items|Total :count item|Total :count items', this.total) }
                 </span>
