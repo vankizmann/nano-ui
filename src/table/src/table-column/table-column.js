@@ -268,7 +268,7 @@ export default {
             this.veFluid = false;
 
             // Bind mounted hook to get real sizes
-            this.$nextTick(this.$refs.column.refresh);
+            this.$refs.column.refresh();
         },
 
         detectVisibity()
