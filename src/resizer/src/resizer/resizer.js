@@ -58,6 +58,14 @@ export default {
             type: [Number]
         },
 
+        bootRefresh: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        }
+
     },
 
     data()
@@ -72,7 +80,7 @@ export default {
         refresh()
         {
             if ( ! this.$el ) {
-                return Any.delay(this.refresh, 20);
+                return Any.delay(this.refresh, 50);
             }
 
             let veWidth = Dom.find(this.$el).width();
@@ -282,7 +290,9 @@ export default {
 
     mounted()
     {
-        this.refresh();
+        if ( this.bootRefresh ) {
+            this.refresh();
+        }
     },
 
     render()

@@ -261,11 +261,7 @@ export default {
         bindAdaptWidth()
         {
             if ( ! this.$refs.column ) {
-                return Any.delay(this.bindAdaptWidth, 5);
-            }
-
-            if ( ! this.veFluid ) {
-                return;
+                return Any.delay(this.bindAdaptWidth, 10);
             }
 
             // Disable fluid after fist run
@@ -366,6 +362,7 @@ export default {
             minWidth: this.minWidth,
             maxWidth: this.maxWidth,
             disabled: !! this.fixedWidth,
+            bootRefresh: false
         };
 
         let events = {
