@@ -261,7 +261,7 @@ export default {
         bindAdaptWidth()
         {
             if ( ! this.$refs.column ) {
-                return Any.delay(this.bindAdaptWidth, 50);
+                return Any.delay(this.bindAdaptWidth, 100);
             }
 
             // Disable fluid after fist run
@@ -294,6 +294,10 @@ export default {
 
         eventResizerInput(value)
         {
+            if ( this.veFluid ) {
+                return;
+            }
+
             this.veWidth = value || this.width;
 
             this.$nextTick(() => this.NTable.$emit('hook:resized'));

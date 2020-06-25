@@ -404,10 +404,8 @@ export default {
                 column.detectVisibity());
         }
 
-        Any.delay(() => {
-            Arr.each(this.veColumns, (column) =>
-                column.bindAdaptWidth());
-        });
+        Arr.each(this.veColumns, (column) =>
+            column.bindAdaptWidth());
     },
 
     renderExpand()
