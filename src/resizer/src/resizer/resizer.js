@@ -77,6 +77,8 @@ export default {
 
             let veWidth = Dom.find(this.$el).width();
 
+            console.log(this.$el, veWidth);
+
             if ( this.veWidth ) {
                 return;
             }
