@@ -78,7 +78,7 @@ export default {
             let veWidth = Dom.find(this.$el).width();
 
             if ( this.veWidth ) {
-                return Any.delay(this.refresh, 20);
+                return;
             }
 
             this.$emit('input', this.veWidth = veWidth);
