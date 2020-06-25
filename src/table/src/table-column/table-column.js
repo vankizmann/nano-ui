@@ -264,6 +264,10 @@ export default {
                 return Any.delay(this.bindAdaptWidth, 5);
             }
 
+            if ( ! this.veFluid ) {
+                return;
+            }
+
             // Disable fluid after fist run
             this.veFluid = false;
 
