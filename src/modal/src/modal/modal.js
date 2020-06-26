@@ -151,6 +151,10 @@ export default {
                 return;
             }
 
+            if ( Dom.find(target).closest('n-disabled') ) {
+                return;
+            }
+
             let result = !! Dom.find(target)
                 .closest(this.target) || this.veVisible;
 

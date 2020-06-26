@@ -11,10 +11,6 @@ $table-row-height: 40px !default;
     border: 1px solid $--color-gray-10;
 }
 
-.n-inverse .n-table {
-    border-color: $--color-gray-90;
-}
-
 .n-table .n-virtualscroller {
     width: auto;
 }
@@ -50,11 +46,6 @@ $table-row-height: 40px !default;
     box-shadow: 0 0 3px rgba($color-black, 0.1);
 }
 
-
-.n-inverse .n-table .n-table__head {
-    border-bottom-color: $--color-gray-90;
-}
-
 .n-table .n-table__body {
     min-width: 0;
     flex: 1 0 auto;
@@ -71,10 +62,6 @@ $table-row-height: 40px !default;
 .n-table .n-table__body .n-draggable-item,
 .n-table .n-table__body .n-virtualscroller__item {
     border-bottom: 1px solid $--color-gray-10;
-}
-
-.n-inverse .n-table .n-table__body .n-draggable-item {
-    border-bottom-color: $--color-gray-90;
 }
 
 .n-table .n-draggable-item__select {
