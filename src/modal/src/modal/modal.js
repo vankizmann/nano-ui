@@ -151,7 +151,7 @@ export default {
                 return;
             }
 
-            if ( Dom.find(target).closest('n-disabled') ) {
+            if ( Dom.find(target).closest('.n-disabled') ) {
                 return;
             }
 
