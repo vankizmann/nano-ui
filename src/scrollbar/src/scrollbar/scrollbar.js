@@ -105,6 +105,8 @@ export default {
             };
 
             Dom.find(this.$el).off('sizechange', null, $event);
+
+            Dom.find(this.$el).css(null);
             Dom.find(this.$el).parent().removeClass('n-scrollbar');
         },
 

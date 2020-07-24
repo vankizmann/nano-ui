@@ -284,6 +284,18 @@ export default {
 
     methods: {
 
+        pushItem(item, index = null)
+        {
+            if ( index === null ) {
+                index = this.veCurrent[this.depthProp] ? this.veCopy.length :
+                    this.veCurrent[this.indexProp];
+            }
+
+            this.veCopy.splice(index, 0, item);
+
+            this.refreshItems();
+        },
+
         exportItems()
         {
             if ( Any.md5(this.items) === Any.md5(this.veCopy) ) {

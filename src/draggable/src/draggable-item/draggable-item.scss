@@ -13,6 +13,11 @@
     transition: background 0ms 100ms;
 }
 
+.n-draggable-item.n-highlight {
+    background: rgba($color-warning, 0.1);
+    transition: background 0ms;
+}
+
 .n-draggable-item.n-current {
     background: rgba($color-primary, 0.1);
 }
@@ -32,11 +37,6 @@
 
 .n-draggable-item.n-nodrop {
     background: rgba($color-danger, 0.1);
-    transition: background 0ms;
-}
-
-.n-draggable-item.n-highlight {
-    background: rgba($color-warning, 0.1);
     transition: background 0ms;
 }
 
