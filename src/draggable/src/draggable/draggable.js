@@ -287,8 +287,8 @@ export default {
         pushItem(item, index = null)
         {
             if ( index === null ) {
-                index = this.veCurrent[this.depthProp] ? this.veCopy.length :
-                    this.veCurrent[this.indexProp];
+                index = Obj.get(this.veCurrent, this.depthProp, 1) ? this.veCopy.length :
+                    Obj.get(this.veCurrent, this.indexProp) + 1;
             }
 
             this.veCopy.splice(index, 0, item);
