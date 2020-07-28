@@ -274,6 +274,14 @@ export default {
             type: [Number]
         },
 
+        keyDebounce: {
+            default()
+            {
+                return 100;
+            },
+            type: [Number]
+        },
+
         bufferItems: {
             default()
             {
