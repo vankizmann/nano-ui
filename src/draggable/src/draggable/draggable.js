@@ -245,6 +245,14 @@ export default {
             type: [Number]
         },
 
+        keyDebounce: {
+            default()
+            {
+                return 100;
+            },
+            type: [Number]
+        },
+
         bufferItems: {
             default()
             {
@@ -1335,7 +1343,7 @@ export default {
                 if ( this.lastUpdate && this.lastUpdate > Date.now() ) {
                     return;
                 } else {
-                    this.lastUpdate = Date.now() + 300;
+                    this.lastUpdate = Date.now() + this.keyDebounce;
                 }
 
                 this.currentPrev();
@@ -1347,7 +1355,7 @@ export default {
                 if ( this.lastUpdate && this.lastUpdate > Date.now() ) {
                     return;
                 } else {
-                    this.lastUpdate = Date.now() + 300;
+                    this.lastUpdate = Date.now() + this.keyDebounce;
                 }
 
                 this.currentNext();
