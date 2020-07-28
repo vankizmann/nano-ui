@@ -1331,11 +1331,25 @@ export default {
 
             if ( event.which === 38 ) {
                 event.preventDefault();
+
+                if ( this.lastUpdate && this.lastUpdate > Date.now() ) {
+                    return;
+                } else {
+                    this.lastUpdate = Date.now() + 300;
+                }
+
                 this.currentPrev();
             }
 
             if ( event.which === 40 ) {
                 event.preventDefault();
+
+                if ( this.lastUpdate && this.lastUpdate > Date.now() ) {
+                    return;
+                } else {
+                    this.lastUpdate = Date.now() + 300;
+                }
+
                 this.currentNext();
             }
         }
