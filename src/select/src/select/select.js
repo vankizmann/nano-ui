@@ -295,7 +295,7 @@ export default {
 
             this.focusDelay = setTimeout(() => {
 
-                if ( this.veOpen ) {
+                if ( this.veOpen && this.$refs.input ) {
                     this.$refs.input.focus();
                 }
 
