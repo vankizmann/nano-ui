@@ -748,14 +748,15 @@ export default {
 
                 finalProps.push(item[this.uniqueProp]);
 
-                let keys = Arr.each(cascade, (sub) => {
-                    return sub[this.uniqueProp];
-                });
-
-                this.veExpanded = Arr.merge(this.veExpanded, keys)
+                let keys = Arr
+                    .each(cascade, (sub) => {
+                        return sub[this.uniqueProp];
+                    })
                     .filter((item) => {
                         return this.veExpanded.indexOf(item) === -1;
                     });
+
+                this.veExpanded = Arr.merge(this.veExpanded, keys);
             });
 
             if ( ! finalProps.length ) {
