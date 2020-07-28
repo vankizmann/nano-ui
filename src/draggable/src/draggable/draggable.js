@@ -906,6 +906,7 @@ export default {
         currentNext()
         {
             let index = 0;
+            console.log('trigger next');
 
             if ( ! this.veCurrent ) {
                 return this.setDefaultCurrent();
