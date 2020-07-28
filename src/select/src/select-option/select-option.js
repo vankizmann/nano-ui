@@ -76,7 +76,11 @@ export default {
             'n-popover-option'
         ];
 
-        if ( Arr.has(this.NSelect.veValue, this.value) ) {
+        if ( this.NSelect.multiple && Arr.has(this.NSelect.veValue, this.value) ) {
+            classList.push('n-active');
+        }
+
+        if ( ! this.NSelect.multiple && this.NSelect.veValue === this.value ) {
             classList.push('n-active');
         }
 

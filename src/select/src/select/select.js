@@ -206,7 +206,7 @@ export default {
                 return this.undefinedText;
             }
 
-            return option.label;
+            return option.label.trim();
         },
 
         openSelect()
