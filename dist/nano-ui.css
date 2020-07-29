@@ -2889,6 +2889,9 @@ body.n-open {
 .n-table .n-table-column.n-right .n-table-column__label {
   text-align: right; }
 
+.n-table .n-table-column.n-filtered .n-table-column__label {
+  font-style: italic; }
+
 .n-table .n-table-column .n-table-column__filter {
   flex: 0 0 auto;
   margin-left: 5px; }

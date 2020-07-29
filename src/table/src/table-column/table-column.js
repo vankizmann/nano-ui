@@ -341,6 +341,14 @@ export default {
             classList.push('n-fixed');
         }
 
+        let filterIndex = Arr.findIndex(this.NTable.filterProps, {
+            property: this.prop
+        });
+
+        if ( filterIndex !== -1 ) {
+            classList.push('n-filtered');
+        }
+
         let width = this.veWidth;
 
         if ( ! this.veWidth ) {
