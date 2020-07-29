@@ -390,7 +390,7 @@ export default {
 
     renderLabelClear()
     {
-        if ( ! this.clearable ) {
+        if ( ! this.clearable || Any.isEmpty(this.veValue) ) {
             return null;
         }
 
