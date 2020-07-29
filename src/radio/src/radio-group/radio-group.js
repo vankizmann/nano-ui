@@ -16,9 +16,8 @@ export default {
         value: {
             default()
             {
-                return [];
-            },
-            type: [Array]
+                return null;
+            }
         },
 
         align: {

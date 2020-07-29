@@ -150,7 +150,7 @@ Select with diffrent styles.
     export default {
         data()
         {
-            return { text: '' };
+            return { value: null };
         }
     } 
 </script>
