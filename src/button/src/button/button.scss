@@ -4,6 +4,12 @@ $button-size: 14px !default;
 $button-height: 34px !default;
 $button-ratio: 0.3 !default;
 
+%n-button {
+    background: $--color-gray-10;
+    font-size: $button-size;
+    border: 1px solid $--color-gray-10;
+}
+
 .n-button__wrapper {
     position: relative;
     display: inline-flex;
@@ -21,11 +27,9 @@ $button-ratio: 0.3 !default;
 }
 
 .n-button:not(.n-button--link) {
+    @extend %n-button;
     padding: 0 $button-height * $button-ratio;
     height: $button-height;
-    background: $--color-gray-10;
-    font-size: $button-size;
-    border: 1px solid $--color-gray-10;
     border-radius: $radius-medium;
     transition: 0.15s background, 0.15s border, 0.15s color;
 }
@@ -105,7 +109,6 @@ $button-ratio: 0.3 !default;
     padding: 0 $button-height * 0.6 * 1.125;
 }
 
-
 .n-button.n-button--large.n-button--square:not(.n-button--link) {
     width: $button-height * 1.125;
     padding: 0;
@@ -146,58 +149,13 @@ $button-ratio: 0.3 !default;
 
 .n-button.n-button--link {
     font-size: $button-size;
-    color: $--color-primary;
+    color: $color-gray-50;
     transition: 0.15s color;
 }
 
 .n-button.n-button--link:hover,
 .n-button.n-button--link:focus {
-    color: $--color-primary-darker;
-}
-
-.n-button.n-button--link.n-button--primary {
-    color: $--color-primary;
-}
-
-.n-button.n-button--link.n-button--primary:hover,
-.n-button.n-button--link.n-button--primary:focus {
-    color: $--color-primary-darker;
-}
-
-.n-button.n-button--link.n-button--success {
-    color: $--color-success;
-}
-
-.n-button.n-button--link.n-button--success:hover,
-.n-button.n-button--link.n-button--success:focus {
-    color: $--color-success-darker;
-}
-
-.n-button.n-button--link.n-button--warning {
-    color: $--color-warning;
-}
-
-.n-button.n-button--link.n-button--warning:hover,
-.n-button.n-button--link.n-button--warning:focus {
-    color: $--color-warning-darker;
-}
-
-.n-button.n-button--link.n-button--danger {
-    color: $--color-danger;
-}
-
-.n-button.n-button--link.n-button--danger:hover,
-.n-button.n-button--link.n-button--danger:focus {
-    color: $--color-danger-darker;
-}
-
-.n-button.n-button--link.n-button--info {
-    color: $--color-info;
-}
-
-.n-button.n-button--link.n-button--info:hover,
-.n-button.n-button--link.n-button--info:focus {
-    color: $--color-info-darker;
+    color: $color-gray-60;
 }
 
 .n-button.n-button--small.n-button--link {
@@ -209,323 +167,128 @@ $button-ratio: 0.3 !default;
 }
 
 .n-disabled .n-button.n-button--link,
-.n-disabled .n-button.n-button--link:hover,
-.n-disabled .n-button.n-button--link:focus {
-    color: $--color-gray-40;
+.n-disabled .n-button.n-button--link:hover {
+    color: $--color-gray-50;
+}
+
+@each $color, $values in $colors {
+
+    $--c--base: map_get($values, 'base');
+    $--c--light: map_get($values, 'light');
+    $--c--dark: map_get($values, 'dark');
+
+    /**
+     * Button primary
+     */
+
+    %n-button-#{$color} {
+        color: $--color-white;
+        background: $--c--base;
+        border-color: $--c--base;
+    }
+
+    %n-button-#{$color}:hover {
+        background: $--c--light;
+        border-color: $--c--light;
+    }
+
+    %n-button-#{$color}:focus {
+        background: $--c--dark;
+        border-color: $--c--dark;
+    }
+
+    %n-button-#{$color}-disabled {
+        background: $--c--base;
+        border-color: $--c--base;
+    }
+
+    .n-button.n-button--#{$color}:not(.n-button--link) {
+        @extend %n-button-#{$color};
+    }
+
+    .n-disabled .n-button.n-button--#{$color}:not(.n-button--link) {
+        @extend %n-button-#{$color}-disabled;
+    }
+
+    /**
+     * Button plain
+     */
+
+    %n-button-#{$color}-plain {
+        color: $--c--base;
+        background: rgba($--c--base, 0.10);
+        border-color: rgba($--c--base, 0.25);
+    }
+
+    %n-button-#{$color}-plain:hover,
+    %n-button-#{$color}-plain:focus {
+        background: rgba($--c--base, 0.20);
+        border-color: rgba($--c--base, 0.25);
+    }
+
+    %n-button-#{$color}-plain-disabled {
+        background: rgba($--c--base, 0.10);
+        border-color: rgba($--c--base, 0.25);
+    }
+
+    .n-button.n-button--plain.n-button--#{$color}:not(.n-button--link) {
+        @extend %n-button-#{$color}-plain;
+    }
+
+    .n-disabled .n-button.n-button--plain.n-button--#{$color}:not(.n-button--link) {
+        @extend %n-button-#{$color}-plain-disabled;
+    }
+
+    /**
+     * Button link
+     */
+
+    %n-button-#{$color}-link {
+        color: $--c--base;
+    }
+
+    %n-button-#{$color}-link:hover {
+        color: $--c--light;
+    }
+
+    %n-button-#{$color}-link-disabled {
+        color: $color-gray-50;
+    }
+
+    .n-button.n-button--link.n-button--#{$color} {
+        @extend %n-button-#{$color}-link;
+    }
+
+    .n-disabled .n-button.n-button--link.n-button--#{$color}{
+        @extend %n-button-#{$color}-link-disabled;
+    }
+
 }
 
 /**
- * Button primary
+ * Secondary fix
  */
-
-.n-button.n-button--primary:not(.n-button--link) {
-    color:  $--color-white;
-    background: $--color-primary;
-    border-color: $--color-primary;
+%n-button-secondary,
+%n-button-secondary-plain {
+    color: $color-secondary;
+    background: $color-white;
+    border-color: $color-gray-10;
 }
 
-.n-button.n-button--primary:not(.n-button--link):hover,
-.n-button.n-button--primary:not(.n-button--link):focus {
-    background: $--color-primary-light;
-    border-color: $--color-primary-light;
-}
-
-.n-button.n-button--primary:not(.n-button--link):active {
-    background: $--color-primary-dark;
-    border-color: $--color-primary-dark;
-}
-
-.n-disabled .n-button.n-button--primary:not(.n-button--link),
-.n-disabled .n-button.n-button--primary:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--primary:not(.n-button--link):focus {
-    background: $--color-primary;
-    border-color: $--color-primary;
-}
-
-/**
- * Button primary plain
- */
-
-.n-button.n-button--plain.n-button--primary:not(.n-button--link) {
-    color:  $--color-primary;
-    background: rgba($color-primary, 0.10);
-    border-color: rgba($color-primary, 0.25);
-}
-
-.n-button.n-button--plain.n-button--primary:not(.n-button--link):hover,
-.n-button.n-button--plain.n-button--primary:not(.n-button--link):focus,
-.n-button.n-button--plain.n-button--primary:not(.n-button--link):active {
-    background: rgba($color-primary, 0.20);
-    border-color: rgba($color-primary, 0.25);
-}
-
-.n-disabled .n-button.n-button--plain.n-button--primary:not(.n-button--link),
-.n-disabled .n-button.n-button--plain.n-button--primary:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--plain.n-button--primary:not(.n-button--link):focus {
-    background: rgba($color-primary, 0.10);
-    border-color: rgba($color-primary, 0.25);
-}
-
-/**
- * Button secondary
- */
-
-.n-button.n-button--secondary:not(.n-button--link) {
-    color:  $--color-black;
-    background: transparent;
-    border-color: $--color-gray-15;
-}
-
-.n-button.n-button--secondary:not(.n-button--link):hover,
-.n-button.n-button--secondary:not(.n-button--link):focus {
-    color: $--color-secondary;
-    background: rgba($color-secondary, 0.1);
-    border-color: $--color-secondary;
-}
-
-.n-button.n-button--secondary:not(.n-button--link):active {
+%n-button-secondary:hover,
+%n-button-secondary-plain:hover {
     background: rgba($color-secondary, 0.15);
-    border-color: $--color-secondary-dark;
+    border-color: rgba($color-secondary, 0.25);
 }
 
-.n-disabled .n-button.n-button--secondary:not(.n-button--link),
-.n-disabled .n-button.n-button--secondary:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--secondary:not(.n-button--link):focus {
-    color: $--color-black;
-    background: transparent;
-    border-color: $--color-gray-15;
+%n-button-secondary:focus,
+%n-button-secondary-plain:focus {
+    background: rgba($color-secondary, 0.20);
+    border-color: rgba($color-secondary, 0.30);
 }
 
-/**
- * Button secondary plain
- */
-
-.n-button.n-button--plain.n-button--secondary:not(.n-button--link) {
-    color: $--color-black;
-    background: transparent;
-    border-color: rgba($color-gray-50, 0.25);
-}
-
-.n-button.n-button--plain.n-button--secondary:not(.n-button--link):hover,
-.n-button.n-button--plain.n-button--secondary:not(.n-button--link):focus,
-.n-button.n-button--plain.n-button--secondary:not(.n-button--link):active {
-    color: $--color-primary;
-    background: rgba($color-secondary, 0.1);
-    border-color: rgba($color-primary, 0.25);
-}
-
-.n-disabled .n-button.n-button--plain.n-button--secondary:not(.n-button--link),
-.n-disabled .n-button.n-button--plain.n-button--secondary:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--plain.n-button--secondary:not(.n-button--link):focus {
-    color: $--color-black;
-    background: rgba($color-gray-50, 0.25);
-    border-color: rgba($color-gray-50, 0.25);
-}
-
-/**
- * Button success
- */
-
-.n-button.n-button--success:not(.n-button--link) {
-    color:  $--color-white;
-    background: $--color-success;
-    border-color: $--color-success;
-}
-
-.n-button.n-button--success:not(.n-button--link):hover,
-.n-button.n-button--success:not(.n-button--link):focus {
-    background: $--color-success-light;
-    border-color: $--color-success-light;
-}
-
-.n-button.n-button--success:not(.n-button--link):active {
-    background: $--color-success-dark;
-    border-color: $--color-success-dark;
-}
-
-.n-disabled .n-button.n-button--success:not(.n-button--link),
-.n-disabled .n-button.n-button--success:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--success:not(.n-button--link):focus {
-    background: $--color-success-lighter;
-    border-color: $--color-success-lighter;
-}
-
-/**
- * Button success plain
- */
-
-.n-button.n-button--plain.n-button--success:not(.n-button--link) {
-    color:  $--color-success;
-    background: rgba($color-success, 0.10);
-    border-color: rgba($color-success, 0.25);
-}
-
-.n-button.n-button--plain.n-button--success:not(.n-button--link):hover,
-.n-button.n-button--plain.n-button--success:not(.n-button--link):focus,
-.n-button.n-button--plain.n-button--success:not(.n-button--link):active {
-    background: rgba($color-success, 0.20);
-    border-color: rgba($color-success, 0.25);
-}
-
-.n-disabled .n-button.n-button--plain.n-button--success:not(.n-button--link),
-.n-disabled .n-button.n-button--plain.n-button--success:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--plain.n-button--success:not(.n-button--link):focus {
-    background: rgba($color-success, 0.10);
-    border-color: rgba($color-success, 0.25);
-}
-
-/**
- * Button warning
- */
-
-.n-button.n-button--warning:not(.n-button--link) {
-    color:  $--color-white;
-    background: $--color-warning;
-    border-color: $--color-warning;
-}
-
-.n-button.n-button--warning:not(.n-button--link):hover,
-.n-button.n-button--warning:not(.n-button--link):focus {
-    background: $--color-warning-light;
-    border-color: $--color-warning-light;
-}
-
-.n-button.n-button--warning:not(.n-button--link):active {
-    background: $--color-warning-dark;
-    border-color: $--color-warning-dark;
-}
-
-.n-disabled .n-button.n-button--warning:not(.n-button--link),
-.n-disabled .n-button.n-button--warning:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--warning:not(.n-button--link):focus {
-    background: $--color-warning-lighter;
-    border-color: $--color-warning-lighter;
-}
-
-/**
- * Button warning plain
- */
-
-.n-button.n-button--plain.n-button--warning:not(.n-button--link) {
-    color:  $--color-warning;
-    background: rgba($color-warning, 0.10);
-    border-color: rgba($color-warning, 0.25);
-}
-
-.n-button.n-button--plain.n-button--warning:not(.n-button--link):hover,
-.n-button.n-button--plain.n-button--warning:not(.n-button--link):focus,
-.n-button.n-button--plain.n-button--warning:not(.n-button--link):active {
-    background: rgba($color-warning, 0.20);
-    border-color: rgba($color-warning, 0.25);
-}
-
-.n-disabled .n-button.n-button--plain.n-button--warning:not(.n-button--link),
-.n-disabled .n-button.n-button--plain.n-button--warning:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--plain.n-button--warning:not(.n-button--link):focus {
-    background: rgba($color-warning, 0.10);
-    border-color: rgba($color-warning, 0.25);
-}
-
-/**
- * Button danger
- */
-
-.n-button.n-button--danger:not(.n-button--link) {
-    color:  $--color-white;
-    background: $--color-danger;
-    border-color: $--color-danger;
-}
-
-.n-button.n-button--danger:not(.n-button--link):hover,
-.n-button.n-button--danger:not(.n-button--link):focus {
-    background: $--color-danger-light;
-    border-color: $--color-danger-light;
-}
-
-.n-button.n-button--danger:not(.n-button--link):active {
-    background: $--color-danger-dark;
-    border-color: $--color-danger-dark;
-}
-
-.n-disabled .n-button.n-button--danger:not(.n-button--link),
-.n-disabled .n-button.n-button--danger:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--danger:not(.n-button--link):focus {
-    background: $--color-danger-lighter;
-    border-color: $--color-danger-lighter;
-}
-
-/**
- * Button danger plain
- */
-
-.n-button.n-button--plain.n-button--danger:not(.n-button--link) {
-    color:  $--color-danger;
-    background: rgba($color-danger, 0.10);
-    border-color: rgba($color-danger, 0.25);
-}
-
-.n-button.n-button--plain.n-button--danger:not(.n-button--link):hover,
-.n-button.n-button--plain.n-button--danger:not(.n-button--link):focus,
-.n-button.n-button--plain.n-button--danger:not(.n-button--link):active {
-    background: rgba($color-danger, 0.20);
-    border-color: rgba($color-danger, 0.25);
-}
-
-.n-disabled .n-button.n-button--plain.n-button--danger:not(.n-button--link),
-.n-disabled .n-button.n-button--plain.n-button--danger:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--plain.n-button--danger:not(.n-button--link):focus {
-    background: rgba($color-danger, 0.10);
-    border-color: rgba($color-danger, 0.25);
-}
-
-/**
- * Button info
- */
-
-.n-button.n-button--info:not(.n-button--link) {
-    color:  $--color-white;
-    background: $--color-info;
-    border-color: $--color-info;
-}
-
-.n-button.n-button--info:not(.n-button--link):hover,
-.n-button.n-button--info:not(.n-button--link):focus {
-    background: $--color-info-light;
-    border-color: $--color-info-light;
-}
-
-.n-button.n-button--info:not(.n-button--link):active {
-    background: $--color-info-dark;
-    border-color: $--color-info-dark;
-}
-
-.n-disabled .n-button.n-button--info:not(.n-button--link),
-.n-disabled .n-button.n-button--info:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--info:not(.n-button--link):focus {
-    background: $--color-info-lighter;
-    border-color: $--color-info-lighter;
-}
-
-/**
- * Button info plain
- */
-
-.n-button.n-button--plain.n-button--info:not(.n-button--link) {
-    color:  $--color-info;
-    background: rgba($color-info, 0.10);
-    border-color: rgba($color-info, 0.25);
-}
-
-.n-button.n-button--plain.n-button--info:not(.n-button--link):hover,
-.n-button.n-button--plain.n-button--info:not(.n-button--link):focus,
-.n-button.n-button--plain.n-button--info:not(.n-button--link):active {
-    background: rgba($color-info, 0.20);
-    border-color: rgba($color-info, 0.25);
-}
-
-.n-disabled .n-button.n-button--plain.n-button--info:not(.n-button--link),
-.n-disabled .n-button.n-button--plain.n-button--info:not(.n-button--link):hover,
-.n-disabled .n-button.n-button--plain.n-button--info:not(.n-button--link):focus {
-    background: rgba($color-info, 0.10);
-    border-color: rgba($color-info, 0.25);
+%n-button-secondary-disabled,
+%n-button-secondary-plain-disabled {
+    background: $color-white;
+    border-color: $color-gray-10;
 }

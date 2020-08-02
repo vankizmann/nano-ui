@@ -184,3 +184,36 @@ $--color-background-lighter:    $color-background-lighter !default;
 
 $--color-background-dark:       $color-background-dark !default;
 $--color-background-darker:     $color-background-darker !default;
+
+$colors: (
+    'primary': (
+        'base': $color-primary,
+        'light': $color-primary-light,
+        'dark': $color-primary-dark
+    ),
+    'secondary': (
+        'base': $color-secondary,
+        'light': $color-secondary-light,
+        'dark': $color-secondary-dark
+    ),
+    'info': (
+        'base': $color-info,
+        'light': $color-info-light,
+        'dark': $color-info-dark
+    ),
+    'success': (
+        'base': $color-success,
+        'light': $color-success-light,
+        'dark': $color-success-dark
+    ),
+    'warning': (
+        'base': $color-warning,
+        'light': $color-warning-light,
+        'dark': $color-warning-dark
+    ),
+    'danger': (
+        'base': $color-danger,
+        'light': $color-danger-light,
+        'dark': $color-danger-dark
+    ),
+) !default;
