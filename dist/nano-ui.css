@@ -2510,11 +2510,11 @@
   padding: 9px 12px; }
 
 .n-popover.n-popover--filter > .n-popover__frame > .n-popover__body {
-  max-height: 200px; }
+  max-height: 200px;
+  overflow-y: auto; }
 
 .n-popover.n-popover--select > .n-popover__frame > .n-popover__body {
-  padding: 0;
-  overflow-y: auto; }
+  padding: 0; }
 
 .n-popover.n-popover--cascader > .n-popover__frame > .n-popover__body {
   padding: 0;

@@ -139,11 +139,11 @@ $popover-option-size: 14px !default;
 
 .n-popover.n-popover--filter > .n-popover__frame > .n-popover__body {
     max-height: 200px;
+    overflow-y: auto;
 }
 
 .n-popover.n-popover--select > .n-popover__frame > .n-popover__body {
     padding: $popover-select-padding;
-    overflow-y: auto;
 }
 
 .n-popover.n-popover--cascader > .n-popover__frame > .n-popover__body {
