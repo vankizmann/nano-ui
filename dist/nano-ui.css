@@ -2513,7 +2513,8 @@
   max-height: 200px; }
 
 .n-popover.n-popover--select > .n-popover__frame > .n-popover__body {
-  padding: 0; }
+  padding: 0;
+  overflow-y: auto; }
 
 .n-popover.n-popover--cascader > .n-popover__frame > .n-popover__body {
   padding: 0;
