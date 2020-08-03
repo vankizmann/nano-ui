@@ -270,19 +270,21 @@ $button-ratio: 0.3 !default;
  */
 %n-button-secondary,
 %n-button-secondary-plain {
-    color: $color-secondary;
+    color: $color-black;
     background: $color-white;
     border-color: $color-gray-10;
 }
 
 %n-button-secondary:hover,
 %n-button-secondary-plain:hover {
+    color: $color-secondary;
     background: rgba($color-secondary, 0.15);
     border-color: rgba($color-secondary, 0.25);
 }
 
 %n-button-secondary:focus,
 %n-button-secondary-plain:focus {
+    color: $color-secondary;
     background: rgba($color-secondary, 0.20);
     border-color: rgba($color-secondary, 0.30);
 }

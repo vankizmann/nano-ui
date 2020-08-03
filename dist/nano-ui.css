@@ -1028,16 +1028,18 @@
  * Secondary fix
  */
 .n-button.n-button--secondary:not(.n-button--link), .n-button.n-button--plain.n-button--secondary:not(.n-button--link) {
-  color: #2877FA;
+  color: #1b2229;
   background: #ffffff;
   border-color: #e8e9ea; }
 
 .n-button.n-button--secondary:hover:not(.n-button--link), .n-button.n-button--plain.n-button--secondary:hover:not(.n-button--link) {
+  color: #2877FA;
   background: rgba(40, 119, 250, 0.15);
   border-color: rgba(40, 119, 250, 0.25); }
 
 .n-button.n-button--secondary:focus:not(.n-button--link),
 .n-button.n-button--plain.n-button--secondary:focus:not(.n-button--link) {
+  color: #2877FA;
   background: rgba(40, 119, 250, 0.2);
   border-color: rgba(40, 119, 250, 0.3); }
 
