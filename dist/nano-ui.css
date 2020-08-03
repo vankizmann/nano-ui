@@ -2509,6 +2509,9 @@
 .n-popover.n-popover--filter > .n-popover__frame > .n-popover__body {
   padding: 9px 12px; }
 
+.n-popover.n-popover--filter > .n-popover__frame > .n-popover__body {
+  max-height: 200px; }
+
 .n-popover.n-popover--select > .n-popover__frame > .n-popover__body {
   padding: 0; }
 

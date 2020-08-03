@@ -137,6 +137,10 @@ $popover-option-size: 14px !default;
     padding: $popover-default-padding;
 }
 
+.n-popover.n-popover--filter > .n-popover__frame > .n-popover__body {
+    max-height: 200px;
+}
+
 .n-popover.n-popover--select > .n-popover__frame > .n-popover__body {
     padding: $popover-select-padding;
 }
