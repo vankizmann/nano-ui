@@ -152,6 +152,11 @@ export default {
 
     methods: {
 
+        active()
+        {
+            return this.veVisible;
+        },
+
         close()
         {
             this.$emit('input', this.veVisible = false);

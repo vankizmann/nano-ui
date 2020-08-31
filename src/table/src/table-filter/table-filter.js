@@ -22,7 +22,7 @@ export default {
 
         eventKeydown(event)
         {
-            if ( ! this.$refs.popover || ! this.$refs.popover.visible ) {
+            if ( ! this.$refs.popover || ! this.$refs.popover.active() ) {
                 return;
             }
 
