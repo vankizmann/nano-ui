@@ -333,6 +333,8 @@ export default {
         refreshItems()
         {
             this.veItems = this.itemReducer([], this.veCopy);
+
+            this.$emit('hook:refreshed');
         },
 
         moveItems(event, target, strategy = 'inner')
