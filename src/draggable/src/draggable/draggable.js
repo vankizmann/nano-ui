@@ -843,7 +843,7 @@ export default {
 
         refreshCurrent()
         {
-            if ( ! this.veCurrent ) {
+            if ( ! this.veCurrent || ! this.veCurrent[this.uniqueProp] ) {
                 return;
             }
 
