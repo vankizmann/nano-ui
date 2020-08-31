@@ -118,14 +118,14 @@ export default {
     {
         this.NTable.$on('reset', this.resetFilter);
 
-        Dom.find(document.body).on('keydown', this.eventKeydown, {
+        Dom.find(document).on('keydown', this.eventKeydown, {
             _uid: this._uid
         });
     },
 
     beforeDestroy()
     {
-        Dom.find(document.body).off('keydown', {
+        Dom.find(document).off('keydown', {
             _uid: this._uid
         });
     },
