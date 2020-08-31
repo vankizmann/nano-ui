@@ -843,9 +843,7 @@ export default {
                 return;
             }
 
-
-            this.veCurrent = Obj.get(this, this.veCurrent[this.pathProp] + '.' +
-                this.veCurrent[this.indexProp]);
+            this.veCurrent = this.getTarget(this.veCurrent[this.uniqueProp]);
 
             this.updateCurrent();
         },
