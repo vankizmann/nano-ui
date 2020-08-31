@@ -334,6 +334,8 @@ export default {
         {
             this.veItems = this.itemReducer([], this.veCopy);
 
+            this.refreshCurrent();
+
             this.$emit('hook:refreshed');
         },
 
@@ -929,7 +931,6 @@ export default {
         currentNext()
         {
             let index = 0;
-            console.log('trigger next');
 
             if ( ! this.veCurrent ) {
                 return this.setDefaultCurrent();
