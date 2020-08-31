@@ -26,6 +26,14 @@ export default {
             type: [Array]
         },
 
+        current: {
+            default()
+            {
+                return null;
+            },
+            type: [Array]
+        },
+
         selected: {
             default()
             {
@@ -309,7 +317,6 @@ export default {
     {
         return {
             veColumns: [],
-            veCurrent: null,
             veFilterProps: this.filterProps,
             veSortProp: this.sortProp,
             veSortDir: this.sortDir,
@@ -318,6 +325,11 @@ export default {
     },
 
     methods: {
+
+        updateCurrent()
+        {
+            this.$refs.list.updateCurrent();
+        },
 
         addColumn(column)
         {

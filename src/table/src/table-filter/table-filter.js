@@ -23,7 +23,7 @@ export default {
         eventKeydown(event)
         {
             console.log('change');
-            
+
             if ( ! this.$refs.popover || ! this.$refs.popover.active() ) {
                 return;
             }
