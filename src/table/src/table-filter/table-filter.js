@@ -22,6 +22,8 @@ export default {
 
         eventKeydown(event)
         {
+            console.log('change');
+            
             if ( ! this.$refs.popover || ! this.$refs.popover.active() ) {
                 return;
             }
@@ -117,6 +119,8 @@ export default {
     mounted()
     {
         this.NTable.$on('reset', this.resetFilter);
+
+        console.log('binded');
 
         Dom.find(document).on('keydown', this.eventKeydown, {
             _uid: this._uid
