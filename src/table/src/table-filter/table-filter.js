@@ -20,6 +20,17 @@ export default {
 
     methods: {
 
+        eventKeydown(event)
+        {
+            if ( event.which === 13 ) {
+                this.applyFilter();
+            }
+
+            if ( event.which === 27 ) {
+                this.$refs.popover.close();
+            }
+        },
+
         getFilterProps(defaults)
         {
             let filter = Arr.find(this.NTable.veFilterProps, {
@@ -102,6 +113,8 @@ export default {
     mounted()
     {
         this.NTable.$on('reset', this.resetFilter);
+
+        Dom.find(document.body).on('keydown', this.eventKeydown);
     },
 
     renderForm()
@@ -149,7 +162,7 @@ export default {
         }
 
         return (
-            <NPopover type="filter" trigger="click" boundary={this.boundaryEl}>
+            <NPopover ref="popover" type="filter" trigger="click" boundary={this.boundaryEl}>
                 <template slot="default">
                     { this.ctor('renderForm')() }
                 </template>
