@@ -326,9 +326,9 @@ export default {
 
     methods: {
 
-        updateCurrent()
+        refreshCurrent()
         {
-            this.$refs.list.updateCurrent();
+            this.$refs.list.refreshCurrent();
         },
 
         addColumn(column)

@@ -837,6 +837,19 @@ export default {
             return this.veCurrent[this.uniqueProp] === unique;
         },
 
+        refreshCurrent()
+        {
+            if ( ! this.veCurrent ) {
+                return;
+            }
+
+
+            this.veCurrent = Obj.get(this, this.veCurrent[this.pathProp] + '.' +
+                this.veCurrent[this.indexProp]);
+
+            this.updateCurrent();
+        },
+
         updateCurrent()
         {
             this.$emit('update:current', this.veCurrent);
