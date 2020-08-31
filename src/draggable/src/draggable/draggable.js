@@ -843,9 +843,7 @@ export default {
                 return;
             }
 
-            this.$nextTick(() => {
-                this.setCurrent(this.veCurrent[this.uniqueProp]);
-            });
+            this.setCurrent(this.veCurrent[this.uniqueProp]);
         },
 
         updateCurrent()
