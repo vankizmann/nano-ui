@@ -127,13 +127,11 @@ export default {
 
     beforeDestroy()
     {
-        console.log(this);
-
         let ident = {
             _uid: this._uid
         };
 
-        Dom.find(document).off('keydown', ident);
+        Dom.find(document).off('keydown', null, ident);
     },
 
     renderForm()
