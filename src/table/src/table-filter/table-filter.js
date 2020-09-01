@@ -127,6 +127,8 @@ export default {
 
     beforeDestroy()
     {
+        console.log(this);
+
         let ident = {
             _uid: this._uid
         };
