@@ -117,16 +117,16 @@ export default {
     mounted()
     {
         Dom.find(document).on('keydown', this.eventKeydown, {
-            _uid: this._uid
+            uid: this._uid
         });
 
         this.NTable.$on('reset', this.resetFilter);
     },
 
-    beforeDestroy()
+    destroyed()
     {
         Dom.find(document).off('keydown', {
-            _uid: this._uid
+            uid: this._uid
         });
     },
 
