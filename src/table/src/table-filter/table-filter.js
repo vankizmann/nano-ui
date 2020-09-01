@@ -116,18 +116,22 @@ export default {
 
     mounted()
     {
-        Dom.find(document).on('keydown', this.eventKeydown, {
-            uid: this._uid
-        });
-
         this.NTable.$on('reset', this.resetFilter);
+
+        let ident = {
+            _uid: this._uid
+        };
+
+        Dom.find(document).on('keydown', this.eventKeydown, ident);
     },
 
-    destroyed()
+    beforeDestroy()
     {
-        Dom.find(document).off('keydown', {
-            uid: this._uid
-        });
+        let ident = {
+            _uid: this._uid
+        };
+
+        Dom.find(document).off('keydown', ident);
     },
 
     renderForm()
