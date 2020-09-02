@@ -271,7 +271,7 @@ export default {
             renderSelect: true,
             viewportHeight: true,
             disableMove: true,
-            updateDelay: 100,
+            updateDelay: 200,
             renderNode: this.ctor('renderNode'),
         };
 
@@ -368,7 +368,7 @@ export default {
             renderSelect: true,
             viewportHeight: true,
             disableMove: true,
-            updateDelay: 100,
+            updateDelay: 200,
             renderNode: this.ctor('renderNode'),
         };
 

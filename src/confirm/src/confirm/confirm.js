@@ -70,7 +70,15 @@ export default {
                 return true;
             },
             type: [Boolean]
-        }
+        },
+
+        propagation: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
 
     },
 

@@ -88,6 +88,14 @@ export default {
             type: [Boolean]
         },
 
+        propagation: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         transitionModal: {
             default()
             {
@@ -153,6 +161,10 @@ export default {
 
             if ( Dom.find(target).closest('.n-disabled') ) {
                 return;
+            }
+
+            if ( ! this.propagation ) {
+                event.stopPropagation();
             }
 
             let result = !! Dom.find(target)
