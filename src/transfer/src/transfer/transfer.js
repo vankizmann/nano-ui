@@ -104,6 +104,8 @@ export default {
             veValue: this.value,
             veSourceSearch: '',
             veTargetSearch: '',
+            veSelectedSource: [],
+            veSelectedTarget: []
         };
     },
 
@@ -186,6 +188,16 @@ export default {
                 this.$refs.target.isIntermediate(true)
             );
         },
+
+        updateSelectedSource(selected)
+        {
+            this.veSelectedSource = selected;
+        },
+
+        updateSelectedTarget(selected)
+        {
+            this.veSelectedTarget = selected;
+        }
 
     },
 
@@ -271,12 +283,13 @@ export default {
             renderSelect: true,
             viewportHeight: true,
             disableMove: true,
-            updateDelay: 200,
+            updateDelay: 100,
             renderNode: this.ctor('renderNode'),
         };
 
         let events = {
-            move: this.moveItemsSource
+            'move': this.moveItemsSource,
+            'update:selected': this.updateSelectedSource
         };
 
         return (
@@ -368,12 +381,13 @@ export default {
             renderSelect: true,
             viewportHeight: true,
             disableMove: true,
-            updateDelay: 200,
+            updateDelay: 100,
             renderNode: this.ctor('renderNode'),
         };
 
         let events = {
-            move: this.moveItemsTarget
+            'move': this.moveItemsTarget,
+            'update:selected': this.updateSelectedTarget
         };
 
         return (
@@ -400,12 +414,10 @@ export default {
         };
 
         let props = {
-            square: true,  disabled: true, icon: this.icons.angleRight
+            square: true, icon: this.icons.angleRight
         };
 
-        if ( this.$refs.source ) {
-            props.disabled = ! this.$refs.source.veSelected.length;
-        }
+        props.disabled = ! this.veSelectedSource.length;
 
         return (
             <NButton key={UUID()} props={props} on={events} />
@@ -419,12 +431,10 @@ export default {
         };
 
         let props = {
-            square: true,  disabled: true, icon: this.icons.angleLeft
+            square: true, icon: this.icons.angleLeft
         };
 
-        if ( this.$refs.target ) {
-            props.disabled = ! this.$refs.target.veSelected.length;
-        }
+        props.disabled = ! this.veSelectedTarget.length;
 
         return (
             <NButton key={UUID()} props={props} on={events} />
