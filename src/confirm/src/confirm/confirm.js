@@ -141,8 +141,16 @@ export default {
 
     renderAction()
     {
+        let classList = [
+            'n-confirm__actions'
+        ];
+
+        if ( window.WIN ) {
+            classList.push('n-confirm__actions--reverse');
+        }
+
         return (
-            <div class="n-confirm__actions">
+            <div class="">
                 <NButton size={this.size} type="secondary" vOn:click={this.abort}>
                     {this.trans('Abort')}
                 </NButton>
