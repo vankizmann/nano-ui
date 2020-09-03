@@ -2778,12 +2778,6 @@ body.n-open {
 .n-confirm__actions > div {
   margin: 0 4px; }
 
-.n-confirm__actions > div:first-child {
-  margin-left: 0; }
-
-.n-confirm__actions > div:last-child {
-  margin-right: 0; }
-
 .n-table {
   position: relative;
   width: 100%;
