@@ -150,7 +150,7 @@ export default {
         }
 
         return (
-            <div class="">
+            <div class={classList}>
                 <NButton size={this.size} type="secondary" vOn:click={this.abort}>
                     {this.trans('Abort')}
                 </NButton>
