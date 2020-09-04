@@ -140,6 +140,14 @@ export default class Notify {
 
     static getWrapper()
     {
+        if ( ! window.zIndex ) {
+            window.zIndex = 9000;
+        }
+
+        let style = {
+            zIndex: window.zIndex++
+        };
+
         let classList = [
             'n-notification__wrapper',
             'n-notification__wrapper--' + this.position
@@ -148,6 +156,8 @@ export default class Notify {
         if ( Dom.find('.n-notification__wrapper').empty() === true ) {
             Dom.make('div', { classList: classList.join(' ') }).appendTo(document.body);
         }
+
+        Dom.find('.n-notification__wrapper').css(style);
 
         return Dom.find('.n-notification__wrapper');
     }
