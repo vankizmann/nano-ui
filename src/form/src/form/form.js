@@ -64,6 +64,7 @@ export default {
 
         stopPropagation(event)
         {
+            console.log('Propagate?');
             event.preventDefault();
             event.stopPropagation();
         },
@@ -132,7 +133,7 @@ export default {
             _uid: this._uid
         };
 
-        if ( ! this.propagation ) {
+        if ( this.propagation ) {
             return;
         }
 
@@ -145,7 +146,7 @@ export default {
             _uid: this._uid
         };
 
-        if ( ! this.propagation ) {
+        if ( this.propagation ) {
             return;
         }
 
