@@ -850,23 +850,31 @@ export default {
             this.setCurrent(this.veCurrent[this.uniqueProp]);
         },
 
-        updateCurrent()
+        updateCurrent(current)
         {
-            this.$emit('update:current', this.veCurrent);
+            this.$emit('update:current', this.veCurrent = current);
         },
 
         setCurrent(unique)
         {
-            this.veCurrent = this.getTarget(unique);
+            let current = this.getTarget(unique);
 
-            this.updateCurrent();
+            if ( current[this.uniqueProp] === this.veCurrent[this.uniqueProp] ) {
+                return;
+            }
+
+            this.updateCurrent(current);
         },
 
         setDefaultCurrent()
         {
-            this.veCurrent = this.getTarget(this.veItems[0]);
+            let current = this.getTarget(this.veItems[0]);
 
-            this.updateCurrent();
+            if ( current[this.uniqueProp] === this.veCurrent[this.uniqueProp] ) {
+                return;
+            }
+
+            this.updateCurrent(current);
         },
 
         currentDblclick()
