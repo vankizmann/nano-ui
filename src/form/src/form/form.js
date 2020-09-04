@@ -64,7 +64,6 @@ export default {
 
         stopPropagation(event)
         {
-            console.log('Propagate?');
             event.preventDefault();
             event.stopPropagation();
         },
