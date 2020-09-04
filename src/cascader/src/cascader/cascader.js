@@ -377,7 +377,7 @@ export default {
         };
 
         return (
-            <NPopover ref="popover" props={props} on={events}>
+            <NPopover ref="popover" key={Any.md5(this.items)} props={props} on={events}>
                 { this.ctor('renderCascade')() }
             </NPopover>
         );
