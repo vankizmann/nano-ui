@@ -1,4 +1,4 @@
-import { UUID, Num, Arr, Obj, Any, Locale } from "nano-js";
+import { UUID, Num, Arr, Obj, Any, Dom, Locale } from "nano-js";
 
 export default {
 
@@ -122,12 +122,34 @@ export default {
 
     mounted()
     {
-        if ( this.propagation ) {
-            this.$on('submit', this.stopPropagation);
+        this.$watch('form', () => this.setForm(this.form),
+            { deep: true });
+
+        this.$watch('errors', () => this.setErrors(this.errors),
+            { deep: true });
+
+        let ident = {
+            _uid: this._uid
+        };
+
+        if ( ! this.propagation ) {
+            return;
         }
 
-        this.$watch('form', () => this.setForm(this.form), { deep: true });
-        this.$watch('errors', () => this.setErrors(this.errors), { deep: true });
+        Dom.find(this.$refs.form).on('submit', this.stopPropagation, ident);
+    },
+
+    beforeDestroy()
+    {
+        let ident = {
+            _uid: this._uid
+        };
+
+        if ( ! this.propagation ) {
+            return;
+        }
+
+        Dom.find(this.$refs.form).off('submit', null, ident);
     },
 
     render($render)
@@ -140,7 +162,7 @@ export default {
         ];
 
         return (
-            <form class={classList} on={this.$listeners}>
+            <form ref="form" class={classList} on={this.$listeners}>
                 {this.$slots.default}
             </form>
         );
