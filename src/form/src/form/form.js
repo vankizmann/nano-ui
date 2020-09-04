@@ -34,6 +34,14 @@ export default {
             type: [String]
         },
 
+        propagation: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         forceChange: {
             default()
             {
@@ -108,6 +116,10 @@ export default {
 
     mounted()
     {
+        if ( this.propagation ) {
+            this.$on('submit', (event) => event.stopPropagation());
+        }
+
         this.$watch('form', () => this.setForm(this.form), { deep: true });
         this.$watch('errors', () => this.setErrors(this.errors), { deep: true });
     },
