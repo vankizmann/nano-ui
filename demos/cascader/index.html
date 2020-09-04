@@ -62,7 +62,7 @@
         Vue.config.devtools = true;
 
         var config = {
-            data: function() {
+            data: function () {
 
                 let total = 0;
 
@@ -108,7 +108,13 @@
                     value: []
                 };
 
-                return { form: form, inverse: false, items: childGenerator() };
+                var self = this;
+
+                Nano.Any.delay(function () {
+                    self.items = childGenerator();
+                }, 2000);
+
+                return { form: form, inverse: false, items: [] };
             }
         };
 

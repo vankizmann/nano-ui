@@ -315,7 +315,7 @@ export default {
         }
 
         return (
-            <div class="n-cascader__items">
+            <div key={Any.md5(items)} class="n-cascader__items">
                 <NScrollbar relative={true}>
                     {
                         Arr.each(items, (item) => {
@@ -377,7 +377,7 @@ export default {
         };
 
         return (
-            <NPopover ref="popover" key={Any.md5(this.items)} props={props} on={events}>
+            <NPopover ref="popover" props={props} on={events}>
                 { this.ctor('renderCascade')() }
             </NPopover>
         );
