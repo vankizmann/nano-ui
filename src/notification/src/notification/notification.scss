@@ -4,7 +4,6 @@ $notification-size: 14px !default;
 $notification-icon-size: 15px !default;
 
 .n-notification__wrapper {
-    z-index: 7000;
     position: fixed;
     display: flex;
     flex-direction: column;

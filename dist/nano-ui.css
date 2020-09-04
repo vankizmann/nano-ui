@@ -59,7 +59,6 @@
   --color-start: rgba(40, 119, 250, 0.4); }
 
 .n-notification__wrapper {
-  z-index: 7000;
   position: fixed;
   display: flex;
   flex-direction: column; }
