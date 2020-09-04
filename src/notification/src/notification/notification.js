@@ -145,7 +145,7 @@ export default class Notify {
         }
 
         let style = {
-            zIndex: window.zIndex + 100
+            'z-index': window.zIndex + 100
         };
 
         let classList = [
