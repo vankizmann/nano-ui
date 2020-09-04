@@ -315,7 +315,7 @@ export default {
         }
 
         return (
-            <div key={Any.md5(items)} class="n-cascader__items">
+            <div class="n-cascader__items">
                 <NScrollbar relative={true}>
                     {
                         Arr.each(items, (item) => {

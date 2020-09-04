@@ -289,6 +289,14 @@ export default {
 
     renderModal()
     {
+        if ( ! window.zIndex ) {
+            window.zIndex = 9000;
+        }
+
+        let style = {
+            zIndex: window.zIndex
+        };
+
         let classList = [
             'n-modal',
             'n-modal--' + this.type,
@@ -305,7 +313,7 @@ export default {
         };
 
         return (
-            <div class={classList}>
+            <div class={classList} style={style}>
                 <transition name={this.transitionModal} mode="out-in">
                     { this.veVisible ? this.ctor('renderBody')() : null }
                 </transition>
