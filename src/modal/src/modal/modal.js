@@ -294,7 +294,7 @@ export default {
         }
 
         let style = {
-            zIndex: window.zIndex
+            zIndex: window.zIndex++
         };
 
         let classList = [
