@@ -62,6 +62,12 @@ export default {
 
     methods: {
 
+        stopPropagation(event)
+        {
+            event.preventDefault();
+            event.stopPropagation();
+        },
+
         addItem(item)
         {
             Arr.add(this.veItems, item, {
@@ -117,7 +123,7 @@ export default {
     mounted()
     {
         if ( this.propagation ) {
-            this.$on('submit', (event) => event.stopPropagation());
+            this.$on('submit', this.stopPropagation);
         }
 
         this.$watch('form', () => this.setForm(this.form), { deep: true });
