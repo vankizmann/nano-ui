@@ -99,10 +99,6 @@ $checkbox-radius: $radius-medium !default;
     transition: color $transition-short;
 }
 
-.n-inverse .n-checkbox .n-checkbox__label {
-    color: $--color-white;
-}
-
 .n-checkbox.n-checked .n-checkbox__label {
     color: $--color-primary;
 }

@@ -1372,9 +1372,6 @@
   text-overflow: ellipsis;
   transition: color 0.12s; }
 
-.n-inverse .n-checkbox .n-checkbox__label {
-  color: #ffffff; }
-
 .n-checkbox.n-checked .n-checkbox__label {
   color: #2877FA; }
 
