@@ -347,6 +347,10 @@ export default {
                 return item[this.uniqueProp];
             });
 
+            if ( Any.isEmpty(ids) ) {
+                return;
+            }
+
             this.$emit('move', ids.join(','), target[this.uniqueProp], strategy);
 
             if ( this.disableMove ) {
@@ -859,7 +863,10 @@ export default {
         {
             let current = this.getTarget(unique);
 
-            if ( current[this.uniqueProp] === this.veCurrent[this.uniqueProp] ) {
+            let isSameCurrent = Obj.get(current, this.uniqueProp) ===
+                Obj.get(this.veCurrent, this.uniqueProp);
+
+            if ( isSameCurrent ) {
                 return;
             }
 
