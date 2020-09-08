@@ -31,6 +31,11 @@
     border-radius: $radius-medium;
 }
 
+.n-file-list-item.n-file-list-item--exceed .n-file-list-item__preview {
+    background: mix($color-white, $color-danger, 50%);
+    color: rgba($color-danger, 0.5);
+}
+
 .n-file-list-item__preview:before {
     content: '\00a0';
     display: block;

@@ -1,4 +1,5 @@
 import FileListItem from "../file-list-item";
+import { Str } from "nano-js";
 
 export default {
 
@@ -21,6 +22,16 @@ export default {
 
     },
 
+    computed: {
+
+        exceed()
+        {
+            return this.NFileList.imageLimit &&
+                this.value.file.size > this.NFileList.imageLimit;
+        }
+
+    },
+
     data()
     {
         return {
@@ -30,7 +41,7 @@ export default {
 
     mounted()
     {
-        if ( this.renderPreview ) {
+        if ( this.renderPreview && ! this.exceed ) {
             this.getImagePreview();
         }
     },

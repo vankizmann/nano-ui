@@ -3352,6 +3352,10 @@ body.n-open {
   color: rgba(40, 119, 250, 0.5);
   border-radius: 2px; }
 
+.n-file-list-item.n-file-list-item--exceed .n-file-list-item__preview {
+  background: #fe97a8;
+  color: rgba(253, 47, 81, 0.5); }
+
 .n-file-list-item__preview:before {
   content: '\00a0';
   display: block;

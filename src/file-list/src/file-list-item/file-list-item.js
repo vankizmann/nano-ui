@@ -53,6 +53,12 @@ export default {
         progress()
         {
             return Obj.get(this.value, this.NFileList.progressProp);
+        },
+
+        exceed()
+        {
+            return this.fileLimit &&
+                this.value.file.size > this.fileLimit;
         }
 
     },
@@ -64,6 +70,13 @@ export default {
             this.NFileList.removeFile(this.value);
         }
 
+    },
+
+    data()
+    {
+        return {
+            classList: []
+        };
     },
 
     renderPreview()
@@ -86,12 +99,18 @@ export default {
 
     renderMeta()
     {
+        let body = Str.filesize(this.file.size);
+
         if ( ! this.file ) {
             return null;
         }
 
+        if ( this.exceed ) {
+            body = this.trans('File exceeds filelimit of :size mb', this.fileLimit / 1000);
+        }
+
         return (
-            <span>{ Str.filesize(this.file.size) }</span>
+            <span>{ body }</span>
         );
     },
 
@@ -99,9 +118,12 @@ export default {
     {
         this.$render = $render;
 
-        let classList = [
-            'n-file-list-item'
-        ];
+        let classList = Arr.merge(['n-file-list-item'],
+            this.classList);
+
+        if ( this.exceed === true ) {
+            classList.push('n-file-list-item--exceed');
+        }
 
         if ( this.done === true ) {
             classList.push('n-file-list-item--done');

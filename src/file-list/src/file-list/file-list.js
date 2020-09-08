@@ -66,6 +66,22 @@ export default {
             type: [String]
         },
 
+        imageLimit: {
+            default()
+            {
+                return 16000;
+            },
+            type: [Number]
+        },
+
+        fileLimit: {
+            default()
+            {
+                return 0;
+            },
+            type: [Number]
+        },
+
         casts: {
             default()
             {
