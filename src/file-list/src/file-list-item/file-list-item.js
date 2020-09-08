@@ -1,4 +1,3 @@
-import CtorMixin from "../../../mixins/src/ctor";
 import { Arr, Obj, Str, Any } from "nano-js";
 
 export default {
@@ -57,8 +56,8 @@ export default {
 
         exceed()
         {
-            return this.fileLimit &&
-                this.value.file.size > this.fileLimit;
+            return this.NFileList.fileLimit &&
+                this.value.file.size > this.NFileList.fileLimit;
         }
 
     },
@@ -105,7 +104,7 @@ export default {
             return null;
         }
 
-        let limit = { size: this.fileLimit / 1000 };
+        let limit = { size: this.NFileList.fileLimit / 1000 };
 
         if ( this.exceed ) {
             body = this.trans('File exceeds filelimit of :size mb', limit);
