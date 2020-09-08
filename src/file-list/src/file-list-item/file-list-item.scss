@@ -32,6 +32,7 @@
 }
 
 .n-file-list-item.n-file-list-item--exceed .n-file-list-item__preview {
+    background: rgba($color-danger, 0.1);
     color: rgba($color-danger, 0.5);
 }
 
@@ -70,6 +71,11 @@
     width: 100%;
     height: 4px;
     background: $--color-background-dark;
+}
+
+
+.n-file-list-item.n-file-list-item--exceed .n-file-list-item__progress {
+    background: rgba($color-danger, 0.15);
 }
 
 .n-file-list-item__progress > span {

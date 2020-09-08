@@ -104,7 +104,9 @@ export default {
             return null;
         }
 
-        let limit = { size: this.NFileList.fileLimit / 1000 };
+        let limit = {
+            size: (this.NFileList.fileLimit || this.NFileList.imageLimit) / 1000
+        };
 
         if ( this.exceed ) {
             body = this.trans('File exceeds filelimit of :size mb', limit);
