@@ -27,7 +27,7 @@ export default {
         exceed()
         {
             return this.NFileList.imageLimit &&
-                this.value.file.size > this.NFileList.imageLimit;
+                (this.value.file.size / 1024) > this.NFileList.imageLimit;
         }
 
     },

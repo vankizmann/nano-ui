@@ -57,7 +57,7 @@ export default {
         exceed()
         {
             return this.NFileList.fileLimit &&
-                this.value.file.size > this.NFileList.fileLimit;
+                (this.value.file.size / 1024) > this.NFileList.fileLimit;
         }
 
     },
