@@ -9,8 +9,8 @@
 
 .n-file-list-item__remove {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 5px;
+    right: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -32,7 +32,6 @@
 }
 
 .n-file-list-item.n-file-list-item--exceed .n-file-list-item__preview {
-    background: mix($color-white, $color-danger, 50%);
     color: rgba($color-danger, 0.5);
 }
 
@@ -103,11 +102,19 @@
     color: $--color-black;
 }
 
+.n-file-list-item.n-file-list-item--exceed .n-file-list-item__name-inner {
+    color: $--color-danger;
+}
+
 .n-file-list-item__meta {
     flex: 0 0 auto;
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+.n-file-list-item.n-file-list-item--exceed .n-file-list-item__meta-inner {
+    color: rgba($color-danger, 0.5);
 }
 
 .n-file-list-item__meta-inner {
@@ -117,5 +124,5 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     padding: 0 5px 15px;
-    color: $color-gray-50;
+    color: $--color-gray-50;
 }

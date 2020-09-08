@@ -3332,8 +3332,8 @@ body.n-open {
 
 .n-file-list-item__remove {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 5px;
+  right: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -3353,7 +3353,6 @@ body.n-open {
   border-radius: 2px; }
 
 .n-file-list-item.n-file-list-item--exceed .n-file-list-item__preview {
-  background: #fe97a8;
   color: rgba(253, 47, 81, 0.5); }
 
 .n-file-list-item__preview:before {
@@ -3413,11 +3412,17 @@ body.n-open {
   padding: 15px 5px 0;
   color: #1b2229; }
 
+.n-file-list-item.n-file-list-item--exceed .n-file-list-item__name-inner {
+  color: #fd2f51; }
+
 .n-file-list-item__meta {
   flex: 0 0 auto;
   display: flex;
   flex-direction: row;
   justify-content: center; }
+
+.n-file-list-item.n-file-list-item--exceed .n-file-list-item__meta-inner {
+  color: rgba(253, 47, 81, 0.5); }
 
 .n-file-list-item__meta-inner {
   flex: 0 1 auto;

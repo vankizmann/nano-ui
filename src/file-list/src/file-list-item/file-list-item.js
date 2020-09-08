@@ -105,8 +105,10 @@ export default {
             return null;
         }
 
+        let limit = { size: this.fileLimit / 1000 };
+
         if ( this.exceed ) {
-            body = this.trans('File exceeds filelimit of :size mb', this.fileLimit / 1000);
+            body = this.trans('File exceeds filelimit of :size mb', limit);
         }
 
         return (
