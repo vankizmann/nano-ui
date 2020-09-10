@@ -138,7 +138,7 @@ export default {
     render()
     {
         return (
-            <div on={this.$listeners}>
+            <div ref="body" on={this.$listeners}>
                 { this.$slots.default }
             </div>
         );

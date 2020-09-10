@@ -268,22 +268,27 @@ export default {
 
             if ( this.trigger === 'context' ) {
 
+                style.left = this.parent.scrollLeft + clientX;
+
                 if ( style.left < 0 ) {
                     style.left = 0;
                 }
 
-                if ( style.left + nodeWidth > this.parent.clientWidth ) {
-                    style.left = offset.left - scroll.left - nodeWidth;
+                if ( style.left + nodeWidth - this.parent.scrollLeft > this.parent.clientWidth ) {
+                    style.left = this.parent.scrollLeft - nodeWidth + this.parent.clientWidth;
                 }
+
+                style.top = this.parent.scrollTop + clientY;
 
                 if ( style.top < 0 ) {
                     style.top = 0;
                 }
 
-                if ( style.top + nodeHeight > this.parent.clientHeight ) {
-                    style.top = this.parent.clientHeight - nodeHeight;
+                if ( style.top + nodeHeight - this.parent.scrollTop > this.parent.clientHeight ) {
+                    style.top = this.parent.scrollTop - nodeHeight + this.parent.clientHeight;
                 }
 
+                console.log(style.top, this.parent.clientHeight, nodeHeight, this.parent.scrollTop, clientY)
             }
 
             if ( this.trigger !== 'context' && this.position.match(/^(top|bottom)-/) && this.contain ) {
@@ -303,7 +308,6 @@ export default {
                 if ( style.top - nodeHeight < 0 ) {
                     style.top = height + offset.top;
                 }
-
             }
 
             if ( this.trigger !== 'context' && this.position.match(/^(left|right)-/) && this.contain ) {
