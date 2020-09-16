@@ -877,7 +877,10 @@ export default {
         {
             let current = this.getTarget(this.veItems[0]);
 
-            if ( current[this.uniqueProp] === this.veCurrent[this.uniqueProp] ) {
+            let isSameCurrent = Obj.get(current, this.uniqueProp) ===
+                Obj.get(this.veCurrent, this.uniqueProp);
+
+            if ( isSameCurrent ) {
                 return;
             }
 
