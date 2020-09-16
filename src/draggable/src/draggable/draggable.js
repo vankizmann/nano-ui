@@ -941,9 +941,9 @@ export default {
                 this.$refs.vscroller.scrollTop(scrollX);
             }
 
-            this.veCurrent = this.getTarget(this.veItems[index]);
+            let current = this.getTarget(this.veItems[index]);
 
-            this.updateCurrent();
+            this.updateCurrent(current);
         },
 
         currentNext()
@@ -982,9 +982,9 @@ export default {
                 this.$refs.vscroller.scrollTop(scrollX);
             }
 
-            this.veCurrent = this.getTarget(this.veItems[index]);
+            let current = this.getTarget(this.veItems[index]);
 
-            this.updateCurrent();
+            this.updateCurrent(current);
         },
 
         removeItem(value)
