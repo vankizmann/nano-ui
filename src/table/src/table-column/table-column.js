@@ -411,6 +411,10 @@ export default {
             </NPopover>
         );
 
+        if ( Any.isEmpty(this.tooltip) ) {
+            tooltipHtml = null;
+        }
+
         return [labelHtml, tooltipHtml];
     },
 
