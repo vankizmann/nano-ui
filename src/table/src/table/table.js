@@ -314,6 +314,22 @@ export default {
             type: [Number]
         },
 
+        loadingMax: {
+            default()
+            {
+                return 1250;
+            },
+            type: [Number]
+        },
+
+        loadingMin: {
+            default()
+            {
+                return 250;
+            },
+            type: [Number]
+        },
+
     },
 
     provide()
