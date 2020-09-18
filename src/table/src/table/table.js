@@ -309,7 +309,7 @@ export default {
         loadingDelay: {
             default()
             {
-                return 50;
+                return 0;
             },
             type: [Number]
         },
