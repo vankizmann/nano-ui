@@ -2581,12 +2581,12 @@
 .n-popover-option {
   display: flex;
   width: 100%;
-  line-height: 1.5 !important;
   cursor: pointer;
   transition: color 150ms ease, background 150ms ease; }
 
 .n-popover-option:not(.n-button__wrapper),
 .n-popover-option.n-button__wrapper > .n-button.n-button--link {
+  line-height: 1.5 !important;
   font-size: 14px;
   padding: 5.6px 14px; }
 
