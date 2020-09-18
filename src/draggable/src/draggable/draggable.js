@@ -288,7 +288,7 @@ export default {
         loadingMin: {
             default()
             {
-                return 250;
+                return 450;
             },
             type: [Number]
         },
