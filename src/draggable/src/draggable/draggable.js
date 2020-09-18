@@ -323,15 +323,22 @@ export default {
                 return Any.delay(this.startLoading, 100);
             }
 
-            Dom.find(this.$el).addClass('n-load');
-
-            let loadingTime = Math.abs(this.veItems.length -
+            let loadingTime = (this.veItems.length -
                 (this.veLoadLength || 0)) * this.loadingDelay;
+
 
             this.veLoadLength = this.veItems.length;
 
+            if ( loadingTime <= 0 ) {
+                return;
+            }
+
             loadingTime = Math.min(loadingTime, this.loadingMax);
             loadingTime = Math.max(loadingTime, this.loadingMin);
+
+            Dom.find(this.$el).addClass('n-load');
+
+            console.log(loadingTime);
 
             Any.delay(() => {
                 Dom.find(this.$el).removeClass('n-load');
