@@ -277,6 +277,22 @@ export default {
             type: [Number]
         },
 
+        loadingMax: {
+            default()
+            {
+                return 1250;
+            },
+            type: [Number]
+        },
+
+        loadingMin: {
+            default()
+            {
+                return 250;
+            },
+            type: [Number]
+        },
+
     },
 
     data()
@@ -313,9 +329,14 @@ export default {
             console.log(Math.min(this.veLoadLength * this.loadingDelay, 1000));
             Dom.find(this.$el).addClass('n-load');
 
+            let loadingTime = this.veLoadLength * this.loadingDelay;
+
+            loadingTime = Math.min(loadingTime, this.loadingMax);
+            loadingTime = Math.max(loadingTime, this.loadingMin);
+
             Any.delay(() => {
                 Dom.find(this.$el).removeClass('n-load');
-            }, Math.min(this.veLoadLength * this.loadingDelay, 1250))
+            }, loadingTime)
         },
 
         pushItem(item, index = null)
