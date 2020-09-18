@@ -336,9 +336,9 @@ export default {
             loadingTime = Math.min(loadingTime, this.loadingMax);
             loadingTime = Math.max(loadingTime, this.loadingMin);
 
-            Dom.find(this.$el).addClass('n-load');
-
-            console.log(loadingTime);
+            Any.delay(() => {
+                Dom.find(this.$el).addClass('n-load');
+            }, 0);
 
             Any.delay(() => {
                 Dom.find(this.$el).removeClass('n-load');
