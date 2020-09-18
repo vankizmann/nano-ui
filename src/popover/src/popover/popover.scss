@@ -191,6 +191,7 @@ $popover-option-size: 14px !default;
 
 .n-popover-option {
     display: flex;
+    flex-direction: row;
     width: 100%;
     cursor: pointer;
     transition: color 150ms ease, background 150ms ease;
@@ -198,20 +199,20 @@ $popover-option-size: 14px !default;
 
 .n-popover-option:not(.n-button__wrapper),
 .n-popover-option.n-button__wrapper > .n-button.n-button--link {
-    font-size: $popover-option-size;
-    padding: $popover-option-size * 0.4  $popover-option-size;
+    font-size: $popover-option-size !important;
+    padding: $popover-option-size * 0.4  $popover-option-size !important;
 }
 
 .n-popover.n-popover--small .n-popover-option:not(.n-button__wrapper),
 .n-popover.n-popover--small .n-popover-option.n-button__wrapper > .n-button.n-button--link {
-    font-size: $popover-option-size * 0.875;
-    padding: $popover-option-size * 0.4 * 0.875  $popover-option-size * 0.875;
+    font-size: $popover-option-size * 0.875 !important;
+    padding: $popover-option-size * 0.4 * 0.875  $popover-option-size * 0.875 !important;
 }
 
 .n-popover.n-popover--large .n-popover-option:not(.n-button__wrapper),
 .n-popover.n-popover--large .n-popover-option.n-button__wrapper > .n-button.n-button--link {
-    font-size: $popover-option-size * 1.125;
-    padding: $popover-option-size * 0.4 * 1.125  $popover-option-size * 1.125;
+    font-size: $popover-option-size * 1.125 !important;
+    padding: $popover-option-size * 0.4 * 1.125  $popover-option-size * 1.125 !important;
 }
 
 .n-popover-option.n-button__wrapper > .n-button.n-button--link {

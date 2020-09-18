@@ -2580,24 +2580,25 @@
 
 .n-popover-option {
   display: flex;
+  flex-direction: row;
   width: 100%;
   cursor: pointer;
   transition: color 150ms ease, background 150ms ease; }
 
 .n-popover-option:not(.n-button__wrapper),
 .n-popover-option.n-button__wrapper > .n-button.n-button--link {
-  font-size: 14px;
-  padding: 5.6px 14px; }
+  font-size: 14px !important;
+  padding: 5.6px 14px !important; }
 
 .n-popover.n-popover--small .n-popover-option:not(.n-button__wrapper),
 .n-popover.n-popover--small .n-popover-option.n-button__wrapper > .n-button.n-button--link {
-  font-size: 12.25px;
-  padding: 4.9px 12.25px; }
+  font-size: 12.25px !important;
+  padding: 4.9px 12.25px !important; }
 
 .n-popover.n-popover--large .n-popover-option:not(.n-button__wrapper),
 .n-popover.n-popover--large .n-popover-option.n-button__wrapper > .n-button.n-button--link {
-  font-size: 15.75px;
-  padding: 6.3px 15.75px; }
+  font-size: 15.75px !important;
+  padding: 6.3px 15.75px !important; }
 
 .n-popover-option.n-button__wrapper > .n-button.n-button--link {
   justify-content: flex-start; }
