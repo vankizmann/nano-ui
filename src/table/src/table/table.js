@@ -309,7 +309,7 @@ export default {
         loadingDelay: {
             default()
             {
-                return 20;
+                return 50;
             },
             type: [Number]
         },
@@ -325,7 +325,7 @@ export default {
         loadingMin: {
             default()
             {
-                return 250;
+                return 450;
             },
             type: [Number]
         },
