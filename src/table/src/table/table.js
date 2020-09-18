@@ -306,6 +306,14 @@ export default {
             type: [Number]
         },
 
+        loadingDelay: {
+            default()
+            {
+                return 20;
+            },
+            type: [Number]
+        },
+
     },
 
     provide()

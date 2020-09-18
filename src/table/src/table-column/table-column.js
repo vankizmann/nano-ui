@@ -113,6 +113,13 @@ export default {
             type: [Number]
         },
 
+        preview: {
+            default()
+            {
+                return null;
+            }
+        },
+
         matrix: {
             default()
             {

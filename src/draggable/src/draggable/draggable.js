@@ -269,12 +269,21 @@ export default {
             type: [Number]
         },
 
+        loadingDelay: {
+            default()
+            {
+                return 0;
+            },
+            type: [Number]
+        },
+
     },
 
     data()
     {
         return {
             veInview: false,
+            veLoad: false,
             veCopy: [],
             veItems: [],
             veCurrent: this.current,
@@ -291,6 +300,23 @@ export default {
     },
 
     methods: {
+
+        startLoading()
+        {
+            if ( ! this.$el ) {
+                return Any.delay(this.startLoading, 100);
+            }
+
+            this.veLoadLength = Math.abs(this.veItems.length -
+                (this.veLoadLength || 0));
+
+            console.log(Math.min(this.veLoadLength * this.loadingDelay, 1000));
+            Dom.find(this.$el).addClass('n-load');
+
+            Any.delay(() => {
+                Dom.find(this.$el).removeClass('n-load');
+            }, Math.min(this.veLoadLength * this.loadingDelay, 1250))
+        },
 
         pushItem(item, index = null)
         {
@@ -333,6 +359,10 @@ export default {
         refreshItems()
         {
             this.veItems = this.itemReducer([], this.veCopy);
+
+            if ( this.loadingDelay ) {
+                this.startLoading();
+            }
 
             this.refreshCurrent();
 
