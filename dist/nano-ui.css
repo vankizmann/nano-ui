@@ -2961,7 +2961,8 @@ body.n-open {
   height: 20px;
   text-align: center;
   color: #54595f;
-  background: #f4f4f4; }
+  background: #f4f4f4;
+  border-radius: 1px; }
 
 .n-inverse .n-table .n-table-column .n-table-column__filter > div {
   color: #c6c8ca;
