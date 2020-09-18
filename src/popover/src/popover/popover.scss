@@ -54,6 +54,10 @@ $popover-option-size: 14px !default;
     max-width: 280px !important;
 }
 
+.n-popover.n-popover--dropdown {
+    max-width: 240px !important;
+}
+
 .n-popover .n-popover__frame {
     width: 100%;
     display: inline-flex;
@@ -91,6 +95,13 @@ $popover-option-size: 14px !default;
 }
 
 .n-popover.n-popover--timepicker > .n-popover__frame {
+    font-size: $popover-default-size;
+    background: $--color-white;
+    border-radius: $radius-medium;
+    box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+}
+
+.n-popover.n-popover--dropdown > .n-popover__frame {
     font-size: $popover-default-size;
     background: $--color-white;
     border-radius: $radius-medium;
