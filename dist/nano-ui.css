@@ -572,6 +572,11 @@
   color: #1b2229;
   transition: color 0.15s; }
 
+.n-form-group__label .n-form-group__label-text .n-icon {
+  font-size: 14.875px;
+  margin-right: 5px;
+  color: #2877FA; }
+
 .n-inverse .n-form-group__label .n-form-group__label-text {
   color: #ffffff; }
 

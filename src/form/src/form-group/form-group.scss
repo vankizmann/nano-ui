@@ -29,6 +29,12 @@ $form-group-spacing: 18px !default;
     transition: color 0.15s;
 }
 
+.n-form-group__label .n-form-group__label-text .n-icon {
+    font-size: $form-legend-size * 0.875;
+    margin-right: 5px;
+    color: $--color-primary;
+}
+
 .n-form-group.n-form-group--checkable .n-form-group__label .n-form-group__label-text:hover {
     //color: $--color-primary;
 }

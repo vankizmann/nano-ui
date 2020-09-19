@@ -120,7 +120,7 @@ export default {
                             <NSwitch size="small" value={this.nativeValue} vOn:input={this.toggleValue} />
                         }
                         <div class="n-form-group__label-text" vOn:click={this.toggleValue}>
-                            { this.icon && <i class={this.icon}></i>} <span>{this.legend}</span>
+                            { this.icon && <i class={['n-icon', this.icon]}></i>} <span>{this.legend}</span>
                         </div>
                         { this.tooltip &&
                             <NPopover type="tooltip" position={this.tooltipPosition}>{this.tooltip}</NPopover>
