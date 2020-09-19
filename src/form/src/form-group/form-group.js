@@ -28,6 +28,13 @@ export default {
             type: [String]
         },
 
+        icon: {
+            default()
+            {
+                return null;
+            }
+        },
+
         align: {
             default()
             {
@@ -113,7 +120,7 @@ export default {
                             <NSwitch size="small" value={this.nativeValue} vOn:input={this.toggleValue} />
                         }
                         <div class="n-form-group__label-text" vOn:click={this.toggleValue}>
-                            <span>{this.legend}</span>
+                            { this.icon && <i class={this.icon}></i>} <span>{this.legend}</span>
                         </div>
                         { this.tooltip &&
                             <NPopover type="tooltip" position={this.tooltipPosition}>{this.tooltip}</NPopover>
