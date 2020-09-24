@@ -2586,11 +2586,10 @@
 .n-popover-label {
   display: flex;
   width: 100%;
-  cursor: pointer;
   line-height: 1.5 !important;
   font-size: 12.25px;
   font-weight: bold;
-  padding: 5.6px 14px; }
+  padding: 9.8px 14px 5.6px; }
 
 .n-popover-option {
   display: flex;

@@ -192,11 +192,10 @@ $popover-option-size: 14px !default;
 .n-popover-label {
     display: flex;
     width: 100%;
-    cursor: pointer;
     line-height: 1.5 !important;
     font-size: $popover-option-size * 0.875;
     font-weight: bold;
-    padding: $popover-option-size * 0.4  $popover-option-size;
+    padding: $popover-option-size * 0.7 $popover-option-size $popover-option-size * 0.4;
 }
 
 .n-popover-option {
