@@ -189,6 +189,16 @@ $popover-option-size: 14px !default;
     padding: $popover-tooltip-padding;
 }
 
+.n-popover-label {
+    display: flex;
+    width: 100%;
+    cursor: pointer;
+    line-height: 1.5 !important;
+    font-size: $popover-option-size * 0.875;
+    font-weight: bold;
+    padding: $popover-option-size * 0.4  $popover-option-size;
+}
+
 .n-popover-option {
     display: flex;
     width: 100%;

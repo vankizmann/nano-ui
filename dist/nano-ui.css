@@ -2583,6 +2583,15 @@
 .n-popover.n-popover--tooltip > .n-popover__frame > .n-popover__footer {
   padding: 3px 9px; }
 
+.n-popover-label {
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  line-height: 1.5 !important;
+  font-size: 12.25px;
+  font-weight: bold;
+  padding: 5.6px 14px; }
+
 .n-popover-option {
   display: flex;
   width: 100%;
