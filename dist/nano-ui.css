@@ -2350,7 +2350,7 @@
   flex-direction: column;
   width: 50%;
   height: 400px;
-  border: 1px solid #e8e9ea;
+  border: 1px solid #dddedf;
   border-radius: 2px;
   background: #ffffff; }
 
@@ -2373,10 +2373,7 @@
   width: 100%;
   min-height: 48px;
   padding: 8px 14px;
-  border-bottom: 1px solid #e8e9ea; }
-
-.n-inverse .n-transfer__header {
-  border-bottom-color: #32383e; }
+  border-bottom: 1px solid #dddedf; }
 
 .n-transfer__header .n-transfer__title {
   font-size: 16px; }
@@ -2384,10 +2381,7 @@
 .n-transfer__search {
   flex: 0 0 auto;
   width: 100%;
-  border-bottom: 1px solid #e8e9ea; }
-
-.n-inverse .n-transfer__search {
-  border-bottom-color: #32383e; }
+  border-bottom: 1px solid #dddedf; }
 
 .n-transfer__search .n-input {
   border: none !important; }
@@ -2409,9 +2403,6 @@
   color: #1b2229;
   margin-left: 15px; }
 
-.n-inverse .n-transfer__item-title {
-  color: #ffffff; }
-
 .n-transfer__item-count {
   color: #767a7f;
   margin-left: 8px; }
@@ -2421,9 +2412,6 @@
 
 .n-transfer__item-count:after {
   content: ')'; }
-
-.n-inverse .n-transfer__item-count {
-  color: #a4a7a9; }
 
 .n-file__wrapper {
   position: relative;
