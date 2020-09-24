@@ -2351,7 +2351,8 @@
   width: 50%;
   height: 400px;
   border: 1px solid #e8e9ea;
-  border-radius: 2px; }
+  border-radius: 2px;
+  background: #ffffff; }
 
 .n-transfer__pane > .n-checkbox-group {
   flex: 1 1 auto;
