@@ -388,7 +388,7 @@ export default {
         {
             this.veItems = this.itemReducer([], this.veCopy);
 
-            if ( this.loadingDelay ) {
+            if ( ! Any.isEmpty(this.loadingDelay) ) {
                 this.startLoading();
             }
 
