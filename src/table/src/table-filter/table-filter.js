@@ -116,13 +116,18 @@ export default {
 
     mounted()
     {
-        this.NTable.$on('reset', this.resetFilter);
+        this.NTable.$on('clearFilters', () => {
+
+            // Reset values
+            this.resetFilter();
+
+            // Update applied state
+            this.veApplied = false;
+        });
 
         let ident = {
             _uid: this._uid
         };
-
-        this.NTable.$on('clearFilters', this.resetFilter);
 
         Dom.find(document).on('keydown', this.eventKeydown, ident);
     },
