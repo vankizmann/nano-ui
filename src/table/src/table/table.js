@@ -136,6 +136,14 @@ export default {
             type: [Number]
         },
 
+        closeFilterOnEnter: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         keyProp: {
             default()
             {

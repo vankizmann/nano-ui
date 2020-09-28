@@ -30,7 +30,10 @@ export default {
                 this.applyFilter();
             }
 
-            if ( event.which === 27 ) {
+            let closeAnyway = event.which === 13 &&
+                this.NTable.closeFilterOnEnter;
+
+            if ( closeAnyway || event.which === 27 ) {
                 this.$refs.popover.close();
             }
         },
