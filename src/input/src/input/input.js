@@ -138,12 +138,12 @@ export default {
             'n-input',
         ];
 
-        let attrs = {
+        let attrs = Obj.assign({
             value: this.veValue,
             type: this.nativeType,
             disabled: this.disabled,
             placeholder: this.placeholder
-        };
+        }, this.$attrs);
 
         let events = {};
 
