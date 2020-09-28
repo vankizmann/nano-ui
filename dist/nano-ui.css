@@ -504,7 +504,7 @@
   display: block; }
 
 .n-loader.n-active .n-loader:before {
-  display: none; }
+  display: none !important; }
 
 .n-loader.n-loader--default:before {
   top: calc(50% - 20px);

@@ -23,7 +23,7 @@ $tooltip-border: 3px !default;
 }
 
 .n-loader.n-active .n-loader:before {
-    display: none;
+    display: none !important;
 }
 
 .n-loader.n-loader--default:before {
