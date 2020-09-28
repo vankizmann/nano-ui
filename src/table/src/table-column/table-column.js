@@ -406,8 +406,16 @@ export default {
             events.click = this.sortByColumn;
         }
 
+        let classList = [
+            'n-table-column__label'
+        ];
+
+        if ( this.sort && this.NTable.sortOnLabel ) {
+            classList.push('n-table-column__label--sort')
+        }
+
         let labelHtml = (
-            <div class="n-table-column__label" on={events}>
+            <div class={classList} on={events}>
                 { this.label }
             </div>
         );
@@ -433,7 +441,7 @@ export default {
 
         let events = {};
 
-        if ( this.sort && ! this.NTable.sortOnLabel ) {
+        if ( this.sort ) {
             events.click = this.sortByColumn;
         }
 

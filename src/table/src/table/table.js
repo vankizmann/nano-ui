@@ -82,6 +82,14 @@ export default {
             type: [Array]
         },
 
+        closeFilterOnEnter: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         group: {
             default()
             {
@@ -134,14 +142,6 @@ export default {
                 return 40;
             },
             type: [Number]
-        },
-
-        closeFilterOnEnter: {
-            default()
-            {
-                return false;
-            },
-            type: [Boolean]
         },
 
         keyProp: {

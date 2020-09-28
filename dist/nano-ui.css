@@ -2940,6 +2940,9 @@ body.n-open {
   white-space: nowrap;
   text-overflow: ellipsis; }
 
+.n-table .n-table-column .n-table-column__label.n-table-column__label--sort {
+  cursor: pointer; }
+
 .n-table .n-table-column.n-left .n-table-column__label {
   text-align: left; }
 
