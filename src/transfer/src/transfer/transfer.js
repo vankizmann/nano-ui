@@ -141,6 +141,36 @@ export default {
             this.$emit('input', this.veValue);
         },
 
+        moveRowTarget(row)
+        {
+            // Get row unique
+            let target = row[this.uniqueProp];
+
+            // Remove item from selected list
+            Arr.remove(this.veSelectedTarget, target);
+
+            Arr.remove(this.veValue, {
+                [this.uniqueProp]: target
+            });
+
+            this.$emit('input', this.veValue);
+        },
+
+        moveRowSource(row)
+        {
+            // Get row unique
+            let source = row[this.uniqueProp];
+
+            // Remove item from selected list
+            Arr.remove(this.veSelectedSource, source);
+
+            Arr.add(this.veValue, row.item, source, {
+                [this.uniqueProp]: source
+            });
+
+            this.$emit('input', this.veValue);
+        },
+
         moveToSource()
         {
             Arr.each(this.$refs.target.veSelected, (target) => {
@@ -289,6 +319,7 @@ export default {
 
         let events = {
             'move': this.moveItemsSource,
+            'row-dblclick': this.moveRowSource,
             'update:selected': this.updateSelectedSource
         };
 
@@ -387,6 +418,7 @@ export default {
 
         let events = {
             'move': this.moveItemsTarget,
+            'row-dblclick': this.moveRowTarget,
             'update:selected': this.updateSelectedTarget
         };
 
