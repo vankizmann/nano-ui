@@ -329,8 +329,6 @@ export default {
             let loadingTime = (itemDiff * Math.sqrt(itemDiff * 0.5)) *
                 this.loadingDelay;
 
-            console.log(loadingTime);
-
             this.veLoadLength = this.veItems.length;
 
             if ( loadingTime <= 0 || loadingTime <= this.loadingMin ) {

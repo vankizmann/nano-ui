@@ -122,6 +122,8 @@ export default {
             _uid: this._uid
         };
 
+        this.NTable.$on('clearFilters', this.resetFilter);
+
         Dom.find(document).on('keydown', this.eventKeydown, ident);
     },
 

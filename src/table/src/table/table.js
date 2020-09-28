@@ -434,8 +434,13 @@ export default {
         {
             this.veFilterProps = [];
 
+            // Emit reset to filters
+            this.$emit('clearFilters');
+
+            // Update prop
             this.$emit('update:filterProps', this.veFilterProps);
 
+            // Emit filter to component
             this.$emit('filter', this.veFilterProps);
         }
 
