@@ -137,8 +137,10 @@ export default {
 
         update(value)
         {
-            return Obj.set(this.NDraggable, this[this.NDraggable.pathProp] +
+            Obj.set(this.NDraggable, this[this.NDraggable.pathProp] +
                 '.' + this[this.NDraggable.indexProp], value);
+
+            this.NDraggable.refreshItems();
         },
 
         /**
