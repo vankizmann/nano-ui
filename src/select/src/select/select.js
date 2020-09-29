@@ -119,6 +119,14 @@ export default {
                 return '$value';
             },
             type: [String]
+        },
+
+        optionsDisabled: {
+            default()
+            {
+                return 'null';
+            },
+            type: [String]
         }
 
     },
@@ -564,7 +572,7 @@ export default {
 
         return Arr.each(this.options, ($value, $key) => {
             return (
-                <NSelectOption value={Obj.get({ $value, $key }, this.optionsValue)} label={Obj.get({ $value, $key }, this.optionsLabel)} />
+                <NSelectOption value={Obj.get({ $value, $key }, this.optionsValue)} label={Obj.get({ $value, $key }, this.optionsLabel)} disabled={Obj.get({ $value }, this.optionsDisabled, false)} />
             );
         });
     },
