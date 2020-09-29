@@ -1,4 +1,4 @@
-import { Str, Arr, Any, Locale, Dom } from "nano-js";
+import { Str, Arr, Obj, Any, Locale, Dom } from "nano-js";
 
 export default {
 
@@ -96,6 +96,29 @@ export default {
                 return false;
             },
             type: [Boolean]
+        },
+
+        options: {
+            default()
+            {
+                return null;
+            }
+        },
+
+        optionsValue: {
+            default()
+            {
+                return '$key';
+            },
+            type: [String]
+        },
+
+        optionsLabel: {
+            default()
+            {
+                return '$value';
+            },
+            type: [String]
         }
 
     },
@@ -491,7 +514,7 @@ export default {
         );
     },
 
-    renderOptions()
+    renderItems()
     {
         if ( ! this.veSearched.length ) {
             return (<div class="n-select__empty">{this.emptyText}</div>);
@@ -528,9 +551,22 @@ export default {
 
         return (
             <NPopover ref="popover" props={props} on={events}>
-                { this.ctor('renderOptions')() }
+                { this.ctor('renderItems')() }
             </NPopover>
         );
+    },
+
+    renderOptions()
+    {
+        if ( Any.isEmpty(this.options) ) {
+            return null;
+        }
+
+        return Arr.each(this.options, ($value, $key) => {
+            return (
+                <NSelectOption value={Obj.get({ $value, $key }, this.optionsValue)} label={Obj.get({ $value, $key }, this.optionsLabel)} />
+            );
+        });
     },
 
     render($render)
@@ -549,6 +585,7 @@ export default {
             <div class={classList}>
                 { this.ctor('renderDisplay')() }
                 { this.ctor('renderPopover')() }
+                { this.ctor('renderOptions')() }
                 { this.$slots.default }
             </div>
         );
