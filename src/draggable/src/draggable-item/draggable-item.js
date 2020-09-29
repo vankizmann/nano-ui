@@ -135,6 +135,12 @@ export default {
             this.NDraggable.copyItem(this);
         },
 
+        update(value)
+        {
+            return Obj.set(this.NDraggable, this[this.NDraggable.pathProp] +
+                '.' + this[this.NDraggable.indexProp], value);
+        },
+
         /**
          * Event listeners
          */
