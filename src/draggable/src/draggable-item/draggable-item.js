@@ -34,15 +34,14 @@ export default {
 
         veItem()
         {
-            return Obj.get(this.NDraggable, this[this.NDraggable.pathProp] +
-                '.' + this[this.NDraggable.indexProp]);
+            return
         }
 
     },
 
     data()
     {
-        return Obj.assign({ veInit: false, strategy: 'nodrop' }, this.value);
+        return Obj.assign({ veInit: false, strategy: 'nodrop', veItem: null }, this.value);
     },
 
     provide()
@@ -52,7 +51,18 @@ export default {
         }
     },
 
+    beforeMount()
+    {
+        this.veItem = this.getItem();
+    },
+
     methods: {
+
+        getItem()
+        {
+            return Obj.get(this.NDraggable, this[this.NDraggable.pathProp] +
+                '.' + this[this.NDraggable.indexProp]);
+        },
 
         resolveDragPosition(eventY)
         {
@@ -139,6 +149,8 @@ export default {
         {
             Obj.set(this.NDraggable, this[this.NDraggable.pathProp] +
                 '.' + this[this.NDraggable.indexProp], value);
+
+            this.veItem = this.getItem();
 
             this.NDraggable.refreshItems();
         },
