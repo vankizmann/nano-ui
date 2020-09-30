@@ -7,6 +7,10 @@ $form-group-spacing: 18px !default;
     position: relative;
 }
 
+.n-form-group:not(:last-child) {
+    margin-bottom: 25px;
+}
+
 .n-form-group__label {
     display: flex;
     flex-direction: row;
