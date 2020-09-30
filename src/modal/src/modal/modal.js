@@ -215,7 +215,7 @@ export default {
         }
 
         let events = {
-            click: this.close
+            click: () => this.$emit('close')
         };
 
         return (
