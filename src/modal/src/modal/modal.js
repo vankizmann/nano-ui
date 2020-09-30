@@ -162,10 +162,15 @@ export default {
                 result = ! Dom.find(target).closest(this.$refs.backdrop);
             }
 
-            if ( result !== this.veVisible ) {
-                this.$emit('input', this.veVisible = !! result);
+            if ( result === this.veVisible ) {
+                return;
             }
 
+            if ( ! result ) {
+                return this.$emit('close');
+            }
+
+            this.$emit('input', this.veVisible = !! result);
         },
 
     },
