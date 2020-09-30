@@ -30,15 +30,6 @@ export default {
 
     },
 
-    computed: {
-
-        veItem()
-        {
-            return
-        }
-
-    },
-
     data()
     {
         return Obj.assign({ veInit: false, strategy: 'nodrop', veItem: null }, this.value);
