@@ -69,7 +69,7 @@ export default {
             });
 
             if ( ! currentTab ) {
-                currentTab = Arr.first(this.veTabs);
+                currentTab = Arr.first(Arr.sort(this.veTabs, 'sort'));
             }
 
             if ( ! currentTab ) {
