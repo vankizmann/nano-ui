@@ -574,12 +574,15 @@ export default {
 
             let props = {
                 value: Obj.get({ $value, $index }, this.optionsValue, null),
-                label: Obj.get({ $value, $index }, this.optionsLabel, null),
                 disabled: Obj.get({ $value, $index }, this.optionsDisabled, false)
             };
+            console.log($value, $index);
 
             return (
-                <NSelectOption props={props} />
+                <NSelectOption props={props}>
+
+                    {  Obj.get({ $value, $index }, this.optionsLabel, null) }
+                </NSelectOption>
             );
         });
     },
