@@ -579,7 +579,6 @@ export default {
 
             return (
                 <NSelectOption props={props}>
-
                     {  Obj.get({ $value, $index }, this.optionsLabel, null) }
                 </NSelectOption>
             );
