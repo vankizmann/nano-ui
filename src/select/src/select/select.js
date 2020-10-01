@@ -576,7 +576,6 @@ export default {
                 value: Obj.get({ $value, $index }, this.optionsValue, null),
                 disabled: Obj.get({ $value, $index }, this.optionsDisabled, false)
             };
-            console.log($value, $index);
 
             return (
                 <NSelectOption props={props}>
