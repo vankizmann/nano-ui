@@ -570,7 +570,7 @@ export default {
             return null;
         }
 
-        return Obj.each(this.options, ($value, $index) => {
+        return Arr.each(this.options, ($value, $index) => {
 
             let props = {
                 value: Obj.get({ $value, $index }, this.optionsValue, null),
