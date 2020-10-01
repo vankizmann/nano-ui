@@ -570,9 +570,16 @@ export default {
             return null;
         }
 
-        return Arr.each(this.options, ($value, $key) => {
+        return Arr.each(this.options, ($value, $index) => {
+
+            let props = {
+                value: Obj.get({ $value, $index }, this.optionsValue, null),
+                label: Obj.get({ $value, $index }, this.optionsLabel, null),
+                disabled: Obj.get({ $value, $index }, this.optionsDisabled, false)
+            };
+
             return (
-                <NSelectOption value={Obj.get({ $value, $key }, this.optionsValue)} label={Obj.get({ $value, $key }, this.optionsLabel)} disabled={Obj.get({ $value }, this.optionsDisabled, false)} />
+                <NSelectOption props={props} />
             );
         });
     },
