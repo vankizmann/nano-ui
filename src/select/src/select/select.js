@@ -108,7 +108,7 @@ export default {
         optionsValue: {
             default()
             {
-                return '$key';
+                return '$index';
             },
             type: [String]
         },
@@ -570,7 +570,7 @@ export default {
             return null;
         }
 
-        return Arr.each(this.options, ($value, $index) => {
+        return Obj.each(this.options, ($value, $index) => {
 
             let props = {
                 value: Obj.get({ $value, $index }, this.optionsValue, null),
