@@ -46,6 +46,11 @@ $draggable-loader-size: 40px !default;
     background: rgba($color-white, 0.7);
 }
 
+.n-loader.n-active .n-draggable.n-load:before,
+.n-loader.n-active .n-draggable.n-load:after {
+    display: none;
+}
+
 .n-draggable.n-load.n-draggable.n-load--default:before {
 }
 
