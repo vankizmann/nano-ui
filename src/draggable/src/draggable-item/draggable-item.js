@@ -30,9 +30,18 @@ export default {
 
     },
 
+    computed: {
+
+        veItem()
+        {
+            return this.value.item;
+        }
+
+    },
+
     data()
     {
-        return Obj.assign({ veInit: false, strategy: 'nodrop', veItem: null }, this.value);
+        return Obj.assign({ veInit: false, strategy: 'nodrop' }, this.value);
     },
 
     provide()
@@ -44,7 +53,7 @@ export default {
 
     beforeMount()
     {
-        this.veItem = this.getItem();
+        // this.veItem = this.getItem();
     },
 
     methods: {
@@ -141,7 +150,7 @@ export default {
             Obj.set(this.NDraggable, this[this.NDraggable.pathProp] +
                 '.' + this[this.NDraggable.indexProp], value);
 
-            this.veItem = this.getItem();
+            // this.veItem = this.getItem();
 
             this.NDraggable.refreshItems();
         },
