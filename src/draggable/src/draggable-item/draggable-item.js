@@ -34,7 +34,12 @@ export default {
 
         veItem()
         {
-            return this.value.item;
+            if ( Obj.has(this.value, 'item') ) {
+                return Obj.get(this.value, 'item');
+            }
+
+            return Obj.get(this.NDraggable, this[this.NDraggable.pathProp] +
+                '.' + this[this.NDraggable.indexProp]);
         }
 
     },
