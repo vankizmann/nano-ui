@@ -60,6 +60,17 @@
     background-color: rgba($color-dark, 0.05);
 }
 
+.table-cell-preview__image {
+    position: relative;
+    width: 100%;
+}
+
+.table-cell-preview__image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
 .table-cell-preview__streamable {
     position: relative;
     width: 100%;

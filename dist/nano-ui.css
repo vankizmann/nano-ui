@@ -2675,7 +2675,9 @@ body.n-open {
 
 .n-modal.n-modal--preview .n-modal__frame {
   background: #1b2229;
-  min-height: 100px; }
+  min-height: 0;
+  min-width: 0;
+  width: auto; }
 
 .n-inverse .n-modal__frame {
   background: #1b2229; }
@@ -3032,6 +3034,15 @@ body.n-open {
  */
 .n-table-column.n-table-column--matrix:nth-last-child(2n+1) {
   background-color: rgba(47, 50, 54, 0.05); }
+
+.table-cell-preview__image {
+  position: relative;
+  width: 100%; }
+
+.table-cell-preview__image img {
+  display: block;
+  width: 100%;
+  height: auto; }
 
 .table-cell-preview__streamable {
   position: relative;

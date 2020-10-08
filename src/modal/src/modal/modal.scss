@@ -52,7 +52,9 @@ body.n-open {
 
 .n-modal.n-modal--preview .n-modal__frame {
     background: $--color-black;
-    min-height: 100px;
+    min-height: 0;
+    min-width: 0;
+    width: auto;
 }
 
 .n-inverse .n-modal__frame {

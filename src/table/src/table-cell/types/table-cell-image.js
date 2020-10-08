@@ -44,7 +44,7 @@ export default {
 
             let matchEmbed = this.preview.match(/(\/embed\/)(.*?$)/);
 
-            if ( matchEmbed !== null && matchEmbed.length === 2 ) {
+            if ( matchEmbed !== null && matchEmbed.length === 3 ) {
                 return matchEmbed[0].replace(/^\/embed\//, '');
             }
 
@@ -92,12 +92,24 @@ export default {
         );
     },
 
+    renderImage()
+    {
+        return (
+            <div class="table-cell-preview__image">
+                <img src={this.preview} />
+            </div>
+        )
+    },
+
     renderPreview()
     {
-        let htmlPreview = null;
-
         if ( ! this.preview ) {
             return null;
+        }
+        let htmlPreview = this.ctor('renderImage')();
+
+        if ( this.preview.match(/\.(jpg|jpeg|png)/) ) {
+            htmlPreview = this.ctor('renderYoutube')();
         }
 
         let linkYoutube = this.getYoutube();
@@ -114,7 +126,7 @@ export default {
 
         return (
             <NModal type="preview" window={true}>
-                { htmlPreview  || <img src={this.preview} /> }
+                { htmlPreview }
             </NModal>
         )
     },
