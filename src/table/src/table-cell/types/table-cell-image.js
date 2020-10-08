@@ -103,14 +103,12 @@ export default {
 
     renderPreview()
     {
+        let htmlPreview = null;
+
         if ( ! this.preview ) {
             return null;
         }
-        let htmlPreview = null;
 
-        if ( this.preview.match(/\.(jpg|jpeg|png)/) ) {
-            htmlPreview = this.ctor('renderImage')();
-        }
         let linkYoutube = this.getYoutube();
 
         if ( linkYoutube ) {
@@ -121,6 +119,10 @@ export default {
 
         if ( linkVimeo ) {
             htmlPreview = this.ctor('renderVimeo')(linkVimeo);
+        }
+
+        if ( Any.isEmpty(htmlPreview) ) {
+            htmlPreview = this.ctor('renderImage')();
         }
 
         return (
@@ -136,6 +138,10 @@ export default {
             'n-table-cell',
             'n-table-cell--' + this.column.type
         ];
+
+        if ( this.preview ) {
+            classList.push('has-preview');
+        }
 
         return (
             <div class={classList}>
