@@ -59,3 +59,25 @@
 .n-table-column.n-table-column--matrix:nth-last-child(2n+1) {
     background-color: rgba($color-dark, 0.05);
 }
+
+.table-cell-preview__streamable {
+    position: relative;
+    width: 100%;
+}
+
+.table-cell-preview__streamable:before {
+    content: '\00a0';
+    display: block;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.6%;
+}
+
+.table-cell-preview__streamable iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+}

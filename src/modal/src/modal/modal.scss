@@ -50,6 +50,11 @@ body.n-open {
     box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
 }
 
+.n-modal.n-modal--preview .n-modal__frame {
+    background: $--color-black;
+    min-height: 100px;
+}
+
 .n-inverse .n-modal__frame {
     background: $--color-black;
 }

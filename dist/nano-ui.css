@@ -2673,6 +2673,10 @@ body.n-open {
   border-radius: 2px;
   box-shadow: 0 1px 3px 1px rgba(27, 34, 41, 0.15); }
 
+.n-modal.n-modal--preview .n-modal__frame {
+  background: #1b2229;
+  min-height: 100px; }
+
 .n-inverse .n-modal__frame {
   background: #1b2229; }
 
@@ -3028,6 +3032,25 @@ body.n-open {
  */
 .n-table-column.n-table-column--matrix:nth-last-child(2n+1) {
   background-color: rgba(47, 50, 54, 0.05); }
+
+.table-cell-preview__streamable {
+  position: relative;
+  width: 100%; }
+
+.table-cell-preview__streamable:before {
+  content: '\00a0';
+  display: block;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.6%; }
+
+.table-cell-preview__streamable iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%; }
 
 .n-table-filter {
   position: relative;
