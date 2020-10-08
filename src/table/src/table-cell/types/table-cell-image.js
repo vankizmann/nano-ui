@@ -57,7 +57,7 @@ export default {
                 return null;
             }
 
-            let page = this.preview.match(/^https?:\/\/(www\.)?vimeo\.com/);
+            let page = this.preview.match(/^https?:\/\/(www\.|player\.)?vimeo\.com/);
 
             if ( page === null ) {
                 return null;
