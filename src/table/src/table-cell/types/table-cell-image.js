@@ -42,6 +42,12 @@ export default {
                 return matchPath[0].replace(/^\.be\//, '');
             }
 
+            let matchEmbed = this.preview.match(/(\/embed\/)(.*?$)/);
+
+            if ( matchEmbed !== null && matchEmbed.length === 2 ) {
+                return matchEmbed[0].replace(/^\/embed\//, '');
+            }
+
             return null;
         },
 
