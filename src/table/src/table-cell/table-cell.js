@@ -1,4 +1,3 @@
-import CtorMixin from "../../../mixins/src/ctor";
 import { Obj } from "nano-js";
 
 export default {
