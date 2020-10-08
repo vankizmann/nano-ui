@@ -106,12 +106,11 @@ export default {
         if ( ! this.preview ) {
             return null;
         }
-        let htmlPreview = this.ctor('renderImage')();
+        let htmlPreview = null;
 
         if ( this.preview.match(/\.(jpg|jpeg|png)/) ) {
-            htmlPreview = this.ctor('renderYoutube')();
+            htmlPreview = this.ctor('renderImage')();
         }
-
         let linkYoutube = this.getYoutube();
 
         if ( linkYoutube ) {
