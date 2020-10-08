@@ -83,7 +83,7 @@ export default {
         );
     },
 
-    renderVimeo()
+    renderVimeo(id)
     {
         return (
             <div class="table-cell-preview__streamable">
