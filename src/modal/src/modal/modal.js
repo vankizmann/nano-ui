@@ -175,11 +175,11 @@ export default {
 
         eventKeydown(event)
         {
-            if ( event.which !== 27 || ! this.veVisible ) {
+            if ( ! this.veVisible || ! this.closable ) {
                 return;
             }
 
-            if ( ! this.closable ) {
+            if ( event.which !== 27 ) {
                 return;
             }
 
@@ -200,7 +200,7 @@ export default {
         Dom.find(document).on('click',
             this.eventClick, { _uid: this._uid });
 
-        Dom.find(document).on('keydown',
+        Dom.find(document).on('keyup',
             this.eventKeydown, { _uid: this._uid });
 
         if ( ! this.$listeners.close ) {
@@ -228,8 +228,8 @@ export default {
         Dom.find(document).off('click',
             null, { _uid: this._uid });
 
-        // Dom.find(document.body).off('keydown',
-        //     null, { _uid: this._uid });
+        Dom.find(document).off('keyup',
+            null, { _uid: this._uid });
     },
 
     renderClose()
