@@ -53,11 +53,11 @@ $color-light-lighter:       lighten($color-light, 10%) !default;
 $color-light-dark:          darken($color-light, 5%) !default;
 $color-light-darker:        darken($color-light, 10%) !default;
 
-$color-dark-light:         lighten($color-dark, 5%) !default;
-$color-dark-lighter:       lighten($color-dark, 10%) !default;
+$color-dark-light:          lighten($color-dark, 5%) !default;
+$color-dark-lighter:        lighten($color-dark, 10%) !default;
 
-$color-dark-dark:          darken($color-dark, 5%) !default;
-$color-dark-darker:        darken($color-dark, 10%) !default;
+$color-dark-dark:           darken($color-dark, 5%) !default;
+$color-dark-darker:         darken($color-dark, 10%) !default;
 
 
 $color-primary-light:       lighten($color-primary, 5%) !default;
@@ -153,6 +153,18 @@ $--color-black-darker:          $color-black-darker !default;
 
 $--color-white-light:           $color-white-light !default;
 $--color-white-lighter:         $color-white-lighter !default;
+
+$--color-white-dark:            $color-white-dark !default;
+$--color-white-darker:          $color-white-darker !default;
+
+$--color-dark-light:            $color-dark-light !default;
+$--color-dark-lighter:          $color-dark-lighter !default;
+
+$--color-dark-dark:             $color-dark-dark !default;
+$--color-dark-darker:           $color-dark-darker !default;
+
+$--color-light-light:           $color-light-light !default;
+$--color-light-lighter:         $color-light-lighter !default;
 
 $--color-white-dark:            $color-white-dark !default;
 $--color-white-darker:          $color-white-darker !default;
