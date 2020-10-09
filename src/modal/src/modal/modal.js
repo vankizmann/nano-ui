@@ -183,6 +183,9 @@ export default {
                 return;
             }
 
+            event.preventDefault();
+            event.stopPropagation();
+
             this.$nextTick(() => this.$emit('close'));
         },
 
