@@ -183,7 +183,7 @@ export default {
                 return;
             }
 
-            this.$emit('close');
+            this.$nextTick(() => this.$emit('close'));
         },
 
     },
