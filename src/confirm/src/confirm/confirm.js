@@ -183,6 +183,8 @@ export default {
         // Override input listener
         events['input'] = this.eventInput;
 
+        // delete events['close'];
+
         return (
             <NModal ref="modal" props={props} on={events}>
                 <div slot="raw" class={classList}>

@@ -1,4 +1,4 @@
-import { UUID, Num, Obj, Any, Dom, Locale } from "nano-js";
+import { UUID, Num, Arr, Obj, Any, Dom, Locale } from "nano-js";
 
 export default {
 
@@ -173,7 +173,7 @@ export default {
             this.$emit('input', this.veVisible = !! result);
         },
 
-        eventKeydown(event)
+        eventKeydown(event, target)
         {
             if ( ! this.veVisible || ! this.closable ) {
                 return;
@@ -183,10 +183,25 @@ export default {
                 return;
             }
 
-            event.preventDefault();
-            event.stopPropagation();
+            let toIndex = 0;
 
-            this.$nextTick(() => this.$emit('close'));
+            Dom.find('.n-modal.n-open').each((el) => {
+
+                if ( Dom.find(el).attr('data-index') < toIndex ) {
+                    return;
+                }
+
+                toIndex = Dom.find(el).attr('data-index');
+            });
+
+            let meIndex = Dom.find(this.$el)
+                .attr('data-index');
+
+            if ( toIndex !== meIndex ) {
+                return;
+            }
+
+            this.$emit('close');
         },
 
     },
@@ -200,10 +215,10 @@ export default {
 
     mounted()
     {
-        Dom.find(document).on('click',
+        Dom.find(document.body).on('click',
             this.eventClick, { _uid: this._uid });
 
-        Dom.find(document).on('keyup',
+        Dom.find(document.body).on('keyup',
             this.eventKeydown, { _uid: this._uid });
 
         if ( ! this.$listeners.close ) {
@@ -228,10 +243,10 @@ export default {
 
     destroyed()
     {
-        Dom.find(document).off('click',
+        Dom.find(document.body).off('click',
             null, { _uid: this._uid });
 
-        Dom.find(document).off('keyup',
+        Dom.find(document.body).off('keyup',
             null, { _uid: this._uid });
     },
 
@@ -340,7 +355,7 @@ export default {
         };
 
         return (
-            <div class={classList} style={style}>
+            <div class={classList} style={style} data-index={window.zIndex}>
                 <transition name={this.transitionModal} mode="out-in">
                     { this.veVisible ? this.ctor('renderBody')() : null }
                 </transition>
