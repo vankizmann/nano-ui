@@ -46,7 +46,6 @@ $color-black-lighter:       lighten($color-black, 10%) !default;
 $color-black-dark:          darken($color-black, 5%) !default;
 $color-black-darker:        darken($color-black, 10%) !default;
 
-
 $color-light-light:         lighten($color-light, 5%) !default;
 $color-light-lighter:       lighten($color-light, 10%) !default;
 
@@ -58,7 +57,6 @@ $color-dark-lighter:        lighten($color-dark, 10%) !default;
 
 $color-dark-dark:           darken($color-dark, 5%) !default;
 $color-dark-darker:         darken($color-dark, 10%) !default;
-
 
 $color-primary-light:       lighten($color-primary, 5%) !default;
 $color-primary-lighter:     lighten($color-primary, 10%) !default;
@@ -114,6 +112,10 @@ $radius-extended: 8px !default;
 
 $--color-black:                 $color-black !default;
 $--color-white:                 $color-white !default;
+
+
+$--color-dark:                  $color-dark !default;
+$--color-light:                 $color-light !default;
 
 $--color-gray-05:               $color-gray-05 !default;
 $--color-gray-10:               $color-gray-10 !default;
