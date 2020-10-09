@@ -227,6 +227,9 @@ export default {
     {
         Dom.find(document.body).off('click',
             null, { _uid: this._uid });
+
+        Dom.find(document.body).off('keydown',
+            null, { _uid: this._uid });
     },
 
     renderClose()
