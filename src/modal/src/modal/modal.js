@@ -218,7 +218,7 @@ export default {
         Dom.find(document.body).on('click',
             this.eventClick, { _uid: this._uid });
 
-        Dom.find(document.body).on('keyup',
+        Dom.find(document.body).on('keydown',
             this.eventKeydown, { _uid: this._uid });
 
         if ( ! this.$listeners.close ) {
@@ -246,7 +246,7 @@ export default {
         Dom.find(document.body).off('click',
             null, { _uid: this._uid });
 
-        Dom.find(document.body).off('keyup',
+        Dom.find(document.body).off('keydown',
             null, { _uid: this._uid });
     },
 
