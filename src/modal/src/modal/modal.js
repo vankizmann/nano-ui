@@ -197,10 +197,10 @@ export default {
 
     mounted()
     {
-        Dom.find(document.body).on('click',
+        Dom.find(document).on('click',
             this.eventClick, { _uid: this._uid });
 
-        Dom.find(document.body).on('keydown',
+        Dom.find(document).on('keydown',
             this.eventKeydown, { _uid: this._uid });
 
         if ( ! this.$listeners.close ) {
@@ -225,11 +225,11 @@ export default {
 
     destroyed()
     {
-        Dom.find(document.body).off('click',
+        Dom.find(document).off('click',
             null, { _uid: this._uid });
 
-        Dom.find(document.body).off('keydown',
-            null, { _uid: this._uid });
+        // Dom.find(document.body).off('keydown',
+        //     null, { _uid: this._uid });
     },
 
     renderClose()
