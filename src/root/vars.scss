@@ -100,15 +100,15 @@ $color-background-lighter:  lighten($color-background, 5%) !default;
 $color-background-dark:     darken($color-background, 5%) !default;
 $color-background-darker:   darken($color-background, 10%) !default;
 
-$transition-short: 0.12s !default;
-$transition-medium: 0.24s !default;
-$transition-long: 0.48s !default;
-$transition-extended: 0.96s !default;
+$transition-short:          0.12s !default;
+$transition-medium:         0.24s !default;
+$transition-long:           0.48s !default;
+$transition-extended:       0.96s !default;
 
-$radius-small: 1px !default;
-$radius-medium: 2px !default;
-$radius-large: 4px !default;
-$radius-extended: 8px !default;
+$radius-small:              1px !default;
+$radius-medium:             2px !default;
+$radius-large:              4px !default;
+$radius-extended:           8px !default;
 
 $--color-black:                 $color-black !default;
 $--color-white:                 $color-white !default;

@@ -173,6 +173,19 @@ export default {
             this.$emit('input', this.veVisible = !! result);
         },
 
+        eventKeydown(event)
+        {
+            if ( event.which !== 27 || ! this.veVisible ) {
+                return;
+            }
+
+            if ( ! this.closable ) {
+                return;
+            }
+
+            this.$emit('close');
+        },
+
     },
 
     data()
@@ -186,6 +199,9 @@ export default {
     {
         Dom.find(document.body).on('click',
             this.eventClick, { _uid: this._uid });
+
+        Dom.find(document.body).on('keydown',
+            this.eventKeydown, { _uid: this._uid });
 
         if ( ! this.$listeners.close ) {
             this.$on('close', this.close);
