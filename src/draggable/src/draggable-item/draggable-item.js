@@ -56,18 +56,8 @@ export default {
         }
     },
 
-    beforeMount()
-    {
-        // this.veItem = this.getItem();
-    },
-
     methods: {
 
-        getItem()
-        {
-            return Obj.get(this.NDraggable, this[this.NDraggable.pathProp] +
-                '.' + this[this.NDraggable.indexProp]);
-        },
 
         resolveDragPosition(eventY)
         {
@@ -268,6 +258,7 @@ export default {
             }
 
             event.preventDefault();
+            event.stopPropagation();
 
             this.NDraggable.$emit('dragdrop', event, this, this.strategy);
         },
