@@ -296,13 +296,19 @@ export default {
 
         let events = {};
 
-        if ( this.trigger === 'hover' && ! disabled ) {
+        if ( this.trigger === 'hover' ) {
             events.mousemove = () => this.eventHover(veCascade);
+        }
+
+        if ( this.trigger === 'hover' && ! disabled ) {
             events.click = (event) => this.eventSelect(event, veCascade);
         }
 
-        if ( this.trigger === 'click' && ! disabled ) {
+        if ( this.trigger === 'click' ) {
             events.click = () => this.eventHover(veCascade);
+        }
+
+        if ( this.trigger === 'click' && ! disabled ) {
             events.dblclick = (event) => this.eventSelect(event, veCascade);
         }
 
