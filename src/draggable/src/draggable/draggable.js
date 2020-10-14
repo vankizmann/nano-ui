@@ -431,7 +431,7 @@ export default {
                 return Num.int(batch['_key']) < targetOrder;
             });
 
-            console.log(batchedBefore, batchedAfter);
+            console.log(target, strategy);
 
             if ( strategy === 'root' ) {
 
@@ -1396,7 +1396,7 @@ export default {
         {
             event.preventDefault();
 
-            console.log(event.target);
+            console.log(event.target, Dom.find(event.target).closest('[data-id]'));
 
             if ( Dom.find(event.target).closest('[data-id]') ) {
                 return;
