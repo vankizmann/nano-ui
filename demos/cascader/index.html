@@ -91,6 +91,7 @@
                         item = {
                             label: 'Item ' + (Math.floor(Math.random() * 2) === 1 ? 'long text is here given' : '') + total,
                             value: 'value-' + total,
+                            disabled: !! Math.floor(Math.random() * 2),
                             children: []
                         };
 

@@ -108,6 +108,14 @@ export default {
             type: [String]
         },
 
+        disabledProp: {
+            default()
+            {
+                return 'disabled';
+            },
+            type: [String]
+        },
+
         childProp: {
             default()
             {
@@ -280,14 +288,20 @@ export default {
             classList.push('n-current');
         }
 
+        let disabled = Obj.get(item, this.disabledProp, false);
+
+        if ( disabled ) {
+            classList.push('n-disabled');
+        }
+
         let events = {};
 
-        if ( this.trigger === 'hover' ) {
+        if ( this.trigger === 'hover' && ! disabled ) {
             events.mousemove = () => this.eventHover(veCascade);
             events.click = (event) => this.eventSelect(event, veCascade);
         }
 
-        if ( this.trigger === 'click' ) {
+        if ( this.trigger === 'click' && ! disabled ) {
             events.click = () => this.eventHover(veCascade);
             events.dblclick = (event) => this.eventSelect(event, veCascade);
         }
