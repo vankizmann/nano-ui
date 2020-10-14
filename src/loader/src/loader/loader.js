@@ -44,7 +44,7 @@ export default {
         minimum: {
             default()
             {
-                return 500;
+                return 300;
             },
             type: [Number]
         },
@@ -52,7 +52,7 @@ export default {
         debounce: {
             default()
             {
-                return 500;
+                return 300;
             },
             type: [Number]
         }
