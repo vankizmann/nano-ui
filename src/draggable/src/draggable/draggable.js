@@ -921,8 +921,8 @@ export default {
         {
             let current = this.getTarget(unique);
 
-            let isSameCurrent = Obj.get(current, this.uniqueProp) ===
-                Obj.get(this.veCurrent, this.uniqueProp);
+            let isSameCurrent = Any.md5(current) ===
+                Any.md5(this.veCurrent);
 
             if ( isSameCurrent ) {
                 return;
