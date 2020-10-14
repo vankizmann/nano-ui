@@ -431,6 +431,8 @@ export default {
                 return Num.int(batch['_key']) < targetOrder;
             });
 
+            console.log(batchedBefore, batchedAfter);
+
             if ( strategy === 'root' ) {
 
                 Arr.each(this.veCached, (source) => {
@@ -1393,6 +1395,8 @@ export default {
         eventEmptyDragdrop(event)
         {
             event.preventDefault();
+
+            console.log(event.target);
 
             if ( Dom.find(event.target).closest('[data-id]') ) {
                 return;
