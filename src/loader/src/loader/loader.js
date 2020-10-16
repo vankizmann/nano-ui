@@ -52,7 +52,7 @@ export default {
         debounce: {
             default()
             {
-                return 300;
+                return 500;
             },
             type: [Number]
         }
