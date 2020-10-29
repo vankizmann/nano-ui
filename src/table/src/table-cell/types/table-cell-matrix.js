@@ -60,12 +60,14 @@ export default {
             'n-table-cell--' + this.column.type
         ];
 
+        let checkedState = this.isChecked();
+
         let disabled = Any.isFunction(this.column.disabled) ?
             this.column.disabled(this.value) : this.column.disabled;
 
         return (
             <div class={classList}>
-                <NCheckbox checked={this.isChecked()} disabled={disabled} vOn:input={this.toggleMatrix} />
+                <NCheckbox checked={checkedState} disabled={disabled && ! checkedState} vOn:input={this.toggleMatrix} />
             </div>
         );
     }
