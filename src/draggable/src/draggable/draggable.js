@@ -91,6 +91,13 @@ export default {
             }
         },
 
+        scrollTopOnChange: {
+            default()
+            {
+                return true;
+            }
+        },
+
         keyProp: {
             default()
             {
@@ -375,7 +382,7 @@ export default {
                 return;
             }
 
-            if ( this.$refs.vscroller ) {
+            if ( this.$refs.vscroller && this.scrollTopOnChange ) {
                 this.$refs.vscroller.scrollTop(0);
             }
 
