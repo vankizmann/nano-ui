@@ -313,7 +313,7 @@ export default {
             <div key={this.veVisible ? '1' : '0'} class="n-modal__frame" style={style}>
                 { this.ctor('renderHeader')() }
                 <div class="n-modal__body">
-                    <NScrollbar class="n-modal__wrap" relative={true}>
+                    <NScrollbar ref="scrollbar" class="n-modal__wrap" relative={true}>
                         {this.$slots.default}
                     </NScrollbar>
                 </div>

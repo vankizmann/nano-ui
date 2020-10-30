@@ -34,6 +34,21 @@ export default {
 
     methods: {
 
+        scrollTop(value)
+        {
+            Dom.find(this.$el).scrollTop(value);
+        },
+
+        scrollUp()
+        {
+            this.scrollTop(0);
+        },
+
+        scrollDown()
+        {
+            this.scrollTop(Dom.find(this.$el).height());
+        },
+
         adjustScrollbars()
         {
             let styles = Dom.find(this.$el).css(), addStyle = {};
