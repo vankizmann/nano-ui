@@ -39,14 +39,17 @@ export default {
             Dom.find(this.$el).scrollTop(value);
         },
 
-        scrollUp()
+        scrollUp(offset = 0)
         {
-            this.scrollTop(0);
+            this.scrollTop(offset);
         },
 
-        scrollDown()
+        scrollDown(offset = 0)
         {
-            this.scrollTop(Dom.find(this.$el).height());
+            let value = Dom.find(this.$el).height() -
+                Dom.find(this.$el).innerHeight();
+
+            this.scrollTop(value + offset);
         },
 
         adjustScrollbars()
