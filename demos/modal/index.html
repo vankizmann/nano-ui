@@ -32,15 +32,12 @@
                 <n-button type="warning">
                     Modal 02
                 </n-button>
-                <n-modal title="Modal :)">
+                <n-modal ref="modal" title="Modal :)">
                     <div>
                         Hello 02!
-                        <n-button type="warning">
+                        <n-button type="warning" @click="scrollDown">
                             Close
                         </n-button>
-                        <n-confirm>
-                            Buhuuu
-                        </n-confirm>
                         <br>
                         <br>
                         <br>
@@ -84,6 +81,12 @@
         var config = {
             data: function() {
                 return { };
+            },
+            methods: {
+                scrollDown()
+                {
+                    this.$refs.modal.$refs.scrollbar.scrollTo(99999);
+                }
             }
         };
 

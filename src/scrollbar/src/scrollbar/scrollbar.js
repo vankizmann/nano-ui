@@ -34,22 +34,9 @@ export default {
 
     methods: {
 
-        scrollTop(value)
+        scrollTo(y = 0, x = 0, duration = 0)
         {
-            Dom.find(this.$el).scrollTop(value);
-        },
-
-        scrollUp(offset = 0)
-        {
-            this.scrollTop(offset);
-        },
-
-        scrollDown(offset = 0)
-        {
-            let value = Dom.find(this.$el).height() -
-                Dom.find(this.$el).innerHeight();
-
-            this.scrollTop(value + offset);
+            this.optiscroll.scrollTo(x, y, duration);
         },
 
         adjustScrollbars()
