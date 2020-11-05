@@ -215,6 +215,13 @@ export default {
             }
         },
 
+        allowCurrent: {
+            default()
+            {
+                return true;
+            }
+        },
+
         allowSelect: {
             default()
             {
@@ -1498,7 +1505,9 @@ export default {
 
     mounted()
     {
-        this.$on('row-click', this.setCurrent);
+        if ( this.allowCurrent ) {
+            this.$on('row-click', this.setCurrent);
+        }
 
         this.$on('dragstart', this.dispatchSelected);
         this.$on('dragstart', this.createDragCounter);
