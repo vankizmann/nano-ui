@@ -253,6 +253,13 @@ export default {
             }
         },
 
+        allowCurrent: {
+            default()
+            {
+                return true;
+            }
+        },
+
         allowSelect: {
             default()
             {
