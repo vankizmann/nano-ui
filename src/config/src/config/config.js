@@ -168,7 +168,7 @@ export default {
 
             // Set setup defaults
             setup = Obj.assign({
-                vIf: true, vShow: true, vAwait: null, on: {}, props: {}, attrs: {}
+                vIf: true, vShow: true, vAwait: null, class: null, on: {}, props: {}, attrs: {}
             }, setup);
 
             if ( ! this.solveAwait(setup.vAwait) ) {
@@ -193,6 +193,9 @@ export default {
 
             // Normalize props
             setup.props = this.solveValue(setup.props);
+
+            // Normalize class
+            setup.class = this.solveValue(setup.class);
 
             // Solve props
             Obj.map(setup.props, (value) => this.solveValue(value));
