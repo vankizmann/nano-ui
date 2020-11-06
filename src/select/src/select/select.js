@@ -314,19 +314,15 @@ export default {
                 value = Arr.first(this.veValue);
             }
 
-            console.log('run');
-
             if ( ! value ) {
                 return;
             }
-            console.log('run2');
 
             let target = Arr.find(this.veOptions, { value });
 
             if ( ! target ) {
                 return;
             }
-            console.log('run3');
 
             let container = Dom.find(this.$refs.popover.$el)
                 .find('.n-select__items').get(0);
