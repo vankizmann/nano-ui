@@ -314,23 +314,29 @@ export default {
                 value = Arr.first(this.veValue);
             }
 
+            console.log('run');
+
             if ( ! value ) {
                 return;
             }
+            console.log('run2');
 
             let target = Arr.find(this.veOptions, { value });
 
             if ( ! target ) {
                 return;
             }
+            console.log('run3');
 
             let container = Dom.find(this.$refs.popover.$el)
                 .find('.n-select__items').get(0);
 
-            let offset = Dom.find(container)
-                .find(`[data-option="${target._uid}"]`).offset('top', container);
+            let selector = `[data-option="${target._uid}"]`;
 
-            this.$refs.scrollbar.scrollTo(offset);
+            let offset = Dom.find(container)
+                .find(selector).offset('top', container);
+
+            this.$refs.scrollbar.scrollTo(offset, 0 , 250);
     },
 
         eventUpdateSearch(event)
@@ -390,11 +396,11 @@ export default {
 
         eventPopoverInput(input)
         {
-            input ? this.openSelect() : this.closeSelect();
-
             if ( input ) {
-                this.$nextTick(this.scrollToClosest);
+                Any.delay(this.scrollToClosest, 100);
             }
+
+            input ? this.openSelect() : this.closeSelect();
         }
 
     },
