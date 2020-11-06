@@ -306,6 +306,33 @@ export default {
             this.toggleOption(selected.veValue);
         },
 
+        scrollToClosest()
+        {
+            let value = this.veValue;
+
+            if ( Any.isArray(this.veValue) ) {
+                value = Arr.first(this.veValue);
+            }
+
+            if ( ! value ) {
+                return;
+            }
+
+            let target = Arr.find(this.veOptions, { value });
+
+            if ( ! target ) {
+                return;
+            }
+
+            let container = Dom.find(this.$refs.popover.$el)
+                .find('.n-select__items').get(0);
+
+            let offset = Dom.find(container)
+                .find(`[data-option="${target._uid}"]`).offset('top', container);
+
+            this.$refs.scrollbar.scrollTo(offset);
+    },
+
         eventUpdateSearch(event)
         {
             this.veSearch = event.target.value;
@@ -364,6 +391,10 @@ export default {
         eventPopoverInput(input)
         {
             input ? this.openSelect() : this.closeSelect();
+
+            if ( input ) {
+                this.$nextTick(this.scrollToClosest);
+            }
         }
 
     },
@@ -529,7 +560,7 @@ export default {
         }
 
         return (
-            <NScrollbar class="n-select__items" relative={true}>
+            <NScrollbar ref="scrollbar" class="n-select__items" relative={true}>
                 {
                     Arr.each(this.veSearched, (option, index) => {
                         return option.ctor('renderOption')(index);

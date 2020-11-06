@@ -99,7 +99,7 @@ export default {
         }
 
         return (
-            <div class={classList} on={events}>
+            <div class={classList} data-option={this._uid} on={events}>
                 { this.$slots.default || this.label }
             </div>
         );
