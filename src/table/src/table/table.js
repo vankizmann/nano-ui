@@ -471,7 +471,7 @@ export default {
         Any.delay(() => {
             Arr.each(this.veColumns, (column) =>
                 column.bindAdaptWidth());
-        }, 1000);
+        }, 500);
     },
 
     renderExpand()
