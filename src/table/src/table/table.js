@@ -372,6 +372,11 @@ export default {
 
     methods: {
 
+        scrollTo(y = 0)
+        {
+            this.$refs.list.scrollTo(y);
+        },
+
         refreshCurrent()
         {
             this.$refs.list.refreshCurrent();

@@ -331,6 +331,11 @@ export default {
 
     methods: {
 
+        scrollTo(y = 0)
+        {
+            this.$refs.vscroller.scrollTop(y);
+        },
+
         startLoading()
         {
             if ( ! this.$el ) {
