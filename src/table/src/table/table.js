@@ -136,6 +136,13 @@ export default {
             }
         },
 
+        scrollTopOnChange: {
+            default()
+            {
+                return true;
+            }
+        },
+
         headerHeight: {
             default()
             {
