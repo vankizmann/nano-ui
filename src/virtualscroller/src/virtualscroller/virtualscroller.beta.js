@@ -60,6 +60,14 @@ export default {
                 return 30;
             },
             type: [Number]
+        },
+
+        useRenderCache: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
         }
 
     },
@@ -229,6 +237,10 @@ export default {
 
     renderItem(props)
     {
+        if ( ! this.useRenderCache ) {
+            return this.renderNode(props);
+        }
+
         let key = Any.md5(props.value);
 
         let veCachedView = {

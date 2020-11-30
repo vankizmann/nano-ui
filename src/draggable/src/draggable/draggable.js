@@ -307,6 +307,14 @@ export default {
             type: [Number]
         },
 
+        useRenderCache: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        }
+
     },
 
     data()
@@ -1599,7 +1607,9 @@ export default {
         });
 
         let props = Obj.assign({}, this.$props, {
-            items: this.veItems, renderNode: this.ctor('renderItem')
+            items: this.veItems,
+            useRenderCache: this.useRenderCache,
+            renderNode: this.ctor("renderItem"),
         });
 
         let events = {
