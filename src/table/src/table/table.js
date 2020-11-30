@@ -226,7 +226,7 @@ export default {
         ghostMode: {
             default()
             {
-                return false;
+                return true;
             },
             type: [Boolean]
         },
