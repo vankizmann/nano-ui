@@ -331,7 +331,7 @@ export default {
         loadingInit: {
             default()
             {
-                return 450;
+                return 650;
             }
         },
 
