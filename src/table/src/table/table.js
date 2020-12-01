@@ -299,7 +299,7 @@ export default {
         updateDelay: {
             default()
             {
-                return 100;
+                return 80;
             },
             type: [Number]
         },
@@ -331,7 +331,7 @@ export default {
         loadingInit: {
             default()
             {
-                return 150;
+                return 450;
             }
         },
 

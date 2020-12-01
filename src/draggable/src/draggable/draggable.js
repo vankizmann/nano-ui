@@ -286,14 +286,14 @@ export default {
         loadingInit: {
             default()
             {
-                return 150;
+                return 650;
             }
         },
 
         loadingDelay: {
             default()
             {
-                return 350;
+                return 0;
             },
             type: [Number]
         },
@@ -328,7 +328,7 @@ export default {
     {
         return {
             veInview: false,
-            veLoad: false,
+            veLoad: true,
             veCopy: [],
             veItems: [],
             veCurrent: this.current,
@@ -353,12 +353,12 @@ export default {
 
         startLoading()
         {
-            if ( ! this.$el ) {
-                return Any.delay(() => this.startLoading(), 100);
+            if ( this.loadingInit && this.veLoad ) {
+                return this.addLoader(this.loadingInit);
             }
 
-            if ( this.loadingInit ) {
-                return this.addLoader(loadingTime);
+            if ( ! this.loadingDelay ) {
+                return;
             }
 
             let itemDiff = this.veItems.length -
@@ -378,19 +378,19 @@ export default {
 
         addLoader(delay)
         {
-            if ( Dom.find(this.el).hasClass('n-load') ) {
-                return;
-            }
-            
             if ( ! this.$el ) {
-                return Any.delay(() => this.addLoader(delay), 100);
+                return Any.delay(() => this.addLoader(delay), 50);
             }
 
+            this.veLoad = false;
+
             Any.delay(() => {
+                console.log('start');
                 Dom.find(this.$el).addClass('n-load');
             }, 0);
 
             Any.delay(() => {
+                console.log('end');
                 Dom.find(this.$el).removeClass('n-load');
             }, delay)
         },
