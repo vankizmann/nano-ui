@@ -328,6 +328,13 @@ export default {
             type: [Number]
         },
 
+        loadingInit: {
+            default()
+            {
+                return 150;
+            }
+        },
+
         loadingDelay: {
             default()
             {

@@ -293,7 +293,7 @@ export default {
         loadingDelay: {
             default()
             {
-                return 0;
+                return 350;
             },
             type: [Number]
         },
@@ -309,7 +309,7 @@ export default {
         loadingMin: {
             default()
             {
-                return 450;
+                return 350;
             },
             type: [Number]
         },
@@ -368,7 +368,7 @@ export default {
             if ( loadingTime <= 0 || loadingTime <= this.loadingMin ) {
                 return;
             }
-            
+
             this.addLoader(Math.min(loadingTime, this.loadingMax));
         },
 
