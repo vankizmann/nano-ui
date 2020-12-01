@@ -356,7 +356,7 @@ export default {
             if ( ! this.$el ) {
                 return Any.delay(() => this.startLoading(), 100);
             }
-            
+
             if ( this.loadingInit ) {
                 return this.addLoader(loadingTime);
             }
@@ -378,6 +378,10 @@ export default {
 
         addLoader(delay)
         {
+            if ( Dom.find(this.el).hasClass('n-load') ) {
+                return;
+            }
+            
             if ( ! this.$el ) {
                 return Any.delay(() => this.addLoader(delay), 100);
             }
