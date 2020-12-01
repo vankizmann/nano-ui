@@ -353,6 +353,10 @@ export default {
 
         startLoading()
         {
+            if ( ! this.$el ) {
+                return Any.delay(() => this.startLoading(), 100);
+            }
+            
             if ( this.loadingInit ) {
                 return this.addLoader(loadingTime);
             }
