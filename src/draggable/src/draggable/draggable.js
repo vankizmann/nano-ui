@@ -283,6 +283,13 @@ export default {
             type: [Number]
         },
 
+        loadingInit: {
+            default()
+            {
+                return 150;
+            }
+        },
+
         loadingDelay: {
             default()
             {
@@ -346,8 +353,8 @@ export default {
 
         startLoading()
         {
-            if ( ! this.$el ) {
-                return Any.delay(this.startLoading, 100);
+            if ( this.loadingInit ) {
+                return this.addLoader(loadingTime);
             }
 
             let itemDiff = this.veItems.length -
@@ -361,8 +368,15 @@ export default {
             if ( loadingTime <= 0 || loadingTime <= this.loadingMin ) {
                 return;
             }
+            
+            this.addLoader(Math.min(loadingTime, this.loadingMax));
+        },
 
-            loadingTime = Math.min(loadingTime, this.loadingMax);
+        addLoader(delay)
+        {
+            if ( ! this.$el ) {
+                return Any.delay(() => this.addLoader(delay), 100);
+            }
 
             Any.delay(() => {
                 Dom.find(this.$el).addClass('n-load');
@@ -370,7 +384,7 @@ export default {
 
             Any.delay(() => {
                 Dom.find(this.$el).removeClass('n-load');
-            }, loadingTime)
+            }, delay)
         },
 
         pushItem(item, index = null)
