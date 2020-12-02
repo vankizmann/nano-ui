@@ -286,7 +286,7 @@ export default {
         loadingInit: {
             default()
             {
-                return 650;
+                return 0;
             }
         },
 
