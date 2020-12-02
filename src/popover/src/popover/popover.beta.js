@@ -505,13 +505,13 @@ export default {
             this.parent = this.NPopover.boundary;
         }
 
-        if ( this.boundary && ! this.parent ) {
-            this.parent = Dom.find(this.boundary).get(0);
+        if ( this.window ) {
+            //this.parent = Dom.find(document.body).get(0);
+            this.parent = Dom.find(this.$el).closestScrollable();
         }
 
-        if ( this.window && ! this.parent ) {
-            this.parent = Dom.find(document.body).get(0);
-            //this.parent = Dom.find(this.$el).closestScrollable();
+        if ( this.boundary && ! this.parent ) {
+            this.parent = Dom.find(this.boundary).get(0);
         }
 
         if ( this.parent ) {
