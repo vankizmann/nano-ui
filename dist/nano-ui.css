@@ -504,7 +504,7 @@
   -webkit-animation: LoadingSpinner 1s linear infinite;
           animation: LoadingSpinner 1s linear infinite; }
 
-.n-loader.n-active:before {
+.n-loader.n-load:before {
   display: block; }
 
 .n-loader.n-active .n-loader:before {

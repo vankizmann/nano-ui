@@ -18,7 +18,7 @@ $tooltip-border: 3px !default;
     animation: LoadingSpinner 1s linear infinite;
 }
 
-.n-loader.n-active:before {
+.n-loader.n-load:before {
     display: block;
 }
 
