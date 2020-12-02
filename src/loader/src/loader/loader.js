@@ -74,7 +74,7 @@ export default {
 
             this.veTiming = Date.now();
 
-            Dom.find(this.$el).addClass('n-active');
+            Dom.find(this.$el).addClass('n-load');
         },
 
         stopTimer()
@@ -86,7 +86,7 @@ export default {
             }
 
             this.veDelay = setTimeout(() => {
-                Dom.find(this.$el).removeClass('n-active');
+                Dom.find(this.$el).removeClass('n-load');
             }, this.debounce);
         }
 

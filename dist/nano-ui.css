@@ -539,7 +539,7 @@
   height: 100%;
   background: rgba(255, 255, 255, 0.7); }
 
-.n-loader.n-active:after {
+.n-loader.n-load:after {
   display: block; }
 
 @-webkit-keyframes LoadingSpinner {
