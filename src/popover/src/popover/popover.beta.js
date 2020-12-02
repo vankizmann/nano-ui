@@ -501,11 +501,15 @@ export default {
 
         this.parent = null;
 
-        if ( this.NScrollbar ) {
+        if ( this.NModal && ! this.parent ) {
+            this.parent = document.body;
+        }
+
+        if ( this.NScrollbar && ! this.parent ) {
             this.parent = this.NScrollbar.$el;
         }
 
-        if ( this.NPopover && ! this.NModal ) {
+        if ( this.NPopover && ! this.parent ) {
             this.parent = this.NPopover.boundary;
         }
 
@@ -514,7 +518,6 @@ export default {
         }
 
         if ( this.window && ! this.parent ) {
-            //this.parent = Dom.find(document.body).get(0);
             this.parent = Dom.find(this.$el).closestScrollable();
         }
 
