@@ -206,6 +206,13 @@ export default {
 
     },
 
+    provided()
+    {
+        return {
+            NModal: this
+        };
+    },
+
     data()
     {
         return {
