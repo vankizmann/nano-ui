@@ -385,12 +385,10 @@ export default {
             this.veLoad = false;
 
             Any.delay(() => {
-                console.log('start');
                 Dom.find(this.$el).addClass('n-load');
             }, 0);
 
             Any.delay(() => {
-                console.log('end');
                 Dom.find(this.$el).removeClass('n-load');
             }, delay)
         },
