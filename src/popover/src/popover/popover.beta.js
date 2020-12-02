@@ -15,6 +15,10 @@ export default {
             default: undefined
         },
 
+        NModal: {
+            default: undefined
+        },
+
         NScrollbar: {
             default: undefined
         }
@@ -501,17 +505,17 @@ export default {
             this.parent = this.NScrollbar.$el;
         }
 
-        if ( this.NPopover ) {
+        if ( this.NPopover && ! this.NModal ) {
             this.parent = this.NPopover.boundary;
-        }
-
-        if ( this.window ) {
-            //this.parent = Dom.find(document.body).get(0);
-            this.parent = Dom.find(this.$el).closestScrollable();
         }
 
         if ( this.boundary && ! this.parent ) {
             this.parent = Dom.find(this.boundary).get(0);
+        }
+
+        if ( this.window && ! this.parent ) {
+            //this.parent = Dom.find(document.body).get(0);
+            this.parent = Dom.find(this.$el).closestScrollable();
         }
 
         if ( this.parent ) {
