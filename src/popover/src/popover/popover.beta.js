@@ -19,7 +19,6 @@ export default {
             default: undefined
         }
 
-
     },
 
     provide()
@@ -511,7 +510,8 @@ export default {
         }
 
         if ( this.window && ! this.parent ) {
-            this.parent = Dom.find(this.$el).closestScrollable();
+            this.parent = Dom.find(document.body).get(0);
+            //this.parent = Dom.find(this.$el).closestScrollable();
         }
 
         if ( this.parent ) {
