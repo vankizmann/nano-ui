@@ -206,7 +206,7 @@ export default {
 
     },
 
-    provided()
+    provide()
     {
         return {
             NModal: this
