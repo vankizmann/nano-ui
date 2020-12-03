@@ -457,6 +457,7 @@ export default {
             }
 
             this.$emit('move', ids.join(','), target[this.uniqueProp], strategy);
+            this.$emit('move-code', this.veCached, target, strategy);
 
             if ( this.disableMove ) {
                 return;
