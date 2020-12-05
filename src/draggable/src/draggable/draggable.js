@@ -48,6 +48,14 @@ export default {
         group: {
             default()
             {
+                return 'default';
+            },
+            type: [String]
+        },
+
+        allowGroups: {
+            default()
+            {
                 return ['default'];
             },
             type: [Array]
@@ -767,9 +775,9 @@ export default {
             this.removeDragIndicator();
         },
 
-        cacheItems(items, group = [])
+        cacheItems(items, group = 'default')
         {
-            if ( Arr.intersect(group, this.group).length ) {
+            if ( Arr.has(this.allowGroups, group) ) {
                 this.veCached = Arr.each(items, (item) => Obj.clone(item));
             }
         },
