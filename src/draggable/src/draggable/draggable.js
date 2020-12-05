@@ -48,9 +48,9 @@ export default {
         group: {
             default()
             {
-                return 'default';
+                return ['default'];
             },
-            type: [String]
+            type: [Array]
         },
 
         allowGroups: {
@@ -777,7 +777,7 @@ export default {
 
         cacheItems(items, group = 'default')
         {
-            if ( Arr.has(this.allowGroups, group) ) {
+            if ( Arr.intersect(group, this.allowGroups).length ) {
                 this.veCached = Arr.each(items, (item) => Obj.clone(item));
             }
         },
