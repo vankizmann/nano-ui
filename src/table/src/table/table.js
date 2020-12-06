@@ -500,7 +500,7 @@ export default {
         }
 
         return (
-            <div class="n-draggable-item__expand">
+            <div class="n-draglist-item__expand">
                 { /* Only used in row */ }
             </div>
         )
@@ -526,7 +526,7 @@ export default {
         }
 
         return (
-            <div class="n-draggable-item__select">
+            <div class="n-draglist-item__select">
                 <NCheckbox props={props} on={events} />
             </div>
         );
@@ -604,7 +604,7 @@ export default {
             props.viewportHeight = this.viewportHeight - this.headerHeight;
         }
 
-        let draggableHtml = this.$render('NDraggable', {
+        let draggableHtml = this.$render('NDraglist', {
             ref: 'list', class: 'n-table__body', props, ...passes
         }, slots);
 

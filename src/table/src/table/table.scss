@@ -59,11 +59,11 @@ $table-row-height: 40px !default;
     flex: 1 1 auto;
 }
 
-.n-table .n-table__body .n-draggable-item,
+.n-table .n-table__body .n-draglist-item,
 .n-table .n-table__body .n-virtualscroller__item {
     border-bottom: 1px solid $--color-gray-10;
 }
 
-.n-table .n-draggable-item__select {
+.n-table .n-draglist-item__select {
     width: 35px;
 }

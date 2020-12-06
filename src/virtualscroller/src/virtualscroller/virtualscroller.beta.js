@@ -298,7 +298,7 @@ export default {
             return this.$slots.empty || null;
         }
 
-        if ( ! this.viewportHeight || this.items.length <= this.threshold ) {
+        if ( ! this.viewportHeight || ! this.itemHeight || this.items.length <= this.threshold ) {
             return (
                 <NScrollbar ref="viewport">
                     { this.ctor('renderItems')() }

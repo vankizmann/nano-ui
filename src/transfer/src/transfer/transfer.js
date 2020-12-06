@@ -308,7 +308,8 @@ export default {
     renderSourceBody()
     {
         let props = {
-            group: [this.veID],
+            group: [this.veID + 'source'],
+            allowGroups: [this.veID + 'target'],
             items: this.veSource,
             renderSelect: true,
             viewportHeight: true,
@@ -325,7 +326,7 @@ export default {
 
         return (
             <div class="n-transfer__body">
-                <NDraggable ref="source" props={props} on={events} />
+                <NDraglist ref="source" props={props} on={events} />
             </div>
         );
     },
@@ -407,7 +408,8 @@ export default {
     renderTargetBody()
     {
         let props = {
-            group: [this.veID],
+            group: [this.veID + 'target'],
+            allowGroups: [this.veID + 'source'],
             items: this.veTarget,
             renderSelect: true,
             viewportHeight: true,
@@ -424,7 +426,7 @@ export default {
 
         return (
             <div class="n-transfer__body">
-                <NDraggable ref="target" props={props} on={events} />
+                <NDraglist ref="target" props={props} on={events} />
             </div>
         );
     },

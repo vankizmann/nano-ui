@@ -2,7 +2,7 @@ import { UUID, Num, Arr, Obj, Dom, Any, Event, Locale } from "nano-js";
 
 export default {
 
-    name: 'NDraggable',
+    // name: 'NDraggable',
 
     model: {
         prop: 'items'
@@ -268,22 +268,6 @@ export default {
         },
 
         keyDebounce: {
-            default()
-            {
-                return 100;
-            },
-            type: [Number]
-        },
-
-        bufferItems: {
-            default()
-            {
-                return 10;
-            },
-            type: [Number]
-        },
-
-        threshold: {
             default()
             {
                 return 100;
@@ -1485,7 +1469,7 @@ export default {
                 this.currentCollapse();
             }
 
-            if ( event.which === 38 ) {
+            if ( event.which === 38 || event.which === 37 ) {
                 event.preventDefault();
 
                 if ( this.lastUpdate && this.lastUpdate > Date.now() ) {
@@ -1497,7 +1481,7 @@ export default {
                 this.currentPrev();
             }
 
-            if ( event.which === 40 ) {
+            if ( event.which === 40 || event.which === 39 ) {
                 event.preventDefault();
 
                 if ( this.lastUpdate && this.lastUpdate > Date.now() ) {
@@ -1596,64 +1580,5 @@ export default {
         Dom.find(document).off('mousemove', null, ident);
         Dom.find(document).off('keydown', null, ident);
     },
-
-    renderEmpty()
-    {
-        if ( ! this.showEmpty ) {
-            return null;
-        }
-
-        return (
-            <div class="n-draggable__empty">
-                 <span>{ this.$slots.empty || this.trans('No entries') }</span>
-            </div>
-        );
-    },
-
-    renderItem(props)
-    {
-        let data = {
-            key: props.value[this.keyProp], props
-        };
-
-        return (
-            this.$render('NDraggableItem', data, [
-                this.$scopedSlots.default
-            ])
-        );
-    },
-
-    render($render)
-    {
-        this.$render = $render;
-
-        if ( ! this.$slots.empty ) {
-            this.$slots.empty = [this.ctor('renderEmpty')()];
-        }
-
-        let slots = Arr.each(this.$slots, (slot, name) => {
-            return this.$render('template', { slot: name }, slot);
-        });
-
-        let props = Obj.assign({}, this.$props, {
-            items: this.veItems,
-            useRenderCache: this.useRenderCache,
-            renderNode: this.ctor("renderItem"),
-        });
-
-        let events = {
-            dragenter: this.eventEmptyDragenter,
-            dragover: this.eventEmptyDragover,
-            dragleave: this.eventEmptyDragleave,
-            dragdrop: this.eventEmptyDragdrop,
-            drop: this.eventEmptyDragdrop
-        };
-
-        return (
-            this.$render('NVirtualscroller', {
-               ref: 'vscroller', class: 'n-draggable', on: events, props: props
-            }, slots)
-        );
-    }
 
 }

@@ -1,0 +1,82 @@
+@import "../../../root/vars";
+
+/**
+ * Fix flickering by set transition delay
+ */
+
+.n-draglist-item {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    box-sizing: border-box;
+    transition: background 0ms 100ms;
+}
+
+.n-draglist-item.n-highlight {
+    background: rgba($color-warning, 0.1);
+    transition: background 0ms;
+}
+
+.n-draglist-item.n-current {
+    background: rgba($color-primary, 0.1);
+}
+
+.n-draglist-item.n-ghost:after {
+    position: relative;
+}
+
+.n-dragged .n-draglist-item.n-selected {
+    opacity: 0.5;
+}
+
+.n-draglist-item.n-dragover {
+    background: rgba($color-primary, 0.1);
+    transition: background 0ms;
+}
+
+.n-draglist-item.n-nodrop {
+    background: rgba($color-danger, 0.1);
+    transition: background 0ms;
+}
+
+.n-draglist-item__spacer {
+    flex: 0 0 auto;
+}
+
+.n-draglist-item__expand,
+.n-draglist-item__select {
+    flex: 0 0 auto;
+    width: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-draglist-item.n-ghost .n-draglist-item__select {
+    display: none !important;
+}
+
+.n-draglist-item__expand > div,
+.n-draglist-item__select > div {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-draglist-item__expand > div {
+    color: $--color-gray-65;
+}
+
+.n-inverse .n-draglist-item__expand > div {
+    color: $--color-gray-35;
+}
+
+.n-draglist-item:not(.n-expanded) .n-draglist-item__expand > div {
+    transform: rotate(90deg);
+}

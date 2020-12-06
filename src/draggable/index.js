@@ -1,7 +1,13 @@
 import Vue from "vue";
 
-import Draggable from './src/draggable/draggable';
-Vue.component(Draggable.name, Draggable);
+import Draglist from './src/draglist/draglist';
+Vue.component(Draglist.name, Draglist);
 
-import DraggableItem from './src/draggable-item/draggable-item';
-Vue.component(DraggableItem.name, DraggableItem);
+import DraglistItem from './src/draglist-item/draglist-item';
+Vue.component(DraglistItem.name, DraglistItem);
+
+import Draggrid from './src/draggrid/draggrid';
+Vue.component(Draggrid.name, Draggrid);
+
+import DraggridItem from './src/draggrid-item/draggrid-item';
+Vue.component(DraggridItem.name, DraggridItem);
