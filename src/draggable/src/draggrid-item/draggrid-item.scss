@@ -1,0 +1,83 @@
+@import "../../../root/vars";
+
+/**
+ * Fix flickering by set transition delay
+ */
+
+.n-draggrid-item {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    box-sizing: border-box;
+    transition: background 0ms 100ms;
+}
+
+.n-draggrid-item.n-highlight {
+    background: rgba($color-warning, 0.1);
+    transition: background 0ms;
+}
+
+.n-draggrid-item.n-current {
+    background: rgba($color-primary, 0.1);
+}
+
+.n-draggrid-item.n-ghost:after {
+    position: relative;
+}
+
+.n-dragged .n-draggrid-item.n-selected {
+    opacity: 0.5;
+}
+
+.n-draggrid-item.n-dragover {
+    background: rgba($color-primary, 0.1);
+    transition: background 0ms;
+}
+
+.n-draggrid-item.n-nodrop {
+    background: rgba($color-danger, 0.1);
+    transition: background 0ms;
+}
+
+.n-draggrid-item__spacer {
+    flex: 0 0 auto;
+}
+
+.n-draggrid-item__expand,
+.n-draggrid-item__select {
+    flex: 0 0 auto;
+    width: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-draggrid-item.n-ghost .n-draggrid-item__select {
+    display: none !important;
+}
+
+.n-draggrid-item__expand > div,
+.n-draggrid-item__select > div {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-draggrid-item__expand > div {
+    color: $--color-gray-65;
+}
+
+.n-inverse .n-draggrid-item__expand > div {
+    color: $--color-gray-35;
+}
+
+.n-draggrid-item:not(.n-expanded) .n-draggrid-item__expand > div {
+    transform: rotate(90deg);
+}

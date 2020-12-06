@@ -490,6 +490,136 @@
 .n-draglist-item:not(.n-expanded) .n-draglist-item__expand > div {
   transform: rotate(90deg); }
 
+.n-draggrid {
+  position: relative;
+  display: flex;
+  flex-direction: column; }
+
+/**
+ * Empty field
+ */
+.n-draggrid.n-load {
+  position: relative; }
+
+.n-draggrid.n-load:before,
+.n-draggrid.n-load:after {
+  content: '\00a0';
+  position: absolute;
+  display: block; }
+
+.n-draggrid.n-load:before {
+  z-index: 900;
+  top: calc(50% - 20px);
+  left: calc(50% - 20px);
+  width: 40px;
+  height: 40px;
+  border-radius: 500px;
+  border: 2px solid #2877FA;
+  border-bottom-color: transparent;
+  -webkit-animation: LoadingSpinner 1s linear infinite;
+          animation: LoadingSpinner 1s linear infinite; }
+
+.n-draggrid.n-load:after {
+  z-index: 800;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7); }
+
+.n-loader.n-active .n-draggrid.n-load:before,
+.n-loader.n-active .n-draggrid.n-load:after {
+  display: none; }
+
+.n-draggrid .n-draggrid__empty {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.n-draggrid .n-draggrid__empty span {
+  color: #8d9194; }
+
+.n-draggrid.n-dragover > .n-draggrid__empty {
+  background: rgba(40, 119, 250, 0.15); }
+
+.n-draggrid.n-nodrop > .n-draggrid__empty {
+  background: rgba(253, 47, 81, 0.15); }
+
+.n-draggrid .n-scrollbar-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start; }
+
+/**
+ * Fix flickering by set transition delay
+ */
+.n-draggrid-item {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  box-sizing: border-box;
+  transition: background 0ms 100ms; }
+
+.n-draggrid-item.n-highlight {
+  background: rgba(255, 172, 47, 0.1);
+  transition: background 0ms; }
+
+.n-draggrid-item.n-current {
+  background: rgba(40, 119, 250, 0.1); }
+
+.n-draggrid-item.n-ghost:after {
+  position: relative; }
+
+.n-dragged .n-draggrid-item.n-selected {
+  opacity: 0.5; }
+
+.n-draggrid-item.n-dragover {
+  background: rgba(40, 119, 250, 0.1);
+  transition: background 0ms; }
+
+.n-draggrid-item.n-nodrop {
+  background: rgba(253, 47, 81, 0.1);
+  transition: background 0ms; }
+
+.n-draggrid-item__spacer {
+  flex: 0 0 auto; }
+
+.n-draggrid-item__expand,
+.n-draggrid-item__select {
+  flex: 0 0 auto;
+  width: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; }
+
+.n-draggrid-item.n-ghost .n-draggrid-item__select {
+  display: none !important; }
+
+.n-draggrid-item__expand > div,
+.n-draggrid-item__select > div {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; }
+
+.n-draggrid-item__expand > div {
+  color: #6b6f74; }
+
+.n-inverse .n-draggrid-item__expand > div {
+  color: #afb2b4; }
+
+.n-draggrid-item:not(.n-expanded) .n-draggrid-item__expand > div {
+  transform: rotate(90deg); }
+
 .n-loader {
   position: relative; }
 

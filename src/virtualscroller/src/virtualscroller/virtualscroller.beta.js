@@ -188,8 +188,7 @@ export default {
     data()
     {
         let state = {
-            startIndex: 0,
-            endIndex: 0,
+            startIndex: 0, endIndex: 0,
         };
 
         return {

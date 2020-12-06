@@ -233,6 +233,10 @@ export default {
 
             let target = this.NDraggable.getTarget(this);
 
+            if ( Arr.has(this.NDraggable.veKeyBuffer, 91) ) {
+                this.select();
+            }
+
             this.NDraggable.$emit('row-click', target);
         },
 

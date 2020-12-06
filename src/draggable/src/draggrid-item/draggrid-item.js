@@ -1,8 +1,11 @@
 import { UUID, Num, Arr, Obj, Dom, Any, Event } from "nano-js";
+import NDraggableItem from "../draggable-item/draggable-item";
 
 export default {
 
     name: 'NDraggridItem',
+
+    extends: NDraggableItem,
 
     renderNode()
     {
@@ -36,43 +39,6 @@ export default {
         );
     },
 
-    renderSpacer()
-    {
-        if ( ! this[this.NDraggable.depthProp] ) {
-            return null;
-        }
-
-        let style = {
-            width: (this.depth * this.NDraggable.itemOffset) + 'px'
-        };
-
-        return (
-            <div class="n-draggrid-item__spacer" style={style}>
-                { /* SPACER */}
-            </div>
-        );
-    },
-
-    renderExpand()
-    {
-        if ( ! this.NDraggable.renderExpand ) {
-            return null;
-        }
-
-        let childLength = Obj.get(this.veItem,
-            this.NDraggable.childProp, []).length;
-
-        return (
-            <div class="n-draggrid-item__expand">
-                { !! childLength &&
-                    <div ref="expand" on={{ click: this.expand }}>
-                        <i class={ this.icons.angleRight }></i>
-                    </div>
-                }
-            </div>
-        )
-    },
-
     renderSelect()
     {
         if ( ! this.NDraggable.renderSelect ) {
@@ -99,9 +65,11 @@ export default {
     {
         this.$render = $render;
 
-        let style = {
-            height: this.NDraggable.itemHeight + 'px'
-        };
+        let style = {};
+
+        if ( this.NDraggable.itemHeight ) {
+            style.height = this.NDraggable.itemHeight + 'px'
+        }
 
         let isBelowThreshold = this.NDraggable.veItems.length <=
             this.NDraggable.threshold;
@@ -143,9 +111,7 @@ export default {
             classList.push('n-ghost');
 
             return (
-                <div class={classList} style={style}>
-                    { this.ctor('renderSpacer')() }
-                </div>
+                <div class={classList} style={style}></div>
             );
         }
 
@@ -161,10 +127,8 @@ export default {
 
         return (
             <div data-id={id} class={classList} style={style} on={events} draggable={allowDrag}>
-                { this.ctor('renderSpacer')() }
-                { this.ctor('renderExpand')() }
-                { this.ctor('renderSelect')() }
                 { this.ctor('renderNode')() }
+                { this.ctor('renderSelect')() }
             </div>
         );
     }

@@ -12,14 +12,14 @@ export default {
         safeZone: {
             default()
             {
-                return (height) => height * 0.51;
+                return (height) => -2;
             }
         },
 
         itemHeight: {
             default()
             {
-                return 34;
+                return 120;
             },
             type: [Number]
         },
@@ -34,7 +34,7 @@ export default {
         scrollTopOnChange: {
             default()
             {
-                return true;
+                return false;
             }
         },
 
@@ -45,30 +45,6 @@ export default {
             },
             type: [Boolean]
         },
-
-        bufferItems: {
-            default()
-            {
-                return 10;
-            },
-            type: [Number]
-        },
-
-        threshold: {
-            default()
-            {
-                return 100;
-            },
-            type: [Number]
-        },
-
-        useRenderCache: {
-            default()
-            {
-                return true;
-            },
-            type: [Boolean]
-        }
 
     },
 
@@ -92,8 +68,15 @@ export default {
         };
 
         return (
-            this.$render('NDraglistItem', data, [this.$scopedSlots.default])
+            this.$render('NDraggridItem', data, [this.$scopedSlots.default])
         );
+    },
+
+    renderItems()
+    {
+        return Arr.each(this.veItems, (value) => {
+            return this.ctor('renderItem')({ value });
+        });
     },
 
     render($render)
@@ -101,7 +84,13 @@ export default {
         this.$render = $render;
 
         if ( ! this.$slots.empty ) {
-            this.$slots.empty = [this.ctor('renderEmpty')()];
+            this.$slots.default = [this.ctor('renderEmpty')()];
+        }
+
+        this.$slots.default = this.$slots.empty;
+
+        if ( this.veItems.length ) {
+            this.$slots.default = [this.ctor('renderItems')()];
         }
 
         let slots = Arr.each(this.$slots, (slot, name) => {
@@ -123,9 +112,13 @@ export default {
         };
 
         return (
-            this.$render('NVirtualscroller', {
-               ref: 'vscroller', class: 'n-draggrid', on: events, props: props
-            }, slots)
+            <div class="n-draggrid">
+            {
+                this.$render('NScrollbar', {
+                    ref: 'viewport', class: '', on: events, props: props
+                 }, slots)
+            }
+            </div>
         );
     }
 

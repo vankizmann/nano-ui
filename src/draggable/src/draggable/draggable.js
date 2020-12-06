@@ -323,9 +323,10 @@ export default {
             veLoad: true,
             veCopy: [],
             veItems: [],
+            veKeyBuffer: [],
             veCurrent: this.current,
             veSelected: this.selected,
-            veExpanded: this.expanded,
+            veExpanded: this.expanded
         };
     },
 
@@ -1455,6 +1456,8 @@ export default {
 
         eventKeydown(event)
         {
+            Arr.add(this.veKeyBuffer, event.which);
+
             if ( ! this.veInview ) {
                 return;
             }
@@ -1492,6 +1495,11 @@ export default {
 
                 this.currentNext();
             }
+        },
+
+        eventKeyup(event)
+        {
+            Arr.remove(this.veKeyBuffer, event.which);
         }
 
     },
@@ -1555,6 +1563,7 @@ export default {
 
         Dom.find(document).on('mousemove', this.eventMousemove, ident);
         Dom.find(document).on('keydown', this.eventKeydown, ident);
+        Dom.find(document).on('keyup', this.eventKeyup, ident);
     },
 
     beforeDestroy()
