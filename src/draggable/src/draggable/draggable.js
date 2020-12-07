@@ -56,7 +56,7 @@ export default {
         allowGroups: {
             default()
             {
-                return ['default'];
+                return this.group;
             },
             type: [Array]
         },
