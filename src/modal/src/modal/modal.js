@@ -8,6 +8,14 @@ export default {
         prop: 'visible'
     },
 
+    inject: {
+
+        NScrollbar: {
+            default: undefined
+        }
+
+    },
+
     props: {
 
         visible: {

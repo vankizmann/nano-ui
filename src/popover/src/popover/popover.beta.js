@@ -501,8 +501,8 @@ export default {
 
         this.parent = null;
 
-        if ( this.NModal && ! this.parent ) {
-            this.parent = document.body;
+        if ( this.NModal.NScrollbar && this.NScrollbar === this.NModal.NScrollbar ) {
+            delete this.NScrollbar;
         }
 
         if ( this.NScrollbar && ! this.parent ) {
