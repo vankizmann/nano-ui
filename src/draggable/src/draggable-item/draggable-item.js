@@ -125,7 +125,8 @@ export default {
                 let target = this.NDraggable.getTarget(this);
 
                 let allowDropRainbow = Arr.each(this.NDraggable.veCached, (source) => {
-                    return !! this.NDraggable.allowDrop(source, target, finalStrategy);
+                    return ! Any.isFunction(this.NDraggable.allowDrop) ? this.NDraggable.allowDrop :
+                        !! this.NDraggable.allowDrop(source, target, finalStrategy);
                 });
 
                 allowDrop &= ! Arr.has(allowDropRainbow, false);

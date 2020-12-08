@@ -1441,7 +1441,7 @@ export default {
 
             let allowDropRainbow = Arr.each(this.veCached, (item) => {
                 return ! Any.isFunction(this.allowDrop) ? this.allowDrop :
-                    this.allowDrop(item, null, 'root');
+                    !! this.allowDrop(item, null, 'root');
             });
 
             if ( Arr.has(allowDropRainbow, false) ) {
