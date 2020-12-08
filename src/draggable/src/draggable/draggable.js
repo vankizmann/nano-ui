@@ -760,7 +760,7 @@ export default {
             this.removeDragIndicator();
         },
 
-        cacheItems(items, group = 'default')
+        cacheItems(items, group = ['default'])
         {
             if ( Arr.intersect(group, this.allowGroups).length ) {
                 this.veCached = Arr.each(items, (item) => Obj.clone(item));
@@ -1436,6 +1436,15 @@ export default {
             event.preventDefault();
 
             if ( Dom.find(event.target).closest('[data-id]') ) {
+                return;
+            }
+
+            let allowDropRainbow = Arr.each(this.veCached, (item) => {
+                return ! Any.isFunction(this.allowDrop) ? this.allowDrop :
+                    this.allowDrop(item, null, 'root');
+            });
+
+            if ( Arr.has(allowDropRainbow, false) ) {
                 return;
             }
 
