@@ -345,8 +345,11 @@ export default {
                 [this.uniqueProp]: unique
             });
 
-            return Obj.get(this.veCopy, item[this.pathProp]
+            console.log(item[this.pathProp]
                 .replace(/\..*?$/, ''));
+
+            return Obj.get(this, item[this.pathProp]
+                .replace(/(^veCopy|\..*?$)/, ''));
         },
 
         scrollTo(y = 0)
