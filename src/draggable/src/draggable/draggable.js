@@ -346,10 +346,10 @@ export default {
             });
 
             console.log(item[this.pathProp]
-                .replace(/\..*?$/, ''));
+                .replace(/\.[^\.]$/, ''));
 
             return Obj.get(this, item[this.pathProp]
-                .replace(/(^veCopy|\..*?$)/, ''));
+                .replace(/(^veCopy|\.[^\.]$)/, ''));
         },
 
         scrollTo(y = 0)
