@@ -339,17 +339,24 @@ export default {
 
     methods: {
 
-        getParentById(unique)
+        getParentById(unique, fallback = null)
         {
             let item = Arr.find(this.veItems, {
                 [this.uniqueProp]: unique
             });
 
-            console.log(item[this.pathProp]
-                .replace(/\.[^\.]$/, ''));
+            if ( Any.isEmpty(item) ) {
+                return fallback;
+            }
 
-            return Obj.get(this, item[this.pathProp]
-                .replace(/(^veCopy|\.[^\.]$)/, ''));
+            let key = item[this.pathProp]
+            .replace(/(^veCopy$|\.[^\.]+$)/, '');
+
+            if ( Any.isEmpty(key) ) {
+                return fallback;
+            }
+            
+            return Obj.get(this, key, fallback);
         },
 
         scrollTo(y = 0)

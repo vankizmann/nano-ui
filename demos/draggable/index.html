@@ -28,7 +28,7 @@
         <n-form-item label="List">
             <div style="display: block; border: 2px solid #000;">
                 <div>
-                    <n-draglist style="height: 500px; overflow: hidden;" :items="form.value" :viewport-height="true" :render-expand="true" :render-select="true" :threshold="800">
+                    <n-draglist ref="drag" style="height: 500px; overflow: hidden;" :items="form.value" :viewport-height="true" :render-expand="true" :render-select="true" :expanded="['value-1']" :threshold="800">
                         <div slot-scope="props" style="line-height: 32px;">
                             {{ props.value.label }}
                         </div>
@@ -110,6 +110,10 @@
                     };
 
                     return { form: form, inverse: false };
+                },
+
+                mounted: function() {
+                    console.log(this.$refs.drag.getParentById('value-20'));
                 }
             };
 
