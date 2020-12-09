@@ -339,6 +339,16 @@ export default {
 
     methods: {
 
+        getParentById(unique)
+        {
+            let item = Arr.find(this.veItems, {
+                [this.uniqueProp]: unique
+            });
+
+            return Obj.get(this.veCopy, item[this.pathProp]
+                .replace(/\..*?$/, ''));
+        },
+
         scrollTo(y = 0)
         {
             this.$refs.vscroller.scrollTop(y);
