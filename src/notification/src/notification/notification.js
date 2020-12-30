@@ -98,7 +98,7 @@ export default class Notify {
 
     static alias = 'Notify';
 
-    static position = 'bottom-start';
+    static position = scope.NanoStyles.notifyPosition;
 
     static notifications = {};
 
