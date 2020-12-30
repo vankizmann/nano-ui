@@ -9,6 +9,10 @@ $notification-icon-size: 15px !default;
     flex-direction: column;
 }
 
+.n-notification__wrapper:hover {
+    display: none;
+}
+
 .n-notification__wrapper.n-notification__wrapper--top-start {
     top: 0;
     left: 0;
@@ -50,8 +54,8 @@ $notification-icon-size: 15px !default;
 .n-notification {
     display: flex;
     align-items: center;
-    width: 100%;
-    max-width: 360px;
+    width: calc(100% - 20px);
+    max-width: 380px;
     padding: 15px;
     margin: 10px;
     background: $--color-white;
