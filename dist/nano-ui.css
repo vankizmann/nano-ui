@@ -496,7 +496,7 @@
 
 .n-draggrid__inner {
   display: flex;
-  flex-direction: row; }
+  flex-direction: column; }
 
 /**
  * Empty field
