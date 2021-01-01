@@ -85,7 +85,6 @@ export default {
 
         if ( ! this.$slots.empty ) {
             this.$slots.default = [this.ctor('renderEmpty')()];
-            console.log('empty');
         }
 
         this.$slots.default = this.$slots.empty;
@@ -97,6 +96,7 @@ export default {
         let slots = Arr.each(this.$slots, (slot, name) => {
             return this.$render('template', { slot: name }, slot);
         });
+        console.log(slots);
 
         let props = Obj.assign({}, this.$props, {
             items: this.veItems,
