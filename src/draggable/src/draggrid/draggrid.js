@@ -54,6 +54,8 @@ export default {
             return null;
         }
 
+        console.log('renderEmpty')
+
         return (
             <div class="n-draggrid__empty">
                  <span>{ this.$slots.empty || this.trans('No entries') }</span>
@@ -93,10 +95,11 @@ export default {
             this.$slots.default = [this.ctor('renderItems')()];
         }
 
+        console.log(this.veItems.length);
+
         let slots = Arr.each(this.$slots, (slot, name) => {
             return this.$render('template', { slot: name }, slot);
         });
-        console.log(slots);
 
         let props = Obj.assign({}, this.$props, {
             items: this.veItems,
