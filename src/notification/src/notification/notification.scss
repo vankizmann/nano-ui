@@ -4,15 +4,10 @@ $notification-size: 14px !default;
 $notification-icon-size: 15px !default;
 
 .n-notification__wrapper {
-    pointer-events: none;
     position: fixed;
     display: flex;
     flex-direction: column;
     transition: opacity 0.15s;
-}
-
-.n-notification__wrapper:hover {
-    opacity: 0;
 }
 
 .n-notification__wrapper.n-notification__wrapper--top-start {

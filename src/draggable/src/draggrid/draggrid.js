@@ -85,6 +85,7 @@ export default {
 
         if ( ! this.$slots.empty ) {
             this.$slots.default = [this.ctor('renderEmpty')()];
+            console.log('empty');
         }
 
         this.$slots.default = this.$slots.empty;
