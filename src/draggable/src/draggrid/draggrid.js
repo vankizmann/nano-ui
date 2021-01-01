@@ -74,9 +74,20 @@ export default {
 
     renderItems()
     {
-        return Arr.each(this.veItems, (value) => {
+        let events = {
+            dragenter: this.eventEmptyDragenter,
+            dragover: this.eventEmptyDragover,
+            dragleave: this.eventEmptyDragleave,
+            dragdrop: this.eventEmptyDragdrop,
+            drop: this.eventEmptyDragdrop
+        };
+
+        let renderItems = Arr.each(this.veItems, (value) => {
             return this.ctor('renderItem')({ value });
         });
+
+        return this.$render('NScrollbar', {ref: 'viewport', on: events }, 
+            [renderItems]);
     },
 
     render($render)
@@ -93,25 +104,9 @@ export default {
             this.$slots.default = [this.ctor('renderItems')()];
         }
 
-        let slots = Arr.each(this.$slots, (slot, name) => {
-            return this.$render('template', { slot: name }, slot);
-        });
-
-        let events = {
-            dragenter: this.eventEmptyDragenter,
-            dragover: this.eventEmptyDragover,
-            dragleave: this.eventEmptyDragleave,
-            dragdrop: this.eventEmptyDragdrop,
-            drop: this.eventEmptyDragdrop
-        };
-
         return (
             <div class="n-draggrid">
-            { 
-                this.$render('NScrollbar', { 
-                    ref: 'viewport', class: 'n-draggrid__inner', on: events 
-                }, slots)
-            }
+                { this.$slots.default }
             </div>
         );
     }
