@@ -105,9 +105,7 @@ export default {
         }
 
         return (
-            <div class="n-draggrid">
-                { this.$slots.default }
-            </div>
+            <div class="n-draggrid">{ this.$slots.default }</div>
         );
     }
 
