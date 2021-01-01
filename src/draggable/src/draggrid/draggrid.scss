@@ -15,6 +15,8 @@ $draglist-loader-size: 40px !default;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 /**
@@ -59,10 +61,8 @@ $draglist-loader-size: 40px !default;
 }
 
 .n-draggrid .n-draggrid__empty {
-    flex: 1 1 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    flex: 0 0 auto;
+    margin: auto;
 }
 
 .n-draggrid .n-draggrid__empty span {

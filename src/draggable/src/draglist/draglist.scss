@@ -51,14 +51,9 @@ $draglist-loader-size: 40px !default;
     display: none;
 }
 
-.n-draglist.n-load.n-draglist.n-load--default:before {
-}
-
 .n-draglist .n-draglist__empty {
-    flex: 1 1 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    flex: 0 0 auto;
+    margin: auto;
 }
 
 .n-draglist .n-draglist__empty span {
