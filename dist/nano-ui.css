@@ -492,9 +492,11 @@
   transform: rotate(90deg); }
 
 .n-draggrid {
-  position: relative;
+  position: relative; }
+
+.n-draggrid__inner {
   display: flex;
-  flex-direction: column; }
+  flex-direction: row; }
 
 /**
  * Empty field

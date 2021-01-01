@@ -6,8 +6,11 @@ $draglist-loader-size: 40px !default;
 
 .n-draggrid {
     position: relative;
+}
+
+.n-draggrid__inner {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 /**

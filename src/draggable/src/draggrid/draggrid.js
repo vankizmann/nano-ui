@@ -54,8 +54,6 @@ export default {
             return null;
         }
 
-        console.log('renderEmpty')
-
         return (
             <div class="n-draggrid__empty">
                  <span>{ this.$slots.empty || this.trans('No entries') }</span>
@@ -86,7 +84,7 @@ export default {
         this.$render = $render;
 
         if ( ! this.$slots.empty ) {
-            this.$slots.default = [this.ctor('renderEmpty')()];
+            this.$slots.empty = [this.ctor('renderEmpty')()];
         }
 
         this.$slots.default = this.$slots.empty;
@@ -95,16 +93,8 @@ export default {
             this.$slots.default = [this.ctor('renderItems')()];
         }
 
-        console.log(this.veItems.length);
-
         let slots = Arr.each(this.$slots, (slot, name) => {
             return this.$render('template', { slot: name }, slot);
-        });
-
-        let props = Obj.assign({}, this.$props, {
-            items: this.veItems,
-            useRenderCache: this.useRenderCache,
-            renderNode: this.ctor('renderItem'),
         });
 
         let events = {
@@ -117,10 +107,10 @@ export default {
 
         return (
             <div class="n-draggrid">
-            {
-                this.$render('NScrollbar', {
-                    ref: 'viewport', class: '', on: events, props: props
-                 }, slots)
+            { 
+                this.$render('NScrollbar', { 
+                    ref: 'viewport', class: 'n-draggrid_inner', on: events 
+                }, slots)
             }
             </div>
         );

@@ -142,6 +142,7 @@ export default {
 
     render()
     {
+        console.log(this);
         return (
             <div ref="body" on={this.$listeners}>
                 { this.$slots.default }
