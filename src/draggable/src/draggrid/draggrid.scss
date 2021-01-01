@@ -6,11 +6,15 @@ $draglist-loader-size: 40px !default;
 
 .n-draggrid {
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
+
 
 .n-draggrid__inner {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 /**
@@ -71,12 +75,4 @@ $draglist-loader-size: 40px !default;
 
 .n-draggrid.n-nodrop > .n-draggrid__empty {
     background: rgba($color-danger, 0.15);
-}
-
-.n-draggrid .n-scrollbar-content {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
 }

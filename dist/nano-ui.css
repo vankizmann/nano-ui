@@ -492,11 +492,14 @@
   transform: rotate(90deg); }
 
 .n-draggrid {
-  position: relative; }
+  position: relative;
+  display: flex;
+  flex-direction: column; }
 
 .n-draggrid__inner {
   display: flex;
-  flex-direction: column; }
+  flex-direction: row;
+  flex-wrap: wrap; }
 
 /**
  * Empty field
@@ -548,13 +551,6 @@
 
 .n-draggrid.n-nodrop > .n-draggrid__empty {
   background: rgba(253, 47, 81, 0.15); }
-
-.n-draggrid .n-scrollbar-content {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start; }
 
 /**
  * Fix flickering by set transition delay
