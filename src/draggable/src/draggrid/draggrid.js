@@ -109,7 +109,7 @@ export default {
             <div class="n-draggrid">
             { 
                 this.$render('NScrollbar', { 
-                    ref: 'viewport', class: 'n-draggrid_inner', on: events 
+                    ref: 'viewport', class: 'n-draggrid__inner', on: events 
                 }, slots)
             }
             </div>
