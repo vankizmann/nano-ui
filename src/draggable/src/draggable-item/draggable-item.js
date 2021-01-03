@@ -149,9 +149,9 @@ export default {
 
         eventDragstart(event)
         {
-            if ( this.eventDragstartSelect() ) {
-                this.NDraggable.$emit('dragstart', event, this);
-            }
+            this.eventDragstartSelect();
+            
+            this.NDraggable.$emit('dragstart', event, this);
         },
 
         eventDragenter(event)
