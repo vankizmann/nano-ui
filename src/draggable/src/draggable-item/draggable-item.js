@@ -149,9 +149,9 @@ export default {
 
         eventDragstart(event)
         {
-            this.eventDragstartSelect();
-
-            this.NDraggable.$emit('dragstart', event, this);
+            if ( this.eventDragstartSelect() ) {
+                this.NDraggable.$emit('dragstart', event, this);
+            }
         },
 
         eventDragenter(event)
@@ -266,7 +266,11 @@ export default {
             allowSelect = allowSelect && (Any.isFunction(this.NDraggable.allowSelect) ?
                 this.NDraggable.allowSelect(this) : this.NDraggable.allowSelect);
             
-            allowSelect ? this.NDraggable.selectItem(this) : null;
+            if ( allowSelect ) {
+                this.NDraggable.selectItem(this);
+            }
+
+            return allowSelect;
         },
 
         eventDragstartSelect()
@@ -276,7 +280,11 @@ export default {
             allowSelect = allowSelect && (Any.isFunction(this.NDraggable.allowSelect) ?
                 this.NDraggable.allowSelect(this) : this.NDraggable.allowSelect);
             
-            allowSelect ? this.NDraggable.selectItem(this, ! this.NDraggable.isSelected(this)) : null;
+            if ( allowSelect ) {
+                this.NDraggable.selectItem(this, ! this.NDraggable.isSelected(this));
+            }
+
+            return allowSelect;
         }
 
     },
