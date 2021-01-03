@@ -158,8 +158,8 @@ export default {
             this.NDraggable.allowSelect(this) : this.NDraggable.allowSelect);
 
         // Is selectable and can be dragged
-        allowDrag = allowDrag && Any.isFunction(this.NDraggable.allowDrag) ?
-            this.NDraggable.allowDrag(this) : this.NDraggable.allowDrag;
+        allowDrag = allowDrag && (Any.isFunction(this.NDraggable.allowDrag) ?
+            this.NDraggable.allowDrag(this) : this.NDraggable.allowDrag);
 
         // Get unique prop
         let id = this.value[this.NDraggable.uniqueProp];
