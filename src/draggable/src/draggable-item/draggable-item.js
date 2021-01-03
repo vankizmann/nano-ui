@@ -149,8 +149,7 @@ export default {
 
         eventDragstart(event)
         {
-            this.NDraggable.selectItem(this,
-                ! this.NDraggable.isSelected(this));
+            this.eventDragstartSelect();
 
             this.NDraggable.$emit('dragstart', event, this);
         },
@@ -235,7 +234,7 @@ export default {
             let target = this.NDraggable.getTarget(this);
 
             if ( this.NDraggable.renderSelect && Arr.has(this.NDraggable.veKeyBuffer, 91) ) {
-                this.select();
+                this.eventClickSelect();
             }
 
             this.NDraggable.$emit('row-click', target);
@@ -259,6 +258,26 @@ export default {
 
             this.NDraggable.$emit('row-dblclick', target);
         },
+
+        eventClickSelect()
+        {
+            let allowSelect = this.NDraggable.canSelect(this);
+
+            allowSelect = allowSelect && (Any.isFunction(this.NDraggable.allowSelect) ?
+                this.NDraggable.allowSelect(this) : this.NDraggable.allowSelect);
+            
+            allowSelect ? this.NDraggable.selectItem(this) : null;
+        },
+
+        eventDragstartSelect()
+        {
+            let allowSelect = this.NDraggable.canSelect(this);
+
+            allowSelect = allowSelect && (Any.isFunction(this.NDraggable.allowSelect) ?
+                this.NDraggable.allowSelect(this) : this.NDraggable.allowSelect);
+            
+            allowSelect ? this.NDraggable.selectItem(this, ! this.NDraggable.isSelected(this)) : null;
+        }
 
     },
 
