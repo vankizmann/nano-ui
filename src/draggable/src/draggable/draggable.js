@@ -17,6 +17,13 @@ export default {
             }
         },
 
+        handle: {
+            default()
+            {
+                return null;
+            }
+        },
+
         renderNode: {
             default()
             {
@@ -265,6 +272,14 @@ export default {
                 return 100;
             },
             type: [Number]
+        },
+
+        keyEvents: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
         },
 
         keyDebounce: {
@@ -1499,6 +1514,10 @@ export default {
             if ( event.which === 32 ) {
                 event.preventDefault();
                 this.currentCollapse();
+            }
+
+            if ( ! this.keyEvents ) {
+                return;
             }
 
             if ( event.which === 38 || event.which === 37 ) {

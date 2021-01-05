@@ -297,7 +297,26 @@ export default {
 
     mounted()
     {
+        let nodeHandle = Dom.find(this.$el);
+
+        if ( this.NDraggable.handle ) {
+            nodeHandle.find(this.NDraggable.handle);
+        }
+
+        nodeHandle.on('dragstart', this.eventDragstart, this._uid);
+
         Any.delay(() => this.veInit = true, 25);
+    },
+
+    beforeDestroy()
+    {
+        let nodeHandle = Dom.find(this.$el);
+
+        if ( this.NDraggable.handle ) {
+            nodeHandle.find(this.NDraggable.handle);
+        }
+
+        nodeHandle.off('dragstart', null, this._uid);
     }
 
 }

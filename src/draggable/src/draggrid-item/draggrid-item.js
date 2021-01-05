@@ -82,7 +82,6 @@ export default {
         let events = {
             click: this.eventClick,
             dblclick: this.eventDblclick,
-            dragstart: this.eventDragstart,
             dragenter: this.eventDragenter,
             dragover: this.eventDragover,
             dragleave: this.eventDragleave,
