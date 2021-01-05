@@ -155,7 +155,7 @@ export default {
         }
 
 
-        let allowDrag = ! this.handle;
+        let allowDrag = ! this.NDraggable.handle;
         
         // Is selectable
         allowDrag = allowDrag && (Any.isFunction(this.NDraggable.allowSelect) ?
