@@ -13,7 +13,8 @@ export default {
             index: this[this.NDraggable.indexProp],
             value: this.veItem,
             remove: this.remove,
-            copy: this.copy
+            copy: this.copy,
+            export: this.export,
         };
 
         let renderNode = null;

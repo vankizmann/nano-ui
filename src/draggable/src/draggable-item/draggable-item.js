@@ -50,6 +50,11 @@ export default {
     },
 
     methods: {
+
+        export(event)
+        {
+            this.NDraggable.exportItems();
+        },
         
         expand(event)
         {
