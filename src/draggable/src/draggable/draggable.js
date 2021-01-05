@@ -1503,7 +1503,7 @@ export default {
         {
             Arr.add(this.veKeyBuffer, event.which);
 
-            if ( ! this.veInview ) {
+            if ( ! this.veInview || ! this.keyEvents ) {
                 return;
             }
 
@@ -1515,10 +1515,6 @@ export default {
             if ( event.which === 32 ) {
                 event.preventDefault();
                 this.currentCollapse();
-            }
-
-            if ( ! this.keyEvents ) {
-                return;
             }
 
             if ( event.which === 38 || event.which === 37 ) {
