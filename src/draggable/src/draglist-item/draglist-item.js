@@ -154,10 +154,14 @@ export default {
             );
         }
 
-        let allowDrag = (Any.isFunction(this.NDraggable.allowSelect) ?
+
+        let allowDrag = ! this.handle;
+        
+        // Is selectable
+        allowDrag = allowDrag && (Any.isFunction(this.NDraggable.allowSelect) ?
             this.NDraggable.allowSelect(this) : this.NDraggable.allowSelect);
 
-        // Is selectable and can be dragged
+        // Is draggable
         allowDrag = allowDrag && (Any.isFunction(this.NDraggable.allowDrag) ?
             this.NDraggable.allowDrag(this) : this.NDraggable.allowDrag);
 

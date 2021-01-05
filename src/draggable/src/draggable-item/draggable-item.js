@@ -300,7 +300,7 @@ export default {
         let nodeHandle = Dom.find(this.$el);
 
         if ( this.NDraggable.handle ) {
-            nodeHandle.find(this.NDraggable.handle);
+            nodeHandle.find('[draggable="true"]');
         }
 
         nodeHandle.on('dragstart', this.eventDragstart, this._uid);
@@ -313,7 +313,7 @@ export default {
         let nodeHandle = Dom.find(this.$el);
 
         if ( this.NDraggable.handle ) {
-            nodeHandle.find(this.NDraggable.handle);
+            nodeHandle.find('[draggable="true"]');
         }
 
         nodeHandle.off('dragstart', null, this._uid);

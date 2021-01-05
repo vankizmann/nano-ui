@@ -20,8 +20,9 @@ export default {
         handle: {
             default()
             {
-                return null;
-            }
+                return false;
+            },
+            type: [Boolean]
         },
 
         renderNode: {
