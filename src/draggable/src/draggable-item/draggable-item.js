@@ -51,27 +51,28 @@ export default {
 
     methods: {
 
-        export(event)
+        export()
         {
-            this.NDraggable.exportItems();
+            Obj.set(this.NDraggable, this[this.NDraggable.pathProp] +
+                '.' + this[this.NDraggable.indexProp], this.veItem);
         },
         
-        expand(event)
+        expand()
         {
             this.NDraggable.expandItem(this);
         },
 
-        select(event)
+        select()
         {
             this.NDraggable.toggleItem(this);
         },
 
-        remove(event)
+        remove()
         {
             this.NDraggable.removeItem(this);
         },
 
-        copy(event)
+        copy()
         {
             this.NDraggable.copyItem(this);
         },
