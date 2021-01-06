@@ -1,0 +1,186 @@
+@import "../../../root/vars";
+
+$select-size: 13px !default;
+$select-height: 32px !default;
+
+$select-item-padding: 3px 6px !default;
+$select-empty-padding: 6px 12px !default;
+
+.n-select__wrapper {
+    position: relative;
+    display: inline-flex;
+    width: 100%;
+}
+
+.n-select {
+    flex: 1 1 auto;
+    min-width: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: $--color-white;
+    color: $--color-black;
+    border: 1px solid $--color-gray-15;
+    border-radius: $radius-small;
+    transition: 0.15s border;
+}
+
+.n-select:hover,
+.n-select.n-open {
+    border: 1px solid $--color-primary;
+}
+
+.n-select.n-select--default {
+    font-size: $select-size;
+    padding: 0 $select-height * 0.3;
+    min-height: $select-height;
+}
+
+.n-select.n-select--small {
+    font-size: $select-size * 0.875;
+    padding: 0 $select-height * 0.3 * 0.875;
+    min-height: $select-height * 0.875;
+}
+
+.n-select.n-select--large {
+    font-size: $select-size * 1.125;
+    padding: 0 $select-height * 0.3 * 1.125;
+    min-height: $select-height * 1.125;
+}
+
+.n-disabled .n-select,
+.n-disabled .n-select:hover {
+    cursor: not-allowed;
+    background: $--color-gray-05;
+    border-color: $--color-gray-15;
+}
+
+.n-select__label {
+    position: relative;
+    overflow: hidden;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.n-select.n-select--multiple .n-select__label {
+    flex-wrap: wrap;
+}
+
+.n-select__input {
+    cursor: pointer;
+    z-index: 10;
+    position: relative;
+    flex: 1 1 auto;
+    width: 0;
+    border: 0;
+    background: transparent;
+    color: $--color-black;
+}
+
+.n-select.n-select--disabled .n-select__input {
+    cursor: not-allowed;
+}
+
+.n-select.n-select--default .n-select__input {
+    height: $select-height - 6;
+    line-height: $select-height - 6;
+}
+
+.n-select.n-select--small .n-select__input {
+    height: ($select-height * 0.875) - 6;
+    line-height: ($select-height * 0.875) - 6;
+}
+
+.n-select.n-select--large .n-select__input {
+    height: ($select-height * 1.125) - 6;
+    line-height: ($select-height * 1.125) - 6;
+}
+
+.n-select__items {
+     max-height: 210px;
+ }
+
+.n-select__item {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.n-select:not(.n-select--multiple) .n-select__item {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.n-select.n-select--multiple .n-select__item {
+    color: $--color-white;
+    background: $--color-primary;
+    padding: $select-item-padding;
+    border-radius: $radius-small;
+}
+
+.n-select.n-select--default.n-select--multiple .n-select__item {
+    font-size: $select-size * 0.825;
+    margin: 3px 6px 3px 0;
+}
+
+.n-select.n-select--small.n-select--multiple .n-select__item {
+    font-size: $select-size * 0.825 * 0.875;
+    margin: 2px 5px 2px 0;
+}
+
+.n-select.n-select--large.n-select--multiple .n-select__item {
+    font-size: $select-size * 0.825 * 1.125;
+    margin: 4px 7px 4px 0;
+}
+
+.n-select__item i {
+    opacity: 0.8;
+    margin-left: 4px;
+}
+
+.n-select__clear {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: $select-height * 0.5;
+    height: $select-height * 0.5;
+    color: $--color-gray-50;
+    font-size: $select-size * 0.665;
+    background: $--color-gray-10;
+    border-radius: 500px;
+    transition: color 0.3s, background 0.3s;
+    margin: 0 8px 0 0;
+}
+
+.n-select__clear:hover {
+    color: $--color-gray-80;
+    background: $--color-gray-15;
+}
+
+.n-select__angle {
+    padding-left: 6px;
+    margin-left: auto;
+    color: $--color-gray-40;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.n-select.n-open .n-select__angle {
+    transform: rotateX(180deg);
+}
+
+.n-select__empty {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: $select-empty-padding;
+    text-align: center;
+    color: $--color-gray-60;
+}

@@ -1,14 +1,6 @@
+import Vue from "vue";
 import CtorMixin from "./mixins/src/ctor";
-
-let scope = {};
-
-if (typeof global !== 'undefined') {
-    scope = global;
-}
-
-if (typeof window !== 'undefined') {
-    scope = window;
-}
+import CmerMixin from "./mixins/src/cmer";
 
 let NanoIcons = {
     checked: 'fa fa-check',
@@ -32,66 +24,65 @@ let NanoStyles = {
     notifyPosition: 'bottom-start'
 };
 
-export function Install(Vue, Icons = {}, Styles = {})
+export function NanoInstall(App, Icons = {}, Styles = {})
 {
-    if ( scope.Nano === undefined ) {
-        return console.error('Nano JS is not available in window scope.');
+    if ( global.Nano === undefined ) {
+        return console.error('Nano JS is not available in scope.');
     }
 
-    scope.Nano.install(Vue);
+    global.Nano.install(App.config.globalProperties);
 
-    Vue.prototype.ctor = CtorMixin.ctor;
+    App.config.globalProperties.ctor = CtorMixin.ctor;
+    App.config.globalProperties.cmer = CmerMixin.cmer;
 
-    Vue.prototype.trans = scope.Nano.Locale.trans;
-    Vue.prototype.choice = scope.Nano.Locale.choice;
+    App.config.globalProperties.trans = global.Nano.Locale.trans;
+    App.config.globalProperties.choice = global.Nano.Locale.choice;
 
-    if ( ! scope.NanoIcons ) {
-        scope.NanoIcons = Nano.Obj.assign(NanoIcons, scope.NanoIcons);
+    if ( ! global.NanoIcons ) {
+        global.NanoIcons = Nano.Obj.assign(NanoIcons, global.NanoIcons);
     }
 
-    Vue.prototype.icons = Vue.Obj.assign(scope.NanoIcons, Icons);
+    App.config.globalProperties.icons = Nano.Obj.assign(global.NanoIcons, Icons);
 
-    if ( ! scope.NanoStyles ) {
-        scope.NanoStyles = Nano.Obj.assign(NanoStyles, scope.NanoStyles);
+    if ( ! global.NanoStyles ) {
+        global.NanoStyles = Nano.Obj.assign(NanoStyles, global.NanoStyles);
     }
 
-    Vue.prototype.styles = Vue.Obj.assign(scope.NanoStyles, Styles);
+    App.config.globalProperties.styles = Nano.Obj.assign(global.NanoStyles, Styles);
 
-    require('./config/index');
-    require('./chart/index');
-    require('./notification/index');
-    require('./scrollbar/index');
-    require('./resizer/index');
-    require('./virtualscroller/index');
-    require('./draggable/index');
-    require('./loader/index');
-    require('./form/index');
-    require('./button/index');
-    require('./input/index');
-    require('./textarea/index');
-    require('./switch/index');
-    require('./checkbox/index');
-    require('./radio/index');
-    require('./select/index');
-    require('./cascader/index');
-    require('./datepicker/index');
-    require('./timepicker/index');
-    require('./transfer/index');
-    require('./file/index');
-    require('./popover/index');
-    require('./modal/index');
-    require('./confirm/index');
-    require('./table/index');
-    require('./paginator/index');
-    require('./tabs/index');
-    require('./info/index');
-    require('./file-list/index');
-    require('./map/index');
+    //require('./config/index');
+    // require('./chart/index');
+    // require('./notification/index');
+    // require('./scrollbar/index');
+    // require('./resizer/index');
+    // require('./virtualscroller/index');
+    // require('./draggable/index');
+    // require('./loader/index');
+    // require('./form/index');
+    require('./button/index').default(App);
+    require('./input/index').default(App);
+    // require('./textarea/index');
+    // require('./switch/index');
+    // require('./checkbox/index');
+    // require('./radio/index');
+    // require('./select/index');
+    // require('./cascader/index');
+    // require('./datepicker/index');
+    // require('./timepicker/index');
+    // require('./transfer/index');
+    // require('./file/index');
+    // require('./popover/index');
+    // require('./modal/index');
+    // require('./confirm/index');
+    // require('./table/index');
+    // require('./paginator/index');
+    // require('./tabs/index');
+    // require('./info/index');
+    // require('./file-list/index');
+    // require('./map/index');
     // require('./wysiwyg/index');
 }
 
-if ( scope.Vue !== undefined ) {
-    Install(scope.Vue);
-}
+global.NanoInstall = NanoInstall;
 
-export default Install;
+export default NanoInstall;

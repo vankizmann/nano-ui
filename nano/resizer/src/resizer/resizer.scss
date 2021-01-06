@@ -1,0 +1,41 @@
+@import "../../../root/vars";
+
+.n-resize,
+.n-resize * {
+    user-select: none !important;
+    cursor: col-resize !important;
+}
+
+.n-resizer {
+    cursor: col-resize;
+    position: absolute;
+    width: 5px;
+    height: 100%;
+    background: rgba($color-gray-50, 0.5);
+    opacity: 0;
+    transition: opacity 200ms;
+}
+
+.n-resizer.n-resizer--start {
+    top: 0;
+    right: 0;
+}
+
+.n-resizer.n-resizer--end {
+    top: 0;
+    left: 0;
+}
+
+.n-resizer.n-disabled {
+    display: none;
+}
+
+.n-resizer:hover  {
+    opacity: 1;
+    transition: opacity 200ms 200ms ease;
+}
+
+.n-resize > .n-resizer {
+    z-index: 99999;
+    opacity: 1;
+}

@@ -1,0 +1,27 @@
+@import "../../../root/vars";
+
+.n-info {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.n-info__body {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 15px 0;
+}
+
+.n-info__empty {
+    margin: auto;
+    padding: 15px 0;
+}
+
+.n-info__column:not(:last-child) {
+    margin-bottom: 14px;
+}

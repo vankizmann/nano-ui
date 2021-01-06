@@ -1,0 +1,108 @@
+@import "../../../root/vars";
+
+$notification-size: 13px !default;
+$notification-icon-size: 15px !default;
+
+.n-notification__wrapper {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    transition: opacity 0.15s;
+}
+
+.n-notification__wrapper.n-notification__wrapper--top-start {
+    top: 0;
+    left: 0;
+}
+
+.n-notification__wrapper.n-notification__wrapper--top-center {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.n-notification__wrapper.n-notification__wrapper--top-end {
+    top: 0;
+    right: 0;
+}
+
+.n-notification__wrapper.n-notification__wrapper--bottom-start {
+    bottom: 0;
+    left: 0;
+}
+
+.n-notification__wrapper.n-notification__wrapper--bottom-center {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.n-notification__wrapper.n-notification__wrapper--bottom-end {
+    bottom: 0;
+    right: 0;
+}
+
+.n-notification__wrapper.n-notification__wrapper--bottom-start,
+.n-notification__wrapper.n-notification__wrapper--bottom-center,
+.n-notification__wrapper.n-notification__wrapper--bottom-end {
+    flex-direction: column-reverse;
+}
+
+.n-notification {
+    display: flex;
+    align-items: center;
+    width: calc(100% - 20px);
+    max-width: 380px;
+    padding: 15px;
+    margin: 10px;
+    background: $--color-white;
+    border-radius: $radius-medium;
+    transition: transform 0.6s;
+    border: 1px solid $--color-gray-10;
+    box-shadow: 0 1px 3px 1px rgba($color-black, 0.05);
+}
+.n-notification__wrapper.n-notification__wrapper--top-start .n-notification:not(.n-notification--active),
+.n-notification__wrapper.n-notification__wrapper--bottom-start .n-notification:not(.n-notification--active) {
+    transform: translateX(-150%);
+}
+.n-notification__wrapper.n-notification__wrapper--top-end .n-notification:not(.n-notification--active),
+.n-notification__wrapper.n-notification__wrapper--bottom-end .n-notification:not(.n-notification--active) {
+    transform: translateX(150%);
+}
+
+.n-notification__icon {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 13px;
+    font-size: $notification-icon-size;
+}
+
+.n-notification.n-notification--primary .n-notification__icon {
+    color: $--color-primary;
+}
+
+.n-notification.n-notification--success .n-notification__icon {
+    color: $--color-success;
+}
+
+.n-notification.n-notification--warning .n-notification__icon {
+    color: $--color-warning;
+}
+
+.n-notification.n-notification--danger .n-notification__icon {
+    color: $--color-danger;
+}
+
+.n-notification.n-notification--info .n-notification__icon {
+    color: $--color-info;
+}
+
+.n-notification__text {
+    overflow: hidden;
+    flex: 1 1 auto;
+    line-height: 1.2;
+    font-size: $notification-size;
+    overflow-wrap: break-word;
+}

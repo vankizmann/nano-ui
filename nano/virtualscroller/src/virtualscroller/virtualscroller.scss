@@ -1,0 +1,56 @@
+@import "../../../root/vars";
+
+.n-virtualscroller {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.n-ghost {
+    position: relative;
+}
+
+.n-ghost:after {
+    content: '\00a0';
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    right: 10px;
+    display: block;
+    width: 30%;
+    max-width: 210px;
+    height: 60%;
+    max-height: 12px;
+    transform: translateY(-50%);
+    background: linear-gradient(30deg, rgba($color-gray-50, 0.20) 0%, rgba($color-gray-50, 0.10) 50%, rgba($color-gray-50, 0.20) 100%);
+    background-size: 400% 400%;
+    animation: VirtualGhostElement 2s linear infinite;
+}
+
+.n-ghost:nth-child(2n):after {
+    width: 40%;
+    max-width: 260px;
+    animation: VirtualGhostElement 2s 0.5s linear infinite;
+}
+
+.n-ghost:nth-child(5n):after {
+    width: 20%;
+    max-width: 180px;
+    animation: VirtualGhostElement 2s 1s linear infinite;
+}
+
+@keyframes VirtualGhostElement {
+
+    0% {
+        background-position: 0 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0 50%;
+    }
+
+}

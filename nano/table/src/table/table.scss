@@ -1,0 +1,69 @@
+@import "../../../root/vars";
+
+$table-row-height: 40px !default;
+
+.n-table {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: $radius-medium;
+    border: 1px solid $--color-gray-10;
+}
+
+.n-table .n-virtualscroller {
+    width: auto;
+}
+
+.n-table .n-table__wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    margin-right: -1px;
+    margin-bottom: -1px;
+}
+
+.n-table .n-table__inner {
+    overflow: hidden;
+    min-width: 0;
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+}
+
+.n-table .n-table__head {
+    position: relative;
+    flex: 0 0 auto;
+    min-width: 0;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    border-bottom: 1px solid $--color-gray-10;
+    box-shadow: 0 0 3px rgba($color-black, 0.1);
+}
+
+.n-table .n-table__body {
+    min-width: 0;
+    flex: 1 0 auto;
+}
+
+.n-table .n-table__body .n-scrollbar-v {
+    right: 1px;
+}
+
+.n-table .n-table__body.n-empty {
+    flex: 1 1 auto;
+}
+
+.n-table .n-table__body .n-draglist-item,
+.n-table .n-table__body .n-virtualscroller__item {
+    border-bottom: 1px solid $--color-gray-10;
+}
+
+.n-table .n-draglist-item__select {
+    width: 35px;
+}

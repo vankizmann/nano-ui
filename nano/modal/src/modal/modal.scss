@@ -1,0 +1,177 @@
+@import "../../../root/vars";
+
+$modal-default-padding: 14px 22px !default;
+
+body.n-open {
+    overflow: hidden;
+}
+
+.n-modal {
+    z-index: 2000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    max-width: 100vw;
+    max-height: 100vh;
+    padding: 3%;
+}
+
+.n-modal.n-open {
+    display: flex;
+}
+
+.n-modal__backdrop {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba($color-black, 0.8);
+}
+
+.n-modal__frame {
+    z-index: 100;
+    flex: 0 1 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 320px;
+    max-width: 100%;
+    min-height: 0;
+    max-height: 100%;
+    margin: auto;
+    background: $--color-white;
+    border-radius: $radius-medium;
+    box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+}
+
+.n-modal.n-modal--preview .n-modal__frame {
+    background: $--color-black;
+    min-height: 0;
+    min-width: 0;
+    width: auto;
+}
+
+.n-inverse .n-modal__frame {
+    background: $--color-black;
+}
+
+.n-modal--center-center > .n-modal__frame {
+    margin: auto;
+}
+
+.n-modal--top-start > .n-modal__frame {
+    margin: 0 auto auto 0;
+}
+
+.n-modal--top-center > .n-modal__frame {
+    margin: 0 auto auto auto;
+}
+
+.n-modal--top-end > .n-modal__frame {
+    margin: 0 0 auto auto;
+}
+
+.n-modal--bottom-start > .n-modal__frame {
+    margin: auto auto 0 0;
+}
+
+.n-modal--bottom-center > .n-modal__frame {
+    margin: auto auto 0 auto;
+}
+
+.n-modal--bottom-end > .n-modal__frame {
+    margin: auto 0 0 auto;
+}
+
+.n-modal--left-start > .n-modal__frame {
+    margin: 0 auto auto 0;
+}
+
+.n-modal--left-center > .n-modal__frame {
+    margin: auto auto auto 0;
+}
+
+.n-modal--left-end > .n-modal__frame {
+    margin: auto auto 0 0;
+}
+
+.n-modal--right-start > .n-modal__frame {
+    margin: 0 0 auto auto;
+}
+
+.n-modal--right-center > .n-modal__frame {
+    margin: auto 0 auto auto;
+}
+
+.n-modal--right-end > .n-modal__frame {
+    margin: auto 0 0 auto;
+}
+
+.n-modal__header {
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.n-modal.n-modal--default .n-modal__header {
+    padding: $modal-default-padding;
+    border-bottom: 1px solid $--color-gray-10;
+}
+
+.n-modal.n-modal--closable .n-modal__header {
+    padding-right: 50px;
+}
+
+.n-modal__body {
+    overflow-y: auto;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.n-modal .n-modal__wrap {
+    flex: 1 1 auto;
+}
+
+.n-modal.n-modal--default .n-modal__wrap {
+    padding: $modal-default-padding;
+}
+
+.n-modal__footer {
+    flex: 0 0 auto;
+}
+
+.n-modal.n-modal--default .n-modal__footer {
+    padding: $modal-default-padding;
+    border-top: 1px solid $--color-gray-10;
+}
+
+.n-modal__close {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    transform: translateY(-50%);
+}
+
+.n-modal__close span {
+    font-size: 18px;
+    color: $--color-gray-30;
+    transition: color 0.15s;
+}
+
+.n-modal__close:hover span {
+    color: $--color-gray-40;
+}

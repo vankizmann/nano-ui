@@ -1,0 +1,101 @@
+@import "../../../root/vars";
+
+$tabs-size: 14px;
+
+.n-tabs {
+    display: flex;
+    flex-direction: column;
+}
+
+.n-tabs__header {
+    flex: 0 0 auto;
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.n-tabs__header-inner {
+    flex: 1 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid $--color-gray-10;
+}
+
+.n-inverse .n-tabs__header-inner {
+    border-bottom: 1px solid $--color-gray-90;
+}
+
+//.n-tabs__header-inner:before {
+//    content: '\00a0';
+//    position: absolute;
+//    bottom: 0;
+//    left: 0;
+//    display: block;
+//    width: 100%;
+//    height: 1px;
+//    background: $--color-gray-10;
+//}
+
+.n-tabs__indicator {
+    z-index: 20;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100px;
+    height: 2px;
+    background: $--color-primary;
+    transition: transform 0.3s ease;
+    transform-origin: 0 50%;
+}
+
+.n-tabs__tab {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    transition: color 0.15s;
+    font-size: $tabs-size;
+}
+
+.n-tabs.n-tabs--small .n-tabs__tab {
+    font-size: $tabs-size * 0.875;
+    padding: 14px * 0.875 16px * 0.875;
+}
+
+.n-tabs__tab-icon {
+    margin-right: 8px;
+    text-align: center;
+}
+
+.n-tabs__tab-icon span {
+    color: $--color-gray-30;
+}
+
+.n-inverse .n-tabs__tab-label span {
+    color: $--color-gray-70;
+}
+
+.n-tabs__tab.n-active .n-tabs__tab-icon span {
+    color: $--color-primary;
+}
+
+.n-tabs__tab-label span {
+    color: $--color-black;
+}
+
+.n-inverse .n-tabs__tab-label span {
+    color: $--color-white;
+}
+
+.n-tabs__tab.n-active .n-tabs__tab-label span {
+    color: $--color-primary;
+}
+
+.n-tabs__body {
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}

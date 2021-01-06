@@ -1,8 +1,11 @@
-import { UUID, Num, Obj, Any, Locale } from "nano-js";
+import { h } from "vue";
+import { Obj } from "nano-js";
 
 export default {
 
     name: 'NInput',
+
+    inheritAttrs: false,
 
     props: {
 
@@ -11,6 +14,14 @@ export default {
             {
                 return null;
             }
+        },
+
+        type: {
+            default()
+            {
+                return 'primary';
+            },
+            type: [String]
         },
 
         icon: {
@@ -39,7 +50,7 @@ export default {
         size: {
             default()
             {
-                return 'default';
+                return 'md';
             },
             type: [String]
         },
@@ -50,14 +61,6 @@ export default {
                 return 'text';
             },
             type: [String]
-        },
-
-        round: {
-            default()
-            {
-                return this.styles.round;
-            },
-            type: [Boolean]
         },
 
         disabled: {
@@ -121,58 +124,51 @@ export default {
         };
 
         let props = {
-            type: 'input',
-            icon: this.icon,
-            square: true,
-            disabled: this.iconDisabled,
+            type:       'input',
+            icon:       this.icon,
+            size:       this.size,
+            square:     true,
+            disabled:   this.iconDisabled,
         };
 
-        return (
-            <NButton props={props} on={events} />
-        );
+        return (<NButton props={props} on={events} />);
     },
 
     renderInput()
     {
-        let classList = [
-            'n-input',
-        ];
+        let props = Obj.except(this.$attrs, ['class', 'style']);
 
-        let attrs = Obj.assign({
-            value: this.veValue,
-            type: this.nativeType,
-            disabled: this.disabled,
-            placeholder: this.placeholder
-        }, this.$attrs);
+        Obj.assign(props, {
+            value:          this.veValue,
+            type:           this.nativeType,
+            disabled:       this.disabled,
+            placeholder:    this.placeholder,
+            onInput:        this.eventInput
+        })
 
-        let events = {};
+        if ( this.disabled ) {
+            props.disabled = true;
+        }
+
+        let events = {
+        };
 
         if ( ! this.disabled ) {
             events = Obj.assign({}, this.$listeners);
         }
 
-        events.input = this.eventInput;
-
         return (
-            <input value={this.veValue} class={classList} attrs={attrs} on={events} />
-        )
+            <input value={this.veValue} {...props} />
+        );
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
         let classList = [
-            'n-input__wrapper'
+            'n-input',
+            'n-input--' + this.size,
+            'n-input--' + this.type,
         ];
-
-        if ( this.size ) {
-            classList.push('n-input--' + this.size);
-        }
-
-        if ( this.round ) {
-            classList.push('n-input--round');
-        }
 
         if ( this.icon ) {
             classList.push('n-input--icon');
@@ -183,13 +179,23 @@ export default {
             classList.push('n-disabled');
         }
 
-        return (
-            <div class={classList}>
-                { this.iconPosition === 'before' && this.ctor('renderIcon')() }
-                { this.ctor('renderInput')() }
-                { this.iconPosition === 'after' && this.ctor('renderIcon')() }
-            </div>
-        );
+        let props = Obj.only(this.$attrs, ['style'], {
+            class: this.cmer(classList)
+        });
+
+        let innerHtml = [];
+
+        if ( this.iconPosition === 'before' ) {
+            innerHtml.push(this.ctor('renderIcon')());
+        }
+
+        innerHtml.push(this.ctor('renderInput')());
+
+        if ( this.iconPosition === 'after' ) {
+            innerHtml.push(this.ctor('renderIcon')());
+        }
+
+        return h('div', props, innerHtml);
     }
 
 }

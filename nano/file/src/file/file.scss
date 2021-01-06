@@ -1,0 +1,24 @@
+@import "../../../root/vars";
+
+.n-file__wrapper {
+    position: relative;
+    display: inline-flex;
+    width: 100%;
+}
+
+.n-file__wrapper > .n-input__wrapper {
+    flex: 1 1 auto;
+}
+
+.n-file__wrapper > .n-input__wrapper .n-input {
+    text-overflow: ellipsis;
+}
+
+.n-file__wrapper > .n-button__wrapper {
+    flex: 0 0 auto;
+    margin-left: 5px;
+}
+
+.n-file__input {
+    display: none;
+}

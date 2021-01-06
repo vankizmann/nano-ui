@@ -1,0 +1,115 @@
+@import "../../../root/vars";
+
+.n-table-cell {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.n-table-column.n-left .n-table-cell {
+    text-align: left;
+}
+
+.n-table-column.n-center .n-table-cell {
+    text-align: center;
+}
+
+.n-table-column.n-right .n-table-cell {
+    text-align: right;
+}
+
+.n-table-column.n-table-column--image .n-table-cell {
+    position: relative;
+    height: 100%;
+}
+
+/**
+ * Image specific styling
+ */
+
+.n-table-column.n-table-column--image {
+    padding: 5px 0;
+}
+
+.n-table-column.n-table-column--image .n-table-cell {
+    position: relative;
+    height: 100%;
+}
+
+.n-table-column.n-table-column--image .n-table-cell > div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-color: rgba($color-gray-50, 0.2);
+}
+
+.n-table-column.n-table-column--image .n-table-cell.has-preview > div {
+    cursor: pointer;
+}
+
+.n-table-column.n-table-column--image .n-table-cell.has-preview > div:before {
+    content: '\00a0';
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background: rgba($color-white, 0.45);
+    transition: opacity 0.15s;
+}
+
+.n-table-column.n-table-column--image .n-table-cell.has-preview > div:hover:before {
+    opacity: 1;
+}
+
+/**
+ * Matrix specific styling
+ */
+
+.n-table-column.n-table-column--matrix:nth-last-child(2n+1) {
+    background-color: rgba($color-dark, 0.05);
+}
+
+.table-cell-preview__image {
+    position: relative;
+    width: 100%;
+}
+
+.table-cell-preview__image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.table-cell-preview__streamable {
+    position: relative;
+    width: 100%;
+}
+
+.table-cell-preview__streamable:before {
+    content: '\00a0';
+    display: block;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.6%;
+}
+
+.table-cell-preview__streamable iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+}

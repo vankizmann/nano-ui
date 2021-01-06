@@ -1,0 +1,21 @@
+@import "../../../root/vars";
+
+.n-radio-group {
+    display: flex;
+}
+
+.n-radio-group > .n-radio {
+    flex: 0 1 auto;
+}
+
+.n-radio-group.n-radio-group--horizontal {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.n-radio-group.n-radio-group--vertical {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}

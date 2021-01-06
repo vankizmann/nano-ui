@@ -1,0 +1,69 @@
+@import "../../../root/vars";
+
+$draglist-placeholder-radius: 500px !default;
+$draglist-placeholder-size: 13px !default;
+$draglist-loader-size: 40px !default;
+
+.n-draglist {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/**
+ * Empty field
+ */
+
+.n-draglist.n-load {
+    position: relative;
+}
+
+.n-draglist.n-load:before,
+.n-draglist.n-load:after {
+    content: '\00a0';
+    position: absolute;
+    display: block;
+}
+
+.n-draglist.n-load:before {
+    z-index: 900;
+    top: calc(50% - #{$draglist-loader-size / 2});
+    left: calc(50% - #{$draglist-loader-size / 2});
+    width: $draglist-loader-size;
+    height: $draglist-loader-size;
+    border-radius: 500px;
+    border: 2px solid $--color-primary;
+    border-bottom-color: transparent;
+    animation: LoadingSpinner 1s linear infinite;
+}
+
+.n-draglist.n-load:after {
+    z-index: 800;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba($color-white, 0.7);
+}
+
+.n-loader.n-active .n-draglist.n-load:before,
+.n-loader.n-active .n-draglist.n-load:after {
+    display: none;
+}
+
+.n-draglist .n-draglist__empty {
+    flex: 0 0 auto;
+    margin: auto;
+}
+
+.n-draglist .n-draglist__empty span {
+    color: $--color-gray-50;
+}
+
+.n-draglist.n-dragover > .n-draglist__empty {
+    background: rgba($color-primary, 0.15);
+}
+
+.n-draglist.n-nodrop > .n-draglist__empty {
+    background: rgba($color-danger, 0.15);
+}

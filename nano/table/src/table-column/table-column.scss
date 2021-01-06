@@ -1,0 +1,124 @@
+@import "../../../root/vars";
+
+.n-table .n-table-column {
+    position: relative;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+    padding: 0 10px;
+}
+
+.n-table .n-table__head .n-table-column {
+    border-left: 1px solid $--color-gray-10;
+}
+
+.n-table .n-table__head .n-table-column:last-child {
+    border-right: 1px solid $--color-gray-10;
+}
+
+.n-table .n-table-column.n-fixed {
+    flex: 0 1 auto;
+}
+
+.n-table .n-table-column.n-fluid {
+    flex: 1 1 auto;
+}
+
+.n-table .n-table-column .n-table-column__sort {
+    flex: 0 0 auto;
+    margin-right: 5px;
+}
+
+.n-table .n-table-column .n-table-column__sort div {
+    cursor: pointer;
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
+.n-table .n-table-column .n-table-column__sort div:before {
+    content: '\00a0';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 0;
+    height: 0;
+    margin: 0 0 0 -6px;
+    border: 4px solid transparent;
+    border-top-color: rgba($color-gray-50, 0.5);
+}
+
+.n-table .n-table-column.is-sorted.is-desc .n-table-column__sort div:before {
+    border-top-color: $--color-primary;
+}
+
+.n-table .n-table-column .n-table-column__sort div:after {
+    content: '\00a0';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 0;
+    height: 0;
+    margin: -10px 0 0 -6px;
+    border: 4px solid transparent;
+    border-bottom-color: rgba($color-gray-50, 0.5);
+}
+
+.n-table .n-table-column.is-sorted.is-asc .n-table-column__sort div:after {
+    border-bottom-color: $--color-primary;
+}
+
+.n-table .n-table-column .n-table-column__label {
+    cursor: default;
+    flex: 1 1 auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.n-table .n-table-column .n-table-column__label.n-table-column__label--sort {
+    cursor: pointer;
+}
+
+.n-table .n-table-column.n-left .n-table-column__label {
+    text-align: left;
+}
+
+.n-table .n-table-column.n-center .n-table-column__label {
+    text-align: center;
+}
+
+.n-table .n-table-column.n-right .n-table-column__label {
+    text-align: right;
+}
+
+.n-table .n-table-column.n-filtered .n-table-column__label {
+    font-style: italic;
+}
+
+.n-table .n-table-column .n-table-column__filter {
+    flex: 0 0 auto;
+    margin-left: 5px;
+}
+
+.n-table .n-table-column .n-table-column__filter > div {
+    cursor: pointer;
+    display: block;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    color: $--color-gray-75;
+    background: $color-gray-05;
+    border-radius: $radius-small;
+}
+
+.n-inverse .n-table .n-table-column .n-table-column__filter > div {
+    color: $--color-gray-25;
+    background: $color-gray-95;
+}
+

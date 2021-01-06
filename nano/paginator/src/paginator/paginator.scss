@@ -1,0 +1,109 @@
+@import "../../../root/vars";
+
+$paginator-size: 14px !default;
+
+.n-paginator {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: $--color-gray-60;
+    font-size: $paginator-size;
+}
+
+.n-paginator.n-paginator--small {
+    font-size: $paginator-size * 0.875;
+}
+
+.n-paginator.n-paginator--large {
+    font-size: $paginator-size * 1.125;
+}
+
+.n-paginator .n-popover {
+    max-height: 200px;
+}
+
+.n-paginator > div {
+    padding: 0 7px;
+}
+
+.n-paginator > div:first-child {
+    padding-left: 0;
+}
+
+.n-paginator > div:last-child {
+    padding-right: 0;
+}
+
+.n-paginator__spacer {
+    flex: 1 1 auto;
+}
+
+.n-paginator__limit {
+    flex: 0 0 auto;
+}
+
+.n-paginator__limit .n-select {
+    width: 150px;
+}
+
+.n-paginator__sync {
+    flex: 0 0 auto;
+}
+
+.n-paginator__goto {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.n-paginator__goto .n-popover {
+    width: 100%;
+    text-align: center;
+}
+
+.n-paginator__goto > span {
+    white-space: nowrap;
+    margin-right: 10px;
+}
+
+.n-paginator__goto .n-select {
+    width: 60px;
+}
+
+.n-paginator__pages {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.n-paginator__pages > div {
+    margin: 0 3px;
+}
+
+.n-paginator__pages > div:first-child {
+    margin-left: 0;
+}
+
+.n-paginator__pages > div:last-child {
+    margin-right: 0;
+}
+
+//.n-paginator__pages .n-button {
+//    border-color: $--color-gray-10;
+//    background: $--color-background;
+//}
+//
+//.n-paginator__pages .n-button:hover,
+//.n-paginator__pages .n-button:focus {
+//    border-color: $--color-primary;
+//    background: transparent;
+//}
+//
+//.n-paginator__pages .n-button.n-button--disabled,
+//.n-paginator__pages .n-button.n-button--disabled:hover,
+//.n-paginator__pages .n-button.n-button--disabled:focus {
+//    border-color: $--color-gray-10;
+//    background: $--color-gray-10;
+//}

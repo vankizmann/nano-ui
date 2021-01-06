@@ -1,0 +1,81 @@
+@import "../../../root/vars";
+
+$confirm-icon-size: 16px;
+$confirm-padding: 18px 22px !default;
+
+.n-confirm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: $--color-white;
+    border-radius: $radius-medium;
+    padding: $confirm-padding;
+}
+
+.n-confirm > div {
+    margin: 8px 0;
+}
+
+.n-confirm > div:first-child {
+    margin-top: 0;
+}
+
+.n-confirm > div:last-child {
+    margin-bottom: 0;
+}
+
+.n-confirm__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: $confirm-icon-size;
+}
+
+.n-confirm.n-confirm--primary .n-confirm__icon {
+    color: $--color-primary;
+}
+
+.n-confirm.n-confirm--success .n-confirm__icon {
+    color: $--color-success;
+}
+
+.n-confirm.n-confirm--warning .n-confirm__icon {
+    color: $--color-warning;
+}
+
+.n-confirm.n-confirm--danger .n-confirm__icon {
+    color: $--color-danger;
+}
+
+.n-confirm.n-confirm--info .n-confirm__icon {
+    color: $--color-info;
+}
+
+.n-confirm__body {
+    width: 100%;
+    text-align: center;
+}
+
+.n-confirm__actions {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.n-confirm__actions.n-confirm__actions--reverse {
+    flex-direction: row-reverse;
+}
+
+.n-confirm__actions > div {
+    margin: 0 4px;
+}
+
+//.n-confirm__actions > div:first-child {
+//    margin-left: 0;
+//}
+//
+//.n-confirm__actions > div:last-child {
+//    margin-right: 0;
+//}

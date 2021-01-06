@@ -1,0 +1,251 @@
+@import "../../../root/vars";
+
+$popover-default-size: 14px !default;
+$popover-default-padding: 9px 12px !default;
+
+$popover-select-size: 13px !default;
+$popover-select-padding: 0 !default;
+
+$popover-cascader-size: 13px !default;
+$popover-cascader-padding: 0 !default;
+
+$popover-tooltip-size: 12px !default;
+$popover-tooltip-padding: 3px 9px !default;
+
+$popover-option-size: 14px !default;
+
+.n-popover {
+    z-index: 10000;
+    position: absolute;
+    padding: 3px;
+    display: none;
+}
+
+.n-popover.n-open {
+    display: inline-flex;
+}
+
+.n-popover.n-popover--select {
+    width: 100%;
+}
+
+.n-popover.n-popover--cascader {
+    width: auto;
+    max-width: unset !important;
+}
+
+.n-popover.n-popover--filter {
+    width: 230px;
+    max-width: unset !important;
+}
+
+.n-popover.n-popover--timepicker {
+    width: 200px;
+    max-width: unset !important;
+}
+
+.n-popover.n-popover--datepicker {
+    //width: 270px;
+    max-width: unset !important;
+}
+
+.n-popover.n-popover--tooltip {
+    width: auto;
+    max-width: 280px !important;
+}
+
+.n-popover.n-popover--dropdown {
+    max-width: 240px !important;
+}
+
+.n-popover .n-popover__frame {
+    width: 100%;
+    display: inline-flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.n-popover.n-popover--default > .n-popover__frame,
+.n-popover.n-popover--filter > .n-popover__frame {
+    font-size: $popover-default-size;
+    background: $--color-white;
+    border-radius: $radius-medium;
+    box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+}
+
+.n-popover.n-popover--select > .n-popover__frame {
+    font-size: $popover-default-size;
+    background: $--color-white;
+    border-radius: $radius-medium;
+    box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+}
+
+.n-popover.n-popover--cascader > .n-popover__frame {
+    font-size: $popover-cascader-size;
+    background: $--color-white;
+    border-radius: $radius-medium;
+    box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+}
+
+.n-popover.n-popover--datepicker > .n-popover__frame {
+    font-size: $popover-default-size;
+    background: $--color-white;
+    border-radius: $radius-medium;
+    box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+}
+
+.n-popover.n-popover--timepicker > .n-popover__frame {
+    font-size: $popover-default-size;
+    background: $--color-white;
+    border-radius: $radius-medium;
+    box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+}
+
+.n-popover.n-popover--dropdown > .n-popover__frame {
+    font-size: $popover-default-size;
+    background: $--color-white;
+    border-radius: $radius-medium;
+    box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+}
+
+.n-popover.n-popover--tooltip > .n-popover__frame {
+    color: $--color-white;
+    font-size: $popover-tooltip-size;
+    background: rgba($color-black, 0.85);
+    border-radius: $radius-medium;
+    box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+}
+
+.n-popover__header {
+    flex: 0 0 auto;
+}
+
+.n-popover.n-popover--default > .n-popover__frame > .n-popover__header,
+.n-popover.n-popover--filter > .n-popover__frame > .n-popover__header {
+    padding: $popover-default-padding;
+    border-bottom: 1px solid $--color-gray-10;
+}
+
+
+.n-popover.n-popover--select > .n-popover__frame > .n-popover__header {
+    padding: $popover-select-padding;
+}
+
+.n-popover.n-popover--cascader > .n-popover__frame > .n-popover__header {
+    padding: $popover-cascader-padding;
+}
+
+.n-popover.n-popover--tooltip > .n-popover__frame > .n-popover__header {
+    padding: $popover-tooltip-padding;
+}
+
+.n-popover__body {
+    flex: 1 1 auto;
+}
+
+.n-popover.n-popover--default > .n-popover__frame > .n-popover__body,
+.n-popover.n-popover--filter > .n-popover__frame > .n-popover__body {
+    padding: $popover-default-padding;
+}
+
+.n-popover.n-popover--filter > .n-popover__frame > .n-popover__body {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.n-popover.n-popover--select > .n-popover__frame > .n-popover__body {
+    padding: $popover-select-padding;
+}
+
+.n-popover.n-popover--cascader > .n-popover__frame > .n-popover__body {
+    padding: $popover-cascader-padding;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.n-popover.n-popover--tooltip > .n-popover__frame > .n-popover__body {
+    text-align: center;
+    padding: $popover-tooltip-padding;
+}
+
+.n-popover__footer {
+    flex: 0 0 auto;
+}
+
+.n-popover.n-popover--default > .n-popover__frame > .n-popover__footer,
+.n-popover.n-popover--filter > .n-popover__frame > .n-popover__footer {
+    padding: $popover-default-padding;
+    border-top: 1px solid $--color-gray-10;
+}
+
+.n-popover.n-popover--select > .n-popover__frame > .n-popover__footer {
+    padding: $popover-select-padding;
+    border-top: 1px solid $--color-gray-10;
+}
+
+.n-popover.n-popover--tooltip > .n-popover__frame > .n-popover__footer {
+    padding: $popover-tooltip-padding;
+}
+
+.n-popover-label {
+    display: flex;
+    width: 100%;
+    line-height: 1.5 !important;
+    font-size: $popover-option-size * 0.875;
+    font-weight: bold;
+    padding: $popover-option-size * 0.7 $popover-option-size $popover-option-size * 0.4;
+}
+
+.n-popover-option {
+    display: flex;
+    width: 100%;
+    cursor: pointer;
+    transition: color 150ms ease, background 150ms ease;
+}
+
+.n-popover-option:not(.n-button__wrapper),
+.n-popover-option.n-button__wrapper > .n-button.n-button--link {
+    line-height: 1.5 !important;
+    font-size: $popover-option-size;
+    padding: $popover-option-size * 0.4  $popover-option-size;
+}
+
+.n-popover.n-popover--small .n-popover-option:not(.n-button__wrapper),
+.n-popover.n-popover--small .n-popover-option.n-button__wrapper > .n-button.n-button--link {
+    font-size: $popover-option-size * 0.875;
+    padding: $popover-option-size * 0.4 * 0.875  $popover-option-size * 0.875;
+}
+
+.n-popover.n-popover--large .n-popover-option:not(.n-button__wrapper),
+.n-popover.n-popover--large .n-popover-option.n-button__wrapper > .n-button.n-button--link {
+    font-size: $popover-option-size * 1.125;
+    padding: $popover-option-size * 0.4 * 1.125  $popover-option-size * 1.125;
+}
+
+.n-popover-option.n-button__wrapper > .n-button.n-button--link {
+    justify-content: flex-start;
+}
+
+.n-popover-option:not(.n-button__wrapper):hover,
+.n-popover-option.n-button__wrapper:hover > .n-button.n-button--link {
+    background: rgba($color-gray-50, 0.1);
+}
+
+.n-popover-option:not(.n-button__wrapper).n-disabled,
+.n-popover-option.n-button__wrapper.n-disabled > .n-button.n-button--link {
+    cursor: not-allowed;
+    background: transparent !important;
+    opacity: 0.5;
+}
+
+.n-popover-option:not(.n-button__wrapper).n-active,
+.n-popover-option.n-button__wrapper.n-active > .n-button.n-button--link {
+    color: $--color-primary;
+}
+
+.n-popover-option:not(.n-button__wrapper).n-current,
+.n-popover-option.n-button__wrapper.n-current > .n-button.n-button--link {
+    background: rgba($color-primary, 0.1);
+}

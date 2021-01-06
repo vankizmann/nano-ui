@@ -1,0 +1,134 @@
+@import "../../../root/vars";
+
+$radio-font-size: 15px !default;
+$radio-height: 16px !default;
+$radio-radius: $radius-small !default;
+
+/**
+ * Checkbox container
+ */
+
+.n-radio {
+    cursor: pointer;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    padding-top: $radio-height / 6;
+    padding-bottom: $radio-height / 6;
+    line-height: 1.2;
+    font-size: $radio-font-size;
+}
+
+.n-radio.n-radio--small {
+    font-size: floor($radio-font-size * 0.925);
+}
+
+.n-radio.n-radio--large {
+    font-size: ceil($radio-font-size * 1.125);
+}
+
+/**
+ * Checkbox pseudo radio
+ */
+
+.n-radio .n-radio__radio {
+    position: relative;
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid $--color-gray-15;
+    border-radius: 500px;
+    width: $radio-height;
+    height: $radio-height;
+    color: $--color-white;
+    background: $--color-white;
+}
+
+.n-radio:hover .n-radio__radio {
+    border-color: $--color-primary;
+}
+
+.n-radio.n-disabled .n-radio__radio {
+    cursor: not-allowed;
+    background: $--color-gray-05;
+    border-color: $--color-gray-15;
+}
+
+.n-radio.n-radio--small .n-radio__radio {
+    width: floor($radio-height * 0.925);
+    height: floor($radio-height * 0.925);
+}
+
+.n-radio.n-radio--large .n-radio__radio {
+    width: ceil($radio-height * 1.125);
+    height: ceil($radio-height * 1.125);
+}
+
+.n-radio.n-checked .n-radio__radio,
+.n-radio.n-intermediate .n-radio__radio {
+    border-color: $--color-primary;
+    background: $--color-primary;
+}
+
+.n-radio .n-radio__radio span {
+    position: absolute;
+    top: calc(50% - #{floor($radio-height * 0.375) * 0.5});
+    left: calc(50% - #{floor($radio-height * 0.375) * 0.5});
+    display: block;
+    width: floor($radio-height * 0.375);
+    height: floor($radio-height * 0.375);
+    visibility: hidden;
+    border-radius: 500px;
+    background: $--color-white;
+}
+
+$radio-height-small: floor(($radio-height - 2) * 0.375 * 0.925);
+
+.n-radio.n-radio--small .n-radio__radio span {
+    top: calc(50% - #{$radio-height-small * 0.5});
+    left: calc(50% - #{$radio-height-small * 0.5});
+    width: $radio-height-small;
+    height: $radio-height-small;
+}
+
+$radio-height-large: ceil(($radio-height - 2) * 0.375 * 1.125);
+
+.n-radio.n-radio--large .n-radio__radio span {
+    top: calc(50% - #{$radio-height-large * 0.5});
+    left: calc(50% - #{$radio-height-large * 0.5});
+    width: $radio-height-large;
+    height: $radio-height-large;
+}
+
+.n-radio.n-checked .n-radio__radio span,
+.n-radio.n-intermediate .n-radio__radio span {
+    visibility: visible;
+}
+
+/**
+ * Checkbox label
+ */
+
+.n-radio .n-radio__label {
+    flex: 1 1 auto;
+    overflow: hidden;
+    padding-left: $radio-height / 2;
+    padding-right: $radio-height / 2;
+    color: $--color-black;
+    text-overflow: ellipsis;
+    transition: color $transition-short;
+}
+
+.n-inverse .n-radio .n-radio__label {
+    color: $--color-white;
+}
+
+.n-radio.n-checked .n-radio__label {
+    color: $--color-primary;
+}
+.n-radio.n-disabled .n-radio__label {
+    cursor: not-allowed;
+    color: $--color-gray-50;
+}
+

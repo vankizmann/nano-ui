@@ -1,0 +1,49 @@
+@import "../../../root/vars";
+
+$textarea-size: 13px !default;
+$textarea-height: 32px !default;
+
+.n-textarea__wrapper {
+    position: relative;
+    display: inline-flex;
+    width: 100%;
+}
+
+.n-textarea {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: $textarea-height * 0.2 $textarea-height * 0.3;
+    min-height: $textarea-height;
+    background: $--color-white;
+    font-size: $textarea-size;
+    border: 1px solid $--color-gray-15;
+    border-radius: $radius-medium;
+    transition: 0.15s border;
+}
+
+.n-textarea:hover,
+.n-textarea:focus {
+    border: 1px solid $--color-primary;
+}
+
+.n-disabled .n-textarea {
+    cursor: not-allowed;
+    background: $--color-gray-05;
+}
+
+.n-disabled .n-textarea:hover,
+.n-disabled .n-textarea:focus {
+    border: 1px solid $--color-gray-15;
+}
+
+.n-textarea.n-textarea--small {
+    font-size: $textarea-size * 0.875;
+    padding: $textarea-height * 0.2 * 0.875 $textarea-height * 0.3 * 0.875;
+    min-height: $textarea-height * 0.875;
+}
+
+.n-textarea.n-textarea--large {
+    font-size: $textarea-size * 1.125;
+    padding: $textarea-height * 0.2 * 1.125 $textarea-height * 0.3 * 1.125;
+    min-height: $textarea-height * 1.125;
+}

@@ -1,0 +1,78 @@
+@import "../../../root/vars";
+
+$draglist-placeholder-radius: 500px !default;
+$draglist-placeholder-size: 13px !default;
+$draglist-loader-size: 40px !default;
+
+.n-draggrid {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.n-draggrid__inner {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+/**
+ * Empty field
+ */
+
+.n-draggrid.n-load {
+    position: relative;
+}
+
+.n-draggrid.n-load:before,
+.n-draggrid.n-load:after {
+    content: '\00a0';
+    position: absolute;
+    display: block;
+}
+
+.n-draggrid.n-load:before {
+    z-index: 900;
+    top: calc(50% - #{$draglist-loader-size / 2});
+    left: calc(50% - #{$draglist-loader-size / 2});
+    width: $draglist-loader-size;
+    height: $draglist-loader-size;
+    border-radius: 500px;
+    border: 2px solid $--color-primary;
+    border-bottom-color: transparent;
+    animation: LoadingSpinner 1s linear infinite;
+}
+
+.n-draggrid.n-load:after {
+    z-index: 800;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba($color-white, 0.7);
+}
+
+.n-loader.n-active .n-draggrid.n-load:before,
+.n-loader.n-active .n-draggrid.n-load:after {
+    display: none;
+}
+
+.n-draggrid .n-draggrid__empty {
+    flex: 0 0 auto;
+    margin: auto;
+}
+
+.n-draggrid .n-draggrid__empty span {
+    color: $--color-gray-50;
+}
+
+.n-draggrid.n-dragover > .n-draggrid__empty {
+    background: rgba($color-primary, 0.15);
+}
+
+.n-draggrid.n-nodrop > .n-draggrid__empty {
+    background: rgba($color-danger, 0.15);
+}

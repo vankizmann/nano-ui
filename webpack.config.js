@@ -55,7 +55,7 @@ let libEsmExport = {
 };
 
 let libWinExport = {
-    entry: ['@babel/polyfill/noConflict', './src/index.js'],
+    entry: ['./src/index.js'],
     devtool: 'source-map',
     output: {
         filename: 'nano-ui.js',
@@ -88,26 +88,31 @@ let libWinExport = {
             root: 'Nano', commonjs: 'nano-js', commonjs2: 'nano-js', amd: 'nano-js'
         }
     },
+    resolve: {
+        alias: {
+            vue$: path.resolve(__dirname, 'node_modules/vue/dist/vue.global.js')
+        }
+    },
     plugins: [
-        new webpack.LoaderOptionsPlugin({
-            minimize: true,
-            debug: false,
-        }),
-        new UglifyJsPlugin({
-            uglifyOptions: {
-                output: {
-                    comments: false
-                }
-            },
-            exclude: /node_modules/,
-        }),
-        new webpack.optimize.AggressiveMergingPlugin(),
+        // new webpack.LoaderOptionsPlugin({
+        //     minimize: true,
+        //     debug: false,
+        // }),
+        // new UglifyJsPlugin({
+        //     uglifyOptions: {
+        //         output: {
+        //             comments: false
+        //         }
+        //     },
+        //     exclude: /node_modules/,
+        // }),
+        // new webpack.optimize.AggressiveMergingPlugin(),
     ]
 };
 
 let libCssExport = {
     mode: 'development',
-    entry: './src/index.scss',
+    entry: './nano/index.scss',
     output: {
         filename: '.lib.ignore.js',
         path: path.resolve('dist')
@@ -117,7 +122,7 @@ let libCssExport = {
             {
                 test: /\.scss$/,
                 include: [
-                    path.resolve('src')
+                    path.resolve('nano')
                 ],
                 use: [
                     MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'

@@ -1,0 +1,193 @@
+@import "../../../root/vars";
+
+$cascader-size: 14px !default;
+$cascader-height: 34px !default;
+
+$cascader-item-padding: 3px 6px !default;
+$cascader-empty-padding: 6px 12px !default;
+
+$cascader-option-size: 14px !default;
+$cascader-option-padding: 6px 12px !default;
+
+.n-cascader__wrapper {
+    position: relative;
+    display: inline-flex;
+    width: 100%;
+}
+
+.n-cascader__wrapper .n-popover {
+    display: inline-flex;
+    flex-direction: row;
+    text-align: left;
+    max-width: 100% !important;
+}
+
+.n-cascader__items {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    min-height: 0;
+    max-height: 210px;
+    width: 160px;
+}
+
+.n-cascader__items:not(:last-child) {
+    box-sizing: content-box;
+    border-right: 1px solid $--color-gray-10;
+}
+
+.n-cascader__items .n-scrollbar-content {
+    flex: 1 1 auto;
+}
+
+.n-cascader {
+    flex: 1 1 auto;
+    min-width: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: $--color-white;
+    color: $--color-black;
+    border: 1px solid $--color-gray-15;
+    border-radius: $radius-small;
+    transition: 0.15s border;
+}
+
+.n-cascader:hover,
+.n-cascader.n-open {
+    border: 1px solid $--color-primary;
+}
+
+.n-cascader.n-cascader--default {
+    font-size: $cascader-size;
+    padding: 0 $cascader-height * 0.3;
+    min-height: $cascader-height;
+}
+
+.n-cascader.n-cascader--small {
+    font-size: $cascader-size * 0.875;
+    padding: 0 $cascader-height * 0.3 * 0.875;
+    min-height: $cascader-height * 0.875;
+}
+
+.n-cascader.n-cascader--large {
+    font-size: $cascader-size * 1.125;
+    padding: 0 $cascader-height * 0.3 * 1.125;
+    min-height: $cascader-height * 1.125;
+}
+
+.n-disabled .n-cascader {
+    cursor: not-allowed;
+    background: $--color-gray-05;
+    border-color: $--color-gray-15;
+    color: $--color-gray-50;
+}
+
+.n-cascader__label {
+    flex: 1 1 auto;
+    position: relative;
+    margin-right: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.n-cascader__placeholder {
+    flex: 0 1 auto;
+    display: inline-block;
+    color: $--color-gray-50;
+}
+
+.n-cascader__item {
+    white-space: nowrap;
+}
+
+.n-cascader__item:after {
+    content: '/';
+    margin: 0 8px;
+    color: $--color-gray-20;
+}
+
+.n-cascader__item:last-child:after {
+    display: none;
+}
+
+.n-cascader__clear {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: $cascader-height * 0.5;
+    height: $cascader-height * 0.5;
+    color: $--color-gray-50;
+    font-size: $cascader-size * 0.665;
+    background: $--color-gray-10;
+    border-radius: 500px;
+    transition: color 0.3s, background 0.3s;
+    margin: 0 8px 0 0;
+}
+
+.n-cascader__clear:hover {
+    color: $--color-gray-80;
+    background: $--color-gray-15;
+}
+
+.n-cascader__angle {
+    padding-left: 6px;
+    margin-left: auto;
+    color: $--color-gray-40;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.n-cascader.n-open .n-cascader__angle {
+    transform: rotateX(180deg);
+}
+
+.n-cascader__empty {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: $cascader-empty-padding;
+    text-align: center;
+    color: $--color-gray-60;
+}
+
+.n-cascader__options {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    border-left: 1px solid $--color-gray-10;
+}
+
+.n-cascader__options:first-child {
+    border-left: none;
+}
+
+.n-cascader-option {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    transition: background 0.15s, color 0.3s;
+}
+
+.n-cascader-option__label {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.n-cascader-option__arrow {
+    flex: 0 0 auto;
+}
+
+.n-cascader-option__arrow span {
+    font-size: $cascader-option-size * 0.875;
+    color: $--color-gray-40;
+}

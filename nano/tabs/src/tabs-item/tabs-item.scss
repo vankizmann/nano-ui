@@ -1,0 +1,17 @@
+@import "../../../root/vars";
+
+.n-tabs-item__wrapper {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.n-tabs-item__wrapper:not(.n-raw) {
+    margin-top: 20px;
+}
+
+.n-tabs-item__wrapper .n-tabs-item {
+    flex: 1 1 auto;
+}

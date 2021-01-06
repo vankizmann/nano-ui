@@ -213,6 +213,12 @@ $--color-background-lighter:    $color-background-lighter !default;
 $--color-background-dark:       $color-background-dark !default;
 $--color-background-darker:     $color-background-darker !default;
 
+$xs-radius:                 1px !default;
+$sm-radius:                 2px !default;
+$md-radius:                 4px !default;
+$lg-radius:                 8px !default;
+$xl-radius:                 16px !default;
+
 $colors: (
     'primary': (
         'base': $color-primary,

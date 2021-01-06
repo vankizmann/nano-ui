@@ -1,0 +1,114 @@
+@import "../../../root/vars";
+
+.n-transfer {
+    display: flex;
+    flex-direction: row;
+}
+
+.n-transfer .n-draglist {
+    width: 100%;
+    min-height: 100%;
+}
+
+.n-transfer__controls {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 15px;
+}
+
+.n-transfer__controls > div {
+    margin: 5px 0;
+}
+
+.n-transfer__controls > div:first-child {
+    margin-top: 0;
+}
+
+.n-transfer__controls > div:last-child {
+    margin-bottom: 0;
+}
+
+.n-transfer__pane {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 400px;
+    border: 1px solid $--color-gray-15;
+    border-radius: $radius-medium;
+    background: $--color-white;
+}
+
+.n-transfer__pane > .n-checkbox-group {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 0;
+    max-height: 100%;
+}
+
+.n-inverse .n-transfer__pane {
+    border-color: $--color-gray-90;
+}
+
+.n-transfer__header {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    min-height: 48px;
+    padding: 8px 14px;
+    border-bottom: 1px solid $--color-gray-15;
+}
+
+.n-transfer__header .n-transfer__title{
+    font-size: 16px;
+}
+
+.n-transfer__search {
+    flex: 0 0 auto;
+    width: 100%;
+    border-bottom: 1px solid $--color-gray-15;
+}
+
+.n-transfer__search .n-input {
+    border: none !important;
+}
+
+.n-transfer__body {
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 0;
+    max-height: 100%;
+    //overflow-y: auto;
+}
+
+.n-transfer__item {
+    overflow: hidden;
+    flex: 1 1 auto;
+    padding: 8px 14px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.n-transfer__item-title {
+    color: $color-black;
+    margin-left: 15px;
+}
+
+.n-transfer__item-count {
+    color: $color-gray-60;
+    margin-left: 8px;
+}
+
+.n-transfer__item-count:before {
+    content: '(';
+}
+
+.n-transfer__item-count:after {
+    content: ')';
+}

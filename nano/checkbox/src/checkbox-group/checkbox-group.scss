@@ -1,0 +1,21 @@
+@import "../../../root/vars";
+
+.n-checkbox-group {
+    display: flex;
+}
+
+.n-checkbox-group > .n-checkbox {
+    flex: 0 1 auto;
+}
+
+.n-checkbox-group.n-checkbox-group--horizontal {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.n-checkbox-group.n-checkbox-group--vertical {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}

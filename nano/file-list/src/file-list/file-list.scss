@@ -1,0 +1,47 @@
+@import "../../../root/vars";
+
+.n-file-list__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.n-file-list__empty {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-file-list__empty span {
+    color: $--color-gray-50;
+}
+
+.n-file-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 5px;
+}
+
+.n-file-list > div {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    padding: 5px;
+}
+
+@media (max-width: 640px) {
+    .n-file-list > div {
+        width: 50%;
+    }
+}
+
+@media (max-width: 420px) {
+    .n-file-list > div {
+        width: 100%;
+    }
+}

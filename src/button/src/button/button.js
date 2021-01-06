@@ -1,27 +1,11 @@
+import { h } from "vue";
 import { Obj, Any } from "nano-js";
 
 export default {
 
     name: 'NButton',
 
-    inheritAttrs: false,
-
     props: {
-
-        icon: {
-            default()
-            {
-                return null;
-            }
-        },
-
-        iconPosition: {
-            default()
-            {
-                return this.styles.iconPosition;
-            },
-            type: [String]
-        },
 
         type: {
             default()
@@ -34,7 +18,7 @@ export default {
         size: {
             default()
             {
-                return 'default';
+                return 'md';
             },
             type: [String]
         },
@@ -42,28 +26,12 @@ export default {
         link: {
             default()
             {
-                return this.type === 'link';
-            },
-            type: [Boolean]
-        },
-
-        square: {
-            default()
-            {
                 return false;
             },
             type: [Boolean]
         },
 
-        round: {
-            default()
-            {
-                return this.styles.round;
-            },
-            type: [Boolean]
-        },
-
-        plain: {
+        square: {
             default()
             {
                 return false;
@@ -77,6 +45,21 @@ export default {
                 return false;
             },
             type: [Boolean]
+        },
+
+        icon: {
+            default()
+            {
+                return null;
+            }
+        },
+
+        iconPosition: {
+            default()
+            {
+                return 'before';
+            },
+            type: [String]
         },
 
         buttonType: {
@@ -104,17 +87,16 @@ export default {
         }
 
         let classList = [
-            'n-icon',
+            'n-icon', 
             'n-icon--' + this.iconPosition,
-            this.icon
         ];
 
-        return (
-            <span class={classList}></span>
-        );
+        classList.push(this.icon);
+
+        return (<i class={classList}></i>);
     },
 
-    renderButton()
+    render()
     {
         let classList = [
             'n-button',
@@ -134,20 +116,9 @@ export default {
             classList.push('n-button--square');
         }
 
-        if ( this.round ) {
-            classList.push('n-button--round');
+        if ( this.disabled ) {
+            classList.push('n-disabled');
         }
-
-        if ( this.plain ) {
-            classList.push('n-button--plain');
-        }
-
-        let attrs = Obj.except(this.$attrs, [
-            'class', 'style'
-        ]);
-
-        attrs.disabled = this.disabled;
-        attrs.type = this.buttonType;
 
         let events = {};
 
@@ -155,40 +126,31 @@ export default {
             events = Obj.assign({}, this.$listeners);
         }
 
+        let attrs = {};
+
+        if ( this.disabled ) {
+            attrs.disabled = true;
+        }
+
         let props = {
             class: classList, attrs: attrs, on: events
         };
 
-        return (
-            this.$render(this.nativeType, props, [
-                this.iconPosition === 'before' && this.ctor('renderIcon')(),
-                this.$slots.default && (<span>{ this.$slots.default }</span>),
-                this.iconPosition === 'after' && this.ctor('renderIcon')()
-            ])
-        );
-    },
+        let innerHtml = [];
 
-    render($render)
-    {
-        this.$render = $render;
-
-        let classList = [
-            'n-button__wrapper'
-        ];
-
-        if ( this.disabled ) {
-            classList.push('n-disabled');
+        if ( this.iconPosition === 'before' ) {
+            innerHtml.push(this.ctor('renderIcon')());
         }
 
-        let attrs = Obj.only(this.$attrs, [
-            'class', 'style'
-        ]);
+        if ( this.$slots.default ) {
+            innerHtml.push(<span>{ this.$slots.default() }</span>);
+        }
 
-        return (
-            <div class={classList} attrs={attrs}>
-                { this.ctor('renderButton')() }
-            </div>
-        );
+        if ( this.iconPosition === 'after' ) {
+            innerHtml.push(this.ctor('renderIcon')());
+        }
+
+        return h(this.nativeType, props, innerHtml);
     }
 
 }

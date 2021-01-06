@@ -1,0 +1,105 @@
+@import "../../../root/vars";
+
+.n-button-group {
+    display: flex;
+    flex-direction: row;
+}
+
+.n-button-group .n-button__wrapper,
+.n-button-group .n-input__wrapper,
+.n-button-group .n-select__wrapper,
+.n-button-group .n-cascader__wrapper,
+.n-button-group .n-datepicker__wrapper,
+.n-button-group .n-timepicker__wrapper {
+    position: relative;
+    margin-left: -1px;
+}
+
+.n-button-group .n-button__wrapper:not(:first-child):not(:last-child) .n-button,
+.n-button-group .n-input__wrapper:not(:first-child):not(:last-child) .n-input,
+.n-button-group .n-select__wrapper:not(:first-child):not(:last-child) .n-select,
+.n-button-group .n-cascader__wrapper:not(:first-child):not(:last-child) .n-cascader,
+.n-button-group .n-datepicker__wrapper:not(:first-child):not(:last-child) .n-datepicker,
+.n-button-group .n-timepicker__wrapper:not(:first-child):not(:last-child) .n-timepicker {
+    border-radius: 0;
+}
+
+.n-button-group .n-button__wrapper:hover,
+.n-button-group .n-input__wrapper:hover,
+.n-button-group .n-select__wrapper:hover,
+.n-button-group .n-cascader__wrapper:hover,
+.n-button-group .n-datepicker__wrapper:hover,
+.n-button-group .n-timepicker__wrapper:hover {
+    z-index: 10;
+}
+
+.n-button-group .n-button__wrapper:first-child:not(:last-child) .n-button,
+.n-button-group .n-input__wrapper:first-child:not(:last-child) .n-input,
+.n-button-group .n-select__wrapper:first-child:not(:last-child) .n-select,
+.n-button-group .n-cascader__wrapper:first-child:not(:last-child) .n-cascader,
+.n-button-group .n-datepicker__wrapper:first-child:not(:last-child) .n-datepicker,
+.n-button-group .n-timepicker__wrapper:first-child:not(:last-child) .n-timepicker {
+    border-radius: $radius-medium 0 0 $radius-medium;
+    margin-left: 0;
+}
+
+.n-button-group .n-button__wrapper:last-child:not(:first-child) .n-button,
+.n-button-group .n-input__wrapper:last-child:not(:first-child) .n-input,
+.n-button-group .n-select__wrapper:last-child:not(:first-child) .n-select,
+.n-button-group .n-cascader__wrapper:last-child:not(:first-child) .n-cascader,
+.n-button-group .n-datepicker__wrapper:last-child:not(:first-child) .n-datepicker,
+.n-button-group .n-timepicker__wrapper:last-child:not(:first-child) .n-timepicker {
+    border-radius: 0 $radius-medium $radius-medium 0;
+}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--primary {
+//    border-left-color: $--color-primary-dark;
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--outline.n-button--primary {
+//    border-left-color: rgba($color-primary, 0.25);
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--secondary {
+//    border-left-color: $--color-gray-10;
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--secondary:hover {
+//    border-left-color: $--color-primary;
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--outline.n-button--secondary {
+//    border-left-color: rgba($color-secondary, 0.25);
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--success {
+//    border-left-color: $--color-success-dark;
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--outline.n-button--success {
+//    border-left-color: rgba($color-success, 0.25);
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--warning {
+//    border-left-color: $--color-warning-dark;
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--outline.n-button--warning {
+//    border-left-color: rgba($color-warning, 0.25);
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--danger {
+//    border-left-color: $--color-danger-dark;
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--outline.n-button--danger {
+//    border-left-color: rgba($color-danger, 0.25);
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--info {
+//    border-left-color: $--color-info-dark;
+//}
+//
+//.n-button-group .n-button__wrapper:nth-child(1n+2) .n-button.n-button--outline.n-button--info {
+//    border-left-color: rgba($color-info, 0.25);
+//}

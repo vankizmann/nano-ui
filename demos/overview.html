@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../dist/nano-ui.css">
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://vankizmann.github.io/nano-js/dist/nano-js.js"></script>
+    <script src="../dist/nano-ui.js"></script>
+
+    <link rel="stylesheet" href="../docs/dist/index.css">
+
+</head>
+<body>
+
+<div id="app" style="max-width: 1440px; margin: 20px auto;">
+
+    <h2 style="font-size: 32px; margin: 30px 0 10px;">NButton</h2>
+
+    <div class="grid grid--row grid--wrap grid--30-30">
+        <div class="col--auto">
+            <n-select style="width: 80px;" v-model="button.size" :options="{xs: 'XS', sm: 'SM', md: 'MD', lg: 'LG'}"></n-select>
+        </div>
+        <div class="col--auto">
+            <n-select style="width: 130px;" v-model="button.icon" :clearable="true" :options="{'fa fa-ghost': 'Ghost icon'}"></n-select>
+        </div>
+        <div class="col--auto">
+            <n-checkbox v-model="button.square">Square</n-checkbox>
+        </div>
+        <div class="col--auto">
+            <n-checkbox v-model="button.link">Link</n-checkbox>
+        </div>
+        <div class="col--auto">
+            <n-checkbox v-model="button.disabled">Disabled</n-checkbox>
+        </div>
+    </div>
+    
+    <div class="grid grid--row grid--wrap grid--20-20">
+        <div class="col--1-1 col--1-3@md">
+            <n-button style="margin: 0 auto;" v-bind="button" type="primary">Button</n-button>
+        </div>
+        <div class="col--1-1 col--1-3@md">
+            <n-button class="test" style="margin: 0 auto;" v-bind="button" type="secondary">Button</n-button>
+        </div>
+        <div class="col--1-1 col--1-3@md">
+            <n-button style="margin: 0 auto;" v-bind="button" type="success">Button</n-button>
+        </div>
+        <div class="col--1-1 col--1-3@md">
+            <n-button style="margin: 0 auto;" v-bind="button" type="warning">Button</n-button>
+        </div>
+        <div class="col--1-1 col--1-3@md">
+            <n-button style="margin: 0 auto;" v-bind="button" type="danger" @click="log">Button</n-button>
+        </div>
+        <div class="col--1-1 col--1-3@md">
+            <n-button style="margin: 0 auto;" v-bind="button" type="info">Button</n-button>
+        </div>
+    </div>
+
+    <h2 style="font-size: 32px; margin: 30px 0 10px;">NInput</h2>
+
+    <div class="grid grid--row grid--wrap grid--30-30">
+        <div class="col--auto">
+            <n-select style="width: 80px;" v-model="input.size" :options="{xs: 'XS', sm: 'SM', md: 'MD', lg: 'LG'}"></n-select>
+        </div>
+        <div class="col--auto">
+            <n-select style="width: 130px;" v-model="input.icon" :clearable="true" :options="{'fa fa-ghost': 'Ghost icon'}"></n-select>
+        </div>
+        <div class="col--auto">
+            <n-checkbox v-model="input.disabled">Disabled</n-checkbox>
+        </div>
+    </div>
+    
+    <div class="grid grid--row grid--wrap grid--20-20">
+        <div class="col--1-1 col--1-3@md">
+            <n-input class="test" v-bind="input" type="primary"></n-input>
+        </div>
+        <div class="col--1-1 col--1-3@md">
+            <n-input v-bind="input" type="secondary"></n-input>
+        </div>
+        <div class="col--1-1 col--1-3@md">
+            <n-input v-bind="input" type="success" @blur="log"></n-input>
+        </div>
+        <div class="col--1-1 col--1-3@md">
+            <n-input v-bind="input" type="warning"></n-input>
+        </div>
+        <div class="col--1-1 col--1-3@md">
+            <n-input v-bind="input" type="danger"></n-input>
+        </div>
+        <div class="col--1-1 col--1-3@md">
+            <n-input v-bind="input" type="info"></n-input>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    (function (Nano) {
+
+        'use strict';
+
+        Nano.Dom.ready(function () {
+
+            let data = {};
+
+            data.button = {
+                icon: '', size: 'md', square: false, link: false, disabled: false
+            };
+
+            data.input = {
+                icon: '', size: 'md', value: 'Text', placeholder: 'Placeholder', disabled: false
+            };
+
+            let methods = {};
+
+            methods.log = function () {
+                console.log('buh');
+            };
+
+            var config = {
+                data: function () {
+                    return data;
+                },
+                methods: methods
+            };
+
+            window.App = Vue.createApp(config);
+
+            window.App.config.devtools = true;
+
+            window.App.use(function (App) {
+                NanoInstall(App);
+            });
+
+            window.App.mount('#app');
+        });
+
+    })(window.Nano);
+</script>
+</body>
+</html>

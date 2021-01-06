@@ -1,0 +1,28 @@
+@import "../../../root/vars";
+
+$select-option-size: 14px !default;
+$select-option-padding: 6px 12px !default;
+
+.n-select-option {
+    cursor: pointer;
+    padding: $select-option-padding;
+    font-size: $select-option-size;
+    transition: background 0.15s, color 0.3s;
+}
+
+.n-select-option.n-select-option--disabled {
+    cursor: not-allowed;
+    color: $--color-gray-30;
+}
+
+.n-select-option:hover {
+    background: rgba($color-gray-50, 0.15);
+}
+
+.n-select-option.n-select-option--current {
+    background: rgba($color-primary, 0.1);
+}
+
+.n-select-option.n-select-option--active {
+    color: $--color-primary;
+}

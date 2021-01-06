@@ -1,0 +1,368 @@
+@import "../../../root/vars";
+
+$datepicker-size: 13px !default;
+$datepicker-padding: 12px !default;
+$datepicker-height: 34px !default;
+
+$datepicker-display-size: 14px !default;
+$datepicker-day-width: 32px !default;
+
+.n-datepicker__wrapper {
+    position: relative;
+    display: inline-flex;
+    width: 100%;
+    color: $--color-black;
+}
+
+.n-datepicker {
+    flex: 1 1 auto;
+    min-width: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: $--color-white;
+    color: $--color-black;
+    border: 1px solid $--color-gray-15;
+    border-radius: $radius-medium;
+    transition: 0.15s border;
+}
+
+.n-datepicker:hover,
+.n-datepicker.n-open {
+    border: 1px solid $--color-primary;
+}
+
+.n-datepicker {
+    font-size: $datepicker-size;
+    padding: 0 $datepicker-height * 0.3;
+    min-height: $datepicker-height;
+}
+
+.n-datepicker.n-clearable {
+    padding-right: $datepicker-height * 0.6;
+}
+
+.n-datepicker.n-datepicker--small {
+    font-size: $datepicker-size * 0.875;
+    padding: 0 $datepicker-height * 0.3 * 0.875;
+    min-height: $datepicker-height * 0.875;
+}
+
+.n-datepicker.n-clearable {
+    padding-right: $datepicker-height * 0.6 * 0.875;
+}
+
+.n-datepicker.n-datepicker--large {
+    font-size: $datepicker-size * 1.125;
+    padding: 0 $datepicker-height * 0.3 * 1.125;
+    min-height: $datepicker-height * 1.125;
+}
+
+.n-datepicker.n-clearable {
+    padding-right: $datepicker-height * 0.6 * 1.125;
+}
+
+.n-datepicker.n-disabled,
+.n-datepicker.n-disabled:hover {
+    cursor: not-allowed;
+    background: $--color-gray-05;
+    border-color: $--color-gray-15;
+}
+
+.n-datepicker__yearview,
+.n-datepicker__monthview {
+    width: 264px;
+}
+
+.n-datepicker .n-button__wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.n-datepicker__icon {
+    flex: 0 0 auto;
+    color: $--color-gray-40;
+}
+
+.n-datepicker__seperator {
+    flex: 0 0 auto;
+    color: $--color-gray-50;
+}
+
+.n-datepicker__input {
+    flex: 1 1 auto;
+}
+
+.n-datepicker__input input {
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: $--color-black;
+    padding: 0 $datepicker-height * 0.3;
+}
+
+.n-inverse .n-datepicker__input input {
+    color: $--color-white;
+}
+
+.n-datepicker.n-disabled .n-datepicker__input input {
+    cursor: not-allowed;
+}
+
+.n-datepicker__input.n-datepicker__input--range input {
+    text-align: center;
+}
+
+.n-datepicker__header {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    border-bottom: 1px solid $--color-gray-10;
+}
+
+.n-datepicker__toolbar {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $datepicker-display-size;
+}
+
+.n-datepicker__prev .n-button {
+    padding: 8px;
+    margin-left: 5px;
+}
+
+.n-datepicker__next .n-button {
+    padding: 8px;
+    margin-left: 5px;
+}
+
+.n-datepicker__display {
+    margin-right: auto;
+}
+
+.n-datepicker__display .n-datepicker__month {
+    cursor: pointer;
+    padding: 5px 7px;
+    text-transform: uppercase;
+    border-radius: $radius-medium;
+}
+
+.n-datepicker__display .n-datepicker__month:hover {
+    background: $--color-gray-10;
+}
+
+.n-datepicker__display .n-datepicker__year {
+    cursor: pointer;
+    padding: 5px 7px;
+    font-weight: bold;
+    border-radius: $radius-medium;
+}
+
+.n-datepicker__display .n-datepicker__year:hover {
+    background: $--color-gray-10;
+}
+
+.n-datepicker__dateview .n-datepicker__legend {
+    display: flex;
+    flex-direction: row;
+    padding: $datepicker-padding $datepicker-padding * 0.5 0;
+}
+
+.n-datepicker__body {
+    padding: $datepicker-padding * 0.5;
+}
+
+.n-datepicker__footer {
+    padding: $datepicker-padding * 0.65 $datepicker-padding;
+    text-align: right;
+    border-top: 1px solid $--color-gray-10;
+}
+
+.n-datepicker__dateview .n-datepicker__panels {
+    display: flex;
+    flex-direction: row;
+}
+
+.n-datepicker__dateview .n-datepicker__panel {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.n-datepicker__dateview .n-datepicker__body {
+    padding-top: 0;
+}
+
+.n-datepicker__legend .n-datepicker__day {
+    flex: 0 0 auto;
+    padding: 2px;
+}
+
+.n-datepicker__legend .n-datepicker__day span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: $datepicker-day-width;
+    height: $datepicker-day-width;
+    font-weight: bold;
+}
+
+.n-datepicker__body .n-datepicker__week {
+    display: flex;
+    flex-direction: row;
+}
+
+.n-datepicker__body .n-datepicker__week .n-datepicker__day {
+    cursor: pointer;
+    flex: 0 0 auto;
+    padding: 2px;
+}
+
+.n-datepicker__body .n-datepicker__week .n-datepicker__day span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: $datepicker-day-width;
+    height: $datepicker-day-width;
+    border-radius: 500px;
+    color: $--color-gray-50;
+}
+
+.n-datepicker__body .n-datepicker__week .n-datepicker__day:hover span {
+    background: $--color-gray-10;
+}
+
+.n-datepicker__body .n-datepicker__week .n-datepicker__day.n-today span {
+    font-weight: bold;
+}
+
+.n-datepicker__body .n-datepicker__week .n-datepicker__day.n-current span {
+    color: $--color-black;
+}
+
+.n-datepicker__body .n-datepicker__week .n-datepicker__day.n-arrive span,
+.n-datepicker__body .n-datepicker__week .n-datepicker__day.n-depart span,
+.n-datepicker__body .n-datepicker__week .n-datepicker__day.n-between span {
+    background: $--color-gray-10;
+}
+
+.n-datepicker__body .n-datepicker__week .n-datepicker__day.n-selected span {
+    color: $--color-white;
+    background: $--color-primary;
+}
+
+.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child):not(:last-child).n-between,
+.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child):not(:last-child).n-arrive:not(.n-depart),
+.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child):not(:last-child).n-depart:not(.n-arrive) {
+    padding: 2px 0;
+}
+
+.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child):not(:last-child).n-between span,
+.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child):not(:last-child).n-arrive:not(.n-depart) span,
+.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child):not(:last-child).n-depart:not(.n-arrive) span {
+    width: $datepicker-day-width + 4;
+    padding: 0 2px;
+    border-radius: 0;
+}
+
+.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:last-child).n-arrive:not(.n-depart),
+.n-datepicker__body .n-datepicker__week .n-datepicker__day:first-child.n-between {
+    padding: 2px 0 2px 2px !important;
+}
+
+.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:last-child).n-arrive:not(.n-depart) span,
+.n-datepicker__body .n-datepicker__week .n-datepicker__day:first-child.n-between span {
+    width: $datepicker-day-width + 2 !important;
+    padding: 0 2px 0 0 !important;
+    border-radius: 500px 0 0 500px !important;
+}
+
+.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child).n-depart:not(.n-arrive),
+.n-datepicker__body .n-datepicker__week .n-datepicker__day:last-child.n-between {
+    padding: 2px 2px 2px 0 !important;
+}
+
+.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child).n-depart:not(.n-arrive) span,
+.n-datepicker__body .n-datepicker__week .n-datepicker__day:last-child.n-between span {
+    width: $datepicker-day-width + 2 !important;
+    padding: 0 0 0 2px !important;
+    border-radius: 0 500px 500px 0 !important;
+}
+
+.n-datepicker__body .n-datepicker__year {
+     display: flex;
+     flex-direction: row;
+     flex-wrap: wrap;
+     justify-content: center;
+ }
+
+.n-datepicker__body .n-datepicker__year .n-datepicker__month {
+    cursor: pointer;
+    flex: 0 0 auto;
+    padding: 5px;
+    width: 33.32%;
+}
+
+.n-datepicker__body .n-datepicker__year .n-datepicker__month span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: $datepicker-day-width * 1.125;
+    border-radius: $radius-medium;
+}
+
+.n-datepicker__body .n-datepicker__year .n-datepicker__month:hover span {
+    background: $--color-gray-10;
+}
+
+.n-datepicker__body .n-datepicker__year .n-datepicker__month.n-current span {
+    font-weight: bold;
+}
+
+.n-datepicker__body .n-datepicker__year .n-datepicker__month.n-selected span {
+    color: $--color-white;
+    background: $--color-primary;
+}
+
+.n-datepicker__body .n-datepicker__decade {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.n-datepicker__body .n-datepicker__decade .n-datepicker__year {
+    cursor: pointer;
+    flex: 0 0 auto;
+    padding: 5px;
+    width: 33.32%;
+}
+
+.n-datepicker__body .n-datepicker__decade .n-datepicker__year span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: $datepicker-day-width * 1.125;
+    border-radius: $radius-medium;
+}
+
+.n-datepicker__body .n-datepicker__decade .n-datepicker__year:hover span {
+    background: $--color-gray-10;
+}
+
+.n-datepicker__body .n-datepicker__decade .n-datepicker__year.n-current span {
+    font-weight: bold;
+}
+
+.n-datepicker__body .n-datepicker__decade .n-datepicker__year.n-selected span {
+    color: $--color-white;
+    background: $--color-primary;
+}

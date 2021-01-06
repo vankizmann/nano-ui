@@ -1,0 +1,30 @@
+@import "../../../root/vars";
+
+$info-column-label-size: 14px !default;
+
+.n-info__field {
+    position: relative;
+}
+
+.n-info__field.n-info__field--image:before {
+    content: '\00a0';
+    display: block;
+    height: 0;
+    padding-bottom: 100%;
+}
+
+.n-info__field.n-info__field--image div {
+     position: absolute;
+     top: 0;
+     bottom: 0;
+     left: 0;
+     right: 0;
+     display: flex;
+     flex-direction: column;
+     align-items: stretch;
+     justify-content: stretch;
+     background-size: contain;
+     background-repeat: no-repeat;
+     background-position: 50% 50%;
+     background-color: rgba($color-gray-50, 0.2);
+}

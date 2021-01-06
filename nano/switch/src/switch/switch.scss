@@ -1,0 +1,107 @@
+@import "../../../root/vars";
+
+$switch-size: 13px !default;
+$switch-height: 18px !default;
+$switch-ratio: 0.3 !default;
+
+.n-switch__wrapper {
+    position: relative;
+    display: inline-flex;
+}
+
+.n-switch {
+    cursor: pointer;
+    position: relative;
+    display: block;
+    width: $switch-height * 2;
+    height: $switch-height;
+    border-radius: $radius-medium;
+    background: $--color-gray-15;
+    transition: background 400ms ease;
+}
+
+.n-switch__wrapper.n-disabled .n-switch,
+.n-switch__wrapper.n-disabled .n-switch__label {
+    cursor: not-allowed;
+}
+
+.n-switch.n-switch--round {
+    border-radius: 500px;
+}
+
+.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--primary {
+    background: $--color-primary;
+}
+
+.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--success {
+    background: $--color-success;
+}
+
+.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--warning {
+    background: $--color-warning;
+}
+
+.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--danger {
+    background: $--color-danger;
+}
+
+.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--info {
+    background: $--color-info;
+}
+
+.n-switch.n-switch--small {
+    width: $switch-height * 0.875 * 2;
+    height: $switch-height * 0.875;
+}
+
+.n-switch.n-switch--large {
+    width: $switch-height * 1.125 * 2;
+    height: $switch-height * 1.125;
+}
+
+.n-switch span {
+    position: absolute;
+    top: 50%;
+    left: $switch-height * 0.15;
+    margin-top: $switch-height * -0.35;
+    width: $switch-height * 0.7;
+    height: $switch-height * 0.7;
+    border-radius: $radius-medium;
+    background: $--color-white;
+    transition: transform 400ms ease;
+}
+
+.n-switch.n-switch--small span {
+    left: $switch-height * 0.875 * 0.15;
+    margin-top: $switch-height * 0.875 * -0.35;
+    width: $switch-height * 0.875 * 0.7;
+    height: $switch-height * 0.875 * 0.7;
+}
+
+.n-switch.n-switch--large span {
+    left: $switch-height * 1.125 * 0.15;
+    margin-top: $switch-height * 1.125 * -0.35;
+    width: $switch-height * 1.125 * 0.7;
+    height: $switch-height * 1.125 * 0.7;
+}
+
+.n-switch.n-switch--round span {
+    border-radius: 500px;
+}
+
+.n-switch.n-on span {
+    transform: translateX($switch-height);
+}
+
+.n-switch.n-switch--small.n-on span {
+    transform: translateX($switch-height * 0.875);
+}
+
+.n-switch.n-switch--large.n-on span {
+    transform: translateX($switch-height * 1.125);
+}
+
+.n-switch__label {
+    cursor: default;
+    margin-left: 8px;
+}

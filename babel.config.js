@@ -9,16 +9,17 @@ module.exports = function (api) {
                 modules: false, useBuiltIns: false
             }
         ],
-        [
-            "@vue/babel-preset-jsx",
-            {
-                modules: false, useBuiltIns: false
-            }
-        ]
+        // [
+        //     "@vue/babel-plugin-jsx",
+        //     {
+        //         modules: false, useBuiltIns: false
+        //     }
+        // ]
     ];
 
     const plugins= [
-        "@vue/babel-plugin-transform-vue-jsx",
+        "@vue/babel-plugin-jsx",
+        // "@vue/babel-plugin-transform-vue-jsx",
         "@babel/plugin-proposal-class-properties",
         "@babel/plugin-proposal-object-rest-spread",
         "@babel/plugin-proposal-export-default-from"
