@@ -6,6 +6,13 @@ export default {
 
     props: {
 
+        modelValue: {
+            default()
+            {
+                return null;
+            },
+        },
+
         value: {
             default()
             {
@@ -23,7 +30,7 @@ export default {
         size: {
             default()
             {
-                return 'default';
+                return 'md';
             },
             type: [String]
         },
@@ -70,7 +77,7 @@ export default {
         placeholder: {
             default()
             {
-                return this.trans('Please select');
+                return Locale.trans('Please select');
             },
             type: [String]
         },
@@ -78,7 +85,7 @@ export default {
         emptyText: {
             default()
             {
-                return this.trans('No items');
+                return Locale.trans('No items');
             },
             type: [String]
         },
@@ -86,7 +93,7 @@ export default {
         undefinedText: {
             default()
             {
-                return this.trans('Undefined item');
+                return Locale.trans('Undefined item');
             }
         },
 
@@ -134,7 +141,7 @@ export default {
     data()
     {
         return {
-            veValue: this.value,
+            veValue: this.modelValue,
             veClearValue: this.clearValue,
             veOpen: false,
             veSearch: '',
@@ -155,8 +162,8 @@ export default {
 
         value()
         {
-            if ( this.veValue !== this.value ) {
-                this.veValue = this.value;
+            if ( this.veValue !== this.modelValue ) {
+                this.veValue = this.modelValue;
             }
         },
 
@@ -166,7 +173,7 @@ export default {
 
         clear()
         {
-            this.$emit('input', this.veValue = Arr.clone(this.veClearValue));
+            this.$emit('update:modelValue', this.veValue = Arr.clone(this.veClearValue));
         },
 
         addOption(option)
@@ -221,7 +228,8 @@ export default {
             }
 
             if ( this.veValue !== veValue ) {
-                this.$emit('input', this.veValue = veValue);
+                console.log('woo?', veValue);
+                this.$emit('update:modelValue', this.veValue = veValue);
             }
         },
 
@@ -237,7 +245,7 @@ export default {
                 return this.undefinedText;
             }
 
-            return option.label.trim();
+            return option.label;
         },
 
         openSelect()
@@ -448,7 +456,7 @@ export default {
         }
 
         return (
-            <input ref="input" class="n-select__input" style={style} value={this.veSearch} on={events} attrs={attrs} />
+            <input ref="input" class="n-select__input" style={style} value={this.veSearch} {...events} {...attrs} />
         );
     },
 
@@ -459,11 +467,11 @@ export default {
         }
 
         let events = {
-            click: this.clear
+            onClick: this.clear
         };
 
         return (
-            <div class="n-select__clear" on={events}>
+            <div class="n-select__clear" {...events}>
                 <span class={this.icons.times}></span>
             </div>
         );
@@ -578,20 +586,19 @@ export default {
             visible: this.veOpen,
             type: 'select',
             trigger: 'click',
-            width: '100%',
+            width: -1,
             size: this.size,
             disabled: this.disabled,
             position: this.position,
-            boundary: this.boundary,
             window: ! this.boundary,
         };
 
         let events = {
-            input: this.eventPopoverInput
+            onInput: this.eventPopoverInput
         };
 
         return (
-            <NPopover ref="popover" props={props} on={events}>
+            <NPopover ref="popover" {...props} {...events}>
                 { this.ctor('renderItems')() }
             </NPopover>
         );
@@ -611,17 +618,15 @@ export default {
             };
 
             return (
-                <NSelectOption props={props}>
+                <NSelectOption {...props}>
                     {  Obj.get({ $value, $index }, this.optionsLabel, null) }
                 </NSelectOption>
             );
         });
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
         let classList = [
             'n-select__wrapper'
         ];
@@ -635,7 +640,7 @@ export default {
                 { this.ctor('renderDisplay')() }
                 { this.ctor('renderPopover')() }
                 { this.ctor('renderOptions')() }
-                { this.$slots.default }
+                { this.$slots.default && this.$slots.default() }
             </div>
         );
     }

@@ -9,7 +9,7 @@ export default {
 
     props: {
 
-        value: {
+        modelValue: {
             default()
             {
                 return null;
@@ -83,11 +83,9 @@ export default {
 
     watch: {
 
-        value()
+        modelValue()
         {
-            if ( this.value !== this.veValue ) {
-                this.veValue = this.value;
-            }
+            this.tempValue = this.modelValue;
         }
 
     },
@@ -101,7 +99,8 @@ export default {
 
         eventInput(event)
         {
-            this.$emit('input', event.target.value);
+            this.$emit('update:modelValue', 
+                this.tempValue = event.target.value);
         }
 
     },
@@ -109,7 +108,7 @@ export default {
     data()
     {
         return {
-            veValue: this.value || ''
+            tempValue: this.modelValue
         };
     },
 
@@ -139,7 +138,7 @@ export default {
         let props = Obj.except(this.$attrs, ['class', 'style']);
 
         Obj.assign(props, {
-            value:          this.veValue,
+            value:          this.tempValue,
             type:           this.nativeType,
             disabled:       this.disabled,
             placeholder:    this.placeholder,
@@ -150,16 +149,7 @@ export default {
             props.disabled = true;
         }
 
-        let events = {
-        };
-
-        if ( ! this.disabled ) {
-            events = Obj.assign({}, this.$listeners);
-        }
-
-        return (
-            <input value={this.veValue} {...props} />
-        );
+        return (<input {...props} />);
     },
 
     render()

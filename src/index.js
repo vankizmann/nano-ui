@@ -65,13 +65,13 @@ export function NanoInstall(App, Icons = {}, Styles = {})
     // require('./switch/index');
     // require('./checkbox/index');
     // require('./radio/index');
-    // require('./select/index');
+    require('./select/index').default(App);
     // require('./cascader/index');
     // require('./datepicker/index');
     // require('./timepicker/index');
     // require('./transfer/index');
     // require('./file/index');
-    // require('./popover/index');
+    require('./popover/index').default(App);
     // require('./modal/index');
     // require('./confirm/index');
     // require('./table/index');

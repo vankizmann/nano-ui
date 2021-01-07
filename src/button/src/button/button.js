@@ -120,21 +120,13 @@ export default {
             classList.push('n-disabled');
         }
 
-        let events = {};
-
-        if ( ! this.disabled ) {
-            events = Obj.assign({}, this.$listeners);
-        }
-
-        let attrs = {};
+        let props = Obj.except(this.$attrs, ['class'], {
+            class: this.cmer(classList)
+        });
 
         if ( this.disabled ) {
-            attrs.disabled = true;
+            props.disabled = true;
         }
-
-        let props = {
-            class: classList, attrs: attrs, on: events
-        };
 
         let innerHtml = [];
 

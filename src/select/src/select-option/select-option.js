@@ -32,9 +32,8 @@ export default {
         label: {
             default()
             {
-                return this.$slots.default[0].text;
-            },
-            type: [String]
+                return null;
+            }
         },
 
         disabled: {
@@ -95,20 +94,18 @@ export default {
         let events = {};
 
         if ( ! this.disabled ) {
-            events.click = (event) => this.NSelect.toggleOption(this.veValue, event);
+            events.onClick = (event) => this.NSelect.toggleOption(this.veValue, event);
         }
 
         return (
-            <div class={classList} data-option={this._uid} on={events}>
-                { this.$slots.default || this.label }
+            <div class={classList} data-option={this._uid} {...events}>
+                { this.$slots.default ? this.$slots.default() : this.label }
             </div>
         );
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
         return null;
     }
 

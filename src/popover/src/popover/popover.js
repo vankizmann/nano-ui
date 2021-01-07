@@ -1,17 +1,20 @@
-import { Obj, Any, Dom, UUID } from "nano-js";
+import { Arr, Any, Dom } from "nano-js";
 
 
 export default {
 
     name: 'NPopover',
 
-    model: {
-        prop: 'visible'
+    provide()
+    {
+        return {
+            NPopover: this
+        };
     },
 
     props: {
 
-        visible: {
+        modelValue: {
             default()
             {
                 return false;
@@ -23,7 +26,8 @@ export default {
             default()
             {
                 return 0;
-            }
+            },
+            type: [Number]
         },
 
         disabled: {
@@ -48,18 +52,10 @@ export default {
             },
         },
 
-        contain: {
-            default()
-            {
-                return true;
-            },
-            type: [Boolean]
-        },
-
         window: {
             default()
             {
-                return false;
+                return true;
             },
             type: [Boolean]
         },
@@ -83,7 +79,7 @@ export default {
         size: {
             default()
             {
-                return 'default';
+                return 'md';
             },
             type: [String]
         },
@@ -91,235 +87,300 @@ export default {
         position: {
             default()
             {
-                return this.trigger === 'context' ?
-                    'bottom-start' : 'bottom-center';
+                return 'bottom-center';
             },
             type: [String]
         },
 
-        closeInside: {
+        scrollClose: {
             default()
             {
-                return false;
+                return true;
             },
             type: [Boolean]
         },
+
+        framerate: {
+            default()
+            {
+                return 30;
+            },
+            type: [Number]
+        }
 
     },
 
     watch: {
 
-        visible()
+        modelValue()
         {
-            if ( this.veVisible !== this.visible ) {
-                this.veVisible = this.visible;
-            }
+            this.tempValue = this.modelValue;
         },
 
-        veVisible()
+        tempValue()
         {
-            if ( this.veVisible === true ) {
-                Dom.find(this.$el).addClass('n-popover--open');
-                Dom.find(this.target).addClass('n-popover--open');
-            }
-
-            if ( this.veVisible === false ) {
-                Dom.find(this.$el).removeClass('n-popover--open');
-                Dom.find(this.target).removeClass('n-popover--open');
-            }
-
-            this.refresh();
+            this.refreshVisible();
         }
 
     },
 
     methods: {
 
+        active()
+        {
+            return this.tempValue;
+        },
+
         close()
         {
-            this.$emit('input', this.veVisible = false);
+            this.$emit('update:modelValue', 
+                this.tempValue = false);
         },
 
-        refresh()
+        refreshVisible()
         {
-            let style = {};
+            Dom.find(this.$el).css(null);
 
-            if ( this.$el === null ) {
-                return { display: 'none' };
+            if ( ! this.tempValue ) {
+                return clearInterval(this.refresh);
             }
 
-            let clientX = Dom.find(this.target).offset('left', this.parent);
+            this.refresh = setInterval(this.updatePosition, 
+                1000 / this.framerate);
 
-            if ( this.trigger !== 'context' ) {
-                clientX -= Dom.find(this.target).scroll('left', this.parent);
+            delete this.passedOffset;
+        },
+
+        isSameOffset(offset)
+        {
+            if ( ! this.passedOffset ) {
+                return false;
             }
+
+            let rainbow = Arr.each(['x', 'y'], (key) => {
+                return offset[key] === this.passedOffset[key];
+            });
+
+            return ! Arr.has(rainbow, false);
+        },
+
+        getTargetHorizontal(position)
+        {
+            let targetRect = this.target.getBoundingClientRect();
 
             if ( this.trigger === 'context' ) {
-                clientX = this.clientX - Dom.find(this.parent).offset('left');
+                targetRect = {
+                    top: this.clientY, left: this.clientX, width: 2, height: 2
+                };
             }
 
-            if ( this.parent === document.body ) {
-                // clientX += Dom.find(document.body).scroll('left');
+            let windowRect = this.$el.getBoundingClientRect();
+
+            if ( this.width === -1 ) {
+                windowRect.width = targetRect.width;
             }
 
-            let clientY = Dom.find(this.target).offset('top', this.parent);
+            let posY = {
 
-            if ( this.trigger !== 'context' ) {
-                clientY -= Dom.find(this.target).scroll('top', this.parent);
-            }
+                // Set above the tagret element
+                start: targetRect.top - windowRect.height,
+                
+                // Set at bottom of target element
+                end: targetRect.top + targetRect.height,
 
-            if ( this.trigger === 'context' ) {
-                clientY = this.clientY - Dom.find(this.parent).offset('top');
-            }
-
-            if ( this.parent === document.body ) {
-                // clientY += Dom.find(document.body).scroll('top');
-            }
-
-            let height = this.trigger === 'context' ?
-                0 : Dom.find(this.target).height();
-
-            let width = this.trigger === 'context' ?
-                0 : Dom.find(this.target).width();
-
-            let realWidth = this.width;
-
-            if ( realWidth === '100%' ) {
-                realWidth = Dom.find(this.target).width();
-            }
-
-            let reset = {
-                'max-width': realWidth ? (realWidth + 'px') : 'auto'
             };
 
-            if ( this.width ) {
-                reset.width = this.width + 'px';
+            let posX = {
+
+                // Set on the left of target element
+                start: targetRect.left,
+
+                // Set into the center of the target element
+                center: targetRect.left + (targetRect.width * 0.5) - 
+                    (windowRect.width * 0.5),
+
+                // Set on the right of the target element
+                end: targetRect.left + targetRect.width - 
+                    windowRect.width,
+
+            };
+
+            let offset = { x: 0, y: 0 };
+
+            if ( position === 'top-start' ) {
+                offset = { x: posX.start, y: posY.start };
             }
 
-            let nodeWidth = Dom.find(this.$el).realWidth(reset);
-            let nodeHeight = Dom.find(this.$el).realHeight(reset);
-
-            if ( this.position.match(/^top-(start|center|end)$/) ) {
-                style.top = clientY - nodeHeight;
+            if ( position === 'top-center' ) {
+                offset = { x: posX.center, y: posY.start };
             }
 
-            if ( this.position.match(/^bottom-(start|center|end)$/) ) {
-                style.top = clientY + height;
+            if ( position === 'top-end' ) {
+                offset = { x: posX.end, y: posY.start };
             }
 
-            if ( this.position.match(/^(top|bottom)-start$/) ) {
-                style.left = clientX;
+            if ( position === 'bottom-start' ) {
+                offset = { x: posX.start, y: posY.end };
             }
 
-            if ( this.position.match(/^(top|bottom)-end$/) ) {
-                style.left = clientX + width - nodeWidth;
+            if ( position === 'bottom-center' ) {
+                offset = { x: posX.center, y: posY.end };
             }
 
-            if ( this.position.match(/^(top|bottom)-center$/) ) {
-                style.left = clientX + (width / 2) - (nodeWidth / 2);
+            if ( position === 'bottom-end' ) {
+                offset = { x: posX.end, y: posY.end };
             }
 
-            if ( this.position.match(/^left-(start|center|end)$/) ) {
-                style.left = clientX - nodeWidth;
+            if ( offset.y < 0 ) {
+                offset.y = 0;
+            }
+        
+            if ( offset.y + windowRect.height > window.innerHeight ) {
+                offset.y = window.innerHeight - windowRect.height;
             }
 
-            if ( this.position.match(/^right-(start|center|end)$/) ) {
-                style.left = clientX + width;
+            if ( offset.x < 0 ) {
+                offset.x = 0;
+            }
+        
+            if ( offset.x + windowRect.width > window.innerWidth ) {
+                offset.x = window.innerWidth - windowRect.width;
             }
 
-            if ( this.position.match(/^(left|right)-start$/) ) {
-                style.top = clientY;
-            }
+            return offset;
+        },
 
-            if ( this.position.match(/^(left|right)-end$/) ) {
-                style.top = clientY + height - nodeHeight;
-            }
-
-            if ( this.position.match(/^(left|right)-center$/) ) {
-                style.top = clientY + (height / 2) - (nodeHeight / 2);
-            }
-
-            let parentWidth = Dom.find(this.parent).width();
-            let parentHeight = Dom.find(this.parent).height();
-
-            // Get target offsets to adjust padding or margin
-            let offset = Dom.find(this.target).offset(null, this.parent);
-
+        getTargetVertical(position)
+        {
+            let targetRect = this.target.getBoundingClientRect();
 
             if ( this.trigger === 'context' ) {
-
-                if ( style.left < 0 ) {
-                    style.left = 0;
-                }
-
-                if ( style.left + nodeWidth > parentWidth ) {
-                    style.left = parentWidth - nodeWidth;
-                }
-
-                if ( style.top < 0 ) {
-                    style.top = 0;
-                }
-
-                if ( style.top + nodeHeight > parentHeight ) {
-                    style.top = parentHeight - nodeHeight;
-                }
-
+                targetRect = {
+                    top: this.clientY, left: this.clientX, width: 2, height: 2
+                };
             }
 
-            if ( this.trigger !== 'context' && this.position.match(/^(top|bottom)-/) && this.contain ) {
+            let windowRect = this.$el.getBoundingClientRect();
 
-                if ( style.left < 0 ) {
-                    style.left = 0;
-                }
+            if ( this.width === -1 ) {
+                windowRect.width = targetRect.width;
+            }
+            
+            let posY = {
 
-                if ( style.left + nodeWidth > parentWidth ) {
-                    style.left = parentWidth - nodeWidth;
-                }
+                // Set at top edge of the target element
+                start: targetRect.top,
 
-                if ( style.top + nodeHeight > parentHeight ) {
-                    style.top = parentHeight - height - nodeHeight - offset.bottom;
-                }
+                // Set at the middle of the target element
+                center: targetRect.top + (targetRect.height * 0.5) - 
+                    (windowRect.height * 0.5),
 
-                if ( style.top - nodeHeight < 0 ) {
-                    style.top = height + offset.top;
-                }
+                // Ste at the bottom of the target elemnent
+                end: targetRect.top + targetRect.height - 
+                    windowRect.height,
 
+            };
+
+            let posX = {
+
+                // Set to the left of the target element
+                start: targetRect.left - windowRect.width,
+
+                // Set to the right of the target element
+                end: targetRect.left + targetRect.width,
+
+            };
+
+            let offset = { x: 0, y: 0 };
+
+            if ( position === 'left-start' ) {
+                offset = { x: posX.start, y: posY.start };
             }
 
-            if ( this.trigger !== 'context' && this.position.match(/^(left|right)-/) && this.contain ) {
-
-                if ( style.top < 0 ) {
-                    style.top = 0;
-                }
-
-                if ( style.top + nodeHeight > parentHeight ) {
-                    style.top = parentHeight - nodeHeight;
-                }
-
-                if ( style.left + nodeWidth > parentWidth ) {
-                    style.left = parentWidth - width - nodeWidth - offset.right;
-                }
-
-                if ( style.left - nodeWidth < 0 ) {
-                    style.left = width + offset.left;
-                }
-
+            if ( position === 'left-center' ) {
+                offset = { x: posX.start, y: posY.center };
             }
 
-            let pseudo = Obj.map(Obj.clone(style), (prop) => prop + 'px');
-
-            if ( this.trigger !== 'context' ) {
-                pseudo['max-width'] = realWidth ? (realWidth + 'px') : 'auto';
+            if ( position === 'left-end' ) {
+                offset = { x: posX.start, y: posY.end };
             }
 
-            if ( ! this.veVisible && ! this.visible ) {
-                pseudo.display = 'none';
+            if ( position === 'right-start' ) {
+                offset = { x: posX.end, y: posY.start };
             }
 
-            return this.style = pseudo;
+            if ( position === 'right-center' ) {
+                offset = { x: posX.end, y: posY.center };
+            }
+
+            if ( position === 'right-end' ) {
+                offset = { x: posX.end, y: posY.end };
+            }
+
+            if ( offset.y < 0 ) {
+                offset.y = 0;
+            }
+        
+            if ( offset.y + windowRect.height > window.innerHeight ) {
+                offset.y = window.innerHeight - windowRect.height;
+            }
+
+            if ( offset.x < 0 ) {
+                offset.x = 0;
+            }
+        
+            if ( offset.x + windowRect.width > window.innerWidth ) {
+                offset.x = window.innerWidth - windowRect.width;
+            }
+
+            return offset;
         },
 
-        eventMousemove(event, el)
+        getTargetOffset()
+        {
+            let position = this.position;
+
+            if ( position.match(/^(top|bottom)\-/) ) {
+                return this.getTargetHorizontal(position);
+            }
+
+            if ( position.match(/^(left|right)\-/) ) {
+                return this.getTargetVertical(position);
+            }
+
+            return targetRect;
+        },
+
+        updatePosition()
+        {
+            let rect = this.target.getBoundingClientRect();
+
+            if ( this.isSameOffset(rect) ) {
+                return;
+            }
+
+            let offset = this.getTargetOffset();
+
+            let style = {
+                'z-index':  window.zIndex++,
+                'top':      Math.round(offset.y) + 'px', 
+                'left':     Math.round(offset.x) + 'px', 
+            };
+
+            if ( this.width === -1 ) {
+                style.width = rect.width + 'px';
+            }
+            
+            Dom.find(this.$el).css(style);
+
+            if ( this.scrollClose && this.passedOffset ) {
+                this.close();
+            }
+
+            this.passedOffset = rect;
+        },
+
+        onHover(event, el)
         {
             if ( this.disabled ) {
                 return;
@@ -328,183 +389,194 @@ export default {
             let target = Dom.find(el).closest(this.target),
                 source = Dom.find(el).closest(this.$el);
 
-            let result = !! target || !! source;
+            let result = (!! target || !! source);
 
-            if ( this.veVisible === result ) {
+            if ( this.tempValue === result ) {
                 return;
             }
 
-            this.$emit('input', this.veVisible = result);
+            if ( ! result ) {
+                return this.$nextTick(this.close);
+            }
+
+            this.$emit('update:modelValue', this.tempValue = result);
         },
 
-        eventClick(event, el)
+        onClick(event, el)
         {
+            let keyCode = event.which === 1;
+
+            if ( this.disabled || this.tempValue || ! keyCode ) {
+                return;
+            }
+
+            let target = Dom.find(el).closest(this.target),
+                source = Dom.find(el).closest(this.$el);
+
+            let result = (!! target || !! source);
+
+            if ( this.tempValue === result ) {
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            this.$emit('update:modelValue', this.tempValue = result);
+        },
+
+        onContext(event, el)
+        {
+            let keyCode = event.which === 3;
+
+            if ( this.disabled || this.tempValue || ! keyCode ) {
+                return;
+            }
+
+            let target = Dom.find(el).closest(this.target),
+                source = Dom.find(el).closest(this.$el);
+
             this.clientX = event.clientX;
             this.clientY = event.clientY;
 
-            if ( event.which !== 1 ) {
+            let result = (!! target || !! source);
+
+            if ( this.tempValue === result ) {
                 return;
             }
 
-            if ( this.disabled ) {
-                return;
-            }
+            event.preventDefault();
+            event.stopPropagation();
 
-            let target = Dom.find(el).closest(this.target),
-                source = Dom.find(el).closest(this.$el);
-
-            let result = !! target || !! source;
-
-            if ( result && this.veVisible ) {
-                result = ! this.closeInside;
-            }
-
-            if ( this.veVisible !== result ) {
-                this.$emit('input', this.veVisible = result);
-            }
+            this.$emit('update:modelValue', this.tempValue = result);
         },
 
-        eventContextmenu(event, el)
+        onExit(event, el)
         {
-            if ( this.disabled ) {
+            if ( this.disabled || ! this.tempValue ) {
                 return;
             }
 
-            if ( event.which !== 3 ) {
+            if ( !! Dom.find(el).closest(this.$el) ) {
                 return;
             }
 
-            let target = Dom.find(el).closest(this.target),
-                source = Dom.find(el).closest(this.$el);
+            let target = Dom.find(el).closest(this.target);
 
-            let result = !! target || !! source;
-
-            if ( result && this.veVisible ) {
-                result = ! this.closeInside;
-            }
-
-            if ( result ) {
-                event.preventDefault();
-            }
-
-            if ( this.veVisible === result ) {
+            if ( this.trigger !== 'context' && !! target ) {
                 return;
             }
 
-            this.$emit('input', this.veVisible = result);
-        },
-
-        eventMousedown(event)
-        {
-            this.clientX = event.clientX;
-            this.clientY = event.clientY;
+            this.close();
         }
 
     },
 
     data()
     {
-        let options = {
-            veVisible: this.visible, clientX: 0, clientY: 0, target: null, parent: null
+        return {
+            tempValue: false,
+            clientX: 0,
+            clientY: 0,
+            target: null
         };
+    },
 
-        options.style = {
-            display: 'none'
-        };
-
-        return options;
+    beforeMount()
+    {
+        this.tempValue = this.visible;
     },
 
     mounted()
     {
-        let $event = {
-            _uid: this._uid
-        };
-
-        if ( this.trigger === 'hover' ) {
-            Dom.find(document).on('mousemove', Any.debounce(this.eventMousemove), $event);
-        }
-
-        if ( this.trigger === 'click' ) {
-            Dom.find(document).on('click', this.eventClick, $event);
-        }
-
-        if ( this.trigger === 'context' ) {
-            Dom.find(document).on('mousedown', this.eventMousedown, $event);
-            Dom.find(document).on('contextmenu', this.eventContextmenu, $event);
-        }
-
         this.target = Dom.find(this.$el).previous().get(0);
 
-        if ( ! Any.isEmpty(this.selector) ) {
-            this.target = Dom.find(this.$el).parent().find(this.selector).get(0);
-        }
-
-        this.parent = null;
-
-        if ( ! Any.isEmpty(this.boundary) ) {
-            this.parent = Dom.find(this.boundary).get(0);
+        if ( this.trigger === 'context' ) {
+            this.target = Dom.find(this.$el).parent().get(0);
         }
 
         if ( this.window ) {
-            this.parent = document.body;
+            Dom.find(document.body).append(this.$el);
         }
 
-        if ( this.parent ) {
-            return Dom.find(this.parent).append(this.$el);
+        if ( this.trigger === 'hover' ) {
+            Dom.find(document.body).on('mousemove', 
+                Any.framerate(this.onHover, 30), this._uid);
         }
 
-        this.parent = Dom.find(this.target).parent().get(0);
+        if ( this.trigger === 'click' ) {
+            Dom.find(document.body).on('click', 
+                Any.framerate(this.onClick, 30), this._uid);
+        }
+
+        if ( this.trigger === 'context' ) {
+            Dom.find(document.body).on('contextmenu', 
+                Any.framerate(this.onContext, 30), this._uid);
+        }
+
+
+        Dom.find(document.body).on('mousedown', 
+            Any.framerate(this.onExit, 30), this._uid);
     },
 
-    beforeDestroy()
+    beforeUnmount()
     {
-        let $event = {
-            _uid: this._uid
-        };
-
-        Dom.find(document).off('mousemove', null, $event);
-        Dom.find(document).off('click', null, $event);
-        Dom.find(document).off('contextmenu', null, $event);
-        Dom.find(document).off('mousedown', null, $event);
+        Dom.find(document).off('mousemove', null, this._uid);
+        Dom.find(document).off('click', null, this._uid);
+        Dom.find(document).off('contextmenu', null, this._uid);
+        Dom.find(document).off('mousedown', null, this._uid);
 
         this.$el.remove();
     },
 
+    renderBody()
+    {
+        if ( this.$slots.raw ) {
+            return this.$slots.raw();
+        }
+
+        return (
+            <div class="n-popover__frame">
+                { this.$slots.header &&
+                    <div class="n-popover__header">
+                        { this.$slots.header() }
+                    </div>
+                }
+                <div class="n-popover__body">
+                    { this.$slots.default() }
+                </div>
+                { this.$slots.footer &&
+                    <div class="n-popover__footer">
+                        { this.$slots.footer() }
+                    </div>
+                }
+            </div>
+        );
+    },
+
     render()
     {
-        let className = [
+        if ( ! window.zIndex ) {
+            window.zIndex = 9000;
+        }
+
+        let classList = [
             'n-popover',
-            'n-popover--' + this.size,
             'n-popover--' + this.type,
             'n-popover--' + this.position
         ];
 
-        let style = this.style;
+        if ( this.size ) {
+            classList.push('n-popover--' + this.size);
+        }
 
-        if ( this.width ) {
-            style.width = this.width + 'px';
+        if ( ! this.tempValue ) {
+            classList.push('n-hidden');
         }
 
         return (
-            <div class={className} style={this.style}>
-                { this.$slots.raw ||
-                    <div class="n-popover__frame">
-                        { this.$slots.header &&
-                            <div class="n-popover__header">
-                                {this.$slots.header}
-                            </div>
-                        }
-                        <div class="n-popover__body">
-                            {this.$slots.default}
-                        </div>
-                        { this.$slots.footer &&
-                            <div class="n-popover__footer">
-                                {this.$slots.footer}
-                            </div>
-                        }
-                    </div>
-                }
+            <div class={this.cmer(classList)}>
+                { this.tempValue && this.ctor('renderBody')() }
             </div>
         );
     }

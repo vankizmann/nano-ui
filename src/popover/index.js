@@ -1,4 +1,5 @@
-import Vue from "vue";
+import Popover from './src/popover/popover';
 
-import Popover from './src/popover/popover.beta';
-Vue.component(Popover.name, Popover);
+export default function (App) {
+    App.component(Popover.name, Popover);
+}
