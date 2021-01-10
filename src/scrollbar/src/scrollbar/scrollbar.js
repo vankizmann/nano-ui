@@ -36,6 +36,13 @@ export default {
                 return 15;
             },
             type: [Number]
+        },
+
+        wrapClass: {
+            default()
+            {
+                return 'n-scrollbar__wrap';
+            }
         }
 
     },
@@ -162,10 +169,14 @@ export default {
         return (
             <div class={classList} {...this.$attrs}>
                 <div class="n-scrollbar-content" ref="content">
-                    <div>{ this.$slots.default() }</div>
+                    <div class={this.wrapClass}>
+                        { this.$slots.default && this.$slots.default() }
+                    </div>
                 </div>
                 <div class="n-scrollbar-spacer" ref="spacer">
-                    <div>{ /* Adapt inner height */ }</div>
+                    <div class={this.wrapClass}>
+                        { /* Adapt inner height */ }
+                    </div>
                 </div>
             </div>
         );

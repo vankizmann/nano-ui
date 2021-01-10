@@ -59,8 +59,7 @@ $notification-icon-size: 16px !default;
     margin: 5px;
     background: $color-white;
     border-radius: $md-radius;
-    border: 1px solid $color-gray-15;
-    box-shadow: 0 1px 3px 1px rgba($color-black, 0.05);
+    box-shadow: 0 1px 5px 2px rgba($color-black, 0.20);
     transition: transform 0.15s;
 }
 
@@ -99,7 +98,6 @@ $notification-icon-size: 16px !default;
 
     .n-notification--#{$color} {
         background: $-color-base;
-        border-color: $-color-dark;
     }
 
     .n-notification--#{$color} .n-notification__icon,

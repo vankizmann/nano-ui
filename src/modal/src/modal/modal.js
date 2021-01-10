@@ -4,10 +4,6 @@ export default {
 
     name: 'NModal',
 
-    model: {
-        prop: 'visible'
-    },
-
     inject: {
 
         NScrollbar: {
@@ -18,7 +14,7 @@ export default {
 
     props: {
 
-        visible: {
+        modelValue: {
             default()
             {
                 return false;
@@ -33,11 +29,12 @@ export default {
             },
         },
 
-        boundary: {
+        disabled: {
             default()
             {
-                return document.body;
+                return false;
             },
+            type: [Boolean]
         },
 
         width: {
@@ -94,34 +91,23 @@ export default {
                 return false;
             },
             type: [Boolean]
-        },
-
-        transitionModal: {
-            default()
-            {
-                return 'n-fade-up';
-            },
-            type: [String]
-        },
-
-        transitionBackdrop: {
-            default()
-            {
-                return 'n-fade';
-            },
-            type: [String]
         }
 
     },
 
     watch: {
 
-        visible()
+        modelValue(value)
         {
-            if ( this.visible !== this.veVisible ) {
-                this.veVisible = this.visible;
+            if ( value !== this.tempValue ) {
+                this.tempValue = value;
             }
         },
+
+        tempValue()
+        {
+            this.startRefreshTimeout();
+        }
 
     },
 
@@ -129,7 +115,7 @@ export default {
 
         open()
         {
-            this.$emit('input', this.veVisible = true);
+            this.$emit('update:modelValue', this.tempValue = true);
         },
 
         close(event)
@@ -138,52 +124,65 @@ export default {
                 event.stopPropagation();
             }
 
-            this.$emit('input', this.veVisible = false);
+            this.$emit('update:modelValue', this.tempValue = false);
         },
 
         addClass() {
-            Dom.find(this.$el).addClass('n-open');
-            Dom.find(this.target).addClass('n-open');
-            Dom.find(document.body).addClass('n-open');
+            // Dom.find(this.$el).addClass('n-open');
+            // Dom.find(this.target).addClass('n-open');
+            // Dom.find(document.body).addClass('n-open');
         },
 
         removeClass() {
-            Dom.find(this.$el).removeClass('n-open');
-            Dom.find(this.target).removeClass('n-open');
-            Dom.find(document.body).removeClass('n-open');
+            // Dom.find(this.$el).removeClass('n-open');
+            // Dom.find(this.target).removeClass('n-open');
+            // Dom.find(document.body).removeClass('n-open');
         },
 
-        eventClick(event, target)
+        stopRefreshTimeout()
         {
-            if ( event.which !== 1 ) {
+            clearInterval(this.refresh);
+
+            Dom.find(this.$el).removeClass('n-ready');
+        },
+
+        startRefreshTimeout()
+        {
+            if ( ! this.tempValue ) {
+                return this.stopRefreshTimeout();
+            }
+
+            Dom.find(this.$el).css({ 
+                'z-index': window.zIndex++
+            });
+
+            this.refresh = setTimeout(() => {
+                Dom.find(this.$el).addClass('n-ready');
+            }, 100);
+        },
+
+        eventClick(event, el)
+        {
+            if ( this.disabled || event.which !== 1 ) {
                 return;
             }
 
-            if ( Dom.find(target).closest('.n-disabled') ) {
+            let result = !! Dom.find(el).closest(this.target) || this.tempValue;
+
+            if ( this.tempValue && this.closable ) {
+                result = ! Dom.find(el).closest(this.$refs.backdrop);
+            }
+
+            if ( result === this.tempValue ) {
                 return;
             }
 
-            let result = !! Dom.find(target)
-                .closest(this.target) || this.veVisible;
-
-            if ( this.veVisible && this.closeOutside ) {
-                result = ! Dom.find(target).closest(this.$refs.backdrop);
-            }
-
-            if ( result === this.veVisible ) {
-                return;
-            }
-
-            if ( ! result ) {
-                return this.$emit('close');
-            }
-
-            this.$emit('input', this.veVisible = !! result);
+            this.$emit('update:modalValue', this.tempValue = !! result);
         },
 
         eventKeydown(event, target)
         {
-            if ( ! this.veVisible || ! this.closable ) {
+            if ( ! this.tempValue || ! this.closable ) {
                 return;
             }
 
@@ -214,55 +213,55 @@ export default {
 
     },
 
-    provide()
-    {
-        return {
-            NModal: this
-        };
-    },
+    // provide()
+    // {
+    //     return {
+    //         NModal: this
+    //     };
+    // },
 
     data()
     {
         return {
-            target: null, veVisible: this.visible
+            target: null, tempValue: this.modelValue
         };
     },
 
     mounted()
     {
-        Dom.find(document.body).on('click',
-            this.eventClick, { _uid: this.uid });
+        this.target = Dom.find(this.$el).previous().get(0);
 
-        Dom.find(document.body).on('keydown',
-            this.eventKeydown, { _uid: this.uid });
+        Dom.find(document.body).on('mousedown',
+            this.eventClick, this._.uid);
+
+        // Dom.find(document.body).on('keydown',
+        //     this.eventKeydown, this._.uid);
 
         // if ( ! this.$listeners.close ) {
         //     this.$on('close', this.close);
         // }
 
-        this.target = Dom.find(this.$el).previous().get(0);
+        // this.target = Dom.find(this.$el).previous().get(0);
 
-        if ( ! Any.isEmpty(this.selector) ) {
-            this.target = Dom.find(this.$el).parent().find(this.selector).get(0);
-        }
+        // if ( ! Any.isEmpty(this.selector) ) {
+        //     this.target = Dom.find(this.$el).parent().find(this.selector).get(0);
+        // }
 
         Dom.find(document.body).append(this.$el);
     },
 
-    beforeDestroy()
+    beforeUnmount()
     {
-        this.$off('close');
-
         this.$el.remove();
     },
 
-    destroyed()
+    unmounted()
     {
-        Dom.find(document.body).off('click',
-            null, { _uid: this.uid });
+        Dom.find(document.body).off('mousedown',
+            null, this._.uid);
 
         Dom.find(document.body).off('keydown',
-            null, { _uid: this.uid });
+            null, this._.uid);
     },
 
     renderClose()
@@ -271,12 +270,12 @@ export default {
             return null;
         }
 
-        let events = {
-            click: () => this.$emit('close')
+        let props = {
+            onClick: this.close
         };
 
         return (
-            <div class="n-modal__close" on={events}>
+            <div class="n-modal__close" {...props}>
                 <span class={this.icons.times}></span>
             </div>
         );
@@ -290,7 +289,7 @@ export default {
 
         return (
             <div class="n-modal__header">
-                { [this.$slots.header() || this.title, this.ctor('renderClose')()] }
+                { [this.$slots.header && this.$slots.header() || this.title, this.ctor('renderClose')()] }
             </div>
         );
     },
@@ -303,56 +302,57 @@ export default {
 
         return (
             <div class="n-modal__footer">
-                { this.$slots.footer }
+                { this.$slots.footer() }
             </div>
         );
     },
 
     renderBody()
     {
+        return (
+            <div class="n-modal__body">
+                <NScrollbar ref="scrollbar" relative={true} wrapClass="n-modal__wrap">
+                    { this.$slots.default && this.$slots.default() }
+                </NScrollbar>
+            </div>
+        );
+    },
+
+    renderFrame()
+    {
+        if ( ! this.tempValue ) {
+            return null;
+        }
+
         let style = {
             width: this.width, height: this.height
         };
 
-        let rawHtml = (
-            <div key={this.veVisible ? '1' : '0'} class="n-modal__frame" style={style}>
-                { this.$slots.raw && this.$slots.raw() }
-            </div>
-        );
-
-        if ( this.$slots.raw ) {
-            return rawHtml;
-        }
+        let innerHtml = [
+            this.ctor('renderHeader')(),
+            this.ctor('renderBody')(),
+            // this.ctor('renderFooter')(),
+        ]
 
         return (
-            <div key={this.veVisible ? '1' : '0'} class="n-modal__frame" style={style}>
-                { this.ctor('renderHeader')() }
-                <div class="n-modal__body">
-                    <NScrollbar ref="scrollbar" class="n-modal__wrap" relative={true}>
-                        {this.$slots.default}
-                    </NScrollbar>
-                </div>
-                { this.ctor('renderFooter')() }
+            <div class="n-modal__frame" style={style}>
+                { this.$slots.raw ? this.$slots.raw() : innerHtml }
             </div>
-        )
+        );
     },
 
     renderBackdrop()
     {
         return (
-            <div ref="backdrop" key={this.veVisible ? '1' : '0'} class="n-modal__backdrop"></div>
-        )
+            <div ref="backdrop" class="n-modal__backdrop"></div>
+        );
     },
 
-    renderModal()
+    render()
     {
         if ( ! window.zIndex ) {
             window.zIndex = 9000;
         }
-
-        let style = {
-            zIndex: window.zIndex++
-        };
 
         let classList = [
             'n-modal',
@@ -360,30 +360,25 @@ export default {
             'n-modal--' + this.position
         ];
 
-        if ( this.closable ) {
-            classList.push('n-closable');
+        // if ( this.closable ) {
+        //     classList.push('n-closable');
+        // }
+
+        if ( ! this.tempValue ) {
+            classList.push('n-hidden');
         }
 
-        let events = {
-            'beforeEnter': this.addClass,
-            'afterLeave': this.removeClass
-        };
+        let innerHtml = null;
+
+        if ( this.tempValue ) {
+            innerHtml = this.ctor('renderFrame')();
+        }
 
         return (
-            <div class={classList} style={style} data-index={window.zIndex}>
-                <transition name={this.transitionModal} mode="out-in">
-                    { this.veVisible ? this.ctor('renderBody')() : null }
-                </transition>
-                <transition name={this.transitionBackdrop} mode="out-in" on={events}>
-                    { this.veVisible ? this.ctor('renderBackdrop')() : null }
-                </transition>
+            <div class={classList}>
+                { [innerHtml, this.ctor('renderBackdrop')()] } 
             </div>
         );
-    },
-
-    render()
-    {
-        return this.ctor('renderModal')();
     }
 
 }

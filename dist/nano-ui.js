@@ -2010,18 +2010,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NModal',
-  model: {
-    prop: 'visible'
-  },
   inject: {
     NScrollbar: {
       "default": undefined
     }
   },
   props: {
-    visible: {
+    modelValue: {
       "default": function _default() {
         return false;
       },
@@ -2032,10 +2030,11 @@ __webpack_require__.r(__webpack_exports__);
         return null;
       }
     },
-    boundary: {
+    disabled: {
       "default": function _default() {
-        return document.body;
-      }
+        return false;
+      },
+      type: [Boolean]
     },
     width: {
       "default": function _default() {
@@ -2078,77 +2077,76 @@ __webpack_require__.r(__webpack_exports__);
         return false;
       },
       type: [Boolean]
-    },
-    transitionModal: {
-      "default": function _default() {
-        return 'n-fade-up';
-      },
-      type: [String]
-    },
-    transitionBackdrop: {
-      "default": function _default() {
-        return 'n-fade';
-      },
-      type: [String]
     }
   },
   watch: {
-    visible: function visible() {
-      if (this.visible !== this.veVisible) {
-        this.veVisible = this.visible;
+    modelValue: function modelValue(value) {
+      if (value !== this.tempValue) {
+        this.tempValue = value;
       }
+    },
+    tempValue: function tempValue() {
+      this.startRefreshTimeout();
     }
   },
   methods: {
     open: function open() {
-      this.$emit('input', this.veVisible = true);
+      this.$emit('update:modelValue', this.tempValue = true);
     },
     close: function close(event) {
       if (event) {
         event.stopPropagation();
       }
 
-      this.$emit('input', this.veVisible = false);
+      this.$emit('update:modelValue', this.tempValue = false);
     },
-    addClass: function addClass() {
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('n-open');
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.target).addClass('n-open');
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).addClass('n-open');
+    addClass: function addClass() {// Dom.find(this.$el).addClass('n-open');
+      // Dom.find(this.target).addClass('n-open');
+      // Dom.find(document.body).addClass('n-open');
     },
-    removeClass: function removeClass() {
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).removeClass('n-open');
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.target).removeClass('n-open');
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).removeClass('n-open');
+    removeClass: function removeClass() {// Dom.find(this.$el).removeClass('n-open');
+      // Dom.find(this.target).removeClass('n-open');
+      // Dom.find(document.body).removeClass('n-open');
     },
-    eventClick: function eventClick(event, target) {
-      if (event.which !== 1) {
-        return;
-      }
-
-      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(target).closest('.n-disabled')) {
-        return;
-      }
-
-      var result = !!nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(target).closest(this.target) || this.veVisible;
-
-      if (this.veVisible && this.closeOutside) {
-        result = !nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(target).closest(this.$refs.backdrop);
-      }
-
-      if (result === this.veVisible) {
-        return;
-      }
-
-      if (!result) {
-        return this.$emit('close');
-      }
-
-      this.$emit('input', this.veVisible = !!result);
+    stopRefreshTimeout: function stopRefreshTimeout() {
+      clearInterval(this.refresh);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).removeClass('n-ready');
     },
-    eventKeydown: function eventKeydown(event, target) {
+    startRefreshTimeout: function startRefreshTimeout() {
       var _this = this;
 
-      if (!this.veVisible || !this.closable) {
+      if (!this.tempValue) {
+        return this.stopRefreshTimeout();
+      }
+
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).css({
+        'z-index': window.zIndex++
+      });
+      this.refresh = setTimeout(function () {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this.$el).addClass('n-ready');
+      }, 100);
+    },
+    eventClick: function eventClick(event, el) {
+      if (this.disabled || event.which !== 1) {
+        return;
+      }
+
+      var result = !!nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(el).closest(this.target) || this.tempValue;
+
+      if (this.tempValue && this.closable) {
+        result = !nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(el).closest(this.$refs.backdrop);
+      }
+
+      if (result === this.tempValue) {
+        return;
+      }
+
+      this.$emit('update:modalValue', this.tempValue = !!result);
+    },
+    eventKeydown: function eventKeydown(event, target) {
+      var _this2 = this;
+
+      if (!this.tempValue || !this.closable) {
         return;
       }
 
@@ -2171,67 +2169,54 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.$nextTick(function () {
-        return _this.$emit('close');
+        return _this2.$emit('close');
       });
     }
   },
-  provide: function provide() {
-    return {
-      NModal: this
-    };
-  },
+  // provide()
+  // {
+  //     return {
+  //         NModal: this
+  //     };
+  // },
   data: function data() {
     return {
       target: null,
-      veVisible: this.visible
+      tempValue: this.modelValue
     };
   },
   mounted: function mounted() {
-    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).on('click', this.eventClick, {
-      _uid: this.uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).on('keydown', this.eventKeydown, {
-      _uid: this.uid
-    }); // if ( ! this.$listeners.close ) {
+    this.target = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).previous().get(0);
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).on('mousedown', this.eventClick, this._.uid); // Dom.find(document.body).on('keydown',
+    //     this.eventKeydown, this._.uid);
+    // if ( ! this.$listeners.close ) {
     //     this.$on('close', this.close);
     // }
-
-    this.target = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).previous().get(0);
-
-    if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.selector)) {
-      this.target = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).parent().find(this.selector).get(0);
-    }
+    // this.target = Dom.find(this.$el).previous().get(0);
+    // if ( ! Any.isEmpty(this.selector) ) {
+    //     this.target = Dom.find(this.$el).parent().find(this.selector).get(0);
+    // }
 
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).append(this.$el);
   },
-  beforeDestroy: function beforeDestroy() {
-    this.$off('close');
+  beforeUnmount: function beforeUnmount() {
     this.$el.remove();
   },
-  destroyed: function destroyed() {
-    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).off('click', null, {
-      _uid: this.uid
-    });
-    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).off('keydown', null, {
-      _uid: this.uid
-    });
+  unmounted: function unmounted() {
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).off('mousedown', null, this._.uid);
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).off('keydown', null, this._.uid);
   },
   renderClose: function renderClose() {
-    var _this2 = this;
-
     if (!this.closable) {
       return null;
     }
 
-    var events = {
-      click: function click() {
-        return _this2.$emit('close');
-      }
+    var props = {
+      onClick: this.close
     };
-    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
-      "class": "n-modal__close",
-      "on": events
-    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", {
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
+      "class": "n-modal__close"
+    }, props), [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", {
       "class": this.icons.times
     }, null)]);
   },
@@ -2242,7 +2227,7 @@ __webpack_require__.r(__webpack_exports__);
 
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": "n-modal__header"
-    }, [[this.$slots.header() || this.title, this.ctor('renderClose')()]]);
+    }, [[this.$slots.header && this.$slots.header() || this.title, this.ctor('renderClose')()]]);
   },
   renderFooter: function renderFooter() {
     if (!this.$slots.footer) {
@@ -2251,92 +2236,67 @@ __webpack_require__.r(__webpack_exports__);
 
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": "n-modal__footer"
-    }, [this.$slots.footer]);
+    }, [this.$slots.footer()]);
   },
   renderBody: function renderBody() {
     var _this3 = this;
+
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": "n-modal__body"
+    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NScrollbar"), {
+      "ref": "scrollbar",
+      "relative": true,
+      "wrapClass": "n-modal__wrap"
+    }, {
+      "default": function _default() {
+        return [_this3.$slots["default"] && _this3.$slots["default"]()];
+      }
+    })]);
+  },
+  renderFrame: function renderFrame() {
+    if (!this.tempValue) {
+      return null;
+    }
 
     var style = {
       width: this.width,
       height: this.height
     };
-
-    var rawHtml = Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
-      "key": this.veVisible ? '1' : '0',
-      "class": "n-modal__frame",
-      "style": style
-    }, [this.$slots.raw && this.$slots.raw()]);
-
-    if (this.$slots.raw) {
-      return rawHtml;
-    }
-
+    var innerHtml = [this.ctor('renderHeader')(), this.ctor('renderBody')() // this.ctor('renderFooter')(),
+    ];
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
-      "key": this.veVisible ? '1' : '0',
       "class": "n-modal__frame",
       "style": style
-    }, [this.ctor('renderHeader')(), Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
-      "class": "n-modal__body"
-    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NScrollbar"), {
-      "ref": "scrollbar",
-      "class": "n-modal__wrap",
-      "relative": true
-    }, {
-      "default": function _default() {
-        return [_this3.$slots["default"]];
-      }
-    })]), this.ctor('renderFooter')()]);
+    }, [this.$slots.raw ? this.$slots.raw() : innerHtml]);
   },
   renderBackdrop: function renderBackdrop() {
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "ref": "backdrop",
-      "key": this.veVisible ? '1' : '0',
       "class": "n-modal__backdrop"
     }, null);
   },
-  renderModal: function renderModal() {
-    var _this4 = this;
-
+  render: function render() {
     if (!window.zIndex) {
       window.zIndex = 9000;
     }
 
-    var style = {
-      zIndex: window.zIndex++
-    };
-    var classList = ['n-modal', 'n-modal--' + this.type, 'n-modal--' + this.position];
+    var classList = ['n-modal', 'n-modal--' + this.type, 'n-modal--' + this.position]; // if ( this.closable ) {
+    //     classList.push('n-closable');
+    // }
 
-    if (this.closable) {
-      classList.push('n-closable');
+    if (!this.tempValue) {
+      classList.push('n-hidden');
     }
 
-    var events = {
-      'beforeEnter': this.addClass,
-      'afterLeave': this.removeClass
-    };
+    var innerHtml = null;
+
+    if (this.tempValue) {
+      innerHtml = this.ctor('renderFrame')();
+    }
+
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
-      "class": classList,
-      "style": style,
-      "data-index": window.zIndex
-    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("transition"), {
-      "name": this.transitionModal,
-      "mode": "out-in"
-    }, {
-      "default": function _default() {
-        return [_this4.veVisible ? _this4.ctor('renderBody')() : null];
-      }
-    }), Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("transition"), {
-      "name": this.transitionBackdrop,
-      "mode": "out-in",
-      "on": events
-    }, {
-      "default": function _default() {
-        return [_this4.veVisible ? _this4.ctor('renderBackdrop')() : null];
-      }
-    })]);
-  },
-  render: function render() {
-    return this.ctor('renderModal')();
+      "class": classList
+    }, [[innerHtml, this.ctor('renderBackdrop')()]]);
   }
 });
 
@@ -3565,6 +3525,11 @@ __webpack_require__.r(__webpack_exports__);
         return 15;
       },
       type: [Number]
+    },
+    wrapClass: {
+      "default": function _default() {
+        return 'n-scrollbar__wrap';
+      }
     }
   },
   methods: {
@@ -3665,10 +3630,14 @@ __webpack_require__.r(__webpack_exports__);
     }, this.$attrs), [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": "n-scrollbar-content",
       "ref": "content"
-    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [this.$slots["default"]()])]), Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": this.wrapClass
+    }, [this.$slots["default"] && this.$slots["default"]()])]), Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": "n-scrollbar-spacer",
       "ref": "spacer"
-    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, null)])]);
+    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": this.wrapClass
+    }, null)])]);
   }
 });
 

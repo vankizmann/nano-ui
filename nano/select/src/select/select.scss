@@ -147,7 +147,7 @@ $select-empty-padding: 6px 12px !default;
     }
 
     .n-select--#{$suffix} .n-select__input input {
-        height: $-select-size - 2;
+        min-height: $-select-size - 6;
     }
 
     $-select-padding: $-select-size * $-select-ratio * 0.5;
