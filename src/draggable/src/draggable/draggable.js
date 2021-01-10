@@ -1595,7 +1595,7 @@ export default {
         this.$on('dragdrop', this.moveItems);
 
         let ident = {
-            _uid: this._uid
+            _uid: this.uid
         };
 
         Event.bind('draggable.start', this.cacheItems, ident);
@@ -1614,7 +1614,7 @@ export default {
     beforeDestroy()
     {
         let ident = {
-            _uid: this._uid
+            _uid: this.uid
         };
 
         this.$off('row-click');

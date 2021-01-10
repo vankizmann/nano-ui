@@ -1,9 +1,9 @@
-import Vue from "vue";
 import CtorMixin from "./mixins/src/ctor";
 import CmerMixin from "./mixins/src/cmer";
 
 let NanoIcons = {
     checked: 'fa fa-check',
+    circle: 'fa fa-circle',
     intermediate: 'fa fa-minus',
     clock: 'fa fa-clock',
     calendar: 'fa fa-calendar',
@@ -50,30 +50,30 @@ export function NanoInstall(App, Icons = {}, Styles = {})
 
     App.config.globalProperties.styles = Nano.Obj.assign(global.NanoStyles, Styles);
 
+    require('./notification/index').default(App);
+    require('./scrollbar/index').default(App);
+    require('./popover/index').default(App);
+    require('./button/index').default(App);
+    require('./input/index').default(App);
+    require('./textarea/index').default(App);
+    require('./select/index').default(App);
+    require('./checkbox/index').default(App);
+    require('./radio/index').default(App);
+    require('./switch/index').default(App);
+    require('./modal/index').default(App);
+    // require('./confirm/index');
     //require('./config/index');
     // require('./chart/index');
-    // require('./notification/index');
-    // require('./scrollbar/index');
     // require('./resizer/index');
     // require('./virtualscroller/index');
     // require('./draggable/index');
     // require('./loader/index');
     // require('./form/index');
-    require('./button/index').default(App);
-    require('./input/index').default(App);
-    // require('./textarea/index');
-    // require('./switch/index');
-    // require('./checkbox/index');
-    // require('./radio/index');
-    require('./select/index').default(App);
     // require('./cascader/index');
     // require('./datepicker/index');
     // require('./timepicker/index');
     // require('./transfer/index');
     // require('./file/index');
-    require('./popover/index').default(App);
-    // require('./modal/index');
-    // require('./confirm/index');
     // require('./table/index');
     // require('./paginator/index');
     // require('./tabs/index');

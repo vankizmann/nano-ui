@@ -1,15 +1,5 @@
 import { UUID, Str, Obj, Dom } from "nano-js";
 
-let scope = {};
-
-if (typeof global !== 'undefined') {
-    scope = global;
-}
-
-if (typeof window !== 'undefined') {
-    scope = window;
-}
-
 class Notification {
 
     el = null;
@@ -21,12 +11,13 @@ class Notification {
     type = '';
 
     options = {
-        duration: 3500,
-        iconPrimary: scope.NanoIcons.info,
-        iconSuccess: scope.NanoIcons.success,
-        iconWarning: scope.NanoIcons.warning,
-        iconDanger: scope.NanoIcons.danger,
-        iconInfo: scope.NanoIcons.info
+        duration: 4500,
+        iconPrimary: global.NanoIcons.info,
+        iconSecondary: global.NanoIcons.info,
+        iconSuccess: global.NanoIcons.success,
+        iconWarning: global.NanoIcons.warning,
+        iconDanger: global.NanoIcons.danger,
+        iconInfo: global.NanoIcons.info
     };
 
     constructor(text, type = 'primary', options = {})
@@ -49,7 +40,7 @@ class Notification {
     {
         this.el.appendTo(el);
 
-        setTimeout(() => this.el.addClass('n-notification--active'), 100);
+        setTimeout(() => this.el.addClass('n-active'), 100);
 
         return this;
     }
@@ -69,8 +60,9 @@ class Notification {
         ];
 
         this.el = Dom.make('div', {
-            classList: classList.join(' ')
+            classList: classList.join(' '), onclick: () => this.remove()
         });
+        
 
         let icon = Dom.make('div', {
             classList: 'n-notification__icon'
@@ -89,7 +81,6 @@ class Notification {
         });
 
         text.html(this.text).appendTo(this.el);
-
     }
 
 }
@@ -98,7 +89,7 @@ export default class Notify {
 
     static alias = 'Notify';
 
-    static position = scope.NanoStyles.notifyPosition;
+    static position = global.NanoStyles.notifyPosition;
 
     static notifications = {};
 
@@ -149,17 +140,17 @@ export default class Notify {
         };
 
         let classList = [
-            'n-notification__wrapper',
-            'n-notification__wrapper--' + this.position
+            'n-notification-frame',
+            'n-' + this.position
         ];
 
-        if ( Dom.find('.n-notification__wrapper').empty() === true ) {
+        if ( Dom.find('.n-notification-frame').empty() === true ) {
             Dom.make('div', { classList: classList.join(' ') }).appendTo(document.body);
         }
 
-        Dom.find('.n-notification__wrapper').css(style);
+        Dom.find('.n-notification-frame').css(style);
 
-        return Dom.find('.n-notification__wrapper');
+        return Dom.find('.n-notification-frame');
     }
 
 }

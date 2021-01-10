@@ -6,11 +6,6 @@ $popover: (
         'border': $color-gray-10,
         'background': $color-white,
     ),
-    'select': (
-        'color': $color-black,
-        'border': $color-gray-10,
-        'background': $color-white,
-    ),
     'tooltip': (
         'color': $color-white,
         'border': $color-gray-90,
@@ -22,6 +17,15 @@ $popover: (
     position: fixed;
     display: flex;
     flex-direction: column;
+    opacity: 0;
+}
+
+.n-popover.n-ready {
+    opacity: 1;
+}
+
+.n-popover > div:first-child:last-child {
+    flex: 1 1 auto;
 }
 
 .n-popover.n-hidden {
@@ -45,55 +49,107 @@ $popover: (
     flex: 0 0 auto;
 }
 
+.n-popover-option {
+    display: block;
+    text-decoration: none;
+}
+.n-popover-option.n-disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
 @each $suffix, $values in $form {
 
-    $popover-font: map-get($values, 'font');
-    $popover-size: map-get($values, 'size');
-    $popover-radius: map-get($values, 'radius');
-    $popover-ratio: map-get($values, 'ratio');
+    $-popover-font: map-get($values, 'font');
+    $-popover-size: map-get($values, 'size');
+    $-popover-radius: map-get($values, 'radius');
+    $-popover-ratio: map-get($values, 'ratio');
 
     .n-popover--#{$suffix} {
-        font-size: $popover-font;
+        font-size: $-popover-font;
     }
 
     .n-popover--#{$suffix} .n-popover__frame {
-        border-radius: $popover-radius;
+        border-radius: $-popover-radius;
     }
 
-    $popover-padding: $popover-size * $popover-ratio;
+    $-popover-padding: $-popover-size * $-popover-ratio;
 
     .n-popover--#{$suffix} .n-popover__header {
-        padding: $popover-padding * 0.5 $popover-padding;
+        padding: $-popover-padding * 0.5 $-popover-padding;
     }
     
     .n-popover--#{$suffix} .n-popover__body {
-        padding: $popover-padding * 0.5 $popover-padding;
+        padding: $-popover-padding * 0.5 $-popover-padding;
     }
     
     .n-popover--#{$suffix} .n-popover__footer {
-        padding: $popover-padding * 0.5 $popover-padding;
+        padding: $-popover-padding * 0.5 $-popover-padding;
+    }
+
+    .n-popover--#{$suffix} .n-popover-option {
+        padding: $-popover-padding * 0.4 $-popover-padding;
+    }
+
+    .n-popover--#{$suffix} .n-popover__body .n-popover-option {
+        margin: 0 -#{$-popover-padding};
+    }
+
+    .n-popover--#{$suffix} .n-popover__body .n-popover-option:first-child {
+        margin-top: -#{$-popover-padding * 0.5};
+    }
+
+    .n-popover--#{$suffix}  .n-popover__body .n-popover-option:last-child {
+        margin-bottom: -#{$-popover-padding * 0.5};
     }
 
 }
 
 @each $suffix, $values in $popover {
 
-    $popover-color: map-get($values, 'color');
-    $popover-background: map-get($values, 'background');
-    $popover-border: map-get($values, 'border');
+    $-popover-color: map-get($values, 'color');
+    $-popover-background: map-get($values, 'background');
+    $-popover-border: map-get($values, 'border');
 
     .n-popover--#{$suffix} .n-popover__frame {
-        color: $popover-color;
-        background: $popover-background;
+        color: $-popover-color;
+        background: $-popover-background;
     }
 
     .n-popover--#{$suffix} .n-popover__header {
-        border-bottom: 1px solid $popover-border;
+        border-bottom: 1px solid $-popover-border;
     }
 
     .n-popover--#{$suffix} .n-popover__footer {
         flex: 0 0 auto;
-        background: rgba($popover-border, 0.65);
+        background: rgba($-popover-border, 0.65);
+    }
+
+    .n-popover--#{$suffix} .n-popover-option {
+        color: $-popover-color;
+    }
+
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+    .n-popover-option--#{$color}.n-hover,
+    .n-popover-option--#{$color}:not(.n-disabled):hover {
+        background: rgba($-color-light, 0.10);
+    }
+
+    .n-popover-option--#{$color}.n-focus,
+    .n-popover-option--#{$color}.n-focus:hover,
+    .n-popover-option--#{$color}:not(.n-disabled):focus {
+        background: rgba($-color-dark, 0.15);
+    }
+
+    .n-popover-option--#{$color}.n-active {
+        color: $-color-base;
     }
 
 }

@@ -27,8 +27,9 @@ export default {
         icon: {
             default()
             {
-                return null;
-            }
+                return '';
+            },
+            type: [String]
         },
 
         iconPosition: {
@@ -83,9 +84,11 @@ export default {
 
     watch: {
 
-        modelValue()
+        modelValue(value)
         {
-            this.tempValue = this.modelValue;
+            if ( value !== this.tempValue ) {
+                this.tempValue = value;
+            }
         }
 
     },
@@ -94,7 +97,7 @@ export default {
 
         eventIconClick(event)
         {
-            this.$emit('icon-click', event);
+            this.$emit('click:icon', event);
         },
 
         eventInput(event)
@@ -108,7 +111,7 @@ export default {
     data()
     {
         return {
-            tempValue: this.modelValue
+            tempValue: this.modelValue || ''
         };
     },
 
@@ -118,19 +121,19 @@ export default {
             return null;
         }
 
-        let events = {
-            click: this.eventIconClick
-        };
+        let disabled = this.disabled || 
+            this.iconDisabled;
 
         let props = {
             type:       'input',
             icon:       this.icon,
             size:       this.size,
             square:     true,
-            disabled:   this.iconDisabled,
+            disabled:   disabled,
+            onClick:    this.eventIconClick,
         };
 
-        return (<NButton props={props} on={events} />);
+        return (<NButton {...props} />);
     },
 
     renderInput()
@@ -143,13 +146,9 @@ export default {
             disabled:       this.disabled,
             placeholder:    this.placeholder,
             onInput:        this.eventInput
-        })
+        });
 
-        if ( this.disabled ) {
-            props.disabled = true;
-        }
-
-        return (<input {...props} />);
+        return h('input', props);
     },
 
     render()

@@ -1,8 +1,10 @@
-import { UUID, Num, Arr, Obj, Any, Dom, Locale } from "nano-js";
+import { Num, Arr, Obj, Any } from "nano-js";
 
 export default {
 
     name: 'NSelectOption',
+
+    inheritAttrs: false,
 
     inject: {
 
@@ -21,15 +23,21 @@ export default {
             }
         },
 
-        prop: {
+        label: {
             default()
             {
-                return '';
-            },
-            type: [String]
+                return null;
+            }
         },
 
-        label: {
+        valueProp: {
+            default()
+            {
+                return null;
+            }
+        },
+
+        labelProp: {
             default()
             {
                 return null;
@@ -48,59 +56,93 @@ export default {
 
     computed: {
 
-        veValue()
+        tempValue()
         {
-            if ( Any.isEmpty(this.prop) ) {
+            if ( Any.isEmpty(this.valueProp) ) {
                 return this.value;
             }
 
-            return Obj.get(this.value, this.prop);
+            return Obj.get(this.value, this.valueProp);
+        },
+
+        tempLabel()
+        {
+            if ( Any.isEmpty(this.labelProp) ) {
+                return this.label;
+            }
+
+            return Obj.get(this.value, this.labelProp);
         }
 
     },
 
-    beforeMount()
+    mounted()
     {
         this.NSelect.addOption(this);
     },
 
-    destroyed()
+    beforeUnmount()
     {
         this.NSelect.removeOption(this);
     },
 
+    methods: {
+
+        toggleItem(event) 
+        {
+            event.preventDefault();
+
+            if ( event.which !== 1 ) {
+                return;
+            }
+
+            if ( this.disabled ) {
+                return;
+            }
+
+            this.NSelect.toggleOption(this.tempValue, 
+                event);
+        },
+
+    },
+
     renderOption(index)
     {
-        let classList = [
-            'n-popover-option'
-        ];
 
-        if ( this.NSelect.multiple && Arr.has(this.NSelect.veValue, this.value) ) {
+        let classList = [];
+
+        let isMultipleActive = this.NSelect.multiple && 
+            Arr.has(this.NSelect.tempValue, this.tempValue);
+
+        if ( isMultipleActive ) {
             classList.push('n-active');
         }
 
-        if ( ! this.NSelect.multiple && this.NSelect.veValue === this.value ) {
+        let isSingleActive = ! this.NSelect.multiple && 
+            this.NSelect.tempValue === this.tempValue;
+
+        if ( isSingleActive ) {
             classList.push('n-active');
         }
 
-        if ( this.disabled ) {
-            classList.push('n-disabled');
+        if ( this.NSelect.index === Num.int(index) ) {
+            classList.push('n-focus');
         }
 
-        if ( this.NSelect.veIndex === index ) {
-            classList.push('n-current');
-        }
+        let props = {
+            'disabled': this.disabled,
+            'onMousedown': this.toggleItem,
+            'type': this.NSelect.type,
+            'clickClose': ! this.NSelect.multiple,
+        };
 
-        let events = {};
-
-        if ( ! this.disabled ) {
-            events.onClick = (event) => this.NSelect.toggleOption(this.veValue, event);
-        }
+        // Required for scrolldown
+        props['data-option'] = this._.uid;
 
         return (
-            <div class={classList} data-option={this._uid} {...events}>
-                { this.$slots.default ? this.$slots.default() : this.label }
-            </div>
+            <NPopoverOption class={classList} {...props}>
+                { this.$slots.default && this.$slots.default() || this.tempLabel }
+            </NPopoverOption>
         );
     },
 

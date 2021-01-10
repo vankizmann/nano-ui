@@ -129,7 +129,7 @@ export default {
             { deep: true });
 
         let ident = {
-            _uid: this._uid
+            _uid: this.uid
         };
 
         if ( this.propagation ) {
@@ -142,7 +142,7 @@ export default {
     beforeDestroy()
     {
         let ident = {
-            _uid: this._uid
+            _uid: this.uid
         };
 
         if ( this.propagation ) {

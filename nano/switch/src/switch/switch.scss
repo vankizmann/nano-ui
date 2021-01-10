@@ -4,13 +4,102 @@ $switch-size: 13px !default;
 $switch-height: 18px !default;
 $switch-ratio: 0.3 !default;
 
-.n-switch__wrapper {
+.n-switch {
+    cursor: default;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: stretch;
+}
+
+.n-switch.n-disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.n-switch__switch {
+    position: relative;
+    background: $color-gray-10;
+    border-radius: 500px;
+    border: 1px solid $color-gray-15;
+    transition: border 0.15s, background 0.15s;
+}
+
+.n-switch__switch span {
+    position: absolute;
+    top: 50%;
+    left: 3px;
+    display: block;
+    background: $color-white;
+    border-radius: 500px;
+    transform: translateY(-50%);
+    box-shadow: 0 1px 2px rgba($color-black, 0.15);
+    transition: left 0.15s, right 0.15s;
+}
+
+@each $suffix, $values in $form {
+
+    $-switch-font: map-get($values, 'font');
+    $-switch-size: map-get($values, 'size');
+    $-switch-radius: map-get($values, 'radius');
+    $-switch-ratio: map-get($values, 'ratio');
+
+    .n-switch--#{$suffix} {
+        min-height: $-switch-size;
+        font-size: $-switch-font;
+    }
+
+    $-switch-frame: $-switch-font * 2.3;
+
+    .n-switch--#{$suffix} .n-switch__switch {
+        width: $-switch-frame;
+        height: $-switch-size - 14;
+    }
+    $-switch-circle: $-switch-size - 20;
+    
+    .n-switch--#{$suffix} .n-switch__switch span {
+        width: $-switch-circle;
+        height: $-switch-circle;
+    }
+
+    .n-switch--#{$suffix}.n-on .n-switch__switch span {
+        left: $-switch-frame - $-switch-circle - 4;
+    }
+
+    $-switch-padding: $-switch-size * $-switch-ratio;
+
+    .n-switch--#{$suffix} .n-switch__label {
+        padding: 0 0 0 $-switch-padding * 0.5;
+    }
+
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+    .n-switch--#{$color}:not(.n-disabled) .n-switch__switch {
+        background: $-color-base;
+        border-color: $-color-dark;
+    }
+
+    .n-switch--#{$color}:not(.n-disabled) .n-switch__label {
+        color: $-color-base;
+    }
+
+}
+
+
+
+.xn-switch__wrapper {
     position: relative;
     display: inline-flex;
 }
 
-.n-switch {
-    cursor: pointer;
+.xn-switch {
+    cursor: default;
     position: relative;
     display: block;
     width: $switch-height * 2;
@@ -20,46 +109,46 @@ $switch-ratio: 0.3 !default;
     transition: background 400ms ease;
 }
 
-.n-switch__wrapper.n-disabled .n-switch,
-.n-switch__wrapper.n-disabled .n-switch__label {
+.xn-switch__wrapper.xn-disabled .xn-switch,
+.xn-switch__wrapper.xn-disabled .xn-switch__label {
     cursor: not-allowed;
 }
 
-.n-switch.n-switch--round {
+.xn-switch.xn-switch--round {
     border-radius: 500px;
 }
 
-.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--primary {
+.xn-switch__wrapper:not(.xn-disabled) .xn-switch.xn-switch--primary {
     background: $--color-primary;
 }
 
-.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--success {
+.xn-switch__wrapper:not(.xn-disabled) .xn-switch.xn-switch--success {
     background: $--color-success;
 }
 
-.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--warning {
+.xn-switch__wrapper:not(.xn-disabled) .xn-switch.xn-switch--warning {
     background: $--color-warning;
 }
 
-.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--danger {
+.xn-switch__wrapper:not(.xn-disabled) .xn-switch.xn-switch--danger {
     background: $--color-danger;
 }
 
-.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--info {
+.xn-switch__wrapper:not(.xn-disabled) .xn-switch.xn-switch--info {
     background: $--color-info;
 }
 
-.n-switch.n-switch--small {
+.xn-switch.xn-switch--small {
     width: $switch-height * 0.875 * 2;
     height: $switch-height * 0.875;
 }
 
-.n-switch.n-switch--large {
+.xn-switch.xn-switch--large {
     width: $switch-height * 1.125 * 2;
     height: $switch-height * 1.125;
 }
 
-.n-switch span {
+.xn-switch span {
     position: absolute;
     top: 50%;
     left: $switch-height * 0.15;
@@ -71,37 +160,37 @@ $switch-ratio: 0.3 !default;
     transition: transform 400ms ease;
 }
 
-.n-switch.n-switch--small span {
+.xn-switch.xn-switch--small span {
     left: $switch-height * 0.875 * 0.15;
     margin-top: $switch-height * 0.875 * -0.35;
     width: $switch-height * 0.875 * 0.7;
     height: $switch-height * 0.875 * 0.7;
 }
 
-.n-switch.n-switch--large span {
+.xn-switch.xn-switch--large span {
     left: $switch-height * 1.125 * 0.15;
     margin-top: $switch-height * 1.125 * -0.35;
     width: $switch-height * 1.125 * 0.7;
     height: $switch-height * 1.125 * 0.7;
 }
 
-.n-switch.n-switch--round span {
+.xn-switch.xn-switch--round span {
     border-radius: 500px;
 }
 
-.n-switch.n-on span {
+.xn-switch.xn-on span {
     transform: translateX($switch-height);
 }
 
-.n-switch.n-switch--small.n-on span {
+.xn-switch.xn-switch--small.xn-on span {
     transform: translateX($switch-height * 0.875);
 }
 
-.n-switch.n-switch--large.n-on span {
+.xn-switch.xn-switch--large.xn-on span {
     transform: translateX($switch-height * 1.125);
 }
 
-.n-switch__label {
+.xn-switch__label {
     cursor: default;
     margin-left: 8px;
 }

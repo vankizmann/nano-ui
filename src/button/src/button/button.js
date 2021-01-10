@@ -134,7 +134,7 @@ export default {
             innerHtml.push(this.ctor('renderIcon')());
         }
 
-        if ( this.$slots.default ) {
+        if ( this.$slots.default && ! this.square ) {
             innerHtml.push(<span>{ this.$slots.default() }</span>);
         }
 

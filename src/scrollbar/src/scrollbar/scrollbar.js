@@ -28,123 +28,145 @@ export default {
                 return false;
             },
             type: [Boolean]
+        },
+
+        framerate: {
+            default()
+            {
+                return 15;
+            },
+            type: [Number]
         }
 
     },
 
     methods: {
 
-        scrollTo(y = 0, x = 0, duration = 0)
+        scrollTo(selector, offset = 0, delay = 100)
         {
-            this.optiscroll.scrollTo(x, y, duration);
+            Any.delay(() => this.onScrollTo(selector, 
+                offset), delay);
         },
 
-        adjustScrollbars()
+        onScrollTo(selector, offset = 0)
         {
-            let styles = Dom.find(this.$el).css(), addStyle = {};
+            let y = Dom.find(this.$refs.content).find(selector)
+                .offset('top', this.$refs.content);
 
-            if ( styles.bottom ) {
-                addStyle['margin-top'] = '-15px';
-            }
-
-            if ( styles.right ) {
-                addStyle['margin-left'] = '-15px';
-            }
-
-            if ( Any.isEmpty(addStyle) ) {
-                return;
-            }
-
-            Dom.find(this.$el).css(addStyle);
+            this.optiscroll.scrollTo(0, y + offset, 0);
         },
 
-        initialize()
+        scrollIntoView(selector, offset = 0, delay = 100)
         {
-            if ( this.optiscroll ) {
-                this.destroy();
-            }
+            Any.delay(() => this.onScrollIntoView(selector), delay);
+        },
 
-            Optiscroll.globalSettings.checkFrequency = 750;
-            Optiscroll.globalSettings.scrollMinUpdateInterval = 16;
+        onScrollIntoView(selector)
+        {
+            this.optiscroll.scrollIntoView(selector, 0);
+        },
+
+        bindOptiscroll()
+        {
+            Optiscroll.globalSettings.
+                checkFrequency = 250;
+
+            Optiscroll.globalSettings.
+                scrollMinUpdateInterval = 25;
 
             let options = {
                 classPrefix: 'n-scrollbar-',
-                minTrackSize: 10,
-                wrapContent: false,
+                minTrackSize: 15,
+                forceScrollbars: true,
+                autoUpdate: true,
                 preventParentScroll: true,
-                forceScrollbars: false
+                wrapContent: false,
             };
 
-            this.optiscroll = new Optiscroll(this.$el.parentNode, options);
+            this.optiscroll = new Optiscroll(this.$el, options);
 
-            if ( this.relative ) {
-                Dom.find(this.$el).parent().addClass('n-relative');
-            }
-
-            let $event = {
-                _uid: this._uid
-            };
-
-            if ( this.relative ) {
-
-                Dom.find(this.$el).on('sizechange',
-                    Any.debounce(this.adjustScrollbars), $event);
-
-                this.adjustScrollbars();
-            }
-
-            Dom.find(this.$el).parent().addClass('n-scrollbar');
-
+            Any.delay(() => {
+                Dom.find(this.$el).addClass('is-ready');
+            }, 500);
         },
 
-        destroy()
+        unbindOptiscroll()
         {
-            try {
-                this.optiscroll = this.optiscroll.destroy();
-            } catch (e) {
-                console.error('NScrollbar casualities...');
-            }
-
-            let $event = {
-                _uid: this._uid
-            };
-
-            Dom.find(this.$el).off('sizechange', null, $event);
-
-            Dom.find(this.$el).css(null);
-            Dom.find(this.$el).parent().removeClass('n-scrollbar');
+            this.optiscroll.destroy();
         },
 
-        refresh()
+        adaptHeight()
         {
-            if ( ! Dom.find(this.$el).parent().hasClass('is-enabled') ) {
-                this.initialize();
+            let height = Dom.find(this.$refs.content)
+                .child().height();
+
+            let window = Dom.find(this.$el)
+                .height();
+
+            if ( height === this.passedHeight ) {
+                return;
             }
+
+            if ( window >= height ) {
+                Dom.find(this.$el).addClass('is-fixed');
+            }
+
+            if ( window < height ) {
+                Dom.find(this.$el).removeClass('is-fixed');
+            }
+
+            if ( window ) {
+                this.passedHeight = height;
+            }
+
+            if ( ! this.relative ) {
+                return;
+            }
+
+            Dom.find(this.$refs.spacer).child().css({
+                height: height + 'px'
+            });
+        },
+
+        bindAdaptHeight()
+        {
+            this.refresh = setInterval(this.adaptHeight, 
+                1000 / this.framerate);
+        },
+
+        unbindAdaptHeight()
+        {
+            clearInterval(this.refresh);
         }
 
     },
 
     mounted()
     {
-        this.$parent.$on('hook:updated', this.refresh);
-        this.$parent.$on('hook:destroyed', this.destroy);
-
-        this.initialize();
+        this.bindAdaptHeight();
+        this.bindOptiscroll();
     },
 
-    beforeDestroy()
+    beforeUnmount()
     {
-        this.destroy();
-
-        this.$parent.$off('hook:updated');
-        this.$parent.$off('hook:destroyed');
+        this.unbindAdaptHeight();
+        this.unbindOptiscroll();
     },
 
     render()
     {
+        let classList = [
+            'n-scrollbar', 'is-fixed'
+        ];
+
         return (
-            <div ref="body" on={this.$listeners}>
-                { this.$slots.default }
+            <div class={classList} {...this.$attrs}>
+                <div class="n-scrollbar-content" ref="content">
+                    <div>{ this.$slots.default() }</div>
+                </div>
+                <div class="n-scrollbar-spacer" ref="spacer">
+                    <div>{ /* Adapt inner height */ }</div>
+                </div>
             </div>
         );
     }

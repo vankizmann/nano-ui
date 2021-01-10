@@ -303,7 +303,7 @@ export default {
             nodeHandle.find('[draggable="true"]');
         }
 
-        nodeHandle.on('dragstart', this.eventDragstart, this._uid);
+        nodeHandle.on('dragstart', this.eventDragstart, this.uid);
 
         Any.delay(() => this.veInit = true, 25);
     },
@@ -316,7 +316,7 @@ export default {
             nodeHandle.find('[draggable="true"]');
         }
 
-        nodeHandle.off('dragstart', null, this._uid);
+        nodeHandle.off('dragstart', null, this.uid);
     }
 
 }

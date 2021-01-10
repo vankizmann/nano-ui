@@ -129,7 +129,7 @@ export default {
         });
 
         let ident = {
-            _uid: this._uid
+            _uid: this.uid
         };
 
         Dom.find(document).on('keydown', this.eventKeydown, ident);
@@ -138,7 +138,7 @@ export default {
     beforeDestroy()
     {
         let ident = {
-            _uid: this._uid
+            _uid: this.uid
         };
 
         Dom.find(document).off('keydown', null, ident);

@@ -11,11 +11,44 @@
 .n-radio-group.n-radio-group--horizontal {
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .n-radio-group.n-radio-group--vertical {
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
+}
+
+@each $suffix, $values in $form {
+
+    $-radio-group-font: map-get($values, 'font');
+    $-radio-group-size: map-get($values, 'size');
+    $-radio-group-radius: map-get($values, 'radius');
+    $-radio-group-ratio: map-get($values, 'ratio');
+
+    .n-radio-group--#{$suffix}.n-radio-group--horizontal .n-radio {
+        padding: 0 $-radio-group-size * $-radio-group-ratio * 0.5;
+    }
+
+    .n-radio-group--#{$suffix}.n-radio-group--horizontal .n-radio:first-child {
+        padding-left: 0;
+    }
+
+    .n-radio-group--#{$suffix}.n-radio-group--horizontal .n-radio:last-child {
+        padding-right: 0;
+    }
+
+    .n-radio-group--#{$suffix}.n-radio-group--vertical .n-radio {
+        padding: $-radio-group-size * $-radio-group-ratio * 0.5 0;
+    }
+
+    .n-radio-group--#{$suffix}.n-radio-group--vertical .n-radio:first-child {
+        padding-top: 0;
+    }
+
+    .n-radio-group--#{$suffix}.n-radio-group--vertical .n-radio:last-child {
+        padding-bottom: 0;
+    }
+
 }

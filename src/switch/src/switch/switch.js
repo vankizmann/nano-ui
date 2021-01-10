@@ -6,7 +6,7 @@ export default {
 
     props: {
 
-        value: {
+        modelValue: {
             default()
             {
                 return false;
@@ -37,23 +37,15 @@ export default {
         offType: {
             default()
             {
-                return null;
+                return 'default';
             }
         },
 
         size: {
             default()
             {
-                return null;
+                return 'md';
             }
-        },
-
-        round: {
-            default()
-            {
-                return true;
-            },
-            type: [Boolean]
         },
 
         disabled: {
@@ -69,7 +61,7 @@ export default {
     data()
     {
         return {
-            veValue: this.value
+            tempValue: this.modelValue
         };
     },
 
@@ -77,23 +69,23 @@ export default {
 
         eventClick()
         {
-            let veValue = this.onValue;
+            let tempValue = this.onValue;
 
-            if ( this.veValue === this.onValue ) {
-                veValue = this.offValue;
+            if ( this.tempValue === this.onValue ) {
+                tempValue = this.offValue;
             }
 
-            this.$emit('input', this.veValue = veValue);
+            this.$emit('input', this.tempValue = tempValue);
         }
 
     },
 
     watch: {
 
-        value()
+        modelValue()
         {
-            if ( this.value !== this.veValue ) {
-                this.veValue = this.value;
+            if ( this.modelValue !== this.tempValue ) {
+                this.tempValue = this.modelValue;
             }
         }
 
@@ -102,41 +94,17 @@ export default {
     renderSwitch()
     {
         let classList = [
-            'n-switch',
+            'n-switch__switch'
         ];
 
-        if ( this.size ) {
-            classList.push('n-switch--' + this.size);
-        }
-
-        if ( this.round ) {
-            classList.push('n-switch--round');
-        }
-
-        if ( this.veValue === this.onValue && this.onType ) {
-            classList.push('n-switch--' + this.onType);
-        }
-
-        if ( this.veValue === this.offValue && this.offType ) {
-            classList.push('n-switch--' + this.offType);
-        }
-
-        if ( this.veValue === this.onValue ) {
-            classList.push('n-on');
-        }
-
-        if ( this.veValue === this.offValue ) {
-            classList.push('n-off');
-        }
-
-        let events = {};
+        let props = {};
 
         if ( ! this.disabled ) {
-            events.click = this.eventClick;
+            props.onMousedown = this.eventClick;
         }
 
         return (
-            <div class={classList} on={events}>
+            <div class={classList} {...props}>
                 <span></span>
             </div>
         )
@@ -152,26 +120,41 @@ export default {
             'n-switch__label',
         ];
 
-        let events = {};
+        let props = {};
 
         if ( ! this.disabled ) {
-            events.click = this.eventClick;
+            props.onMousedown = this.eventClick;
         }
 
         return (
-            <div class={classList} on={events}>
-                { this.$slots.default }
+            <div class={classList} {...props}>
+                { this.$slots.default() }
             </div>
         )
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
         let classList = [
-            'n-switch__wrapper'
+            'n-switch',
+            'n-switch--' + this.size
         ];
+
+        if ( this.tempValue === this.onValue ) {
+            classList.push('n-switch--' + this.onType);
+        }
+
+        if ( this.tempValue === this.offValue) {
+            classList.push('n-switch--' + this.offType);
+        }
+
+        if ( this.tempValue === this.onValue ) {
+            classList.push('n-on');
+        }
+
+        if ( this.tempValue === this.offValue ) {
+            classList.push('n-off');
+        }
 
         if ( this.disabled ) {
             classList.push('n-disabled');

@@ -1,3 +1,4 @@
+import { h } from "vue";
 import {Obj, Any, UUID} from "nano-js";
 
 export default {
@@ -6,17 +7,25 @@ export default {
 
     props: {
 
-        value: {
+        modelValue: {
             default()
             {
                 return null;
             }
         },
 
+        type: {
+            default()
+            {
+                return 'primary';
+            },
+            type: [String]
+        },
+
         size: {
             default()
             {
-                return 'default';
+                return 'md';
             },
             type: [String]
         },
@@ -73,10 +82,10 @@ export default {
 
     watch: {
 
-        value(value)
+        modelValue(value)
         {
-            if ( this.value !== this.veValue ) {
-                this.veValue = value;
+            if ( value !== this.tempValue ) {
+                this.tempValue = value;
             }
         }
 
@@ -86,7 +95,8 @@ export default {
 
         eventInput(event)
         {
-            this.$emit('input', event.target.value);
+            this.$emit('update:modelValue', 
+                this.tempValue = event.target.value);
         }
 
     },
@@ -94,61 +104,52 @@ export default {
     data()
     {
         return {
-            veValue: this.value || ''
+            tempValue: this.modelValue || ''
         };
     },
 
     renderInput()
     {
-        let classList = [
-            'n-textarea',
-            'n-textarea--' + this.size
-        ];
+        let props = Obj.except(this.$attrs, ['class', 'style']);
 
-        let attrs = {
-            value: this.veValue,
-            rows: this.minRows,
-            disabled: this.disabled,
-            placeholder: this.placeholder
-        };
+        Obj.assign(props, {
+            value:          this.tempValue,
+            rows:           this.minRows,
+            disabled:       this.disabled,
+            placeholder:    this.placeholder,
+            onInput:        this.eventInput,
+        });
 
         if ( this.maxLength !== 0 ) {
-            attrs.maxLength = this.maxLength;
+            props.maxLength = this.maxLength;
         }
 
-        let currentRows = (this.veValue.match(/\n/g) || []).length + 1;
+        let currentRows = (this.tempValue.match(/\n/g) || []).length + 1;
 
-        if ( this.autoRows && attrs.rows < currentRows ) {
-            attrs.rows = currentRows <= this.maxRows ? currentRows : this.maxRows;
+        if ( this.autoRows && props.rows < currentRows ) {
+            props.rows = currentRows <= this.maxRows ? currentRows : this.maxRows;
         }
 
-        let events = Obj.clone(this.$listeners);
-
-        // Override input event
-        events.input = this.eventInput;
-
-        return (
-            <textarea value={this.veValue} class={classList} attrs={attrs} on={events} />
-        );
+        return h('textarea', props);
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
         let classList = [
-            'n-textarea__wrapper'
+            'n-textarea',
+            'n-textarea--' + this.size,
+            'n-textarea--' + this.type,
         ];
 
         if ( this.disabled ) {
             classList.push('n-disabled');
         }
 
-        return (
-            <div class={classList}>
-                { this.ctor('renderInput')() }
-            </div>
-        );
+        let props = Obj.only(this.$attrs, ['style'], {
+            class: this.cmer(classList)
+        });
+
+        return h('div', props, [this.ctor('renderInput')()]);
     }
 
 }

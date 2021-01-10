@@ -13,18 +13,19 @@ export default {
             },
         },
 
-        value: {
-            default()
-            {
-                return null;
-            },
-        },
-
         clearValue: {
             default()
             {
                 return null;
             }
+        },
+
+        type: {
+            default()
+            {
+                return 'primary';
+            },
+            type: [String]
         },
 
         size: {
@@ -58,6 +59,14 @@ export default {
             type: [Boolean]
         },
 
+        collapse: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         disabled: {
             default()
             {
@@ -85,7 +94,7 @@ export default {
         emptyText: {
             default()
             {
-                return Locale.trans('No items');
+                return 'No items';
             },
             type: [String]
         },
@@ -93,8 +102,17 @@ export default {
         undefinedText: {
             default()
             {
-                return Locale.trans('Undefined item');
-            }
+                return 'Undefined item';
+            },
+            type: [String]
+        },
+
+        collapseText: {
+            default()
+            {
+                return '+:count item|+:count items';
+            },
+            type: [String]
         },
 
         allowCreate: {
@@ -108,8 +126,9 @@ export default {
         options: {
             default()
             {
-                return null;
-            }
+                return [];
+            },
+            type: [Array, Object]
         },
 
         optionsValue: {
@@ -141,13 +160,13 @@ export default {
     data()
     {
         return {
-            veValue: this.modelValue,
-            veClearValue: this.clearValue,
-            veOpen: false,
-            veSearch: '',
-            veIndex: -1,
-            veOptions: [],
-            veSearched: []
+            tempValue: this.modelValue,
+            tempClear: this.clearValue,
+            focus: false,
+            search: '',
+            index: -1,
+            elements: [],
+            searched: []
         };
     },
 
@@ -160,229 +179,94 @@ export default {
 
     watch: {
 
-        value()
+        modelValue()
         {
-            if ( this.veValue !== this.modelValue ) {
-                this.veValue = this.modelValue;
-            }
+            this.tempValue = this.modelValue;
+        },
+
+        search()
+        {
+            this.searchOptions();
+        },
+
+        focus()
+        {
+            this.$nextTick(this.scrollToClosest);
         },
 
     },
 
     methods: {
 
-        clear()
+        clear(event = null)
         {
-            this.$emit('update:modelValue', this.veValue = Arr.clone(this.veClearValue));
+            if ( event ) {
+                event.preventDefault();
+            }
+
+            this.focusInput();
+            
+            this.focus = true;
+
+            this.$emit('update:modelValue', 
+                this.tempValue = Arr.clone(this.tempClear));
         },
 
         addOption(option)
         {
-            Arr.add(this.veOptions, option, {
-                veValue: option.veValue
-            });
+            Arr.add(this.elements, option, 
+                { tempValue: option.tempValue });
         },
 
         removeOption(option)
         {
-            Arr.remove(this.veOptions, {
-                veValue: option.veValue
-            });
+            Arr.remove(this.elements, 
+                { tempValue: option.tempValue });
         },
 
-        searchOptions()
+        focusInput(event = null)
         {
-            if ( Any.isEmpty(this.veSearch) ) {
-                return this.veSearched = this.veOptions;
-            }
-
-            let searchRegex = new RegExp(this.veSearch, 'i');
-
-            this.veSearched = Arr.filter(this.veOptions, (option) => {
-                return option.label.match(searchRegex);
-            });
-        },
-
-        toggleOption(value, event)
-        {
-            if ( Any.isEmpty(value) ) {
-                return;
-            }
-
             if ( event ) {
-                event.stopPropagation();
+                event.preventDefault();
             }
 
-            let veValue = this.veValue;
+            this.$refs.input.focus();
+        },
 
-            if ( ! this.multiple ) {
+        blurInput(event = null)
+        {
+            this.$refs.input.blur();
+        },
+
+        onFocusInput()
+        {
+            clearInterval(this.refresh);
+
+            this.$refs.popover.open();
+        },
+
+        onBlurInput()
+        {
+            setTimeout(() => {
+                this.index = -1;
+                this.search = '';
                 this.$refs.popover.close();
-            }
-
-            if ( ! this.multiple ) {
-                veValue = value;
-            }
-
-            if ( this.multiple ) {
-                Arr.toggle(veValue, value);
-            }
-
-            if ( this.veValue !== veValue ) {
-                console.log('woo?', veValue);
-                this.$emit('update:modelValue', this.veValue = veValue);
-            }
+            }, 100);
         },
 
-        getOptionLabel(value)
+        onInputInput(event)
         {
-            let option = Arr.find(this.veOptions, { value });
-
-            if ( ! option && this.allowCreate ) {
-                return value;
-            }
-
-            if ( ! option && ! this.allowCreate ) {
-                return this.undefinedText;
-            }
-
-            return option.label;
+            this.search = event.target.value;
         },
 
-        openSelect()
+        onKeydownInput(event)
         {
-            clearTimeout(this.focusDelay);
-
-            this.veOpen = true;
-
-            if ( this.$refs.input ) {
-                this.$refs.input.focus();
+            if ( ! this.focus ) {
+                return this.onFocusInput();
             }
 
-            this.veIndex = -1;
-        },
-
-        closeSelect()
-        {
-            clearTimeout(this.focusDelay);
-
-            this.veOpen = false;
-
-            if ( this.$refs.input ) {
-                this.$refs.input.blur();
-            }
-
-            this.veSearch = '';
-
-            this.veIndex = -1;
-        },
-
-        selectPrev()
-        {
-            let newIndex = this.veIndex - 1;
-
-            if ( newIndex < 0 ) {
-                newIndex = this.veOptions.length - 1;
-            }
-
-            this.veIndex = newIndex;
-        },
-
-        selectNext()
-        {
-            let newIndex = this.veIndex + 1;
-
-            if ( newIndex > this.veOptions.length - 1 ) {
-                newIndex = 0;
-            }
-
-            this.veIndex = newIndex;
-        },
-
-        toggleSelected()
-        {
-            let selected = Arr.get(this.veSearched, this.veIndex);
-
-            if ( this.veSearched.length === 1 ) {
-                selected = Arr.get(this.veSearched, 0);
-                this.veSearch = '';
-            }
-
-            if ( ! selected ) {
-                return;
-            }
-
-            this.toggleOption(selected.veValue);
-        },
-
-        scrollToClosest()
-        {
-            let value = this.veValue;
-
-            if ( Any.isArray(this.veValue) ) {
-                value = Arr.first(this.veValue);
-            }
-
-            if ( ! value ) {
-                return;
-            }
-
-            let target = Arr.find(this.veOptions, { value });
-
-            if ( ! target ) {
-                return;
-            }
-
-            let container = Dom.find(this.$refs.popover.$el)
-                .find('.n-select__items').get(0);
-
-            let selector = `[data-option="${target._uid}"]`;
-
-            let offset = Dom.find(container)
-                .find(selector).offset('top', container);
-
-            this.$refs.scrollbar.scrollTo(offset, 0 , 250);
-    },
-
-        eventUpdateSearch(event)
-        {
-            this.veSearch = event.target.value;
-
-            this.$once('hook:updated', this.$refs.popover.refresh);
-
-            this.veIndex = -1;
-        },
-
-        eventFocusSearch(event)
-        {
-            this.focusDelay = setTimeout(this.openSelect, 200);
-        },
-
-        eventBlurSearch(event)
-        {
-            clearTimeout(this.focusDelay);
-
-            this.focusDelay = setTimeout(() => {
-
-                if ( this.veOpen && this.$refs.input ) {
-                    this.$refs.input.focus();
-                }
-
-            }, 200);
-        },
-
-        eventKeydownSearch(event)
-        {
             if ( event.which === 13 ) {
-
-                if ( this.allowCreate && this.veIndex === -1 ) {
-                    this.toggleOption(this.veSearch);
-                    this.veSearch = '';
-                }
-
-                if ( ! this.allowCreate || this.veIndex !== -1 ) {
-                    this.toggleSelected();
-                }
-
+                this.createOrToggle();
             }
 
             if ( event.which === 38 ) {
@@ -392,125 +276,209 @@ export default {
             if ( event.which === 40 ) {
                 this.selectNext();
             }
-
-            if ( event.which === 9 || event.which === 27 ) {
-                this.$refs.popover.close();
-            }
         },
 
-        eventPopoverInput(input)
+        searchOptions()
         {
-            if ( input ) {
-                Any.delay(this.scrollToClosest, 100);
+            this.index = -1;
+
+            if ( Any.isEmpty(this.search) ) {
+                return this.searched = this.elements;
             }
 
-            input ? this.openSelect() : this.closeSelect();
+            let searchRegex = new RegExp(this.search, 'i');
+
+            let searched = Arr.filter(this.elements, (option) => {
+                return option.label.match(searchRegex);
+            });
+
+            this.searched = searched;
+        },
+
+        toggleOption(value, event = null)
+        {
+            if ( Any.isEmpty(value) ) {
+                return;
+            }
+
+            if ( event ) {
+                event.preventDefault();
+            }
+
+            let tempValue = this.tempValue;
+
+            if ( this.multiple ) {
+                this.focusInput();
+            }
+
+            if ( ! this.multiple ) {
+                tempValue = value;
+            }
+
+            if ( this.multiple ) {
+                Arr.toggle(tempValue, value);
+            }
+
+            if ( ! this.multiple ) {
+                this.$refs.popover.close();
+            }
+
+            if ( this.tempValue === tempValue ) {
+                return;
+            }
+
+            this.$emit('update:modelValue', 
+                this.tempValue = tempValue);
+        },
+
+        getOptionLabel(value)
+        {
+            let option = Arr.find(this.elements, 
+                { tempValue: value });
+
+            if ( ! option && this.allowCreate ) {
+                return value;
+            }
+
+            if ( ! option && ! this.allowCreate ) {
+                return this.trans(this.undefinedText);
+            }
+
+            return option.tempLabel;
+        },
+
+        selectPrev()
+        {
+            let newIndex = this.index - 1;
+
+            if ( newIndex < 0 ) {
+                newIndex = this.searched.length - 1;
+            }
+
+            this.index = newIndex;
+
+            this.scrollToCurrent();
+        },
+
+        selectNext()
+        {
+            let newIndex = this.index + 1;
+
+            if ( newIndex > this.searched.length - 1 ) {
+                newIndex = 0;
+            }
+
+            this.index = newIndex;
+
+            this.scrollToCurrent();
+        },
+
+        createOrToggle()
+        {
+            if ( this.allowCreate && this.search ) {
+                return this.createOption();
+            }
+            
+            let selected = Arr.get(this.searched, 
+                this.index);
+
+            if ( this.searched.length === 1 ) {
+                selected = Arr.first(this.searched);
+            }
+
+            if ( ! selected || selected.disabled ) {
+                return;
+            }
+
+            this.toggleOption(selected.tempValue);
+        },
+
+        createOption()
+        {
+            this.toggleOption(this.search);
+
+            this.search = '';
+        },
+
+        scrollToCurrent()
+        {
+            if ( ! this.focus ) {
+                return;
+            }
+
+            let selected = Arr.get(this.searched, 
+                this.index);
+
+            if ( ! selected ) {
+                return;
+            }
+
+            this.$refs.scrollbar.scrollIntoView(
+                `[data-option="${selected._.uid}"]`);
+        },
+
+        scrollToClosest()
+        {
+            if ( ! this.focus ) {
+                return;
+            }
+
+            let value = this.tempValue;
+
+            if ( Any.isArray(this.tempValue) ) {
+                value = Arr.first(this.tempValue);
+            }
+
+            if ( ! value ) {
+                return;
+            }
+
+            let target = Arr.find(this.elements, { 
+                tempValue: value
+             });
+
+            if ( ! target ) {
+                return;
+            }
+
+            this.$refs.scrollbar.scrollIntoView(
+                `[data-option="${target._.uid}"]`);
         }
 
     },
 
     created()
     {
-        if ( this.multiple && ! Any.isArray(this.veValue) ) {
-            this.veValue = [];
+        if ( this.multiple && ! Any.isArray(this.tempValue) ) {
+            this.tempValue = [];
         }
 
-        if ( this.multiple && ! Any.isArray(this.veClearValue) ) {
-            this.veClearValue = [];
+        if ( this.multiple && ! Any.isArray(this.clearValue) ) {
+            this.tempClear = [];
         }
     },
 
     beforeMount()
     {
-        this.$watch('veSearch', this.searchOptions);
-
         this.searchOptions();
-    },
-
-    renderLabelInput()
-    {
-        let events = {
-            input: this.eventUpdateSearch,
-            focus: this.eventFocusSearch,
-            blur: this.eventBlurSearch,
-            keydown: this.eventKeydownSearch,
-        };
-
-        let style = {};
-
-        if ( ! this.multiple && ! this.veOpen && ! Any.isEmpty(this.veValue) ) {
-            style.opacity = 0;
-        }
-
-        let attrs = {
-            type: 'text',
-            disabled: this.disabled
-        };
-
-        if ( ! this.multiple && this.veOpen ) {
-            attrs.placeholder = this.getOptionLabel(this.veValue);
-        }
-
-        if ( Any.isEmpty(this.veValue) && ! Any.isNumber(this.veValue) ) {
-            attrs.placeholder = this.placeholder;
-        }
-
-        return (
-            <input ref="input" class="n-select__input" style={style} value={this.veSearch} {...events} {...attrs} />
-        );
     },
 
     renderLabelClear()
     {
-        if ( ! this.clearable || Any.isEmpty(this.veValue) ) {
+        if ( ! this.clearable || Any.isEmpty(this.tempValue) ) {
             return null;
         }
 
-        let events = {
-            onClick: this.clear
-        };
+        let props = {};
+
+        if ( ! this.disabled ) {
+            props.onMousedown = this.clear;
+        }
 
         return (
-            <div class="n-select__clear" {...events}>
-                <span class={this.icons.times}></span>
+            <div class="n-select__clear" {...props}>
+                <i class={this.icons.times}></i>
             </div>
-        );
-    },
-
-    renderLabelItem(value)
-    {
-        if ( Any.isEmpty(this.veValue) && ! Any.isNumber(this.veValue) ) {
-            return null;
-        }
-
-        let classList = [
-            'n-select__item'
-        ];
-
-        let style = {};
-
-        if ( ! this.multiple && this.veOpen ) {
-            style.display = 'none';
-        }
-
-        if ( ! this.multiple && this.veSearch ) {
-            style.display = 'none';
-        }
-
-        let events = {
-            click: () => this.toggleOption(value)
-        };
-
-        let removeHtml = null;
-
-        if ( this.multiple ) {
-            removeHtml = (<i on={events} class={this.icons.times}></i>);
-        }
-
-        return (
-            <span class={classList} style={style}>
-                { [this.getOptionLabel(value), removeHtml] }
-            </span>
         );
     },
 
@@ -518,88 +486,214 @@ export default {
     {
         return (
             <div class="n-select__angle">
-                <span class={this.icons.angleDown}></span>
+                <i class={this.icons.angleDown}></i>
             </div>
         );
     },
 
-    renderLabel()
+    renderLabelItem(value)
     {
-        let values = this.veValue;
+        let classList = [
+            'n-select__item'
+        ];
 
-        if ( ! Any.isArray(values) ) {
-            values = [values];
+        let props = {
+            class: this.icons.times,
+        };
+
+        if ( ! this.disabled ) {
+            props.onMousedown = (event) => this.toggleOption(value, event);
         }
 
+        let labelHtml = (
+            <span>{ this.getOptionLabel(value) }</span>
+        );
+
         return (
-            <div class="n-select__label">
-                { this.ctor('renderLabelClear')() }
-                {
-                    Arr.each(values, (value) => {
-                        return this.ctor('renderLabelItem')(value)
-                    })
-                }
-                { this.ctor('renderLabelInput')() }
-                { this.ctor('renderLabelAngle')() }
+            <div class={classList}>
+                { [labelHtml, <i {...props}></i>] }
             </div>
         );
+    },
+
+    renderLabelCollapse()
+    {
+        let first = Arr.first(this.tempValue);
+
+        if ( ! first ) {
+            return null;
+        }
+
+        let firstHtml = this.ctor('renderLabelItem')(first);
+
+        if ( this.tempValue.length === 1 ) {
+            return firstHtml;
+        }
+
+        let count = this.tempValue.length - 1;
+
+        let collapseHtml = (
+            <div class="n-select__item">
+                <span>{ this.choice(this.collapseText, count) }</span>
+            </div>
+        );
+
+        return [
+            firstHtml, collapseHtml
+        ];
+    },
+
+    renderLabelItems()
+    {
+        if ( this.collapse ) {
+            return this.ctor('renderLabelCollapse')();
+        }
+
+        return Arr.each(this.tempValue, (value) => {
+            return this.ctor('renderLabelItem')(value);
+        });
+    },
+
+    renderMultiple()
+    {
+        let isEmptyValue = Any.isEmpty(this.tempValue) &&
+            ! Any.isNumber(this.tempValue);
+
+        let props = {
+            value: this.search,
+            placeholder: this.placeholder,
+            disabled: this.disabled,
+            onBlur: this.onBlurInput,
+            onFocus: this.onFocusInput,
+            onInput: this.onInputInput,
+            onKeydown: this.onKeydownInput
+        };
+
+        if ( ! this.focus ) {
+            props.value = null;
+        }
+
+        if ( ! isEmptyValue ) {
+            props.placeholder = null;
+        }
+
+        return [
+            this.ctor('renderLabelClear')(), 
+            (
+                <div class="n-select__items">
+                    { this.ctor('renderLabelItems')() }
+                    <div class="n-select__input">
+                        <input ref="input" {...props} />
+                    </div>
+                </div>
+            ), 
+            this.ctor('renderLabelAngle')()
+        ];
+    },
+
+    renderSingle()
+    {
+        let isEmptyValue = Any.isEmpty(this.tempValue) &&
+            ! Any.isNumber(this.tempValue);
+
+        let modelLabel = this.getOptionLabel(
+            this.tempValue);
+        
+        if ( isEmptyValue ) {
+            modelLabel = null;
+        }
+
+        let props = {
+            value: this.search,
+            placeholder: this.placeholder,
+            disabled: this.disabled,
+            onBlur: this.onBlurInput,
+            onFocus: this.onFocusInput,
+            onInput: this.onInputInput,
+            onKeydown: this.onKeydownInput
+        };
+
+        if ( ! this.focus ) {
+            props.value = modelLabel;
+        }
+
+        if ( ! isEmptyValue ) {
+            props.placeholder = modelLabel;
+        }
+
+        return [
+            this.ctor('renderLabelClear')(), 
+            (
+                <div class="n-select__input">
+                    <input ref="input" {...props} />
+                </div>
+            ), 
+            this.ctor('renderLabelAngle')()
+        ];
     },
 
     renderDisplay()
     {
         let classList = [
-            'n-select',
-            'n-select--' + this.size
+            'n-select__display'
         ];
 
         if ( this.multiple ) {
-            classList.push('n-select--multiple');
+            classList.push('n-multiple');
+        }
+
+        let displayHtml = this.ctor('renderSingle');
+
+        if ( this.multiple ) {
+            displayHtml = this.ctor('renderMultiple');
         }
 
         return (
             <div class={classList}>
-                { this.ctor('renderLabel')() }
+                { displayHtml() }
             </div>
         );
     },
 
     renderItems()
     {
-        if ( ! this.veSearched.length ) {
-            return (<div class="n-select__empty">{this.emptyText}</div>);
+        let emptyHtml = (
+            <div class="n-select__empty">{ this.trans(this.emptyText) }</div>
+        );
+        
+        if ( ! this.searched.length ) {
+            return emptyHtml;
+        }
+
+        let options = Obj.each(this.searched, (option, index) => {
+            return option.ctor('renderOption')(index);
+        });
+
+        let props = {
+            relative: true, size: this.size
         }
 
         return (
-            <NScrollbar ref="scrollbar" class="n-select__items" relative={true}>
-                {
-                    Arr.each(this.veSearched, (option, index) => {
-                        return option.ctor('renderOption')(index);
-                    })
-                }
+            <NScrollbar ref="scrollbar" class="n-select__body" {...props}>
+                { Obj.values(options) }
             </NScrollbar>
-        )
+        );
     },
 
     renderPopover()
     {
         let props = {
-            visible: this.veOpen,
-            type: 'select',
             trigger: 'click',
             width: -1,
             size: this.size,
+            scrollClose: true,
             disabled: this.disabled,
-            position: this.position,
-            window: ! this.boundary,
-        };
-
-        let events = {
-            onInput: this.eventPopoverInput
+            onScrollClose: this.blurInput
         };
 
         return (
-            <NPopover ref="popover" {...props} {...events}>
-                { this.ctor('renderItems')() }
+            <NPopover ref="popover" vModel={this.focus} {...props}>
+                { { raw: this.ctor('renderItems') } }
             </NPopover>
         );
     },
@@ -607,40 +701,54 @@ export default {
     renderOptions()
     {
         if ( Any.isEmpty(this.options) ) {
-            return null;
+            return this.$slots.default();
         }
 
-        return Arr.each(this.options, ($value, $index) => {
+        let optionRender = ($value, $index) => {
 
             let props = {
+                label: Obj.get({ $value, $index }, this.optionsLabel, null),
                 value: Obj.get({ $value, $index }, this.optionsValue, null),
-                disabled: Obj.get({ $value, $index }, this.optionsDisabled, false)
             };
 
-            return (
-                <NSelectOption {...props}>
-                    {  Obj.get({ $value, $index }, this.optionsLabel, null) }
-                </NSelectOption>
-            );
-        });
+            return (<NSelectOption {...props}></NSelectOption>);
+        };
+
+        return Obj.values(Obj.each(this.options, optionRender));
     },
 
     render()
     {
         let classList = [
-            'n-select__wrapper'
+            'n-select',
+            'n-select--' + this.type,
+            'n-select--' + this.size,
         ];
+
+        let isEmptyValue = Any.isEmpty(this.tempValue) &&
+            ! Any.isNumber(this.tempValue);
+
+        if ( isEmptyValue ) {
+            classList.push('n-empty');
+        }
+
+        if ( this.clearable ) {
+            classList.push('n-clearable');
+        }
+
+        if ( this.focus ) {
+            classList.push('n-focus');
+        }
 
         if ( this.disabled ) {
             classList.push('n-disabled');
         }
 
         return (
-            <div class={classList}>
+            <div class={classList} onMousedown={this.focusInput}>
                 { this.ctor('renderDisplay')() }
-                { this.ctor('renderPopover')() }
                 { this.ctor('renderOptions')() }
-                { this.$slots.default && this.$slots.default() }
+                { this.ctor('renderPopover')() }
             </div>
         );
     }

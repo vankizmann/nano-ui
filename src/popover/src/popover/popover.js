@@ -1,4 +1,4 @@
-import { Arr, Any, Dom } from "nano-js";
+import { Arr, Any, Dom, Event, UUID } from "nano-js";
 
 
 export default {
@@ -17,9 +17,8 @@ export default {
         modelValue: {
             default()
             {
-                return false;
-            },
-            type: [Boolean]
+                return null;
+            }
         },
 
         width: {
@@ -103,7 +102,7 @@ export default {
         framerate: {
             default()
             {
-                return 30;
+                return 15;
             },
             type: [Number]
         }
@@ -119,9 +118,64 @@ export default {
 
         tempValue()
         {
-            this.refreshVisible();
+            Any.delay(this.refreshVisible, 50);
         }
 
+    },
+
+    data()
+    {
+        return {
+            tempValue: false,
+            clientX: 0,
+            clientY: 0,
+            target: null
+        };
+    },
+
+    beforeMount()
+    {
+        this.tempValue = this.modelValue;
+    },
+
+    mounted()
+    {
+        this.target = Dom.find(this.$el).previous().get(0);
+
+        if ( this.trigger === 'context' ) {
+            this.target = Dom.find(this.$el).parent().get(0);
+        }
+
+        if ( this.window ) {
+            Dom.find(document.body).append(this.$el);
+        }
+
+        if ( this.trigger === 'hover' ) {
+            Dom.find(document.body).on('mousemove', 
+                Any.framerate(this.onHover, 30), this._.uid);
+        }
+
+        if ( this.trigger === 'click' ) {
+            Dom.find(document.body).on('mousedown', 
+                Any.framerate(this.onClick, 30), this._.uid);
+        }
+
+        if ( this.trigger === 'context' ) {
+            Dom.find(document.body).on('contextmenu', 
+                Any.framerate(this.onContext, 30), this._.uid);
+        }
+
+        Dom.find(document.body).on('mousedown', 
+            Any.framerate(this.onExit, 30), this._.uid);
+    },
+
+    beforeUnmount()
+    {
+        Dom.find(document).off('mousemove', null, this._.uid);
+        Dom.find(document).off('mousedown', null, this._.uid);
+        Dom.find(document).off('contextmenu', null, this._.uid);
+
+        this.$el.remove();
     },
 
     methods: {
@@ -131,8 +185,18 @@ export default {
             return this.tempValue;
         },
 
-        close()
+        open()
         {
+            this.$emit('update:modelValue', 
+                this.tempValue = true);
+        },
+
+        close(scrollClose = false)
+        {
+            if ( scrollClose ) {
+                this.$emit('scrollClose');
+            }
+
             this.$emit('update:modelValue', 
                 this.tempValue = false);
         },
@@ -142,13 +206,29 @@ export default {
             Dom.find(this.$el).css(null);
 
             if ( ! this.tempValue ) {
-                return clearInterval(this.refresh);
+                return this.stopRefreshInterval();
             }
 
+            this.startRefreshInterval();
+
+            delete this.passedOffset;
+        },
+
+        startRefreshInterval()
+        {
             this.refresh = setInterval(this.updatePosition, 
                 1000 / this.framerate);
 
-            delete this.passedOffset;
+            Any.delay(() => {
+                Dom.find(this.$el).addClass('n-ready');
+            }, 100);
+        },
+
+        stopRefreshInterval()
+        {
+            clearInterval(this.refresh);
+
+            Dom.find(this.$el).removeClass('n-ready');
         },
 
         isSameOffset(offset)
@@ -229,6 +309,23 @@ export default {
 
             if ( position === 'bottom-end' ) {
                 offset = { x: posX.end, y: posY.end };
+            }
+
+            let inverse = this.position;
+
+            if ( position.match(/^(top)\-/) ) {
+                inverse = inverse.replace(/^(top)\-/, 'bottom-');
+            }
+
+            if ( position.match(/^(bottom)\-/) ) {
+                inverse = inverse.replace(/^(bottom)\-/, 'top-');
+            }
+
+            let broken = offset.y + windowRect.height > 
+                window.innerHeight || offset.y < 0;
+
+            if ( this.scrollClose && broken ) {
+                return this.getTargetHorizontal(inverse);
             }
 
             if ( offset.y < 0 ) {
@@ -317,11 +414,28 @@ export default {
                 offset = { x: posX.end, y: posY.end };
             }
 
+            let inverse = this.position;
+
+            if ( position.match(/^(left)\-/) ) {
+                inverse = inverse.replace(/^(left)\-/, 'right-');
+            }
+
+            if ( position.match(/^(right)\-/) ) {
+                inverse = inverse.replace(/^(right)\-/, 'left-');
+            }
+
+            let broken = offset.x + windowRect.width > 
+                window.innerWidth || offset.x < 0;
+
+            if ( this.scrollClose && broken ) {
+                return this.getTargetVertical(inverse);
+            }
+
             if ( offset.y < 0 ) {
                 offset.y = 0;
             }
         
-            if ( offset.y + windowRect.height > window.innerHeight ) {
+            if ( offset.y + windowRect.height >  window.innerHeight ) {
                 offset.y = window.innerHeight - windowRect.height;
             }
 
@@ -359,6 +473,10 @@ export default {
                 return;
             }
 
+            if ( this.width ) {
+                Dom.find(this.$el).css({ width: this.width + 'px' });
+            }
+
             let offset = this.getTargetOffset();
 
             let style = {
@@ -374,7 +492,7 @@ export default {
             Dom.find(this.$el).css(style);
 
             if ( this.scrollClose && this.passedOffset ) {
-                this.close();
+                this.close(true);
             }
 
             this.passedOffset = rect;
@@ -418,9 +536,6 @@ export default {
             if ( this.tempValue === result ) {
                 return;
             }
-
-            event.preventDefault();
-            event.stopPropagation();
 
             this.$emit('update:modelValue', this.tempValue = result);
         },
@@ -472,63 +587,6 @@ export default {
 
     },
 
-    data()
-    {
-        return {
-            tempValue: false,
-            clientX: 0,
-            clientY: 0,
-            target: null
-        };
-    },
-
-    beforeMount()
-    {
-        this.tempValue = this.visible;
-    },
-
-    mounted()
-    {
-        this.target = Dom.find(this.$el).previous().get(0);
-
-        if ( this.trigger === 'context' ) {
-            this.target = Dom.find(this.$el).parent().get(0);
-        }
-
-        if ( this.window ) {
-            Dom.find(document.body).append(this.$el);
-        }
-
-        if ( this.trigger === 'hover' ) {
-            Dom.find(document.body).on('mousemove', 
-                Any.framerate(this.onHover, 30), this._uid);
-        }
-
-        if ( this.trigger === 'click' ) {
-            Dom.find(document.body).on('click', 
-                Any.framerate(this.onClick, 30), this._uid);
-        }
-
-        if ( this.trigger === 'context' ) {
-            Dom.find(document.body).on('contextmenu', 
-                Any.framerate(this.onContext, 30), this._uid);
-        }
-
-
-        Dom.find(document.body).on('mousedown', 
-            Any.framerate(this.onExit, 30), this._uid);
-    },
-
-    beforeUnmount()
-    {
-        Dom.find(document).off('mousemove', null, this._uid);
-        Dom.find(document).off('click', null, this._uid);
-        Dom.find(document).off('contextmenu', null, this._uid);
-        Dom.find(document).off('mousedown', null, this._uid);
-
-        this.$el.remove();
-    },
-
     renderBody()
     {
         if ( this.$slots.raw ) {
@@ -563,20 +621,23 @@ export default {
         let classList = [
             'n-popover',
             'n-popover--' + this.type,
-            'n-popover--' + this.position
+            'n-popover--' + this.size,
+            'n-popover--' + this.position,
         ];
-
-        if ( this.size ) {
-            classList.push('n-popover--' + this.size);
-        }
 
         if ( ! this.tempValue ) {
             classList.push('n-hidden');
         }
 
+        let viewBody = this.modelValue;
+
+        if ( Any.isNull(this.modelValue) ) {
+            viewBody = this.tempValue;
+        }
+
         return (
-            <div class={this.cmer(classList)}>
-                { this.tempValue && this.ctor('renderBody')() }
+            <div class={classList}>
+                { viewBody && this.ctor('renderBody')() }
             </div>
         );
     }

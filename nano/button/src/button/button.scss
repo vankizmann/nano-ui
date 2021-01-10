@@ -20,43 +20,43 @@
 
 @each $suffix, $values in $form {
 
-    $button-font: map-get($values, 'font');
-    $button-size: map-get($values, 'size');
-    $button-radius: map-get($values, 'radius');
-    $button-ratio: map-get($values, 'ratio');
+    $-button-font: map-get($values, 'font');
+    $-button-size: map-get($values, 'size');
+    $-button-radius: map-get($values, 'radius');
+    $-button-ratio: map-get($values, 'ratio');
 
     .n-button--#{$suffix} {
-        font-size: $button-font;
+        font-size: $-button-font;
     }
 
     .n-button--#{$suffix}:not(.n-button--link) {
-        height: $button-size;
-        border-radius: $button-radius;
+        height: $-button-size;
+        border-radius: $-button-radius;
     }
 
     .n-button--#{$suffix}.n-button--square:not(.n-button--link) {
-        width: $button-size;
+        width: $-button-size;
     }
 
     .n-button--#{$suffix}:not(.n-button--link):not(.n-button--square) {
-        padding: 0 $button-size * $button-ratio;
+        padding: 0 $-button-size * $-button-ratio;
     }
 
     .n-button--#{$suffix} .n-icon.n-icon--before:not(:last-child) {
-        margin-right: $button-font * $button-ratio;
+        margin-right: $-button-font * $-button-ratio;
     }
 
     .n-button--#{$suffix} .n-icon.n-icon--after:not(:first-child) {
-        margin-left: $button-font * $button-ratio;
+        margin-left: $-button-font * $-button-ratio;
     }
 
 }
 
 @each $color, $values in $colors {
 
-    $color-base: map_get($values, 'base');
-    $color-light: map_get($values, 'light');
-    $color-dark: map_get($values, 'dark');
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
 
     /**
      * Button primary
@@ -64,39 +64,39 @@
 
     .n-button--#{$color}:not(.n-button--link) {
         color: $--color-white;
-        background: $color-base;
-        border-color: $color-base;
+        background: $-color-base;
+        border-color: $-color-base;
     }
 
     .n-button--#{$color}:not(.n-button--link):hover {
-        background: $color-light;
-        border-color: $color-light;
+        background: $-color-light;
+        border-color: $-color-light;
     }
 
     .n-button--#{$color}:not(.n-button--link):focus {
-        background: $color-dark;
-        border-color: $color-dark;
+        background: $-color-dark;
+        border-color: $-color-dark;
     }
 
-    .n-button--#{$color}:not(.n-button--link)[disabled] {
-        background: $color-base;
-        border-color: $color-base;
+    .n-button--#{$color}:not(.n-button--link).n-disabled {
+        background: $-color-base;
+        border-color: $-color-base;
     }
 
     .n-button--#{$color}.n-button--link {
-        color: $color-base;
+        color: $-color-base;
     }
 
     .n-button--#{$color}.n-button--link:hover {
-        color: $color-light;
+        color: $-color-light;
     }
 
     .n-button--#{$color}.n-button--link:focus {
-        color: $color-dark;
+        color: $-color-dark;
     }
 
-    .n-button--#{$color}.n-button--link[disabled] {
-        color: $color-base;
+    .n-button--#{$color}.n-button--link.n-disabled {
+        color: $-color-base;
     }
 
 }

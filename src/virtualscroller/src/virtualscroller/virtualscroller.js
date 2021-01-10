@@ -187,7 +187,7 @@ export default {
         this.$watch('items', this.discoverHeight);
 
         let ident = {
-            _uid: this._uid
+            _uid: this.uid
         };
 
         Dom.find(this.$el).on('scrollstop', this.eventScrollstop, ident);
@@ -198,7 +198,7 @@ export default {
     beforeDestroy()
     {
         let ident = {
-            _uid: this._uid
+            _uid: this.uid
         };
 
         Dom.find(this.$el).off('scrollstop', null, ident);

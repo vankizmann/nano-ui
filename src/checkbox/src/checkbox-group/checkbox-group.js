@@ -13,12 +13,20 @@ export default {
 
     props: {
 
-        value: {
+        modelValue: {
             default()
             {
                 return [];
             },
             type: [Array]
+        },
+
+        size: {
+            default()
+            {
+                return 'md';
+            },
+            type: [String]
         },
 
         align: {
@@ -35,27 +43,27 @@ export default {
 
         globalChecked()
         {
-            let checked = Arr.filter(this.veCheckboxes, (checkbox) => {
-                return checkbox.veChecked;
+            let checked = Arr.filter(this.elements, (checkbox) => {
+                return checkbox.tempChecked;
             });
 
-            return this.veCheckboxes.length !== 0 &&
-                checked.length === this.veCheckboxes.length;
+            return checked.length === this.elements.length &&
+                this.elements.length !== 0;
         },
 
         globalIntermediate()
         {
-            let checked = this.veCheckboxes.filter((checkbox) => {
-                return checkbox.veChecked;
+            let checked = this.elements.filter((checkbox) => {
+                return checkbox.tempChecked;
             });
 
-            return checked.length !== 0 &&
-                checked.length !== this.veCheckboxes.length;
+            return checked.length !== this.elements.length &&
+                checked.length !== 0 ;
         },
 
         globalDisabled()
         {
-            return this.veCheckboxes.length === 0;
+            return this.elements.length === 0;
         },
 
     },
@@ -63,9 +71,9 @@ export default {
     data()
     {
         return {
-            veValue: this.value,
-            veCheckboxes: [],
-            veIndex: -1
+            tempValue: this.modelValue,
+            index: -1,
+            elements: []
         }
     },
 
@@ -73,9 +81,10 @@ export default {
 
         value()
         {
-            if ( this.value !== this.veValue ) {
-                this.veValue = this.value;
+            if ( this.tempValue = this.modelValue ) {
+                this.tempValue = this.modelValue;
             }
+            
         },
 
     },
@@ -84,66 +93,92 @@ export default {
 
         addCheckbox(checkbox)
         {
-            this.veIndex = -1;
+            this.index = -1;
 
-            Arr.add(this.veCheckboxes, checkbox, {
-                _uid: checkbox._uid
+            Arr.add(this.elements, checkbox, {
+                uid: checkbox.uid
             });
 
-            this.veCheckboxes = Arr.sort(this.veCheckboxes, 'sort');
+            this.elements = Arr.sort(this.elements, 'sort');
         },
 
         removeCheckbox(checkbox)
         {
-            Arr.remove(this.veCheckboxes, {
-                _uid: checkbox._uid
+            Arr.remove(this.elements, {
+                uid: checkbox.uid
             });
 
-            this.veIndex = -1;
+            this.index = -1;
         },
 
-        toggleCheckbox(checkbox)
+        toggleCheckbox(checkbox, emit = true)
         {
-            let veIndex = Arr.findIndex(this.veCheckboxes, {
-                _uid: checkbox._uid
+            let index = Arr.findIndex(this.elements, {
+                uid: checkbox.uid
             });
 
-            if ( ! checkbox.veChecked ) {
-                this.veIndex = veIndex;
+            if ( ! checkbox.tempChecked ) {
+                this.index = index;
             }
 
-            Arr.toggle(this.veValue, checkbox.value);
+            Arr.toggle(this.tempValue, checkbox.value);
+
+            if ( ! emit ) {
+                return;
+            }
+
+            this.$emit('update:modelValue', this.tempValue);
         },
 
-        checkCheckbox(checkbox)
+        checkCheckbox(checkbox, emit = true)
         {
-            Arr.add(this.veValue, checkbox.value);
+            Arr.add(this.tempValue, checkbox.value);
+
+            if ( ! emit ) {
+                return;
+            }
+
+            this.$emit('update:modelValue', this.tempValue);
         },
 
-        uncheckCheckbox(checkbox)
+        uncheckCheckbox(checkbox, emit = true)
         {
-            Arr.remove(this.veValue, checkbox.value);
+            Arr.remove(this.tempValue, checkbox.value);
+
+            if ( ! emit ) {
+                return;
+            }
+
+            this.$emit('update:modelValue', this.tempValue);
         },
 
         shiftCheckbox(checkbox)
         {
-            if ( this.veIndex === -1 ) {
-                return this.toggleCheckbox(checkbox);
+            if ( this.index === -1 ) {
+                return this.toggleCheckbox(checkbox, false);
             }
 
-            let veIndex = Arr.findIndex(this.veCheckboxes, {
-                _uid: checkbox._uid
+            let index = Arr.findIndex(this.elements, {
+                uid: checkbox.uid
             });
 
-            let checkboxes = this.veCheckboxes.slice(this.veIndex, veIndex + 1);
+            let checkboxes = this.elements.slice(this.index, index + 1);
 
-            if ( veIndex < this.veIndex ) {
-                checkboxes = this.veCheckboxes.slice(veIndex, this.veIndex + 1);
+            if ( index < this.index ) {
+                checkboxes = this.elements.slice(index, this.index + 1);
             }
 
-            Arr.each(checkboxes, (checkbox) => checkbox.check());
+            this.index = -1;
 
-            this.veIndex = -1;
+            Arr.each(checkboxes, (checkbox) => {
+                this.checkCheckbox(checkbox, false);
+            });
+
+            Arr.each(checkboxes, (checkbox) => {
+                checkbox.updateFromGroup();
+            });
+
+            this.$emit('update:modelValue', this.tempValue);
         },
 
         toggleAll()
@@ -153,33 +188,48 @@ export default {
 
         checkAll()
         {
-            Arr.each(this.veCheckboxes, (checkbox) => checkbox.check());
+            Arr.each(this.elements, (checkbox) => {
+                this.checkCheckbox(checkbox, false);
+            });
+
+            Arr.each(this.elements, (checkbox) => {
+                checkbox.updateFromGroup();
+            });
+
+            this.$emit('update:modelValue', this.tempValue);
         },
 
         uncheckAll()
         {
-            Arr.each(this.veCheckboxes, (checkbox) => checkbox.uncheck());
+            Arr.each(this.elements, (checkbox) => {
+                this.uncheckCheckbox(checkbox, false);
+            });
+
+            Arr.each(this.elements, (checkbox) => {
+                checkbox.updateFromGroup();
+            });
+
+            this.$emit('update:modelValue', this.tempValue);
         },
 
         isChecked(value)
         {
-            return Arr.has(this.veValue, value);
+            return Arr.has(this.tempValue, value);
         }
 
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
         let classList = [
             'n-checkbox-group',
-            'n-checkbox-group--' + this.align
+            'n-checkbox-group--' + this.size,
+            'n-checkbox-group--' + this.align,
         ];
 
         return (
             <div class={classList}>
-                {this.$slots.default}
+                {this.$slots.default()}
             </div>
         );
     }

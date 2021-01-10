@@ -67,7 +67,7 @@ export default {
         }
 
         let key = Arr.findIndex(this.NMatrix.columns, {
-            _uid: this._uid
+            _uid: this.uid
         });
 
         let value = Num.int(this.value) || Math.pow(2, key);

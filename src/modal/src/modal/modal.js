@@ -91,7 +91,7 @@ export default {
         closeOutside: {
             default()
             {
-                return this.closable;
+                return false;
             },
             type: [Boolean]
         },
@@ -231,14 +231,14 @@ export default {
     mounted()
     {
         Dom.find(document.body).on('click',
-            this.eventClick, { _uid: this._uid });
+            this.eventClick, { _uid: this.uid });
 
         Dom.find(document.body).on('keydown',
-            this.eventKeydown, { _uid: this._uid });
+            this.eventKeydown, { _uid: this.uid });
 
-        if ( ! this.$listeners.close ) {
-            this.$on('close', this.close);
-        }
+        // if ( ! this.$listeners.close ) {
+        //     this.$on('close', this.close);
+        // }
 
         this.target = Dom.find(this.$el).previous().get(0);
 
@@ -259,10 +259,10 @@ export default {
     destroyed()
     {
         Dom.find(document.body).off('click',
-            null, { _uid: this._uid });
+            null, { _uid: this.uid });
 
         Dom.find(document.body).off('keydown',
-            null, { _uid: this._uid });
+            null, { _uid: this.uid });
     },
 
     renderClose()
@@ -290,7 +290,7 @@ export default {
 
         return (
             <div class="n-modal__header">
-                { [this.$slots.header || this.title, this.ctor('renderClose')()] }
+                { [this.$slots.header() || this.title, this.ctor('renderClose')()] }
             </div>
         );
     },
@@ -316,7 +316,7 @@ export default {
 
         let rawHtml = (
             <div key={this.veVisible ? '1' : '0'} class="n-modal__frame" style={style}>
-                { this.$slots.raw }
+                { this.$slots.raw && this.$slots.raw() }
             </div>
         );
 
@@ -381,10 +381,8 @@ export default {
         );
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
         return this.ctor('renderModal')();
     }
 

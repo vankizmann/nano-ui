@@ -1,4 +1,5 @@
-import Vue from "vue";
-
 import Scrollbar from './src/scrollbar/scrollbar';
-Vue.component(Scrollbar.name, Scrollbar);
+
+export default function (App) {
+    App.component(Scrollbar.name, Scrollbar);
+}

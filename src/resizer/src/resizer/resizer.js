@@ -101,10 +101,10 @@ export default {
             Dom.find(document.body).addClass('n-resize');
 
             Dom.find(document).on('mouseup',
-                Any.throttle(this.eventResizerStartMouseup, 30), this._uid);
+                Any.throttle(this.eventResizerStartMouseup, 30), this.uid);
 
             Dom.find(document).on('mousemove',
-                Any.framerate(this.eventResizerStartMousemove, 30), this._uid);
+                Any.framerate(this.eventResizerStartMousemove, 30), this.uid);
         },
 
         eventResizerStartMousemove(event)
@@ -144,8 +144,8 @@ export default {
             event.preventDefault();
             event.stopPropagation();
 
-            Dom.find(document).off('mousemove', null, this._uid);
-            Dom.find(document).off('mouseup', null, this._uid);
+            Dom.find(document).off('mousemove', null, this.uid);
+            Dom.find(document).off('mouseup', null, this.uid);
 
             if ( ! this.clientX ) {
                 return;
@@ -191,10 +191,10 @@ export default {
             Dom.find(document.body).addClass('n-resize');
 
             Dom.find(document).on('mouseup',
-                Any.throttle(this.eventResizerEndMouseup, 30), this._uid);
+                Any.throttle(this.eventResizerEndMouseup, 30), this.uid);
 
             Dom.find(document).on('mousemove',
-                Any.framerate(this.eventResizerEndMousemove, 30), this._uid);
+                Any.framerate(this.eventResizerEndMousemove, 30), this.uid);
         },
 
         eventResizerEndMousemove(event)
@@ -234,8 +234,8 @@ export default {
             event.preventDefault();
             event.stopPropagation();
 
-            Dom.find(document).off('mousemove', null, this._uid);
-            Dom.find(document).off('mouseup', null, this._uid);
+            Dom.find(document).off('mousemove', null, this.uid);
+            Dom.find(document).off('mouseup', null, this.uid);
 
             if ( ! this.clientX ) {
                 return;

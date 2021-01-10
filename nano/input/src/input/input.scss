@@ -36,6 +36,10 @@
     transform: translateY(-50%);
 }
 
+.n-input .n-button--input {
+    color: $color-gray-60;
+}
+
 .n-input.n-input--icon.n-input--icon-before .n-button {
     left: 1px;
 }
@@ -46,47 +50,51 @@
 
 @each $suffix, $values in $form {
 
-    $input-font: map-get($values, 'font');
-    $input-size: map-get($values, 'size');
-    $input-radius: map-get($values, 'radius');
-    $input-ratio: map-get($values, 'ratio');
+    $-input-font: map-get($values, 'font');
+    $-input-size: map-get($values, 'size');
+    $-input-radius: map-get($values, 'radius');
+    $-input-ratio: map-get($values, 'ratio');
 
     .n-input--#{$suffix} {
-        font-size: $input-font;
+        font-size: $-input-font;
     }
 
     .n-input--#{$suffix} input {
-        height: $input-size;
-        padding: 0 $input-size * $input-ratio;
-        border-radius: $input-radius;
+        height: $-input-size;
+        padding: 0 $-input-size * $-input-ratio;
+        border-radius: $-input-radius;
     }
 
     .n-input--#{$suffix}.n-input--icon.n-input--icon-before input {
-        padding-left: $input-size + ($input-size * $input-ratio);
+        padding-left: $-input-size + ($-input-size * $-input-ratio);
     }
     
     .n-input--#{$suffix}.n-input--icon.n-input--icon-after input {
-        padding-right: $input-size + ($input-size * $input-ratio);
+        padding-right: $-input-size + ($-input-size * $-input-ratio);
     }
 
 }
 
 @each $color, $values in $colors {
 
-    $color-base: map_get($values, 'base');
-    $color-light: map_get($values, 'light');
-    $color-dark: map_get($values, 'dark');
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
 
     /**
      * Button primary
      */
 
-    .n-input--#{$color} input:hover:not([disabled]) {
-        border-color: $color-base;
+    .n-input--#{$color}:not(.n-disabled):hover input {
+        border-color: $-color-base;
     }
 
-    .n-input--#{$color} input:focus:not([disabled]) {
-        border-color: $color-light;
+    .n-input--#{$color}:not(.n-disabled) input:focus{
+        border-color: $-color-light;
+    }
+
+    .n-input--#{$color}:not(.n-disabled) .n-button--input:not(.n-disabled):hover {
+        color: $-color-base;
     }
 
 }

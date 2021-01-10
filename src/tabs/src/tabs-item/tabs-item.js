@@ -48,7 +48,7 @@ export default {
         sort: {
             default()
             {
-                return this._uid;
+                return this.uid;
             },
             type: [Number]
         },

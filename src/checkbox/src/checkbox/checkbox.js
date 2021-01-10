@@ -4,10 +4,6 @@ export default {
 
     name: 'NCheckbox',
 
-    model: {
-        prop: 'checked'
-    },
-
     inject: {
 
         NCheckboxGroup: {
@@ -18,6 +14,14 @@ export default {
 
     props: {
 
+        modelValue: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         value: {
             default()
             {
@@ -25,13 +29,6 @@ export default {
             }
         },
 
-        checked: {
-            default()
-            {
-                return false;
-            },
-            type: [Boolean]
-        },
 
         disabled: {
             default()
@@ -41,10 +38,18 @@ export default {
             type: [Boolean]
         },
 
+        type: {
+            default()
+            {
+                return 'primary';
+            },
+            type: [String]
+        },
+
         size: {
             default()
             {
-                return 'default';
+                return 'md';
             },
             type: [String]
         },
@@ -69,19 +74,24 @@ export default {
 
     computed: {
 
-        veComputed()
+        uid()
         {
-            return ! this.global ? this.veChecked :
+            return this._.uid;
+        },
+
+        tempComputed()
+        {
+            return ! this.global ? this.tempChecked :
                 this.NCheckboxGroup.globalChecked;
         },
 
-        veIntermediate()
+        tempIntermediate()
         {
             return ! this.global ? this.intermediate :
                 this.NCheckboxGroup.globalIntermediate;
         },
 
-        veDisabled()
+        tempDisabled()
         {
             return ! this.global ? this.disabled :
                 this.NCheckboxGroup.globalDisabled;
@@ -92,58 +102,16 @@ export default {
     data()
     {
         return {
-            veChecked: this.checked
+            tempChecked: this.modelValue
         };
-    },
-
-    methods: {
-
-        toggle()
-        {
-            this.$emit('input', this.veChecked = ! this.veChecked);
-        },
-
-        check()
-        {
-            if ( this.NCheckboxGroup ) {
-                this.NCheckboxGroup.checkCheckbox(this);
-            }
-
-            this.$emit('input', this.veChecked = true);
-        },
-
-        uncheck()
-        {
-            if ( this.NCheckboxGroup ) {
-                this.NCheckboxGroup.uncheckCheckbox(this);
-            }
-
-            this.$emit('input', this.veChecked = false);
-        },
-
-        eventLocalClick(event)
-        {
-            if ( this.NCheckboxGroup ) {
-                event.shiftKey ? this.NCheckboxGroup.shiftCheckbox(this) :
-                    this.NCheckboxGroup.toggleCheckbox(this);
-            }
-
-            this.$emit('input', this.veChecked = ! this.veChecked);
-        },
-
-        eventGlobalClick()
-        {
-            this.NCheckboxGroup.toggleAll();
-        },
-
     },
 
     watch: {
 
-        checked()
+        modelValue(value)
         {
-            if ( this.checked !== this.veChecked ) {
-                this.veChecked = this.checked;
+            if ( value !== this.tempChecked ) {
+                this.tempChecked = value;
             }
         }
 
@@ -152,7 +120,7 @@ export default {
     beforeMount()
     {
         if ( this.NCheckboxGroup ) {
-            this.veChecked = this.NCheckboxGroup.isChecked(this.value);
+            this.tempChecked = this.NCheckboxGroup.isChecked(this.value);
         }
     },
 
@@ -162,29 +130,94 @@ export default {
             return;
         }
 
-        this.NCheckboxGroup.$watch('veValue', () => {
-            this.veChecked = this.NCheckboxGroup.isChecked(this.value);
-        });
-
         this.NCheckboxGroup.addCheckbox(this);
     },
 
-    beforeDestroy()
+    beforeUnmount()
     {
         if ( this.NCheckboxGroup && ! this.global ) {
             this.NCheckboxGroup.removeCheckbox(this);
         }
     },
 
+    methods: {
+
+        toggle()
+        {
+            this.$emit('update:modelValue', this.tempChecked = ! this.tempChecked);
+        },
+
+        check()
+        {
+            if ( this.NCheckboxGroup ) {
+                this.NCheckboxGroup.checkCheckbox(this);
+            }
+
+            this.$emit('update:modelValue', this.tempChecked = true);
+        },
+
+        uncheck()
+        {
+            if ( this.NCheckboxGroup ) {
+                this.NCheckboxGroup.uncheckCheckbox(this);
+            }
+
+            this.$emit('update:modelValue', this.tempChecked = false);
+        },
+
+        eventShiftClick()
+        {
+            if ( this.NCheckboxGroup ) {
+                this.NCheckboxGroup.shiftCheckbox(this);
+            }
+
+            this.$emit('update:modelValue', this.tempChecked = true);
+        },
+
+        eventLocalClick(event)
+        {
+            event.preventDefault();
+
+            if ( event.shiftKey ) {
+                return this.eventShiftClick();
+            }
+            
+            if ( this.NCheckboxGroup ) {
+                this.NCheckboxGroup.toggleCheckbox(this);
+            }
+
+            this.$emit('update:modelValue', this.tempChecked = ! this.tempChecked);
+        },
+
+        eventGlobalClick()
+        {
+            this.NCheckboxGroup.toggleAll();
+        },
+
+        updateFromGroup()
+        {
+            let checked = this.NCheckboxGroup.isChecked(this.value);
+
+            if ( this.tempChecked === checked ) {
+                return;
+            }
+            
+            this.$emit('update:modelValue', this.tempChecked = checked);
+        }
+
+    },
+
     renderCheckbox()
     {
-        let interHtml = this.$slots.intermediate;
+        let interHtml = this.$slots.intermediate &&
+            this.$slots.intermediate();
 
         if ( ! interHtml )  {
             interHtml = (<span class={this.icons.intermediate}></span>);
         }
 
-        let checkHtml = this.$slots.checked;
+        let checkHtml = this.$slots.checked &&
+            this.$slots.checked();
 
         if ( ! checkHtml )  {
             checkHtml = (<span class={this.icons.checked}></span>);
@@ -192,7 +225,7 @@ export default {
 
         return (
             <div class="n-checkbox__checkbox">
-                { this.veIntermediate ? interHtml : checkHtml }
+                { this.tempIntermediate ? interHtml : checkHtml }
             </div>
         );
     },
@@ -205,50 +238,44 @@ export default {
 
         return (
             <div class="n-checkbox__label">
-                { this.$slots.default || this.$slots.label }
+                { this.$slots.default() || this.$slots.label() }
             </div>
         );
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
         let classList = [
             'n-checkbox',
-            'n-checkbox--' + this.size
+            'n-checkbox--' + this.size,
+            'n-checkbox--' + this.type,
         ];
 
-        if ( this.veComputed ) {
+        if ( this.tempComputed ) {
             classList.push('n-checked');
         }
 
-        if ( this.veIntermediate ) {
+        if ( this.tempIntermediate ) {
             classList.push('n-intermediate');
         }
 
-        if ( this.veDisabled ) {
+        if ( this.tempDisabled ) {
             classList.push('n-disabled');
         }
 
-        let events = {};
+        let props = Obj.clone(this.$attrs);
 
-        if ( ! this.veDisabled ) {
-            events = Obj.clone(this.$listeners);
+        if ( ! this.tempDisabled && this.global ) {
+            props.onMousedown = this.eventGlobalClick;
         }
 
-        if ( ! this.veDisabled && this.global ) {
-            events.click = this.eventGlobalClick;
-        }
-
-        if ( ! this.veDisabled && ! this.global ) {
-            events.click = this.eventLocalClick;
+        if ( ! this.tempDisabled && ! this.global ) {
+            props.onMousedown = this.eventLocalClick;
         }
 
         return (
-            <div class={classList} on={events}>
-                { this.ctor('renderCheckbox')() }
-                { this.ctor('renderLabel')() }
+            <div class={classList} {...props}>
+                { [this.ctor('renderCheckbox')(), this.ctor('renderLabel')()] }
             </div>
         );
     }

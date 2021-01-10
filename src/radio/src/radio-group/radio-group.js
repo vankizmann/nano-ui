@@ -13,11 +13,19 @@ export default {
 
     props: {
 
-        value: {
+        modelValue: {
             default()
             {
                 return null;
             }
+        },
+
+        size: {
+            default()
+            {
+                return 'md';
+            },
+            type: [String]
         },
 
         align: {
@@ -33,17 +41,17 @@ export default {
     data()
     {
         return {
-            veValue: this.value,
-            vRadios: []
+            tempValue: this.modelValue,
+            elements: []
         }
     },
 
     watch: {
 
-        value()
+        modelValue()
         {
-            if ( this.value !== this.veValue ) {
-                this.veValue = this.value;
+            if ( this.modelValue !== this.tempValue ) {
+                this.tempValue = this.modelValue;
             }
         },
 
@@ -53,42 +61,47 @@ export default {
 
         addRadio(radio)
         {
-            Arr.add(this.vRadios, radio, {
-                _uid: radio._uid
+            Arr.add(this.elements, radio, {
+                uid: radio.uid
             });
         },
 
         removeRadio(radio)
         {
-            Arr.remove(this.vRadios, {
-                _uid: radio._uid
+            Arr.remove(this.elements, {
+                uid: radio.uid
             });
         },
 
         checkRadio(radio)
         {
-            this.$emit('input', this.veValue = radio.value);
+            this.tempValue = radio.value;
+            
+            Arr.each(this.elements, (radio) => {
+                radio.updateFromGroup();
+            });
+
+            this.$emit('update:modelValue', this.tempValue);
         },
 
         isChecked(value)
         {
-            return this.veValue === value;
+            return this.tempValue === value;
         }
 
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
         let classList = [
             'n-radio-group',
-            'n-radio-group--' + this.align
+            'n-radio-group--' + this.size,
+            'n-radio-group--' + this.align,
         ];
 
         return (
             <div class={classList}>
-                {this.$slots.default}
+                { this.$slots.default() }
             </div>
         );
     }
