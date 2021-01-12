@@ -6,7 +6,7 @@ export default {
 
     props: {
 
-        value: {
+        modelValue: {
             default()
             {
                 return [];
@@ -22,7 +22,7 @@ export default {
             type: [Array]
         },
 
-        items: {
+        options: {
             default()
             {
                 return [];
@@ -40,7 +40,7 @@ export default {
         placeholder: {
             default()
             {
-                return this.trans('Please select');
+                return 'Please select';
             },
             type: [String]
         },
@@ -64,7 +64,15 @@ export default {
         size: {
             default()
             {
-                return 'default';
+                return 'md';
+            },
+            type: [String]
+        },
+
+        type: {
+            default()
+            {
+                return 'primary';
             },
             type: [String]
         },
@@ -77,17 +85,10 @@ export default {
             type: [String]
         },
 
-        boundary: {
-            default()
-            {
-                return null;
-            }
-        },
-
         trigger: {
             default()
             {
-                return 'click';
+                return 'hover';
             },
             type: [String]
         },
@@ -108,6 +109,14 @@ export default {
             type: [String]
         },
 
+        childProp: {
+            default()
+            {
+                return 'children';
+            },
+            type: [String]
+        },
+
         disabledProp: {
             default()
             {
@@ -116,69 +125,53 @@ export default {
             type: [String]
         },
 
-        childProp: {
-            default()
-            {
-                return 'children';
-            },
-            type: [String]
-        }
-
     },
 
     data()
     {
         return {
-            veValue: this.value,
-            veHover: this.value,
-            veOpen: false,
+            tempValue: this.modelValue,
+            tempHover: this.modelValue,
+            focus: false,
         };
     },
 
     methods: {
 
-        clear()
+        clearCascader()
         {
-            this.$emit('input', this.veHover = this.veValue = this.clearValue);
+            this.focus = true;
+
+            this.$emit('update:modelValue', 
+                this.tempValue = this.tempHover = this.clearValue);
         },
 
-        eventPopoverInput(input)
+        onCascaderInput(value)
         {
-            this.veOpen = input;
+            this.focus = false;
+
+            this.$emit('update:modelValue', 
+                this.tempValue = value);
         },
 
-        eventHover(cascade)
+        onCascaderHover(value)
         {
-            if ( this.trigger !== 'hover' ) {
-                this.$emit('hover', this.veHover = cascade);
-            }
-
-            // Hover intend emulation
-            clearTimeout(this.veDelay);
-
-            this.veDelay = setTimeout(() => {
-                this.$emit('hover', this.veHover = cascade);
-            }, 250);
+            this.$emit('update:hover', 
+                this.tempHover = value);
         },
 
-        eventSelect(event, cascade)
+        onPopoverInput(value)
         {
-            if ( event ) {
-                event.stopPropagation();
-            }
-
-            this.veOpen = false;
-
-            this.$emit('input', this.veValue = cascade);
+            this.focus = value;
         },
 
     },
 
     watch: {
 
-        value() {
-            if ( this.value !== this.veValue ) {
-                this.veValue = this.value;
+        modelValue(value) {
+            if ( value !== this.tempValue ) {
+                this.tempValue = value;
             }
         }
 
@@ -186,26 +179,45 @@ export default {
 
     renderLabelClear()
     {
-        if ( ! this.clearable || this.disabled ) {
+        if ( ! this.clearable || Any.isEmpty(this.tempValue) ) {
             return null;
         }
 
-        let events = {
-            click: this.clear
-        };
+        let props = {};
+
+        if ( ! this.disabled ) {
+            props.onMousedown = this.clearCascader;
+        }
 
         return (
-            <div class="n-cascader__clear" on={events}>
-                <span class={this.icons.times}></span>
+            <div class="n-cascader__clear" {...props}>
+                <i class={ this.icons.times }></i>
+            </div>
+        );
+    },
+
+    renderLabelAngle()
+    {
+        return (
+            <div class="n-cascader__angle">
+                <i class={ this.icons.angleDown }></i>
             </div>
         );
     },
 
     renderLabelItems()
     {
-        let items = this.items, renderList = [];
+        let items = this.options, renderList = [];
 
-        Arr.each(this.veValue, (value) => {
+        if ( Any.isEmpty(this.tempValue) ) {
+            return (
+                <div class="n-cascader__placeholder">
+                    { this.trans(this.placeholder) }
+                </div>
+            );
+        }
+
+        Arr.each(this.tempValue, (value) => {
 
             if ( ! items ) {
                 return;
@@ -226,30 +238,9 @@ export default {
             renderList.push(itemLabel);
         });
 
-        return renderList;
-    },
-
-    renderLabelAngle()
-    {
         return (
-            <div class="n-cascader__angle">
-                <span class={this.icons.angleDown}></span>
-            </div>
-        );
-    },
-
-    renderLabel()
-    {
-        return (
-            <div class="n-cascader__label">
-                { !! this.veValue.length &&
-                    this.ctor('renderLabelItems')()
-                }
-                { ! this.veValue.length &&
-                    <span class="n-cascader__placeholder">
-                        {this.placeholder}
-                    </span>
-                }
+            <div class="n-cascader__items">
+                { renderList }
             </div>
         );
     },
@@ -257,148 +248,47 @@ export default {
     renderDisplay()
     {
         let classList = [
-            'n-cascader',
-            'n-cascader--' + this.size
+            'n-cascader__display'
         ];
 
         return (
             <div class={classList}>
                 { this.ctor('renderLabelClear')() }
-                { this.ctor('renderLabel')() }
+                { this.ctor('renderLabelItems')() }
                 { this.ctor('renderLabelAngle')() }
-            </div>
-        )
-    },
-
-    renderOption(item, cascade = [])
-    {
-        let veCascade = Arr.clone(cascade);
-
-        veCascade.push(item[this.valueProp]);
-
-        let classList = [
-            'n-popover-option'
-        ];
-
-        if ( Arr.has(this.veValue, item[this.valueProp]) ) {
-            classList.push('n-active');
-        }
-
-        if ( Arr.has(this.veHover, item[this.valueProp]) ) {
-            classList.push('n-current');
-        }
-
-        let disabled = Obj.get(item, this.disabledProp, false);
-
-        if ( disabled ) {
-            classList.push('n-disabled');
-        }
-
-        let events = {};
-
-        if ( this.trigger === 'hover' ) {
-            events.mousemove = () => this.eventHover(veCascade);
-        }
-
-        if ( this.trigger === 'hover' && ! disabled ) {
-            events.click = (event) => this.eventSelect(event, veCascade);
-        }
-
-        if ( this.trigger === 'click' ) {
-            events.click = () => this.eventHover(veCascade);
-        }
-
-        if ( this.trigger === 'click' && ! disabled ) {
-            events.dblclick = (event) => this.eventSelect(event, veCascade);
-        }
-
-        let children = Obj.get(item, this.childProp);
-
-        return (
-            <div class={classList} on={events}>
-                <div class="n-cascader-option__label">
-                    <span>{ Obj.get(item, this.labelProp) }</span>
-                </div>
-                { ! Any.isEmpty(children) &&
-                    <div class="n-cascader-option__arrow">
-                        <span class={this.icons.angleRight}></span>
-                    </div>
-                }
             </div>
         );
     },
 
-    renderOptions(items, cascade = [])
+    renderItems()
     {
-        if ( Any.isEmpty(items) ) {
-            return null;
-        }
-
-        return (
-            <div class="n-cascader__items">
-                <NScrollbar relative={true}>
-                    {
-                        Arr.each(items, (item) => {
-                            return this.ctor('renderOption')(item, cascade);
-                        })
-                    }
-                </NScrollbar>
-            </div>
-        )
-    },
-
-    renderCascade()
-    {
-        let renderList = [
-            this.ctor('renderOptions')(this.items)
-        ];
-
-        let items = this.items, cascade = [];
-
-        Arr.each(this.veHover, (value) => {
-
-            if ( ! items ) {
-                return;
-            }
-
-            cascade.push(value);
-
-            let item = Arr.find(items, {
-                [this.valueProp]: value
-            });
-
-            items = Obj.get(item, this.childProp);
-
-            let options = this.ctor('renderOptions')
-                (items, cascade);
-
-            renderList.push(options);
+        let props = Obj.except(this.$props, ['modelValue'], {
+            hover: this.tempHover,
+            modelValue: this.tempValue,
         });
 
-        return renderList;
+        props['onUpdate:hover'] = this.onCascaderHover;
+        props['onUpdate:modelValue'] = this.onCascaderInput;
+
+        return (
+            <NCascaderPanel class="n-cascader__body" {...props}></NCascaderPanel>
+        );
     },
 
     renderPopover()
     {
         let props = {
-            visible: this.veOpen,
-            type: 'cascader',
             trigger: 'click',
-            width: '100%',
+            width: 0,
             size: this.size,
-            disabled: this.disabled,
             position: this.position,
-            boundary: this.boundary,
-            window: ! this.boundary,
-        };
-
-        let events = {
-            input: this.eventPopoverInput
+            scrollClose: true,
+            disabled: this.disabled,
         };
 
         return (
-            <NPopover ref="popover" props={props} on={events}>
-                { this.ctor('renderCascade')() }
+            <NPopover ref="popover" vModel={this.focus} {...props}>
+                { { raw: this.ctor('renderItems') } }
             </NPopover>
         );
     },
@@ -406,8 +296,22 @@ export default {
     render()
     {
         let classList = [
-            'n-cascader__wrapper'
+            'n-cascader',
+            'n-cascader--' + this.type,
+            'n-cascader--' + this.size,
         ];
+
+        if ( Any.isEmpty(this.tempValue) ) {
+            classList.push('n-empty');
+        }
+
+        if ( this.clearable ) {
+            classList.push('n-clearable');
+        }
+
+        if ( this.focus ) {
+            classList.push('n-focus');
+        }
 
         if ( this.disabled ) {
             classList.push('n-disabled');

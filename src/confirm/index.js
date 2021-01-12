@@ -1,4 +1,5 @@
-import Vue from "vue";
-
 import Confirm from './src/confirm/confirm';
-Vue.component(Confirm.name, Confirm);
+
+export default function (App) {
+    App.component(Confirm.name, Confirm);
+}

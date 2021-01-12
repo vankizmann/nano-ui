@@ -167,15 +167,20 @@ export default {
 
         Dom.find(document.body).on('mousedown', 
             Any.framerate(this.onExit, 30), this._.uid);
+
+        Event.bind('NPopover:close', this.onCloseEvent, this._.uid);
     },
 
     beforeUnmount()
     {
+        this.$el.remove();
+
         Dom.find(document).off('mousemove', null, this._.uid);
         Dom.find(document).off('mousedown', null, this._.uid);
         Dom.find(document).off('contextmenu', null, this._.uid);
 
-        this.$el.remove();
+        Event.unbind('NPopover:close', this._.uid);
+        
     },
 
     methods: {
@@ -201,6 +206,13 @@ export default {
                 this.tempValue = false);
         },
 
+        onCloseEvent(uid)
+        {
+            if ( this.tempValue && this._.uid !== uid ) {
+                this.close();
+            }
+        },
+
         refreshVisible()
         {
             Dom.find(this.$el).css(null);
@@ -221,6 +233,7 @@ export default {
 
             Any.delay(() => {
                 Dom.find(this.$el).addClass('n-ready');
+                Event.fire('NPopover:close', this._.uid);
             }, 100);
         },
 
@@ -244,7 +257,20 @@ export default {
             return ! Arr.has(rainbow, false);
         },
 
-        getTargetHorizontal(position)
+        isSameSize(size)
+        {
+            if ( ! this.passedSize ) {
+                return false;
+            }
+
+            let rainbow = Arr.each(['width', 'height'], (key) => {
+                return size[key] === this.passedSize[key];
+            });
+
+            return ! Arr.has(rainbow, false);
+        },
+
+        getTargetHorizontal(position, fallback = null)
         {
             let targetRect = this.target.getBoundingClientRect();
 
@@ -324,8 +350,12 @@ export default {
             let broken = offset.y + windowRect.height > 
                 window.innerHeight || offset.y < 0;
 
-            if ( this.scrollClose && broken ) {
-                return this.getTargetHorizontal(inverse);
+            if ( this.scrollClose && broken && ! fallback ) {
+                return this.getTargetHorizontal(inverse, offset);
+            }
+
+            if ( fallback && broken ) {
+                offset = fallback;
             }
 
             if ( offset.y < 0 ) {
@@ -347,7 +377,7 @@ export default {
             return offset;
         },
 
-        getTargetVertical(position)
+        getTargetVertical(position, fallback = null)
         {
             let targetRect = this.target.getBoundingClientRect();
 
@@ -427,8 +457,12 @@ export default {
             let broken = offset.x + windowRect.width > 
                 window.innerWidth || offset.x < 0;
 
-            if ( this.scrollClose && broken ) {
-                return this.getTargetVertical(inverse);
+            if ( this.scrollClose && broken && ! fallback ) {
+                return this.getTargetVertical(inverse, offset);
+            }
+
+            if ( fallback && broken ) {
+                offset = fallback;
             }
 
             if ( offset.y < 0 ) {
@@ -467,11 +501,16 @@ export default {
 
         updatePosition()
         {
-            let rect = this.target.getBoundingClientRect();
+            let size = this.$el.getBoundingClientRect(),
+                rect = this.target.getBoundingClientRect();
 
-            if ( this.isSameOffset(rect) ) {
+            let isSameSize = this.isSameSize(size);
+
+            if ( isSameSize && this.isSameOffset(rect) ) {
                 return;
             }
+
+            this.passedSize = size;
 
             if ( this.width ) {
                 Dom.find(this.$el).css({ width: this.width + 'px' });
@@ -488,10 +527,10 @@ export default {
             if ( this.width === -1 ) {
                 style.width = rect.width + 'px';
             }
-            
+
             Dom.find(this.$el).css(style);
 
-            if ( this.scrollClose && this.passedOffset ) {
+            if ( this.scrollClose && this.passedOffset && isSameSize ) {
                 this.close(true);
             }
 

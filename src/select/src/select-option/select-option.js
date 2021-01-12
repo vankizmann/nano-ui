@@ -136,6 +136,10 @@ export default {
             'clickClose': ! this.NSelect.multiple,
         };
 
+        if ( isSingleActive || isMultipleActive ) {
+            props.icon = this.icons.checked;
+        }
+
         // Required for scrolldown
         props['data-option'] = this._.uid;
 

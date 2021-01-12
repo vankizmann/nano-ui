@@ -49,21 +49,17 @@ export default {
 
     methods: {
 
-        scrollTo(selector, offset = 0, delay = 100)
+        scrollTo(x = 0, y = 0, delay = 100)
         {
-            Any.delay(() => this.onScrollTo(selector, 
-                offset), delay);
+            Any.delay(() => this.onScrollTo(x, y), delay);
         },
 
-        onScrollTo(selector, offset = 0)
+        onScrollTo(x = 0, y = 0)
         {
-            let y = Dom.find(this.$refs.content).find(selector)
-                .offset('top', this.$refs.content);
-
-            this.optiscroll.scrollTo(0, y + offset, 0);
+            this.optiscroll.scrollTo(x, y, 0);
         },
 
-        scrollIntoView(selector, offset = 0, delay = 100)
+        scrollIntoView(selector, delay = 100)
         {
             Any.delay(() => this.onScrollIntoView(selector), delay);
         },
@@ -91,10 +87,6 @@ export default {
             };
 
             this.optiscroll = new Optiscroll(this.$el, options);
-
-            Any.delay(() => {
-                Dom.find(this.$el).addClass('is-ready');
-            }, 500);
         },
 
         unbindOptiscroll()
@@ -114,20 +106,12 @@ export default {
                 return;
             }
 
-            if ( window >= height ) {
-                Dom.find(this.$el).addClass('is-fixed');
-            }
-
-            if ( window < height ) {
-                Dom.find(this.$el).removeClass('is-fixed');
-            }
-
             if ( window ) {
                 this.passedHeight = height;
             }
 
             if ( ! this.relative ) {
-                return;
+                return Any.delay(this.onSizechange, 100);
             }
 
             Dom.find(this.$refs.spacer).child().css({
@@ -144,7 +128,26 @@ export default {
         unbindAdaptHeight()
         {
             clearInterval(this.refresh);
-        }
+        },
+
+        onScroll(event)
+        {
+            let scrollTop = this.$refs.content
+                .scrollTop;
+
+            this.$emit('scrollupdate', scrollTop);
+        },
+
+        onSizechange(event)
+        {
+            let height = Dom.find(this.$el).height();
+
+            if ( this.passedHeight ) {
+                Dom.find(this.$el).addClass('is-ready');
+            }
+
+            this.$emit('sizechange', height);
+        },
 
     },
 
@@ -152,18 +155,30 @@ export default {
     {
         this.bindAdaptHeight();
         this.bindOptiscroll();
+
+        Dom.find(this.$el).on('sizechange', 
+            this.onSizechange, this._.uid);
+
+        Dom.find(this.$el).on('scroll', 
+            this.onScroll, this._.uid);
     },
 
     beforeUnmount()
     {
         this.unbindAdaptHeight();
         this.unbindOptiscroll();
+
+        Dom.find(this.$el).off('sizechange', 
+            null, this._.uid);
+
+        Dom.find(this.$el).off('scroll', 
+            null, this._.uid);
     },
 
     render()
     {
         let classList = [
-            'n-scrollbar', 'is-fixed'
+            'n-scrollbar'
         ];
 
         return (

@@ -69,6 +69,14 @@ export default {
             type: [String]
         },
 
+        size: {
+            default()
+            {
+                return 'md';
+            },
+            type: [String]
+        },
+
         position: {
             default()
             {
@@ -85,10 +93,10 @@ export default {
             type: [Boolean]
         },
 
-        closeOutside: {
+        renderClose: {
             default()
             {
-                return false;
+                return true;
             },
             type: [Boolean]
         }
@@ -111,114 +119,12 @@ export default {
 
     },
 
-    methods: {
-
-        open()
-        {
-            this.$emit('update:modelValue', this.tempValue = true);
-        },
-
-        close(event)
-        {
-            if ( event ) {
-                event.stopPropagation();
-            }
-
-            this.$emit('update:modelValue', this.tempValue = false);
-        },
-
-        addClass() {
-            // Dom.find(this.$el).addClass('n-open');
-            // Dom.find(this.target).addClass('n-open');
-            // Dom.find(document.body).addClass('n-open');
-        },
-
-        removeClass() {
-            // Dom.find(this.$el).removeClass('n-open');
-            // Dom.find(this.target).removeClass('n-open');
-            // Dom.find(document.body).removeClass('n-open');
-        },
-
-        stopRefreshTimeout()
-        {
-            clearInterval(this.refresh);
-
-            Dom.find(this.$el).removeClass('n-ready');
-        },
-
-        startRefreshTimeout()
-        {
-            if ( ! this.tempValue ) {
-                return this.stopRefreshTimeout();
-            }
-
-            Dom.find(this.$el).css({ 
-                'z-index': window.zIndex++
-            });
-
-            this.refresh = setTimeout(() => {
-                Dom.find(this.$el).addClass('n-ready');
-            }, 100);
-        },
-
-        eventClick(event, el)
-        {
-            if ( this.disabled || event.which !== 1 ) {
-                return;
-            }
-
-            let result = !! Dom.find(el).closest(this.target) || this.tempValue;
-
-            if ( this.tempValue && this.closable ) {
-                result = ! Dom.find(el).closest(this.$refs.backdrop);
-            }
-
-            if ( result === this.tempValue ) {
-                return;
-            }
-
-            this.$emit('update:modalValue', this.tempValue = !! result);
-        },
-
-        eventKeydown(event, target)
-        {
-            if ( ! this.tempValue || ! this.closable ) {
-                return;
-            }
-
-            if ( event.which !== 27 ) {
-                return;
-            }
-
-            let toIndex = 0;
-
-            Dom.find('.n-modal.n-open').each((el) => {
-
-                if ( Dom.find(el).attr('data-index') < toIndex ) {
-                    return;
-                }
-
-                toIndex = Dom.find(el).attr('data-index');
-            });
-
-            let meIndex = Dom.find(this.$el)
-                .attr('data-index');
-
-            if ( toIndex !== meIndex ) {
-                return;
-            }
-
-            this.$nextTick(() => this.$emit('close'));
-        },
-
+    provide()
+    {
+        return {
+            NModal: this
+        };
     },
-
-    // provide()
-    // {
-    //     return {
-    //         NModal: this
-    //     };
-    // },
 
     data()
     {
@@ -234,8 +140,8 @@ export default {
         Dom.find(document.body).on('mousedown',
             this.eventClick, this._.uid);
 
-        // Dom.find(document.body).on('keydown',
-        //     this.eventKeydown, this._.uid);
+        Dom.find(document.body).on('keydown',
+            this.eventKeydown, this._.uid);
 
         // if ( ! this.$listeners.close ) {
         //     this.$on('close', this.close);
@@ -264,14 +170,120 @@ export default {
             null, this._.uid);
     },
 
+    methods: {
+
+        openModal(force = false, source = null)
+        {
+            if ( this.tempValue ) {
+                return;
+            }
+
+            if ( this.closable || force ) {
+                this.tempValue = true;
+            }
+
+            this.$emit('update:modelValue', true, source);
+        },
+
+        closeModal(force = false, source = null)
+        {
+            if ( ! this.tempValue ) {
+                return;
+            }
+
+            if ( this.closable || force ) {
+                this.tempValue = false;
+            }
+
+            this.$emit('update:modelValue', false, source);
+        },
+
+        stopRefreshTimeout()
+        {
+            clearInterval(this.refresh);
+
+            Dom.find(this.$el).removeClass('n-ready');
+        },
+
+        startRefreshTimeout()
+        {
+            if ( ! this.tempValue ) {
+                return this.stopRefreshTimeout();
+            }
+
+            window.zIndex += 1;
+
+            Dom.find(this.$el).attr('data-modal', 
+                window.zIndex);
+
+            Dom.find(this.$el).css({ 
+                'z-index': window.zIndex
+            });
+
+            this.refresh = setTimeout(() => {
+                Dom.find(this.$el).addClass('n-ready');
+            }, 100);
+        },
+
+        eventClick(event, el)
+        {
+            if ( this.disabled || event.which !== 1 ) {
+                return;
+            }
+
+            let result = !! Dom.find(el).closest(this.target);
+
+            if ( ! result && ! this.tempValue ) {
+                return;
+            }
+
+            if ( this.tempValue && this.closable ) {
+                result = ! Dom.find(el).closest(this.$refs.backdrop);
+            }
+
+            if ( result === this.tempValue ) {
+                return;
+            }
+
+            if ( ! result ) {
+                return this.closeModal(false, 'escape');
+            }
+            
+            this.openModal(true, 'selector');
+        },
+
+        eventKeydown(event, el)
+        {
+            if ( ! this.tempValue || event.which !== 27 ) {
+                return;
+            }
+
+            let extractIndex = (modal) => { 
+                return Dom.find(modal).attr('data-modal');
+            };
+
+            let indexes = Dom.find('.n-modal:not(.n-hidden)')
+                .each(extractIndex);
+
+            let index = Dom.find(this.$el).attr('data-modal');
+
+            if ( Arr.last(indexes.sort()) !== index ) {
+                return;
+            }
+
+            this.closeModal(false, 'escape');
+        },
+
+    },
+
     renderClose()
     {
-        if ( ! this.closable ) {
+        if ( ! this.renderClose || ! this.closable ) {
             return null;
         }
 
         let props = {
-            onClick: this.close
+            onClick: () => this.closeModal(false, 'escape')
         };
 
         return (
@@ -289,7 +301,7 @@ export default {
 
         return (
             <div class="n-modal__header">
-                { [this.$slots.header && this.$slots.header() || this.title, this.ctor('renderClose')()] }
+                { [this.$slots.header && this.$slots.header({ closeModal: this.closeModal }) || this.title, this.ctor('renderClose')()] }
             </div>
         );
     },
@@ -302,7 +314,7 @@ export default {
 
         return (
             <div class="n-modal__footer">
-                { this.$slots.footer() }
+                { this.$slots.footer({ closeModal: this.closeModal }) }
             </div>
         );
     },
@@ -312,7 +324,7 @@ export default {
         return (
             <div class="n-modal__body">
                 <NScrollbar ref="scrollbar" relative={true} wrapClass="n-modal__wrap">
-                    { this.$slots.default && this.$slots.default() }
+                    { this.$slots.default && this.$slots.default({ closeModal: this.closeModal }) }
                 </NScrollbar>
             </div>
         );
@@ -331,7 +343,7 @@ export default {
         let innerHtml = [
             this.ctor('renderHeader')(),
             this.ctor('renderBody')(),
-            // this.ctor('renderFooter')(),
+            this.ctor('renderFooter')(),
         ]
 
         return (
@@ -356,13 +368,14 @@ export default {
 
         let classList = [
             'n-modal',
+            'n-modal--' + this.size,
             'n-modal--' + this.type,
             'n-modal--' + this.position
         ];
 
-        // if ( this.closable ) {
-        //     classList.push('n-closable');
-        // }
+        if ( this.renderClose ) {
+            classList.push('n-closable');
+        }
 
         if ( ! this.tempValue ) {
             classList.push('n-hidden');

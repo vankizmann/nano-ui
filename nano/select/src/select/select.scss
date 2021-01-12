@@ -126,14 +126,14 @@ $select-empty-padding: 6px 12px !default;
      max-height: 210px;
      background: $color-white;
      box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
- }
+}
 
  .n-select__empty {
      text-align: center;
      color: $color-gray-60;
- }
+}
 
- @each $suffix, $values in $form {
+@each $suffix, $values in $form {
 
     $-select-font: map-get($values, 'font');
     $-select-size: map-get($values, 'size');
@@ -168,6 +168,10 @@ $select-empty-padding: 6px 12px !default;
         line-height: $-select-size - 14;
     }
 
+    .n-select--#{$suffix} .n-select__angle i {
+        font-size: $-select-font - 2;
+    }
+
     .n-select--#{$suffix} .n-select__clear i {
         font-size: $-select-font - 4;
     }
@@ -196,6 +200,11 @@ $select-empty-padding: 6px 12px !default;
     .n-select--#{$suffix} .n-select__item i {
         font-size: $-select-font - 5;
         padding: 0 $-select-padding * 0.5;
+    }
+
+    .n-popover--#{$suffix} .n-select__body,
+    .n-popover--#{$suffix} .n-select__empty {
+        border-radius: $-select-radius;
     }
 
     .n-popover--#{$suffix} .n-select__empty {

@@ -1,4 +1,7 @@
-import Vue from "vue";
-
+import TimepickerPanel from "./src/timepicker-panel/timepicker-panel";
 import Timepicker from "./src/timepicker/timepicker";
-Vue.component(Timepicker.name, Timepicker);
+
+export default function (App) {
+    App.component(TimepickerPanel.name, TimepickerPanel);
+    App.component(Timepicker.name, Timepicker);
+}

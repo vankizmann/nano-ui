@@ -1,0 +1,86 @@
+@import "../../../root/vars";
+
+.n-timepicker-panel {
+    cursor: default;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    border: 1px solid $color-gray-10;
+}
+
+.n-timepicker-panel__header {
+    border-bottom: 1px solid $color-gray-10;
+}
+
+.n-timepicker-panel__panel:not(:last-child) {
+    border-right: 1px solid $color-gray-10;
+}
+
+.n-timepicker-panel__body {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.n-timepicker-panel-display,
+.n-timepicker-panel__item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-timepicker-panel__item {
+    margin: 2px;
+}
+
+@each $suffix, $values in $form {
+
+    $-timepicker-panel-font: map-get($values, 'font');
+    $-timepicker-panel-size: map-get($values, 'size');
+    $-timepicker-panel-radius: map-get($values, 'radius');
+    $-timepicker-panel-ratio: map-get($values, 'ratio');
+
+    .n-timepicker-panel--#{$suffix} {
+        font-size: $-timepicker-panel-font;
+        border-radius: $-timepicker-panel-radius;
+    }
+
+    .n-timepicker-panel--#{$suffix} .n-timepicker-panel__panel {
+        width: $-timepicker-panel-size * 2;
+        height: $-timepicker-panel-size * 5;
+    }
+
+    $-timepicker-panel-padding: $-timepicker-panel-size * $-timepicker-panel-ratio;
+
+    .n-timepicker-panel--#{$suffix} .n-timepicker-panel__header,
+    .n-timepicker-panel--#{$suffix} .n-timepicker-panel__footer {
+        padding: $-timepicker-panel-padding * 0.7 $-timepicker-panel-padding;
+    }
+
+    .n-timepicker-panel--#{$suffix} .n-timepicker-panel__wrap {
+        padding: ($-timepicker-panel-padding - 2) * 0.25 ($-timepicker-panel-padding - 2);
+    }
+
+    .n-timepicker-panel--#{$suffix} .n-timepicker-panel__item {
+        height: $-timepicker-panel-size - 4;
+        padding: 0 $-timepicker-panel-padding;
+        border-radius: $-timepicker-panel-radius;
+    }
+
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+    .n-timepicker-panel--#{$color} .n-timepicker-panel__item.n-selected {
+        color: $--color-white;
+        background: $-color-base;
+    }
+
+}

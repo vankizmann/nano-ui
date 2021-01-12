@@ -178,11 +178,14 @@
 .n-scrollbar {
   position: relative; }
 
+.n-scrollbar.is-fixed {
+  position: absolute; }
+
 .n-scrollbar.is-enabled {
   overflow: hidden; }
 
-.n-scrollbar .n-scrollbar-content {
-  position: absolute !important;
+.n-scrollbar-content {
+  position: absolute;
   top: 0;
   left: 0;
   right: 0; }
@@ -249,8 +252,8 @@
 .n-scrollbar-h {
   opacity: 0; }
 
-.n-scrollbar.is-enabled.is-ready.has-vtrack:not(.is-fixed):hover > .n-scrollbar-v,
-.n-scrollbar.is-enabled.is-ready.has-htrack:not(.is-fixed):hover > .n-scrollbar-h {
+.n-scrollbar.is-ready.has-vtrack:hover > .n-scrollbar-v,
+.n-scrollbar.is-ready.has-htrack:hover > .n-scrollbar-h {
   opacity: 1; }
 
 /***
@@ -316,9 +319,16 @@
   opacity: 1; }
 
 .n-virtualscroller {
-  position: relative;
-  width: 100%;
-  overflow: hidden; }
+  position: relative; }
+
+.n-virtualscroller__item {
+  position: absolute;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  min-width: 100%;
+  align-items: stretch;
+  justify-content: stretch; }
 
 .n-ghost {
   position: relative; }
@@ -371,18 +381,16 @@
 .n-draggable__indicator {
   pointer-events: none;
   z-index: 99999;
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: fixed;
+  top: -9999px;
+  left: -9999px;
   display: block;
-  width: 100%;
   height: 0;
   margin-top: -1px;
-  border-bottom: 1px solid #4e7bff;
-  transition: visibility 0ms 100ms;
-  transform: translateY(-9999px); }
+  border-bottom: 1px solid #4e7bff; }
 
 .n-draggable__counter {
+  pointer-events: none;
   z-index: 99999;
   position: absolute;
   top: -9999px;
@@ -448,71 +456,67 @@
 .n-draglist.n-nodrop > .n-draglist__empty {
   background: rgba(253, 47, 81, 0.15); }
 
-/**
- * Fix flickering by set transition delay
- */
 .n-draglist-item {
+  cursor: default;
   display: flex;
   flex-direction: row;
   align-items: stretch;
   justify-content: stretch;
-  box-sizing: border-box;
-  transition: background 0ms 100ms; }
-
-.n-draglist-item.n-highlight {
-  background: rgba(255, 172, 47, 0.1);
-  transition: background 0ms; }
-
-.n-draglist-item.n-current {
-  background: rgba(78, 123, 255, 0.1); }
-
-.n-draglist-item.n-ghost:after {
-  position: relative; }
-
-.n-dragged .n-draglist-item.n-selected {
-  opacity: 0.5; }
+  width: 100%; }
 
 .n-draglist-item.n-dragover {
-  background: rgba(78, 123, 255, 0.1);
-  transition: background 0ms; }
+  background: rgba(78, 123, 255, 0.15); }
 
 .n-draglist-item.n-nodrop {
-  background: rgba(253, 47, 81, 0.1);
-  transition: background 0ms; }
+  background: rgba(253, 47, 81, 0.15); }
 
 .n-draglist-item__spacer {
   flex: 0 0 auto; }
 
+.n-draglist-item__element {
+  flex: 1 1 auto; }
+
+.n-draglist-item__handle,
 .n-draglist-item__expand,
 .n-draglist-item__select {
-  flex: 0 0 auto;
-  width: 30px;
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
-  justify-content: center; }
+  width: 20px; }
 
-.n-draglist-item.n-ghost .n-draglist-item__select {
-  display: none !important; }
-
-.n-draglist-item__expand > div,
-.n-draglist-item__select > div {
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
+.n-draglist-item__ellipsis,
+.n-draglist-item__angle,
+.n-draglist-item__checkbox {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
-  justify-content: center; }
+  width: 16px;
+  height: 16px; }
 
-.n-draglist-item__expand > div {
-  color: #6b6f74; }
+.n-draglist-item .n-draglist-item__ellipsis {
+  color: #c6c8ca; }
 
-.n-inverse .n-draglist-item__expand > div {
-  color: #afb2b4; }
-
-.n-draglist-item:not(.n-expanded) .n-draglist-item__expand > div {
+.n-draglist-item.n-expanded .n-draglist-item__angle {
   transform: rotate(90deg); }
+
+.n-draglist-item:not(.n-children) .n-draglist-item__angle i {
+  display: none; }
+
+.n-draglist-item__checkbox {
+  border: 1px solid #dddedf; }
+
+.n-draglist-item.n-selected .n-draglist-item__checkbox {
+  color: #ffffff;
+  background: #4e7bff;
+  border-color: #4e7bff; }
+
+.n-draglist-item:not(.n-selected) .n-draglist-item__checkbox i {
+  display: none; }
+
+.n-draglist-item.n-selected .n-draglist-item__pseudo {
+  background: red; }
 
 .n-draggrid {
   position: relative;
@@ -1306,7 +1310,6 @@
           appearance: none;
   display: block;
   width: 100%;
-  white-space: nowrap;
   text-decoration: none;
   line-height: 1.2;
   border: none;
@@ -2393,6 +2396,9 @@
   height: 10px;
   line-height: 10px; }
 
+.n-select--xs .n-select__angle i {
+  font-size: 8px; }
+
 .n-select--xs .n-select__clear i {
   font-size: 6px; }
 
@@ -2416,6 +2422,10 @@
 .n-select--xs .n-select__item i {
   font-size: 5px;
   padding: 0 2.4px; }
+
+.n-popover--xs .n-select__body,
+.n-popover--xs .n-select__empty {
+  border-radius: 1px; }
 
 .n-popover--xs .n-select__empty {
   padding: 4.8px; }
@@ -2442,6 +2452,9 @@
   height: 14px;
   line-height: 14px; }
 
+.n-select--sm .n-select__angle i {
+  font-size: 10px; }
+
 .n-select--sm .n-select__clear i {
   font-size: 8px; }
 
@@ -2465,6 +2478,10 @@
 .n-select--sm .n-select__item i {
   font-size: 7px;
   padding: 0 2.8px; }
+
+.n-popover--sm .n-select__body,
+.n-popover--sm .n-select__empty {
+  border-radius: 2px; }
 
 .n-popover--sm .n-select__empty {
   padding: 5.6px; }
@@ -2491,6 +2508,9 @@
   height: 18px;
   line-height: 18px; }
 
+.n-select--md .n-select__angle i {
+  font-size: 12px; }
+
 .n-select--md .n-select__clear i {
   font-size: 10px; }
 
@@ -2514,6 +2534,10 @@
 .n-select--md .n-select__item i {
   font-size: 9px;
   padding: 0 3.2px; }
+
+.n-popover--md .n-select__body,
+.n-popover--md .n-select__empty {
+  border-radius: 3px; }
 
 .n-popover--md .n-select__empty {
   padding: 6.4px; }
@@ -2540,6 +2564,9 @@
   height: 22px;
   line-height: 22px; }
 
+.n-select--lg .n-select__angle i {
+  font-size: 14px; }
+
 .n-select--lg .n-select__clear i {
   font-size: 12px; }
 
@@ -2563,6 +2590,10 @@
 .n-select--lg .n-select__item i {
   font-size: 11px;
   padding: 0 3.6px; }
+
+.n-popover--lg .n-select__body,
+.n-popover--lg .n-select__empty {
+  border-radius: 5px; }
 
 .n-popover--lg .n-select__empty {
   padding: 7.2px; }
@@ -2634,601 +2665,1314 @@
 .n-select-option.n-select-option--active {
   color: #4e7bff; }
 
-.n-cascader__wrapper {
-  position: relative;
-  display: inline-flex;
-  width: 100%; }
-
-.n-cascader__wrapper .n-popover {
+.n-cascader-panel {
+  overflow: hidden;
   display: inline-flex;
   flex-direction: row;
-  text-align: left;
-  max-width: 100% !important; }
+  align-items: stretch;
+  justify-content: stretch;
+  border: 1px solid #dddedf; }
 
-.n-cascader__items {
-  flex: 1 1 auto;
+.n-cascader-panel__items {
+  width: 200px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  justify-content: stretch;
-  min-height: 0;
-  max-height: 210px;
-  width: 160px; }
+  justify-content: stretch; }
 
-.n-cascader__items:not(:last-child) {
-  box-sizing: content-box;
-  border-right: 1px solid #e8e9ea; }
+.n-cascader-panel__items:not(:last-child) {
+  border-right: 1px solid #dddedf; }
 
-.n-cascader__items .n-scrollbar-content {
-  flex: 1 1 auto; }
+.n-cascader-panel--xs {
+  border-radius: 1px;
+  font-size: 10px; }
+
+.n-cascader-panel--sm {
+  border-radius: 2px;
+  font-size: 12px; }
+
+.n-cascader-panel--md {
+  border-radius: 3px;
+  font-size: 14px; }
+
+.n-cascader-panel--lg {
+  border-radius: 5px;
+  font-size: 16px; }
 
 .n-cascader {
-  flex: 1 1 auto;
-  min-width: 0;
-  cursor: pointer;
+  cursor: default;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  width: 100%;
+  border: 1px solid #dddedf; }
+
+.n-cascader.n-disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  background: rgba(221, 222, 223, 0.3); }
+
+.n-cascader__display {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  width: 100%; }
+
+.n-cascader__clear,
+.n-cascader__angle {
+  order: 100;
+  flex: 0 0 auto;
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: #ffffff;
-  color: #1b2229;
-  border: 1px solid #dddedf;
-  border-radius: 1px;
-  transition: 0.15s border; }
-
-.n-cascader:hover,
-.n-cascader.n-open {
-  border: 1px solid #4e7bff; }
-
-.n-cascader.n-cascader--default {
-  font-size: 14px;
-  padding: 0 10.2px;
-  min-height: 34px; }
-
-.n-cascader.n-cascader--small {
-  font-size: 12.25px;
-  padding: 0 8.925px;
-  min-height: 29.75px; }
-
-.n-cascader.n-cascader--large {
-  font-size: 15.75px;
-  padding: 0 11.475px;
-  min-height: 38.25px; }
-
-.n-disabled .n-cascader {
-  cursor: not-allowed;
-  background: #f4f4f4;
-  border-color: #dddedf;
-  color: #8d9194; }
-
-.n-cascader__label {
-  flex: 1 1 auto;
-  position: relative;
-  margin-right: auto;
-  overflow: hidden;
-  text-overflow: ellipsis; }
-
-.n-cascader__placeholder {
-  flex: 0 1 auto;
-  display: inline-block;
-  color: #8d9194; }
-
-.n-cascader__item {
-  white-space: nowrap; }
-
-.n-cascader__item:after {
-  content: '/';
-  margin: 0 8px;
-  color: #d1d3d4; }
-
-.n-cascader__item:last-child:after {
-  display: none; }
+  justify-content: center;
+  color: #767a7f; }
 
 .n-cascader__clear {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 17px;
-  height: 17px;
-  color: #8d9194;
-  font-size: 9.31px;
-  background: #e8e9ea;
-  border-radius: 500px;
-  transition: color 0.3s, background 0.3s;
-  margin: 0 8px 0 0; }
+  display: none; }
 
-.n-cascader__clear:hover {
-  color: #494e54;
-  background: #dddedf; }
+.n-cascader:hover.n-clearable:not(.n-empty) .n-cascader__clear,
+.n-cascader.n-focus.n-clearable:not(.n-empty) .n-cascader__clear {
+  display: flex; }
+
+.n-cascader:hover.n-clearable:not(.n-empty) .n-cascader__angle,
+.n-cascader.n-focus.n-clearable:not(.n-empty) .n-cascader__angle {
+  display: none; }
 
 .n-cascader__angle {
-  padding-left: 6px;
-  margin-left: auto;
-  color: #a4a7a9;
-  transform-style: preserve-3d;
-  transition: transform 0.6s; }
+  transition: transform 0.25s; }
 
-.n-cascader.n-open .n-cascader__angle {
-  transform: rotateX(180deg); }
+.n-cascader.n-focus .n-cascader__angle {
+  transform: scaleY(-1); }
 
+.n-cascader__clear i,
+.n-cascader__angle i {
+  text-align: center; }
+
+.n-cascader__clear i {
+  border-radius: 500px;
+  background: rgba(221, 222, 223, 0.6); }
+
+.n-cascader__items,
+.n-cascader__placeholder {
+  flex: 1 1 auto;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%; }
+
+.n-cascader__placeholder {
+  color: rgba(27, 34, 41, 0.5); }
+
+.n-cascader__item {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; }
+
+.n-cascader__item:not(:last-child):after {
+  content: '/';
+  opacity: 0.3; }
+
+.n-cascader__item i {
+  opacity: 0.7; }
+
+.n-cascader__body,
 .n-cascader__empty {
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding: 6px 12px;
+  margin: 1px 0;
+  max-height: 210px;
+  background: #ffffff;
+  border: 0;
+  box-shadow: 0 1px 3px 1px rgba(27, 34, 41, 0.15); }
+
+.n-cascader__empty {
   text-align: center;
   color: #767a7f; }
 
-.n-cascader__options {
-  overflow-y: auto;
+.n-cascader--xs {
+  min-height: 24px;
+  font-size: 10px;
+  border-radius: 1px; }
+
+.n-cascader--xs .n-cascader__display,
+.n-cascader--xs .n-cascader__placeholder {
+  padding: 0 4.8px; }
+
+.n-cascader--xs .n-cascader__clear,
+.n-cascader--xs .n-cascader__angle {
+  width: 24px;
+  margin: 0 -4.8px 0 -4.8px; }
+
+.n-cascader--xs .n-cascader__clear i,
+.n-cascader--xs .n-cascader__angle i {
+  width: 10px;
+  height: 10px;
+  line-height: 10px; }
+
+.n-cascader--xs .n-cascader__angle i {
+  font-size: 8px; }
+
+.n-cascader--xs .n-cascader__clear i {
+  font-size: 6px; }
+
+.n-cascader--xs .n-cascader__items {
+  padding: 0 2.4px; }
+
+.n-cascader--xs .n-cascader__item {
+  padding: 0 2.4px; }
+
+.n-cascader--xs .n-cascader__item:after {
+  margin-left: 4.8px; }
+
+.n-popover--xs .n-cascader__body,
+.n-popover--xs .n-cascader__empty {
+  border-radius: 1px; }
+
+.n-popover--xs .n-cascader__empty {
+  padding: 4.8px; }
+
+.n-cascader--sm {
+  min-height: 28px;
+  font-size: 12px;
+  border-radius: 2px; }
+
+.n-cascader--sm .n-cascader__display,
+.n-cascader--sm .n-cascader__placeholder {
+  padding: 0 5.6px; }
+
+.n-cascader--sm .n-cascader__clear,
+.n-cascader--sm .n-cascader__angle {
+  width: 28px;
+  margin: 0 -5.6px 0 -5.6px; }
+
+.n-cascader--sm .n-cascader__clear i,
+.n-cascader--sm .n-cascader__angle i {
+  width: 14px;
+  height: 14px;
+  line-height: 14px; }
+
+.n-cascader--sm .n-cascader__angle i {
+  font-size: 10px; }
+
+.n-cascader--sm .n-cascader__clear i {
+  font-size: 8px; }
+
+.n-cascader--sm .n-cascader__items {
+  padding: 0 2.8px; }
+
+.n-cascader--sm .n-cascader__item {
+  padding: 0 2.8px; }
+
+.n-cascader--sm .n-cascader__item:after {
+  margin-left: 5.6px; }
+
+.n-popover--sm .n-cascader__body,
+.n-popover--sm .n-cascader__empty {
+  border-radius: 2px; }
+
+.n-popover--sm .n-cascader__empty {
+  padding: 5.6px; }
+
+.n-cascader--md {
+  min-height: 32px;
+  font-size: 14px;
+  border-radius: 3px; }
+
+.n-cascader--md .n-cascader__display,
+.n-cascader--md .n-cascader__placeholder {
+  padding: 0 6.4px; }
+
+.n-cascader--md .n-cascader__clear,
+.n-cascader--md .n-cascader__angle {
+  width: 32px;
+  margin: 0 -6.4px 0 -6.4px; }
+
+.n-cascader--md .n-cascader__clear i,
+.n-cascader--md .n-cascader__angle i {
+  width: 18px;
+  height: 18px;
+  line-height: 18px; }
+
+.n-cascader--md .n-cascader__angle i {
+  font-size: 12px; }
+
+.n-cascader--md .n-cascader__clear i {
+  font-size: 10px; }
+
+.n-cascader--md .n-cascader__items {
+  padding: 0 3.2px; }
+
+.n-cascader--md .n-cascader__item {
+  padding: 0 3.2px; }
+
+.n-cascader--md .n-cascader__item:after {
+  margin-left: 6.4px; }
+
+.n-popover--md .n-cascader__body,
+.n-popover--md .n-cascader__empty {
+  border-radius: 3px; }
+
+.n-popover--md .n-cascader__empty {
+  padding: 6.4px; }
+
+.n-cascader--lg {
+  min-height: 36px;
+  font-size: 16px;
+  border-radius: 5px; }
+
+.n-cascader--lg .n-cascader__display,
+.n-cascader--lg .n-cascader__placeholder {
+  padding: 0 7.2px; }
+
+.n-cascader--lg .n-cascader__clear,
+.n-cascader--lg .n-cascader__angle {
+  width: 36px;
+  margin: 0 -7.2px 0 -7.2px; }
+
+.n-cascader--lg .n-cascader__clear i,
+.n-cascader--lg .n-cascader__angle i {
+  width: 22px;
+  height: 22px;
+  line-height: 22px; }
+
+.n-cascader--lg .n-cascader__angle i {
+  font-size: 14px; }
+
+.n-cascader--lg .n-cascader__clear i {
+  font-size: 12px; }
+
+.n-cascader--lg .n-cascader__items {
+  padding: 0 3.6px; }
+
+.n-cascader--lg .n-cascader__item {
+  padding: 0 3.6px; }
+
+.n-cascader--lg .n-cascader__item:after {
+  margin-left: 7.2px; }
+
+.n-popover--lg .n-cascader__body,
+.n-popover--lg .n-cascader__empty {
+  border-radius: 5px; }
+
+.n-popover--lg .n-cascader__empty {
+  padding: 7.2px; }
+
+.n-cascader--primary:not(.n-disabled):hover,
+.n-cascader--primary:not(.n-disabled).n-focus {
+  border-color: #4e7bff; }
+
+.n-cascader--secondary:not(.n-disabled):hover,
+.n-cascader--secondary:not(.n-disabled).n-focus {
+  border-color: #6e68e6; }
+
+.n-cascader--info:not(.n-disabled):hover,
+.n-cascader--info:not(.n-disabled).n-focus {
+  border-color: #37C4EF; }
+
+.n-cascader--success:not(.n-disabled):hover,
+.n-cascader--success:not(.n-disabled).n-focus {
+  border-color: #3ed786; }
+
+.n-cascader--warning:not(.n-disabled):hover,
+.n-cascader--warning:not(.n-disabled).n-focus {
+  border-color: #ffac2f; }
+
+.n-cascader--danger:not(.n-disabled):hover,
+.n-cascader--danger:not(.n-disabled).n-focus {
+  border-color: #fd2f51; }
+
+.n-datepicker-panel {
+  cursor: default;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  border: 1px solid #e8e9ea; }
+
+.n-datepicker-panel__header {
+  border-bottom: 1px solid #e8e9ea; }
+
+.n-datepicker-panel__footer {
+  border-top: 1px solid #e8e9ea; }
+
+.n-datepicker-panel__body,
+.n-datepicker-panel__dateview {
   display: flex;
   flex-direction: column;
-  width: 200px;
-  border-left: 1px solid #e8e9ea; }
+  align-items: stretch;
+  justify-content: stretch; }
 
-.n-cascader__options:first-child {
-  border-left: none; }
-
-.n-cascader-option {
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+.n-datepicker-panel__panels,
+.n-datepicker-panel__toolbar {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  transition: background 0.15s, color 0.3s; }
+  align-items: stretch;
+  justify-content: stretch; }
 
-.n-cascader-option__label {
-  flex: 1 1 auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap; }
+.n-datepicker-panel__display {
+  flex: 1 1 auto; }
 
-.n-cascader-option__arrow {
-  flex: 0 0 auto; }
-
-.n-cascader-option__arrow span {
-  font-size: 12.25px;
-  color: #a4a7a9; }
-
-.n-datepicker__wrapper {
-  position: relative;
+.n-datepicker-panel__display .n-datepicker-panel__month,
+.n-datepicker-panel__display .n-datepicker-panel__year,
+.n-datepicker-panel__toolbar .n-datepicker-panel__prev,
+.n-datepicker-panel__toolbar .n-datepicker-panel__next {
   display: inline-flex;
-  width: 100%;
-  color: #1b2229; }
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; }
 
-.n-datepicker {
-  flex: 1 1 auto;
-  min-width: 0;
-  cursor: pointer;
+.n-datepicker-panel__display .n-datepicker-panel__month:hover,
+.n-datepicker-panel__display .n-datepicker-panel__year:hover {
+  background: rgba(221, 222, 223, 0.6); }
+
+.n-datepicker-panel__display .n-datepicker-panel__month {
+  text-transform: uppercase; }
+
+.n-datepicker-panel__display .n-datepicker-panel__year {
+  font-weight: bold; }
+
+.n-datepicker-panel__footer {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  background: #ffffff;
-  color: #1b2229;
-  border: 1px solid #dddedf;
-  border-radius: 2px;
-  transition: 0.15s border; }
+  align-items: stretch;
+  justify-content: flex-end; }
 
-.n-datepicker:hover,
-.n-datepicker.n-open {
-  border: 1px solid #4e7bff; }
+.n-datepicker-panel__legend,
+.n-datepicker-panel__body > .n-datepicker-panel__week,
+.n-datepicker-panel__body > .n-datepicker-panel__year,
+.n-datepicker-panel__body > .n-datepicker-panel__decade {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center; }
+
+.n-datepicker-panel__body > .n-datepicker-panel__week {
+  margin-bottom: 3px; }
+
+.n-datepicker-panel__dateview .n-datepicker-panel__day,
+.n-datepicker-panel__year > .n-datepicker-panel__month,
+.n-datepicker-panel__decade > .n-datepicker-panel__year {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+
+.n-datepicker-panel__dateview .n-datepicker-panel__day {
+  line-height: 1;
+  border-radius: 500px; }
+
+.n-datepicker-panel__dateview .n-datepicker-panel__day.n-disabled {
+  cursor: not-allowed;
+  opacity: 0.6; }
+
+.n-datepicker-panel__dateview .n-datepicker-panel__day.n-arrive:not(.n-selected),
+.n-datepicker-panel__dateview .n-datepicker-panel__day.n-depart:not(.n-selected),
+.n-datepicker-panel__dateview .n-datepicker-panel__day.n-between:not(.n-selected) {
+  background: rgba(221, 222, 223, 0.6); }
+
+.n-datepicker-panel__dateview .n-datepicker-panel__day:not(:first-child):not(:last-child).n-between,
+.n-datepicker-panel__dateview .n-datepicker-panel__day:not(:first-child):not(:last-child).n-arrive:not(.n-depart),
+.n-datepicker-panel__dateview .n-datepicker-panel__day:not(:first-child):not(:last-child).n-depart:not(.n-arrive) {
+  border-radius: 0; }
+
+.n-datepicker-panel__dateview .n-datepicker-panel__day:not(:last-child).n-arrive:not(.n-depart),
+.n-datepicker-panel__dateview .n-datepicker-panel__day:first-child.n-between {
+  border-radius: 500px 0 0 500px !important; }
+
+.n-datepicker-panel__dateview .n-datepicker-panel__day:not(:first-child).n-depart:not(.n-arrive),
+.n-datepicker-panel__dateview .n-datepicker-panel__day:last-child.n-between {
+  border-radius: 0 500px 500px 0 !important; }
+
+.n-datepicker-panel__year > .n-datepicker-panel__month,
+.n-datepicker-panel__decade > .n-datepicker-panel__year {
+  width: 33.332%; }
+
+.n-datepicker-panel__body .n-datepicker-panel__day:not(.n-current) {
+  color: #a4a7a9; }
+
+.n-datepicker-panel__body .n-datepicker-panel__day.n-today,
+.n-datepicker-panel__body .n-datepicker-panel__month.n-current,
+.n-datepicker-panel__body .n-datepicker-panel__year.n-current {
+  font-weight: bold; }
+
+.n-datepicker-panel__legend .n-datepicker-panel__day {
+  font-weight: bold; }
+
+.n-datepicker-panel--xs {
+  font-size: 10px;
+  border-radius: 1px; }
+
+.n-datepicker-panel--xs .n-datepicker-panel__display .n-datepicker-panel__month,
+.n-datepicker-panel--xs .n-datepicker-panel__display .n-datepicker-panel__year {
+  height: 20px;
+  padding: 0 4.8px;
+  border-radius: 1px; }
+
+.n-datepicker-panel--xs .n-datepicker-panel__toolbar .n-button {
+  width: 20px;
+  height: 20px; }
+
+.n-datepicker-panel--xs .n-datepicker-panel__header,
+.n-datepicker-panel--xs .n-datepicker-panel__footer {
+  padding: 6.72px 9.6px; }
+
+.n-datepicker-panel--xs .n-datepicker-panel__dateview .n-datepicker-panel__panel,
+.n-datepicker-panel--xs .n-datepicker-panel__monthview .n-datepicker-panel__body,
+.n-datepicker-panel--xs .n-datepicker-panel__yearview .n-datepicker-panel__body {
+  width: 187.2px; }
+
+.n-datepicker-panel--xs .n-datepicker-panel__monthview .n-datepicker-panel__body,
+.n-datepicker-panel--xs .n-datepicker-panel__yearview .n-datepicker-panel__body {
+  padding: 7.6px; }
+
+.n-datepicker-panel--xs .n-datepicker-panel__dateview .n-datepicker-panel__panel {
+  padding: 4.8px; }
+
+.n-datepicker-panel--xs .n-datepicker-panel__dateview .n-datepicker-panel__day {
+  width: 24px;
+  height: 24px; }
+
+.n-datepicker-panel--xs .n-datepicker-panel__year > .n-datepicker-panel__month,
+.n-datepicker-panel--xs .n-datepicker-panel__decade > .n-datepicker-panel__year {
+  height: 24px;
+  border-radius: 1px; }
+
+.n-datepicker-panel--sm {
+  font-size: 12px;
+  border-radius: 2px; }
+
+.n-datepicker-panel--sm .n-datepicker-panel__display .n-datepicker-panel__month,
+.n-datepicker-panel--sm .n-datepicker-panel__display .n-datepicker-panel__year {
+  height: 24px;
+  padding: 0 5.6px;
+  border-radius: 2px; }
+
+.n-datepicker-panel--sm .n-datepicker-panel__toolbar .n-button {
+  width: 24px;
+  height: 24px; }
+
+.n-datepicker-panel--sm .n-datepicker-panel__header,
+.n-datepicker-panel--sm .n-datepicker-panel__footer {
+  padding: 7.84px 11.2px; }
+
+.n-datepicker-panel--sm .n-datepicker-panel__dateview .n-datepicker-panel__panel,
+.n-datepicker-panel--sm .n-datepicker-panel__monthview .n-datepicker-panel__body,
+.n-datepicker-panel--sm .n-datepicker-panel__yearview .n-datepicker-panel__body {
+  width: 218.4px; }
+
+.n-datepicker-panel--sm .n-datepicker-panel__monthview .n-datepicker-panel__body,
+.n-datepicker-panel--sm .n-datepicker-panel__yearview .n-datepicker-panel__body {
+  padding: 9.2px; }
+
+.n-datepicker-panel--sm .n-datepicker-panel__dateview .n-datepicker-panel__panel {
+  padding: 5.6px; }
+
+.n-datepicker-panel--sm .n-datepicker-panel__dateview .n-datepicker-panel__day {
+  width: 28px;
+  height: 28px; }
+
+.n-datepicker-panel--sm .n-datepicker-panel__year > .n-datepicker-panel__month,
+.n-datepicker-panel--sm .n-datepicker-panel__decade > .n-datepicker-panel__year {
+  height: 28px;
+  border-radius: 2px; }
+
+.n-datepicker-panel--md {
+  font-size: 14px;
+  border-radius: 3px; }
+
+.n-datepicker-panel--md .n-datepicker-panel__display .n-datepicker-panel__month,
+.n-datepicker-panel--md .n-datepicker-panel__display .n-datepicker-panel__year {
+  height: 28px;
+  padding: 0 6.4px;
+  border-radius: 3px; }
+
+.n-datepicker-panel--md .n-datepicker-panel__toolbar .n-button {
+  width: 28px;
+  height: 28px; }
+
+.n-datepicker-panel--md .n-datepicker-panel__header,
+.n-datepicker-panel--md .n-datepicker-panel__footer {
+  padding: 8.96px 12.8px; }
+
+.n-datepicker-panel--md .n-datepicker-panel__dateview .n-datepicker-panel__panel,
+.n-datepicker-panel--md .n-datepicker-panel__monthview .n-datepicker-panel__body,
+.n-datepicker-panel--md .n-datepicker-panel__yearview .n-datepicker-panel__body {
+  width: 249.6px; }
+
+.n-datepicker-panel--md .n-datepicker-panel__monthview .n-datepicker-panel__body,
+.n-datepicker-panel--md .n-datepicker-panel__yearview .n-datepicker-panel__body {
+  padding: 10.8px; }
+
+.n-datepicker-panel--md .n-datepicker-panel__dateview .n-datepicker-panel__panel {
+  padding: 6.4px; }
+
+.n-datepicker-panel--md .n-datepicker-panel__dateview .n-datepicker-panel__day {
+  width: 32px;
+  height: 32px; }
+
+.n-datepicker-panel--md .n-datepicker-panel__year > .n-datepicker-panel__month,
+.n-datepicker-panel--md .n-datepicker-panel__decade > .n-datepicker-panel__year {
+  height: 32px;
+  border-radius: 3px; }
+
+.n-datepicker-panel--lg {
+  font-size: 16px;
+  border-radius: 5px; }
+
+.n-datepicker-panel--lg .n-datepicker-panel__display .n-datepicker-panel__month,
+.n-datepicker-panel--lg .n-datepicker-panel__display .n-datepicker-panel__year {
+  height: 32px;
+  padding: 0 7.2px;
+  border-radius: 5px; }
+
+.n-datepicker-panel--lg .n-datepicker-panel__toolbar .n-button {
+  width: 32px;
+  height: 32px; }
+
+.n-datepicker-panel--lg .n-datepicker-panel__header,
+.n-datepicker-panel--lg .n-datepicker-panel__footer {
+  padding: 10.08px 14.4px; }
+
+.n-datepicker-panel--lg .n-datepicker-panel__dateview .n-datepicker-panel__panel,
+.n-datepicker-panel--lg .n-datepicker-panel__monthview .n-datepicker-panel__body,
+.n-datepicker-panel--lg .n-datepicker-panel__yearview .n-datepicker-panel__body {
+  width: 280.8px; }
+
+.n-datepicker-panel--lg .n-datepicker-panel__monthview .n-datepicker-panel__body,
+.n-datepicker-panel--lg .n-datepicker-panel__yearview .n-datepicker-panel__body {
+  padding: 12.4px; }
+
+.n-datepicker-panel--lg .n-datepicker-panel__dateview .n-datepicker-panel__panel {
+  padding: 7.2px; }
+
+.n-datepicker-panel--lg .n-datepicker-panel__dateview .n-datepicker-panel__day {
+  width: 36px;
+  height: 36px; }
+
+.n-datepicker-panel--lg .n-datepicker-panel__year > .n-datepicker-panel__month,
+.n-datepicker-panel--lg .n-datepicker-panel__decade > .n-datepicker-panel__year {
+  height: 36px;
+  border-radius: 5px; }
+
+.n-datepicker-panel--primary .n-datepicker-panel__body .n-datepicker-panel__day.n-selected,
+.n-datepicker-panel--primary .n-datepicker-panel__body .n-datepicker-panel__month.n-selected,
+.n-datepicker-panel--primary .n-datepicker-panel__body .n-datepicker-panel__year.n-selected {
+  color: #ffffff;
+  background: #4e7bff; }
+
+.n-datepicker-panel--secondary .n-datepicker-panel__body .n-datepicker-panel__day.n-selected,
+.n-datepicker-panel--secondary .n-datepicker-panel__body .n-datepicker-panel__month.n-selected,
+.n-datepicker-panel--secondary .n-datepicker-panel__body .n-datepicker-panel__year.n-selected {
+  color: #ffffff;
+  background: #6e68e6; }
+
+.n-datepicker-panel--info .n-datepicker-panel__body .n-datepicker-panel__day.n-selected,
+.n-datepicker-panel--info .n-datepicker-panel__body .n-datepicker-panel__month.n-selected,
+.n-datepicker-panel--info .n-datepicker-panel__body .n-datepicker-panel__year.n-selected {
+  color: #ffffff;
+  background: #37C4EF; }
+
+.n-datepicker-panel--success .n-datepicker-panel__body .n-datepicker-panel__day.n-selected,
+.n-datepicker-panel--success .n-datepicker-panel__body .n-datepicker-panel__month.n-selected,
+.n-datepicker-panel--success .n-datepicker-panel__body .n-datepicker-panel__year.n-selected {
+  color: #ffffff;
+  background: #3ed786; }
+
+.n-datepicker-panel--warning .n-datepicker-panel__body .n-datepicker-panel__day.n-selected,
+.n-datepicker-panel--warning .n-datepicker-panel__body .n-datepicker-panel__month.n-selected,
+.n-datepicker-panel--warning .n-datepicker-panel__body .n-datepicker-panel__year.n-selected {
+  color: #ffffff;
+  background: #ffac2f; }
+
+.n-datepicker-panel--danger .n-datepicker-panel__body .n-datepicker-panel__day.n-selected,
+.n-datepicker-panel--danger .n-datepicker-panel__body .n-datepicker-panel__month.n-selected,
+.n-datepicker-panel--danger .n-datepicker-panel__body .n-datepicker-panel__year.n-selected {
+  color: #ffffff;
+  background: #fd2f51; }
 
 .n-datepicker {
-  font-size: 13px;
-  padding: 0 10.2px;
-  min-height: 34px; }
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  width: 100%;
+  border: 1px solid #dddedf; }
 
-.n-datepicker.n-clearable {
-  padding-right: 20.4px; }
-
-.n-datepicker.n-datepicker--small {
-  font-size: 11.375px;
-  padding: 0 8.925px;
-  min-height: 29.75px; }
-
-.n-datepicker.n-clearable {
-  padding-right: 17.85px; }
-
-.n-datepicker.n-datepicker--large {
-  font-size: 14.625px;
-  padding: 0 11.475px;
-  min-height: 38.25px; }
-
-.n-datepicker.n-clearable {
-  padding-right: 22.95px; }
-
-.n-datepicker.n-disabled,
-.n-datepicker.n-disabled:hover {
+.n-datepicker.n-disabled {
   cursor: not-allowed;
-  background: #f4f4f4;
-  border-color: #dddedf; }
+  opacity: 0.7;
+  background: rgba(221, 222, 223, 0.3); }
 
-.n-datepicker__yearview,
-.n-datepicker__monthview {
-  width: 264px; }
-
-.n-datepicker .n-button__wrapper {
-  position: absolute;
-  top: 0;
-  right: 0; }
-
-.n-datepicker__icon {
-  flex: 0 0 auto;
-  color: #a4a7a9; }
+.n-datepicker__display {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  width: 100%; }
 
 .n-datepicker__seperator {
   flex: 0 0 auto;
-  color: #8d9194; }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: #767a7f; }
 
 .n-datepicker__input {
-  flex: 1 1 auto; }
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  width: 50%; }
 
 .n-datepicker__input input {
-  cursor: pointer;
+  cursor: default;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
   display: block;
   width: 100%;
-  border: 0;
+  white-space: nowrap;
+  text-decoration: none;
+  line-height: 1.2;
+  border: none;
   background: transparent;
-  color: #1b2229;
-  padding: 0 10.2px; }
+  box-shadow: none; }
 
-.n-inverse .n-datepicker__input input {
-  color: #ffffff; }
-
-.n-datepicker.n-disabled .n-datepicker__input input {
+.n-disabled .n-datepicker__input input {
   cursor: not-allowed; }
 
-.n-datepicker__input.n-datepicker__input--range input {
+.n-datepicker__clear,
+.n-datepicker__angle {
+  order: 100;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: #767a7f; }
+
+.n-datepicker__clear {
+  display: none; }
+
+.n-datepicker:hover.n-clearable:not(.n-empty) .n-datepicker__clear,
+.n-datepicker.n-focus.n-clearable:not(.n-empty) .n-datepicker__clear {
+  display: flex; }
+
+.n-datepicker:hover.n-clearable:not(.n-empty) .n-datepicker__angle,
+.n-datepicker.n-focus.n-clearable:not(.n-empty) .n-datepicker__angle {
+  display: none; }
+
+.n-datepicker__angle {
+  transition: transform 0.25s; }
+
+.n-datepicker.n-focus .n-datepicker__angle {
+  transform: scaleY(-1); }
+
+.n-datepicker__clear i,
+.n-datepicker__angle i {
   text-align: center; }
 
-.n-datepicker__header {
-  display: flex;
-  flex-direction: row;
-  padding: 10px;
-  border-bottom: 1px solid #e8e9ea; }
+.n-datepicker__clear i {
+  border-radius: 500px;
+  background: rgba(221, 222, 223, 0.6); }
 
-.n-datepicker__toolbar {
+.n-datepicker__placeholder {
   flex: 1 1 auto;
-  display: flex;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  width: 100%; }
+
+.n-datepicker__placeholder {
+  color: rgba(27, 34, 41, 0.5); }
+
+.n-datepicker__body,
+.n-datepicker__empty {
+  overflow: hidden;
+  margin: 1px 0;
+  background: #ffffff;
+  border: 0;
+  box-shadow: 0 1px 3px 1px rgba(27, 34, 41, 0.15); }
+
+.n-datepicker__empty {
+  text-align: center;
+  color: #767a7f; }
+
+.n-datepicker--xs {
+  min-height: 24px;
+  font-size: 10px;
+  border-radius: 1px; }
+
+.n-datepicker--xs .n-datepicker__display,
+.n-datepicker--xs .n-datepicker__seperator,
+.n-datepicker--xs .n-datepicker__input input {
+  padding: 0 4.8px; }
+
+.n-datepicker--xs .n-datepicker__clear,
+.n-datepicker--xs .n-datepicker__angle {
+  width: 24px;
+  margin: 0 -4.8px 0 -4.8px; }
+
+.n-datepicker--xs .n-datepicker__clear i,
+.n-datepicker--xs .n-datepicker__angle i {
+  width: 10px;
+  height: 10px;
+  line-height: 10px; }
+
+.n-datepicker--xs .n-datepicker__angle i {
+  font-size: 8px; }
+
+.n-datepicker--xs .n-datepicker__clear i {
+  font-size: 6px; }
+
+.n-popover--xs .n-datepicker__body,
+.n-popover--xs .n-datepicker__empty {
+  border-radius: 1px; }
+
+.n-popover--xs .n-datepicker__empty {
+  padding: 4.8px; }
+
+.n-datepicker--sm {
+  min-height: 28px;
+  font-size: 12px;
+  border-radius: 2px; }
+
+.n-datepicker--sm .n-datepicker__display,
+.n-datepicker--sm .n-datepicker__seperator,
+.n-datepicker--sm .n-datepicker__input input {
+  padding: 0 5.6px; }
+
+.n-datepicker--sm .n-datepicker__clear,
+.n-datepicker--sm .n-datepicker__angle {
+  width: 28px;
+  margin: 0 -5.6px 0 -5.6px; }
+
+.n-datepicker--sm .n-datepicker__clear i,
+.n-datepicker--sm .n-datepicker__angle i {
+  width: 14px;
+  height: 14px;
+  line-height: 14px; }
+
+.n-datepicker--sm .n-datepicker__angle i {
+  font-size: 10px; }
+
+.n-datepicker--sm .n-datepicker__clear i {
+  font-size: 8px; }
+
+.n-popover--sm .n-datepicker__body,
+.n-popover--sm .n-datepicker__empty {
+  border-radius: 2px; }
+
+.n-popover--sm .n-datepicker__empty {
+  padding: 5.6px; }
+
+.n-datepicker--md {
+  min-height: 32px;
+  font-size: 14px;
+  border-radius: 3px; }
+
+.n-datepicker--md .n-datepicker__display,
+.n-datepicker--md .n-datepicker__seperator,
+.n-datepicker--md .n-datepicker__input input {
+  padding: 0 6.4px; }
+
+.n-datepicker--md .n-datepicker__clear,
+.n-datepicker--md .n-datepicker__angle {
+  width: 32px;
+  margin: 0 -6.4px 0 -6.4px; }
+
+.n-datepicker--md .n-datepicker__clear i,
+.n-datepicker--md .n-datepicker__angle i {
+  width: 18px;
+  height: 18px;
+  line-height: 18px; }
+
+.n-datepicker--md .n-datepicker__angle i {
+  font-size: 12px; }
+
+.n-datepicker--md .n-datepicker__clear i {
+  font-size: 10px; }
+
+.n-popover--md .n-datepicker__body,
+.n-popover--md .n-datepicker__empty {
+  border-radius: 3px; }
+
+.n-popover--md .n-datepicker__empty {
+  padding: 6.4px; }
+
+.n-datepicker--lg {
+  min-height: 36px;
+  font-size: 16px;
+  border-radius: 5px; }
+
+.n-datepicker--lg .n-datepicker__display,
+.n-datepicker--lg .n-datepicker__seperator,
+.n-datepicker--lg .n-datepicker__input input {
+  padding: 0 7.2px; }
+
+.n-datepicker--lg .n-datepicker__clear,
+.n-datepicker--lg .n-datepicker__angle {
+  width: 36px;
+  margin: 0 -7.2px 0 -7.2px; }
+
+.n-datepicker--lg .n-datepicker__clear i,
+.n-datepicker--lg .n-datepicker__angle i {
+  width: 22px;
+  height: 22px;
+  line-height: 22px; }
+
+.n-datepicker--lg .n-datepicker__angle i {
   font-size: 14px; }
 
-.n-datepicker__prev .n-button {
-  padding: 8px;
-  margin-left: 5px; }
+.n-datepicker--lg .n-datepicker__clear i {
+  font-size: 12px; }
 
-.n-datepicker__next .n-button {
-  padding: 8px;
-  margin-left: 5px; }
+.n-popover--lg .n-datepicker__body,
+.n-popover--lg .n-datepicker__empty {
+  border-radius: 5px; }
 
-.n-datepicker__display {
-  margin-right: auto; }
+.n-popover--lg .n-datepicker__empty {
+  padding: 7.2px; }
 
-.n-datepicker__display .n-datepicker__month {
-  cursor: pointer;
-  padding: 5px 7px;
-  text-transform: uppercase;
-  border-radius: 2px; }
+.n-datepicker--primary:not(.n-disabled):hover,
+.n-datepicker--primary:not(.n-disabled).n-focus {
+  border-color: #4e7bff; }
 
-.n-datepicker__display .n-datepicker__month:hover {
-  background: #e8e9ea; }
+.n-datepicker--secondary:not(.n-disabled):hover,
+.n-datepicker--secondary:not(.n-disabled).n-focus {
+  border-color: #6e68e6; }
 
-.n-datepicker__display .n-datepicker__year {
-  cursor: pointer;
-  padding: 5px 7px;
-  font-weight: bold;
-  border-radius: 2px; }
+.n-datepicker--info:not(.n-disabled):hover,
+.n-datepicker--info:not(.n-disabled).n-focus {
+  border-color: #37C4EF; }
 
-.n-datepicker__display .n-datepicker__year:hover {
-  background: #e8e9ea; }
+.n-datepicker--success:not(.n-disabled):hover,
+.n-datepicker--success:not(.n-disabled).n-focus {
+  border-color: #3ed786; }
 
-.n-datepicker__dateview .n-datepicker__legend {
+.n-datepicker--warning:not(.n-disabled):hover,
+.n-datepicker--warning:not(.n-disabled).n-focus {
+  border-color: #ffac2f; }
+
+.n-datepicker--danger:not(.n-disabled):hover,
+.n-datepicker--danger:not(.n-disabled).n-focus {
+  border-color: #fd2f51; }
+
+.n-timepicker-panel {
+  cursor: default;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  border: 1px solid #e8e9ea; }
+
+.n-timepicker-panel__header {
+  border-bottom: 1px solid #e8e9ea; }
+
+.n-timepicker-panel__panel:not(:last-child) {
+  border-right: 1px solid #e8e9ea; }
+
+.n-timepicker-panel__body {
   display: flex;
   flex-direction: row;
-  padding: 12px 6px 0; }
+  align-items: stretch;
+  justify-content: stretch; }
 
-.n-datepicker__body {
-  padding: 6px; }
-
-.n-datepicker__footer {
-  padding: 7.8px 12px;
-  text-align: right;
-  border-top: 1px solid #e8e9ea; }
-
-.n-datepicker__dateview .n-datepicker__panels {
-  display: flex;
-  flex-direction: row; }
-
-.n-datepicker__dateview .n-datepicker__panel {
-  flex: 0 0 auto;
-  display: flex;
-  flex-direction: column; }
-
-.n-datepicker__dateview .n-datepicker__body {
-  padding-top: 0; }
-
-.n-datepicker__legend .n-datepicker__day {
-  flex: 0 0 auto;
-  padding: 2px; }
-
-.n-datepicker__legend .n-datepicker__day span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 32px;
-  height: 32px;
-  font-weight: bold; }
-
-.n-datepicker__body .n-datepicker__week {
-  display: flex;
-  flex-direction: row; }
-
-.n-datepicker__body .n-datepicker__week .n-datepicker__day {
-  cursor: pointer;
-  flex: 0 0 auto;
-  padding: 2px; }
-
-.n-datepicker__body .n-datepicker__week .n-datepicker__day span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 500px;
-  color: #8d9194; }
-
-.n-datepicker__body .n-datepicker__week .n-datepicker__day:hover span {
-  background: #e8e9ea; }
-
-.n-datepicker__body .n-datepicker__week .n-datepicker__day.n-today span {
-  font-weight: bold; }
-
-.n-datepicker__body .n-datepicker__week .n-datepicker__day.n-current span {
-  color: #1b2229; }
-
-.n-datepicker__body .n-datepicker__week .n-datepicker__day.n-arrive span,
-.n-datepicker__body .n-datepicker__week .n-datepicker__day.n-depart span,
-.n-datepicker__body .n-datepicker__week .n-datepicker__day.n-between span {
-  background: #e8e9ea; }
-
-.n-datepicker__body .n-datepicker__week .n-datepicker__day.n-selected span {
-  color: #ffffff;
-  background: #4e7bff; }
-
-.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child):not(:last-child).n-between,
-.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child):not(:last-child).n-arrive:not(.n-depart),
-.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child):not(:last-child).n-depart:not(.n-arrive) {
-  padding: 2px 0; }
-
-.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child):not(:last-child).n-between span,
-.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child):not(:last-child).n-arrive:not(.n-depart) span,
-.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child):not(:last-child).n-depart:not(.n-arrive) span {
-  width: 36px;
-  padding: 0 2px;
-  border-radius: 0; }
-
-.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:last-child).n-arrive:not(.n-depart),
-.n-datepicker__body .n-datepicker__week .n-datepicker__day:first-child.n-between {
-  padding: 2px 0 2px 2px !important; }
-
-.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:last-child).n-arrive:not(.n-depart) span,
-.n-datepicker__body .n-datepicker__week .n-datepicker__day:first-child.n-between span {
-  width: 34px !important;
-  padding: 0 2px 0 0 !important;
-  border-radius: 500px 0 0 500px !important; }
-
-.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child).n-depart:not(.n-arrive),
-.n-datepicker__body .n-datepicker__week .n-datepicker__day:last-child.n-between {
-  padding: 2px 2px 2px 0 !important; }
-
-.n-datepicker__body .n-datepicker__week .n-datepicker__day:not(:first-child).n-depart:not(.n-arrive) span,
-.n-datepicker__body .n-datepicker__week .n-datepicker__day:last-child.n-between span {
-  width: 34px !important;
-  padding: 0 0 0 2px !important;
-  border-radius: 0 500px 500px 0 !important; }
-
-.n-datepicker__body .n-datepicker__year {
+.n-timepicker-panel-display,
+.n-timepicker-panel__item {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  align-items: center;
   justify-content: center; }
 
-.n-datepicker__body .n-datepicker__year .n-datepicker__month {
-  cursor: pointer;
-  flex: 0 0 auto;
-  padding: 5px;
-  width: 33.32%; }
+.n-timepicker-panel__item {
+  margin: 2px; }
 
-.n-datepicker__body .n-datepicker__year .n-datepicker__month span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 36px;
+.n-timepicker-panel--xs {
+  font-size: 10px;
+  border-radius: 1px; }
+
+.n-timepicker-panel--xs .n-timepicker-panel__panel {
+  width: 48px;
+  height: 120px; }
+
+.n-timepicker-panel--xs .n-timepicker-panel__header,
+.n-timepicker-panel--xs .n-timepicker-panel__footer {
+  padding: 6.72px 9.6px; }
+
+.n-timepicker-panel--xs .n-timepicker-panel__wrap {
+  padding: 1.9px 7.6px; }
+
+.n-timepicker-panel--xs .n-timepicker-panel__item {
+  height: 20px;
+  padding: 0 9.6px;
+  border-radius: 1px; }
+
+.n-timepicker-panel--sm {
+  font-size: 12px;
   border-radius: 2px; }
 
-.n-datepicker__body .n-datepicker__year .n-datepicker__month:hover span {
-  background: #e8e9ea; }
+.n-timepicker-panel--sm .n-timepicker-panel__panel {
+  width: 56px;
+  height: 140px; }
 
-.n-datepicker__body .n-datepicker__year .n-datepicker__month.n-current span {
-  font-weight: bold; }
+.n-timepicker-panel--sm .n-timepicker-panel__header,
+.n-timepicker-panel--sm .n-timepicker-panel__footer {
+  padding: 7.84px 11.2px; }
 
-.n-datepicker__body .n-datepicker__year .n-datepicker__month.n-selected span {
-  color: #ffffff;
-  background: #4e7bff; }
+.n-timepicker-panel--sm .n-timepicker-panel__wrap {
+  padding: 2.3px 9.2px; }
 
-.n-datepicker__body .n-datepicker__decade {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center; }
-
-.n-datepicker__body .n-datepicker__decade .n-datepicker__year {
-  cursor: pointer;
-  flex: 0 0 auto;
-  padding: 5px;
-  width: 33.32%; }
-
-.n-datepicker__body .n-datepicker__decade .n-datepicker__year span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 36px;
+.n-timepicker-panel--sm .n-timepicker-panel__item {
+  height: 24px;
+  padding: 0 11.2px;
   border-radius: 2px; }
 
-.n-datepicker__body .n-datepicker__decade .n-datepicker__year:hover span {
-  background: #e8e9ea; }
-
-.n-datepicker__body .n-datepicker__decade .n-datepicker__year.n-current span {
-  font-weight: bold; }
-
-.n-datepicker__body .n-datepicker__decade .n-datepicker__year.n-selected span {
-  color: #ffffff;
-  background: #4e7bff; }
-
-.n-timepicker__wrapper {
-  position: relative;
-  display: inline-flex;
-  width: 100%;
-  color: #1b2229; }
-
-.n-popover.n-popover--timepicker {
-  display: inline-flex;
-  flex-direction: row;
-  text-align: left;
-  min-width: 200px; }
-
-.n-timepicker {
-  flex: 1 1 auto;
-  min-width: 0;
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  background: #ffffff;
-  color: #1b2229;
-  border: 1px solid #dddedf;
-  border-radius: 1px;
-  transition: 0.15s border; }
-
-.n-timepicker:hover,
-.n-timepicker.n-open {
-  border: 1px solid #4e7bff; }
-
-.n-timepicker {
+.n-timepicker-panel--md {
   font-size: 14px;
-  padding: 0 10.2px;
-  min-height: 34px; }
+  border-radius: 3px; }
 
-.n-timepicker.n-timepicker--small {
-  font-size: 12.25px;
-  padding: 0 8.925px;
-  min-height: 29.75px; }
+.n-timepicker-panel--md .n-timepicker-panel__panel {
+  width: 64px;
+  height: 160px; }
 
-.n-timepicker.n-timepicker--large {
-  font-size: 15.75px;
-  padding: 0 11.475px;
-  min-height: 38.25px; }
+.n-timepicker-panel--md .n-timepicker-panel__header,
+.n-timepicker-panel--md .n-timepicker-panel__footer {
+  padding: 8.96px 12.8px; }
 
-.n-disabled .n-timepicker,
-.n-disabled .n-timepicker:hover {
+.n-timepicker-panel--md .n-timepicker-panel__wrap {
+  padding: 2.7px 10.8px; }
+
+.n-timepicker-panel--md .n-timepicker-panel__item {
+  height: 28px;
+  padding: 0 12.8px;
+  border-radius: 3px; }
+
+.n-timepicker-panel--lg {
+  font-size: 16px;
+  border-radius: 5px; }
+
+.n-timepicker-panel--lg .n-timepicker-panel__panel {
+  width: 72px;
+  height: 180px; }
+
+.n-timepicker-panel--lg .n-timepicker-panel__header,
+.n-timepicker-panel--lg .n-timepicker-panel__footer {
+  padding: 10.08px 14.4px; }
+
+.n-timepicker-panel--lg .n-timepicker-panel__wrap {
+  padding: 3.1px 12.4px; }
+
+.n-timepicker-panel--lg .n-timepicker-panel__item {
+  height: 32px;
+  padding: 0 14.4px;
+  border-radius: 5px; }
+
+.n-timepicker-panel--primary .n-timepicker-panel__item.n-selected {
+  color: #ffffff;
+  background: #4e7bff; }
+
+.n-timepicker-panel--secondary .n-timepicker-panel__item.n-selected {
+  color: #ffffff;
+  background: #6e68e6; }
+
+.n-timepicker-panel--info .n-timepicker-panel__item.n-selected {
+  color: #ffffff;
+  background: #37C4EF; }
+
+.n-timepicker-panel--success .n-timepicker-panel__item.n-selected {
+  color: #ffffff;
+  background: #3ed786; }
+
+.n-timepicker-panel--warning .n-timepicker-panel__item.n-selected {
+  color: #ffffff;
+  background: #ffac2f; }
+
+.n-timepicker-panel--danger .n-timepicker-panel__item.n-selected {
+  color: #ffffff;
+  background: #fd2f51; }
+
+.n-timepicker {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  width: 100%;
+  border: 1px solid #dddedf; }
+
+.n-timepicker.n-disabled {
   cursor: not-allowed;
-  background: #f4f4f4;
-  border-color: #dddedf; }
+  opacity: 0.7;
+  background: rgba(221, 222, 223, 0.3); }
 
-.n-timepicker .n-button__wrapper {
-  position: absolute;
-  top: 0;
-  right: 0; }
-
-.n-timepicker__icon {
-  flex: 0 0 auto;
-  color: #a4a7a9; }
+.n-timepicker__display {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  width: 100%; }
 
 .n-timepicker__seperator {
   flex: 0 0 auto;
-  color: #8d9194; }
-
-.n-timepicker__input {
-  flex: 1 1 auto; }
-
-.n-timepicker__input input {
-  cursor: pointer;
-  display: block;
-  width: 100%;
-  border: 0;
-  background: transparent;
-  color: #1b2229;
-  padding: 0 10.2px; }
-
-.n-disabled .n-timepicker .n-timepicker__input input {
-  cursor: not-allowed; }
-
-.n-timepicker__header {
   display: flex;
   flex-direction: row;
-  padding: 10px;
-  border-bottom: 1px solid #e8e9ea; }
-
-.n-timepicker__toolbar {
-  flex: 1 1 auto;
-  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px; }
+  color: #767a7f; }
 
-.n-timepicker__prev {
-  margin-right: auto; }
+.n-timepicker__input {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  width: 50%; }
 
-.n-timepicker__next {
-  margin-left: auto; }
+.n-timepicker__input input {
+  cursor: default;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+  text-decoration: none;
+  line-height: 1.2;
+  border: none;
+  background: transparent;
+  box-shadow: none; }
 
-.n-timepicker__display .n-timepicker__time {
-  padding: 5px 7px; }
+.n-disabled .n-timepicker__input input {
+  cursor: not-allowed; }
 
-.n-timepicker__body {
+.n-timepicker__clear,
+.n-timepicker__angle {
+  order: 100;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: #767a7f; }
+
+.n-timepicker__clear {
+  display: none; }
+
+.n-timepicker:hover.n-clearable:not(.n-empty) .n-timepicker__clear,
+.n-timepicker.n-focus.n-clearable:not(.n-empty) .n-timepicker__clear {
   display: flex; }
 
-.n-timepicker__footer {
-  padding: 10px;
-  text-align: right;
-  border-top: 1px solid #e8e9ea; }
+.n-timepicker:hover.n-clearable:not(.n-empty) .n-timepicker__angle,
+.n-timepicker.n-focus.n-clearable:not(.n-empty) .n-timepicker__angle {
+  display: none; }
 
-.n-timepicker__panel {
+.n-timepicker__angle {
+  transition: transform 0.25s; }
+
+.n-timepicker.n-focus .n-timepicker__angle {
+  transform: scaleY(-1); }
+
+.n-timepicker__clear i,
+.n-timepicker__angle i {
+  text-align: center; }
+
+.n-timepicker__clear i {
+  border-radius: 500px;
+  background: rgba(221, 222, 223, 0.6); }
+
+.n-timepicker__placeholder {
   flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  height: 200px;
-  min-height: 0;
-  padding: 5px;
-  overflow-y: auto; }
-
-.n-timepicker__panel:not(:last-child) {
-  box-sizing: content-box;
-  border-right: 1px solid #e8e9ea; }
-
-.n-timepicker__panel .n-timepicker__item {
-  cursor: pointer;
-  padding: 3px; }
-
-.n-timepicker__panel .n-timepicker__item span {
-  display: flex;
-  justify-content: center;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
-  height: 35px;
+  justify-content: flex-start;
+  width: 100%; }
+
+.n-timepicker__placeholder {
+  color: rgba(27, 34, 41, 0.5); }
+
+.n-timepicker__body,
+.n-timepicker__empty {
+  overflow: hidden;
+  margin: 1px 0;
+  background: #ffffff;
+  border: 0;
+  box-shadow: 0 1px 3px 1px rgba(27, 34, 41, 0.15); }
+
+.n-timepicker__empty {
+  text-align: center;
+  color: #767a7f; }
+
+.n-timepicker--xs {
+  min-height: 24px;
+  font-size: 10px;
+  border-radius: 1px; }
+
+.n-timepicker--xs .n-timepicker__display,
+.n-timepicker--xs .n-timepicker__seperator,
+.n-timepicker--xs .n-timepicker__input input {
+  padding: 0 4.8px; }
+
+.n-timepicker--xs .n-timepicker__clear,
+.n-timepicker--xs .n-timepicker__angle {
+  width: 24px;
+  margin: 0 -4.8px 0 -4.8px; }
+
+.n-timepicker--xs .n-timepicker__clear i,
+.n-timepicker--xs .n-timepicker__angle i {
+  width: 10px;
+  height: 10px;
+  line-height: 10px; }
+
+.n-timepicker--xs .n-timepicker__angle i {
+  font-size: 8px; }
+
+.n-timepicker--xs .n-timepicker__clear i {
+  font-size: 6px; }
+
+.n-popover--xs .n-timepicker__body,
+.n-popover--xs .n-timepicker__empty {
+  border-radius: 1px; }
+
+.n-popover--xs .n-timepicker__empty {
+  padding: 4.8px; }
+
+.n-timepicker--sm {
+  min-height: 28px;
+  font-size: 12px;
   border-radius: 2px; }
 
-.n-timepicker__panel .n-timepicker__item:hover span {
-  background: #F0F3F7; }
+.n-timepicker--sm .n-timepicker__display,
+.n-timepicker--sm .n-timepicker__seperator,
+.n-timepicker--sm .n-timepicker__input input {
+  padding: 0 5.6px; }
 
-.n-timepicker__panel .n-timepicker__item.n-active span {
-  color: #ffffff;
-  background: #4e7bff; }
+.n-timepicker--sm .n-timepicker__clear,
+.n-timepicker--sm .n-timepicker__angle {
+  width: 28px;
+  margin: 0 -5.6px 0 -5.6px; }
+
+.n-timepicker--sm .n-timepicker__clear i,
+.n-timepicker--sm .n-timepicker__angle i {
+  width: 14px;
+  height: 14px;
+  line-height: 14px; }
+
+.n-timepicker--sm .n-timepicker__angle i {
+  font-size: 10px; }
+
+.n-timepicker--sm .n-timepicker__clear i {
+  font-size: 8px; }
+
+.n-popover--sm .n-timepicker__body,
+.n-popover--sm .n-timepicker__empty {
+  border-radius: 2px; }
+
+.n-popover--sm .n-timepicker__empty {
+  padding: 5.6px; }
+
+.n-timepicker--md {
+  min-height: 32px;
+  font-size: 14px;
+  border-radius: 3px; }
+
+.n-timepicker--md .n-timepicker__display,
+.n-timepicker--md .n-timepicker__seperator,
+.n-timepicker--md .n-timepicker__input input {
+  padding: 0 6.4px; }
+
+.n-timepicker--md .n-timepicker__clear,
+.n-timepicker--md .n-timepicker__angle {
+  width: 32px;
+  margin: 0 -6.4px 0 -6.4px; }
+
+.n-timepicker--md .n-timepicker__clear i,
+.n-timepicker--md .n-timepicker__angle i {
+  width: 18px;
+  height: 18px;
+  line-height: 18px; }
+
+.n-timepicker--md .n-timepicker__angle i {
+  font-size: 12px; }
+
+.n-timepicker--md .n-timepicker__clear i {
+  font-size: 10px; }
+
+.n-popover--md .n-timepicker__body,
+.n-popover--md .n-timepicker__empty {
+  border-radius: 3px; }
+
+.n-popover--md .n-timepicker__empty {
+  padding: 6.4px; }
+
+.n-timepicker--lg {
+  min-height: 36px;
+  font-size: 16px;
+  border-radius: 5px; }
+
+.n-timepicker--lg .n-timepicker__display,
+.n-timepicker--lg .n-timepicker__seperator,
+.n-timepicker--lg .n-timepicker__input input {
+  padding: 0 7.2px; }
+
+.n-timepicker--lg .n-timepicker__clear,
+.n-timepicker--lg .n-timepicker__angle {
+  width: 36px;
+  margin: 0 -7.2px 0 -7.2px; }
+
+.n-timepicker--lg .n-timepicker__clear i,
+.n-timepicker--lg .n-timepicker__angle i {
+  width: 22px;
+  height: 22px;
+  line-height: 22px; }
+
+.n-timepicker--lg .n-timepicker__angle i {
+  font-size: 14px; }
+
+.n-timepicker--lg .n-timepicker__clear i {
+  font-size: 12px; }
+
+.n-popover--lg .n-timepicker__body,
+.n-popover--lg .n-timepicker__empty {
+  border-radius: 5px; }
+
+.n-popover--lg .n-timepicker__empty {
+  padding: 7.2px; }
+
+.n-timepicker--primary:not(.n-disabled):hover,
+.n-timepicker--primary:not(.n-disabled).n-focus {
+  border-color: #4e7bff; }
+
+.n-timepicker--secondary:not(.n-disabled):hover,
+.n-timepicker--secondary:not(.n-disabled).n-focus {
+  border-color: #6e68e6; }
+
+.n-timepicker--info:not(.n-disabled):hover,
+.n-timepicker--info:not(.n-disabled).n-focus {
+  border-color: #37C4EF; }
+
+.n-timepicker--success:not(.n-disabled):hover,
+.n-timepicker--success:not(.n-disabled).n-focus {
+  border-color: #3ed786; }
+
+.n-timepicker--warning:not(.n-disabled):hover,
+.n-timepicker--warning:not(.n-disabled).n-focus {
+  border-color: #ffac2f; }
+
+.n-timepicker--danger:not(.n-disabled):hover,
+.n-timepicker--danger:not(.n-disabled).n-focus {
+  border-color: #fd2f51; }
 
 .n-transfer {
   display: flex;
@@ -3343,9 +4087,10 @@
 
 .n-popover {
   position: fixed;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
-  opacity: 0; }
+  opacity: 0;
+  transition: opacity 0.15s ease-in; }
 
 .n-popover.n-ready {
   opacity: 1; }
@@ -3370,12 +4115,26 @@
   flex: 0 0 auto; }
 
 .n-popover-option {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: stretch;
+  color: #1b2229;
   text-decoration: none; }
 
 .n-popover-option.n-disabled {
   cursor: not-allowed;
   opacity: 0.7; }
+
+.n-popover-option span {
+  flex: 1 1 auto; }
+
+.n-popover-option i {
+  flex: 0 0 auto; }
+
+.n-popover-option .n-icon {
+  text-align: center;
+  color: #767a7f; }
 
 .n-popover--xs {
   font-size: 10px; }
@@ -3392,7 +4151,7 @@
 .n-popover--xs .n-popover__footer {
   padding: 4.8px 9.6px; }
 
-.n-popover--xs .n-popover-option {
+.n-popover-option.n-popover-option--xs {
   padding: 3.84px 9.6px; }
 
 .n-popover--xs .n-popover__body .n-popover-option {
@@ -3403,6 +4162,16 @@
 
 .n-popover--xs .n-popover__body .n-popover-option:last-child {
   margin-bottom: -4.8px; }
+
+.n-popover-option--xs .n-icon {
+  width: 10px;
+  font-size: 8px; }
+
+.n-popover-option--xs .n-icon.n-icon--before:not(:last-child) {
+  margin-right: 4px; }
+
+.n-popover-option--xs .n-icon.n-icon--after:not(:first-child) {
+  margin-left: 4px; }
 
 .n-popover--sm {
   font-size: 12px; }
@@ -3419,7 +4188,7 @@
 .n-popover--sm .n-popover__footer {
   padding: 5.6px 11.2px; }
 
-.n-popover--sm .n-popover-option {
+.n-popover-option.n-popover-option--sm {
   padding: 4.48px 11.2px; }
 
 .n-popover--sm .n-popover__body .n-popover-option {
@@ -3430,6 +4199,16 @@
 
 .n-popover--sm .n-popover__body .n-popover-option:last-child {
   margin-bottom: -5.6px; }
+
+.n-popover-option--sm .n-icon {
+  width: 12px;
+  font-size: 10px; }
+
+.n-popover-option--sm .n-icon.n-icon--before:not(:last-child) {
+  margin-right: 4.8px; }
+
+.n-popover-option--sm .n-icon.n-icon--after:not(:first-child) {
+  margin-left: 4.8px; }
 
 .n-popover--md {
   font-size: 14px; }
@@ -3446,7 +4225,7 @@
 .n-popover--md .n-popover__footer {
   padding: 6.4px 12.8px; }
 
-.n-popover--md .n-popover-option {
+.n-popover-option.n-popover-option--md {
   padding: 5.12px 12.8px; }
 
 .n-popover--md .n-popover__body .n-popover-option {
@@ -3457,6 +4236,16 @@
 
 .n-popover--md .n-popover__body .n-popover-option:last-child {
   margin-bottom: -6.4px; }
+
+.n-popover-option--md .n-icon {
+  width: 14px;
+  font-size: 12px; }
+
+.n-popover-option--md .n-icon.n-icon--before:not(:last-child) {
+  margin-right: 5.6px; }
+
+.n-popover-option--md .n-icon.n-icon--after:not(:first-child) {
+  margin-left: 5.6px; }
 
 .n-popover--lg {
   font-size: 16px; }
@@ -3473,7 +4262,7 @@
 .n-popover--lg .n-popover__footer {
   padding: 7.2px 14.4px; }
 
-.n-popover--lg .n-popover-option {
+.n-popover-option.n-popover-option--lg {
   padding: 5.76px 14.4px; }
 
 .n-popover--lg .n-popover__body .n-popover-option {
@@ -3485,6 +4274,16 @@
 .n-popover--lg .n-popover__body .n-popover-option:last-child {
   margin-bottom: -7.2px; }
 
+.n-popover-option--lg .n-icon {
+  width: 16px;
+  font-size: 14px; }
+
+.n-popover-option--lg .n-icon.n-icon--before:not(:last-child) {
+  margin-right: 6.4px; }
+
+.n-popover-option--lg .n-icon.n-icon--after:not(:first-child) {
+  margin-left: 6.4px; }
+
 .n-popover--default .n-popover__frame {
   color: #1b2229;
   background: #ffffff; }
@@ -3493,7 +4292,6 @@
   border-bottom: 1px solid #e8e9ea; }
 
 .n-popover--default .n-popover__footer {
-  flex: 0 0 auto;
   background: rgba(232, 233, 234, 0.65); }
 
 .n-popover--default .n-popover-option {
@@ -3504,11 +4302,10 @@
   background: rgba(27, 34, 41, 0.95); }
 
 .n-popover--tooltip .n-popover__header {
-  border-bottom: 1px solid #32383e; }
+  border-bottom: 1px solid #262d34; }
 
 .n-popover--tooltip .n-popover__footer {
-  flex: 0 0 auto;
-  background: rgba(50, 56, 62, 0.65); }
+  background: rgba(38, 45, 52, 0.65); }
 
 .n-popover--tooltip .n-popover-option {
   color: #ffffff; }
@@ -3518,11 +4315,11 @@
   background: rgba(104, 142, 255, 0.1); }
 
 .n-popover-option--primary.n-focus,
-.n-popover-option--primary.n-focus:hover,
-.n-popover-option--primary:not(.n-disabled):focus {
+.n-popover-option--primary.n-focus:hover {
   background: rgba(53, 104, 255, 0.15); }
 
-.n-popover-option--primary.n-active {
+.n-popover-option--primary.n-active,
+.n-popover-option--primary.n-active .n-icon {
   color: #4e7bff; }
 
 .n-popover-option--secondary.n-hover,
@@ -3530,11 +4327,11 @@
   background: rgba(131, 126, 234, 0.1); }
 
 .n-popover-option--secondary.n-focus,
-.n-popover-option--secondary.n-focus:hover,
-.n-popover-option--secondary:not(.n-disabled):focus {
+.n-popover-option--secondary.n-focus:hover {
   background: rgba(89, 82, 226, 0.15); }
 
-.n-popover-option--secondary.n-active {
+.n-popover-option--secondary.n-active,
+.n-popover-option--secondary.n-active .n-icon {
   color: #6e68e6; }
 
 .n-popover-option--info.n-hover,
@@ -3542,11 +4339,11 @@
   background: rgba(79, 203, 241, 0.1); }
 
 .n-popover-option--info.n-focus,
-.n-popover-option--info.n-focus:hover,
-.n-popover-option--info:not(.n-disabled):focus {
+.n-popover-option--info.n-focus:hover {
   background: rgba(31, 189, 237, 0.15); }
 
-.n-popover-option--info.n-active {
+.n-popover-option--info.n-active,
+.n-popover-option--info.n-active .n-icon {
   color: #37C4EF; }
 
 .n-popover-option--success.n-hover,
@@ -3554,11 +4351,11 @@
   background: rgba(83, 219, 147, 0.1); }
 
 .n-popover-option--success.n-focus,
-.n-popover-option--success.n-focus:hover,
-.n-popover-option--success:not(.n-disabled):focus {
+.n-popover-option--success.n-focus:hover {
   background: rgba(43, 208, 121, 0.15); }
 
-.n-popover-option--success.n-active {
+.n-popover-option--success.n-active,
+.n-popover-option--success.n-active .n-icon {
   color: #3ed786; }
 
 .n-popover-option--warning.n-hover,
@@ -3566,11 +4363,11 @@
   background: rgba(255, 182, 73, 0.1); }
 
 .n-popover-option--warning.n-focus,
-.n-popover-option--warning.n-focus:hover,
-.n-popover-option--warning:not(.n-disabled):focus {
+.n-popover-option--warning.n-focus:hover {
   background: rgba(255, 162, 22, 0.15); }
 
-.n-popover-option--warning.n-active {
+.n-popover-option--warning.n-active,
+.n-popover-option--warning.n-active .n-icon {
   color: #ffac2f; }
 
 .n-popover-option--danger.n-hover,
@@ -3578,15 +4375,12 @@
   background: rgba(253, 72, 102, 0.1); }
 
 .n-popover-option--danger.n-focus,
-.n-popover-option--danger.n-focus:hover,
-.n-popover-option--danger:not(.n-disabled):focus {
+.n-popover-option--danger.n-focus:hover {
   background: rgba(253, 22, 60, 0.15); }
 
-.n-popover-option--danger.n-active {
+.n-popover-option--danger.n-active,
+.n-popover-option--danger.n-active .n-icon {
   color: #fd2f51; }
-
-body.n-open {
-  overflow: hidden; }
 
 .n-modal {
   position: fixed;
@@ -3597,7 +4391,8 @@ body.n-open {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 3%; }
+  padding: 3%;
+  transition: opacity 0.15s ease-in; }
 
 .n-modal:not(.n-ready) {
   opacity: 0; }
@@ -3606,33 +4401,31 @@ body.n-open {
   display: none; }
 
 .n-modal__backdrop {
+  z-index: 10;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(27, 34, 41, 0.6); }
+  background: rgba(27, 34, 41, 0.6);
+  transition: opacity 0.6s 0.1s linear; }
+
+.n-modal:not(.n-ready) .n-modal__backdrop {
+  opacity: 0; }
 
 .n-modal__frame {
-  z-index: 100;
-  flex: 0 1 auto;
+  z-index: 20;
+  overflow: hidden;
   position: relative;
+  flex: 0 1 auto;
   display: flex;
   flex-direction: column;
-  min-width: 320px;
+  min-width: 300px;
   max-width: 100%;
   min-height: 0;
   max-height: 100%;
   margin: auto;
-  background: #ffffff;
-  border-radius: 2px;
-  box-shadow: 0 1px 3px 1px rgba(27, 34, 41, 0.15); }
-
-.n-modal.n-modal--preview .n-modal__frame {
-  background: #1b2229;
-  min-height: 0;
-  min-width: 0;
-  width: auto; }
+  box-shadow: 0 1px 5px 2px rgba(27, 34, 41, 0.2); }
 
 .n-modal--center-center > .n-modal__frame {
   margin: auto; }
@@ -3677,15 +4470,8 @@ body.n-open {
   position: relative;
   flex: 0 0 auto; }
 
-.n-modal.n-modal--default .n-modal__header {
-  padding: 14px 22px;
-  border-bottom: 1px solid #e8e9ea; }
-
-.n-modal.n-modal--closable .n-modal__header {
-  padding-right: 50px; }
-
 .n-modal__body {
-  overflow-y: auto;
+  overflow: hidden;
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
@@ -3695,90 +4481,266 @@ body.n-open {
 .n-modal .n-modal__wrap {
   flex: 1 1 auto; }
 
-.n-modal.n-modal--default .n-modal__wrap {
-  padding: 14px 22px; }
-
 .n-modal__footer {
   flex: 0 0 auto; }
 
-.n-modal.n-modal--default .n-modal__footer {
-  padding: 14px 22px;
-  border-top: 1px solid #e8e9ea; }
-
 .n-modal__close {
-  cursor: pointer;
+  cursor: default;
   position: absolute;
   top: 50%;
-  right: 10px;
+  right: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
-  transform: translateY(-50%); }
+  transform: translateY(-50%);
+  opacity: 0.3;
+  transition: opacity 0.15s; }
 
-.n-modal__close span {
-  font-size: 18px;
-  color: #bbbdbf;
-  transition: color 0.15s; }
+.n-modal__close:hover {
+  opacity: 0.6; }
 
-.n-modal__close:hover span {
-  color: #a4a7a9; }
+.n-modal--xs {
+  font-size: 10px; }
+
+.n-modal--xs .n-modal__frame {
+  border-radius: 3px; }
+
+.n-modal--xs .n-modal__header {
+  padding: 7.68px 9.6px; }
+
+.n-modal--xs.n-closable .n-modal__header {
+  padding-right: 33.6px; }
+
+.n-modal--xs:not(.n-raw) .n-modal__wrap {
+  padding: 9.6px 9.6px; }
+
+.n-modal--xs .n-modal__footer {
+  padding: 7.68px 9.6px; }
+
+.n-modal__close {
+  width: 24px;
+  height: 24px; }
+
+.n-modal--sm {
+  font-size: 12px; }
+
+.n-modal--sm .n-modal__frame {
+  border-radius: 4px; }
+
+.n-modal--sm .n-modal__header {
+  padding: 8.96px 11.2px; }
+
+.n-modal--sm.n-closable .n-modal__header {
+  padding-right: 39.2px; }
+
+.n-modal--sm:not(.n-raw) .n-modal__wrap {
+  padding: 11.2px 11.2px; }
+
+.n-modal--sm .n-modal__footer {
+  padding: 8.96px 11.2px; }
+
+.n-modal__close {
+  width: 28px;
+  height: 28px; }
+
+.n-modal--md {
+  font-size: 14px; }
+
+.n-modal--md .n-modal__frame {
+  border-radius: 5px; }
+
+.n-modal--md .n-modal__header {
+  padding: 10.24px 12.8px; }
+
+.n-modal--md.n-closable .n-modal__header {
+  padding-right: 44.8px; }
+
+.n-modal--md:not(.n-raw) .n-modal__wrap {
+  padding: 12.8px 12.8px; }
+
+.n-modal--md .n-modal__footer {
+  padding: 10.24px 12.8px; }
+
+.n-modal__close {
+  width: 32px;
+  height: 32px; }
+
+.n-modal--lg {
+  font-size: 16px; }
+
+.n-modal--lg .n-modal__frame {
+  border-radius: 7px; }
+
+.n-modal--lg .n-modal__header {
+  padding: 11.52px 14.4px; }
+
+.n-modal--lg.n-closable .n-modal__header {
+  padding-right: 50.4px; }
+
+.n-modal--lg:not(.n-raw) .n-modal__wrap {
+  padding: 14.4px 14.4px; }
+
+.n-modal--lg .n-modal__footer {
+  padding: 11.52px 14.4px; }
+
+.n-modal__close {
+  width: 36px;
+  height: 36px; }
+
+.n-modal--default .n-modal__frame {
+  color: #1b2229;
+  background: #ffffff; }
+
+.n-modal--default .n-modal__header {
+  border-bottom: 1px solid #e8e9ea; }
+
+.n-modal--default .n-modal__footer {
+  background: rgba(232, 233, 234, 0.65); }
+
+.n-modal--preview .n-modal__frame {
+  color: #ffffff;
+  background: #1b2229; }
+
+.n-modal--preview .n-modal__header {
+  border-bottom: 1px solid #262d34; }
+
+.n-modal--preview .n-modal__footer {
+  background: rgba(38, 45, 52, 0.65); }
 
 .n-confirm {
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background: #ffffff;
-  border-radius: 2px;
-  padding: 18px 22px; }
-
-.n-confirm > div {
-  margin: 8px 0; }
-
-.n-confirm > div:first-child {
-  margin-top: 0; }
-
-.n-confirm > div:last-child {
-  margin-bottom: 0; }
+  align-items: center; }
 
 .n-confirm__icon {
   display: flex;
   justify-content: center;
-  align-items: center;
-  font-size: 16px; }
-
-.n-confirm.n-confirm--primary .n-confirm__icon {
-  color: #4e7bff; }
-
-.n-confirm.n-confirm--success .n-confirm__icon {
-  color: #3ed786; }
-
-.n-confirm.n-confirm--warning .n-confirm__icon {
-  color: #ffac2f; }
-
-.n-confirm.n-confirm--danger .n-confirm__icon {
-  color: #fd2f51; }
-
-.n-confirm.n-confirm--info .n-confirm__icon {
-  color: #37C4EF; }
+  align-items: center; }
 
 .n-confirm__body {
   width: 100%;
   text-align: center; }
 
 .n-confirm__actions {
-  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  width: 100%; }
 
-.n-confirm__actions.n-confirm__actions--reverse {
+.n-confirm__actions.n-reverse {
   flex-direction: row-reverse; }
 
-.n-confirm__actions > div {
-  margin: 0 4px; }
+.n-confirm--xs {
+  font-size: 10px;
+  border-radius: 3px; }
+
+.n-confirm--xs .n-confirm__icon {
+  font-size: 14px;
+  padding: 11.52px 9.6px; }
+
+.n-confirm--xs .n-confirm__body {
+  padding: 0 9.6px; }
+
+.n-confirm--xs .n-confirm__action {
+  padding: 11.52px 9.6px; }
+
+.n-confirm--xs .n-confirm__action > button {
+  margin: 0 9.6px; }
+
+.n-confirm--xs .n-confirm__action > button:first-child {
+  margin-left: 0; }
+
+.n-confirm--xs .n-confirm__action > button:last-child {
+  margin-right: 0; }
+
+.n-confirm--sm {
+  font-size: 12px;
+  border-radius: 4px; }
+
+.n-confirm--sm .n-confirm__icon {
+  font-size: 16px;
+  padding: 13.44px 11.2px; }
+
+.n-confirm--sm .n-confirm__body {
+  padding: 0 11.2px; }
+
+.n-confirm--sm .n-confirm__action {
+  padding: 13.44px 11.2px; }
+
+.n-confirm--sm .n-confirm__action > button {
+  margin: 0 11.2px; }
+
+.n-confirm--sm .n-confirm__action > button:first-child {
+  margin-left: 0; }
+
+.n-confirm--sm .n-confirm__action > button:last-child {
+  margin-right: 0; }
+
+.n-confirm--md {
+  font-size: 14px;
+  border-radius: 5px; }
+
+.n-confirm--md .n-confirm__icon {
+  font-size: 18px;
+  padding: 15.36px 12.8px; }
+
+.n-confirm--md .n-confirm__body {
+  padding: 0 12.8px; }
+
+.n-confirm--md .n-confirm__action {
+  padding: 15.36px 12.8px; }
+
+.n-confirm--md .n-confirm__action > button {
+  margin: 0 12.8px; }
+
+.n-confirm--md .n-confirm__action > button:first-child {
+  margin-left: 0; }
+
+.n-confirm--md .n-confirm__action > button:last-child {
+  margin-right: 0; }
+
+.n-confirm--lg {
+  font-size: 16px;
+  border-radius: 7px; }
+
+.n-confirm--lg .n-confirm__icon {
+  font-size: 20px;
+  padding: 17.28px 14.4px; }
+
+.n-confirm--lg .n-confirm__body {
+  padding: 0 14.4px; }
+
+.n-confirm--lg .n-confirm__action {
+  padding: 17.28px 14.4px; }
+
+.n-confirm--lg .n-confirm__action > button {
+  margin: 0 14.4px; }
+
+.n-confirm--lg .n-confirm__action > button:first-child {
+  margin-left: 0; }
+
+.n-confirm--lg .n-confirm__action > button:last-child {
+  margin-right: 0; }
+
+.n-confirm--primary .n-confirm__icon {
+  color: #4e7bff; }
+
+.n-confirm--secondary .n-confirm__icon {
+  color: #6e68e6; }
+
+.n-confirm--info .n-confirm__icon {
+  color: #37C4EF; }
+
+.n-confirm--success .n-confirm__icon {
+  color: #3ed786; }
+
+.n-confirm--warning .n-confirm__icon {
+  color: #ffac2f; }
+
+.n-confirm--danger .n-confirm__icon {
+  color: #fd2f51; }
 
 .n-table {
   position: relative;

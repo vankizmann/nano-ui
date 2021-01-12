@@ -1,82 +1,162 @@
 @import "../../../root/vars";
 
-/**
- * Fix flickering by set transition delay
- */
-
 .n-draglist-item {
+    cursor: default;
     display: flex;
     flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
-    box-sizing: border-box;
-    transition: background 0ms 100ms;
-}
-
-.n-draglist-item.n-highlight {
-    background: rgba($color-warning, 0.1);
-    transition: background 0ms;
-}
-
-.n-draglist-item.n-current {
-    background: rgba($color-primary, 0.1);
-}
-
-.n-draglist-item.n-ghost:after {
-    position: relative;
-}
-
-.n-dragged .n-draglist-item.n-selected {
-    opacity: 0.5;
+    width: 100%;
 }
 
 .n-draglist-item.n-dragover {
-    background: rgba($color-primary, 0.1);
-    transition: background 0ms;
+    background: rgba($color-primary, 0.15);
 }
 
 .n-draglist-item.n-nodrop {
-    background: rgba($color-danger, 0.1);
-    transition: background 0ms;
+    background: rgba($color-danger, 0.15);
 }
 
 .n-draglist-item__spacer {
     flex: 0 0 auto;
 }
 
+.n-draglist-item__element {
+    flex: 1 1 auto;
+}
+
+.n-draglist-item__handle,
 .n-draglist-item__expand,
 .n-draglist-item__select {
-    flex: 0 0 auto;
-    width: 30px;
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: center;
-}
-
-.n-draglist-item.n-ghost .n-draglist-item__select {
-    display: none !important;
-}
-
-.n-draglist-item__expand > div,
-.n-draglist-item__select > div {
-    cursor: pointer;
+    align-items: center;
     width: 20px;
-    height: 20px;
+}
+
+.n-draglist-item__ellipsis,
+.n-draglist-item__angle,
+.n-draglist-item__checkbox {
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    width: 16px;
+    height: 16px;
 }
 
-.n-draglist-item__expand > div {
-    color: $--color-gray-65;
+.n-draglist-item .n-draglist-item__ellipsis {
+    color: $color-gray-25;
 }
 
-.n-inverse .n-draglist-item__expand > div {
-    color: $--color-gray-35;
-}
-
-.n-draglist-item:not(.n-expanded) .n-draglist-item__expand > div {
+.n-draglist-item.n-expanded .n-draglist-item__angle {
     transform: rotate(90deg);
 }
+
+.n-draglist-item:not(.n-children) .n-draglist-item__angle i {
+    display: none;
+}
+
+.n-draglist-item__checkbox {
+    border: 1px solid $color-gray-15;
+}
+
+.n-draglist-item.n-selected .n-draglist-item__checkbox {
+    color: $color-white;
+    background: $color-primary;
+    border-color: $color-primary;
+}
+
+.n-draglist-item:not(.n-selected) .n-draglist-item__checkbox i {
+    display: none;
+}
+
+.n-draglist-item.n-selected .n-draglist-item__pseudo {
+    background: red;
+}
+
+
+
+
+
+// /**
+//  * Fix flickering by set transition delay
+//  */
+
+// .n-draglist-item {
+//     display: flex;
+//     flex-direction: row;
+//     align-items: stretch;
+//     justify-content: stretch;
+//     box-sizing: border-box;
+//     transition: background 0ms 100ms;
+// }
+
+// .n-draglist-item.n-highlight {
+//     background: rgba($color-warning, 0.1);
+//     transition: background 0ms;
+// }
+
+// .n-draglist-item.n-current {
+//     background: rgba($color-primary, 0.1);
+// }
+
+// .n-draglist-item.n-ghost:after {
+//     position: relative;
+// }
+
+// .n-dragged .n-draglist-item.n-selected {
+//     opacity: 0.5;
+// }
+
+// .n-draglist-item.n-dragover {
+//     background: rgba($color-primary, 0.1);
+//     transition: background 0ms;
+// }
+
+// .n-draglist-item.n-nodrop {
+//     background: rgba($color-danger, 0.1);
+//     transition: background 0ms;
+// }
+
+// .n-draglist-item__spacer {
+//     flex: 0 0 auto;
+// }
+
+// .n-draglist-item__expand,
+// .n-draglist-item__select {
+//     flex: 0 0 auto;
+//     width: 30px;
+//     display: flex;
+//     flex-direction: row;
+//     align-items: center;
+//     justify-content: center;
+// }
+
+// .n-draglist-item.n-ghost .n-draglist-item__select {
+//     display: none !important;
+// }
+
+// .n-draglist-item__expand > div,
+// .n-draglist-item__select > div {
+//     cursor: pointer;
+//     width: 20px;
+//     height: 20px;
+//     display: flex;
+//     flex-direction: row;
+//     align-items: center;
+//     justify-content: center;
+// }
+
+// .n-draglist-item__expand > div {
+//     color: $--color-gray-65;
+// }
+
+// .n-inverse .n-draglist-item__expand > div {
+//     color: $--color-gray-35;
+// }
+
+// .n-draglist-item:not(.n-expanded) .n-draglist-item__expand > div {
+//     transform: rotate(90deg);
+// }

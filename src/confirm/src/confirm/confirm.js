@@ -4,10 +4,6 @@ export default {
 
     name: 'NConfirm',
 
-    model: {
-        prop: 'visible'
-    },
-
     props: {
 
         visible: {
@@ -25,17 +21,10 @@ export default {
             },
         },
 
-        boundary: {
-            default()
-            {
-                return document.body;
-            },
-        },
-
         size: {
             default()
             {
-                return 'default';
+                return 'md';
             },
             type: [String]
         },
@@ -70,42 +59,6 @@ export default {
                 return true;
             },
             type: [Boolean]
-        },
-
-        propagation: {
-            default()
-            {
-                return true;
-            },
-            type: [Boolean]
-        },
-
-    },
-
-    data()
-    {
-        return {
-            veVisible: this.visible
-        };
-    },
-
-    methods: {
-
-        abort(event)
-        {
-            this.$refs.modal.close(event);
-            this.$emit('abort');
-        },
-
-        confirm(event)
-        {
-            this.$refs.modal.close(event);
-            this.$emit('confirm');
-        },
-
-        eventInput(value)
-        {
-            this.$emit('input', this.veVisible = value);
         }
 
     },
@@ -114,9 +67,41 @@ export default {
 
         visible()
         {
-            if ( this.visible !== this.veVisible ) {
-                this.veVisible = this.visible;
+            if ( this.visible !== this.tempVisible ) {
+                this.tempVisible = this.visible;
             }
+        }
+
+    },
+
+    data()
+    {
+        return {
+            tempVisible: this.visible
+        };
+    },
+
+    methods: {
+
+        abort(event)
+        {
+            this.$refs.modal.closeModal(true, 'self');
+            this.$emit('abort');
+        },
+
+        confirm(event)
+        {
+            this.$refs.modal.closeModal(true, 'self');
+            this.$emit('confirm');
+        },
+
+        eventInput(value, source)
+        {
+            if ( ! value && source !== 'self' ) {
+                this.$emit('abort');
+            }
+
+            this.$emit('update:visible', this.tempVisible = value);
         }
 
     },
@@ -134,7 +119,7 @@ export default {
     {
         return (
             <div class="n-confirm__body">
-                {this.$slots.default || this.trans('Are you sure?')}
+                { this.$slots.default && this.$slots.default() || this.trans('Are you sure?') }
             </div>
         );
     },
@@ -142,20 +127,20 @@ export default {
     renderAction()
     {
         let classList = [
-            'n-confirm__actions'
+            'n-confirm__action'
         ];
 
         if ( window.WIN ) {
-            classList.push('n-confirm__actions--reverse');
+            classList.push('n-reverse');
         }
 
         return (
             <div class={classList}>
-                <NButton size={this.size} type="secondary" vOn:click={this.abort}>
-                    {this.trans('Abort')}
+                <NButton size={this.size} type={this.type} link={true} onClick={this.abort}>
+                    { this.trans('Abort') }
                 </NButton>
-                <NButton size={this.size} type={this.type} vOn:click={this.confirm}>
-                    {this.trans('Confirm')}
+                <NButton size={this.size} type={this.type} link={false} onClick={this.confirm}>
+                    { this.trans('Confirm') }
                 </NButton>
             </div>
         );
@@ -170,28 +155,30 @@ export default {
         ];
 
         let props = {
-            type: 'confirm',
-            visible: this.veVisible,
+            type: 'default',
             selector: this.selector,
             width: this.width,
             position: this.position,
-            closable: this.closable
+            closable: this.closable,
+            modelValue: this.tempVisible,
         };
 
-        let events = Obj.clone(this.$listeners);
-
         // Override input listener
-        events['input'] = this.eventInput;
+        props['onUpdate:modelValue'] = this.eventInput;
 
-        // delete events['close'];
-
-        return (
-            <NModal ref="modal" props={props} on={events}>
-                <div slot="raw" class={classList}>
+        let innerHtml = {
+            raw: () => (
+                <div class={classList}>
                     { this.ctor('renderIcon')() }
                     { this.ctor('renderBody')() }
                     { this.ctor('renderAction')() }
                 </div>
+            )
+        };
+
+        return (
+            <NModal ref="modal" {...props}>
+                { innerHtml }
             </NModal>
         );
     }

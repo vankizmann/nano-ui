@@ -20,6 +20,14 @@ export default {
             type: [String]
         },
 
+        size: {
+            default()
+            {
+                return 'md';
+            },
+            type: [String]
+        },
+
         focus: {
             default()
             {
@@ -52,6 +60,14 @@ export default {
             type: [String]
         },
 
+        iconPosition: {
+            default()
+            {
+                return 'before';
+            },
+            type: [String]
+        },
+
         clickClose: {
             default()
             {
@@ -65,9 +81,13 @@ export default {
 
     computed: {
 
-        size()
+        tempSize()
         {
-            return this.NPopover.size;
+            if ( this.NPopover ) {
+                return this.NPopover.size;
+            }
+
+            return this.size;
         }
 
     },
@@ -76,11 +96,29 @@ export default {
 
         onClick(event)
         {
-            if ( this.clickClose ) {
+            if ( this.NPopover && this.clickClose ) {
                 this.NPopover.close();
             }
+
+            this.$emit('click', event);
         }
 
+    },
+
+    renderIcon()
+    {
+        if ( ! this.icon ) {
+            return null;
+        }
+
+        let classList = [
+            'n-icon', 
+            'n-icon--' + this.iconPosition,
+        ];
+
+        classList.push(this.icon);
+
+        return (<i class={classList}></i>);
     },
 
     render()
@@ -88,7 +126,7 @@ export default {
         let classList = [
             'n-popover-option',
             'n-popover-option--' + this.type,
-            'n-popover-option--' + this.size,
+            'n-popover-option--' + this.tempSize,
         ];
 
         if ( this.disabled ) {
@@ -107,7 +145,7 @@ export default {
 
         return (
             <a class={classList} href="javascript:void(0)" {...props}>
-                <span>{ this.$slots.default() }</span>
+                <span>{ this.$slots.default() }</span> { this.ctor('renderIcon')() }
             </a>
         );
     }

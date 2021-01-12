@@ -1,58 +1,169 @@
 import { UUID, Num, Arr, Obj, Dom, Any, Event } from "nano-js";
+import draggable from "../..";
 import NDraggableItem from "../draggable-item/draggable-item";
 
 export default {
 
     name: 'NDraglistItem',
 
-    extends: NDraggableItem,
+    inject: {
 
-    renderNode()
+        NDraggable: {
+            default: undefined
+        }
+    
+    },
+
+    props: {
+
+        value: {
+            required: true
+        }
+
+    },
+
+    computed: {
+
+        item()
+        {
+            return Obj.get(this.NDraggable, this.value.route);
+        }
+
+    },
+
+    watch: {
+
+        'value.id': function () {
+            Any.async(this.refreshBinding);
+        }
+
+    },
+
+    mounted()
     {
-        let props = {
-            index: this[this.NDraggable.indexProp],
-            value: this.veItem,
-            remove: this.remove,
-            copy: this.copy,
-            export: this.export,
-        };
+        Any.async(() => this.NDraggable.drag.bindNode(this));
+    },
 
-        let renderNode = null;
+    beforeUnmount()
+    {
+        Any.async(() => this.NDraggable.drag.unbindNode(this));
+    },
 
-        if ( Any.isFunction(this.NDraggable.renderNode) ) {
-            renderNode = this.NDraggable.renderNode(props);
+    methods: {
+
+        refreshBinding()
+        {
+            clearTimeout(this.refresh);
+
+            this.refresh = setTimeout(() => {
+                this.NDraggable.drag.bindNode(this)
+            }, 150);
+
+            this.NDraggable.drag.unbindNode(this);
+        },
+
+        hasChildren()
+        {
+            return !! this.getChildren().length;
+        },
+
+        getChildren()
+        {
+            return Obj.get(this.item, this.NDraggable.childProp, []);
+        },
+
+        isDisabled()
+        {
+            return false;
+        },
+
+        isDraggable()
+        {
+            return true;
+        },
+
+        isExpanded()
+        {
+            return this.NDraggable.isExpanded(this.value);
+        },
+
+        expandItem()
+        {
+            if ( this.hasChildren() ) {
+                this.NDraggable.expandItem(this.value);
+            }
+        },
+
+        isSelected()
+        {
+            return this.NDraggable.isSelected(this.value);
+        },
+
+        selectItem()
+        {
+            if ( ! this.isDisabled() ) {
+                this.NDraggable.selectItem(this.value);
+            }
         }
 
-        if ( Any.isString(this.NDraggable.renderNode) ) {
-            renderNode = this.$render(this.NDraggable.renderNode, { props })
-        }
+    },
 
-        if ( Any.isEmpty(renderNode) && this.$scopedSlots.default ) {
-            renderNode = this.$scopedSlots.default(props);
-        }
+    renderElement()
+    {
+        let props = Obj.except(this.$props, ['value'], {
+            value: this.item
+        });
 
-        let attrs = {
-            width: '100%', flex: '1 1 auto'
-        };
+        let renderFunction = this.$slots.default;
+
+        if ( this.NDraggable.renderNode ) {
+            renderFunction = this.NDraggable.renderNode;
+        }
 
         return (
-            this.NDraggable.wrapNode ? this.$render('div', { attrs }, [renderNode]) : renderNode
+            <div class="n-draglist-item__element">
+                { renderFunction(props) }
+            </div>
         );
     },
 
     renderSpacer()
     {
-        if ( ! this[this.NDraggable.depthProp] ) {
+        let depth = Obj.get(this.value, 
+            this.NDraggable.depthProp, 0);
+
+        if ( ! depth ) {
             return null;
         }
 
         let style = {
-            width: (this.depth * this.NDraggable.itemOffset) + 'px'
+            width: (depth * this.NDraggable.itemOffset) + 'px'
         };
 
         return (
             <div class="n-draglist-item__spacer" style={style}>
-                { /* SPACER */}
+                { /* SPACER */ }
+            </div>
+        );
+    },
+
+    renderHandle()
+    {
+        if ( ! this.NDraggable.renderHandle ) {
+            return null;
+        }
+
+        let props = {};
+
+        if ( this.isDraggable() ) {
+            props.draggable = true;
+        }
+
+        return (
+            <div class="n-draglist-item__handle" {...props}>
+                <div class="n-draglist-item__ellipsis">
+                    <i class={ this.icons.handle }></i>
+                </div>
             </div>
         );
     },
@@ -63,18 +174,13 @@ export default {
             return null;
         }
 
-        let childLength = Obj.get(this.veItem,
-            this.NDraggable.childProp, []).length;
-
         return (
-            <div class="n-draglist-item__expand">
-                { !! childLength &&
-                    <div ref="expand" on={{ click: this.expand }}>
-                        <i class={ this.icons.angleRight }></i>
-                    </div>
-                }
+            <div class="n-draglist-item__expand" onMousedown={this.expandItem}>
+                <div class="n-draglist-item__angle">
+                    <i class={ this.icons.angleRight }></i>
+                </div>
             </div>
-        )
+        );
     },
 
     renderSelect()
@@ -83,97 +189,52 @@ export default {
             return null;
         }
 
-        let allowSelect = this.NDraggable.canSelect(this);
-
-        allowSelect = allowSelect && (Any.isFunction(this.NDraggable.allowSelect) ?
-            this.NDraggable.allowSelect(this) : this.NDraggable.allowSelect);
-
-        let isChecked = this.NDraggable.isSelected(this);
-
-        // TODO: Decouple is checked from draggable (Not anynmore?)
-
         return (
-            <div ref="select" class="n-draglist-item__select">
-                <NCheckbox disabled={!allowSelect} checked={isChecked} onInput={this.select} />
+            <div class="n-draglist-item__select" onMousedown={this.selectItem}>
+                <div class="n-draglist-item__checkbox">
+                    <i class={ this.icons.checked }></i>
+                </div>
             </div>
-        )
+        );
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
-        let style = {};
-
-        if ( this.NDraggable.itemHeight ) {
-            style.height = this.NDraggable.itemHeight + 'px'
-        }
-
-        let isBelowThreshold = this.NDraggable.veItems.length <=
-            this.NDraggable.threshold;
-
-        if ( ! this.NDraggable.ghostMode || isBelowThreshold ) {
-            this.veInit = true;
-        }
-
-        let events = {
-            click: this.eventClick,
-            dblclick: this.eventDblclick,
-            dragenter: this.eventDragenter,
-            dragover: this.eventDragover,
-            dragleave: this.eventDragleave,
-            dragend: this.eventDragend,
-            dragdrop: this.eventDragdrop,
-            drop: this.eventDragdrop
-        };
-
         let classList = [
             'n-draglist-item'
         ];
 
-        if ( this.NDraggable.isSelected(this) ) {
+        if ( this.hasChildren() ) {
+            classList.push('n-children');
+        }
+
+        if ( this.isDisabled() ) {
+            classList.push('n-disabled');
+        }
+
+        if ( this.isSelected() ) {
             classList.push('n-selected');
         }
 
-        if ( this.NDraggable.isCurrent(this) ) {
-            classList.push('n-current');
-        }
-
-        if ( this.NDraggable.isExpanded(this) ) {
+        if ( this.isExpanded() ) {
             classList.push('n-expanded');
         }
 
-        if ( ! this.veInit ) {
+        let props = {
+            onClick: this.NDraggable.$emit('row-click', this),
+            onDblclick: this.NDraggable.$emit('row-dblclick', this)
+        };
 
-            classList.push('n-ghost');
-
-            return (
-                <div class={classList} style={style}>
-                    { this.ctor('renderSpacer')() }
-                </div>
-            );
+        if ( ! this.NDraggable.handle && this.isDraggable() ) {
+            props.draggable = true;
         }
 
-
-        let allowDrag = ! this.NDraggable.handle;
-        
-        // Is selectable
-        allowDrag = allowDrag && (Any.isFunction(this.NDraggable.allowSelect) ?
-            this.NDraggable.allowSelect(this) : this.NDraggable.allowSelect);
-
-        // Is draggable
-        allowDrag = allowDrag && (Any.isFunction(this.NDraggable.allowDrag) ?
-            this.NDraggable.allowDrag(this) : this.NDraggable.allowDrag);
-
-        // Get unique prop
-        let id = this.value[this.NDraggable.uniqueProp];
-
         return (
-            <div data-id={id} class={classList} style={style} on={events} draggable={allowDrag}>
+            <div class={classList} {...props}>
                 { this.ctor('renderSpacer')() }
                 { this.ctor('renderExpand')() }
                 { this.ctor('renderSelect')() }
-                { this.ctor('renderNode')() }
+                { this.ctor('renderElement')() }
             </div>
         );
     }

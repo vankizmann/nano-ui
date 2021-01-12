@@ -2,6 +2,7 @@ import CtorMixin from "./mixins/src/ctor";
 import CmerMixin from "./mixins/src/cmer";
 
 let NanoIcons = {
+    handle: 'fa fa-ellipsis-v',
     checked: 'fa fa-check',
     circle: 'fa fa-circle',
     intermediate: 'fa fa-minus',
@@ -51,8 +52,14 @@ export function NanoInstall(App, Icons = {}, Styles = {})
     App.config.globalProperties.styles = Nano.Obj.assign(global.NanoStyles, Styles);
 
     require('./notification/index').default(App);
+    //require('./config/index');
     require('./scrollbar/index').default(App);
+    require('./virtualscroller/index').default(App); //!complex
+    require('./draggable/index').default(App); //!supercomplex
+    // require('./loader/index');
+    // require('./resizer/index');
     require('./popover/index').default(App);
+    require('./modal/index').default(App);
     require('./button/index').default(App);
     require('./input/index').default(App);
     require('./textarea/index').default(App);
@@ -60,26 +67,21 @@ export function NanoInstall(App, Icons = {}, Styles = {})
     require('./checkbox/index').default(App);
     require('./radio/index').default(App);
     require('./switch/index').default(App);
-    require('./modal/index').default(App);
-    // require('./confirm/index');
-    //require('./config/index');
-    // require('./chart/index');
-    // require('./resizer/index');
-    // require('./virtualscroller/index');
-    // require('./draggable/index');
-    // require('./loader/index');
-    // require('./form/index');
-    // require('./cascader/index');
-    // require('./datepicker/index');
-    // require('./timepicker/index');
+    require('./confirm/index').default(App);
+    require('./cascader/index').default(App);
+    require('./datepicker/index').default(App);
+    require('./timepicker/index').default(App);
+    // require('./datetimepicker/index');
     // require('./transfer/index');
-    // require('./file/index');
-    // require('./table/index');
-    // require('./paginator/index');
+    // require('./form/index');
     // require('./tabs/index');
-    // require('./info/index');
+    // require('./table/index'); //!complex
+    // require('./paginator/index');
+    // require('./info/index'); //!complex
     // require('./file-list/index');
+    // require('./file/index');
     // require('./map/index');
+    // require('./chart/index');
     // require('./wysiwyg/index');
 }
 

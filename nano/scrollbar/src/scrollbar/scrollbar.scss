@@ -4,12 +4,16 @@
     position: relative;
 }
 
+.n-scrollbar.is-fixed {
+    position: absolute;
+}
+
 .n-scrollbar.is-enabled {
     overflow: hidden;
 }
 
-.n-scrollbar .n-scrollbar-content {
-    position: absolute !important;
+.n-scrollbar-content {
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
@@ -121,8 +125,8 @@
     opacity: 0;
 }
 
-.n-scrollbar.is-enabled.is-ready.has-vtrack:not(.is-fixed):hover > .n-scrollbar-v,
-.n-scrollbar.is-enabled.is-ready.has-htrack:not(.is-fixed):hover > .n-scrollbar-h {
+.n-scrollbar.is-ready.has-vtrack:hover > .n-scrollbar-v,
+.n-scrollbar.is-ready.has-htrack:hover > .n-scrollbar-h {
     opacity: 1;
 }
 

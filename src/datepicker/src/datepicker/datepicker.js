@@ -6,10 +6,10 @@ export default {
 
     props: {
 
-        value: {
+        modelValue: {
             default()
             {
-                return 'now';
+                return null;
             }
         },
 
@@ -23,7 +23,7 @@ export default {
         arrive: {
             default()
             {
-                return 'now';
+                return null;
             }
         },
 
@@ -37,7 +37,7 @@ export default {
         depart: {
             default()
             {
-                return 'now+1day';
+                return null;
             }
         },
 
@@ -48,10 +48,40 @@ export default {
             }
         },
 
+        minDate: {
+            default()
+            {
+                return null;
+            }
+        },
+
+        maxDate: {
+            default()
+            {
+                return null;
+            }
+        },
+
+        size: {
+            default()
+            {
+                return 'md';
+            },
+            type: [String]
+        },
+
+        type: {
+            default()
+            {
+                return 'primary';
+            },
+            type: [String]
+        },
+
         placeholder: {
             default()
             {
-                return this.trans('Select date');
+                return 'Select date';
             },
             type: [String]
         },
@@ -59,7 +89,7 @@ export default {
         placeholderArrive: {
             default()
             {
-                return this.trans('Start date');
+                return 'Start date';
             },
             type: [String]
         },
@@ -67,7 +97,7 @@ export default {
         placeholderDepart: {
             default()
             {
-                return this.trans('Start end');
+                return 'End date';
             },
             type: [String]
         },
@@ -91,24 +121,9 @@ export default {
         monthPanels: {
             default()
             {
-                return this.range ? 2 : 1;
+                return 1;
             },
             type: [Number]
-        },
-
-        size: {
-            default()
-            {
-                return null;
-            }
-        },
-
-        round: {
-            default()
-            {
-                return true;
-            },
-            type: [Boolean]
         },
 
         boundary: {
@@ -121,7 +136,7 @@ export default {
         position: {
             default()
             {
-                return 'bottom-center';
+                return 'bottom-start';
             },
             type: [String]
         },
@@ -153,7 +168,7 @@ export default {
         displayFormat: {
             default()
             {
-                return this.trans('YYYY-MM-DD');
+                return 'YYYY-MM-DD';
             },
             type: [String]
         },
@@ -162,14 +177,8 @@ export default {
             default()
             {
                 return [
-                    this.trans('Mo'),
-                    this.trans('Tu'),
-                    this.trans('We'),
-                    this.trans('Th'),
-                    this.trans('Fr'),
-                    this.trans('Sa'),
-                    this.trans('Su'),
-                ]
+                    'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su',
+                ];
             },
             type: [Array]
         },
@@ -178,45 +187,36 @@ export default {
             default()
             {
                 return [
-                    this.trans('Jan'),
-                    this.trans('Feb'),
-                    this.trans('Mar'),
-                    this.trans('Apr'),
-                    this.trans('May'),
-                    this.trans('Jun'),
-                    this.trans('Jul'),
-                    this.trans('Aug'),
-                    this.trans('Sep'),
-                    this.trans('Oct'),
-                    this.trans('Nov'),
-                    this.trans('Dec'),
-                ]
+                    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+                ];
             },
             type: [Array]
         }
 
     },
 
-    computed: {
-
-        yearsGrid()
-        {
-            return this.veCached.getYears();
-        },
-
-        monthsGrid()
-        {
-            return this.veCached.getMonths();
-        }
-
-    },
 
     watch: {
 
-        value()
+        modelValue(value)
         {
-            if ( this.value !== this.veValue.format(this.format) ) {
-                this.veValue = Now.make(this.value);
+            if ( value !== this.tempValue.format(this.format) ) {
+                this.tempValue = Now.make(value);
+            }
+        },
+
+        arrive(value)
+        {
+            if ( value !== this.tempArrive.format(this.format) ) {
+                this.tempArrive = Now.make(value);
+            }
+        },
+
+        depart(value)
+        {
+            if ( value !== this.tempDepart.format(this.format) ) {
+                this.tempDepart = Now.make(value);
             }
         },
 
@@ -225,136 +225,59 @@ export default {
     data()
     {
         return {
-            veView: 'date',
-            veOpen: false,
-            veRanger: null,
-            veTempArrive: null,
-            veTempDepart: null,
-            veValue: Now.make(this.value, this.format),
-            veCached: Now.make(this.value, this.format),
-            veArrive: Now.make(this.arrive),
-            veDepart: Now.make(this.depart),
-        }
+            focus: false,
+            tempValue: Now.make(this.modelValue, this.format),
+            tempArrive: Now.make(this.arrive, this.format),
+            tempDepart: Now.make(this.depart, this.format),
+        };
     },
 
     methods: {
 
-        gotoDate()
+        clearDatepicker()
         {
-            this.veView = 'date';
-
-            this.$nextTick(this.$refs.popover.refresh);
+            this.range ? this.clearRangeDatepicker() :
+                this.clearSingleDatepicker();
         },
 
-        gotoMonth()
+        clearSingleDatepicker()
         {
-            this.veView = 'month';
+            this.tempValue = Now.make(this.clearValue, 
+                this.format);
 
-            this.$nextTick(this.$refs.popover.refresh);
+            this.$emit('update:modelValue', this.clearValue);
         },
 
-        gotoYear()
+
+        clearRangeDatepicker()
         {
-            this.veView = 'year';
+            this.tempArrive = Now.make(this.clearArrive, 
+                this.format);
 
-            this.$nextTick(this.$refs.popover.refresh);
-        },
+            this.$emit('update:arrive', this.clearValue);
 
-        patchDate(now)
-        {
-            if ( Any.isString(now) ) {
-                now = Now.make(now);
-            }
+            this.tempDepart = Now.make(this.clearDepart, 
+                this.format);
 
-            // Copy now to cache
-            this.veCached = now.clone();
-
-            // Copy now to value
-            this.veValue = now.clone();
-
-            this.$emit('input', this.veValue.format(this.format));
-
-            this.veOpen = false;
-        },
-
-        patchMonth(now)
-        {
-            if ( Any.isString(now) ) {
-                now = Now.make(now);
-            }
-
-            this.veCached = now.clone();
-
-            this.gotoDate();
-        },
-
-        patchYear(now)
-        {
-            if ( Any.isString(now) ) {
-                now = Now.make(now);
-            }
-
-            this.veCached = now.clone();
-
-            this.gotoMonth();
-        },
-
-        patchRange(now)
-        {
-            if ( this.veTempArrive && ! this.veTempDepart ) {
-                this.veTempDepart = now.clone();
-            }
-
-            if ( ! this.veTempArrive && ! this.veTempDepart ) {
-                this.veTempArrive = now.clone();
-            }
-
-            if ( ! this.veTempArrive || ! this.veTempDepart ) {
-                return;
-            }
-
-            this.veArrive = this.veTempArrive.clone();
-            this.veDepart = this.veTempDepart.clone();
-
-            this.$emit('update:arrive', this.veArrive.format(this.format));
-            this.$emit('update:depart', this.veDepart.format(this.format));
-
-            this.veTempArrive = null;
-            this.veTempDepart = null;
-
-            this.$emit('range', [
-                this.veArrive.format(this.format),
-                this.veDepart.format(this.format)
-            ]);
-
-            this.veOpen = false;
-        },
-
-        printRange(now)
-        {
-            this.veRanger = now.clone();
-        },
-
-        eventClear()
-        {
-            this.$emit('input', this.clearValue);
-        },
-
-        eventRangeClear()
-        {
-            this.$emit('update:arrive', this.clearArrive);
             this.$emit('update:depart', this.clearDepart);
         },
 
-        eventInput(event)
+        onPopoverInput(value)
         {
-            let input = event.target.value;
+            this.focus = value;
+        },
 
-            if ( input.length !== this.displayFormat.length ) {
+        onValueInput(event)
+        {
+            let isNotSameLength = this.displayFormat.length !==
+                event.target.value.length;
+
+            if ( isNotSameLength ) {
                 return;
             }
 
-            let value = Now.make(input, this.displayFormat);
+            let value = Now.make(event.target.value, 
+                this.displayFormat);
 
             if ( ! value.moment.isValid() ) {
                 return;
@@ -366,609 +289,297 @@ export default {
                 date: value.moment.date(),
             });
 
-            this.veCached = Now.make(moment);
+            this.tempValue = Now.make(moment);
 
-            this.veValue = Now.make(moment);
-
-            this.$emit('input', this.veValue.format(this.format));
+            this.$emit('update:modelValue', 
+                this.tempValue.format(this.format));
         },
 
-        eventPopoverInput(value)
+        onArriveInput(event)
         {
-            this.veOpen = value;
+            let isNotSameLength = this.displayFormat.length !==
+                event.target.value.length;
+
+            if ( isNotSameLength ) {
+                return;
+            }
+
+            let value = Now.make(event.target.value, 
+                this.displayFormat);
+
+            if ( ! value.moment.isValid() ) {
+                return;
+            }
+
+            let moment = this.veValue.moment.set({
+                year: value.moment.year(),
+                month: value.moment.month(),
+                date: value.moment.date(),
+            });
+
+            this.tempArrive = Now.make(moment);
+
+            this.$emit('update:arrive', 
+                this.tempArrive.format(this.format));
         },
 
-        eventStop(event)
+        onDepartInput(event)
         {
-            event.stopPropagation();
-        }
+            let isNotSameLength = this.displayFormat.length !==
+                event.target.value.length;
+
+            if ( isNotSameLength ) {
+                return;
+            }
+
+            let value = Now.make(event.target.value, 
+                this.displayFormat);
+
+            if ( ! value.moment.isValid() ) {
+                return;
+            }
+
+            let moment = this.veValue.moment.set({
+                year: value.moment.year(),
+                month: value.moment.month(),
+                date: value.moment.date(),
+            });
+
+            this.tempDepart = Now.make(moment);
+
+            this.$emit('update:depart', 
+                this.tempDepart.format(this.format));
+        },
+
+        onDatepickerInput(value)
+        {
+            this.focus = false;
+
+            this.tempValue = Now.make(value, 
+                this.format);
+
+            this.$emit('update:modelValue', value);
+        },
+
+        onDatepickerDepart(value)
+        {
+            this.focus = false;
+
+            this.tempDepart = Now.make(value, 
+                this.format);
+
+            this.$emit('update:depart', value);
+        },
+
+        onDatepickerArrive(value)
+        {
+            this.focus = false;
+
+            this.tempArrive = Now.make(value, 
+                this.format);
+
+            this.$emit('update:arrive', value);
+        },
 
     },
 
-    renderToolbarPrev(closure)
+
+    renderLabelClear()
+    {
+        let isEmpty = ! this.tempArrive.initialDate &&
+            ! this.tempDepart.initialDate;
+
+        if ( ! this.range ) {
+            isEmpty = ! this.tempValue.initialDate;
+        }
+
+        if ( ! this.clearable || isEmpty ) {
+            return null;
+        }
+
+        let props = {};
+
+        if ( ! this.disabled ) {
+            props.onMousedown = this.clearDatepicker;
+        }
+
+        return (
+            <div class="n-datepicker__clear" {...props}>
+                <i class={ this.icons.times }></i>
+            </div>
+        );
+    },
+
+    renderLabelAngle()
+    {
+        return (
+            <div class="n-datepicker__angle">
+                <i class={ this.icons.angleDown }></i>
+            </div>
+        );
+    },
+
+    renderRange()
+    {
+        let arriveProps = {
+            value: '',
+            disabled: this.disabled,
+            placeholder: this.trans(this.placeholderArrive),
+            onInput: this.onArriveInput,
+        };
+
+        if ( this.tempArrive.valid() ) {
+            arriveProps.value = this.tempArrive.format(
+                this.displayFormat, true);
+        }
+
+        let departProps = {
+            value: '',
+            disabled: this.disabled,
+            placeholder: this.trans(this.placeholderDepart),
+            onInput: this.onDepartInput,
+        };
+
+        if ( this.tempDepart.valid() ) {
+            departProps.value = this.tempDepart.format(
+                this.displayFormat, true);
+        }
+
+        return [
+            (
+                <div class="n-datepicker__input">
+                    <input {...arriveProps}/>
+                </div>
+            ),
+            (
+                <div class="n-datepicker__seperator">
+                    <span>{ this.rangeSeparator }</span>
+                </div>
+            ),
+            (
+                <div class="n-datepicker__input">
+                    <input {...departProps}/>
+                </div>
+            )
+        ];
+    },
+
+    renderSingle()
     {
         let props = {
-            link: true,
-            icon: this.icons.angleLeft,
+            value: '',
+            disabled: this.disabled,
+            placeholder: this.trans(this.placeholder),
+            onInput: this.onValueInput,
         };
 
-        let events = {
-            click: closure
-        };
-
-        return (
-            <NButton props={props} on={events} />
-        );
-    },
-
-    renderToolbarNext(closure)
-    {
-        let props = {
-            link: true,
-            icon: this.icons.angleRight,
-        };
-
-        let events = {
-            click: closure
-        };
-
-        return (
-            <NButton props={props} on={events} />
-        );
-    },
-
-    renderToolbarMonth()
-    {
-        let events = {
-            click: this.gotoMonth
-        };
-
-        let monthsHtml = [
-            this.months[this.veCached.month()]
-        ];
-
-        let month = this.veCached.clone()
-            .addMonths(this.monthPanels - 1);
-
-        if ( month.month() !== this.veCached.month() ) {
-            monthsHtml.push(this.months[month.month()]);
+        if ( this.tempValue.valid() ) {
+            props.value = this.tempValue.format(
+                this.displayFormat, true);
         }
 
         return (
-            <span class="n-datepicker__month" on={events}>
-                { monthsHtml.join(' - ') }
-            </span>
-        );
-    },
-
-    renderToolbarYear()
-    {
-        let events = {
-            click: this.gotoYear
-        };
-
-        let yearsHtml = [
-            this.veCached.year()
-        ];
-
-        let month = this.veCached.clone()
-            .addMonths(this.monthPanels - 1);
-
-        if ( month.year() !== this.veCached.year() ) {
-            yearsHtml.push(month.year());
-        }
-
-        return (
-            <span class="n-datepicker__year" on={events}>
-                { yearsHtml.join(' - ') }
-            </span>
-        );
-    },
-
-    renderToolbar({ prev, next })
-    {
-        return (
-            <div class="n-datepicker__toolbar">
-                <div class="n-datepicker__display">
-                    { this.ctor('renderToolbarMonth')() }
-                    { this.ctor('renderToolbarYear')() }
-                </div>
-                <div class="n-datepicker__prev">
-                    { this.ctor('renderToolbarPrev')(prev) }
-                </div>
-                <div class="n-datepicker__next">
-                    { this.ctor('renderToolbarNext')(next) }
-                </div>
+            <div class="n-datepicker__input">
+                <input {...props}/>
             </div>
         );
     },
 
-    renderDateItem(now, month)
+    renderDisplay()
     {
         let classList = [
-            'n-datepicker__day'
+            'n-datepicker__display'
         ];
-
-        if ( now.equalDate() ) {
-            classList.push('n-today');
-        }
-
-        if ( now.equal(this.veCached, 'YYYYMMDD') ) {
-            classList.push('n-selected');
-        }
-
-        if ( now.month() === month.month() ) {
-            classList.push('n-current');
-        }
-
-        let events = {
-            click: () => this.patchDate(now)
-        };
-
-        return (
-            <div class={classList} on={events}>
-                <span>{ now.format('DD') }</span>
-            </div>
-        );
-    },
-
-    renderRangeDateItem(now, month)
-    {
-        let classList = [
-            'n-datepicker__day'
-        ];
-
-        if ( now.equalDate('now') ) {
-            classList.push('n-today');
-        }
-
-        if ( now.month() === month.month() ) {
-            classList.push('n-current');
-        }
-
-        let viewMode = 0;
-
-        if ( !! this.veTempArrive ) {
-            viewMode++;
-        }
-
-        if ( !! this.veTempDepart ) {
-            viewMode++;
-        }
-
-        if ( viewMode === 0 ) {
-
-            if ( now.between(this.veArrive, this.veDepart) ) {
-                classList.push('n-between');
-                classList.push('n-selected');
-            }
-
-            let arriveFirst = this.veArrive.before(this.veDepart);
-
-            if ( now.equalDate(this.veArrive) ) {
-                classList.push(arriveFirst ? 'n-arrive' : 'n-depart');
-                classList.push('n-selected');
-            }
-
-            if ( now.equalDate(this.veDepart) ) {
-                classList.push(arriveFirst ? 'n-depart' : 'n-arrive');
-                classList.push('n-selected');
-            }
-
-        }
-
-        if ( viewMode === 1 ) {
-
-            if ( now.between(this.veTempArrive, this.veRanger) ) {
-                classList.push('n-between');
-            }
-
-            let arriveFirst = this.veTempArrive.before(this.veRanger);
-
-            if ( now.equalDate(this.veTempArrive) ) {
-                classList.push(arriveFirst ? 'n-arrive' : 'n-depart');
-            }
-
-            if ( now.equalDate(this.veRanger) ) {
-                classList.push(arriveFirst ? 'n-depart' : 'n-arrive');
-            }
-
-        }
-
-        let events = {
-            click: () => this.patchRange(now),
-            mouseenter: () => this.printRange(now)
-        };
-
-        return (
-            <div class={classList} on={events}>
-                <span>{ now.format('DD') }</span>
-            </div>
-        );
-    },
-
-    renderDate()
-    {
-        let prev = () => this.veCached = this.veCached.prevMonth();
-        let next = () => this.veCached = this.veCached.nextMonth();
-
-        let legendHtml = (
-            Arr.each(this.weekdays, (day) => {
-                return (
-                    <div class="n-datepicker__day">
-                        <span>{ day }</span>
-                    </div>
-                );
-            })
-        );
-
-        let renderItem = this.ctor('renderDateItem');
 
         if ( this.range ) {
-            renderItem = this.ctor('renderRangeDateItem');
+            classList.push('n-range');
         }
 
-        let bodyHtml = (month) => (
-            Arr.each(Arr.chunk(month.getDatesGrid(), 7), (chunks) => {
-                return (
-                    <div class="n-datepicker__week">
-                        { Arr.each(chunks, (chunk) => renderItem(chunk, month)) }
-                    </div>
-                );
-            })
-        );
+        let displayHtml = this.ctor('renderSingle');
 
-        let panelHtml = (
-            Arr.each(Arr.make(this.monthPanels), (offset) => {
-
-                let month = this.veCached.clone()
-                    .addMonths(offset - 1);
-
-                return (
-                    <div class="n-datepicker__panel">
-                        <div class="n-datepicker__legend">
-                            { legendHtml }
-                        </div>
-                        <div class="n-datepicker__body">
-                            { bodyHtml(month) }
-                        </div>
-                    </div>
-                );
-            })
-        );
-
-        return (
-            <div class="n-datepicker__dateview" vOn:click={this.eventStop}>
-                <div class="n-datepicker__header">
-                    { this.ctor('renderToolbar')({ prev, next }) }
-                </div>
-                <div class="n-datepicker__panels">
-                    { panelHtml }
-                </div>
-            </div>
-        );
-    },
-
-    renderMonthItem(now)
-    {
-        let classList = [
-            'n-datepicker__month'
-        ];
-
-        if ( now.equal(this.veCached, 'YYYYMM') ) {
-            classList.push('n-selected');
-        }
-
-        if ( now.month() === Now.make('now').month() ) {
-            classList.push('n-current');
-        }
-
-        let events = {
-            click: () => this.patchMonth(now)
-        };
-
-        return (
-            <div class={classList} on={events}>
-                <span>{ this.months[now.month()] }</span>
-            </div>
-        )
-    },
-
-    renderMonth()
-    {
-        let prev = () => this.veCached = this.veCached.prevYear();
-        let next = () => this.veCached = this.veCached.nextYear();
-
-        return (
-            <div class="n-datepicker__monthview" vOn:click={this.eventStop}>
-                <div class="n-datepicker__header">
-                    { this.ctor('renderToolbar')({ prev, next }) }
-                </div>
-                <div class="n-datepicker__body">
-                    <div class="n-datepicker__year">
-                        { Arr.each(this.monthsGrid, this.ctor('renderMonthItem')) }
-                    </div>
-                </div>
-                <div class="n-datepicker__footer">
-                    <NButton size="small" link={true} vOn:click={this.gotoDate}>
-                        { this.trans('Go back') }
-                    </NButton>
-                </div>
-            </div>
-        );
-    },
-
-    renderYearItem(now)
-    {
-        let classList = [
-            'n-datepicker__year'
-        ];
-
-        if ( now.equal(this.veCached, 'YYYY') ) {
-            classList.push('n-selected');
-        }
-
-        if ( now.year() === Now.make('now').year() ) {
-            classList.push('n-current');
-        }
-
-        let events = {
-            click: () => this.patchYear(now)
-        };
-
-        return (
-            <div class={classList} on={events}>
-                <span>{ now.year() }</span>
-            </div>
-        )
-    },
-
-    renderYear()
-    {
-        let prev = () => this.veCached = this.veCached.prevDecade();
-        let next = () => this.veCached = this.veCached.nextDecade();
-
-        return (
-            <div class="n-datepicker__yearview" vOn:click={this.eventStop}>
-                <div class="n-datepicker__header">
-                    { this.ctor('renderToolbar')({ prev, next }) }
-                </div>
-                <div class="n-datepicker__body">
-                    <div class="n-datepicker__decade">
-                        { Arr.each(this.yearsGrid, this.ctor('renderYearItem')) }
-                    </div>
-                </div>
-                <div class="n-datepicker__footer">
-                    <NButton size="small" link={true} vOn:click={this.gotoDate}>
-                        { this.trans('Go back') }
-                    </NButton>
-                </div>
-            </div>
-        );
-    },
-
-    renderInputIcon()
-    {
-        return (
-            <div class="n-datepicker__icon">
-                <span class={this.icons.calendar}></span>
-            </div>
-        );
-    },
-
-    renderInputClear()
-    {
-        if ( ! this.clearable ) {
-            return null;
-        }
-
-        let props = {
-            type: 'input',
-            icon: this.icons.times,
-            disabled: this.disabled
-        };
-
-        if ( Any.isEmpty(this.value) ) {
-            props.disabled = true;
-        }
-
-        let events = {
-            click: this.eventClear
-        };
-
-        return (
-            <NButton props={props} on={events} />
-        )
-    },
-
-    renderInput()
-    {
-        let classList = [
-            'n-datepicker'
-        ];
-
-        if ( this.size ) {
-            classList.push('n-datepicker--' + this.size);
-        }
-
-        if ( this.round ) {
-            classList.push('n-datepicker--round');
-        }
-
-        if ( this.clearable ){
-            classList.push('n-clearable');
-        }
-
-        if ( this.disabled ){
-            classList.push('n-disabled');
-        }
-
-        let attrs = {
-            type: 'text',
-            value: '',
-            disabled: this.disabled,
-            placeholder: this.placeholder
-        };
-
-        let renderDisplay = ! Any.isEmpty(this.value);
-
-        if ( Any.isString(this.value) ) {
-            renderDisplay |= this.value.match(/^now/);
-        }
-
-        if ( renderDisplay ) {
-            attrs.value = this.veValue.format(this.displayFormat, true);
-        }
-
-        let events = {
-            input: this.eventInput
-        };
-
-        let inputHtml = (
-            <div class="n-datepicker__input">
-                <input value={attrs.value} attrs={attrs} on={events} />
-            </div>
-        );
-
-        return (
-            <div class={classList}>
-                { this.ctor('renderInputIcon')() }
-                { inputHtml }
-                { this.ctor('renderInputClear')() }
-            </div>
-        );
-    },
-
-    renderRangeInputArrive()
-    {
-        let attrs = {
-            type: 'text',
-            value: '',
-            disabled: this.disabled,
-            placeholder: this.placeholderArrive,
-        };
-
-        if ( ! Any.isEmpty(this.arrive) ) {
-            attrs.value = this.veArrive.format(this.displayFormat, true);
-        }
-
-        return (
-            <input value={attrs.value} attrs={attrs} />
-        );
-    },
-
-    renderRangeInputDepart()
-    {
-        let attrs = {
-            type: 'text',
-            value: '',
-            disabled: this.disabled,
-            placeholder: this.placeholderDepart,
-        };
-
-        if ( ! Any.isEmpty(this.depart) ) {
-            attrs.value = this.veDepart.format(this.displayFormat, true);
-        }
-
-        return (
-            <input value={attrs.value} attrs={attrs} />
-        );
-    },
-
-    renderRangeInputClear()
-    {
-        if ( ! this.clearable ) {
-            return null;
-        }
-
-        let props = {
-            type: 'input',
-            icon: this.icons.times,
-            disabled: this.disabled
-        };
-
-        if ( Any.isEmpty(this.value) ) {
-            props.disabled = true;
-        }
-
-        let events = {
-            click: this.eventRangeClear
-        };
-
-        return (
-            <NButton props={props} on={events} />
-        )
-    },
-
-    renderRangeInput()
-    {
-        let classList = [
-            'n-datepicker',
-        ];
-
-        if ( this.size ) {
-            classList.push('n-datepicker--' + this.size);
-        }
-
-        if ( this.round ) {
-            classList.push('n-datepicker--round');
-        }
-
-        if ( this.clearable ){
-            classList.push('n-clearable');
-        }
-
-        if ( this.disabled ){
-            classList.push('n-disabled');
+        if ( this.range ) {
+            displayHtml = this.ctor('renderRange');
         }
 
         return (
             <div class={classList}>
-                { this.ctor('renderInputIcon')() }
-                <div class="n-datepicker__input n-datepicker__input--range">
-                    { this.ctor('renderRangeInputArrive')() }
-                </div>
-                <span class="n-datepicker__seperator">
-                    <span>{ this.rangeSeparator }</span>
-                </span>
-                <div class="n-datepicker__input n-datepicker__input--range">
-                    { this.ctor('renderRangeInputDepart')() }
-                </div>
-                { this.ctor('renderRangeInputClear')() }
+                { this.ctor('renderLabelClear')() }
+                { displayHtml() }
+                { this.ctor('renderLabelAngle')() }
             </div>
+        );
+    },
+
+    renderItems()
+    {
+        
+        let props = Obj.except(this.$props, ['modelValue'], {
+            arrive: this.tempArrive.format(this.format) || null,
+            depart: this.tempDepart.format(this.format) || null,
+            modelValue: this.tempValue.format(this.format) || null,
+        });
+
+        props['onUpdate:arrive'] = this.onDatepickerArrive;
+        props['onUpdate:depart'] = this.onDatepickerDepart;
+        props['onUpdate:modelValue'] = this.onDatepickerInput;
+
+        return (
+            <NDatepickerPanel class="n-datepicker__body" {...props}></NDatepickerPanel>
         );
     },
 
     renderPopover()
     {
         let props = {
-            visible: this.veOpen,
-            type: 'datepicker',
             trigger: 'click',
-            width: '100%',
+            width: 0,
             size: this.size,
-            disabled: this.disabled,
             position: this.position,
-            boundary: this.boundary,
-            window: ! this.boundary,
-        };
-
-        let events = {
-            input: this.eventPopoverInput
+            scrollClose: true,
+            disabled: this.disabled
         };
 
         return (
-            <NPopover ref="popover" props={props} on={events}>
-                { this.ctor('render' + Str.ucfirst(this.veView))() }
+            <NPopover ref="popover" vModel={this.focus} {...props}>
+                { { raw: this.ctor('renderItems') } }
             </NPopover>
-        )
+        );
     },
 
     render()
     {
+        let classList = [
+            'n-datepicker',
+            'n-datepicker--' + this.type,
+            'n-datepicker--' + this.size,
+        ];
+
+        let isEmpty = ! this.tempArrive.initialDate &&
+            ! this.tempDepart.initialDate;
+
+        if ( ! this.range ) {
+            isEmpty = ! this.tempValue.initialDate;
+        }
+
+        if ( isEmpty ) {
+            classList.push('n-empty');
+        }
+
+        if ( this.clearable ) {
+            classList.push('n-clearable');
+        }
+
+        if ( this.focus ) {
+            classList.push('n-focus');
+        }
+
+        if ( this.disabled ) {
+            classList.push('n-disabled');
+        }
+
         return (
-            <div class="n-datepicker__wrapper">
-                { this.ctor(this.range ? 'renderRangeInput' : 'renderInput')() }
+            <div class={classList}>
+                { this.ctor('renderDisplay')() }
                 { this.ctor('renderPopover')() }
             </div>
         );

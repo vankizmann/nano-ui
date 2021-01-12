@@ -44,13 +44,6 @@ export default {
             type: [String]
         },
 
-        boundary: {
-            default()
-            {
-                return null;
-            }
-        },
-
         multiple: {
             default()
             {
@@ -577,14 +570,17 @@ export default {
             props.placeholder = null;
         }
 
+        let inputHtml = (
+            <div class="n-select__input">
+                <input ref="input" {...props} />
+            </div>
+        );
+
         return [
             this.ctor('renderLabelClear')(), 
             (
                 <div class="n-select__items">
-                    { this.ctor('renderLabelItems')() }
-                    <div class="n-select__input">
-                        <input ref="input" {...props} />
-                    </div>
+                    { [this.ctor('renderLabelItems')(), inputHtml] }
                 </div>
             ), 
             this.ctor('renderLabelAngle')()
@@ -649,9 +645,7 @@ export default {
         }
 
         return (
-            <div class={classList}>
-                { displayHtml() }
-            </div>
+            <div class={classList}>{ displayHtml() }</div>
         );
     },
 

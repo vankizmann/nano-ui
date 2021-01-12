@@ -59,7 +59,7 @@ export default {
             <div ref="select" class="n-draggrid-item__select">
                 <NCheckbox disabled={!allowSelect} checked={isChecked} onInput={this.select} />
             </div>
-        )
+        );
     },
 
     render($render)

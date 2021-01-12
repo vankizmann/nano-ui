@@ -9,7 +9,7 @@ export default {
         value: {
             default()
             {
-                return 'now';
+                return null;
             }
         },
 
@@ -23,7 +23,7 @@ export default {
         placeholder: {
             default()
             {
-                return this.trans('Select time');
+                return 'Select time';
             },
             type: [String]
         },
@@ -31,21 +31,23 @@ export default {
         size: {
             default()
             {
-                return null;
-            }
+                return 'md';
+            },
+            type: [String]
         },
 
-        boundary: {
+        type: {
             default()
             {
-                return null;
-            }
+                return 'primary';
+            },
+            type: [String]
         },
 
         position: {
             default()
             {
-                return 'bottom-center';
+                return 'bottom-start';
             },
             type: [String]
         },
@@ -77,7 +79,7 @@ export default {
         displayFormat: {
             default()
             {
-                return this.trans('HH:mm:ss');
+                return 'HH:mm:ss';
             },
             type: [String]
         },
@@ -112,27 +114,27 @@ export default {
 
         hoursGrid()
         {
-            return this.veValue.getHours(this.hoursInterval);
+            return this.tempValue.getHours(this.hoursInterval);
         },
 
         minutesGrid()
         {
-            return this.veValue.getMinutes(this.minutesInterval);
+            return this.tempValue.getMinutes(this.minutesInterval);
         },
 
         secondsGrid()
         {
-            return this.veValue.getSeconds(this.secondsInterval);
+            return this.tempValue.getSeconds(this.secondsInterval);
         }
 
     },
 
     watch: {
 
-        value()
+        modelValue(value)
         {
-            if ( this.value !== this.veValue.format(this.format) ) {
-                this.veValue = Now.make(this.value);
+            if ( value !== this.tempValue.format(this.format) ) {
+                this.tempValue = Now.make(value);
             }
         }
 
@@ -141,291 +143,156 @@ export default {
     data()
     {
         return {
-            veOpen: false,
-            veValue: Now.make(this.value),
+            focus: false,
+            tempValue: Now.make(this.value),
         }
     },
 
     methods: {
 
-        eventInput(event)
+        clearTimepicker()
         {
-            if ( event.target.value.length !== this.displayFormat.length ) {
+            this.tempValue = Now.make(this.clearValue, 
+                this.format);
+
+            this.$emit('update:modelValue', this.clearValue);
+        },
+
+        onPopoverInput(value)
+        {
+            this.focus = value;
+        },
+
+        onValueInput(event)
+        {
+            let isNotSameLength = this.displayFormat.length !==
+                event.target.value.length;
+
+            if ( isNotSameLength ) {
                 return;
             }
 
-            let value = Now.make(event.target.value, this.displayFormat);
+            let value = Now.make(event.target.value, 
+                this.displayFormat);
 
             if ( ! value.moment.isValid() ) {
                 return;
             }
 
-            let moment = this.veValue.moment.set({
-                hour: value.moment.hour(),
-                minute: value.moment.minute(),
+            let moment = this.tempValue.moment.set({
+                hour: value.moment.hour(), 
+                minute: value.moment.minute(), 
                 second: value.moment.second(),
             });
 
-            this.veValue = Now.make(moment);
+            this.tempValue = Now.make(moment);
 
-            this.$emit('input', this.veValue.format(this.format));
+            this.$emit('update:modelValue', 
+                this.tempValue.format(this.format));
         },
 
-        eventClear()
+        onTimepickerInput(value)
         {
-            this.veValue = Now.make('now');
+            this.tempValue = Now.make(value, 
+                this.format);
 
-            this.$emit('input', this.clearValue);
+            this.$emit('update:modelValue', value);
         },
-
-        eventSelect(now)
-        {
-            this.veValue = now.clone();
-
-            this.$emit('input', this.veValue.format(this.format));
-        },
-
-        eventPopoverInput(value)
-        {
-            this.veOpen = value;
-        },
-
-        eventStop(event)
-        {
-            event.stopPropagation();
-        }
 
     },
 
-    renderToolbar()
+    renderLabelClear()
     {
-        return (
-            <div class="n-timepicker__toolbar">
-                <div class="n-timepicker-display">
-                    <span class="n-timepicker__time">
-                        { this.veValue.format(this.displayFormat) || this.placeholder }
-                    </span>
-                </div>
-            </div>
-        )
-    },
-
-    renderIcon()
-    {
-        return (
-            <div class="n-timepicker__icon">
-                <span class={this.icons.clock}></span>
-            </div>
-        );
-    },
-
-    renderClear()
-    {
-        if ( ! this.clearable ) {
+        if ( ! this.clearable || ! this.tempValue.valid() ) {
             return null;
         }
 
-        let props = {
-            type: 'input',
-            icon: this.icons.times
-        };
+        let props = {};
 
-        if ( this.disabled || ! this.value ) {
-            props.disabled = true;
+        if ( ! this.disabled ) {
+            props.onMousedown = this.clearTimepicker;
         }
 
-        let events = {
-            click: this.eventClear
-        };
-
         return (
-            <NButton props={props} on={events} />
+            <div class="n-timepicker__clear" {...props}>
+                <i class={ this.icons.times }></i>
+            </div>
         );
     },
 
-    renderInput()
+    renderLabelAngle()
     {
-        let attrs = {
-            type: 'text',
-            placeholder: this.placeholder,
-            disabled: this.disabled
+        return (
+            <div class="n-timepicker__angle">
+                <i class={ this.icons.angleDown }></i>
+            </div>
+        );
+    },
+
+    renderSingle()
+    {
+        let props = {
+            value: '',
+            disabled: this.disabled,
+            placeholder: this.trans(this.placeholder),
+            onInput: this.onValueInput,
         };
 
-        let events = {
-            input: this.eventInput
-        };
-
-        let value = '';
-
-        if ( ! Any.isEmpty(this.value) ) {
-            value = this.veValue.format(this.displayFormat, true);
+        if ( this.tempValue.valid() ) {
+            props.value = this.tempValue.format(
+                this.displayFormat, true);
         }
 
         return (
             <div class="n-timepicker__input">
-                <input value={value} attrs={attrs} on={events} />
+                <input {...props}/>
             </div>
         );
     },
 
-
-    renderTimepicker()
+    renderDisplay()
     {
         let classList = [
-            'n-timepicker'
+            'n-timepicker__display'
         ];
-
-        if ( this.size ) {
-            classList.push('n-timepicker--' + this.size);
-        }
 
         return (
             <div class={classList}>
-                { this.ctor('renderIcon')() }
-                { this.ctor('renderInput')() }
-                { this.ctor('renderClear')() }
+                { this.ctor('renderLabelClear')() }
+                { this.ctor('renderSingle')() }
+                { this.ctor('renderLabelAngle')() }
             </div>
         );
     },
 
-    renderHourItem(now)
+    renderPanel()
     {
-        let classList = [
-            'n-timepicker__item'
-        ];
+        
+        let props = Obj.except(this.$props, ['modelValue'], {
+            modelValue: this.tempValue.format(this.format) || null,
+        });
 
-        if ( now.hour() === this.veValue.hour() ) {
-            classList.push('n-active');
-        }
-
-        let events = {
-            click: () => this.eventSelect(now)
-        };
+        props['onUpdate:modelValue'] = this.onTimepickerInput;
 
         return (
-            <div on={events} class={classList}>
-                <span>{ now.format('HH') }</span>
-            </div>
-        );
-    },
-
-    renderHourPanel()
-    {
-        if ( ! this.displayFormat.match('HH') ) {
-            return null;
-        }
-
-        return (
-            <div class="n-timepicker__panel">
-                <NScrollbar>
-                    { Arr.each(this.hoursGrid, this.ctor('renderHourItem')) }
-                </NScrollbar>
-            </div>
-        );
-    },
-
-    renderMinuteItem(now)
-    {
-        let classList = [
-            'n-timepicker__item'
-        ];
-
-        if ( now.minute() === this.veValue.minute() ) {
-            classList.push('n-active');
-        }
-
-        let events = {
-            click: () => this.eventSelect(now)
-        };
-
-        return (
-            <div on={events} class={classList}>
-                <span>{ now.format('mm') }</span>
-            </div>
-        );
-    },
-
-    renderMinutePanel()
-    {
-        if ( ! this.displayFormat.match('mm') ) {
-            return null;
-        }
-
-        return (
-            <div class="n-timepicker__panel">
-                <NScrollbar>
-                    { Arr.each(this.minutesGrid, this.ctor('renderMinuteItem')) }
-                </NScrollbar>
-            </div>
-        );
-    },
-
-    renderSecondItem(now)
-    {
-        let classList = [
-            'n-timepicker__item'
-        ];
-
-        if ( now.second() === this.veValue.second() ) {
-            classList.push('n-active');
-        }
-
-        let events = {
-            click: () => this.eventSelect(now)
-        };
-
-        return (
-            <div on={events} class={classList}>
-                <span>{ now.format('ss') }</span>
-            </div>
-        );
-    },
-
-    renderSecondPanel()
-    {
-        if ( ! this.displayFormat.match('ss') ) {
-            return null;
-        }
-
-        return (
-            <div class="n-timepicker__panel">
-                <NScrollbar>
-                    { Arr.each(this.secondsGrid, this.ctor('renderSecondItem')) }
-                </NScrollbar>
-            </div>
+            <NTimepickerPanel class="n-timepicker__body" {...props}></NTimepickerPanel>
         );
     },
 
     renderPopover()
     {
         let props = {
-            visible: this.veOpen,
-            type: 'timepicker',
             trigger: 'click',
-            width: '100%',
+            width: 0,
             size: this.size,
-            disabled: this.disabled,
             position: this.position,
-            boundary: this.boundary,
-            window: ! this.boundary,
-        };
-
-        let events = {
-            input: this.eventPopoverInput
+            scrollClose: true,
+            disabled: this.disabled
         };
 
         return (
-            <NPopover ref="popover" props={props} on={events}>
-                <div class="n-timepicker__time" vOn:click={this.eventStop}>
-                    <div class="n-timepicker__header">
-                        {this.ctor('renderToolbar')()}
-                    </div>
-                    <div class="n-timepicker__body">
-                        { this.ctor('renderHourPanel')() }
-                        { this.ctor('renderMinutePanel')() }
-                        { this.ctor('renderSecondPanel')() }
-                    </div>
-                </div>
+            <NPopover ref="popover" vModel={this.focus} {...props}>
+                { { raw: this.ctor('renderPanel') } }
             </NPopover>
         );
     },
@@ -433,16 +300,30 @@ export default {
     render()
     {
         let classList = [
-            'n-timepicker__wrapper'
+            'n-timepicker',
+            'n-timepicker--' + this.type,
+            'n-timepicker--' + this.size,
         ];
 
-        if ( this.disabled ){
+        if ( ! this.tempValue.valid() ) {
+            classList.push('n-empty');
+        }
+
+        if ( this.clearable ) {
+            classList.push('n-clearable');
+        }
+
+        if ( this.focus ) {
+            classList.push('n-focus');
+        }
+
+        if ( this.disabled ) {
             classList.push('n-disabled');
         }
 
         return (
             <div class={classList}>
-                { this.ctor('renderTimepicker')() }
+                { this.ctor('renderDisplay')() }
                 { this.ctor('renderPopover')() }
             </div>
         );

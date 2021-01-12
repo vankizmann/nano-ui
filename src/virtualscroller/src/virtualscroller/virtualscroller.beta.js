@@ -24,13 +24,6 @@ export default {
             }
         },
 
-        viewportHeight: {
-            default()
-            {
-                return false;
-            }
-        },
-
         renderNode: {
             default()
             {
@@ -41,7 +34,7 @@ export default {
         threshold: {
             default()
             {
-                return 100;
+                return 120;
             },
             type: [Number]
         },
@@ -49,139 +42,10 @@ export default {
         bufferItems: {
             default()
             {
-                return 10;
+                return 34;
             },
             type: [Number]
         },
-
-        frameRate: {
-            default()
-            {
-                return 30;
-            },
-            type: [Number]
-        },
-
-        useRenderCache: {
-            default()
-            {
-                return true;
-            },
-            type: [Boolean]
-        }
-
-    },
-
-    computed: {
-
-        isFixedHeight()
-        {
-            return Any.isNumber(this.viewportHeight) ||
-                ! this.viewportHeight;
-        },
-
-        fixedHeight()
-        {
-            return this.viewportHeight ||
-                this.items.length * this.itemHeight;
-        }
-
-    },
-
-    methods: {
-
-        extendLifecycle()
-        {
-            Arr.each(this.cachedView , (cachedView) =>
-                cachedView.time = Date.now() - 10);
-        },
-
-        scrollTop(value = -1)
-        {
-            if ( ! this.$refs.viewport ) {
-                return;
-            }
-
-            if ( value !== -1 ) {
-                this.$refs.viewport.$el.scrollTop = value;
-            }
-
-            return this.$refs.viewport.$el.scrollTop;
-        },
-
-        refreshDriver()
-        {
-            if ( ! this.$refs.viewport || ! this.veHeight ) {
-                return;
-            }
-
-            let scrollTop = this.$refs.viewport.$el.scrollTop;
-
-            let startIndex = Math.floor(
-                (scrollTop / this.itemHeight) - (this.bufferItems / 2)
-            );
-
-            if ( startIndex < 0 ) {
-                startIndex = 0;
-            }
-
-            let endIndex = Math.ceil(((scrollTop + this.veHeight) /
-                this.itemHeight) + (this.bufferItems / 2));
-
-            if ( endIndex > this.items.length ) {
-                endIndex = this.items.length;
-            }
-
-            let itemCount = Math.ceil(this.veHeight / this.itemHeight)
-                + this.bufferItems;
-
-            if ( endIndex - startIndex < itemCount ) {
-                endIndex = startIndex + itemCount;
-            }
-
-            let newState = {
-                startIndex, endIndex
-            };
-
-            if ( ! Any.isEqual(newState, this.state.startIndex) ) {
-                this.state = newState;
-            }
-        },
-
-        discoverHeight()
-        {
-            if ( this.isFixedHeight ) {
-                this.veHeight = this.fixedHeight;
-            }
-
-            if ( ! this.isFixedHeight ) {
-                this.veHeight = Dom.find(this.$el).height();
-            }
-
-            if ( ! this.veHeight ) {
-                return Any.delay(this.discoverHeight, 250);
-            }
-
-            let styles = {
-                height: this.fixedHeight + 'px'
-            };
-
-            if ( this.isFixedHeight ) {
-                Dom.find(this.$el).css(styles);
-            }
-
-            Any.async(this.refreshDriver);
-        },
-
-        eventScroll()
-        {
-            Any.async(this.refreshDriver);
-        },
-
-        eventScrollstop()
-        {
-            Any.async(this.refreshDriver);
-        }
 
     },
 
@@ -192,140 +56,229 @@ export default {
         };
 
         return {
-            state, veInit: false, veHeight: 0
+            state, height: 0, scrollTop: 0
         };
     },
 
-    beforeMount()
-    {
-        this.cachedView = {};
-    },
+    watch: {
 
-    mounted()
-    {
-        this.$watch('items', this.discoverHeight);
-
-        let ident = {
-            _uid: this.uid
-        };
-
-        Dom.find(this.$el).on('scroll',
-            Any.framerate(this.eventScroll, this.frameRate), ident);
-
-        Dom.find(this.$el).on('scrollstart',
-            Any.throttle(this.extendLifecycle, 50), ident);
-
-        Dom.find(this.$el).on('scrollstop',
-            Any.debounce(this.eventScrollstop, 50), ident);
-
-        Dom.find(this.$el).observerResize(this.discoverHeight)(this.$el);
-
-        this.veInit = true;
-    },
-
-    beforeDestroy()
-    {
-        let ident = {
-            _uid: this.uid
-        };
-
-        Dom.find(this.$el).off('scroll', null, ident);
-        Dom.find(this.$el).off('scrollstart', null, ident);
-        Dom.find(this.$el).off('scrollstop', null, ident);
-    },
-
-    renderItem(props)
-    {
-        if ( ! this.useRenderCache ) {
-            return this.renderNode(props);
+        'items': function () {
+            this.updateRender();
         }
 
-        let key = Any.md5(props.value);
+    },
 
-        let veCachedView = {
-            time: Date.now(),
+    methods: {
+
+        isIndexRendered(index)
+        {
+            if ( this.items.length <= this.threshold ) {
+                return true;
+            }
+
+            return this.state.startIndex < index && 
+                this.state.endIndex > index;
+        },
+
+        scrollIntoView(index)
+        {
+            if ( ! this.$refs.scrollbar ) {
+                return;
+            }
+
+            if ( index === -1 || index > this.items.length ) {
+                index = this.items.length;
+            }
+
+            if ( ! this.isIndexRendered(index) ) {
+                return this.scrollToIndex(index);
+            }
+
+            let selector = `[data-index="${index}"]`;
+
+            this.$refs.scrollbar.scrollIntoView(selector);
+        },
+
+        scrollToIndex(index)
+        {
+            if ( ! this.$refs.scrollbar ) {
+                return;
+            }
+
+            if ( index === -1 || index > this.items.length ) {
+                index = this.items.length;
+            }
+
+            let targetTop = index * this.itemHeight;
+
+            if ( this.scrollTop > targetTop ) {
+                return this.scrollTo(0, targetTop);
+            }
+
+            targetTop = targetTop - this.height + 
+                this.itemHeight;
+
+            this.scrollTo(0, targetTop);
+        },
+
+        scrollTo(x = 0, y = 0)
+        {
+            if ( ! this.$refs.scrollbar ) {
+                return;
+            }
+
+            this.$refs.scrollbar.scrollTo(x, y);
+        },
+
+        clearState()
+        {
+            this.state = { startIndex: 0, endIndex: 0 };
+        },
+
+        updateRender()
+        {
+            if ( this.items.length <= this.threshold ) {
+                return this.clearState();
+            }
+
+            this.scrollTop = Obj.get(this.$refs.scrollbar, 
+                '$refs.content.scrollTop');
+
+            console.log(this.scrollTop);
+
+            this.refreshDriver();
+        },
+
+        onScrollupdate(scrollTop)
+        {
+            if ( ! Any.isNumber(scrollTop) ) {
+                return;
+            }
+
+            if ( this.items.length <= this.threshold ) {
+                return this.clearState();
+            }
+            
+            this.scrollTop = scrollTop;
+
+            this.refreshDriver();
+        },
+
+        onSizechange(height)
+        {
+            if ( ! Any.isNumber(height) ) {
+                return;
+            }
+
+            if ( this.items.length <= this.threshold ) {
+                return this.clearState();
+            }
+
+            this.height = height;
+
+            this.refreshDriver();
+        },
+
+        refreshDriver()
+        {
+            let startItem = Math.round(this.scrollTop / 
+                this.itemHeight);
+
+            let endItem = Math.round((this.scrollTop + 
+                this.height) /  this.itemHeight);
+
+            let startIndex = startItem - this.bufferItems;
+
+            if ( startIndex < 0 ) {
+                startIndex = 0;
+            }
+
+            let endIndex = endItem + this.bufferItems;
+
+            if ( endIndex > this.items.length ) {
+                endIndex = this.items.length;
+            }
+
+            let newState = {
+                startIndex, endIndex
+            };
+
+            if ( ! Any.isEqual(newState, this.state) ) {
+                this.state = newState;
+            }
+        },
+
+    },
+
+    renderItem(passed)
+    {
+        passed.index = (passed.index + 
+            this.state.startIndex);
+
+        let topOffset = Math.round(this.itemHeight * 
+            passed.index);
+
+        let renderFunction = this.$slots.default;
+
+        // Finally render node
+        if ( this.renderNode ) {
+            renderFunction = this.renderNode;
+        }
+
+        let props = {
+            'data-index': passed.index
         };
 
-        let cachedView = veCachedView;
-
-        if ( this.cachedView[key] ) {
-            cachedView = this.cachedView[key];
-        }
-
-        let doRerender = veCachedView.time - cachedView.time > 3000 ||
-            veCachedView.time - cachedView.time === 0;
-
-        if ( doRerender ) {
-
-            // Set new timestamp
-            cachedView.time = Date.now();
-
-            // Finally render node
-            cachedView.view = this.renderNode(props);
-        }
-
-        // Override view
-        this.cachedView[key] = cachedView;
-
-        return this.cachedView[key].view;
+        props.style = {
+            top: topOffset + 'px', height: this.itemHeight + 'px'
+        };
+        
+        return (
+            <div class="n-virtualscroller__item" {...props}>
+                { renderFunction(passed) }
+            </div>
+        );
     },
 
     renderItems()
     {
-        return Arr.each(this.items, (value, position) => {
-            return this.ctor('renderItem')({ value, position });
-        });
-    },
+        if ( ! this.items.length ) {
+            return this.$slots.empty && this.$slots.empty() || null;
+        };
 
-    renderBuffer()
-    {
         let items = Arr.slice(this.items, this.state.startIndex,
             this.state.endIndex);
 
-        return Arr.each(items, (value, position) => {
-            return this.ctor('renderItem')({ value, position });
+        if ( this.items.length <= this.threshold ) {
+            items = this.items;
+        }
+
+        return Arr.each(items, (value, index) => {
+            return this.ctor('renderItem')({ value, index });
         });
     },
 
-    renderBody()
+    render()
     {
-        if ( ! this.veInit ) {
-            return null;
-        }
+        let classList = [
+            'n-virtualscroller'
+        ];
 
-        if ( ! this.items.length ) {
-            return this.$slots.empty || null;
-        }
+        let props = Obj.except(this.$attrs, [], {
+            onSizechange: this.onSizechange,
+            onScrollupdate: this.onScrollupdate,
+        });
 
-        if ( ! this.viewportHeight || ! this.itemHeight || this.items.length <= this.threshold ) {
-            return (
-                <NScrollbar ref="viewport">
+        let style = {
+            height: (this.items.length * this.itemHeight) + 'px'
+        };
+
+        return (
+            <NScrollbar ref="scrollbar" class={classList} {...props}>
+                <div ref="viewport" class="n-virtualscroller" style={style}>
                     { this.ctor('renderItems')() }
-                </NScrollbar>
-            );
-        }
-
-        let endIndex =  Math.min(this.items.length, this.state.endIndex);
-
-        return (
-            <NScrollbar ref="viewport">
-                <div style={{ height: (this.state.startIndex * this.itemHeight) + 'px' }}></div>
-                { this.ctor('renderBuffer')() }
-                <div style={{ height: ((this.items.length - endIndex) * this.itemHeight) + 'px' }}></div>
+                </div>
             </NScrollbar>
-        );
-    },
-
-    render($render)
-    {
-        this.$render = $render;
-
-        return (
-            <div class="n-virtualscroller" on={this.$listeners}>
-                { this.$slots.before || null }
-                { this.ctor('renderBody')() }
-                { this.$slots.default || null }
-            </div>
         );
     }
 
