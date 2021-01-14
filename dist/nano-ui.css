@@ -1752,8 +1752,8 @@
 .n-checkbox__checkbox span {
   opacity: 0; }
 
-.n-checkbox:not(.n-disabled).n-checked .n-checkbox__checkbox span,
-.n-checkbox:not(.n-disabled).n-intermediate .n-checkbox__checkbox span {
+.n-checkbox.n-checked .n-checkbox__checkbox span,
+.n-checkbox.n-intermediate .n-checkbox__checkbox span {
   opacity: 1; }
 
 .n-checkbox.n-disabled .n-checkbox__checkbox {

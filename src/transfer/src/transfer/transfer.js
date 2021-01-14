@@ -244,12 +244,12 @@ export default {
     renderSourceSelect()
     {
         let props = {
-            checked: this.sourceChecked,
+            modelValue: this.sourceChecked,
             intermediate: this.sourceIntermediate,
             disabled: ! this.tempSource.length
         };
 
-        props['onUpdate:checked'] = () => {
+        props['onUpdate:modelValue'] = () => {
             this.$refs.source.selectAll();
         };
 
@@ -342,12 +342,12 @@ export default {
     renderTargetSelect()
     {
         let props = {
-            checked: this.targetChecked,
+            modelValue: this.targetChecked,
             intermediate: this.targetIntermediate,
             disabled: ! this.tempTarget.length
         };
 
-        props['onUpdate:checked'] = () => {
+        props['onUpdate:modelValue'] = () => {
             this.$refs.target.selectAll();
         };
 

@@ -1974,17 +1974,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NCheckbox',
-  model: {
-    prop: 'checked',
-    event: 'update:checked'
-  },
   inject: {
     NCheckboxGroup: {
       "default": undefined
     }
   },
   props: {
-    checked: {
+    modelValue: {
       "default": function _default() {
         return false;
       },
@@ -2027,9 +2023,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    uid: function uid() {
-      return this._.uid;
-    },
     tempComputed: function tempComputed() {
       return !this.global ? this.tempChecked : this.NCheckboxGroup.globalChecked;
     },
@@ -2042,11 +2035,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      tempChecked: this.checked
+      tempChecked: this.modelValue
     };
   },
   watch: {
-    checked: function checked(value) {
+    modelValue: function modelValue(value) {
       if (value !== this.tempChecked) {
         this.tempChecked = value;
       }
@@ -2071,28 +2064,28 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     toggle: function toggle() {
-      this.$emit('update:checked', this.tempChecked = !this.tempChecked);
+      this.$emit('update:modelValue', this.tempChecked = !this.tempChecked);
     },
     check: function check() {
       if (this.NCheckboxGroup) {
         this.NCheckboxGroup.checkCheckbox(this);
       }
 
-      this.$emit('update:checked', this.tempChecked = true);
+      this.$emit('update:modelValue', this.tempChecked = true);
     },
     uncheck: function uncheck() {
       if (this.NCheckboxGroup) {
         this.NCheckboxGroup.uncheckCheckbox(this);
       }
 
-      this.$emit('update:checked', this.tempChecked = false);
+      this.$emit('update:modelValue', this.tempChecked = false);
     },
     eventShiftClick: function eventShiftClick() {
       if (this.NCheckboxGroup) {
         this.NCheckboxGroup.shiftCheckbox(this);
       }
 
-      this.$emit('update:checked', this.tempChecked = true);
+      this.$emit('update:modelValue', this.tempChecked = true);
     },
     eventLocalClick: function eventLocalClick(event) {
       event.preventDefault();
@@ -2105,7 +2098,7 @@ __webpack_require__.r(__webpack_exports__);
         this.NCheckboxGroup.toggleCheckbox(this);
       }
 
-      this.$emit('update:checked', this.tempChecked = !this.tempChecked);
+      this.$emit('update:modelValue', this.tempChecked = !this.tempChecked);
     },
     eventGlobalClick: function eventGlobalClick() {
       this.NCheckboxGroup.toggleAll();
@@ -2117,7 +2110,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      this.$emit('update:checked', this.tempChecked = checked);
+      this.$emit('update:modelValue', this.tempChecked = checked);
     }
   },
   renderCheckbox: function renderCheckbox() {
@@ -10471,12 +10464,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this7 = this;
 
     var props = {
-      checked: this.sourceChecked,
+      modelValue: this.sourceChecked,
       intermediate: this.sourceIntermediate,
       disabled: !this.tempSource.length
     };
 
-    props['onUpdate:checked'] = function () {
+    props['onUpdate:modelValue'] = function () {
       _this7.$refs.source.selectAll();
     };
 
@@ -10556,12 +10549,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this9 = this;
 
     var props = {
-      checked: this.targetChecked,
+      modelValue: this.targetChecked,
       intermediate: this.targetIntermediate,
       disabled: !this.tempTarget.length
     };
 
-    props['onUpdate:checked'] = function () {
+    props['onUpdate:modelValue'] = function () {
       _this9.$refs.target.selectAll();
     };
 

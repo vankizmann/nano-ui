@@ -4,11 +4,6 @@ export default {
 
     name: 'NCheckbox',
 
-    model: {
-        prop: 'checked',
-        event: 'update:checked'
-    },
-
     inject: {
 
         NCheckboxGroup: {
@@ -19,7 +14,7 @@ export default {
 
     props: {
 
-        checked: {
+        modelValue: {
             default()
             {
                 return false;
@@ -78,11 +73,6 @@ export default {
 
     computed: {
 
-        uid()
-        {
-            return this._.uid;
-        },
-
         tempComputed()
         {
             return ! this.global ? this.tempChecked :
@@ -106,13 +96,13 @@ export default {
     data()
     {
         return {
-            tempChecked: this.checked
+            tempChecked: this.modelValue
         };
     },
 
     watch: {
 
-        checked(value)
+        modelValue(value)
         {
             if ( value !== this.tempChecked ) {
                 this.tempChecked = value;
@@ -148,7 +138,7 @@ export default {
 
         toggle()
         {
-            this.$emit('update:checked', this.tempChecked = ! this.tempChecked);
+            this.$emit('update:modelValue', this.tempChecked = ! this.tempChecked);
         },
 
         check()
@@ -157,7 +147,7 @@ export default {
                 this.NCheckboxGroup.checkCheckbox(this);
             }
 
-            this.$emit('update:checked', this.tempChecked = true);
+            this.$emit('update:modelValue', this.tempChecked = true);
         },
 
         uncheck()
@@ -166,7 +156,7 @@ export default {
                 this.NCheckboxGroup.uncheckCheckbox(this);
             }
 
-            this.$emit('update:checked', this.tempChecked = false);
+            this.$emit('update:modelValue', this.tempChecked = false);
         },
 
         eventShiftClick()
@@ -175,7 +165,7 @@ export default {
                 this.NCheckboxGroup.shiftCheckbox(this);
             }
 
-            this.$emit('update:checked', this.tempChecked = true);
+            this.$emit('update:modelValue', this.tempChecked = true);
         },
 
         eventLocalClick(event)
@@ -190,7 +180,7 @@ export default {
                 this.NCheckboxGroup.toggleCheckbox(this);
             }
 
-            this.$emit('update:checked', this.tempChecked = ! this.tempChecked);
+            this.$emit('update:modelValue', this.tempChecked = ! this.tempChecked);
         },
 
         eventGlobalClick()
@@ -206,7 +196,7 @@ export default {
                 return;
             }
             
-            this.$emit('update:checked', this.tempChecked = checked);
+            this.$emit('update:modelValue', this.tempChecked = checked);
         }
 
     },
