@@ -1,5 +1,13 @@
 @import "../../../root/vars";
 
+.n-draglist.n-empty.n-dragover {
+    background: rgba($color-primary, 0.075);
+}
+
+.n-draglist__empty {
+    margin: auto;
+}
+
 .n-draglist-item {
     cursor: default;
     display: flex;
@@ -10,11 +18,11 @@
 }
 
 .n-draglist-item.n-dragover {
-    background: rgba($color-primary, 0.15);
+    background: rgba($color-primary, 0.075);
 }
 
 .n-draglist-item.n-nodrop {
-    background: rgba($color-danger, 0.15);
+    background: rgba($color-danger, 0.075);
 }
 
 .n-draglist-item__spacer {
@@ -32,7 +40,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 20px;
+    width: 30px;
 }
 
 .n-draglist-item__ellipsis,
@@ -42,12 +50,14 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 16px;
-    height: 16px;
 }
 
 .n-draglist-item .n-draglist-item__ellipsis {
     color: $color-gray-25;
+}
+
+.n-draglist-item .n-draglist-item__expand {
+    color: $color-gray-60;
 }
 
 .n-draglist-item.n-expanded .n-draglist-item__angle {
@@ -59,6 +69,8 @@
 }
 
 .n-draglist-item__checkbox {
+    transition: border 0.15s, background 0.15s;
+    background: $color-white;
     border: 1px solid $color-gray-15;
 }
 
@@ -68,14 +80,49 @@
     border-color: $color-primary;
 }
 
+.n-draglist-item.n-disabled .n-draglist-item__checkbox {
+    cursor: not-allowed;
+    opacity: 0.7;
+    background:rgba($color-gray-15, 0.3);
+}
+
 .n-draglist-item:not(.n-selected) .n-draglist-item__checkbox i {
     display: none;
 }
 
-.n-draglist-item.n-selected .n-draglist-item__pseudo {
-    background: red;
-}
+@each $suffix, $values in $form {
 
+    $-draglist-font: map-get($values, 'font');
+    $-draglist-size: map-get($values, 'size');
+    $-draglist-radius: map-get($values, 'radius');
+    $-draglist-ratio: map-get($values, 'ratio');
+
+    .n-draglist--#{$suffix} {
+        font-size: $-draglist-font;
+    }
+
+    .n-draglist--#{$suffix} .n-draglist__empty {
+        padding: $-draglist-size $-draglist-size * 0.5;
+    }
+
+    .n-draglist--#{$suffix} .n-draglist-item__ellipsis,
+    .n-draglist--#{$suffix} .n-draglist-item__angle,
+    .n-draglist--#{$suffix} .n-draglist-item__checkbox {
+        width: $-draglist-size - 16;
+        height: $-draglist-size - 16;
+        border-radius: $-draglist-radius - 1;
+    }
+
+    .n-draglist--#{$suffix} .n-draglist-item__ellipsis,
+    .n-draglist--#{$suffix} .n-draglist-item__angle {
+        font-size: $-draglist-font - 2;
+    }
+
+    .n-draglist--#{$suffix} .n-draglist-item__checkbox {
+        font-size: $-draglist-font - 4;
+    }
+
+}
 
 
 

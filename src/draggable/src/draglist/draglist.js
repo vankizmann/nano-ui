@@ -26,6 +26,22 @@ export default {
             }
         },
 
+        size: {
+            default()
+            {
+                return 'md';
+            },
+            type: [String]
+        },
+
+        type: {
+            default()
+            {
+                return 'primary';
+            },
+            type: [String]
+        },
+
         current: {
             default()
             {
@@ -109,66 +125,10 @@ export default {
             }
         },
 
-        keyProp: {
-            default()
-            {
-                return 'md5';
-            },
-            type: [String]
-        },
-
-        orderProp: {
-            default()
-            {
-                return 'order';
-            },
-            type: [String]
-        },
-
         uniqueProp: {
             default()
             {
                 return 'id';
-            },
-            type: [String]
-        },
-
-        depthProp: {
-            default()
-            {
-                return 'depth';
-            },
-            type: [String]
-        },
-
-        pathProp: {
-            default()
-            {
-                return 'path';
-            },
-            type: [String]
-        },
-
-        indexProp: {
-            default()
-            {
-                return 'index';
-            },
-            type: [String]
-        },
-
-        cascadeProp: {
-            default()
-            {
-                return 'cascade';
-            },
-            type: [String]
-        },
-
-        parentProp: {
-            default()
-            {
-                return 'parent';
             },
             type: [String]
         },
@@ -192,7 +152,7 @@ export default {
         renderSelect: {
             default()
             {
-                return true;
+                return false;
             },
             type: [Boolean]
         },
@@ -200,7 +160,7 @@ export default {
         renderExpand: {
             default()
             {
-                return true;
+                return false;
             },
             type: [Boolean]
         },
@@ -223,14 +183,14 @@ export default {
         insertNode: {
             default()
             {
-                return () => true;
+                return true;
             }
         },
 
         removeNode: {
             default()
             {
-                return () => true;
+                return true;
             }
         },
 
@@ -306,18 +266,31 @@ export default {
     data()
     {
         return {
-            drag: null, virtuals: [], visible: [], tempExpanded: [], tempSelected: []
+            virtuals: [], visible: [], childNodes: {}, tempExpanded: [], tempSelected: []
         };
     },
 
     beforeMount()
     {
+        // Draghandler in window schreiben, vue scheint die elements zu tauschen
         this.drag = new NDraghandler(this);
     },
 
     mounted()
     {
+        this.drag.bindRoot();
+
         Any.async(this.refreshVirtuals);
+    },
+
+    beforeUnmount()
+    {
+        this.drag.unbindRoot();
+    },
+
+    unmounted()
+    {
+        this.drag.destroy();
     },
 
     watch: {
@@ -330,6 +303,11 @@ export default {
         virtuals()
         {
             this.filterVirtuals();
+        },
+
+        selected(value)
+        {
+            this.tempSelected = value;
         }
 
     },
@@ -344,31 +322,118 @@ export default {
 
         filterVirtuals()
         {
-            this.visible = Arr.filter(this.virtuals, (item) => {
-                return ! item[this.depthProp] || Arr.has(this.tempExpanded, item[this.parentProp]);
+            this.visible = Arr.filter(this.virtuals, (node) => {
+                return ! node.depth || Arr.has(this.tempExpanded, node.parent);
             });
         },
 
-        isExpanded(item)
+        isDraggable(node)
         {
-            return Arr.has(this.tempExpanded, item[this.uniqueProp]);
+            let canDrag = this.allowDrag;
+
+            if ( ! Any.isFunction(canDrag) ) {
+                canDrag = () => this.allowDrag;
+            }
+
+            return canDrag(node);
         },
 
-        expandItem(item)
+        isDisabled(node)
         {
-            Arr.toggle(this.tempExpanded, item[this.uniqueProp]);
+            if ( ! this.tempSelected.length ) {
+                return false;
+            }
+
+            let first = Arr.find(this.virtuals, {
+                [this.uniqueProp]: this.tempSelected[0]
+            });
+
+            return ! first || node.value.depth !== first.depth;
+        },
+
+        hasChildren(node)
+        {
+            return !! this.getChildren(node).length;
+        },
+
+        getChildren(node)
+        {
+            return Obj.get(node.item, this.childProp, []);
+        },
+
+        isExpanded(node)
+        {
+            return Arr.has(this.tempExpanded, node.value[this.uniqueProp]);
+        },
+
+        expandItem(node)
+        {
+            if ( ! this.hasChildren(node) ) {
+                return;
+            }
+
+            Arr.toggle(this.tempExpanded, node.value[this.uniqueProp]);
 
             this.filterVirtuals();
         },
 
-        isSelected(item)
+        isSelected(node)
         {
-            return Arr.has(this.tempSelected, item[this.uniqueProp]);
+            return Arr.has(this.tempSelected, node.value[this.uniqueProp]);
         },
 
-        selectItem(item)
+        isTotalSelected()
         {
-            Arr.toggle(this.tempSelected, item[this.uniqueProp]);
+            let visible = Arr.filter(this.visible, (item) => {
+                return ! item.depth;
+            });
+
+            return visible.length === this.tempSelected;
+        },
+
+        isInterSelected()
+        {
+            let visible = Arr.filter(this.visible, (item) => {
+                return ! item.depth;
+            });
+
+            return visible.length !== this.tempSelected &&
+                this.tempSelected;
+        },
+
+        selectItem(node)
+        {
+            if ( this.isDisabled(node) ) {
+                return;
+            }
+
+            Arr.toggle(this.tempSelected, node.value[this.uniqueProp]);
+
+            this.$emit('update:selected', this.tempSelected);
+        },
+
+        selectAll()
+        {
+            let visible = Arr.filter(this.visible, (item) => {
+                return ! item.depth;
+            });
+
+            let indexies = Arr.each(visible, (item) => {
+                return item[this.uniqueProp];
+            });
+
+            if ( indexies.length === this.tempSelected.length ) {
+                return this.$emit('update:selected', this.tempSelected = []);
+            }
+
+            this.$emit('update:selected', this.tempSelected = indexies);
+        },
+
+        unselectAll()
+        {
+            if ( this.tempSelected.length ) {
+                this.$emit('update:selected', this.tempSelected = []);
+            }
         }
 
     },
@@ -380,9 +445,9 @@ export default {
         }
 
         return (
-            <div class="n-draglist__empty">
+            <NEmptyIcon class="n-draglist__empty">
                  { this.$slots.empty && this.$slots.empty() || this.trans('No entries') }
-            </div>
+            </NEmptyIcon>
         );
     },
 
@@ -419,12 +484,22 @@ export default {
         //     drop: this.eventEmptyDragdrop
         // };
 
-        let props = Obj.except(this.$props, ['items'], {
+        let classList = [
+            'n-draglist',
+            'n-draglist--' + this.size,
+            'n-draglist--' + this.type
+        ];
+
+        if ( ! this.items.length ) {
+            classList.push('n-empty');
+        }
+
+        let props = Obj.only(this.$props, ['threshold', 'itemHeight'], {
             items: this.visible
         });
 
         return (
-            <NVirtualscroller ref="virtualscroller" {...props}>
+            <NVirtualscroller ref="virtualscroller" class={classList} {...props}>
                 { { default: this.ctor('renderItem'), empty: this.ctor('renderEmpty') } }
             </NVirtualscroller>
         );

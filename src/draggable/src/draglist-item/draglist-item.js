@@ -31,88 +31,60 @@ export default {
 
     },
 
-    watch: {
-
-        'value.id': function () {
-            Any.async(this.refreshBinding);
-        }
-
-    },
-
     mounted()
     {
-        Any.async(() => this.NDraggable.drag.bindNode(this));
+        this.NDraggable.drag.bindNode(this);
     },
 
     beforeUnmount()
     {
-        Any.async(() => this.NDraggable.drag.unbindNode(this));
+        this.NDraggable.drag.unbindNode(this);
     },
 
     methods: {
 
-        refreshBinding()
-        {
-            clearTimeout(this.refresh);
-
-            this.refresh = setTimeout(() => {
-                this.NDraggable.drag.bindNode(this)
-            }, 150);
-
-            this.NDraggable.drag.unbindNode(this);
-        },
-
         hasChildren()
         {
-            return !! this.getChildren().length;
-        },
-
-        getChildren()
-        {
-            return Obj.get(this.item, this.NDraggable.childProp, []);
+            return this.NDraggable.hasChildren(this);
         },
 
         isDisabled()
         {
-            return false;
+            return this.NDraggable.isDisabled(this);
         },
 
         isDraggable()
         {
-            return true;
+            return this.NDraggable.isDraggable(this);
         },
 
         isExpanded()
         {
-            return this.NDraggable.isExpanded(this.value);
+            return this.NDraggable.isExpanded(this);
         },
 
         expandItem()
         {
-            if ( this.hasChildren() ) {
-                this.NDraggable.expandItem(this.value);
-            }
+            this.NDraggable.expandItem(this);
         },
 
         isSelected()
         {
-            return this.NDraggable.isSelected(this.value);
+            return this.NDraggable.isSelected(this);
         },
 
         selectItem()
         {
-            if ( ! this.isDisabled() ) {
-                this.NDraggable.selectItem(this.value);
-            }
+            this.NDraggable.selectItem(this);
         }
 
     },
 
     renderElement()
     {
-        let props = Obj.except(this.$props, ['value'], {
-            value: this.item
-        });
+        let props = {
+            value: this.value, item: this.item
+        };
 
         let renderFunction = this.$slots.default;
 
@@ -129,15 +101,15 @@ export default {
 
     renderSpacer()
     {
-        let depth = Obj.get(this.value, 
-            this.NDraggable.depthProp, 0);
+        let width = this.value.depth * 
+            this.NDraggable.itemOffset;
 
-        if ( ! depth ) {
+        if ( ! width ) {
             return null;
         }
 
         let style = {
-            width: (depth * this.NDraggable.itemOffset) + 'px'
+            width: width + 'px'
         };
 
         return (
@@ -221,8 +193,8 @@ export default {
         }
 
         let props = {
-            onClick: this.NDraggable.$emit('row-click', this),
-            onDblclick: this.NDraggable.$emit('row-dblclick', this)
+            onClick: () => this.NDraggable.$emit('row-click', this),
+            onDblclick: () => this.NDraggable.$emit('row-dblclick', this)
         };
 
         if ( ! this.NDraggable.handle && this.isDraggable() ) {

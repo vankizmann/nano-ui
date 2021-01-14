@@ -385,6 +385,26 @@
             </div>
         </div>
 
+        <h2>NTransfer</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 80px;" v-model="n_transfer.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_transfer.type" :options="types"></n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_cascader.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+        
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1">
+                <n-transfer v-bind="n_transfer" trigger="hover" :options="cascaderData"></n-transfer>
+            </div>
+        </div>
+
         <h2>NModal</h2>
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
@@ -487,7 +507,7 @@
             </div>
         </div>
 
-        <n-virtualscroller ref="virtualscroller" :items="virtualData" style="height: 500px; margin-top: 30px; border: 1px solid #000; border-radius: 4px;">
+        <n-virtualscroller ref="virtualscroller" :items="virtualData" style="height: 500px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
             <template v-slot:default="{ value }">
                 <div style="padding: 0 15px; line-height: 30px;">{{ value.label }}</div>
             </template>
@@ -501,19 +521,30 @@
                     Add draggable list with 1000 items
                 </n-button>
             </div>
+            <div class="col--auto">
+                <n-button type="danger" @click="n_draggable.count--">
+                    Remove draggable list with 1000 items
+                </n-button>
+            </div>
         </div>
 
-        <n-draglist v-model:items="cascaderData" style="height: 500px; margin-top: 30px; border: 1px solid #000; border-radius: 4px;">
-            <template v-slot:default="{ value }">
-                {{ value.label }}
+        <n-draglist v-model:items="cascaderData" style="height: 300px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
+            <template v-slot:default="{ value, item }">
+                <div style="padding: 0 15px; line-height: 34px;">{{ item.label }}</div>
+            </template>
+        </n-draglist>
+
+        <n-draglist v-model:items="testData" style="height: 300px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
+            <template v-slot:default="{ value, item }">
+                <div style="padding: 0 15px; line-height: 34px;">{{ item.label }}</div>
             </template>
         </n-draglist>
         
 
         <template v-for="index in Arr.make(n_draggable.count)">
-            <n-draglist v-model:items="virtualTree" style="height: 500px; margin-top: 30px; border: 1px solid #000; border-radius: 4px;">
-                <template v-slot:default="{ value }">
-                    {{ value.label }}
+            <n-draglist v-model:items="virtualTree" :render-expand="true" style="height: 500px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
+                <template v-slot:default="{ value, item }">
+                    <div style="padding: 0 5px; line-height: 34px;">{{ item.label }}</div>
                 </template>
             </n-draglist>
         </template>
@@ -551,27 +582,28 @@
                 preview:    'Preview',
             };
 
-            let index = 0;
+            data.testData = [];
 
-            let itemGenerator = function (count = 100) {
-                return Nano.Arr.each(Nano.Arr.make(count), (value) => {
-                    return { id: Nano.UUID(), value: `index-${index++}`, label: `Item ${index}`}
+            let itemGenerator = function (count = 100, index = 0) {
+                return Nano.Arr.each(Nano.Arr.make(count), function (value) {
+                    return { id: Nano.UUID(), value: Nano.UUID(), label: `Item ${index++}` };
                 });
             };
+
 
             data.cascaderData = Nano.Arr.each(itemGenerator(5), function (item) {
 
                 let children  = Nano.Arr.each(itemGenerator(5), function (item) {
-                    return Nano.Obj.assign(item, { children: itemGenerator(5) })
+                    return Nano.Obj.assign(item, { children: itemGenerator(5) });
                 });
 
-                return Nano.Obj.assign(item, { children: children })
+                return Nano.Obj.assign(item, { children: children });
             });
 
-            data.virtualData = itemGenerator(1000);
+            data.virtualData = itemGenerator(10000);
 
             data.virtualTree = Nano.Arr.each(itemGenerator(50), function (item) {
-                return Nano.Obj.assign(item, { children: itemGenerator(20) })
+                return Nano.Obj.assign(item, { children: itemGenerator(20) });
             });
 
             data.n_button = {
@@ -612,6 +644,10 @@
 
             data.n_timepicker = {
                 size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_transfer = {
+                size: 'md', type: 'primary', disabled: false
             };
 
             data.n_modal = {

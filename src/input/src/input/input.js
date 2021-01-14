@@ -97,7 +97,7 @@ export default {
 
         eventIconClick(event)
         {
-            this.$emit('click:icon', event);
+            this.$emit('icon-click', event);
         },
 
         eventInput(event)

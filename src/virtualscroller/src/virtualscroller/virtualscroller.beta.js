@@ -144,8 +144,6 @@ export default {
             this.scrollTop = Obj.get(this.$refs.scrollbar, 
                 '$refs.content.scrollTop');
 
-            console.log(this.scrollTop);
-
             this.refreshDriver();
         },
 
@@ -246,6 +244,12 @@ export default {
             return this.$slots.empty && this.$slots.empty() || null;
         };
 
+        let style = {};
+
+        if ( this.items.length ) {
+            style.height = (this.items.length * this.itemHeight) + 'px';
+        }
+
         let items = Arr.slice(this.items, this.state.startIndex,
             this.state.endIndex);
 
@@ -253,31 +257,27 @@ export default {
             items = this.items;
         }
 
-        return Arr.each(items, (value, index) => {
-            return this.ctor('renderItem')({ value, index });
-        });
+        return (
+            <div class="n-virtualscroller__inner" style={style}>
+                {
+                    Arr.each(items, (value, index) => {
+                        return this.ctor('renderItem')({ value, index });
+                    })
+                }
+            </div>
+        );
     },
 
     render()
     {
-        let classList = [
-            'n-virtualscroller'
-        ];
-
-        let props = Obj.except(this.$attrs, [], {
+        let props = {
             onSizechange: this.onSizechange,
             onScrollupdate: this.onScrollupdate,
-        });
-
-        let style = {
-            height: (this.items.length * this.itemHeight) + 'px'
         };
 
         return (
-            <NScrollbar ref="scrollbar" class={classList} {...props}>
-                <div ref="viewport" class="n-virtualscroller" style={style}>
-                    { this.ctor('renderItems')() }
-                </div>
+            <NScrollbar ref="scrollbar" {...props}>
+                { this.ctor('renderItems')() }
             </NScrollbar>
         );
     }

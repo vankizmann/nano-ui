@@ -17,6 +17,11 @@
     top: 0;
     left: 0;
     right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
 }
 
 .n-scrollbar.is-enabled > .n-scrollbar-content {
@@ -24,6 +29,14 @@
     overflow: scroll;
     bottom: 0;
     -webkit-overflow-scrolling: touch;
+}
+
+.n-scrollbar__wrap {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
 }
 
 

@@ -134,11 +134,6 @@ let libCssExport = {
         new MiniCssExtractPlugin({
             filename: 'nano-ui.css'
         }),
-        new webpack.LoaderOptionsPlugin({
-            options: {
-                postcss: [ autoprefixer() ]
-            }
-        })
     ]
 };
 
@@ -166,11 +161,6 @@ let docsCssExport = {
         new MiniCssExtractPlugin({
             filename: 'index.css'
         }),
-        new webpack.LoaderOptionsPlugin({
-            options: {
-                postcss: [ autoprefixer() ]
-            }
-        })
     ]
 };
 

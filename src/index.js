@@ -52,10 +52,11 @@ export function NanoInstall(App, Icons = {}, Styles = {})
     App.config.globalProperties.styles = Nano.Obj.assign(global.NanoStyles, Styles);
 
     require('./notification/index').default(App);
-    //require('./config/index');
+    require('./empty/index').default(App);
+    //require('./config/index'); //!complex
     require('./scrollbar/index').default(App);
-    require('./virtualscroller/index').default(App); //!complex
-    require('./draggable/index').default(App); //!supercomplex
+    require('./virtualscroller/index').default(App);
+    require('./draggable/index').default(App);
     // require('./loader/index');
     // require('./resizer/index');
     require('./popover/index').default(App);
@@ -72,17 +73,19 @@ export function NanoInstall(App, Icons = {}, Styles = {})
     require('./datepicker/index').default(App);
     require('./timepicker/index').default(App);
     // require('./datetimepicker/index');
-    // require('./transfer/index');
+    require('./transfer/index').default(App);
     // require('./form/index');
     // require('./tabs/index');
     // require('./table/index'); //!complex
     // require('./paginator/index');
     // require('./info/index'); //!complex
-    // require('./file-list/index');
-    // require('./file/index');
-    // require('./map/index');
-    // require('./chart/index');
-    // require('./wysiwyg/index');
+
+    // require('./map/index'); // SX only ez
+    // require('./file-list/index'); // SX only
+    // require('./file/index'); // SX only
+
+    // require('./chart/index'); // Ignore
+    // require('./wysiwyg/index'); // Ignore
 }
 
 global.NanoInstall = NanoInstall;

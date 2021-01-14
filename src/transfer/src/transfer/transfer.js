@@ -6,7 +6,7 @@ export default {
 
     props: {
 
-        value: {
+        modelValue: {
             default()
             {
                 return [];
@@ -14,7 +14,7 @@ export default {
             type: [Array]
         },
 
-        items: {
+        options: {
             default()
             {
                 return [];
@@ -25,7 +25,7 @@ export default {
         sourceLabel: {
             default()
             {
-                return this.trans('Source');
+                return 'Source';
             },
             type: [String]
         },
@@ -33,7 +33,7 @@ export default {
         targetLabel: {
             default()
             {
-                return this.trans('Target');
+                return 'Target';
             },
             type: [String]
         },
@@ -58,17 +58,41 @@ export default {
 
     computed: {
 
-        veSource()
+        sourceChecked()
         {
-            let source = Arr.filter(this.items, (item) => {
-                return ! Arr.find(this.veValue, { [this.uniqueProp]: item[this.uniqueProp] });
+            return this.selectedSource.length === 
+                this.tempSource.length;
+        },
+
+        sourceIntermediate()
+        {
+            return this.selectedSource.length && 
+                this.selectedSource.length !== this.tempSource.length;
+        },
+
+        targetChecked()
+        {
+            return this.selectedTarget.length === 
+                this.tempTarget.length;
+        },
+
+        targetIntermediate()
+        {
+            return this.selectedTarget.length && 
+                this.selectedTarget.length !== this.tempTarget.length;
+        },
+
+        tempSource()
+        {
+            let source = Arr.filter(this.options, (item) => {
+                return ! Arr.find(this.tempValue, { [this.uniqueProp]: item[this.uniqueProp] });
             });
 
-            if ( Any.isEmpty(this.veSourceSearch) ) {
+            if ( Any.isEmpty(this.sourceSearch) ) {
                 return Arr.clone(source);
             }
 
-            let searchPattern = new RegExp(this.veSourceSearch, 'i');
+            let searchPattern = new RegExp(this.sourceSearch, 'i');
 
             source = Arr.filter(source, (item) => {
                 return item[this.labelProp].match(searchPattern);
@@ -77,17 +101,17 @@ export default {
             return Arr.clone(source);
         },
 
-        veTarget()
+        tempTarget()
         {
-            let target = Arr.filter(this.items, (item) => {
-                return !! Arr.find(this.veValue, { [this.uniqueProp]: item[this.uniqueProp] });
+            let target = Arr.filter(this.options, (item) => {
+                return !! Arr.find(this.tempValue, { [this.uniqueProp]: item[this.uniqueProp] });
             });
 
-            if ( Any.isEmpty(this.veTargetSearch) ) {
+            if ( Any.isEmpty(this.targetSearch) ) {
                 return Arr.clone(target);
             }
 
-            let searchPattern = new RegExp(this.veTargetSearch, 'i');
+            let searchPattern = new RegExp(this.targetSearch, 'i');
 
             target = Arr.filter(target, (item) => {
                 return item[this.labelProp].match(searchPattern);
@@ -100,155 +124,138 @@ export default {
     data()
     {
         return {
-            veID: UUID(),
-            veValue: this.value,
-            veSourceSearch: '',
-            veTargetSearch: '',
-            veSelectedSource: [],
-            veSelectedTarget: []
+            uid: UUID(),
+            tempValue: this.modelValue,
+            sourceSearch: '',
+            targetSearch: '',
+            selectedSource: [],
+            selectedTarget: []
         };
     },
 
     methods: {
 
-        moveItemsTarget(items)
+        moveItemsTarget(options)
         {
-            Arr.each(items.split(','), (source) => {
+            Arr.each(options, (source) => {
 
-                let item = Arr.find(this.items, {
+                let item = Arr.find(this.options, {
                     [this.uniqueProp]: source
                 });
 
-                Arr.add(this.veValue, item, {
-                    [this.uniqueProp]: source
-                });
-
-            });
-
-            this.$emit('input', this.veValue);
-        },
-
-        moveItemsSource(items)
-        {
-            Arr.each(items.split(','), (source) => {
-
-                Arr.remove(this.veValue, {
+                Arr.add(this.tempValue, item, {
                     [this.uniqueProp]: source
                 });
 
             });
 
-            this.$emit('input', this.veValue);
+            this.$emit('input', this.tempValue);
         },
 
-        moveRowTarget(row)
+        moveItemsSource(options)
         {
-            // Get row unique
-            let target = row[this.uniqueProp];
+            Arr.each(options, (source) => {
+
+                Arr.remove(this.tempValue, {
+                    [this.uniqueProp]: source
+                });
+
+            });
+
+            this.$emit('input', this.tempValue);
+        },
+
+        moveRowTarget(node)
+        {
+            // Get node unique
+            let target = node.value[this.uniqueProp];
 
             // Remove item from selected list
-            Arr.remove(this.veSelectedTarget, target);
+            Arr.remove(this.selectedTarget, target);
 
-            Arr.remove(this.veValue, {
+            this.tempValue = Arr.remove(this.tempValue, {
                 [this.uniqueProp]: target
             });
 
-            this.$emit('input', this.veValue);
+            this.$emit('update:modelValue', this.tempValue);
         },
 
-        moveRowSource(row)
+        moveRowSource(node)
         {
-            // Get row unique
-            let source = row[this.uniqueProp];
+            // Get node unique
+            let source = node.value[this.uniqueProp];
 
             // Remove item from selected list
-            Arr.remove(this.veSelectedSource, source);
+            Arr.remove(this.selectedSource, source);
 
-            Arr.add(this.veValue, row.item, source, {
+            Arr.add(this.tempValue, node.item, source, {
                 [this.uniqueProp]: source
             });
 
-            this.$emit('input', this.veValue);
+            this.$emit('update:modelValue', this.tempValue);
         },
 
         moveToSource()
         {
-            Arr.each(this.$refs.target.veSelected, (target) => {
+            Arr.each(this.selectedTarget, (target) => {
 
-                Arr.remove(this.veValue, {
+                Arr.remove(this.tempValue, {
                     [this.uniqueProp]: target
                 });
 
             });
 
-            this.$refs.target.unselectAllItems();
+            this.selectedTarget = [];
 
-            this.$emit('input', this.veValue);
+            this.$emit('update:modelValue', this.tempValue);
         },
 
         moveToTarget()
         {
-            Arr.each(this.$refs.source.veSelected, (source) => {
+            Arr.each(this.selectedSource, (source) => {
 
-                let item = Arr.find(this.items, {
+                let item = Arr.find(this.options, {
                     [this.uniqueProp]: source
                 });
 
-                Arr.add(this.veValue, item, source, {
+                Arr.add(this.tempValue, item, {
                     [this.uniqueProp]: source
                 });
 
             });
 
-            this.$refs.source.unselectAllItems();
+            this.selectedSource = [];
 
-            this.$emit('input', this.veValue);
-        },
-
-        toggleSourceSelected()
-        {
-            this.$refs.source.toggleAllItems(
-                this.$refs.source.isIntermediate(true)
-            );
-        },
-
-        toggleTargetSelected()
-        {
-            this.$refs.target.toggleAllItems(
-                this.$refs.target.isIntermediate(true)
-            );
+            this.$emit('update:modelValue', this.tempValue);
         },
 
         updateSelectedSource(selected)
         {
-            this.veSelectedSource = selected;
+            this.selectedSource = selected;
         },
 
         updateSelectedTarget(selected)
         {
-            this.veSelectedTarget = selected;
+            this.selectedTarget = selected;
         }
 
     },
 
     renderSourceSelect()
     {
-        let events = {
-            input: this.toggleSourceSelected
-        };
-
         let props = {
-            disabled: ! this.veSource.length
+            checked: this.sourceChecked,
+            intermediate: this.sourceIntermediate,
+            disabled: ! this.tempSource.length
         };
 
-        if ( this.$refs.source && this.veSource.length ) {
-            props['checked'] = this.$refs.source.isAllSelected(true);
-            props['intermediate'] = this.$refs.source.isIntermediate(true);
-        }
+        props['onUpdate:checked'] = () => {
+            this.$refs.source.selectAll();
+        };
 
         return (
             <div class="n-transfer__select">
-                <NCheckbox props={props} on={events} />
+                <NCheckbox {...props} />
             </div>
         );
     },
@@ -262,8 +269,8 @@ export default {
         );
 
         let counterHtml = (
-            <span key={UUID()} class="n-transfer__item-count">
-                { this.veSource.length }
+            <span class="n-transfer__item-count">
+                { this.tempSource.length }
             </span>
         );
 
@@ -289,18 +296,20 @@ export default {
         let props = {
             placeholder: this.trans('Search item'),
             icon: this.icons.times,
-            iconDisabled: ! this.veSourceSearch
+            iconDisabled: ! this.sourceSearch
         };
 
-        let events = {
-            input: () => this.$refs.source.unselectAllItems()
+        props['onIconClick'] = () => {
+            this.sourceSearch = '';
         };
 
-        events['icon-click'] = () => this.veSourceSearch = '';
+        props['onUpdate:modelValue'] = () => {
+            this.selectedSource = [];
+        };
 
         return (
             <div class="n-transfer__search">
-                <NInput vModel={this.veSourceSearch} props={props} on={events} />
+                <NInput vModel={this.sourceSearch} {...props} />
             </div>
         )
     },
@@ -308,47 +317,43 @@ export default {
     renderSourceBody()
     {
         let props = {
-            group: [this.veID + 'source'],
-            allowGroups: [this.veID + 'target'],
-            items: this.veSource,
+            group: [this.uid + 'source'],
+            allowGroups: [this.uid + 'target'],
+            items: this.tempSource,
             renderSelect: true,
-            viewportHeight: true,
-            disableMove: true,
-            updateDelay: 100,
+            selected: this.selectedSource,
+            safezone: () => -10,
+            // viewportHeight: true,
+            // disableMove: true,
+            // updateDelay: 100,
             renderNode: this.ctor('renderNode'),
-        };
-
-        let events = {
-            'move': this.moveItemsSource,
-            'row-dblclick': this.moveRowSource,
-            'update:selected': this.updateSelectedSource
+            onMove: this.moveItemsSource,
+            'onRowDblclick': this.moveRowSource,
+            'onUpdate:selected': this.updateSelectedSource
         };
 
         return (
             <div class="n-transfer__body">
-                <NDraglist ref="source" props={props} on={events} />
+                <NDraglist ref="source" {...props} />
             </div>
         );
     },
 
     renderTargetSelect()
     {
-        let events = {
-            input: this.toggleTargetSelected
-        };
-
         let props = {
-            disabled: ! this.veTarget.length
+            checked: this.targetChecked,
+            intermediate: this.targetIntermediate,
+            disabled: ! this.tempTarget.length
         };
 
-        if ( this.$refs.target && this.veTarget.length ) {
-            props['checked'] = this.$refs.target.isAllSelected(true);
-            props['intermediate'] = this.$refs.target.isIntermediate(true);
-        }
+        props['onUpdate:checked'] = () => {
+            this.$refs.target.selectAll();
+        };
 
         return (
             <div class="n-transfer__select">
-                <NCheckbox props={props} on={events} />
+                <NCheckbox {...props} />
             </div>
         );
     },
@@ -362,8 +367,8 @@ export default {
         );
 
         let counterHtml = (
-            <span key={UUID()} class="n-transfer__item-count">
-                { this.veTarget.length }
+            <span class="n-transfer__item-count">
+                { this.tempTarget.length }
             </span>
         );
 
@@ -389,18 +394,20 @@ export default {
         let props = {
             placeholder: this.trans('Search item'),
             icon: this.icons.times,
-            iconDisabled: ! this.veTargetSearch
+            iconDisabled: ! this.targetSearch
         };
 
-        let events = {
-            input: () => this.$refs.target.unselectAllItems()
+        props['onIconClick'] = () => {
+            this.targetSearch = '';
         };
 
-        events['icon-click'] = () => this.veTargetSearch = '';
+        props['onUpdate:modelValue'] = () => {
+            this.selectedTarget = [];
+        };
 
         return (
             <div class="n-transfer__search">
-                <NInput vModel={this.veTargetSearch} props={props} on={events} />
+                <NInput vModel={this.targetSearch} {...props} />
             </div>
         )
     },
@@ -408,77 +415,74 @@ export default {
     renderTargetBody()
     {
         let props = {
-            group: [this.veID + 'target'],
-            allowGroups: [this.veID + 'source'],
-            items: this.veTarget,
+            group: [this.uid + 'target'],
+            allowGroups: [this.uid + 'source'],
+            items: this.tempTarget,
             renderSelect: true,
-            viewportHeight: true,
-            disableMove: true,
-            updateDelay: 100,
+            selected: this.selectedTarget,
+            safezone: () => -1,
+            // viewportHeight: true,
+            // disableMove: true,
+            // updateDelay: 100,
             renderNode: this.ctor('renderNode'),
-        };
-
-        let events = {
-            'move': this.moveItemsTarget,
-            'row-dblclick': this.moveRowTarget,
-            'update:selected': this.updateSelectedTarget
+            onMove: this.moveItemsTarget,
+            'onRowDblclick': this.moveRowTarget,
+            'onUpdate:selected': this.updateSelectedTarget
         };
 
         return (
             <div class="n-transfer__body">
-                <NDraglist ref="target" props={props} on={events} />
+                <NDraglist ref="target" {...props} />
             </div>
         );
     },
 
     renderNode(props)
     {
-        if ( this.$scopedSlots.default ) {
-            return this.$scopedSlots.default(props);
+        if ( this.$slots.default ) {
+            return this.$slots.default(props);
         }
         return (
-            <div class="n-transfer__item">{ props.value[this.labelProp] }</div>
+            <div class="n-transfer__item">{ props.item.label }</div>
         );
     },
 
     renderMoveSource()
     {
-        let events = {
-            click: this.moveToTarget
-        };
-
         let props = {
-            square: true, icon: this.icons.angleRight
+            disabled: ! this.selectedSource.length,
+            square: true, 
+            icon: this.icons.angleRight,
+            onClick: this.moveToTarget
         };
 
-        props.disabled = ! this.veSelectedSource.length;
+        // props.disabled = ! this.$refs.source ||
+        //     this.$refs.source.tempSelected.length;
 
         return (
-            <NButton key={UUID()} props={props} on={events} />
+            <NButton {...props} />
         );
     },
 
     renderMoveTarget()
     {
-        let events = {
-            click: this.moveToSource
-        };
-
         let props = {
-            square: true, icon: this.icons.angleLeft
+            disabled: ! this.selectedTarget.length,
+            square: true, 
+            icon: this.icons.angleLeft,
+            onClick: this.moveToSource
         };
 
-        props.disabled = ! this.veSelectedTarget.length;
+        // props.disabled = ! this.$refs.target||
+        //     this.$refs.target.tempSelected.length;
 
         return (
-            <NButton key={UUID()} props={props} on={events} />
+            <NButton {...props} />
         );
     },
 
     render($render)
     {
-        this.$render = $render;
-
         return (
             <div class="n-transfer">
                 <div class="n-transfer__pane">

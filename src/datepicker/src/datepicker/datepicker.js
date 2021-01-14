@@ -283,7 +283,7 @@ export default {
                 return;
             }
 
-            let moment = this.veValue.moment.set({
+            let moment = this.tempValue.moment.set({
                 year: value.moment.year(),
                 month: value.moment.month(),
                 date: value.moment.date(),
@@ -311,7 +311,7 @@ export default {
                 return;
             }
 
-            let moment = this.veValue.moment.set({
+            let moment = this.tempValue.moment.set({
                 year: value.moment.year(),
                 month: value.moment.month(),
                 date: value.moment.date(),
@@ -339,7 +339,7 @@ export default {
                 return;
             }
 
-            let moment = this.veValue.moment.set({
+            let moment = this.tempValue.moment.set({
                 year: value.moment.year(),
                 month: value.moment.month(),
                 date: value.moment.date(),

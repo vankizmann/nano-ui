@@ -182,7 +182,7 @@ export default {
         ];
 
         return (
-            <div class={classList} {...this.$attrs}>
+            <div class={classList} {...Obj.except(this.$attrs, ['class'])}>
                 <div class="n-scrollbar-content" ref="content">
                     <div class={this.wrapClass}>
                         { this.$slots.default && this.$slots.default() }

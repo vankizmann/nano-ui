@@ -652,7 +652,9 @@ export default {
     renderItems()
     {
         let emptyHtml = (
-            <div class="n-select__empty">{ this.trans(this.emptyText) }</div>
+            <div class="n-select__empty">
+                <NEmptyIcon>{ this.trans(this.emptyText) }</NEmptyIcon>
+            </div>
         );
         
         if ( ! this.searched.length ) {
