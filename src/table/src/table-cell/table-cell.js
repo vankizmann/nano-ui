@@ -20,13 +20,17 @@ export default {
             required: true
         },
 
+        item: {
+            required: true
+        }
+
     },
 
     computed: {
 
         input()
         {
-            return Obj.get(this.value, this.column.prop);
+            return Obj.get(this.item, this.column.prop);
         }
 
     },

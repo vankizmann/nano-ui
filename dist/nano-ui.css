@@ -4809,16 +4809,15 @@
   border-radius: 2px;
   border: 1px solid #e8e9ea; }
 
-.n-table .n-virtualscroller {
-  width: auto; }
-
-.n-table .n-table__wrap {
+.n-table > .n-scrollbar,
+.n-table > .n-scrollbar > .n-scrollbar-content,
+.n-table > .n-scrollbar > .n-scrollbar-content > .n-scrollbar__wrap,
+.n-table > .n-scrollbar > .n-scrollbar-content > .n-scrollbar__wrap > .n-scrollbar {
+  flex: 1 1 auto;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: stretch;
-  justify-content: stretch;
-  margin-right: -1px;
-  margin-bottom: -1px; }
+  justify-content: stretch; }
 
 .n-table .n-table__inner {
   overflow: hidden;

@@ -76,7 +76,7 @@ export function NanoInstall(App, Icons = {}, Styles = {})
     require('./transfer/index').default(App);
     // require('./form/index'); // 15.1
     // require('./tabs/index'); // 15.1
-    // require('./table/index'); //!complex 14.1
+    require('./table/index').default(App);
     // require('./paginator/index'); // 14.1
     // require('./info/index'); //!complex 15.1
 

@@ -34,7 +34,7 @@ export default {
         threshold: {
             default()
             {
-                return 120;
+                return 24;
             },
             type: [Number]
         },
@@ -42,7 +42,7 @@ export default {
         bufferItems: {
             default()
             {
-                return 34;
+                return 24;
             },
             type: [Number]
         },

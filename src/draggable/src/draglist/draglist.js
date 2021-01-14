@@ -266,7 +266,12 @@ export default {
     data()
     {
         return {
-            virtuals: [], visible: [], childNodes: {}, tempExpanded: [], tempSelected: []
+            virtuals: [], 
+            visible: [], 
+            childNodes: {}, 
+            firstSelected: null, 
+            tempExpanded: [], 
+            tempSelected: []
         };
     },
 
@@ -279,6 +284,9 @@ export default {
     mounted()
     {
         this.drag.bindRoot();
+
+        this.$watch('tempSelected', this.watchSelected, 
+            { deep: true });
 
         Any.async(this.refreshVirtuals);
     },
@@ -295,7 +303,7 @@ export default {
 
     watch: {
         
-        items(value)
+        items()
         {
             this.refreshVirtuals();
         },
@@ -313,6 +321,19 @@ export default {
     },
 
     methods: {
+
+        watchSelected()
+        {
+            if ( ! this.tempSelected.length ) {
+                return this.firstSelected = null;
+            }
+
+            let first = Arr.find(this.virtuals, {
+                [this.uniqueProp]: this.tempSelected[0]
+            });
+
+            this.firstSelected = first;
+        },
 
         refreshVirtuals()
         {
@@ -340,15 +361,8 @@ export default {
 
         isDisabled(node)
         {
-            if ( ! this.tempSelected.length ) {
-                return false;
-            }
-
-            let first = Arr.find(this.virtuals, {
-                [this.uniqueProp]: this.tempSelected[0]
-            });
-
-            return ! first || node.value.depth !== first.depth;
+            return this.firstSelected && 
+                node.value.depth !== this.firstSelected.depth;
         },
 
         hasChildren(node)
@@ -462,28 +476,6 @@ export default {
 
     render()
     {
-        // if ( ! this.$slots.empty ) {
-        //     this.$slots.empty = [this.ctor('renderEmpty')()];
-        // }
-
-        // let slots = Arr.each(this.$slots, (slot, name) => {
-        //     return h('template', { slot: name }, slot);
-        // });
-
-        // let props = Obj.assign({}, this.$props, {
-        //     items: this.veItems,
-        //     useRenderCache: this.useRenderCache,
-        //     renderNode: this.ctor('renderItem'),
-        // });
-
-        // let events = {
-        //     dragenter: this.eventEmptyDragenter,
-        //     dragover: this.eventEmptyDragover,
-        //     dragleave: this.eventEmptyDragleave,
-        //     dragdrop: this.eventEmptyDragdrop,
-        //     drop: this.eventEmptyDragdrop
-        // };
-
         let classList = [
             'n-draglist',
             'n-draglist--' + this.size,

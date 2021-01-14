@@ -1,4 +1,5 @@
 import { Any, Arr, Obj, UUID } from "nano-js";
+import { h, resolveComponent } from "vue";
 
 export default {
 
@@ -482,15 +483,15 @@ export default {
 
     mounted()
     {
-        if ( ! this.veVisibleColumns.length ) {
-            Arr.each(this.veColumns, (column) =>
-                column.detectVisibity());
-        }
+        // if ( ! this.veVisibleColumns.length ) {
+        //     Arr.each(this.veColumns, (column) =>
+        //         column.detectVisibity());
+        // }
 
-        Any.delay(() => {
-            Arr.each(this.veColumns, (column) =>
-                column.bindAdaptWidth());
-        }, 500);
+        // Any.delay(() => {
+        //     Arr.each(this.veColumns, (column) =>
+        //         column.bindAdaptWidth());
+        // }, 500);
     },
 
     renderExpand()
@@ -534,9 +535,11 @@ export default {
 
     renderBody(props)
     {
-        return Arr.each(this.veColumns, (column) => {
+        let result = Obj.each(this.veColumns, (column) => {
             return column.ctor('renderBody')(props);
         });
+
+        return Obj.values(result);
     },
 
     renderHeadPopover()
@@ -580,41 +583,46 @@ export default {
         return [headHtml, this.ctor('renderHeadPopover')()];
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
-        let props = Obj.assign({}, this.$props, {
-            renderNode: this.ctor('renderBody')
+        let props = Obj.except(this.$props, [], {
+            items: this.items, renderNode: this.ctor('renderBody')
         });
+        
 
-        let style = {
-            height: this.viewportHeight + 'px'
-        };
+        // let style = {
+        //     height: this.viewportHeight + 'px'
+        // };
 
-        let slots = Arr.each(this.$slots, (slot, name) => {
-            return this.$render('template', { slot: name }, slot);
-        });
+        // let slots = Arr.each(this.$slots, (slot, name) => {
+        //     return h('template', { slot: name }, slot);
+        // });
 
-        let passes = {
-            on: Obj.clone(this.$listeners), scopedSlots: this.$scopedSlots
-        };
+        // let passes = {
+        //     on: Obj.clone(this.$listeners), scopedSlots: this.$scopedSlots
+        // };
 
-        if ( Any.isNumber(this.viewportHeight) ) {
-            props.viewportHeight = this.viewportHeight - this.headerHeight;
-        }
+        // if ( Any.isNumber(this.viewportHeight) ) {
+        //     props.viewportHeight = this.viewportHeight - this.headerHeight;
+        // }
 
-        let draggableHtml = this.$render('NDraglist', {
-            ref: 'list', class: 'n-table__body', props, ...passes
-        }, slots);
+        let draggableHtml = (
+            <NDraglist {...props}>
+                { { default: () => this.ctor('renderBody')() } }
+            </NDraglist>
+        );
+    
+        
+        // resolveComponent('NDraglist', {
+        //     ref: 'list', class: 'n-table__body', ...props, style: 'min-height: 300px;'
+        // }, slots);
 
         return (
-            <div class="n-table" style={style}>
-                <NScrollbar class="n-table__wrap" relative={!this.viewportHeight}>
-                    <div class="n-table__inner">
-                        { [this.ctor('renderHead')(), draggableHtml] }
-                    </div>
+            <div class="n-table" style="height: 500px;">
+                <NScrollbar class="n-table__wrap">
+                    { [draggableHtml] }
                 </NScrollbar>
+                { this.$slots.default && this.$slots.default()}
             </div>
         );
     },

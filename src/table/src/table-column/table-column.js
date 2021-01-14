@@ -1,4 +1,5 @@
 import { Any, Arr, Obj, Str, Dom } from "nano-js";
+import { h, resolveComponent } from "vue";
 
 export default {
 
@@ -44,7 +45,7 @@ export default {
         tooltip: {
             default()
             {
-                return this.label;
+                return '';
             },
             type: [String]
         },
@@ -156,7 +157,7 @@ export default {
         sortProp: {
             default()
             {
-                return this.prop;
+                return '';
             },
             type: [String]
         },
@@ -164,7 +165,7 @@ export default {
         filterProp: {
             default()
             {
-                return this.prop;
+                return '';
             },
             type: [String]
         },
@@ -187,28 +188,28 @@ export default {
         width: {
             default()
             {
-                return this.fixedWidth || 170;
+                return 170;
             }
         },
 
         minWidth: {
             default()
             {
-                return this.fixedWidth || 120;
+                return 120;
             }
         },
 
         maxWidth: {
             default()
             {
-                return this.fixedWidth || 9999;
+                return 9999;
             }
         },
 
         emptyText: {
             default()
             {
-                return this.trans('-');
+                return '-';
             },
             type: [String]
         },
@@ -216,7 +217,7 @@ export default {
         undefinedText: {
             default()
             {
-                return this.trans('-');
+                return '-';
             },
             type: [String]
         },
@@ -224,7 +225,7 @@ export default {
         trueText: {
             default()
             {
-                return this.trans('Yes');
+                return 'Yes';
             },
             type: [String]
         },
@@ -232,7 +233,7 @@ export default {
         falseText: {
             default()
             {
-                return this.trans('No');
+                return 'No';
             },
             type: [String]
         },
@@ -240,7 +241,7 @@ export default {
         datetimeFormat: {
             default()
             {
-                return this.trans('YYYY-MM-DD HH:mm');
+                return 'YYYY-MM-DD HH:mm';
             },
             type: [String]
         }
@@ -325,7 +326,7 @@ export default {
         this.NTable.addColumn(this);
     },
 
-    beforeDestroy()
+    beforeUnmount()
     {
         this.NTable.removeColumn(this);
     },
@@ -472,12 +473,24 @@ export default {
         );
 
         return [
-            angleHtml, this.$render(componentName, { props })
+            angleHtml, resolveComponent(componentName, { props })
         ];
     },
 
     renderBody(props)
     {
+        let passed = Obj.except(props, [], {
+            column: this
+        });
+
+        let componentName = 'NTableCell' + Str.ucfirst(this.type);
+
+
+        let componentInstance = resolveComponent(componentName);
+
+        return h(componentInstance, passed);
+
+
         if ( ! this.veWidth ) {
             return null;
         }
@@ -488,7 +501,7 @@ export default {
             [NDraggable.uniqueProp]: props.value[NDraggable.uniqueProp]
         });
 
-        let componentName = 'NTableCell' + Str.ucfirst(this.type);
+        
 
         let classList = [
             'n-table-column',
@@ -535,15 +548,13 @@ export default {
 
         return (
             <div class={classList} style={style}>
-                { this.$scopedSlots.default ? this.$scopedSlots.default(props) : this.$render(componentName, { props }) }
+                { this.$slots.default ? this.$slots.default(props) : resolveComponent(componentName, { props }) }
             </div>
         );
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
         return null;
     }
 }

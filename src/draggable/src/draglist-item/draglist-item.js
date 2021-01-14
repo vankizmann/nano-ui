@@ -193,8 +193,12 @@ export default {
         }
 
         let props = {
-            onClick: () => this.NDraggable.$emit('row-click', this),
-            onDblclick: () => this.NDraggable.$emit('row-dblclick', this)
+            onClick: () => {
+                this.NDraggable.$emit('row-click', this);
+            },
+            onDblclick: () => {
+                this.NDraggable.$emit('row-dblclick', this);
+            }
         };
 
         if ( ! this.NDraggable.handle && this.isDraggable() ) {

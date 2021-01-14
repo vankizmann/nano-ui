@@ -14,9 +14,11 @@ export default {
             'n-table-cell--' + this.column.type
         ];
 
-        return <div class={className}>
-            <span>{ Any.convertString(this.input, this.column.emptyText) }</span>
-        </div>;
+        return (
+            <div class={className}>
+                <span>{ Any.convertString(this.input, this.column.emptyText) }</span>
+            </div>
+        );
     }
 
 }
