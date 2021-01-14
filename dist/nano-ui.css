@@ -479,7 +479,6 @@
   display: none; }
 
 .n-draglist-item__checkbox {
-  transition: border 0.15s, background 0.15s;
   background: #ffffff;
   border: 1px solid #dddedf; }
 
@@ -4818,6 +4817,10 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: stretch; }
+
+.n-table .n-draglist-item__element {
+  display: flex;
+  flex-direction: row; }
 
 .n-table .n-table__inner {
   overflow: hidden;

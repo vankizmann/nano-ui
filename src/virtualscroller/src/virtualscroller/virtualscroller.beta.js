@@ -34,7 +34,7 @@ export default {
         threshold: {
             default()
             {
-                return 24;
+                return 40;
             },
             type: [Number]
         },
@@ -42,7 +42,7 @@ export default {
         bufferItems: {
             default()
             {
-                return 24;
+                return 40;
             },
             type: [Number]
         },
@@ -244,12 +244,6 @@ export default {
             return this.$slots.empty && this.$slots.empty() || null;
         };
 
-        let style = {};
-
-        if ( this.items.length ) {
-            style.height = (this.items.length * this.itemHeight) + 'px';
-        }
-
         let items = Arr.slice(this.items, this.state.startIndex,
             this.state.endIndex);
 
@@ -257,15 +251,9 @@ export default {
             items = this.items;
         }
 
-        return (
-            <div class="n-virtualscroller__inner" style={style}>
-                {
-                    Arr.each(items, (value, index) => {
-                        return this.ctor('renderItem')({ value, index });
-                    })
-                }
-            </div>
-        );
+        return Arr.each(items, (value, index) => {
+            return this.ctor('renderItem')({ value, index });
+        });
     },
 
     render()
@@ -275,9 +263,17 @@ export default {
             onScrollupdate: this.onScrollupdate,
         };
 
+        let style = {};
+
+        if ( this.items.length ) {
+            style.height = (this.items.length * this.itemHeight) + 'px';
+        }
+
         return (
             <NScrollbar ref="scrollbar" {...props}>
-                { this.ctor('renderItems')() }
+                <div class="n-virtualscroller__inner" style={style}>
+                    { this.ctor('renderItems')() }
+                </div>
             </NScrollbar>
         );
     }

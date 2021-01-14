@@ -181,6 +181,10 @@ export default {
             'n-scrollbar'
         ];
 
+        if ( this.optiscroll ) {
+            classList.push('is-enabled');
+        }
+
         return (
             <div class={classList} {...Obj.except(this.$attrs, ['class'])}>
                 <div class="n-scrollbar-content" ref="content">

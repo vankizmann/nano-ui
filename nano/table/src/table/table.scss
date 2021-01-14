@@ -22,6 +22,11 @@ $table-row-height: 40px !default;
     justify-content: stretch;
 }
 
+.n-table .n-draglist-item__element {
+    display: flex;
+    flex-direction: row;
+}
+
 // .n-table .n-virtualscroller {
 //     width: auto;
 // }

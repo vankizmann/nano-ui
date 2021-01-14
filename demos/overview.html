@@ -542,7 +542,7 @@
         
 
         <template v-for="index in Arr.make(n_draggable.count)">
-            <n-draglist v-model:items="virtualTree" :render-expand="true" style="height: 500px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
+            <n-draglist v-model:items="virtualTree" :render-expand="true" :render-select="true" style="height: 500px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
                 <template v-slot:default="{ value, item }">
                     <div style="padding: 0 5px; line-height: 34px;"><n-input v-model="item.label"></n-input></div>
                 </template>
@@ -553,6 +553,11 @@
 
         <n-table v-model:items="virtualData">
             <n-table-column type="string" prop="value"></n-table-column>
+            <n-table-column type="string" prop="label"></n-table-column>
+            <n-table-column type="string" prop="value"></n-table-column>
+            <n-table-column type="string" prop="label"></n-table-column>
+            <n-table-column type="string" prop="value"></n-table-column>
+            <n-table-column type="string" prop="label"></n-table-column>
         </n-table>
 
     </div>
@@ -608,7 +613,7 @@
 
             data.virtualData = itemGenerator(10000);
 
-            data.virtualTree = Nano.Arr.each(itemGenerator(100), function (item) {
+            data.virtualTree = Nano.Arr.each(itemGenerator(1000), function (item) {
                 return Nano.Obj.assign(item, { children: itemGenerator(20) });
             });
 

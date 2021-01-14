@@ -8606,6 +8606,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   render: function render() {
     var classList = ['n-scrollbar'];
+
+    if (this.optiscroll) {
+      classList.push('is-enabled');
+    }
+
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
       "class": classList
     }, nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].except(this.$attrs, ['class'])), [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
@@ -11366,12 +11371,6 @@ function _isSlot(s) {
       },
       type: [Boolean]
     },
-    updateDelay: {
-      "default": function _default() {
-        return 80;
-      },
-      type: [Number]
-    },
     keyDebounce: {
       "default": function _default() {
         return 100;
@@ -11380,13 +11379,13 @@ function _isSlot(s) {
     },
     bufferItems: {
       "default": function _default() {
-        return 10;
+        return 40;
       },
       type: [Number]
     },
     threshold: {
       "default": function _default() {
-        return 100;
+        return 40;
       },
       type: [Number]
     },
@@ -11603,7 +11602,11 @@ function _isSlot(s) {
     var props = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].except(this.$props, [], {
       items: this.items,
       renderNode: this.ctor('renderBody')
-    }); // let style = {
+    });
+
+    props['onUpdate:items'] = function (value) {
+      _this2.$emit('update:items', value);
+    }; // let style = {
     //     height: this.viewportHeight + 'px'
     // };
     // let slots = Arr.each(this.$slots, (slot, name) => {
@@ -11615,6 +11618,7 @@ function _isSlot(s) {
     // if ( Any.isNumber(this.viewportHeight) ) {
     //     props.viewportHeight = this.viewportHeight - this.headerHeight;
     // }
+
 
     var draggableHtml = Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NDraglist"), props, {
       "default": function _default() {
@@ -12783,13 +12787,13 @@ function _isSlot(s) {
     },
     threshold: {
       "default": function _default() {
-        return 24;
+        return 40;
       },
       type: [Number]
     },
     bufferItems: {
       "default": function _default() {
-        return 24;
+        return 40;
       },
       type: [Number]
     }
@@ -12953,27 +12957,18 @@ function _isSlot(s) {
     }
 
     ;
-    var style = {};
-
-    if (this.items.length) {
-      style.height = this.items.length * this.itemHeight + 'px';
-    }
-
     var items = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].slice(this.items, this.state.startIndex, this.state.endIndex);
 
     if (this.items.length <= this.threshold) {
       items = this.items;
     }
 
-    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
-      "class": "n-virtualscroller__inner",
-      "style": style
-    }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(items, function (value, index) {
+    return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(items, function (value, index) {
       return _this.ctor('renderItem')({
         value: value,
         index: index
       });
-    })]);
+    });
   },
   render: function render() {
     var _slot;
@@ -12982,9 +12977,18 @@ function _isSlot(s) {
       onSizechange: this.onSizechange,
       onScrollupdate: this.onScrollupdate
     };
+    var style = {};
+
+    if (this.items.length) {
+      style.height = this.items.length * this.itemHeight + 'px';
+    }
+
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NScrollbar"), Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
       "ref": "scrollbar"
-    }, props), _isSlot(_slot = this.ctor('renderItems')()) ? _slot : {
+    }, props), _isSlot(_slot = Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": "n-virtualscroller__inner",
+      "style": style
+    }, [this.ctor('renderItems')()])) ? _slot : {
       "default": function _default() {
         return [_slot];
       }

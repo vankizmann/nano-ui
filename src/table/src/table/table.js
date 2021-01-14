@@ -297,14 +297,6 @@ export default {
             type: [Boolean]
         },
 
-        updateDelay: {
-            default()
-            {
-                return 80;
-            },
-            type: [Number]
-        },
-
         keyDebounce: {
             default()
             {
@@ -316,7 +308,7 @@ export default {
         bufferItems: {
             default()
             {
-                return 10;
+                return 40;
             },
             type: [Number]
         },
@@ -324,7 +316,7 @@ export default {
         threshold: {
             default()
             {
-                return 100;
+                return 40;
             },
             type: [Number]
         },
@@ -588,6 +580,10 @@ export default {
         let props = Obj.except(this.$props, [], {
             items: this.items, renderNode: this.ctor('renderBody')
         });
+
+        props['onUpdate:items'] = (value) => {
+            this.$emit('update:items', value);
+        }
         
 
         // let style = {
