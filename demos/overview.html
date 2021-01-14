@@ -522,7 +522,7 @@
                 </n-button>
             </div>
             <div class="col--auto">
-                <n-button type="danger" @click="n_draggable.count--">
+                <n-button type="danger" @click="n_draggable.count ? n_draggable.count-- : 0">
                     Remove draggable list with 1000 items
                 </n-button>
             </div>

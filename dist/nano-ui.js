@@ -6560,22 +6560,23 @@ function NanoInstall(App) {
 
   __webpack_require__(/*! ./notification/index */ "./src/notification/index.js")["default"](App);
 
-  __webpack_require__(/*! ./empty/index */ "./src/empty/index.js")["default"](App); //require('./config/index'); //!complex
+  __webpack_require__(/*! ./empty/index */ "./src/empty/index.js")["default"](App); //require('./config/index'); //!complex 16.1
 
 
   __webpack_require__(/*! ./scrollbar/index */ "./src/scrollbar/index.js")["default"](App);
 
   __webpack_require__(/*! ./virtualscroller/index */ "./src/virtualscroller/index.js")["default"](App);
 
-  __webpack_require__(/*! ./draggable/index */ "./src/draggable/index.js")["default"](App); // require('./loader/index');
-  // require('./resizer/index');
+  __webpack_require__(/*! ./draggable/index */ "./src/draggable/index.js")["default"](App); // require('./loader/index'); //14.1
+  // require('./resizer/index'); //14.1
 
 
   __webpack_require__(/*! ./popover/index */ "./src/popover/index.js")["default"](App);
 
   __webpack_require__(/*! ./modal/index */ "./src/modal/index.js")["default"](App);
 
-  __webpack_require__(/*! ./button/index */ "./src/button/index.js")["default"](App);
+  __webpack_require__(/*! ./button/index */ "./src/button/index.js")["default"](App); // group 14.1
+
 
   __webpack_require__(/*! ./input/index */ "./src/input/index.js")["default"](App);
 
@@ -6595,17 +6596,17 @@ function NanoInstall(App) {
 
   __webpack_require__(/*! ./datepicker/index */ "./src/datepicker/index.js")["default"](App);
 
-  __webpack_require__(/*! ./timepicker/index */ "./src/timepicker/index.js")["default"](App); // require('./datetimepicker/index');
+  __webpack_require__(/*! ./timepicker/index */ "./src/timepicker/index.js")["default"](App); // require('./datetimepicker/index'); 17.1
 
 
-  __webpack_require__(/*! ./transfer/index */ "./src/transfer/index.js")["default"](App); // require('./form/index');
-  // require('./tabs/index');
-  // require('./table/index'); //!complex
-  // require('./paginator/index');
-  // require('./info/index'); //!complex
-  // require('./map/index'); // SX only ez
-  // require('./file-list/index'); // SX only
-  // require('./file/index'); // SX only
+  __webpack_require__(/*! ./transfer/index */ "./src/transfer/index.js")["default"](App); // require('./form/index'); // 15.1
+  // require('./tabs/index'); // 15.1
+  // require('./table/index'); //!complex 14.1
+  // require('./paginator/index'); // 14.1
+  // require('./info/index'); //!complex 15.1
+  // require('./map/index'); // SX only ez 16.1
+  // require('./file-list/index'); // SX only 16.1
+  // require('./file/index'); // SX only 16.1
   // require('./chart/index'); // Ignore
   // require('./wysiwyg/index'); // Ignore
 
@@ -10353,13 +10354,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.selectedSource.length === this.tempSource.length;
     },
     sourceIntermediate: function sourceIntermediate() {
-      return this.selectedSource.length && this.selectedSource.length !== this.tempSource.length;
+      return !!this.selectedSource.length && this.selectedSource.length !== this.tempSource.length;
     },
     targetChecked: function targetChecked() {
       return this.selectedTarget.length === this.tempTarget.length;
     },
     targetIntermediate: function targetIntermediate() {
-      return this.selectedTarget.length && this.selectedTarget.length !== this.tempTarget.length;
+      return !!this.selectedTarget.length && this.selectedTarget.length !== this.tempTarget.length;
     },
     tempSource: function tempSource() {
       var _this = this;

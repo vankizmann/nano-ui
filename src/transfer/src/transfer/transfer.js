@@ -66,7 +66,7 @@ export default {
 
         sourceIntermediate()
         {
-            return this.selectedSource.length && 
+            return !! this.selectedSource.length && 
                 this.selectedSource.length !== this.tempSource.length;
         },
 
@@ -78,7 +78,7 @@ export default {
 
         targetIntermediate()
         {
-            return this.selectedTarget.length && 
+            return !! this.selectedTarget.length && 
                 this.selectedTarget.length !== this.tempTarget.length;
         },
 

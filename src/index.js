@@ -53,15 +53,15 @@ export function NanoInstall(App, Icons = {}, Styles = {})
 
     require('./notification/index').default(App);
     require('./empty/index').default(App);
-    //require('./config/index'); //!complex
+    //require('./config/index'); //!complex 16.1
     require('./scrollbar/index').default(App);
     require('./virtualscroller/index').default(App);
     require('./draggable/index').default(App);
-    // require('./loader/index');
-    // require('./resizer/index');
+    // require('./loader/index'); //14.1
+    // require('./resizer/index'); //14.1
     require('./popover/index').default(App);
     require('./modal/index').default(App);
-    require('./button/index').default(App);
+    require('./button/index').default(App); // group 14.1
     require('./input/index').default(App);
     require('./textarea/index').default(App);
     require('./select/index').default(App);
@@ -72,17 +72,17 @@ export function NanoInstall(App, Icons = {}, Styles = {})
     require('./cascader/index').default(App);
     require('./datepicker/index').default(App);
     require('./timepicker/index').default(App);
-    // require('./datetimepicker/index');
+    // require('./datetimepicker/index'); 17.1
     require('./transfer/index').default(App);
-    // require('./form/index');
-    // require('./tabs/index');
-    // require('./table/index'); //!complex
-    // require('./paginator/index');
-    // require('./info/index'); //!complex
+    // require('./form/index'); // 15.1
+    // require('./tabs/index'); // 15.1
+    // require('./table/index'); //!complex 14.1
+    // require('./paginator/index'); // 14.1
+    // require('./info/index'); //!complex 15.1
 
-    // require('./map/index'); // SX only ez
-    // require('./file-list/index'); // SX only
-    // require('./file/index'); // SX only
+    // require('./map/index'); // SX only ez 16.1
+    // require('./file-list/index'); // SX only 16.1
+    // require('./file/index'); // SX only 16.1
 
     // require('./chart/index'); // Ignore
     // require('./wysiwyg/index'); // Ignore
