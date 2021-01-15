@@ -181,9 +181,11 @@ export default {
             'n-scrollbar'
         ];
 
-        if ( this.optiscroll ) {
-            classList.push('is-enabled');
-        }
+        console.log(this.optiscroll)
+
+        // if ( this.optiscroll ) {
+        //     classList.push('is-enabled');
+        // }
 
         return (
             <div class={classList} {...Obj.except(this.$attrs, ['class'])}>

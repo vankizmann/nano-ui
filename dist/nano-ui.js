@@ -8606,10 +8606,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   render: function render() {
     var classList = ['n-scrollbar'];
-
-    if (this.optiscroll) {
-      classList.push('is-enabled');
-    }
+    console.log(this.optiscroll); // if ( this.optiscroll ) {
+    //     classList.push('is-enabled');
+    // }
 
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
       "class": classList
