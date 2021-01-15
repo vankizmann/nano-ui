@@ -60,8 +60,8 @@ export default {
 
         sourceChecked()
         {
-            return this.selectedSource.length === 
-                this.tempSource.length;
+            return this.selectedSource.length && 
+                this.selectedSource.length === this.tempSource.length;
         },
 
         sourceIntermediate()
@@ -72,8 +72,8 @@ export default {
 
         targetChecked()
         {
-            return this.selectedTarget.length === 
-                this.tempTarget.length;
+            return this.selectedTarget.length && 
+                this.selectedTarget.length === this.tempTarget.length;
         },
 
         targetIntermediate()

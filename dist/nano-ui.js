@@ -11636,7 +11636,7 @@ function _isSlot(s) {
       "class": "n-table__wrap"
     }, {
       "default": function _default() {
-        return [[draggableHtml]];
+        return [[_this2.ctor('renderHead')(), draggableHtml]];
       }
     }), this.$slots["default"] && this.$slots["default"]()]);
   }
@@ -12392,13 +12392,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: {
     sourceChecked: function sourceChecked() {
-      return this.selectedSource.length === this.tempSource.length;
+      return this.selectedSource.length && this.selectedSource.length === this.tempSource.length;
     },
     sourceIntermediate: function sourceIntermediate() {
       return !!this.selectedSource.length && this.selectedSource.length !== this.tempSource.length;
     },
     targetChecked: function targetChecked() {
-      return this.selectedTarget.length === this.tempTarget.length;
+      return this.selectedTarget.length && this.selectedTarget.length === this.tempTarget.length;
     },
     targetIntermediate: function targetIntermediate() {
       return !!this.selectedTarget.length && this.selectedTarget.length !== this.tempTarget.length;

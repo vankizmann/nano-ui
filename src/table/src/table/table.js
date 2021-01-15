@@ -616,7 +616,7 @@ export default {
         return (
             <div class="n-table" style="height: 500px;">
                 <NScrollbar class="n-table__wrap">
-                    { [draggableHtml] }
+                    { [this.ctor('renderHead')(), draggableHtml] }
                 </NScrollbar>
                 { this.$slots.default && this.$slots.default()}
             </div>
