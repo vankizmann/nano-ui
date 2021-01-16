@@ -38,7 +38,7 @@ export default {
     render()
     {
         return (
-            <div class="n-table-cell">
+            <div>
                 <span>{ this.input }</span>
             </div>
         );

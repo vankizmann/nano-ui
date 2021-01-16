@@ -1,10 +1,9 @@
-import Vue from "vue";
-
 import Form from './src/form/form';
-Vue.component(Form.name, Form);
-
 import FormGroup from './src/form-group/form-group';
-Vue.component(FormGroup.name, FormGroup);
-
 import FormItem from './src/form-item/form-item';
-Vue.component(FormItem.name, FormItem);
+
+export default function (App) {
+    App.component(Form.name, Form);
+    App.component(FormGroup.name, FormGroup);
+    App.component(FormItem.name, FormItem);
+}

@@ -9,14 +9,11 @@ export default {
 
     render()
     {
-        let className = [
-            'n-table-cell',
-            'n-table-cell--' + this.column.type
-        ];
-
-        return <div class={className}>
-            <span>{ Any.convertDatetime(this.input, this.column.datetimeFormat, this.column.emptyText) }</span>
-        </div>;
+        return (
+            <div>
+                <span>{ Any.convertDatetime(this.input, this.column.datetimeFormat, this.column.emptyText) }</span>
+            </div>
+        );
     }
 
 }

@@ -92,6 +92,9 @@ export default {
 
         Event.bind('NResizer:move', 
             this.forceWidth, this._.uid);
+
+        Dom.find(window).on('resize', 
+            Any.debounce(this.onResize, 500), this._.uid);
     },
 
     updated()
@@ -107,6 +110,9 @@ export default {
 
         Event.unbind('NResizer:move', 
             this._.uid);
+        
+        Dom.find(window).off('resize', 
+            null, this._.uid);
     },
 
     methods: {
@@ -168,6 +174,15 @@ export default {
                 .off('resized', null, this._.uid);
         },
 
+
+        onResize()
+        {
+            if ( this.NScrollbar ) {
+                return;
+            }
+
+            this.updateWidth();
+        },
 
         onLeftMousedown(event)
         {
@@ -394,6 +409,10 @@ export default {
 
     renderHandle()
     {
+        if ( this.disabled ) {
+            return null;
+        }
+        
         let classList = [
             'n-resizer__handle',
         ];

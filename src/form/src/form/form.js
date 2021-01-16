@@ -64,6 +64,10 @@ export default {
 
         stopPropagation(event)
         {
+            if ( this.propagation ) {
+                return;
+            }
+            
             event.preventDefault();
             event.stopPropagation();
         },
@@ -71,14 +75,14 @@ export default {
         addItem(item)
         {
             Arr.add(this.veItems, item, {
-                _uid: item._uid
+                uid: item.uid
             });
         },
 
         removeItem(item)
         {
             Arr.remove(this.veItems,{
-                _uid: item._uid
+                uid: item.uid
             });
         },
 
@@ -122,48 +126,48 @@ export default {
 
     mounted()
     {
-        this.$watch('form', () => this.setForm(this.form),
-            { deep: true });
+        // this.$watch('form', () => this.setForm(this.form),
+        //     { deep: true });
 
-        this.$watch('errors', () => this.setErrors(this.errors),
-            { deep: true });
+        // this.$watch('errors', () => this.setErrors(this.errors),
+        //     { deep: true });
 
-        let ident = {
-            _uid: this.uid
-        };
+        // let ident = {
+        //     _uid: this.uid
+        // };
 
-        if ( this.propagation ) {
-            return;
-        }
+        // if ( this.propagation ) {
+        //     return;
+        // }
 
-        Dom.find(this.$refs.form).on('submit', this.stopPropagation, ident);
+        Dom.find(this.$refs.form).on('submit', 
+            this.stopPropagation, this._.uid);
     },
 
-    beforeDestroy()
+    beforeUnmount()
     {
-        let ident = {
-            _uid: this.uid
-        };
+        // let ident = {
+        //     _uid: this.uid
+        // };
 
-        if ( this.propagation ) {
-            return;
-        }
+        // if ( this.propagation ) {
+        //     return;
+        // }
 
-        Dom.find(this.$refs.form).off('submit', null, ident);
+        Dom.find(this.$refs.form).off('submit', 
+            null, this._.uid);
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
         let classList = [
             'n-form',
             'n-form--' + this.align
         ];
 
         return (
-            <form ref="form" class={classList} on={this.$listeners}>
-                {this.$slots.default}
+            <form ref="form" class={classList}>
+                { this.$slots.default() }
             </form>
         );
     }

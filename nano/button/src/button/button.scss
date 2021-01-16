@@ -84,20 +84,16 @@
         border-color: $-color-base;
     }
 
-    .n-button--#{$color}.n-button--link {
+    .n-button--#{$color}:not(.n-disabled).n-button--link {
         color: $-color-base;
     }
 
-    .n-button--#{$color}.n-button--link:hover {
+    .n-button--#{$color}:not(.n-disabled).n-button--link:hover {
         color: $-color-light;
     }
 
-    .n-button--#{$color}.n-button--link:focus {
+    .n-button--#{$color}:not(.n-disabled).n-button--link:focus {
         color: $-color-dark;
-    }
-
-    .n-button--#{$color}.n-button--link.n-disabled {
-        color: $-color-base;
     }
 
 }

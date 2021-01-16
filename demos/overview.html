@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="../dist/nano-ui.css">
 
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.5/vue.global.prod.js"></script> -->
     <script src="https://unpkg.com/vue@next"></script>
     <script src="../node_modules/nano-js/dist/nano-js.js"></script>
     <!-- <script src="https://vankizmann.github.io/nano-js/dist/nano-js.js"></script> -->
@@ -564,10 +565,21 @@
 
         <h2>NTable</h2>
 
-        <n-table v-if="true" v-model:items="virtualTree" :render-expand="true">
-            <n-table-column label="TestLabel asd asd ad asdasddas" type="string" prop="label" align="center" :sort="true" :filter="true"></n-table-column>
-            <n-table-column label="TestValue" type="string" prop="value"></n-table-column>
-            <n-table-column label="TestId" type="string" prop="id"></n-table-column>
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--auto">
+                <n-button type="primary" @click="$refs.table.resetFilter()">
+                    Reset filter
+                </n-button>
+            </div>
+        </div>
+
+        <n-table ref="table" v-model:items="virtualTree" :render-expand="true" :item-height="100" style="margin-top: 30px;">
+            <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="Image" type="image" prop="image" :fixed-width="130"></n-table-column>
+            <n-table-column label="Date" type="datetime" prop="date" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="Enabled" type="boolean" prop="enabled" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="Value" type="string" prop="value" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="ID" type="string" prop="id" :fixed-width="300"></n-table-column>
         </n-table>
         
     </div>
@@ -607,7 +619,17 @@
 
             let itemGenerator = function (count = 100, index = 0) {
                 return Nano.Arr.each(Nano.Arr.make(count), function (value) {
-                    return { id: Nano.UUID(), value: Nano.UUID(), label: `Item ${index++}` };
+
+                    let id = Nano.UUID();
+
+                    return {
+                        id:     id, 
+                        value:  id, 
+                        label:  `Item ${index++}`, 
+                        image:  'https://picsum.photos/100/100?' + id,
+                        date: Nano.Now.make().format('YYYY-MM-DD HH:mm:ss', true),
+                        enabled: !! Math.floor(Math.random() * 2)
+                    };
                 });
             };
 

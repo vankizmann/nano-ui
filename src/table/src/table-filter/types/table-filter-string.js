@@ -9,37 +9,34 @@ export default {
 
     methods: {
 
-        resetFilter()
+        getDefaultFilter()
         {
-            this.form.value = null;
-            this.form.operator = 'li';
+            return {
+                type:       this.column.type, 
+                value:      null, 
+                operator:   'li',
+                property:   this.getFilterProp(), 
+            };
         }
 
     },
 
-    data()
-    {
-        let defaults = {
-            property: this.column.filterProp, type: this.column.type, value: null, operator: 'li'
-        };
-
-        return { form: this.getFilterProps(defaults) };
-    },
-
     renderForm()
     {
+        let options = {
+            li: this.trans('Includes value'),
+            nl: this.trans('Excludes value'),
+            eq: this.trans('Equal value'),
+            ne: this.trans('Except value'),
+        };
+
         return (
-            <NForm form={this.form}>
+            <NForm>
                 <NFormItem>
-                    <NInput size="sm" vModel={this.form.value}/>
+                    <NInput size="sm" vModel={this.filter.value} />
                 </NFormItem>
                 <NFormItem>
-                    <NSelect size="sm" vModel={this.form.operator}>
-                        <NSelectOption value="li" label={this.trans('Includes value')} />
-                        <NSelectOption value="nl" label={this.trans('Excludes value')} />
-                        <NSelectOption value="eq" label={this.trans('Equal value')} />
-                        <NSelectOption value="ne" label={this.trans('Except value')} />
-                    </NSelect>
+                    <NSelect size="sm" vModel={this.filter.operator} options={options} />
                 </NFormItem>
             </NForm>
         );

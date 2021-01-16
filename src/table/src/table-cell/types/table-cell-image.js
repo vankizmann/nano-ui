@@ -146,7 +146,6 @@ export default {
         return (
             <div class={classList}>
                 <div style={'background-image: url(\'' + this.input + '\');'} />
-                { this.ctor('renderPreview')() }
             </div>
         );
     }

@@ -19,6 +19,15 @@ export default {
             },
             type: [String]
         },
+
+        disabled: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        }
+
     },
 
     render()
@@ -27,7 +36,11 @@ export default {
             'n-empty-icon',
             'n-empty-icon--' + this.size,
             'n-empty-icon--' + this.type
-        ]
+        ];
+
+        if ( this.disabled ) {
+            classList.push('n-disabled');
+        }
 
         return (
             <div class={classList}>

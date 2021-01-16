@@ -1,4 +1,4 @@
-import {Arr, Obj, Any, UUID, Dom} from "nano-js";
+import {Arr, Obj, Any, Dom, Event, UUID} from "nano-js";
 
 export default {
 
@@ -18,16 +18,110 @@ export default {
 
     },
 
+    computed: {
+
+        tempFilter()
+        {
+            return this.NTable.getColumnFilter(this.column);
+        },
+
+        canReset()
+        {
+            return ! this.NTable.getColumnFiltered(this.column);
+        },
+
+        canApply()
+        {
+            return ! Any.isEmpty(this.filter.value);
+        }
+
+    },
+
+    data()
+    {
+        return {
+            filter: Obj.clone(this.tempFilter), visible: false
+        };
+    },
+
+    beforeMount()
+    {
+        this.mountFilter();
+    },
+
+    mounted()
+    {
+        Event.bind('NTable:reset', 
+            this.resetFilter, this._.uid);
+
+        Dom.find(document).on('keydown', 
+            this.onKeydown, this._.uid);
+    },
+
+    beforeUnmount()
+    {
+        Event.unbind('NTable:reset', 
+            this._.uid);
+
+        Dom.find(document).off('keydown', 
+            null, this._.uid);
+    },
+
     methods: {
 
-        eventKeydown(event)
+        getFilterProp()
         {
-            // if ( ! this.$refs.popover || ! this.$refs.popover.active() ) {
-            //     return;
-            // }
+            return this.column.filterProp || 
+                this.column.prop;
+        },
 
-            if ( event.which === 13 ) {
+        getDefaultFilter()
+        {
+            return {
+                type:       this.column.type, 
+                value:      null,
+                property:   this.getFilterProp(), 
+            };
+        },
+
+        mountFilter()
+        {
+            if ( this.filter ) {
+                return this.applyFilter();
+            }
+
+            this.filter = this.getDefaultFilter();
+
+            Arr.add(this.NTable.tempFilter, this.filter, {
+                property: this.getFilterProp()
+            });
+        },
+
+        resetFilter(uid)
+        {
+            if ( this.NTable.uid !== uid ) {
+                return;
+            }
+
+            this.filter = this.getDefaultFilter();
+
+            Arr.add(this.NTable.tempFilter, this.filter, {
+                property: this.getFilterProp()
+            });
+        },
+
+        onKeydown(event)
+        {
+            if ( ! this.visible ) {
+                return;
+            }
+
+            if ( event.which === 13 && this.canApply ) {
                 this.applyFilter();
+            }
+
+            if ( event.which === 13 && ! this.canApply ) {
+                this.clearFilter();
             }
 
             let closeAnyway = event.which === 13 &&
@@ -38,104 +132,32 @@ export default {
             }
         },
 
-        getFilterProps(defaults)
-        {
-            let filter = Arr.find(this.NTable.veFilterProps, {
-                property: this.column.filterProp
-            }, {});
-
-            return Obj.assign(defaults, filter);
-        },
-
         applyFilter()
         {
-            if ( Any.isNull(this.form.value) ) {
-                return;
-            }
+            let filter = Obj.clone(this.filter);
 
-            let filterData = Obj.clone(this.form);
-
-            Obj.map(filterData, (value) => {
-                return Any.isArray(value) ? value.join(',') : value;
+            this.NTable.replaceFilter(filter, {
+                property: this.getFilterProp()
             });
 
-            Arr.replace(this.NTable.veFilterProps, filterData, {
-                property: this.column.filterProp
-            });
-
-            // Update filter event
-            this.NTable.$emit('update:filterProps',
-                this.NTable.veFilterProps);
-
-            // Update applied state
-            this.veApplied = true;
-
-            // Send filter event
-            this.NTable.$emit('filter',
-                this.NTable.veFilterProps);
+            Arr.add(this.NTable.tempFilterProps, 
+                this.getFilterProp());
         },
 
         clearFilter()
         {
-            this.resetFilter();
+            let filter = this.getDefaultFilter();
 
-            Arr.remove(this.NTable.veFilterProps, {
-                property: this.column.filterProp
+            this.NTable.replaceFilter(filter, {
+                property: this.getFilterProp()
             });
 
-            // Update filter event
-            this.NTable.$emit('update:filterProps',
-                this.NTable.veFilterProps);
+            Arr.remove(this.NTable.tempFilterProps, 
+                this.getFilterProp());
 
-            // Update applied state
-            this.veApplied = false;
-
-            // Send filter event
-            this.NTable.$emit('filter',
-                this.NTable.veFilterProps);
-        },
-
-        resetFilter()
-        {
-            // Reset data
+            this.filter = filter;
         }
 
-    },
-
-    data()
-    {
-        let defaults = {
-            property: this.column.filterProp, type: this.column.type, value: null
-        };
-
-        let data = {
-            form: this.getFilterProps(defaults)
-        };
-
-        data.veApplied = ! Any.isEmpty(data.form.value);
-
-        return data;
-    },
-
-    mounted()
-    {
-        // this.NTable.$on('clearFilters', () => {
-
-        //     // Reset values
-        //     this.resetFilter();
-
-        //     // Update applied state
-        //     this.veApplied = false;
-        // });
-
-        Dom.find(document).on('keydown', 
-            this.eventKeydown, this._.uid);
-    },
-
-    beforeUnmount()
-    {
-        Dom.find(document).off('keydown', 
-            null, this._.uid);
     },
 
     renderForm()
@@ -148,11 +170,12 @@ export default {
         let props = {
             type: 'primary',
             link: true,
-            size: 'small',
+            size: 'xs',
+            disabled: ! this.canApply
         };
 
         return (
-            <NButton props={props} vOn:click={this.applyFilter}>
+            <NButton {...props} onClick={this.applyFilter}>
                 { this.trans('Apply') }
             </NButton>
         );
@@ -163,27 +186,40 @@ export default {
         let props = {
             type: 'danger',
             link: true,
-            size: 'small',
-            disabled: ! this.veApplied,
+            size: 'xs',
+            disabled: this.canReset,
         };
 
         return (
-            <NButton props={props} vOn:click={this.clearFilter}>
+            <NButton {...props} onClick={this.clearFilter}>
                 { this.trans('Reset') }
             </NButton>
         );
     },
 
-    render()
+    renderFooter()
     {
         return (
-            <NPopover ref="popover" trigger="click" size="sm">
+            <div class="n-table-filter__footer">
+                { this.ctor('renderReset')() }
+                { this.ctor('renderApply')() }
+            </div>
+        )
+    },
+
+    render()
+    {
+        let props = {
+            class: 'n-table-filter__popover',
+            trigger: 'click',
+            size: 'sm',
+            width: 190,
+        }
+
+        return (
+            <NPopover ref="popover" vModel={this.visible} {...props}>
                 {
-                    {
-                        default: [
-                            this.ctor('renderForm')()
-                        ]
-                    }
+                    { default: this.ctor('renderForm'), footer: this.ctor('renderFooter') }
                 }
             </NPopover>
         );

@@ -9,32 +9,29 @@ export default {
 
     methods: {
 
-        resetFilter()
+        getDefaultFilter()
         {
-            this.form.value = null;
-            this.form.operator = 'in';
+            return {
+                type:       this.column.type, 
+                value:      null, 
+                operator:   'in',
+                property:   this.getFilterProp(), 
+            };
         }
 
     },
 
-    data()
-    {
-        let defaults = {
-            property: this.column.filterProp, type: this.column.type, value: null, operator: 'in'
-        };
-
-        return { form: this.getFilterProps(defaults) };
-    },
-
     renderForm()
     {
+        let options = {
+            1: this.trans(this.column.trueText),
+            0: this.trans(this.column.falseText),
+        };
+
         return (
-            <NForm form={this.form}>
+            <NForm>
                 <NFormItem>
-                    <NSelect size="small" vModel={this.form.value}>
-                        <NSelectOption value="1" label={this.column.trueText} />
-                        <NSelectOption value="0" label={this.column.falseText} />
-                    </NSelect>
+                    <NSelect size="sm" vModel={this.filter.value} options={options} clearable={true} />
                 </NFormItem>
             </NForm>
         );

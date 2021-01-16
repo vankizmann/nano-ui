@@ -86,7 +86,7 @@ export default {
                 return;
             }
 
-            if ( index === -1 || index > this.items.length ) {
+            if ( index === -1 || index >= this.items.length ) {
                 index = this.items.length;
             }
 
@@ -105,7 +105,7 @@ export default {
                 return;
             }
 
-            if ( index === -1 || index > this.items.length ) {
+            if ( index === -1 || index >= this.items.length ) {
                 index = this.items.length;
             }
 

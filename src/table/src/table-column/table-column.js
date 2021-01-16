@@ -1,4 +1,4 @@
-import { Any, Arr, Obj, Str, Dom } from "nano-js";
+import { Any, Arr, Obj, Str, Dom, UUID } from "nano-js";
 import { h, resolveComponent } from "vue";
 
 export default {
@@ -258,9 +258,7 @@ export default {
     data()
     {
         return {
-            veWidth: 0,
-            veVisible: this.visible,
-            veFluid: this.fluid,
+            uid: UUID(), tempWidth: 0,
         };
     },
 
@@ -274,15 +272,13 @@ export default {
                 visible &= this.NTable.$el.innerWidth > this.breakpoint;
             }
 
-            if ( visible ) {
-                this.NTable.showColumn(this);
-            }
+            return visible;
         },
 
         sortByColumn(event)
         {
             if ( ! Dom.find(event.target).closest('.n-table-column__filter') ) {
-                this.NTable.sortByColumn(this.prop);
+                this.NTable.sortByColumn(this);
             }
         },
 
@@ -301,29 +297,37 @@ export default {
     renderHead()
     {
         let classList = [
-            'n-table-column', 'n-' + this.align
+            'n-table-column', 
+            'n-table-column--' + this.align,
+            'n-table-column--' + this.type,
         ];
 
-        if ( this.NTable.veSortProp === this.prop ) {
-            classList.push('is-sorted', 'is-' + this.NTable.veSortDir);
+        let sortDirection = this.NTable.getColumnSorted(this);
+
+        if ( sortDirection ) {
+            classList.push('n-sorted', 'n-' + sortDirection);
         }
 
-        if ( this.veFluid ) {
+        if ( this.fluid ) {
             classList.push('n-fluid');
         }
 
-        let filterIndex = Arr.findIndex(this.NTable.filterProps, {
-            property: this.prop
-        });
+        if ( this.fixedWidth ) {
+            classList.push('n-fixed');
+        }
 
-        if ( filterIndex !== -1 ) {
+        if ( this.NTable.getColumnFiltered(this)  ) {
             classList.push('n-filtered');
         }
 
         let style = {};
 
-        if ( this.NTable.isHidden(this) ) {
+        if ( ! this.NTable.getColumnVisiblity(this) ) {
             style.display = 'none';
+        }
+
+        if ( this.fixedWidth ) {
+            style.width = this.fixedWidth + 'px';
         }
 
         let props = {
@@ -338,7 +342,7 @@ export default {
         }
 
         return (
-            <NResizer ref="column" class={classList} style={style} vModel={this.veWidth} {...props}>
+            <NResizer ref="column" class={classList} style={style} vModel={this.tempWidth} {...props}>
                 { this.ctor('renderHeadSort')() }
                 { this.ctor('renderHeadLabel')() }
                 { this.ctor('renderHeadFilter')() }
@@ -404,28 +408,30 @@ export default {
 
     renderBody(props)
     {
-        let classList = [];
+        let classList = [
+            'n-table-cell',
+            'n-table-cell--' + this.align,
+            'n-table-cell--' + this.type,
+        ];
 
-        classList.push('n-' + this.align);
-
-        if ( this.veFluid ) {
+        if ( this.fluid ) {
             classList.push('n-fluid');
         }
 
-        if ( this.veWidth ) {
+        if ( this.tempWidth ) {
             classList.push('n-fixed');
         }
 
-        let index = Arr.findIndex(this.NTable.veIntersection, this.prop);
+        let index = this.NTable.getColumnIndex(this);
 
         let offset = 0;
 
-        if ( ! index ) {
+        if ( index === 0 ) {
             offset = props.value.depth * this.NTable.itemOffset;
         }
 
         let style = {
-            width: (this.veWidth - offset) + 'px'
+            width: (this.tempWidth - offset) + 'px'
         };
 
         if ( this.minWidth ) {
@@ -436,12 +442,12 @@ export default {
             style.maxWidth = (this.maxWidth - offset) + 'px';
         }
 
-        if ( this.NTable.isHidden(this) ) {
+        if ( ! this.NTable.getColumnVisiblity(this) ) {
             style.display = 'none';
         }
 
-        let passed = Obj.except(props, [], {
-            class: classList, style: style, column: this
+        let passed = Obj.except(this.$attrs, [], {
+            ...props, class: classList, style: style, column: this
         });
 
         let component = resolveComponent('NTableCell' + 

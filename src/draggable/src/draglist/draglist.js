@@ -94,7 +94,7 @@ export default {
             }
         },
 
-        showEmpty: {
+        showEmptyIcon: {
             default()
             {
                 return true;
@@ -139,6 +139,13 @@ export default {
                 return 'children';
             },
             type: [String]
+        },
+
+        renderCurrent: {
+            default()
+            {
+                return true;
+            }
         },
 
         renderHandle: {
@@ -188,13 +195,6 @@ export default {
         },
 
         removeNode: {
-            default()
-            {
-                return true;
-            }
-        },
-
-        allowCurrent: {
             default()
             {
                 return true;
@@ -270,14 +270,14 @@ export default {
             visible: [], 
             childNodes: {}, 
             firstSelected: null, 
-            tempExpanded: [], 
-            tempSelected: []
+            tempCurrent: this.current, 
+            tempExpanded: this.expanded, 
+            tempSelected: this.selected
         };
     },
 
     beforeMount()
     {
-        // Draghandler in window schreiben, vue scheint die elements zu tauschen
         this.drag = new NDraghandler(this);
     },
 
@@ -316,6 +316,11 @@ export default {
         selected(value)
         {
             this.tempSelected = value;
+        },
+
+        current(value)
+        {
+            this.tempCurrent = value;
         }
 
     },
@@ -359,6 +364,94 @@ export default {
             return canDrag(node);
         },
 
+        isCurrent(node)
+        {
+            return this.renderCurrent && this.tempCurrent && 
+                node.value[this.uniqueProp] === this.tempCurrent[this.uniqueProp] ;
+        },
+
+        setCurrent(node)
+        {
+            let isSameNode = this.tempCurrent && 
+                this.tempCurrent[this.uniqueProp] === node.value[this.uniqueProp];
+
+            if ( isSameNode ) {
+                return;
+            }
+
+            this.$emit('update:current', 
+                this.tempCurrent = node.item);
+        },
+
+        setRawCurrent(index)
+        {
+            let item = Obj.get(this, this.visible[index]['route']);
+
+            if ( ! item ) {
+                return console.error('Cant set raw current: ' + index);
+            }
+
+            this.$refs.virtualscroller
+                .scrollIntoView(index);
+
+            this.$emit('update:current', 
+                this.tempCurrent = item);
+        },
+
+        setNextCurrent()
+        {
+            if ( ! this.visible.length ) {
+                return;
+            }
+
+            let reset = 0;
+
+            if ( ! this.tempCurrent ) {
+                return this.setRawCurrent(reset);
+            }
+
+            let index = Arr.findIndex(this.visible, {
+                [this.uniqueProp]: this.tempCurrent[this.uniqueProp]
+            });
+
+            if ( index !== -1 ) {
+                index++;
+            }
+
+            if ( index > this.visible.length ) {
+                index = reset;
+            }
+
+            this.setRawCurrent(index);
+        },
+
+        setPrevCurrent()
+        {
+            if ( ! this.visible.length ) {
+                return;
+            }
+
+            let reset = this.items.length - 1;
+
+            if ( ! this.tempCurrent ) {
+                return this.setRawCurrent(reset);
+            }
+
+            let index = Arr.findIndex(this.visible, {
+                [this.uniqueProp]: this.tempCurrent[this.uniqueProp]
+            });
+
+            if ( index !== -1 ) {
+                index--;
+            }
+
+            if ( index < 0 ) {
+                index = reset;
+            }
+            
+            this.setRawCurrent(index);
+        },
+
         isDisabled(node)
         {
             return this.firstSelected && 
@@ -387,6 +480,25 @@ export default {
             }
 
             Arr.toggle(this.tempExpanded, node.value[this.uniqueProp]);
+
+            this.filterVirtuals();
+        },
+
+        expandCurrent()
+        {
+            if ( ! this.tempCurrent ) {
+                return;
+            }
+
+            let children = Obj.get(this.tempCurrent, 
+                this.childProp);
+
+            if ( Any.isEmpty(children) ) {
+                return;
+            }
+
+            Arr.toggle(this.tempExpanded, 
+                this.tempCurrent[this.uniqueProp]);
 
             this.filterVirtuals();
         },
@@ -448,18 +560,47 @@ export default {
             if ( this.tempSelected.length ) {
                 this.$emit('update:selected', this.tempSelected = []);
             }
+        },
+
+        bindKeydown()
+        {
+            Dom.find(document).on('keydown', 
+                this.onKeydown, this._.uid)
+        },
+
+        unbindKeydown()
+        {
+            Dom.find(document).off('keydown', 
+                null, this._.uid)
+        },
+
+        onKeydown(event)
+        {
+            if ( event.which === 32 ) {
+                event.preventDefault();
+                event.stopPropagation();
+                this.expandCurrent();
+            }
+
+            if ( event.which === 38 ) {
+                event.preventDefault();
+                event.stopPropagation();
+                this.setPrevCurrent();
+            }
+
+            if ( event.which === 40 ) {
+                event.preventDefault();
+                event.stopPropagation();
+                this.setNextCurrent();
+            }
         }
 
     },
 
     renderEmpty()
     {
-        if ( ! this.showEmpty ) {
-            return null;
-        }
-
         return (
-            <NEmptyIcon class="n-draglist__empty">
+            <NEmptyIcon disabled={! this.showEmptyIcon} class="n-draglist__empty">
                  { this.$slots.empty && this.$slots.empty() || this.trans('No entries') }
             </NEmptyIcon>
         );
@@ -487,7 +628,9 @@ export default {
         }
 
         let props = Obj.only(this.$props, ['threshold', 'itemHeight'], {
-            items: this.visible
+            items: this.visible,
+            onMouseenter: this.bindKeydown,
+            onMouseleave: this.unbindKeydown
         });
 
         return (

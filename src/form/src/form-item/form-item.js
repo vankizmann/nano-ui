@@ -1,4 +1,4 @@
-import { Arr, Obj, Any, Dom } from "nano-js";
+import { Arr, Obj, Any, Dom, UUID } from "nano-js";
 
 export default {
 
@@ -100,6 +100,13 @@ export default {
 
     },
 
+    data()
+    {
+        return {
+            uid: UUID()
+        };
+    },
+
     beforeMount()
     {
         this.NForm.addItem(this);
@@ -107,10 +114,10 @@ export default {
 
     mounted()
     {
-        this.NForm.$on('errors', this.gotoInput);
+        // this.NForm.$on('errors', this.gotoInput);
     },
 
-    beforeDestroy()
+    beforeUnmount()
     {
         this.NForm.removeItem(this);
     },
@@ -163,14 +170,12 @@ export default {
         );
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
         return <div class="n-form-item">
             { this.ctor('renderLabel')() }
             <div class="n-form-item__input">
-                { this.$slots.default }
+                { this.$slots.default() }
             </div>
             { this.ctor('renderError')() }
         </div>;

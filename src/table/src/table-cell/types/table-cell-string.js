@@ -9,13 +9,8 @@ export default {
 
     render()
     {
-        let className = [
-            'n-table-cell',
-            'n-table-cell--' + this.column.type
-        ];
-
         return (
-            <div class={className}>
+            <div>
                 <span>{ Any.convertString(this.input, this.column.emptyText) }</span>
             </div>
         );

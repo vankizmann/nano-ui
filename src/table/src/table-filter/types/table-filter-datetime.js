@@ -1,5 +1,4 @@
 import TableFilter from "../table-filter";
-import { Any, Locale } from "nano-js";
 
 export default {
 
@@ -9,38 +8,36 @@ export default {
 
     methods: {
 
-        resetFilter()
+        getDefaultFilter()
         {
-            this.form.value = null;
-            this.form.operator = 'eq';
+            return {
+                type:       this.column.type, 
+                value:      null, 
+                operator:   'eq',
+                property:   this.getFilterProp(), 
+            };
         }
 
     },
 
-    data()
-    {
-        let defaults = {
-            property: this.column.filterProp, type: this.column.type, value: null, operator: 'eq'
-        };
-
-
-        return { form: this.getFilterProps(defaults) };
-    },
-
     renderForm()
     {
-        return <NForm form={this.form}>
-            <NFormItem>
-                <NDatepicker size="small" vModel={this.form.value} format2="YYYY-MM-DD"/>
-            </NFormItem>
-            <NFormItem>
-                <NSelect size="small" vModel={this.form.operator}>
-                    <NSelectOption value="eq" label={this.trans('Exact date')} />
-                    <NSelectOption value="lt" label={this.trans('Before date')} />
-                    <NSelectOption value="gt" label={this.trans('After date')} />
-                </NSelect>
-            </NFormItem>
-        </NForm>;
+        let options = {
+            eq: this.trans('Exact date'),
+            lt: this.trans('Before date'),
+            gt: this.trans('After date'),
+        };
+
+        return (
+            <NForm>
+                <NFormItem>
+                    <NDatepicker size="sm" vModel={this.filter.value} format={this.column.datetimeFormat} />
+                </NFormItem>
+                <NFormItem>
+                    <NSelect size="sm" vModel={this.filter.operator} options={options} />
+                </NFormItem>
+            </NForm>
+        );
     }
 
 }

@@ -17,6 +17,10 @@
     opacity: 0.3;
 }
 
+.n-empty-icon.n-disabled .n-empty-icon__frame {
+    display: none;
+}
+
 .n-empty-icon__frame:before {
     content: '\00a0';
     display: block;
@@ -47,10 +51,7 @@
     .n-empty-icon--#{$suffix} .n-empty-icon__frame {
         max-width: $-empty-icon-size * 2.6;
         max-height: $-empty-icon-size * 2.6;
-    }
-
-    .n-empty-icon--#{$suffix} .n-empty-icon__text {
-        margin-top: $-empty-icon-size * 0.3;
+        margin-bottom: $-empty-icon-size * 0.3;
     }
 
 }

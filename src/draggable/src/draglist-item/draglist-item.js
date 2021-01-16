@@ -53,6 +53,11 @@ export default {
             return this.NDraggable.isDisabled(this);
         },
 
+        isCurrent()
+        {
+            return this.NDraggable.isCurrent(this);
+        },
+
         isDraggable()
         {
             return this.NDraggable.isDraggable(this);
@@ -76,6 +81,20 @@ export default {
         selectItem()
         {
             this.NDraggable.selectItem(this);
+        },
+
+        onClick()
+        {
+            this.NDraggable.setCurrent(this);
+
+            this.NDraggable.$emit('row-click', this);
+        },
+
+        onDblclick()
+        {
+            this.NDraggable.setCurrent(this);
+
+            this.NDraggable.$emit('row-dblclick', this);
         }
 
     },
@@ -192,13 +211,13 @@ export default {
             classList.push('n-expanded');
         }
 
+        if ( this.isCurrent() ) {
+            classList.push('n-current');
+        }
+
         let props = {
-            onClick: () => {
-                this.NDraggable.$emit('row-click', this);
-            },
-            onDblclick: () => {
-                this.NDraggable.$emit('row-dblclick', this);
-            }
+            onClick: this.onClick,
+            onDblclick: this.onDblclick,
         };
 
         if ( ! this.NDraggable.handle && this.isDraggable() ) {

@@ -1,4 +1,4 @@
-import { Any, Arr, Obj, UUID } from "nano-js";
+import { Any, Arr, Obj, Event, UUID } from "nano-js";
 import { h, resolveComponent } from "vue";
 
 export default {
@@ -26,7 +26,7 @@ export default {
             type: [Array]
         },
 
-        visibleColumns: {
+        visible: {
             default()
             {
                 return [];
@@ -58,6 +58,14 @@ export default {
             type: [Array]
         },
 
+        filter: {
+            default()
+            {
+                return [];
+            },
+            type: [Array]
+        },
+
         sortProp: {
             default()
             {
@@ -72,22 +80,6 @@ export default {
                 return 'desc';
             },
             type: [String]
-        },
-
-        sortOnLabel: {
-            default()
-            {
-                return false;
-            },
-            type: [Boolean]
-        },
-
-        filterProps: {
-            default()
-            {
-                return [];
-            },
-            type: [Array]
         },
 
         closeFilterOnEnter: {
@@ -113,7 +105,7 @@ export default {
             }
         },
 
-        showEmpty: {
+        showEmptyIcon: {
             default()
             {
                 return true;
@@ -142,14 +134,6 @@ export default {
             {
                 return true;
             }
-        },
-
-        headerHeight: {
-            default()
-            {
-                return 40;
-            },
-            type: [Number]
         },
 
         uniqueProp: {
@@ -184,6 +168,13 @@ export default {
             type: [Boolean]
         },
 
+        renderCurrent: {
+            default()
+            {
+                return true;
+            }
+        },
+
         transformDrop: {
             default()
             {
@@ -210,13 +201,6 @@ export default {
             default()
             {
                 return () => true;
-            }
-        },
-
-        allowCurrent: {
-            default()
-            {
-                return true;
             }
         },
 
@@ -271,14 +255,14 @@ export default {
 
         checked()
         {
-            return !! this.veSelected.length &&
-                this.veSelected.length === this.items.length;
+            return !! this.tempSelected.length &&
+                this.tempSelected.length === this.items.length;
         },
 
         intermediate()
         {
-            return !! this.veSelected.length && 
-                this.veSelected.length !== this.items.length
+            return !! this.tempSelected.length && 
+                this.tempSelected.length !== this.items.length
         }
 
     },
@@ -287,140 +271,197 @@ export default {
     {
         return {
             uid: UUID(),
-            veColumns: [],
-            veFilterProps: this.filterProps,
-            veSortProp: this.sortProp,
-            veSortDir: this.sortDir,
-            veVisibleColumns: this.visibleColumns,
-            veIntersection: [],
-            veSelected: []
+            elements: [],
+            tempVisible: this.visible,
+            tempVisibleProps: [],
+            tempSelected: [],
+            tempSortProp: this.sortProp,
+            tempSortDir: this.sortDir,
+            tempFilter: this.filter,
+            tempFilterProps: [],
+        }
+    },
+
+    mounted()
+    {
+        this.$watch('tempVisible', 
+            this.makeVisibleProps, { deep: true });
+
+        if ( ! this.tempVisible.length ) {
+            Arr.each(this.elements, this.detectVisible);
         }
     },
 
     methods: {
 
-        scrollTo(y = 0)
-        {
-            this.$refs.list.scrollTo(y);
-        },
-
-        refreshCurrent()
-        {
-            this.$refs.list.refreshCurrent();
-        },
-
         addColumn(column)
         {
-            Arr.add(this.veColumns, column, {
-                prop: column._uid
-            });
+            Arr.add(this.elements, column, 
+                { uid: column.uid });
         },
 
         removeColumn(column)
         {
-            Arr.remove(this.veColumns, {
-                prop: column._uid
-            });
+            Arr.remove(this.elements, 
+                { uid: column.uid });
         },
 
-        showColumn(column)
+        getColumnIndex(column)
         {
             if ( ! Any.isString(column) ) {
                 column = column['prop'];
             }
 
-            Arr.add(this.veVisibleColumns, column);
-
-            this.$emit('update:visibleColumns', this.veVisibleColumns);
+            return Arr.findIndex(this.tempVisibleProps, 
+                column);
         },
 
-        hideColumn(column)
+        getColumnVisiblity(column)
         {
             if ( ! Any.isString(column) ) {
                 column = column.prop;
             }
 
-            Arr.remove(this.veVisibleColumns, column);
-
-            this.$emit('update:visibleColumns', this.veVisibleColumns);
+            return Arr.has(this.tempVisible, column);
         },
 
-        isHidden(column)
+        getColumnSorted(column)
         {
-            if ( ! Any.isString(column) ) {
-                column = column.prop;
+            let prop = column;
+
+            if ( ! Any.isString(prop) ) {
+                prop = column.sortProp;
             }
 
-            return ! Arr.has(this.veVisibleColumns, column);
+            if ( Any.isEmpty(prop) ) {
+                prop = column.prop;
+            }
+
+            if ( this.tempSortProp !== prop ) {
+                return null;
+            }
+
+            return this.tempSortDir;
         },
 
-        sortByColumn(prop)
+        getColumnFilter(column)
         {
-            let dir = this.veSortDir;
+            let prop = column;
 
-            if ( prop === this.veSortProp && this.veSortDir === 'desc' ) {
+            if ( ! Any.isString(prop) ) {
+                prop = column.filterProp;
+            }
+
+            if ( Any.isEmpty(prop) ) {
+                prop = column.prop;
+            }
+
+            return Arr.find(this.tempFilter, {
+                property: prop
+            });
+        },
+
+        getColumnFiltered(column)
+        {
+            let prop = column;
+
+            if ( ! Any.isString(prop) ) {
+                prop = column.filterProp;
+            }
+
+            if ( Any.isEmpty(prop) ) {
+                prop = column.prop;
+            }
+
+            return Arr.has(this.tempFilterProps, prop);
+        },
+
+        detectVisible(column)
+        {
+            if ( column.detectVisibity() ) {
+                Arr.add(this.tempVisible, column.prop);
+            }
+        },
+
+        makeVisibleProps()
+        {
+            this.tempVisibleProps = Arr.intersect(
+                Arr.extract(this.elements, 'prop'), this.tempVisible);
+        },
+
+        sortByColumn(column)
+        {
+            let prop = column;
+
+            if ( ! Any.isString(prop) ) {
+                prop = column.sortProp;
+            }
+
+            if ( Any.isEmpty(prop) ) {
+                prop = column.prop;
+            }
+
+
+            let dir = this.tempSortDir;
+
+            if ( prop === this.tempSortProp && this.tempSortDir === 'desc' ) {
                 dir = 'asc';
             }
 
-            if ( prop === this.veSortProp && this.veSortDir === 'asc' ) {
+            if ( prop === this.tempSortProp && this.tempSortDir === 'asc' ) {
                 dir = 'desc';
             }
 
-            if ( this.veSortDir !== dir ) {
-                this.$emit('update:sortDir', this.veSortDir = dir);
+            if ( this.tempSortDir !== dir ) {
+                this.$emit('update:sortDir', this.tempSortDir = dir);
             }
 
-            if ( this.veSortProp !== prop ) {
-                this.$emit('update:sortProp', this.veSortProp = prop);
+            if ( this.tempSortProp !== prop ) {
+                this.$emit('update:sortProp', this.tempSortProp = prop);
             }
 
-            this.$emit('sort', this.veSortProp, this.veSortDir);
+            this.$emit('sort', this.tempSortProp, this.tempSortDir);
         },
 
-        toggleSelected()
+        replaceFilter(filter, search)
         {
-            this.$refs.list.toggleAllItems(
-                this.$refs.list.isIntermediate(true)
-            );
+            Arr.replace(this.tempFilter, filter, search);
+
+            let filters = Arr.filter(this.tempFilter, (filter) => {
+                return Arr.has(this.tempFilterProps, filter.property);
+            });
+
+            this.$emit('update:filter', filters);
+
+            this.$emit('filter', filters, this.tempFilterProps);
         },
 
-        clearFilters()
+        resetFilter()
         {
-            this.veFilterProps = [];
+            this.tempFilter = this.tempFilterProps = [];
 
-            // Emit reset to filters
-            this.$emit('clearFilters');
+            Event.fire('NTable:reset', this.uid);
 
-            // Update prop
-            this.$emit('update:filterProps', this.veFilterProps);
+            this.$emit('update:filter', this.tempFilter);
 
-            // Emit filter to component
-            this.$emit('filter', this.veFilterProps);
+            this.$emit('filter', this.tempFilter, this.tempFilterProps);
         },
 
-        generateIntersection()
+        selectAll()
         {
-            let columnProps = Arr.extract(this.veColumns, 'prop');
-            
-            this.veIntersection = Arr.intersect(columnProps, 
-                this.veVisibleColumns);
-        }
+            this.$refs.draggable.selectAll();
+        },
 
-    },
+        // scrollTo(y = 0)
+        // {
+        //     this.$refs.draggable.scrollTo(y);
+        // },
 
-    mounted()
-    {
-        this.$watch('veVisibleColumns', 
-            this.generateIntersection, {deep: true});
+        refreshCurrent()
+        {
+            this.$refs.draggable.refreshCurrent();
+        },
 
-        if ( ! this.veVisibleColumns.length ) {
-            Arr.each(this.veColumns, (column) => column.detectVisibity());
-        }
-
-        // Any.delay(() => {
-        //     Arr.each(this.veColumns, (column) =>
-        //         column.bindAdaptWidth());
-        // }, 500);
     },
 
     renderExpand()
@@ -446,7 +487,7 @@ export default {
             modelValue: this.checked,
             intermediate: this.intermediate,
             disabled: ! this.items.length,
-            onClick: () => this.$refs.draggable.selectAll()
+            onClick: this.selectAll
         };
 
         return (
@@ -458,29 +499,27 @@ export default {
 
     renderBody(props)
     {
-        let result = Obj.each(this.veColumns, (column) => {
+        let columns = Obj.each(this.elements, (column) => {
             return column.ctor('renderBody')(props);
         });
 
-        return Obj.values(result);
+        return Obj.values(columns);
     },
 
     renderContext()
     {
-        let columnHtml = (
-            Obj.each(this.veColumns, (column) => {
-                return (
-                    <NCheckbox class="n-table__checkbox" value={column.prop}>
-                        { column.label }
-                    </NCheckbox>
-                );
-            })
-        );
+        let columns = Obj.each(this.elements, (column) => {
+            return (
+                <NCheckbox class="n-table__checkbox" value={column.prop}>
+                    { column.label }
+                </NCheckbox>
+            );
+        });
 
         return (
             <NPopover trigger="context" width={140}>
-                <NCheckboxGroup vModel={this.veVisibleColumns} align="vertical">
-                    { Obj.values(columnHtml) }
+                <NCheckboxGroup vModel={this.tempVisible} align="vertical">
+                    { Obj.values(columns) }
                 </NCheckboxGroup>
             </NPopover>
         );
@@ -494,22 +533,27 @@ export default {
             this.ctor('renderContext')()
         ];
 
-        let columnHtml = Obj.each(this.veColumns, (column) => {
+        let columns = Obj.each(this.elements, (column) => {
             return column.ctor('renderHead')();
         });
 
         return (
             <div class="n-table__header">
-                { defaultRender } { Obj.values(columnHtml) }
+                { defaultRender } { Obj.values(columns) }
             </div>
         );
     },
 
     render()
     {
-        let props = Obj.except(this.$props, [], {
+        let except = [
+            'visible', 'filter', 'sortProp', 
+            'sortDir', 'closeFilterOnEnter'
+        ];
+
+        let props = Obj.except(this.$props, except, {
             items: this.items, 
-            selected: this.veSelected,
+            selected: this.tempSelected,
             renderNode: this.ctor('renderBody')
         });
 
@@ -517,8 +561,16 @@ export default {
             this.$emit('update:items', value);
         }
 
+        props['onUpdate:current'] = (value) => {
+            this.$emit('update:current', value);
+        }
+
+        props['onUpdate:expanded'] = (value) => {
+            this.$emit('update:expanded', value);
+        }
+
         props['onUpdate:selected'] = (value) => {
-            this.$emit('update:selected', this.veSelected = value);
+            this.$emit('update:selected', this.tempSelected = value);
         }
         
         let draggableHtml = (

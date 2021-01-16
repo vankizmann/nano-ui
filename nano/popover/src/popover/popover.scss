@@ -152,7 +152,7 @@ $popover: (
     }
 
     .n-popover--#{$suffix} .n-popover__footer {
-        background: rgba($-popover-border, 0.65);
+        border-top: 1px solid $-popover-border;
     }
 
     .n-popover--#{$suffix} .n-popover-option {

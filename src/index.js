@@ -58,7 +58,7 @@ export function NanoInstall(App, Icons = {}, Styles = {})
     require('./virtualscroller/index').default(App);
     require('./draggable/index').default(App);
     // require('./loader/index'); //16.1
-    require('./resizer/index').default(App); //16.1
+    require('./resizer/index').default(App); //check
     require('./popover/index').default(App);
     require('./modal/index').default(App);
     require('./button/index').default(App); // group 14.1
@@ -73,10 +73,10 @@ export function NanoInstall(App, Icons = {}, Styles = {})
     require('./datepicker/index').default(App);
     require('./timepicker/index').default(App);
     // require('./datetimepicker/index'); 18.1
-    require('./transfer/index').default(App);
-    // require('./form/index'); // 16.1
+    require('./transfer/index').default(App); // check
+    require('./form/index').default(App); // check
     // require('./tabs/index'); // 16.1
-    require('./table/index').default(App);
+    require('./table/index').default(App); // check
     // require('./paginator/index'); // 16.1
     // require('./info/index'); //!complex 16.1
 
