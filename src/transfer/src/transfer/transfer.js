@@ -14,6 +14,22 @@ export default {
             type: [Array]
         },
 
+        size: {
+            default()
+            {
+                return 'md';
+            },
+            type: [String]
+        },
+
+        type: {
+            default()
+            {
+                return 'primary';
+            },
+            type: [String]
+        },
+
         options: {
             default()
             {
@@ -60,7 +76,7 @@ export default {
 
         sourceChecked()
         {
-            return this.selectedSource.length && 
+            return !! this.selectedSource.length && 
                 this.selectedSource.length === this.tempSource.length;
         },
 
@@ -72,7 +88,7 @@ export default {
 
         targetChecked()
         {
-            return this.selectedTarget.length && 
+            return !! this.selectedTarget.length && 
                 this.selectedTarget.length === this.tempTarget.length;
         },
 
@@ -245,6 +261,8 @@ export default {
     {
         let props = {
             modelValue: this.sourceChecked,
+            size: this.size,
+            type: this.type,
             intermediate: this.sourceIntermediate,
             disabled: ! this.tempSource.length
         };
@@ -295,6 +313,8 @@ export default {
     {
         let props = {
             placeholder: this.trans('Search item'),
+            size: this.size,
+            type: this.type,
             icon: this.icons.times,
             iconDisabled: ! this.sourceSearch
         };
@@ -320,6 +340,8 @@ export default {
             group: [this.uid + 'source'],
             allowGroups: [this.uid + 'target'],
             items: this.tempSource,
+            size: this.size,
+            type: this.type,
             renderSelect: true,
             selected: this.selectedSource,
             safezone: () => -10,
@@ -333,9 +355,7 @@ export default {
         };
 
         return (
-            <div class="n-transfer__body">
-                <NDraglist ref="source" {...props} />
-            </div>
+            <NDraglist ref="source" class="n-transfer__body" {...props} />
         );
     },
 
@@ -343,6 +363,8 @@ export default {
     {
         let props = {
             modelValue: this.targetChecked,
+            size: this.size,
+            type: this.type,
             intermediate: this.targetIntermediate,
             disabled: ! this.tempTarget.length
         };
@@ -393,6 +415,8 @@ export default {
     {
         let props = {
             placeholder: this.trans('Search item'),
+            size: this.size,
+            type: this.type,
             icon: this.icons.times,
             iconDisabled: ! this.targetSearch
         };
@@ -418,6 +442,8 @@ export default {
             group: [this.uid + 'target'],
             allowGroups: [this.uid + 'source'],
             items: this.tempTarget,
+            size: this.size,
+            type: this.type,
             renderSelect: true,
             selected: this.selectedTarget,
             safezone: () => -1,
@@ -431,9 +457,7 @@ export default {
         };
 
         return (
-            <div class="n-transfer__body">
-                <NDraglist ref="target" {...props} />
-            </div>
+            <NDraglist ref="target" class="n-transfer__body" {...props} />
         );
     },
 
@@ -451,6 +475,8 @@ export default {
     {
         let props = {
             disabled: ! this.selectedSource.length,
+            size: this.size,
+            type: this.type,
             square: true, 
             icon: this.icons.angleRight,
             onClick: this.moveToTarget
@@ -468,6 +494,8 @@ export default {
     {
         let props = {
             disabled: ! this.selectedTarget.length,
+            size: this.size,
+            type: this.type,
             square: true, 
             icon: this.icons.angleLeft,
             onClick: this.moveToSource
@@ -483,9 +511,15 @@ export default {
 
     render($render)
     {
+        let classList = [
+            'n-transfer',
+            'n-transfer--' + this.size,
+            'n-transfer--' + this.type,
+        ]
+
         return (
-            <div class="n-transfer">
-                <div class="n-transfer__pane">
+            <div class={classList}>
+                <div class="n-transfer__panel">
                     { this.ctor('renderSourceHeader')() }
                     { this.ctor('renderSourceSearch')() }
                     { this.ctor('renderSourceBody')() }
@@ -494,7 +528,7 @@ export default {
                     { this.ctor('renderMoveSource')() }
                     { this.ctor('renderMoveTarget')() }
                 </div>
-                <div class="n-transfer__pane">
+                <div class="n-transfer__panel">
                     { this.ctor('renderTargetHeader')() }
                     { this.ctor('renderTargetSearch')() }
                     { this.ctor('renderTargetBody')() }

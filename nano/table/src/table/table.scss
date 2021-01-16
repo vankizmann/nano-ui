@@ -3,23 +3,54 @@
 $table-row-height: 40px !default;
 
 .n-table {
+    overflow: hidden;
     position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
     border-radius: $radius-medium;
-    border: 1px solid $--color-gray-10;
+    border: 1px solid $--color-gray-15;
 }
 
 .n-table > .n-scrollbar,
 .n-table > .n-scrollbar > .n-scrollbar-content,
-.n-table > .n-scrollbar > .n-scrollbar-content > .n-scrollbar__wrap,
-.n-table > .n-scrollbar > .n-scrollbar-content > .n-scrollbar__wrap > .n-scrollbar {
+.n-table > .n-scrollbar > .n-scrollbar-content > .n-scrollbar__wrap {
+    min-width: 100%;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
+}
+
+.n-table .n-draglist-item {
+    border-bottom: 1px solid $color-gray-10;
+}
+
+.n-table .n-draglist-item__handle,
+.n-table .n-draglist-item__select,
+.n-table .n-draglist-item__expand {
+    width: 32px;
+}
+
+.n-table__checkbox .n-checkbox__label{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.n-table__body {
+    overflow: hidden;
+    flex: 1 1 auto;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.n-table__body > .n-scrollbar {
+    flex: 1 1 auto;
 }
 
 .n-table .n-draglist-item__element {
@@ -31,25 +62,21 @@ $table-row-height: 40px !default;
 //     width: auto;
 // }
 
-// .n-table .n-table__wrap {
-//     display: flex;
-//     flex-direction: row;
-//     align-items: stretch;
-//     justify-content: stretch;
-//     margin-right: -1px;
-//     margin-bottom: -1px;
-// }
-
-.n-table .n-table__inner {
-    overflow: hidden;
-    min-width: 0;
-    flex: 1 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: stretch;
+.n-table .n-table__wrap {
+    margin-right: -1px;
+    margin-bottom: -1px;
 }
 
-.n-table .n-table__head {
+// .n-table .n-table__inner {
+//     overflow: hidden;
+//     min-width: 0;
+//     flex: 1 0 auto;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: stretch;
+// }
+
+.n-table .n-table__header {
     position: relative;
     flex: 0 0 auto;
     min-width: 0;
@@ -58,28 +85,24 @@ $table-row-height: 40px !default;
     flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
-    border-bottom: 1px solid $--color-gray-10;
+    border-bottom: 1px solid $--color-gray-15;
     box-shadow: 0 0 3px rgba($color-black, 0.1);
 }
 
-.n-table .n-table__body {
-    min-width: 0;
-    flex: 1 0 auto;
-}
+// .n-table .n-table__body {
+//     min-width: 0;
+//     flex: 1 0 auto;
+// }
 
-.n-table .n-table__body .n-scrollbar-v {
-    right: 1px;
-}
+// .n-table .n-table__body.n-empty {
+//     flex: 1 1 auto;
+// }
 
-.n-table .n-table__body.n-empty {
-    flex: 1 1 auto;
-}
+// .n-table .n-table__body .n-draglist-item,
+// .n-table .n-table__body .n-virtualscroller__item {
+//     border-bottom: 1px solid $--color-gray-10;
+// }
 
-.n-table .n-table__body .n-draglist-item,
-.n-table .n-table__body .n-virtualscroller__item {
-    border-bottom: 1px solid $--color-gray-10;
-}
-
-.n-table .n-draglist-item__select {
-    width: 35px;
-}
+// .n-table .n-draglist-item__select {
+//     width: 35px;
+// }

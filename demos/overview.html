@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="../dist/nano-ui.css">
 
     <script src="https://unpkg.com/vue@next"></script>
-    <script src="https://vankizmann.github.io/nano-js/dist/nano-js.js"></script>
+    <script src="../node_modules/nano-js/dist/nano-js.js"></script>
+    <!-- <script src="https://vankizmann.github.io/nano-js/dist/nano-js.js"></script> -->
     <script src="../dist/nano-ui.js"></script>
 
     <link rel="stylesheet" href="../docs/dist/index.css">
@@ -22,6 +23,10 @@
         body {
             font-family: 'Helvetica', 'Roboto', 'Arial', sans-serif;
             font-size: 14px;
+        }
+
+        #app {
+            overflow-x: hidden;
         }
 
         .app-scrollbar {
@@ -549,15 +554,20 @@
             </n-draglist>
         </template>
 
+        <h2>NResizer</h2>
+
+        <div style="display: flex; flex-direction: row;">
+            <n-resizer style="width: 60%; height: 200px; flex: 1 1 auto; background: #eee;">
+                Resizercontent
+            </n-resizer>
+        </div>
+
         <h2>NTable</h2>
 
-        <n-table v-model:items="virtualData">
+        <n-table v-if="true" v-model:items="virtualTree" :render-expand="true">
+            <n-table-column label="TestLabel asd asd ad asdasddas" type="string" prop="label" align="center" :sort="true" :filter="true"></n-table-column>
             <n-table-column label="TestValue" type="string" prop="value"></n-table-column>
-            <n-table-column label="TestLabel" type="string" prop="label"></n-table-column>
-            <n-table-column label="TestValue" type="string" prop="value"></n-table-column>
-            <n-table-column label="TestLabel" type="string" prop="label"></n-table-column>  
-            <n-table-column label="TestValue" type="string" prop="value"></n-table-column>
-            <n-table-column label="TestLabel" type="string" prop="label"></n-table-column>
+            <n-table-column label="TestId" type="string" prop="id"></n-table-column>
         </n-table>
         
     </div>
@@ -613,7 +623,7 @@
 
             data.virtualData = itemGenerator(10000);
 
-            data.virtualTree = Nano.Arr.each(itemGenerator(1000), function (item) {
+            data.virtualTree = Nano.Arr.each(itemGenerator(100), function (item) {
                 return Nano.Obj.assign(item, { children: itemGenerator(20) });
             });
 

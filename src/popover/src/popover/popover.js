@@ -12,6 +12,14 @@ export default {
         };
     },
 
+    inject: {
+
+        NPopover: {
+            default: undefined
+        }
+
+    },
+
     props: {
 
         modelValue: {
@@ -129,7 +137,8 @@ export default {
             tempValue: false,
             clientX: 0,
             clientY: 0,
-            target: null
+            target: null,
+            prevent: false,
         };
     },
 
@@ -198,12 +207,26 @@ export default {
 
         close(scrollClose = false)
         {
+            if ( this.prevent ) {
+                return;
+            }
+
             if ( scrollClose ) {
                 this.$emit('scrollClose');
             }
 
             this.$emit('update:modelValue', 
                 this.tempValue = false);
+        },
+
+        pause()
+        {
+            this.prevent = true;
+        },
+
+        unpause()
+        {
+            this.prevent = false;
         },
 
         onCloseEvent(uid)
@@ -231,15 +254,27 @@ export default {
             this.refresh = setInterval(this.updatePosition, 
                 1000 / this.framerate);
 
-            Any.delay(() => {
+            let onReady = () => {
+
                 Dom.find(this.$el).addClass('n-ready');
+
+                if ( this.NPopover ) {
+                    this.NPopover.pause();
+                }
+
                 Event.fire('NPopover:close', this._.uid);
-            }, 100);
+            }
+
+            Any.delay(onReady, 100);
         },
 
         stopRefreshInterval()
         {
             clearInterval(this.refresh);
+
+            if ( this.NPopover ) {
+                this.NPopover.unpause();
+            }
 
             Dom.find(this.$el).removeClass('n-ready');
         },
@@ -595,12 +630,14 @@ export default {
 
             let result = (!! target || !! source);
 
+            if ( result ) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
             if ( this.tempValue === result ) {
                 return;
             }
-
-            event.preventDefault();
-            event.stopPropagation();
 
             this.$emit('update:modelValue', this.tempValue = result);
         },

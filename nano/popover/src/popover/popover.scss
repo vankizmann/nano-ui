@@ -94,15 +94,15 @@ $popover: (
     $-popover-padding: $-popover-size * $-popover-ratio;
 
     .n-popover--#{$suffix} .n-popover__header {
-        padding: $-popover-padding * 0.5 $-popover-padding;
+        padding: $-popover-padding * 0.7 $-popover-padding;
     }
     
     .n-popover--#{$suffix} .n-popover__body {
-        padding: $-popover-padding * 0.5 $-popover-padding;
+        padding: $-popover-padding * 0.7 $-popover-padding;
     }
     
     .n-popover--#{$suffix} .n-popover__footer {
-        padding: $-popover-padding * 0.5 $-popover-padding;
+        padding: $-popover-padding * 0.7 $-popover-padding;
     }
 
     .n-popover-option.n-popover-option--#{$suffix} {
@@ -114,11 +114,11 @@ $popover: (
     }
 
     .n-popover--#{$suffix} .n-popover__body .n-popover-option:first-child {
-        margin-top: -#{$-popover-padding * 0.5};
+        margin-top: -#{$-popover-padding * 0.7};
     }
 
     .n-popover--#{$suffix}  .n-popover__body .n-popover-option:last-child {
-        margin-bottom: -#{$-popover-padding * 0.5};
+        margin-bottom: -#{$-popover-padding * 0.7};
     }
 
     .n-popover-option--#{$suffix} .n-icon {

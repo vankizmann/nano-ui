@@ -30,10 +30,18 @@ export default {
             type: [Boolean]
         },
 
+        fixture: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         framerate: {
             default()
             {
-                return 15;
+                return 5;
             },
             type: [Number]
         },
@@ -45,6 +53,57 @@ export default {
             }
         }
 
+    },
+
+    mounted()
+    {
+        this.bindAdaptHeight();
+        this.bindAdaptWidth();
+        this.bindOptiscroll();
+
+        Event.bind('NScrollbar:resize',
+            this.onResize, this._.uid);
+
+        Event.bind('NResizer:moved',
+            Any.debounce(this.onUpdate, 200), this._.uid);
+
+        Dom.find(window).on('resize', 
+            Any.debounce(this.onResize, 500), this._.uid);
+
+        Dom.find(this.$el).on('sizechange', 
+            this.onSizechange, this._.uid);
+
+        Dom.find(this.$el).on('scroll', 
+            this.onScroll, this._.uid);
+    },
+
+    updated()
+    {
+        if ( this.optiscroll ) {
+            Dom.find(this.$el).addClass('is-enabled');
+        }
+    },
+
+    beforeUnmount()
+    {
+        this.unbindAdaptHeight();
+        this.unbindAdaptWidth();
+        this.unbindOptiscroll();
+
+        Event.unbind('NScrollbar:resize', 
+            this._.uid);
+
+        Event.unbind('NResizer:moved', 
+            this._.uid);
+
+        Dom.find(window).off('resize', 
+            null, this._.uid);
+
+        Dom.find(this.$el).off('sizechange', 
+            null, this._.uid);
+
+        Dom.find(this.$el).off('scroll', 
+            null, this._.uid);
     },
 
     methods: {
@@ -110,24 +169,72 @@ export default {
                 this.passedHeight = height;
             }
 
+            let style = {
+                height: height + 'px'
+            };
+
+            if ( this.fixture ) {
+                Dom.find(this.$refs.content).child().css(style);
+            }
+
             if ( ! this.relative ) {
                 return Any.delay(this.onSizechange, 100);
             }
 
-            Dom.find(this.$refs.spacer).child().css({
-                height: height + 'px'
-            });
+            Dom.find(this.$refs.spacer).child().css(style);
         },
 
         bindAdaptHeight()
         {
-            this.refresh = setInterval(this.adaptHeight, 
+            this.refreshHeight = setInterval(this.adaptHeight, 
                 1000 / this.framerate);
         },
 
         unbindAdaptHeight()
         {
-            clearInterval(this.refresh);
+            clearInterval(this.refreshHeight);
+        },
+
+        adaptWidth()
+        {
+            let width = Dom.find(this.$refs.content)
+                .child().width();
+
+            let window = Dom.find(this.$el)
+                .width();
+
+            if ( width === this.passedWidth ) {
+                return;
+            }
+
+            if ( window ) {
+                this.passedWidth = width;
+            }
+
+            let style = {
+                width: width + 'px'
+            };
+
+            if ( this.fixture ) {
+                Dom.find(this.$refs.content).child().css(style);
+            }
+
+            if ( ! this.relative ) {
+                return Any.delay(this.onSizechange, 100);
+            }
+
+            Dom.find(this.$refs.spacer).child().css(style);
+        },
+
+        bindAdaptWidth()
+        {
+            this.refreshWidth = setInterval(this.adaptWidth, 
+                1000 / this.framerate);
+        },
+
+        unbindAdaptWidth()
+        {
+            clearInterval(this.refreshWidth);
         },
 
         onScroll(event)
@@ -149,30 +256,58 @@ export default {
             this.$emit('sizechange', height);
         },
 
-    },
+        onResize(event)
+        {
+            if ( ! this.fixture ) {
+                return;
+            }
 
-    mounted()
-    {
-        this.bindAdaptHeight();
-        this.bindOptiscroll();
+            let $child = Dom.find(this.$refs.content)
+                .child();
 
-        Dom.find(this.$el).on('sizechange', 
-            this.onSizechange, this._.uid);
+            let height = $child.realHeight();
 
-        Dom.find(this.$el).on('scroll', 
-            this.onScroll, this._.uid);
-    },
+            if ( height !== this.passedHeight ) {
+                $child.css({ height: height + 'px' });
+            }
 
-    beforeUnmount()
-    {
-        this.unbindAdaptHeight();
-        this.unbindOptiscroll();
+            let width = $child.realWidth();
 
-        Dom.find(this.$el).off('sizechange', 
-            null, this._.uid);
+            if ( width !== this.passedWidth ) {
+                $child.css({ width: width + 'px' });
+            }
 
-        Dom.find(this.$el).off('scroll', 
-            null, this._.uid);
+            this.$nextTick(() => {
+                Dom.find(this.$el).fire('resized');
+            });
+        },
+
+        onUpdate()
+        {
+            if ( ! this.fixture ) {
+                return;
+            }
+
+            let $child = Dom.find(this.$refs.content)
+                .child();
+
+            let height = $child.actual(() => {
+                return $child.scrollHeight();
+            });
+
+            if ( height !== this.passedHeight ) {
+                $child.css({ height: height + 'px' });
+            }
+
+            let width = $child.actual(() => {
+                return $child.scrollWidth();
+            });
+
+            if ( width !== this.passedWidth ) {
+                $child.css({ width: width + 'px' });
+            }
+        }
+
     },
 
     render()
@@ -180,12 +315,6 @@ export default {
         let classList = [
             'n-scrollbar'
         ];
-
-        console.log(this.optiscroll)
-
-        // if ( this.optiscroll ) {
-        //     classList.push('is-enabled');
-        // }
 
         return (
             <div class={classList} {...Obj.except(this.$attrs, ['class'])}>

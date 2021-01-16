@@ -1,9 +1,5 @@
 @import "../../../root/vars";
 
-.n-draglist.n-empty.n-dragover {
-    background: rgba($color-primary, 0.075);
-}
-
 .n-draglist__empty {
     margin: auto;
 }
@@ -15,10 +11,6 @@
     align-items: stretch;
     justify-content: stretch;
     width: 100%;
-}
-
-.n-draglist-item.n-dragover {
-    background: rgba($color-primary, 0.075);
 }
 
 .n-draglist-item.n-nodrop {
@@ -36,11 +28,12 @@
 .n-draglist-item__handle,
 .n-draglist-item__expand,
 .n-draglist-item__select {
+    flex: 0 0 auto;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 30px;
+    width: 28px;
 }
 
 .n-draglist-item__ellipsis,
@@ -71,12 +64,6 @@
 .n-draglist-item__checkbox {
     background: $color-white;
     border: 1px solid $color-gray-15;
-}
-
-.n-draglist-item.n-selected .n-draglist-item__checkbox {
-    color: $color-white;
-    background: $color-primary;
-    border-color: $color-primary;
 }
 
 .n-draglist-item.n-disabled .n-draglist-item__checkbox {
@@ -119,6 +106,33 @@
 
     .n-draglist--#{$suffix} .n-draglist-item__checkbox {
         font-size: $-draglist-font - 4;
+    }
+
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+    .n-draglist--#{$color}.n-empty.n-dragover {
+        background: rgba($-color-base, 0.075);
+    }
+
+    .n-draglist--#{$color} .n-draglist-item.n-dragover {
+        background: rgba($-color-base, 0.075);
+    }
+
+    .n-draglist--#{$color} .n-draglist-item.n-selected .n-draglist-item__checkbox {
+        color: $color-white;
+        background: $-color-base;
+        border-color: $-color-base;
+    }
+
+    .n-draglist--#{$color} .n-draglist-item.n-selected .n-draglist-item__checkbox:hover {
+        background: $-color-light;
+        border-color: $-color-light;
     }
 
 }

@@ -173,7 +173,7 @@ export default {
         fluid: {
             default()
             {
-                return false;
+                return true;
             },
             type: [Boolean]
         },
@@ -259,7 +259,6 @@ export default {
     {
         return {
             veWidth: 0,
-            veValue: this.value,
             veVisible: this.visible,
             veFluid: this.fluid,
         };
@@ -267,26 +266,12 @@ export default {
 
     methods: {
 
-        bindAdaptWidth()
-        {
-            if ( ! this.$refs.column ) {
-                return Any.delay(this.bindAdaptWidth, 10);
-            }
-
-            // Disable fluid after fist run
-            this.veFluid = false;
-
-            // Bind mounted hook to get real sizes
-            this.$refs.column.refresh();
-        },
-
         detectVisibity()
         {
             let visible = this.visible;
 
             if ( this.breakpoint ) {
-                visible &= this.NTable.$el.innerWidth
-                    > this.breakpoint;
+                visible &= this.NTable.$el.innerWidth > this.breakpoint;
             }
 
             if ( visible ) {
@@ -300,24 +285,6 @@ export default {
                 this.NTable.sortByColumn(this.prop);
             }
         },
-
-        eventResizerInput(value)
-        {
-            this.veWidth = value || this.width;
-
-            this.$nextTick(() => this.NTable.$emit('hook:resized'));
-        }
-
-    },
-
-    watch: {
-
-        value()
-        {
-            if ( this.value !== this.veValue ) {
-                this.veValue = this.value;
-            }
-        }
 
     },
 
@@ -338,16 +305,11 @@ export default {
         ];
 
         if ( this.NTable.veSortProp === this.prop ) {
-            classList.push('is-sorted');
-            classList.push('is-' + this.NTable.veSortDir);
+            classList.push('is-sorted', 'is-' + this.NTable.veSortDir);
         }
 
         if ( this.veFluid ) {
             classList.push('n-fluid');
-        }
-
-        if ( this.veWidth ) {
-            classList.push('n-fixed');
         }
 
         let filterIndex = Arr.findIndex(this.NTable.filterProps, {
@@ -358,36 +320,25 @@ export default {
             classList.push('n-filtered');
         }
 
-        let width = this.veWidth;
+        let style = {};
 
-        if ( ! this.veWidth ) {
-            width = this.width;
-        }
-
-        let style = {
-            width: width + 'px',
-            minWidth: this.minWidth + 'px',
-            maxWidth: this.maxWidth + 'px'
-        };
-
-        if ( this.NTable.columnHidden(this) ) {
+        if ( this.NTable.isHidden(this) ) {
             style.display = 'none';
         }
 
         let props = {
-            width: this.veWidth,
             minWidth: this.minWidth,
             maxWidth: this.maxWidth,
             disabled: !! this.fixedWidth,
-            bootRefresh: false
+            group: [this.NTable.uid],
         };
 
-        let events = {
-            input: this.eventResizerInput
-        };
+        if ( this.sort ) {
+            props.onClick = this.sortByColumn;
+        }
 
         return (
-            <NResizer ref="column" class={classList} style={style} props={props} on={events}>
+            <NResizer ref="column" class={classList} style={style} vModel={this.veWidth} {...props}>
                 { this.ctor('renderHeadSort')() }
                 { this.ctor('renderHeadLabel')() }
                 { this.ctor('renderHeadFilter')() }
@@ -397,40 +348,23 @@ export default {
 
     renderHeadLabel()
     {
-        if ( ! this.boundaryEl ) {
-            this.boundaryEl = Dom.find(this.NTable.$el)
-                .find('.n-table__inner').get(0);
-        }
-
-        let events = {};
-
-        if ( this.sort && this.NTable.sortOnLabel ) {
-            events.click = this.sortByColumn;
-        }
-
         let classList = [
             'n-table-column__label'
         ];
 
-        if ( this.sort && this.NTable.sortOnLabel ) {
-            classList.push('n-table-column__label--sort')
-        }
-
         let labelHtml = (
-            <div class={classList} on={events}>
-                { this.label }
+            <div class={classList}>
+                <span>{ this.label }</span>
             </div>
         );
 
-        let tooltipHtml = (
-            <NPopover type="tooltip" boundary={this.boundaryEl}>
-                { this.tooltip }
-            </NPopover>
-        );
-
         if ( Any.isEmpty(this.tooltip) ) {
-            tooltipHtml = null;
+            return labelHtml;
         }
+
+        let tooltipHtml = (
+            <NPopover type="tooltip">{ this.tooltip }</NPopover>
+        );
 
         return [labelHtml, tooltipHtml];
     },
@@ -441,15 +375,9 @@ export default {
             return null;
         }
 
-        let events = {};
-
-        if ( this.sort ) {
-            events.click = this.sortByColumn;
-        }
-
         return (
-            <div class="n-table-column__sort" on={events}>
-                <div></div>
+            <div class="n-table-column__sort">
+                <i>{ /* Sorting angles */ }</i>
             </div>
         )
     },
@@ -460,53 +388,23 @@ export default {
             return null;
         }
 
-        let componentName = 'NTableFilter' + Str.ucfirst(this.type);
-
-        let props = {
-            column: this
-        };
-
         let angleHtml = (
             <div class="n-table-column__filter">
-                <div><span class={this.icons.angleDown}></span></div>
+                <i class={this.icons.angleDown}></i>
             </div>
         );
 
+        let component = resolveComponent('NTableFilter' + 
+            Str.ucfirst(this.type));
+
         return [
-            angleHtml, resolveComponent(componentName, { props })
+            angleHtml, h(component, { column: this })
         ];
     },
 
     renderBody(props)
     {
-        let passed = Obj.except(props, [], {
-            column: this
-        });
-
-        let componentName = 'NTableCell' + Str.ucfirst(this.type);
-
-
-        let componentInstance = resolveComponent(componentName);
-
-        return h(componentInstance, passed);
-
-
-        if ( ! this.veWidth ) {
-            return null;
-        }
-
-        let NDraggable = this.NTable.$refs.list;
-
-        let remote = Arr.find(NDraggable.veItems, {
-            [NDraggable.uniqueProp]: props.value[NDraggable.uniqueProp]
-        });
-
-        
-
-        let classList = [
-            'n-table-column',
-            'n-table-column--' + this.type
-        ];
+        let classList = [];
 
         classList.push('n-' + this.align);
 
@@ -518,39 +416,38 @@ export default {
             classList.push('n-fixed');
         }
 
-        let index = Arr.findIndex(this.NTable.veColumns, {
-            prop: this.prop
-        });
+        let index = Arr.findIndex(this.NTable.veIntersection, this.prop);
 
-        let width = this.veWidth;
+        let offset = 0;
 
         if ( ! index ) {
-            width -= remote.depth * this.NTable.itemOffset;
+            offset = props.value.depth * this.NTable.itemOffset;
         }
 
         let style = {
-            width: width + 'px',
+            width: (this.veWidth - offset) + 'px'
         };
 
-        if ( index ) {
-            style.minWidth = this.minWidth + 'px';
+        if ( this.minWidth ) {
+            style.minWidth = (this.minWidth - offset) + 'px';
         }
 
-        if ( this.NTable.columnHidden(this) ) {
+        if ( this.maxWidth ) {
+            style.maxWidth = (this.maxWidth - offset) + 'px';
+        }
+
+        if ( this.NTable.isHidden(this) ) {
             style.display = 'none';
         }
 
-        let getTarget = () => {
-            return this.NDraggable.getTarget(props.value);
-        };
+        let passed = Obj.except(props, [], {
+            class: classList, style: style, column: this
+        });
 
-        props = Obj.assign(props, { column: this, getTarget });
+        let component = resolveComponent('NTableCell' + 
+            Str.ucfirst(this.type));
 
-        return (
-            <div class={classList} style={style}>
-                { this.$slots.default ? this.$slots.default(props) : resolveComponent(componentName, { props }) }
-            </div>
-        );
+        return h(component, passed);
     },
 
     render()

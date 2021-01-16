@@ -22,9 +22,9 @@ export default {
 
         eventKeydown(event)
         {
-            if ( ! this.$refs.popover || ! this.$refs.popover.active() ) {
-                return;
-            }
+            // if ( ! this.$refs.popover || ! this.$refs.popover.active() ) {
+            //     return;
+            // }
 
             if ( event.which === 13 ) {
                 this.applyFilter();
@@ -119,29 +119,23 @@ export default {
 
     mounted()
     {
-        this.NTable.$on('clearFilters', () => {
+        // this.NTable.$on('clearFilters', () => {
 
-            // Reset values
-            this.resetFilter();
+        //     // Reset values
+        //     this.resetFilter();
 
-            // Update applied state
-            this.veApplied = false;
-        });
+        //     // Update applied state
+        //     this.veApplied = false;
+        // });
 
-        let ident = {
-            _uid: this.uid
-        };
-
-        Dom.find(document).on('keydown', this.eventKeydown, ident);
+        Dom.find(document).on('keydown', 
+            this.eventKeydown, this._.uid);
     },
 
-    beforeDestroy()
+    beforeUnmount()
     {
-        let ident = {
-            _uid: this.uid
-        };
-
-        Dom.find(document).off('keydown', null, ident);
+        Dom.find(document).off('keydown', 
+            null, this._.uid);
     },
 
     renderForm()
@@ -182,21 +176,15 @@ export default {
 
     render()
     {
-        // Disabled maybe use this at some point
-        if ( ! this.boundaryEl && false ) {
-            this.boundaryEl = Dom.find(this.NTable.$el)
-                .find('.n-table__inner').get(0);
-        }
-
         return (
-            <NPopover ref="popover" type="filter" trigger="click" boundary={this.boundaryEl}>
-                <template slot="default">
-                    { this.ctor('renderForm')() }
-                </template>
-                <template slot="footer">
-                    { this.ctor('renderReset')() }
-                    { this.ctor('renderApply')() }
-                </template>
+            <NPopover ref="popover" trigger="click" size="sm">
+                {
+                    {
+                        default: [
+                            this.ctor('renderForm')()
+                        ]
+                    }
+                }
             </NPopover>
         );
     }

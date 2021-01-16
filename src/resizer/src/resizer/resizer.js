@@ -4,13 +4,17 @@ export default {
 
     name: 'NResizer',
 
-    model: {
-        prop: 'width'
+    inject: {
+
+        NScrollbar: {
+            default: undefined
+        }
+
     },
 
     props: {
 
-        width: {
+        modelValue: {
             default()
             {
                 return 0;
@@ -21,7 +25,7 @@ export default {
         minWidth: {
             default()
             {
-                return 0;
+                return 60;
             },
             type: [Number]
         },
@@ -34,6 +38,14 @@ export default {
             type: [Number]
         },
 
+        group: {
+            default()
+            {
+                return [];
+            },
+            type: [Array]
+        },
+
         disabled: {
             default()
             {
@@ -42,10 +54,10 @@ export default {
             type: [Boolean]
         },
 
-        resizerPosition: {
+        position: {
             default()
             {
-                return 'end';
+                return 'right';
             },
             type: [String]
         },
@@ -53,17 +65,9 @@ export default {
         resizerWidth: {
             default()
             {
-                return 5;
+                return 8;
             },
             type: [Number]
-        },
-
-        bootRefresh: {
-            default()
-            {
-                return true;
-            },
-            type: [Boolean]
         }
 
     },
@@ -71,43 +75,124 @@ export default {
     data()
     {
         return {
-            veWidth: this.width
+            sizeFixed: false,
+            tempValue: this.modelValue,
         };
+    },
+
+    mounted()
+    {
+        if ( ! this.modelValue ) {
+            this.updateWidth();
+        }
+
+        if ( this.NScrollbar ) {
+            this.bindSizechange();
+        }
+
+        Event.bind('NResizer:move', 
+            this.forceWidth, this._.uid);
+    },
+
+    updated()
+    {
+        this.updateWidth();
+    },
+
+    unmounted()
+    {
+        if ( this.NScrollbar ) {
+            this.unbindSizechange();
+        }
+
+        Event.unbind('NResizer:move', 
+            this._.uid);
     },
 
     methods: {
 
-        refresh()
+        forceWidth(group)
         {
-            if ( ! this.$el ) {
-                return Any.delay(this.refresh, 50);
+            if ( ! Arr.has(group, this.group) ) {
+                return;
             }
-
-            let veWidth = Dom.find(this.$el).width();
-
-            if ( this.veWidth ) {
+            
+            if ( ! this.tempValue || ! this.group.length ) {
                 return;
             }
 
-            this.$emit('input', this.veWidth = veWidth);
+            this.sizeFixed = true;
+
+            let style = {
+                width: this.tempValue + 'px', flex: '0 0 auto'
+            };
+
+            Dom.find(this.$el).css(style);
         },
 
-        eventResizerStartMousedown(event)
+        updateWidth()
         {
+            this.tempValue = Dom.find(this.$el)
+                .width();
+
+            this.updateHandle();
+
+            this.$emit('update:modelValue', 
+                this.tempValue);
+        },
+
+        updateHandle()
+        {
+            let style = {};
+
+            if ( this.position === 'left' ) {
+                style.transform =`translateX(-${this.tempValue - this.resizerWidth}px)`
+            }
+    
+            if ( this.position === 'right' ) {
+                style.transform = `translateX(${this.tempValue - this.resizerWidth}px)`
+            }
+
+            Dom.find(this.$refs.handle).css(style);
+        },
+
+        bindSizechange()
+        {
+            Dom.find(this.NScrollbar.$el).on('resized', 
+                Any.debounce(this.updateWidth, 100), this._.uid);
+        },
+
+        unbindSizechange()
+        {
+            Dom.find(this.NScrollbar.$el)
+                .off('resized', null, this._.uid);
+        },
+
+
+        onLeftMousedown(event)
+        {
+            if ( event.which !== 1 ) {
+                return;
+            }
+
             event.preventDefault();
             event.stopPropagation();
 
-            Dom.find(this.$el).addClass('n-resize');
-            Dom.find(document.body).addClass('n-resize');
+            if ( this.group.length ) {
+                Event.fire('NResizer:move', this.group);
+            }
+
+            Dom.find(this.$el).addClass('n-move');
+            Dom.find(document.body).addClass('n-move');
 
             Dom.find(document).on('mouseup',
-                Any.throttle(this.eventResizerStartMouseup, 30), this.uid);
+                Any.framerate(this.onLeftMouseup, 60), this._.uid);
 
             Dom.find(document).on('mousemove',
-                Any.framerate(this.eventResizerStartMousemove, 30), this.uid);
+                Any.framerate(this.onLeftMousemove, 60), this._.uid);
         },
 
-        eventResizerStartMousemove(event)
+        onLeftMousemove(event)
         {
             this.clientX = (window.innerWidth - event.clientX);
 
@@ -136,16 +221,16 @@ export default {
                 transform: `translateX(-${targetWidth}px)`
             };
 
-            Dom.find(this.$el).find('[data-resizer]').css(style);
+            Dom.find(this.$refs.handle).css(style);
         },
 
-        eventResizerStartMouseup(event)
+        onLeftMouseup(event)
         {
             event.preventDefault();
             event.stopPropagation();
 
-            Dom.find(document).off('mousemove', null, this.uid);
-            Dom.find(document).off('mouseup', null, this.uid);
+            Dom.find(document).off('mouseup', null, this._.uid);
+            Dom.find(document).off('mousemove', null, this._.uid);
 
             if ( ! this.clientX ) {
                 return;
@@ -167,37 +252,49 @@ export default {
                 targetWidth = Math.min(targetWidth, this.maxWidth);
             }
 
-            this.veWidth = Math.round(targetWidth);
+            this.tempValue = Math.round(targetWidth);
 
-            Dom.find(this.$el).removeClass('n-resize');
-            Dom.find(document.body).removeClass('n-resize');
+            Dom.find(this.$el).removeClass('n-move');
 
             let style = {
                 transform: `translateX(-${targetWidth - this.resizerWidth}px)`
             };
 
-            Dom.find(this.$el).find('[data-resizer]').css(style);
+            Dom.find(this.$refs.handle).css(style);
 
             delete this.clientX;
 
-            this.$nextTick(() => this.$emit('input', this.veWidth));
+            if ( this.group.length ) {
+                Event.fire('NResizer:moved', this.group);
+            }
+
+            this.$emit('update:modelValue', this.tempValue);
         },
 
-        eventResizerEndMousedown(event)
+        onRightMousedown(event)
         {
-            event.preventDefault();
+            if ( event.which !== 1 ) {
+                return;
+            }
 
-            Dom.find(this.$el).addClass('n-resize');
-            Dom.find(document.body).addClass('n-resize');
+            event.preventDefault();
+            event.stopPropagation();
+
+            if ( this.group.length ) {
+                Event.fire('NResizer:move', this.group);
+            }
+
+            Dom.find(this.$el).addClass('n-move');
+            Dom.find(document.body).addClass('n-move');
 
             Dom.find(document).on('mouseup',
-                Any.throttle(this.eventResizerEndMouseup, 30), this.uid);
+                Any.framerate(this.onRightMouseup, 60), this._.uid);
 
             Dom.find(document).on('mousemove',
-                Any.framerate(this.eventResizerEndMousemove, 30), this.uid);
+                Any.framerate(this.onRightMousemove, 60), this._.uid);
         },
 
-        eventResizerEndMousemove(event)
+        onRightMousemove(event)
         {
             this.clientX = event.clientX;
 
@@ -226,16 +323,16 @@ export default {
                 transform: `translateX(${targetWidth}px)`
             };
 
-            Dom.find(this.$el).find('[data-resizer]').css(style);
+            Dom.find(this.$refs.handle).css(style);
         },
 
-        eventResizerEndMouseup(event)
+        onRightMouseup(event)
         {
             event.preventDefault();
             event.stopPropagation();
 
-            Dom.find(document).off('mousemove', null, this.uid);
-            Dom.find(document).off('mouseup', null, this.uid);
+            Dom.find(document).off('mousemove', null, this._.uid);
+            Dom.find(document).off('mouseup', null, this._.uid);
 
             if ( ! this.clientX ) {
                 return;
@@ -257,80 +354,85 @@ export default {
                 targetWidth = Math.min(targetWidth, this.maxWidth);
             }
 
-            this.veWidth = Math.round(targetWidth);
+            this.tempValue = Math.round(targetWidth);
 
-            Dom.find(this.$el).removeClass('n-resize');
-            Dom.find(document.body).removeClass('n-resize');
+            Dom.find(this.$el).removeClass('n-move');
 
             let style = {
                 transform: `translateX(${targetWidth - this.resizerWidth}px)`
             };
 
-            Dom.find(this.$el).find('[data-resizer]').css(style);
+            Dom.find(this.$refs.handle).css(style);
+
+            let frameStyle = {
+                width: this.tempValue + 'px', flex: '0 0 auto'
+            };
+
+            Dom.find(this.$el).css(frameStyle);
 
             delete this.clientX;
 
-            this.$nextTick(() => this.$emit('input', this.veWidth));
+            if ( this.group.length ) {
+                Event.fire('NResizer:moved', this.group);
+            }
+
+            this.$emit('update:modelValue', this.tempValue);
         }
 
     },
 
     watch: {
 
-        width()
+        modelValue(value)
         {
-            if ( this.width !== this.veWidth ) {
-                this.veWidth = this.width;
+            if ( value !== this.tempValue ) {
+                this.tempValue = value;
             }
         }
 
     },
 
-    mounted()
+    renderHandle()
     {
-        if ( this.bootRefresh ) {
-            this.refresh();
+        let classList = [
+            'n-resizer__handle',
+        ];
+
+        let props = {};
+
+        if ( this.position === 'right' ) {
+            props.onMousedown = this.onRightMousedown;
         }
+
+        if ( this.position === 'left' ) {
+            props.onMousedown = this.onLeftMousedown;
+        }
+
+        return (
+            <div ref="handle" class={classList} {...props}/>
+        );
     },
 
     render()
     {
         let classList = [
             'n-resizer',
-            'n-resizer--' + this.resizerPosition
+            'n-resizer--' + this.position,
         ];
-
-        if ( this.disabled ) {
-            classList.push('n-disabled');
-        }
 
         let style = {};
 
-        if ( this.resizerPosition === 'start' ) {
-            style.transform =`translateX(-${this.veWidth - this.resizerWidth}px)`
+        if ( this.minWidth ) {
+            style['min-width'] = this.minWidth + 'px';
         }
 
-        if ( this.resizerPosition === 'end' ) {
-            style.transform = `translateX(${this.veWidth - this.resizerWidth}px)`
+        if ( this.maxWidth ) {
+            style['max-width'] = this.maxWidth + 'px';
         }
-
-        let events = {};
-
-        if ( this.resizerPosition === 'end' ) {
-            events.mousedown = this.eventResizerEndMousedown;
-        }
-
-        if ( this.resizerPosition === 'start' ) {
-            events.mousedown = this.eventResizerStartMousedown;
-        }
-
-        let resizerHtml = (
-            <div class={classList} data-resizer="true" style={style} on={events} />
-        );
 
         return (
-            <div>
-                { [this.$slots.default, resizerHtml] }
+            <div class={classList} style={style}>
+                { [this.$slots.default(), this.ctor('renderHandle')()] }
             </div>
         );
     }

@@ -239,9 +239,15 @@ export default {
 
     render()
     {
+        let size = this.size;
+
+        if ( this.NCheckboxGroup ) {
+            size = this.NCheckboxGroup.size;
+        }
+
         let classList = [
             'n-checkbox',
-            'n-checkbox--' + this.size,
+            'n-checkbox--' + size,
             'n-checkbox--' + this.type,
         ];
 

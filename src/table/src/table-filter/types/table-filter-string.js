@@ -31,10 +31,10 @@ export default {
         return (
             <NForm form={this.form}>
                 <NFormItem>
-                    <NInput size="small" vModel={this.form.value}/>
+                    <NInput size="sm" vModel={this.form.value}/>
                 </NFormItem>
                 <NFormItem>
-                    <NSelect size="small" vModel={this.form.operator}>
+                    <NSelect size="sm" vModel={this.form.operator}>
                         <NSelectOption value="li" label={this.trans('Includes value')} />
                         <NSelectOption value="nl" label={this.trans('Excludes value')} />
                         <NSelectOption value="eq" label={this.trans('Equal value')} />

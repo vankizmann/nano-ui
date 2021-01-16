@@ -9,6 +9,13 @@ export default {
         prop: 'items'
     },
 
+    provide()
+    {
+        return {
+            NTable: this
+        };
+    },
+
     props: {
 
         items: {
@@ -99,7 +106,7 @@ export default {
             type: [Array]
         },
 
-        safeZone: {
+        safezone: {
             default()
             {
                 return (height) => height * 0.51;
@@ -130,13 +137,6 @@ export default {
             type: [Number]
         },
 
-        viewportHeight: {
-            default()
-            {
-                return false;
-            }
-        },
-
         scrollTopOnChange: {
             default()
             {
@@ -152,50 +152,10 @@ export default {
             type: [Number]
         },
 
-        keyProp: {
-            default()
-            {
-                return 'md5';
-            },
-            type: [String]
-        },
-
-        orderProp: {
-            default()
-            {
-                return 'order';
-            },
-            type: [String]
-        },
-
         uniqueProp: {
             default()
             {
                 return 'id';
-            },
-            type: [String]
-        },
-
-        depthProp: {
-            default()
-            {
-                return 'depth';
-            },
-            type: [String]
-        },
-
-        pathProp: {
-            default()
-            {
-                return 'path';
-            },
-            type: [String]
-        },
-
-        indexProp: {
-            default()
-            {
-                return 'index';
             },
             type: [String]
         },
@@ -220,14 +180,6 @@ export default {
             default()
             {
                 return false;
-            },
-            type: [Boolean]
-        },
-
-        ghostMode: {
-            default()
-            {
-                return true;
             },
             type: [Boolean]
         },
@@ -289,14 +241,6 @@ export default {
             }
         },
 
-        wrapNode: {
-            default()
-            {
-                return false;
-            },
-            type: [Boolean]
-        },
-
         keyDebounce: {
             default()
             {
@@ -308,7 +252,7 @@ export default {
         bufferItems: {
             default()
             {
-                return 40;
+                return 24;
             },
             type: [Number]
         },
@@ -321,52 +265,35 @@ export default {
             type: [Number]
         },
 
-        loadingInit: {
-            default()
-            {
-                return 0;
-            }
-        },
-
-        loadingDelay: {
-            default()
-            {
-                return 0;
-            },
-            type: [Number]
-        },
-
-        loadingMax: {
-            default()
-            {
-                return 1250;
-            },
-            type: [Number]
-        },
-
-        loadingMin: {
-            default()
-            {
-                return 450;
-            },
-            type: [Number]
-        },
-
     },
 
-    provide()
-    {
-        return { NTable: this };
+    computed: {
+
+        checked()
+        {
+            return !! this.veSelected.length &&
+                this.veSelected.length === this.items.length;
+        },
+
+        intermediate()
+        {
+            return !! this.veSelected.length && 
+                this.veSelected.length !== this.items.length
+        }
+
     },
 
     data()
     {
         return {
+            uid: UUID(),
             veColumns: [],
             veFilterProps: this.filterProps,
             veSortProp: this.sortProp,
             veSortDir: this.sortDir,
             veVisibleColumns: this.visibleColumns,
+            veIntersection: [],
+            veSelected: []
         }
     },
 
@@ -410,7 +337,7 @@ export default {
         hideColumn(column)
         {
             if ( ! Any.isString(column) ) {
-                column = column['prop'];
+                column = column.prop;
             }
 
             Arr.remove(this.veVisibleColumns, column);
@@ -418,10 +345,10 @@ export default {
             this.$emit('update:visibleColumns', this.veVisibleColumns);
         },
 
-        columnHidden(column)
+        isHidden(column)
         {
             if ( ! Any.isString(column) ) {
-                column = column['prop'];
+                column = column.prop;
             }
 
             return ! Arr.has(this.veVisibleColumns, column);
@@ -469,16 +396,26 @@ export default {
 
             // Emit filter to component
             this.$emit('filter', this.veFilterProps);
+        },
+
+        generateIntersection()
+        {
+            let columnProps = Arr.extract(this.veColumns, 'prop');
+            
+            this.veIntersection = Arr.intersect(columnProps, 
+                this.veVisibleColumns);
         }
 
     },
 
     mounted()
     {
-        // if ( ! this.veVisibleColumns.length ) {
-        //     Arr.each(this.veColumns, (column) =>
-        //         column.detectVisibity());
-        // }
+        this.$watch('veVisibleColumns', 
+            this.generateIntersection, {deep: true});
+
+        if ( ! this.veVisibleColumns.length ) {
+            Arr.each(this.veColumns, (column) => column.detectVisibity());
+        }
 
         // Any.delay(() => {
         //     Arr.each(this.veColumns, (column) =>
@@ -505,22 +442,16 @@ export default {
             return null;
         }
 
-        let events = {
-            input: this.toggleSelected
-        };
-
         let props = {
-            disabled: ! this.items.length
+            modelValue: this.checked,
+            intermediate: this.intermediate,
+            disabled: ! this.items.length,
+            onClick: () => this.$refs.draggable.selectAll()
         };
-
-        if ( this.$refs.list && this.items.length ) {
-            props['checked'] = this.$refs.list.isAllSelected(true);
-            props['intermediate'] = this.$refs.list.isIntermediate(true);
-        }
 
         return (
             <div class="n-draglist-item__select">
-                <NCheckbox props={props} on={events} />
+                <NCheckbox {...props}></NCheckbox>
             </div>
         );
     },
@@ -534,12 +465,12 @@ export default {
         return Obj.values(result);
     },
 
-    renderHeadPopover()
+    renderContext()
     {
         let columnHtml = (
-            Arr.each(this.veColumns, (column) => {
+            Obj.each(this.veColumns, (column) => {
                 return (
-                    <NCheckbox size="small" value={column.prop}>
+                    <NCheckbox class="n-table__checkbox" value={column.prop}>
                         { column.label }
                     </NCheckbox>
                 );
@@ -547,9 +478,9 @@ export default {
         );
 
         return (
-            <NPopover trigger="context" close-inside={false}>
+            <NPopover trigger="context" width={140}>
                 <NCheckboxGroup vModel={this.veVisibleColumns} align="vertical">
-                    { columnHtml }
+                    { Obj.values(columnHtml) }
                 </NCheckboxGroup>
             </NPopover>
         );
@@ -559,63 +490,48 @@ export default {
     {
         let defaultRender = [
             this.ctor('renderExpand')(),
-            this.ctor('renderSelect')()
+            this.ctor('renderSelect')(), 
+            this.ctor('renderContext')()
         ];
 
-        let columnHtml = Arr.each(this.veColumns, (column) => {
+        let columnHtml = Obj.each(this.veColumns, (column) => {
             return column.ctor('renderHead')();
         });
 
-        let headHtml = (
-            <div class="n-table__head">
-                {[defaultRender, ...columnHtml]}
+        return (
+            <div class="n-table__header">
+                { defaultRender } { Obj.values(columnHtml) }
             </div>
         );
-
-        return [headHtml, this.ctor('renderHeadPopover')()];
     },
 
     render()
     {
         let props = Obj.except(this.$props, [], {
-            items: this.items, renderNode: this.ctor('renderBody')
+            items: this.items, 
+            selected: this.veSelected,
+            renderNode: this.ctor('renderBody')
         });
 
         props['onUpdate:items'] = (value) => {
             this.$emit('update:items', value);
         }
+
+        props['onUpdate:selected'] = (value) => {
+            this.$emit('update:selected', this.veSelected = value);
+        }
         
-
-        // let style = {
-        //     height: this.viewportHeight + 'px'
-        // };
-
-        // let slots = Arr.each(this.$slots, (slot, name) => {
-        //     return h('template', { slot: name }, slot);
-        // });
-
-        // let passes = {
-        //     on: Obj.clone(this.$listeners), scopedSlots: this.$scopedSlots
-        // };
-
-        // if ( Any.isNumber(this.viewportHeight) ) {
-        //     props.viewportHeight = this.viewportHeight - this.headerHeight;
-        // }
-
         let draggableHtml = (
-            <NDraglist {...props}>
-                { { default: () => this.ctor('renderBody')() } }
-            </NDraglist>
+            <div class="n-table__body">
+                <NDraglist ref="draggable" {...props}>
+                    { { default: () => this.ctor('renderBody')() } }
+                </NDraglist>
+            </div>
         );
     
-        
-        // resolveComponent('NDraglist', {
-        //     ref: 'list', class: 'n-table__body', ...props, style: 'min-height: 300px;'
-        // }, slots);
-
         return (
-            <div class="n-table" style="height: 500px;">
-                <NScrollbar class="n-table__wrap">
+            <div class="n-table" style="min-height: 500px;">
+                <NScrollbar class="n-table__wrap" fixture={true}>
                     { [this.ctor('renderHead')(), draggableHtml] }
                 </NScrollbar>
                 { this.$slots.default && this.$slots.default()}

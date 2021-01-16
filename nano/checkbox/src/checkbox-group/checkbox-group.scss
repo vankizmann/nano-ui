@@ -20,6 +20,10 @@
     align-items: flex-start;
 }
 
+.n-checkbox-group.n-checkbox-group--vertical .n-checkbox {
+    width: 100%;
+}
+
 @each $suffix, $values in $form {
 
     $-checkbox-group-font: map-get($values, 'font');
@@ -28,11 +32,11 @@
     $-checkbox-group-ratio: map-get($values, 'ratio');
 
     .n-checkbox-group--#{$suffix}.n-checkbox-group--horizontal .n-checkbox {
-        padding: 0 $-checkbox-group-size * $-checkbox-group-ratio * 0.5;
+        min-height: 0;
     }
 
-    .n-checkbox-group--#{$suffix}.n-checkbox-group--horizontal .n-checkbox:first-child {
-        padding-left: 0;
+    .n-checkbox-group--#{$suffix}.n-checkbox-group--horizontal .n-checkbox:not(:first-child) {
+        margin-left: $-checkbox-group-size * $-checkbox-group-ratio * 0.5;
     }
 
     .n-checkbox-group--#{$suffix}.n-checkbox-group--horizontal .n-checkbox:last-child {
@@ -40,11 +44,11 @@
     }
 
     .n-checkbox-group--#{$suffix}.n-checkbox-group--vertical .n-checkbox {
-        padding: $-checkbox-group-size * $-checkbox-group-ratio * 0.5 0;
+        min-height: 0;
     }
 
-    .n-checkbox-group--#{$suffix}.n-checkbox-group--vertical .n-checkbox:first-child {
-        padding-top: 0;
+    .n-checkbox-group--#{$suffix}.n-checkbox-group--vertical .n-checkbox:not(:first-child) {
+        margin-top: $-checkbox-group-size * $-checkbox-group-ratio * 0.5;
     }
 
     .n-checkbox-group--#{$suffix}.n-checkbox-group--vertical .n-checkbox:last-child {

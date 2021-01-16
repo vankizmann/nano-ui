@@ -53,12 +53,12 @@ export function NanoInstall(App, Icons = {}, Styles = {})
 
     require('./notification/index').default(App);
     require('./empty/index').default(App);
-    //require('./config/index'); //!complex 16.1
+    //require('./config/index'); //!complex 17.1
     require('./scrollbar/index').default(App);
     require('./virtualscroller/index').default(App);
     require('./draggable/index').default(App);
-    // require('./loader/index'); //14.1
-    // require('./resizer/index'); //14.1
+    // require('./loader/index'); //16.1
+    require('./resizer/index').default(App); //16.1
     require('./popover/index').default(App);
     require('./modal/index').default(App);
     require('./button/index').default(App); // group 14.1
@@ -72,17 +72,17 @@ export function NanoInstall(App, Icons = {}, Styles = {})
     require('./cascader/index').default(App);
     require('./datepicker/index').default(App);
     require('./timepicker/index').default(App);
-    // require('./datetimepicker/index'); 17.1
+    // require('./datetimepicker/index'); 18.1
     require('./transfer/index').default(App);
-    // require('./form/index'); // 15.1
-    // require('./tabs/index'); // 15.1
+    // require('./form/index'); // 16.1
+    // require('./tabs/index'); // 16.1
     require('./table/index').default(App);
-    // require('./paginator/index'); // 14.1
-    // require('./info/index'); //!complex 15.1
+    // require('./paginator/index'); // 16.1
+    // require('./info/index'); //!complex 16.1
 
-    // require('./map/index'); // SX only ez 16.1
-    // require('./file-list/index'); // SX only 16.1
-    // require('./file/index'); // SX only 16.1
+    // require('./map/index'); // SX only ez 17.1
+    // require('./file-list/index'); // SX only 17.1
+    // require('./file/index'); // SX only 17.1
 
     // require('./chart/index'); // Ignore
     // require('./wysiwyg/index'); // Ignore
