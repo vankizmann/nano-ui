@@ -121,7 +121,7 @@ export default {
         }
 
         let props = Obj.except(this.$attrs, ['class'], {
-            class: this.cmer(classList)
+            class: classList
         });
 
         if ( this.disabled ) {

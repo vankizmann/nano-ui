@@ -169,7 +169,7 @@ export default {
         }
 
         let props = Obj.only(this.$attrs, ['style'], {
-            class: this.cmer(classList)
+            class: classList
         });
 
         let innerHtml = [];
