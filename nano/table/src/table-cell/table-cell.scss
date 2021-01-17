@@ -10,6 +10,10 @@
     padding: 0 10px;
 }
 
+.n-table-cell.n-fluid {
+    flex: 1 1 auto;
+}
+
 .n-table-cell.n-fixed {
     flex: 0 0 auto;
 }
@@ -24,10 +28,6 @@
 
 .n-table-cell--right {
     justify-content: flex-end;
-}
-
-.n-table-cell.n-fluid {
-    flex: 1 1 auto;
 }
 
 .n-table-cell > span {

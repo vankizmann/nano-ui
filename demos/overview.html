@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="../dist/nano-ui.css">
 
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.5/vue.global.prod.js"></script> -->
-    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.5/vue.global.prod.js"></script>
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
     <script src="../node_modules/nano-js/dist/nano-js.js"></script>
     <!-- <script src="https://vankizmann.github.io/nano-js/dist/nano-js.js"></script> -->
     <script src="../dist/nano-ui.js"></script>
@@ -69,7 +69,7 @@
                 <n-select style="width: 80px;" v-model="n_button.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
-                <n-select style="width: 200px;" v-model="n_button.icon" placeholder="Icon" :clearable="true" :options="icons">
+                <n-select style="width: 200px;" v-model="n_button.icon" placeholder="Icon" :clearable="true" :options="demoIcons">
                     <n-select-option :disabled="true" value="foo1" label="foo1"></n-select-option>
                     <n-select-option value="bar1" label="bar1"></n-select-option>
                     <n-select-option value="foo2" label="foo2"></n-select-option>
@@ -123,7 +123,7 @@
                 <n-select style="width: 80px;" v-model="n_input.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
-                <n-select style="width: 200px;" v-model="n_input.icon" :clearable="true" placeholder="Icon" :options="icons"></n-select>
+                <n-select style="width: 200px;" v-model="n_input.icon" :clearable="true" placeholder="Icon" :options="demoIcons"></n-select>
             </div>
             <div class="col--auto">
                 <n-input v-model="n_input.placeholder"></n-input>
@@ -465,6 +465,25 @@
             </div>
         </div>
 
+
+        <h2>NLoader</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 80px;" v-model="n_loader.size" :options="sizes"></n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_loader.type" :options="types"></n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_loader.visible">Visible</n-checkbox>
+            </div>
+        </div>
+
+        <n-loader v-bind="n_loader" style="min-height: 200px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px; padding: 20px;">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia voluptas fuga sit iste odit amet, quam delectus iure facilis, voluptatum officiis magnam deserunt nulla maiores accusantium corrupti! Iste, rem optio? Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint dignissimos ad beatae soluta quaerat reprehenderit, quasi maxime quisquam? Commodi, cumque sequi? Harum quam nobis suscipit consequatur soluta aperiam! Rerum tempore minima saepe, quisquam ab sunt consequatur modi repudiandae molestiae inventore!
+        </n-loader>
+
         <h2>Notify</h2>
         
         <div class="grid grid--row grid--wrap grid--10-10">
@@ -487,6 +506,42 @@
                 <n-button type="info" @click="notify('info')">Notify</n-button>
             </div>
         </div>
+
+        <h2>NTabs</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 80px;" v-model="n_tabs.size" :options="sizes"></n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_tabs.type" :options="types"></n-checkbox>
+            </div>
+        </div>
+
+        <n-tabs v-model="n_tabs.value" v-bind="n_tabs">
+            <n-tabs-item label="Default" icon="fa fa-ghost">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aut, dicta quidem aliquid accusantium nulla veritatis nostrum? Porro, hic eligendi?
+            </n-tabs-item>
+            <n-tabs-item name="keep" label="Keep" :keep="true">
+                <n-textarea></n-textarea>
+            </n-tabs-item>
+            <n-tabs-item name="bar" label="Headline in extra extra extra extra extra extra looooong">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, modi?
+            </n-tabs-item>
+        </n-tabs>
+
+        <h2>NPaginator</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 80px;" v-model="n_paginator.size" :options="sizes"></n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_paginator.type" :options="types"></n-checkbox>
+            </div>
+        </div>
+
+        <n-paginator :total="241" v-bind="n_paginator"></n-paginator>
 
         <h2>NVirtualscroller</h2>
 
@@ -571,6 +626,11 @@
                     Reset filter
                 </n-button>
             </div>
+            <div class="col--auto">
+                <n-button type="primary" @click="$refs.table.highlightNode(virtualTree[0]['children'][3]['id'])">
+                    Highlight node
+                </n-button>
+            </div>
         </div>
 
         <n-table ref="table" v-model:items="virtualTree" :render-expand="true" :item-height="100" style="margin-top: 30px;">
@@ -579,7 +639,7 @@
             <n-table-column label="Date" type="datetime" prop="date" :sort="true" :filter="true"></n-table-column>
             <n-table-column label="Enabled" type="boolean" prop="enabled" :sort="true" :filter="true"></n-table-column>
             <n-table-column label="Value" type="string" prop="value" :sort="true" :filter="true"></n-table-column>
-            <n-table-column label="ID" type="string" prop="id" :fixed-width="300"></n-table-column>
+            <n-table-column label="ID" type="string" prop="id" :fixed-width="300" :breakpoint="1300"></n-table-column>
         </n-table>
         
     </div>
@@ -701,8 +761,20 @@
                 size: 'md', type: 'primary', disabled: false
             };
 
+            data.n_tabs = {
+                value: 'default', size: 'md', type: 'primary'
+            };
+
+            data.n_paginator = {
+                size: 'md', type: 'primary'
+            };
+
             data.n_draggable = {
                 count: 0
+            };
+
+            data.n_loader = {
+                size: 'md', type: 'primary', visible: true
             };
 
             let methods = {};
@@ -720,7 +792,7 @@
 
                     this.icons.ghost = 'fa fa-ghost'
 
-                    data.icons = Nano.Arr.reduce(Nano.Obj.values(this.icons), function (merge, icon) {
+                    data.demoIcons = Nano.Arr.reduce(Nano.Obj.values(this.icons), function (merge, icon) {
                         return Nano.Obj.assign(merge, { [icon]: icon });
                     }, {});
 

@@ -1,4 +1,4 @@
-import { Any } from "nano-js";
+import { h, resolveComponent } from "vue";
 
 export default {
 
@@ -48,20 +48,12 @@ export default {
         sort: {
             default()
             {
-                return this.uid;
+                return 0;
             },
             type: [Number]
         },
 
         preload: {
-            default()
-            {
-                return false;
-            },
-            type: [Boolean]
-        },
-
-        raw: {
             default()
             {
                 return false;
@@ -92,7 +84,7 @@ export default {
     data()
     {
         return {
-            veInit: false
+            _key: null, init: false
         }
     },
 
@@ -101,7 +93,7 @@ export default {
         this.NTabs.addTab(this);
     },
 
-    beforeDestroy()
+    beforeUnmount()
     {
         this.NTabs.removeTab(this);
     },
@@ -114,7 +106,7 @@ export default {
 
         return (
             <div class="n-tabs__tab-icon">
-                { this.$slots.icon || <span class={this.icon}></span> }
+                { this.$slots.icon && this.$slots.icon() || <i class={this.icon}></i> }
             </div>
         );
     },
@@ -123,7 +115,7 @@ export default {
     {
         return (
             <div class="n-tabs__tab-label">
-                { this.$slots.label || <span>{this.label}</span> }
+                { this.$slots.label && this.$slots.label () || <span>{this.label}</span> }
             </div>
         );
     },
@@ -134,16 +126,16 @@ export default {
             'n-tabs__tab'
         ];
 
-        if ( this.NTabs.veValue === this.name ) {
+        if ( this.NTabs.tempValue === this.name ) {
             classList.push('n-active');
         }
 
-        let events = {
-            click: () => this.changeTab(this.name)
+        let props = {
+            onClick: () => this.changeTab(this.name)
         };
 
         return (
-            <div class={classList} on={events}>
+            <div class={classList} {...props}>
                 { this.ctor('renderHeaderIcon')() }
                 { this.ctor('renderHeaderLabel')() }
             </div>
@@ -152,13 +144,13 @@ export default {
 
     render()
     {
-        let renderBody = this.NTabs.veValue === this.name;
+        let renderBody = this.NTabs.tempValue === this.name;
 
-        if ( this.NTabs.veValue !== this.name && this.keep ) {
-            renderBody = this.veInit;
+        if ( this.NTabs.tempValue !== this.name && this.keep ) {
+            renderBody = this.init;
         }
 
-        if ( this.NTabs.veValue !== this.name && this.preload ) {
+        if ( this.NTabs.tempValue !== this.name && this.preload ) {
             renderBody = true;
         }
 
@@ -166,28 +158,30 @@ export default {
             return null;
         }
 
-        this.veInit = true;
+        this.init = true;
 
         let classList = [
-            'n-tabs-item__wrapper'
+            'n-tabs-item'
         ];
-
-        if ( this.raw ) {
-            classList.push('n-raw');
-        }
 
         let style = {};
 
-        if ( this.NTabs.veValue !== this.name ) {
+        if ( this.NTabs.tempValue !== this.name ) {
             style.display = 'none';
         }
 
-        return (
-            <div class={classList} style={style}>
-                <NScrollbar class="n-tabs-item" relative={this.NTabs.relative}>
-                    { this.$slots.default }
-                </NScrollbar>
-            </div>
-        );
+        if ( this.$slots.raw ) { 
+            return this.$slots.raw();
+        }
+
+        let element = 'div';
+
+        if ( ! this.NTabs.relative ) {
+            element = resolveComponent('NScrollbar');
+        }
+
+        return h(element, { class: classList, style }, [
+            this.$slots.default && this.$slots.default()
+        ]);
     }
 }

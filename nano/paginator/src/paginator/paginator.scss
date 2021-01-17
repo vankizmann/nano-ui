@@ -1,37 +1,11 @@
 @import "../../../root/vars";
 
-$paginator-size: 14px !default;
-
 .n-paginator {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: stretch;
     color: $--color-gray-60;
-    font-size: $paginator-size;
-}
-
-.n-paginator.n-paginator--small {
-    font-size: $paginator-size * 0.875;
-}
-
-.n-paginator.n-paginator--large {
-    font-size: $paginator-size * 1.125;
-}
-
-.n-paginator .n-popover {
-    max-height: 200px;
-}
-
-.n-paginator > div {
-    padding: 0 7px;
-}
-
-.n-paginator > div:first-child {
-    padding-left: 0;
-}
-
-.n-paginator > div:last-child {
-    padding-right: 0;
 }
 
 .n-paginator__spacer {
@@ -42,8 +16,8 @@ $paginator-size: 14px !default;
     flex: 0 0 auto;
 }
 
-.n-paginator__limit .n-select {
-    width: 150px;
+.n-paginator__count {
+    flex: 0 0 auto;
 }
 
 .n-paginator__sync {
@@ -52,23 +26,6 @@ $paginator-size: 14px !default;
 
 .n-paginator__goto {
     flex: 0 0 auto;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.n-paginator__goto .n-popover {
-    width: 100%;
-    text-align: center;
-}
-
-.n-paginator__goto > span {
-    white-space: nowrap;
-    margin-right: 10px;
-}
-
-.n-paginator__goto .n-select {
-    width: 60px;
 }
 
 .n-paginator__pages {
@@ -78,32 +35,47 @@ $paginator-size: 14px !default;
     align-items: center;
 }
 
-.n-paginator__pages > div {
-    margin: 0 3px;
-}
+@each $suffix, $values in $form {
 
-.n-paginator__pages > div:first-child {
-    margin-left: 0;
-}
+    $-paginator-font: map-get($values, 'font');
+    $-paginator-size: map-get($values, 'size');
+    $-paginator-radius: map-get($values, 'radius');
+    $-paginator-ratio: map-get($values, 'ratio');
 
-.n-paginator__pages > div:last-child {
-    margin-right: 0;
-}
+    .n-paginator--#{$suffix} .n-paginator__count {
+        font-size: $-paginator-font;
+    }
 
-//.n-paginator__pages .n-button {
-//    border-color: $--color-gray-10;
-//    background: $--color-background;
-//}
-//
-//.n-paginator__pages .n-button:hover,
-//.n-paginator__pages .n-button:focus {
-//    border-color: $--color-primary;
-//    background: transparent;
-//}
-//
-//.n-paginator__pages .n-button.n-button--disabled,
-//.n-paginator__pages .n-button.n-button--disabled:hover,
-//.n-paginator__pages .n-button.n-button--disabled:focus {
-//    border-color: $--color-gray-10;
-//    background: $--color-gray-10;
-//}
+    .n-paginator--#{$suffix} > div {
+        padding: 0 $-paginator-size * $-paginator-ratio * 0.5;
+    }
+    
+    .n-paginator--#{$suffix} > div:first-child {
+        padding-left: 0;
+    }
+    
+    .n-paginator--#{$suffix} > div:last-child {
+        padding-right: 0;
+    }
+
+    .n-paginator--#{$suffix} .n-paginator__limit .n-select {
+        width: $-paginator-size * 4.2;
+    }
+
+    .n-paginator--#{$suffix} .n-paginator__goto .n-select {
+        width: $-paginator-size * 3.2;
+    }
+
+    .n-paginator--#{$suffix} .n-paginator__pages > button {
+        margin: 0 $-paginator-size * $-paginator-ratio * 0.2;
+    }
+    
+    .n-paginator--#{$suffix} .n-paginator__pages > button:first-child {
+        margin-left: 0;
+    }
+    
+    .n-paginator--#{$suffix} .n-paginator__pages > button:last-child {
+        margin-right: 0;
+    }
+
+}

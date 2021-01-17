@@ -49,6 +49,11 @@
 
 .n-table__body > .n-scrollbar {
     flex: 1 1 auto;
+    margin-right: -1px;
+}
+
+.n-table__body .n-scrollbar-v {
+    right: 1px;
 }
 
 .n-table .n-draglist-item__element {

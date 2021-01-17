@@ -82,14 +82,6 @@ export default {
             type: [Boolean]
         },
 
-        resize: {
-            default()
-            {
-                return true;
-            },
-            type: [Boolean]
-        },
-
         visible: {
             default()
             {
@@ -202,7 +194,7 @@ export default {
         maxWidth: {
             default()
             {
-                return 9999;
+                return 0;
             }
         },
 
@@ -269,7 +261,7 @@ export default {
             let visible = this.visible;
 
             if ( this.breakpoint ) {
-                visible &= this.NTable.$el.innerWidth > this.breakpoint;
+                visible &= Dom.find(this.NTable.$el).width() > this.breakpoint;
             }
 
             return visible;

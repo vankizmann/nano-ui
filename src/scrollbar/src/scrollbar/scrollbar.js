@@ -82,6 +82,10 @@ export default {
         if ( this.optiscroll ) {
             Dom.find(this.$el).addClass('is-enabled');
         }
+
+        if ( this.passedHeight || this.passedWidth ) {
+            Dom.find(this.$el).addClass('is-ready');
+        }
     },
 
     beforeUnmount()
@@ -108,7 +112,7 @@ export default {
 
     methods: {
 
-        scrollTo(x = 0, y = 0, delay = 100)
+        scrollTo(x = 0, y = 0, delay = 0)
         {
             Any.delay(() => this.onScrollTo(x, y), delay);
         },
@@ -118,7 +122,7 @@ export default {
             this.optiscroll.scrollTo(x, y, 0);
         },
 
-        scrollIntoView(selector, delay = 100)
+        scrollIntoView(selector, delay = 200)
         {
             Any.delay(() => this.onScrollIntoView(selector), delay);
         },
@@ -134,7 +138,7 @@ export default {
                 checkFrequency = 250;
 
             Optiscroll.globalSettings.
-                scrollMinUpdateInterval = 25;
+                scrollMinUpdateInterval = 15;
 
             let options = {
                 classPrefix: 'n-scrollbar-',
@@ -216,7 +220,7 @@ export default {
             };
 
             if ( this.fixture ) {
-                Dom.find(this.$refs.content).child().css(style);
+                this.onUpdate();
             }
 
             if ( ! this.relative ) {
@@ -249,7 +253,7 @@ export default {
         {
             let height = Dom.find(this.$el).height();
 
-            if ( this.passedHeight ) {
+            if ( this.passedHeight || this.passedWidth ) {
                 Dom.find(this.$el).addClass('is-ready');
             }
 
@@ -262,20 +266,7 @@ export default {
                 return;
             }
 
-            let $child = Dom.find(this.$refs.content)
-                .child();
-
-            let height = $child.realHeight();
-
-            if ( height !== this.passedHeight ) {
-                $child.css({ height: height + 'px' });
-            }
-
-            let width = $child.realWidth();
-
-            if ( width !== this.passedWidth ) {
-                $child.css({ width: width + 'px' });
-            }
+            this.onUpdate();
 
             this.$nextTick(() => {
                 Dom.find(this.$el).fire('resized');

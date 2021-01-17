@@ -128,6 +128,10 @@
         background: rgba($-color-base, 0.075);
     }
 
+    .n-draglist--#{$color} .n-draglist-item.n-highlight {
+        animation: NDraglistItem#{$color} 1s linear infinite;
+    }
+
     .n-draglist--#{$color} .n-draglist-item.n-selected .n-draglist-item__checkbox {
         color: $color-white;
         background: $-color-base;
@@ -137,6 +141,18 @@
     .n-draglist--#{$color} .n-draglist-item.n-selected .n-draglist-item__checkbox:hover {
         background: $-color-light;
         border-color: $-color-light;
+    }
+
+    @keyframes NDraglistItem#{$color} {
+        0% {
+            background: rgba($-color-base, 0);
+        }
+        50% {
+            background: rgba($-color-base, 0.150);
+        }
+        100% {
+            background: rgba($-color-base, 0);
+        }
     }
 
 }

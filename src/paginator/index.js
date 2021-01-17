@@ -1,4 +1,5 @@
-import Vue from "vue";
-
 import Paginator from './src/paginator/paginator';
-Vue.component(Paginator.name, Paginator);
+
+export default function (App) {
+    App.component(Paginator.name, Paginator);
+}

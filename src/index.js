@@ -18,6 +18,8 @@ let NanoIcons = {
     angleRight: 'fa fa-angle-right',
     angleDown: 'fa fa-angle-down',
     angleLeft: 'fa fa-angle-left',
+    angleDoubleLeft: 'fa fa-angle-double-left',
+    angleDoubleRight: 'fa fa-angle-double-right'
 };
 
 let NanoStyles = {
@@ -57,7 +59,7 @@ export function NanoInstall(App, Icons = {}, Styles = {})
     require('./scrollbar/index').default(App);
     require('./virtualscroller/index').default(App);
     require('./draggable/index').default(App);
-    // require('./loader/index'); //16.1
+    require('./loader/index').default(App);
     require('./resizer/index').default(App); //check
     require('./popover/index').default(App);
     require('./modal/index').default(App);
@@ -75,9 +77,9 @@ export function NanoInstall(App, Icons = {}, Styles = {})
     // require('./datetimepicker/index'); 18.1
     require('./transfer/index').default(App); // check
     require('./form/index').default(App); // check
-    // require('./tabs/index'); // 16.1
-    require('./table/index').default(App); // check
-    // require('./paginator/index'); // 16.1
+    require('./tabs/index').default(App);
+    require('./table/index').default(App); // matrix, options, select
+    require('./paginator/index').default(App); // 16.1
     // require('./info/index'); //!complex 16.1
 
     // require('./map/index'); // SX only ez 17.1

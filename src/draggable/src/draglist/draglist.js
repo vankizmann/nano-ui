@@ -121,7 +121,7 @@ export default {
         scrollTopOnChange: {
             default()
             {
-                return true;
+                return false;
             }
         },
 
@@ -175,7 +175,7 @@ export default {
         transformDrop: {
             default()
             {
-                return (item) => item;
+                return (node) => node;
             }
         },
 
@@ -222,22 +222,6 @@ export default {
             }
         },
 
-        wrapNode: {
-            default()
-            {
-                return false;
-            },
-            type: [Boolean]
-        },
-
-        updateDelay: {
-            default()
-            {
-                return 100;
-            },
-            type: [Number]
-        },
-
         keyEvents: {
             default()
             {
@@ -246,13 +230,13 @@ export default {
             type: [Boolean]
         },
 
-        keyDebounce: {
+        highlightTimeout: {
             default()
             {
-                return 100;
+                return 7000;
             },
             type: [Number]
-        },
+        }
 
     },
 
@@ -269,6 +253,7 @@ export default {
             virtuals: [], 
             visible: [], 
             childNodes: {}, 
+            highlight: [],
             firstSelected: null, 
             tempCurrent: this.current, 
             tempExpanded: this.expanded, 
@@ -305,6 +290,10 @@ export default {
         
         items()
         {
+            if ( this.scrollTopOnChange ) {
+                this.scrollTo();
+            }
+
             this.refreshVirtuals();
         },
 
@@ -353,6 +342,11 @@ export default {
             });
         },
 
+        scrollTo(x = 0, y = 0)
+        {
+            this.$refs.virtualscroller.scrollTo(x, y);
+        },
+
         isDraggable(node)
         {
             let canDrag = this.allowDrag;
@@ -362,6 +356,53 @@ export default {
             }
 
             return canDrag(node);
+        },
+
+        isHighlight(node)
+        {
+            return Arr.has(this.highlight, node.value[this.uniqueProp]);
+        },
+
+        highlightNode(value, key = null)
+        {
+            clearTimeout(this.refresh);
+
+            Arr.recursive(this.items, this.childProp, (node, cascade) => {
+
+                if ( Obj.get(node, key || this.uniqueProp) !== value ) {
+                    return;
+                }
+
+                Arr.each(cascade, (item) => {
+                    Arr.add(this.tempExpanded, item[this.uniqueProp]);
+                });
+
+                Arr.add(this.highlight, node[this.uniqueProp]);
+            });
+
+            if ( ! this.highlight.length ) {
+                return;
+            }
+
+            this.$nextTick(this.scrollToHighlight);
+            
+            this.refresh = setTimeout(() => 
+                this.highlight = [], this.highlightTimeout);
+            
+            this.filterVirtuals();
+        },
+
+        scrollToHighlight()
+        {
+            if ( ! this.highlight.length ) {
+                return;
+            }
+
+            let index = Arr.findIndex(this.visible, {
+                [this.uniqueProp]: Arr.first(this.highlight)
+            });
+
+            this.$refs.virtualscroller.scrollIntoView(index);
         },
 
         isCurrent(node)
@@ -385,11 +426,8 @@ export default {
 
         setRawCurrent(index)
         {
-            let item = Obj.get(this, this.visible[index]['route']);
-
-            if ( ! item ) {
-                return console.error('Cant set raw current: ' + index);
-            }
+            let item = Obj.get(this, 
+                this.visible[index]['route']);
 
             this.$refs.virtualscroller
                 .scrollIntoView(index);
@@ -564,12 +602,20 @@ export default {
 
         bindKeydown()
         {
+            if ( ! this.keyEvents ) {
+                return;
+            }
+
             Dom.find(document).on('keydown', 
                 this.onKeydown, this._.uid)
         },
 
         unbindKeydown()
         {
+            if ( ! this.keyEvents ) {
+                return;
+            }
+
             Dom.find(document).off('keydown', 
                 null, this._.uid)
         },
@@ -609,7 +655,7 @@ export default {
     renderItem(props)
     {
         return (
-            <NDraglistItem {...props}>
+            <NDraglistItem data-unique={props.value[this.uniqueProp]} {...Obj.except(props, ['index'])}>
                 { { default: this.$slots.default } }
             </NDraglistItem>
         );

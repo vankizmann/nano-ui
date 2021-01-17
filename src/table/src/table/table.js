@@ -5,10 +5,6 @@ export default {
 
     name: 'NTable',
 
-    model: {
-        prop: 'items'
-    },
-
     provide()
     {
         return {
@@ -98,6 +94,14 @@ export default {
             type: [Array]
         },
 
+        allowGroups: {
+            default()
+            {
+                return ['default'];
+            },
+            type: [Array]
+        },
+
         safezone: {
             default()
             {
@@ -132,7 +136,7 @@ export default {
         scrollTopOnChange: {
             default()
             {
-                return true;
+                return false;
             }
         },
 
@@ -178,7 +182,7 @@ export default {
         transformDrop: {
             default()
             {
-                return (item) => item;
+                return (node) => node;
             }
         },
 
@@ -225,14 +229,6 @@ export default {
             }
         },
 
-        keyDebounce: {
-            default()
-            {
-                return 100;
-            },
-            type: [Number]
-        },
-
         bufferItems: {
             default()
             {
@@ -245,6 +241,22 @@ export default {
             default()
             {
                 return 40;
+            },
+            type: [Number]
+        },
+
+        keyEvents: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
+        highlightTimeout: {
+            default()
+            {
+                return 7000;
             },
             type: [Number]
         },
@@ -452,10 +464,10 @@ export default {
             this.$refs.draggable.selectAll();
         },
 
-        // scrollTo(y = 0)
-        // {
-        //     this.$refs.draggable.scrollTo(y);
-        // },
+        highlightNode(value, key = null)
+        {
+            this.$refs.draggable.highlightNode(value, key);
+        },
 
         refreshCurrent()
         {

@@ -1,5 +1,4 @@
-import CtorMixin from "../../../mixins/src/ctor";
-import { Str, Num, Arr, Locale } from "nano-js";
+import { Str, Num, Arr, Any } from "nano-js";
 
 export default {
 
@@ -41,7 +40,7 @@ export default {
         size: {
             default()
             {
-                return 'default';
+                return 'md';
             },
             type: [String]
         },
@@ -49,7 +48,7 @@ export default {
         type: {
             default()
             {
-                return 'secondary';
+                return 'primary';
             },
             type: [String]
         },
@@ -57,7 +56,7 @@ export default {
         maxPages: {
             default()
             {
-                return 7;
+                return 5;
             },
             type: [Number]
         },
@@ -78,7 +77,12 @@ export default {
 
         pages()
         {
-            return Num.ceil(this.total / this.veLimit);
+            return Num.ceil(this.total / this.tempLimit);
+        },
+
+        pageOptions()
+        {
+            return Arr.make(this.pages || 1);
         }
 
     },
@@ -86,39 +90,62 @@ export default {
     data()
     {
         return {
-            vePage: this.page, veLimit: this.limit
+            tempPage: this.page, 
+            tempLimit: this.limit,
         }
     },
 
     methods: {
 
-        changePage(page)
+        forcePage(page)
         {
-            this.vePage = page;
+            if ( page !== this.tempPage ) {
+                this.tempPage = page;
+            }
         },
 
         updatePaginate()
         {
             let paginate = {
-                page: this.vePage, limit: this.veLimit
+                page: this.tempPage, limit: this.tempLimit
             };
 
             this.$emit('paginate', paginate);
         },
 
-        eventPageInput(value)
+        onPrevPage()
         {
-            this.$emit('update:page', this.vePage = value);
+            this.onPageInput(this.tempPage - 1);
+        },
+
+        onNextPage()
+        {
+            this.onPageInput(this.tempPage + 1);
+        },
+
+        onFirstPage()
+        {
+            this.onPageInput(1);
+        },
+
+        onLastPage()
+        {
+            this.onPageInput(this.pages);
+        },
+
+        onPageInput(value)
+        {
+            this.$emit('update:page', this.tempPage = value);
 
             this.updatePaginate();
         },
 
-        eventLimitInput(value)
+        onLimitInput(value)
         {
-            this.$emit('update:limit', this.veLimit = value);
+            this.$emit('update:limit', this.tempLimit = value);
 
-            if ( this.pages < this.vePage ) {
-                this.$emit('update:page', this.vePage = 1);
+            if ( this.pages < this.tempPage ) {
+                this.$emit('update:page', this.tempPage = 1);
             }
 
             this.updatePaginate();
@@ -128,17 +155,17 @@ export default {
 
     watch: {
 
-        page()
+        page(value)
         {
-            if ( this.page !== this.vePage ) {
-                this.vePage = this.page;
+            if ( value !== this.tempPage ) {
+                this.tempPage = value;
             }
         },
 
-        limit()
+        limit(value)
         {
-            if ( this.limit !== this.veLimit ) {
-                this.veLimit = this.limit;
+            if ( value !== this.tempLimit ) {
+                this.tempLimit = value;
             }
         }
 
@@ -146,28 +173,25 @@ export default {
 
     renderLimit()
     {
-        let events = {
-            input: this.eventLimitInput
-        };
-
         let props = {
-            value: this.veLimit,
-            size: this.size
+            modelValue:     this.tempLimit,
+            size:           this.size,
+            type:           this.type,
+            optionsValue:  '$value.value',
+            optionsLabel:  '$value.label',
         };
 
-        let optionsHtml = Arr.each(this.limitOptions, (limit) => {
-            return (
-                <NSelectOption disabled={limit === this.veLimit} value={limit}>
-                    { this.choice(':count items', limit) }
-                </NSelectOption>
-            );
+        props.options = Arr.each(this.limitOptions, (limit) => {
+            return {
+                value: limit, label: this.choice(':count items', limit)
+            };
         });
+
+        props['onUpdate:modelValue'] = this.onLimitInput;
 
         return (
             <div class="n-paginator__limit">
-                <NSelect props={props} on={events}>
-                    { optionsHtml }
-                </NSelect>
+                <NSelect {...props} />
             </div>
         );
     },
@@ -176,9 +200,7 @@ export default {
     {
         return (
             <div class="n-paginator__count">
-                <span>
-                    { this.choice('No items|Total :count item|Total :count items', this.total) }
-                </span>
+                { this.choice('No items|Total :count item|Total :count items', this.total) }
             </div>
         );
     },
@@ -194,32 +216,26 @@ export default {
 
     renderGoto()
     {
-        let events = {
-            input: this.eventPageInput
-        };
-
         let props = {
-            value: this.vePage,
-            size: this.size,
-            undefinedText: '?'
+            modelValue:     this.tempPage,
+            size:           this.size,
+            type:           this.type,
+            undefinedText:  '?',
+            optionsValue:   '$value.value',
+            optionsLabel:   '$value.label',
         };
 
-        let optionsHtml = Arr.each(Arr.make(this.pages || 1), (value, index) => {
-            return (
-                <NSelectOption disabled={Num.int(index) + 1 === this.vePage} value={Num.int(index) + 1}>
-                    { Num.int(index) + 1 }
-                </NSelectOption>
-            );
-        });
+        props.options = Arr.reduce(this.pageOptions, (merge, index) => {
+            return Arr.push(merge, {
+                value: index, label: index
+            });
+        }, []);
+
+        props['onUpdate:modelValue'] = this.onPageInput;
 
         return (
             <div class="n-paginator__goto">
-                <span>
-                    {this.trans('Goto')}
-                </span>
-                <NSelect props={props} on={events}>
-                    { optionsHtml }
-                </NSelect>
+                <NSelect {...props} />
             </div>
         );
     },
@@ -230,19 +246,16 @@ export default {
             type: this.type,
             square: true,
             size: this.size,
-            icon: this.icons.angleLeft
+            icon: this.icons.angleLeft,
+            onClick: this.onPrevPage
         };
 
-        if ( this.vePage - 1 < 1 ) {
+        if ( this.tempPage - 1 < 1 ) {
             props.disabled = true;
         }
 
-        let events = {
-            click: () => this.eventPageInput(this.vePage - 1)
-        };
-
         return (
-            <NButton props={props} on={events} />
+            <NButton {...props} />
         );
     },
 
@@ -252,25 +265,68 @@ export default {
             type: this.type,
             square: true,
             size: this.size,
-            icon: this.icons.angleRight
+            icon: this.icons.angleRight,
+            onClick: this.onNextPage
         };
 
-        if ( this.vePage + 1 > this.pages ) {
+        if ( this.tempPage + 1 > this.pages ) {
             props.disabled = true;
         }
 
-        let events = {
-            click: () => this.eventPageInput(this.vePage + 1)
+        return (
+            <NButton {...props} />
+        );
+    },
+
+    renderFirst()
+    {
+        if ( this.pages < this.maxPages ) {
+            return null;
+        }
+
+        let props = {
+            type: this.type,
+            square: true,
+            size: this.size,
+            icon: this.icons.angleDoubleLeft,
+            onClick: this.onFirstPage
         };
 
+        if ( this.tempPage - 1 < 1 ) {
+            props.disabled = true;
+        }
+
         return (
-            <NButton props={props} on={events} />
+            <NButton {...props} />
+        );
+    },
+
+    renderLast()
+    {
+        if ( this.pages < this.maxPages ) {
+            return null;
+        }
+
+        let props = {
+            type: this.type,
+            square: true,
+            size: this.size,
+            icon: this.icons.angleDoubleRight,
+            onClick: this.onLastPage
+        };
+
+        if ( this.tempPage + 1 > this.pages ) {
+            props.disabled = true;
+        }
+
+        return (
+            <NButton {...props} />
         );
     },
 
     renderPage(index)
     {
-        let page = this.vePage;
+        let page = this.tempPage;
 
         let pages = Math.abs(this.maxPages / 2);
 
@@ -284,7 +340,7 @@ export default {
             page = global - pages;
         }
 
-        let current = Num.int(index) + 1;
+        let current = Num.int(index);
 
         if ( current < page - pages ) {
             return null;
@@ -296,61 +352,63 @@ export default {
 
         let props = {
             type: this.type,
-            square: true,
-            size: this.size
+            size: this.size,
         };
 
-        if ( current === this.vePage ) {
+        if ( current === this.tempPage ) {
             props.disabled = true;
         }
 
-        let events = {
-            click: () => this.eventPageInput(current)
+        props.onClick = () => {
+            this.onPageInput(current);
         };
 
         return (
-            <NButton props={props} on={events}>{ current }</NButton>
+            <NButton {...props}>{ current }</NButton>
         );
     },
 
     renderPages()
     {
+        let pages = Arr.each(this.pageOptions, (index) => {
+            return this.ctor('renderPage')(index);
+        });
+
         return (
             <div class="n-paginator__pages">
+                { this.ctor('renderFirst')() }
                 { this.ctor('renderPrev')() }
-                {
-                    Arr.each(Arr.make(this.pages || 1), (empty, index) => {
-                        return this.ctor('renderPage')(index);
-                    })
-                }
+                { ...pages }
                 { this.ctor('renderNext')() }
+                { this.ctor('renderLast')() }
             </div>
         );
     },
 
     renderSlot(view)
     {
-        if ( ! this.$slots[view] ) {
-            return null;
+        let renderFunction = this.ctor('render' + 
+            Str.ucfirst(view));
+
+        if ( Any.isFunction(renderFunction) ) {
+            return renderFunction();
         }
 
-        return this.$slots[view];
+        return this.$slots[view] && this.$slots[view]();
     },
 
     render()
     {
         let className = [
             'n-paginator',
-            'n-paginator--' + this.size
+            'n-paginator--' + this.size,
+            'n-paginator--' + this.type
         ];
 
         return <div class={className}>
             {
                 Arr.each(this.layout, (view) => {
-
-                    let ctor = this.ctor('render' + Str.ucfirst(view));
-
-                    return ctor ? ctor() : this.ctor('renderSlot')(view)
+                    return this.ctor('renderSlot')(view);
                 })
             }
         </div>;

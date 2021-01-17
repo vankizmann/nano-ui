@@ -516,6 +516,9 @@ class NDraghandler {
             this.unlinkNodes(clone);
         }
 
+        this.cacheNodes = Arr.each(this.cacheNodes,
+            this.rootNode.transformDrop);
+
         if ( this.rootNode.insertNode && strategy === 'root' ) {
             clone = this.moveNodesRoot(clone, target);
         }
@@ -582,6 +585,10 @@ class NDraghandler {
 
     moveNodesRoot(clone)
     {
+        if ( this.rootNode.disableMove ) {
+            return clone;
+        }
+
         Arr.each(this.cacheNodes, (node) => {
             clone.items.push(node.item);
         });
@@ -591,6 +598,10 @@ class NDraghandler {
 
     moveNodesInto(clone, target)
     {
+        if ( this.rootNode.disableMove ) {
+            return clone;
+        }
+
         let targetRoute = [target.value.route, 
             this.childProp].join('.');
 
@@ -608,6 +619,10 @@ class NDraghandler {
 
     moveNodesBefore(clone, target)
     {
+        if ( this.rootNode.disableMove ) {
+            return clone;
+        }
+
         let targetRoute = target.value.route
             .replace(/\.[0-9]+$/, '');
 
@@ -624,6 +639,10 @@ class NDraghandler {
 
     moveNodesAfter(clone, target)
     {
+        if ( this.rootNode.disableMove ) {
+            return clone;
+        }
+
         let targetRoute = target.value.route
             .replace(/\.[0-9]+$/, '');
 
@@ -637,12 +656,6 @@ class NDraghandler {
 
         return clone;
     }
-
-
-
-
-
-
 
     reduce(items, ...props) {
         return Arr.reduce(items, (merge, item, index) => 

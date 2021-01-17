@@ -53,6 +53,11 @@ export default {
             return this.NDraggable.isDisabled(this);
         },
 
+        isHighlight()
+        {
+            return this.NDraggable.isHighlight(this);
+        },
+
         isCurrent()
         {
             return this.NDraggable.isCurrent(this);
@@ -213,6 +218,10 @@ export default {
 
         if ( this.isCurrent() ) {
             classList.push('n-current');
+        }
+
+        if ( this.isHighlight() ) {
+            classList.push('n-highlight');
         }
 
         let props = {

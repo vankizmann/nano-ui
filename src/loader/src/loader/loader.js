@@ -4,10 +4,6 @@ export default {
 
     name: 'NLoader',
 
-    model: {
-        prop: 'visible'
-    },
-
     inject: {
 
         NLoader: {
@@ -36,7 +32,15 @@ export default {
         size: {
             default()
             {
-                return 'default';
+                return 'md';
+            },
+            type: [String]
+        },
+
+        type: {
+            default()
+            {
+                return 'primary';
             },
             type: [String]
         },
@@ -52,7 +56,7 @@ export default {
         debounce: {
             default()
             {
-                return 500;
+                return 100;
             },
             type: [Number]
         }
@@ -62,32 +66,38 @@ export default {
     data()
     {
         return {
-            veTiming: 0
+            tempVisible: this.visible
         };
     },
 
     methods: {
 
-        startTimer()
+        applyTimer()
         {
-            clearTimeout(this.veDelay);
+            this.timing = Date.now();
 
-            this.veTiming = Date.now();
-
-            Dom.find(this.$el).addClass('n-load');
-        },
-
-        stopTimer()
-        {
-            let timing = Date.now() - this.veTiming;
-
-            if ( timing < this.minimum ) {
-                return Any.delay(this.stopTimer, this.minimum - timing + 10);
+            if ( this.visible) {
+                return this.tempVisible = this.visible;
             }
 
-            this.veDelay = setTimeout(() => {
-                Dom.find(this.$el).removeClass('n-load');
-            }, this.debounce);
+            console.log('start timer');
+            this.startTimer();
+        },
+
+        startTimer()
+        {
+            let timing = Date.now() - this.timing;
+
+            if ( timing < this.minimum ) {
+                return this.restartTimer(timing);
+            }
+
+            this.timeout = setTimeout(() => this.tempVisible = false, 
+                this.debounce);
+        },
+
+        restartTimer(timing = 0) {
+            Any.delay(this.startTimer, this.minimum - timing + 10);
         }
 
     },
@@ -96,27 +106,31 @@ export default {
 
         visible()
         {
-            this.visible ? this.startTimer() : this.stopTimer();
+            this.applyTimer();
         }
 
     },
 
     mounted()
     {
-        this.visible ? this.startTimer() : this.stopTimer();
+        this.applyTimer();
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
         let classList = [
-            'n-loader', 'n-loader--' + this.size
+            'n-loader', 
+            'n-loader--' + this.size, 
+            'n-loader--' + this.type
         ];
+
+        if ( this.tempVisible ) {
+            classList.push('n-load');
+        }
 
         return (
             <div class={classList}>
-                { this.$slots.default }
+                { this.$slots.default && this.$slots.default() }
             </div>
         );
     }

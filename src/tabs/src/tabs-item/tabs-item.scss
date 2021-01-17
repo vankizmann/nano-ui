@@ -1,17 +1,20 @@
 @import "../../../root/vars";
 
-.n-tabs-item__wrapper {
+$tabs-size: 14px;
+
+.n-tabs-item {
     flex: 1 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: stretch;
 }
 
-.n-tabs-item__wrapper:not(.n-raw) {
-    margin-top: 20px;
-}
+@each $suffix, $values in $form {
 
-.n-tabs-item__wrapper .n-tabs-item {
-    flex: 1 1 auto;
+    $-tabs-font: map-get($values, 'font');
+    $-tabs-size: map-get($values, 'size');
+    $-tabs-radius: map-get($values, 'radius');
+    $-tabs-ratio: map-get($values, 'ratio');
+
+    .n-tabs--#{$suffix} .n-tabs-item {
+        margin-top: $-tabs-size;
+    }
+
 }

@@ -13,7 +13,7 @@ export default {
 
     props: {
 
-        value: {
+        modelValue: {
             default()
             {
                 return 'default';
@@ -32,7 +32,15 @@ export default {
         size: {
             default()
             {
-                return 'default';
+                return 'md';
+            },
+            type: [String]
+        },
+
+        type: {
+            default()
+            {
+                return 'primary';
             },
             type: [String]
         }
@@ -42,7 +50,10 @@ export default {
     data()
     {
         return {
-            width: 0, offset: 0, veTabs: [], veValue: this.value
+            elements: [], 
+            width: 0, 
+            offset: 0, 
+            tempValue: this.modelValue
         };
     },
 
@@ -50,54 +61,60 @@ export default {
 
         addTab(tab)
         {
-            Arr.add(this.veTabs, tab, {
-                name: tab.name
-            });
+            Arr.add(this.elements, tab, 
+                { name: tab.name });
         },
 
         removeTab(tab)
         {
-            Arr.remove(this.veTabs, {
-                name: tab.name
-            });
+            Arr.remove(this.elements, 
+                { name: tab.name });
         },
 
         getTab(updateEvent = true)
         {
-            let currentTab = Arr.find(this.veTabs, {
+            let currentTab = Arr.find(this.elements, {
                 name: this.value
             });
 
-            if ( ! currentTab ) {
-                currentTab = Arr.first(Arr.sort(this.veTabs, 'sort'));
-            }
+            let sorted = Arr.sort(this.elements, 'sort');
 
             if ( ! currentTab ) {
-                return Any.delay(() => this.getTab(updateEvent), 250);
+                currentTab = Arr.first(sorted);
             }
 
-            if ( currentTab.name === this.veValue ) {
+            let repeatNext = () => this.getTab(updateEvent);
+
+            if ( ! currentTab ) {
+                return Any.delay(repeatNext, 250);
+            }
+
+            if ( currentTab.name === this.tempValue || ! updateEvent  ) {
                 return;
             }
 
-            if ( updateEvent ) {
-                this.$emit('input', this.veValue = currentTab.name);
-            }
+            this.$emit('update:modelValue', 
+                this.tempValue = currentTab.name);
         },
 
-        changeTab(tab)
+        changeTab(value)
         {
-            this.$emit('input', this.veValue = tab);
+            if ( this.tempValue === value ) {
+                return;
+            }
+
+            this.$emit('update:modelValue', 
+                this.tempValue = value);
         }
 
     },
 
     watch: {
 
-        value()
+        modelValue(value)
         {
-            if ( this.value !== this.veValue ) {
-                this.veValue = this.value;
+            if ( value !== this.tempValue ) {
+                this.tempValue = value;
             }
         }
 
@@ -105,7 +122,7 @@ export default {
 
     mounted()
     {
-        // this.getTab(false);
+        this.getTab(false);
     },
 
     updated()
@@ -123,33 +140,35 @@ export default {
 
     renderHeaderIndicator()
     {
-        let style = {
-            transform: `scaleX(${this.width / 100}) translateX(${this.offset / (this.width / 100)}px)`
-        };
+        let transform = `scaleX(${this.width / 100}) ` + 
+            `translateX(${this.offset / (this.width / 100)}px)`;
 
         return (
-            <div class="n-tabs__indicator" style={style}>
-                <span></span>
+            <div class="n-tabs__indicator" style={{ transform }}>
+                { /* Indicator bar */ }
             </div>
         );
     },
 
     renderHeader()
     {
-        if ( this.veTabs.length <= 1 ) {
+        if ( this.elements.length <= 1 ) {
             return null;
         }
 
-        let headerItems = Arr.each(Arr.sort(this.veTabs, 'sort'), (tab) => {
-            return tab.ctor('renderHeader')()
+        // FIXME: As soon vue doesnt bug
+        let sorted = Arr.sort(this.elements, 'sort');
+        
+        let tabs = Arr.each(Arr.make(sorted.length), (tab, index) => {
+            return sorted[index].ctor('renderHeader')();
         });
 
         return (
-            <div class="n-tabs__header">
-                <div class="n-tabs__header-inner">
-                    { [headerItems, this.ctor('renderHeaderIndicator')()] }
+            <NScrollbar relative={true}>
+                <div class="n-tabs__header">
+                    { [tabs, this.ctor('renderHeaderIndicator')()] }
                 </div>
-            </div>
+            </NScrollbar>
         );
     },
 
@@ -157,7 +176,7 @@ export default {
     {
         return (
             <div class="n-tabs__body">
-                {this.$slots.default}
+                { this.$slots.default && this.$slots.default() }
             </div>
         );
     },
@@ -165,7 +184,9 @@ export default {
     render()
     {
         let classList = [
-            'n-tabs', 'n-tabs--' + this.size
+            'n-tabs', 
+            'n-tabs--' + this.size, 
+            'n-tabs--' + this.type
         ];
 
         return (
