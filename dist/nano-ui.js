@@ -1139,9 +1139,9 @@ __webpack_require__.r(__webpack_exports__);
       classList.push('n-disabled');
     }
 
-    var props = {
-      "class": classList
-    };
+    var props = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].except(this.$attrs, ['class'], {
+      "class": this.cmer(classList)
+    });
 
     if (this.disabled) {
       props.disabled = true;
@@ -8263,7 +8263,7 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     var props = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].only(this.$attrs, ['style'], {
-      "class": classList
+      "class": this.cmer(classList)
     });
     var innerHtml = [];
 
@@ -14471,7 +14471,7 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     var props = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].only(this.$attrs, ['style'], {
-      "class": classList
+      "class": this.cmer(classList)
     });
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["h"])('div', props, [this.ctor('renderInput')()]);
   }

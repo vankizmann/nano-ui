@@ -146,7 +146,7 @@ export default {
         }
 
         let props = Obj.only(this.$attrs, ['style'], {
-            class: classList
+            class: this.cmer(classList)
         });
 
         return h('div', props, [this.ctor('renderInput')()]);
