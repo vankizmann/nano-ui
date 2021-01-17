@@ -120,9 +120,9 @@ export default {
             classList.push('n-disabled');
         }
 
-        let props = Obj.except(this.$attrs, ['class'], {
+        let props = {
             class: classList
-        });
+        };
 
         if ( this.disabled ) {
             props.disabled = true;
