@@ -22,11 +22,12 @@ export default {
             type: [Boolean]
         },
 
-        selector: {
+        listen: {
             default()
             {
-                return null;
+                return true;
             },
+            type: [Boolean]
         },
 
         disabled: {
@@ -227,7 +228,7 @@ export default {
 
         eventClick(event, el)
         {
-            if ( this.disabled || event.which !== 1 ) {
+            if ( ! this.listen || this.disabled || event.which !== 1 ) {
                 return;
             }
 

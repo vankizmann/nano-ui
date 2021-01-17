@@ -8557,10 +8557,11 @@ __webpack_require__.r(__webpack_exports__);
       },
       type: [Boolean]
     },
-    selector: {
+    listen: {
       "default": function _default() {
-        return null;
-      }
+        return true;
+      },
+      type: [Boolean]
     },
     disabled: {
       "default": function _default() {
@@ -8708,7 +8709,7 @@ __webpack_require__.r(__webpack_exports__);
       }, 100);
     },
     eventClick: function eventClick(event, el) {
-      if (this.disabled || event.which !== 1) {
+      if (!this.listen || this.disabled || event.which !== 1) {
         return;
       }
 
