@@ -1,4 +1,5 @@
-import Vue from "vue";
-
 import NConfig from "./src/config/config";
-Vue.component(NConfig.name, NConfig);
+
+export default function(App) {
+    App.component(NConfig.name, NConfig);
+}

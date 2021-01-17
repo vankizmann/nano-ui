@@ -55,7 +55,7 @@ export function NanoInstall(App, Icons = {}, Styles = {})
 
     require('./notification/index').default(App);
     require('./empty/index').default(App);
-    //require('./config/index'); //!complex 17.1
+    require('./config/index').default(App); //!complex 17.1
     require('./scrollbar/index').default(App);
     require('./virtualscroller/index').default(App);
     require('./draggable/index').default(App);

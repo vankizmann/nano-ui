@@ -195,11 +195,10 @@ export default {
         {
             if ( event ) {
                 event.preventDefault();
+                event.stopPropagation();
             }
 
             this.focusInput();
-            
-            this.focus = true;
 
             this.$emit('update:modelValue', 
                 this.tempValue = Arr.clone(this.tempClear));
@@ -217,6 +216,12 @@ export default {
                 { tempValue: option.tempValue });
         },
 
+        resetInput()
+        {
+            this.index = -1;
+            this.search = '';
+        },
+
         focusInput(event = null)
         {
             if ( event ) {
@@ -226,25 +231,14 @@ export default {
             this.$refs.input.focus();
         },
 
-        blurInput(event = null)
-        {
-            this.$refs.input.blur();
-        },
-
         onFocusInput()
         {
+            console.log('focus')
+            if ( ! this.focus ) {
+                this.$refs.popover.open();
+            }
+            
             clearInterval(this.refresh);
-
-            this.$refs.popover.open();
-        },
-
-        onBlurInput()
-        {
-            setTimeout(() => {
-                this.index = -1;
-                this.search = '';
-                this.$refs.popover.close();
-            }, 100);
         },
 
         onInputInput(event)
@@ -402,7 +396,7 @@ export default {
             let selected = Arr.get(this.searched, 
                 this.index);
 
-            if ( ! selected ) {
+            if ( ! selected || ! this.$refs.scrollbar ) {
                 return;
             }
 
@@ -556,7 +550,6 @@ export default {
             value: this.search,
             placeholder: this.placeholder,
             disabled: this.disabled,
-            onBlur: this.onBlurInput,
             onFocus: this.onFocusInput,
             onInput: this.onInputInput,
             onKeydown: this.onKeydownInput
@@ -603,7 +596,6 @@ export default {
             value: this.search,
             placeholder: this.placeholder,
             disabled: this.disabled,
-            onBlur: this.onBlurInput,
             onFocus: this.onFocusInput,
             onInput: this.onInputInput,
             onKeydown: this.onKeydownInput
@@ -681,10 +673,11 @@ export default {
         let props = {
             trigger: 'click',
             width: -1,
+            listen: true,
             size: this.size,
             scrollClose: true,
             disabled: this.disabled,
-            onScrollClose: this.blurInput
+            onClose: this.resetInput
         };
 
         return (
@@ -741,10 +734,10 @@ export default {
         }
 
         return (
-            <div class={classList} onMousedown={this.focusInput}>
+            <div class={classList} onClick={this.focusInput}>
                 { this.ctor('renderDisplay')() }
-                { this.ctor('renderOptions')() }
                 { this.ctor('renderPopover')() }
+                { this.ctor('renderOptions')() }
             </div>
         );
     }

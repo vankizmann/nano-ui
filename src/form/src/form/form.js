@@ -140,7 +140,7 @@ export default {
         //     return;
         // }
 
-        Dom.find(this.$refs.form).on('submit', 
+        Dom.find(this.$el).on('submit', 
             this.stopPropagation, this._.uid);
     },
 
@@ -154,7 +154,7 @@ export default {
         //     return;
         // }
 
-        Dom.find(this.$refs.form).off('submit', 
+        Dom.find(this.$el).off('submit', 
             null, this._.uid);
     },
 
@@ -166,7 +166,7 @@ export default {
         ];
 
         return (
-            <form ref="form" class={classList}>
+            <form class={classList}>
                 { this.$slots.default() }
             </form>
         );

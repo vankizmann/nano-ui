@@ -14,7 +14,7 @@ $popover: (
 ) !default;
 
 .n-popover {
-    position: fixed;
+    position: absolute;
     display: inline-flex;
     flex-direction: column;
     opacity: 0;

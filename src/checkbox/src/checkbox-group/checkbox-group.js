@@ -104,11 +104,11 @@ export default {
 
         removeCheckbox(checkbox)
         {
+            this.index = -1;
+            
             Arr.remove(this.elements, {
                 uid: checkbox.uid
             });
-
-            this.index = -1;
         },
 
         toggleCheckbox(checkbox, emit = true)

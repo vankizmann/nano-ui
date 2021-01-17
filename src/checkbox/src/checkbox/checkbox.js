@@ -1,4 +1,4 @@
-import { Arr, Obj, Any } from "nano-js";
+import { Arr, Obj, Any, UUID } from "nano-js";
 
 export default {
 
@@ -96,7 +96,7 @@ export default {
     data()
     {
         return {
-            tempChecked: this.modelValue
+            uid: UUID(), tempChecked: this.modelValue
         };
     },
 

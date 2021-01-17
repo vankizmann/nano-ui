@@ -161,13 +161,47 @@ export default {
 
         selectItem(cascade, event = null)
         {
-            if ( event ) {
-                event.stopPropagation();
+            clearTimeout(this.clickTimer);
+
+            if ( ! this.lastclick ) {
+                this.lastclick = 0;
             }
+
+            this.lastclick++;
+
+            let isTouchDevice = !! ('ontouchstart' in window || 
+                navigator.msMaxTouchPoints);
+
+            let trigger = isTouchDevice ? 'click' : 
+                this.trigger ;
+            
+            this.clickTimer = setTimeout(() => 
+                this.lastclick = 0, 240);
+
+            this.hoverTimer = setTimeout(() => 
+                this.hoverItem(cascade), 240);
+
+            if ( this.lastclick === 1 && trigger === 'click' ) {
+                return this.hoverItem(cascade, event);
+            }
+
+            if ( event ) {
+                event.preventDefault();
+            }
+
+            this.clickTimer = setTimeout(() => 
+                this.fireSelectItem(cascade), 50);
+        },
+
+        fireSelectItem(cascade)
+        {
+            clearTimeout(this.hoverTimer);
+
+            this.lastclick = 0;
 
             this.$emit('update:modelValue', 
                 this.tempValue = cascade);
-        },
+        }
 
     },
 
@@ -221,17 +255,8 @@ export default {
             props.onMousemove = Any.framerate(this.onHover(tempCascade), 30);
         }
 
-        if ( this.trigger === 'hover' && ! disabled ) {
-            props.onClick = this.onSelect(tempCascade);
-        }
-
-        if ( this.trigger === 'click' ) {
-            props.onMousedown = Any.framerate(this.onHover(tempCascade), 30);
-        }
-
-        if ( this.trigger === 'click' && ! disabled ) {
-            props.onDblclick = this.onSelect(tempCascade);
-        }
+        props.onMousedown = this.onSelect(tempCascade);
+        props.onTouchstart = this.onSelect(tempCascade);
 
         let children = Obj.get(item, this.childProp);
 

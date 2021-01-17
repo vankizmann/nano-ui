@@ -45,18 +45,12 @@ export default {
             type: [Boolean]
         },
 
-        selector: {
+        listen: {
             default()
             {
-                return null;
+                return true;
             },
-        },
-
-        boundary: {
-            default()
-            {
-                return null;
-            },
+            type: [Boolean]
         },
 
         window: {
@@ -159,22 +153,22 @@ export default {
             Dom.find(document.body).append(this.$el);
         }
 
-        if ( this.trigger === 'hover' ) {
+        if ( this.listen && this.trigger === 'hover' ) {
             Dom.find(document.body).on('mousemove', 
                 Any.framerate(this.onHover, 30), this._.uid);
         }
 
-        if ( this.trigger === 'click' ) {
-            Dom.find(document.body).on('mousedown', 
+        if ( this.listen && this.trigger === 'click' ) {
+            Dom.find(document.body).on(['mousedown', 'touchstart'], 
                 Any.framerate(this.onClick, 30), this._.uid);
         }
 
-        if ( this.trigger === 'context' ) {
+        if ( this.listen && this.trigger === 'context' ) {
             Dom.find(document.body).on('contextmenu', 
                 Any.framerate(this.onContext, 30), this._.uid);
         }
 
-        Dom.find(document.body).on('mousedown', 
+        Dom.find(document.body).on(['mousedown', 'touchstart'], 
             Any.framerate(this.onExit, 30), this._.uid);
 
         Event.bind('NPopover:close', this.onCloseEvent, this._.uid);
@@ -212,6 +206,10 @@ export default {
             }
 
             delete this.timer;
+
+            if ( ! scrollClose ) {
+                this.$emit('close');
+            }
 
             if ( scrollClose ) {
                 this.$emit('scrollClose');
@@ -408,7 +406,8 @@ export default {
             }
         
             if ( offset.x + windowRect.width > window.innerWidth ) {
-                offset.x = window.innerWidth - windowRect.width;
+                offset.x = window.innerWidth - windowRect.width -
+                    (window.innerWidth - document.body.clientWidth);
             }
 
             return offset;
@@ -515,7 +514,8 @@ export default {
             }
         
             if ( offset.x + windowRect.width > window.innerWidth ) {
-                offset.x = window.innerWidth - windowRect.width;
+                offset.x = window.innerWidth - windowRect.width -
+                    (window.innerWidth - document.body.clientWidth);
             }
 
             return offset;
@@ -559,10 +559,13 @@ export default {
 
             let offset = this.getTargetOffset();
 
+            let scroll = Dom.find(document.body)
+                .scroll();
+
             let style = {
                 'z-index':  window.zIndex++,
-                'top':      Math.round(offset.y) + 'px', 
-                'left':     Math.round(offset.x) + 'px', 
+                'top':      Math.round(offset.y + scroll.top) + 'px', 
+                'left':     Math.round(offset.x + scroll.left) + 'px', 
             };
 
             if ( this.width === -1 ) {
@@ -572,7 +575,7 @@ export default {
             Dom.find(this.$el).css(style);
 
             let isScrollClose = this.passedOffset && isSameSize &&
-                (Date.now() - this.timer) > 1200;
+                (Date.now() - this.timer) > 500;
 
             if ( this.scrollClose && isScrollClose ) {
                 this.close(true);
@@ -605,7 +608,8 @@ export default {
 
         onClick(event, el)
         {
-            let keyCode = event.which === 1;
+            let keyCode = event.which === 1 ||
+                event.which === 0;
 
             if ( this.disabled || this.tempValue || ! keyCode ) {
                 return;

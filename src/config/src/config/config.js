@@ -1,4 +1,5 @@
-import { Num, Arr, Obj, Any, Dom, Locale, Str } from "nano-js";
+import { Arr, Obj, Any } from "nano-js";
+import { h, resolveComponent } from "vue";
 
 export default {
 
@@ -6,7 +7,7 @@ export default {
 
     props: {
 
-        value: {
+        modelValue: {
             default()
             {
                 return {};
@@ -35,7 +36,7 @@ export default {
     data()
     {
         return {
-            veValue: this.value
+            tempValue: this.modelValue
         };
     },
 
@@ -52,7 +53,7 @@ export default {
             }
 
             if ( Any.isString(value) && value.match(/\$\$value/) ) {
-                return Obj.has({ $$value: this.veValue }, value);
+                return Obj.has({ $$value: this.tempValue }, value);
             }
 
             return false;
@@ -61,7 +62,7 @@ export default {
         solveValue(value, ...args)
         {
             if ( Any.isFunction(value) ) {
-                return value.apply(this.scope, [this.veValue, ...args]);
+                return value.apply(this.scope, [this.tempValue, ...args]);
             }
 
             if ( Any.isString(value) && value.match(/^\$\$scope/) ) {
@@ -69,7 +70,7 @@ export default {
             }
 
             if ( Any.isString(value) && value.match(/^\$\$value/) ) {
-                return Obj.get({ $$value: this.veValue }, value);
+                return Obj.get({ $$value: this.tempValue }, value);
             }
 
             return value;
@@ -91,7 +92,7 @@ export default {
         solveContent(value, ...args)
         {
             if ( Any.isFunction(value) ) {
-                return value.apply(this.scope, [this.$render, this.veValue, ...args]);
+                return value.apply(this.scope, [this.$render, this.tempValue, ...args]);
             }
 
             return value;
@@ -103,12 +104,11 @@ export default {
                 return veModel.fallback;
             }
 
-
-            if ( ! Obj.has(this.veValue, veModel.path) ) {
-                this.deepSet(this.veValue, veModel.path, veModel.fallback);
+            if ( ! Obj.has(this.tempValue, veModel.path) ) {
+                this.deepSet(this.tempValue, veModel.path, veModel.fallback);
             }
 
-            return Obj.get(this.veValue, veModel.path);
+            return Obj.get(this.tempValue, veModel.path);
         },
 
         inputClosure(veModel, closure = null)
@@ -120,10 +120,10 @@ export default {
             return (value) => {
 
                 if ( closure ) {
-                    closure(value, this.veValue);
+                    closure(value, this.tempValue);
                 }
 
-                this.deepSet(this.veValue, veModel.path, value);
+                this.deepSet(this.tempValue, veModel.path, value);
             };
         },
 
@@ -135,11 +135,11 @@ export default {
             let key = keys.shift();
 
             if ( obj[key] === undefined || obj[key] === null ) {
-                this.$set(obj, key, {});
+                Obj.set(obj, key, {});
             }
 
             if ( keys.length === 0 ) {
-                return this.$set(obj, key, val);
+                return Obj.set(obj, key, val);
             }
 
             return this.deepSet(obj[key], keys, val);
@@ -149,10 +149,10 @@ export default {
 
     watch: {
 
-        value()
+        modelValue(value)
         {
-            if ( this.value !== this.veValue ) {
-                this.veValue = this.value;
+            if ( value !== this.tempValue ) {
+                this.tempValue = value;
             }
         }
 
@@ -166,9 +166,11 @@ export default {
 
         return Arr.each(source, (setup, component) => {
 
+            component = component.replace(/:.*?$/, '');
+
             // Set setup defaults
             setup = Obj.assign({
-                vIf: true, vShow: true, vAwait: null, class: null, on: {}, props: {}, attrs: {}
+                vIf: true, vShow: true, vAwait: null, class: null, $on: {}, $props: {}, $attrs: {}
             }, setup);
 
             if ( ! this.solveAwait(setup.vAwait) ) {
@@ -185,51 +187,75 @@ export default {
 
             // Build default model
             let veModel = Obj.assign({
-                prop: 'value', fallback: null
+                prop: 'modelValue', fallback: null
             }, setup.model);
 
             // Delete model from setup
             delete setup.model;
 
             // Normalize props
-            setup.props = this.solveValue(setup.props);
+            setup.$props = this.solveValue(setup.$props);
 
             // Normalize class
             setup.class = this.solveValue(setup.class);
 
             // Solve props
-            Obj.map(setup.props, (value) => this.solveValue(value));
+            Obj.map(setup.$props, (value) => this.solveValue(value));
 
             // Normalize attrs
-            setup.attrs = this.solveValue(setup.attrs);
+            setup.$attrs = this.solveValue(setup.$attrs);
 
             // Solve attrs
-            Obj.map(setup.attrs, (value) => this.solveValue(value));
+            Obj.map(setup.$attrs, (value) => this.solveValue(value));
 
             // Solve events
-            Obj.map(setup.on, (value) => this.solveEvent(value));
+            Obj.map(setup.$on, (value) => this.solveEvent(value));
 
             if ( veModel.path ) {
 
                 // Override input event
-                setup.on.input = this.inputClosure(veModel, setup.on.input);
+                setup['onUpdate:modelValue'] = this.inputClosure(veModel, setup.$on.input);
 
                 // Set prop in value or get fallback
-                setup.props[veModel.prop] = this.prepareValue(veModel);
+                setup.$props[veModel.prop] = this.prepareValue(veModel);
             }
 
-            // Solve conten if is functional
-            let content = this.solveContent(setup.content, setup);
+            Obj.assign(setup, setup.$props);
+            delete setup.$props;
 
-            return this.$render(component.replace(/:.*?$/, ''), setup,
-                this.ctor('renderLayer')(content));
+            Obj.assign(setup, setup.$attrs);
+            delete setup.$attrs;
+
+            Obj.assign(setup, setup.$on);
+            delete setup.$on;
+            
+            let content = setup.content;
+            delete setup.content;
+            
+            delete setup.vIf;
+            delete setup.vShow;
+            delete setup.vAwait;
+
+            // Solve conten if is functional
+            let slots = this.solveContent(content, setup);
+
+            let domtypes = [
+                'div', 'span', 'a'
+            ];
+
+            let resolved = component;
+
+            if ( ! Arr.has(domtypes, resolved) ) {
+                resolved = resolveComponent(component);
+            }
+
+            return h(resolved, setup,
+                this.ctor('renderLayer')(slots));
         });
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
         return this.ctor('renderLayer')(this.config)[0];
     }
 

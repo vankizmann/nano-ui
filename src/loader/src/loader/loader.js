@@ -80,7 +80,6 @@ export default {
                 return this.tempVisible = this.visible;
             }
 
-            console.log('start timer');
             this.startTimer();
         },
 
