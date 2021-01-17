@@ -63,7 +63,7 @@ export function NanoInstall(App, Icons = {}, Styles = {})
     require('./resizer/index').default(App); //check
     require('./popover/index').default(App);
     require('./modal/index').default(App);
-    require('./button/index').default(App); // group 14.1
+    require('./button/index').default(App); // group 17.1
     require('./input/index').default(App);
     require('./textarea/index').default(App);
     require('./select/index').default(App);
@@ -78,9 +78,9 @@ export function NanoInstall(App, Icons = {}, Styles = {})
     require('./transfer/index').default(App); // check
     require('./form/index').default(App); // check
     require('./tabs/index').default(App);
-    require('./table/index').default(App); // matrix, options, select
-    require('./paginator/index').default(App); // 16.1
-    // require('./info/index'); //!complex 16.1
+    require('./table/index').default(App); // 18.1 matrix, options, select
+    require('./paginator/index').default(App);
+    require('./info/index').default(App); //!complex 16.1
 
     // require('./map/index'); // SX only ez 17.1
     // require('./file-list/index'); // SX only 17.1

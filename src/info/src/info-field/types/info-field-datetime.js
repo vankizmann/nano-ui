@@ -14,7 +14,7 @@ export default {
         ];
 
         return <div class={className}>
-            <span>{ Any.convertDatetime(this.veValue, this.column.datetimeFormat, this.column.emptyText) }</span>
+            <span>{ Any.convertDatetime(this.input, this.column.datetimeFormat, this.column.emptyText) }</span>
         </div>;
     }
 

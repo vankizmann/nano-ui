@@ -1,5 +1,5 @@
 import { UUID, Num, Arr, Obj, Any, Dom, Locale, Str } from "nano-js";
-import CtorMixin from "../../../mixins/src/ctor";
+import { h, resolveComponent } from "vue";
 
 export default {
 
@@ -66,7 +66,7 @@ export default {
         emptyText: {
             default()
             {
-                return this.trans('-');
+                return Locale.trans('-');
             },
             type: [String]
         },
@@ -74,7 +74,7 @@ export default {
         trueText: {
             default()
             {
-                return this.trans('Yes');
+                return Locale.trans('Yes');
             },
             type: [String]
         },
@@ -82,7 +82,7 @@ export default {
         falseText: {
             default()
             {
-                return this.trans('No');
+                return Locale.trans('No');
             },
             type: [String]
         },
@@ -90,17 +90,18 @@ export default {
         datetimeFormat: {
             default()
             {
-                return this.trans('YYYY-MM-DD HH:mm');
+                return Locale.trans('YYYY-MM-DD HH:mm');
             },
             type: [String]
         }
 
     },
 
-    methods: {
-
-        ...CtorMixin,
-
+    data()
+    {
+        return {
+            uid: UUID()
+        };
     },
 
     beforeMount()
@@ -108,46 +109,51 @@ export default {
         this.NInfo.addColumn(this);
     },
 
-    destroyed()
+    beforeUnmount()
     {
         this.NInfo.removeColumn(this);
     },
 
-    renderLabel({ column })
+    renderLabel()
     {
+        if ( this.$slots.label ) {
+            return this.$slots.label();
+        }
+        
         return (
             <div class="n-info-column__label">
-                <span>{column.label}</span>
+                <span>{this.label}</span>
             </div>
         );
     },
 
-    renderBody({ column, value, key })
+    renderBody(props)
     {
+        if ( this.$slots.default ) {
+            return this.$slots.label();
+        }
+
+        let passed = Obj.except(props, [], {
+            column: this
+        });
+
+
+        let component = resolveComponent('NInfoField' + 
+            Str.ucfirst(this.type));
+
          return (
              <div class="n-info-column__value">
-                 { this.ctor('renderCell')({ column, value, key }) }
+                 { h(component, passed) }
              </div>
          );
     },
 
     renderCell(props)
     {
-        return this.h('NInfoField' + Str.ucfirst(this.type), { props });
     },
 
-    render(h)
+    render()
     {
-        this.h = h;
-
-        if ( ! this.$scopedSlots.label ) {
-            this.$scopedSlots.label = this.ctor('renderLabel');
-        }
-
-        if ( ! this.$scopedSlots.default ) {
-            this.$scopedSlots.default = this.ctor('renderBody');
-        }
-
         return null;
     }
 

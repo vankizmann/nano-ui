@@ -1,1 +1,34 @@
 @import "../../../root/vars";
+
+.n-draglist__empty {
+    margin: auto;
+}
+
+@each $suffix, $values in $form {
+
+    $-draglist-font: map-get($values, 'font');
+    $-draglist-size: map-get($values, 'size');
+    $-draglist-radius: map-get($values, 'radius');
+    $-draglist-ratio: map-get($values, 'ratio');
+
+    .n-draglist--#{$suffix} {
+        font-size: $-draglist-font;
+    }
+
+    .n-draglist--#{$suffix} .n-draglist__empty {
+        padding: $-draglist-size $-draglist-size * 0.5;
+    }
+
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+    .n-draglist--#{$color}.n-empty.n-dragover {
+        background: rgba($-color-base, 0.075);
+    }
+
+}

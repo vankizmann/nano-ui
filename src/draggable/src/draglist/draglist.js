@@ -250,6 +250,7 @@ export default {
     data()
     {
         return {
+            uid: UUID(),
             virtuals: [], 
             visible: [], 
             childNodes: {}, 
@@ -422,18 +423,28 @@ export default {
 
             this.$emit('update:current', 
                 this.tempCurrent = node.item);
+            
+            Event.fire('NDraglist:syncCurrent', node.item, this.uid);
         },
 
         setRawCurrent(index)
         {
-            let item = Obj.get(this, 
-                this.visible[index]['route']);
+            let route = Obj.get(this.visible, 
+                [index, 'route']);
+
+            if ( ! route ) {
+                return this.setRawCurrent(0);
+            }
+
+            let item = Obj.get(this, route);
 
             this.$refs.virtualscroller
                 .scrollIntoView(index);
 
             this.$emit('update:current', 
                 this.tempCurrent = item);
+            
+            Event.fire('NDraglist:syncCurrent', item, this.uid);
         },
 
         setNextCurrent()
@@ -456,7 +467,7 @@ export default {
                 index++;
             }
 
-            if ( index > this.visible.length ) {
+            if ( index >= this.visible.length ) {
                 index = reset;
             }
 
@@ -488,6 +499,11 @@ export default {
             }
             
             this.setRawCurrent(index);
+        },
+
+        syncCurrent()
+        {
+            return ['NDraglist:syncCurrent', this.uid];
         },
 
         isDisabled(node)
@@ -607,7 +623,7 @@ export default {
             }
 
             Dom.find(document).on('keydown', 
-                this.onKeydown, this._.uid)
+                this.onKeydown, this.uid)
         },
 
         unbindKeydown()
@@ -617,7 +633,7 @@ export default {
             }
 
             Dom.find(document).off('keydown', 
-                null, this._.uid)
+                null, this.uid)
         },
 
         onKeydown(event)

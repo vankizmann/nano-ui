@@ -17,7 +17,7 @@ export default {
             required: true
         },
 
-        value: {
+        item: {
             required: true
         },
 
@@ -25,24 +25,20 @@ export default {
 
     computed: {
 
-        veValue()
+        input()
         {
-            return Obj.get(this.value, this.column.prop);
+            return Obj.get(this.item, this.column.prop);
         }
-
-    },
-
-    methods: {
-
-        ...CtorMixin,
 
     },
 
     render()
     {
-        return <div class="n-info__field">
-            <span>{ this.value }</span>
-        </div>;
+        return (
+            <div class="n-info__field">
+                <span>{ this.input }</span>
+            </div>
+        );
     }
 
 }

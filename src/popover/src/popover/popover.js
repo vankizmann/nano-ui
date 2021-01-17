@@ -211,6 +211,8 @@ export default {
                 return;
             }
 
+            delete this.timer;
+
             if ( scrollClose ) {
                 this.$emit('scrollClose');
             }
@@ -545,6 +547,10 @@ export default {
                 return;
             }
 
+            if ( ! this.timer ) {
+                this.timer = Date.now();
+            }
+
             this.passedSize = size;
 
             if ( this.width ) {
@@ -565,7 +571,10 @@ export default {
 
             Dom.find(this.$el).css(style);
 
-            if ( this.scrollClose && this.passedOffset && isSameSize ) {
+            let isScrollClose = this.passedOffset && isSameSize &&
+                (Date.now() - this.timer) > 1200;
+
+            if ( this.scrollClose && isScrollClose ) {
                 this.close(true);
             }
 

@@ -6271,6 +6271,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
+      uid: Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])(),
       virtuals: [],
       visible: [],
       childNodes: {},
@@ -6401,11 +6402,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       this.$emit('update:current', this.tempCurrent = node.item);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].fire('NDraglist:syncCurrent', node.item, this.uid);
     },
     setRawCurrent: function setRawCurrent(index) {
-      var item = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this, this.visible[index]['route']);
+      var route = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.visible, [index, 'route']);
+
+      if (!route) {
+        return this.setRawCurrent(0);
+      }
+
+      var item = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this, route);
       this.$refs.virtualscroller.scrollIntoView(index);
       this.$emit('update:current', this.tempCurrent = item);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].fire('NDraglist:syncCurrent', item, this.uid);
     },
     setNextCurrent: function setNextCurrent() {
       if (!this.visible.length) {
@@ -6424,7 +6433,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         index++;
       }
 
-      if (index > this.visible.length) {
+      if (index >= this.visible.length) {
         index = reset;
       }
 
@@ -6452,6 +6461,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       this.setRawCurrent(index);
+    },
+    syncCurrent: function syncCurrent() {
+      return ['NDraglist:syncCurrent', this.uid];
     },
     isDisabled: function isDisabled(node) {
       return this.firstSelected && node.value.depth !== this.firstSelected.depth;
@@ -6536,14 +6548,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('keydown', this.onKeydown, this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('keydown', this.onKeydown, this.uid);
     },
     unbindKeydown: function unbindKeydown() {
       if (!this.keyEvents) {
         return;
       }
 
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off('keydown', null, this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off('keydown', null, this.uid);
     },
     onKeydown: function onKeydown(event) {
       if (event.which === 32) {
@@ -7207,7 +7219,7 @@ function NanoInstall(App) {
 
   __webpack_require__(/*! ./modal/index */ "./src/modal/index.js")["default"](App);
 
-  __webpack_require__(/*! ./button/index */ "./src/button/index.js")["default"](App); // group 14.1
+  __webpack_require__(/*! ./button/index */ "./src/button/index.js")["default"](App); // group 17.1
 
 
   __webpack_require__(/*! ./input/index */ "./src/input/index.js")["default"](App);
@@ -7239,11 +7251,12 @@ function NanoInstall(App) {
 
   __webpack_require__(/*! ./tabs/index */ "./src/tabs/index.js")["default"](App);
 
-  __webpack_require__(/*! ./table/index */ "./src/table/index.js")["default"](App); // matrix, options, select
+  __webpack_require__(/*! ./table/index */ "./src/table/index.js")["default"](App); // 18.1 matrix, options, select
 
 
-  __webpack_require__(/*! ./paginator/index */ "./src/paginator/index.js")["default"](App); // 16.1
-  // require('./info/index'); //!complex 16.1
+  __webpack_require__(/*! ./paginator/index */ "./src/paginator/index.js")["default"](App);
+
+  __webpack_require__(/*! ./info/index */ "./src/info/index.js")["default"](App); //!complex 16.1
   // require('./map/index'); // SX only ez 17.1
   // require('./file-list/index'); // SX only 17.1
   // require('./file/index'); // SX only 17.1
@@ -7254,6 +7267,547 @@ function NanoInstall(App) {
 global.NanoInstall = NanoInstall;
 /* harmony default export */ __webpack_exports__["default"] = (NanoInstall);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./src/info/index.js":
+/*!***************************!*\
+  !*** ./src/info/index.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _src_info_info__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/info/info */ "./src/info/src/info/info.js");
+/* harmony import */ var _src_info_column_info_column__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/info-column/info-column */ "./src/info/src/info-column/info-column.js");
+/* harmony import */ var _src_info_field_types_info_field_string__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/info-field/types/info-field-string */ "./src/info/src/info-field/types/info-field-string.js");
+/* harmony import */ var _src_info_field_types_info_field_boolean__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./src/info-field/types/info-field-boolean */ "./src/info/src/info-field/types/info-field-boolean.js");
+/* harmony import */ var _src_info_field_types_info_field_datetime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./src/info-field/types/info-field-datetime */ "./src/info/src/info-field/types/info-field-datetime.js");
+/* harmony import */ var _src_info_field_types_info_field_option__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./src/info-field/types/info-field-option */ "./src/info/src/info-field/types/info-field-option.js");
+/* harmony import */ var _src_info_field_types_info_field_image__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./src/info-field/types/info-field-image */ "./src/info/src/info-field/types/info-field-image.js");
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function (App) {
+  App.component(_src_info_info__WEBPACK_IMPORTED_MODULE_0__["default"].name, _src_info_info__WEBPACK_IMPORTED_MODULE_0__["default"]);
+  App.component(_src_info_column_info_column__WEBPACK_IMPORTED_MODULE_1__["default"].name, _src_info_column_info_column__WEBPACK_IMPORTED_MODULE_1__["default"]);
+  App.component(_src_info_field_types_info_field_string__WEBPACK_IMPORTED_MODULE_2__["default"].name, _src_info_field_types_info_field_string__WEBPACK_IMPORTED_MODULE_2__["default"]);
+  App.component(_src_info_field_types_info_field_boolean__WEBPACK_IMPORTED_MODULE_3__["default"].name, _src_info_field_types_info_field_boolean__WEBPACK_IMPORTED_MODULE_3__["default"]);
+  App.component(_src_info_field_types_info_field_datetime__WEBPACK_IMPORTED_MODULE_4__["default"].name, _src_info_field_types_info_field_datetime__WEBPACK_IMPORTED_MODULE_4__["default"]);
+  App.component(_src_info_field_types_info_field_option__WEBPACK_IMPORTED_MODULE_5__["default"].name, _src_info_field_types_info_field_option__WEBPACK_IMPORTED_MODULE_5__["default"]);
+  App.component(_src_info_field_types_info_field_image__WEBPACK_IMPORTED_MODULE_6__["default"].name, _src_info_field_types_info_field_image__WEBPACK_IMPORTED_MODULE_6__["default"]);
+});
+
+/***/ }),
+
+/***/ "./src/info/src/info-column/info-column.js":
+/*!*************************************************!*\
+  !*** ./src/info/src/info-column/info-column.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'NInfoColumn',
+  inject: {
+    NInfo: {
+      "default": undefined
+    }
+  },
+  props: {
+    prop: {
+      "default": function _default() {
+        return 'id';
+      },
+      type: [String]
+    },
+    label: {
+      "default": function _default() {
+        return '';
+      },
+      type: [String]
+    },
+    type: {
+      "default": function _default() {
+        return 'string';
+      },
+      type: [String]
+    },
+    options: {
+      "default": function _default() {
+        return [];
+      },
+      type: [Object, Array, Function]
+    },
+    optionsValue: {
+      "default": function _default() {
+        return '$value';
+      },
+      type: [String]
+    },
+    optionsLabel: {
+      "default": function _default() {
+        return '$value';
+      },
+      type: [String]
+    },
+    emptyText: {
+      "default": function _default() {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Locale"].trans('-');
+      },
+      type: [String]
+    },
+    trueText: {
+      "default": function _default() {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Locale"].trans('Yes');
+      },
+      type: [String]
+    },
+    falseText: {
+      "default": function _default() {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Locale"].trans('No');
+      },
+      type: [String]
+    },
+    datetimeFormat: {
+      "default": function _default() {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Locale"].trans('YYYY-MM-DD HH:mm');
+      },
+      type: [String]
+    }
+  },
+  data: function data() {
+    return {
+      uid: Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])()
+    };
+  },
+  beforeMount: function beforeMount() {
+    this.NInfo.addColumn(this);
+  },
+  beforeUnmount: function beforeUnmount() {
+    this.NInfo.removeColumn(this);
+  },
+  renderLabel: function renderLabel() {
+    if (this.$slots.label) {
+      return this.$slots.label();
+    }
+
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": "n-info-column__label"
+    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", null, [this.label])]);
+  },
+  renderBody: function renderBody(props) {
+    if (this.$slots["default"]) {
+      return this.$slots.label();
+    }
+
+    var passed = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].except(props, [], {
+      column: this
+    });
+    var component = Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])('NInfoField' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.type));
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": "n-info-column__value"
+    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["h"])(component, passed)]);
+  },
+  renderCell: function renderCell(props) {},
+  render: function render() {
+    return null;
+  }
+});
+
+/***/ }),
+
+/***/ "./src/info/src/info-field/info-field.js":
+/*!***********************************************!*\
+  !*** ./src/info/src/info-field/info-field.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_src_ctor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/src/ctor */ "./src/mixins/src/ctor.js");
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  inject: {
+    NInfo: {
+      "default": undefined
+    }
+  },
+  props: {
+    column: {
+      required: true
+    },
+    item: {
+      required: true
+    }
+  },
+  computed: {
+    input: function input() {
+      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.item, this.column.prop);
+    }
+  },
+  render: function render() {
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": "n-info__field"
+    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", null, [this.input])]);
+  }
+});
+
+/***/ }),
+
+/***/ "./src/info/src/info-field/types/info-field-boolean.js":
+/*!*************************************************************!*\
+  !*** ./src/info/src/info-field/types/info-field-boolean.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _info_field__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../info-field */ "./src/info/src/info-field/info-field.js");
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'NInfoFieldBoolean',
+  "extends": _info_field__WEBPACK_IMPORTED_MODULE_2__["default"],
+  render: function render() {
+    var className = ['n-info__field', 'n-info__field--' + this.column.type];
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": className
+    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", null, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].convertBoolean(this.input, this.column.trueText, this.column.falseText)])]);
+  }
+});
+
+/***/ }),
+
+/***/ "./src/info/src/info-field/types/info-field-datetime.js":
+/*!**************************************************************!*\
+  !*** ./src/info/src/info-field/types/info-field-datetime.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _info_field__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../info-field */ "./src/info/src/info-field/info-field.js");
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'NInfoFieldDatetime',
+  "extends": _info_field__WEBPACK_IMPORTED_MODULE_2__["default"],
+  render: function render() {
+    var className = ['n-info__field', 'n-info__field--' + this.column.type];
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": className
+    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", null, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].convertDatetime(this.input, this.column.datetimeFormat, this.column.emptyText)])]);
+  }
+});
+
+/***/ }),
+
+/***/ "./src/info/src/info-field/types/info-field-image.js":
+/*!***********************************************************!*\
+  !*** ./src/info/src/info-field/types/info-field-image.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _info_field__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../info-field */ "./src/info/src/info-field/info-field.js");
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'NInfoFieldImage',
+  "extends": _info_field__WEBPACK_IMPORTED_MODULE_1__["default"],
+  render: function render() {
+    var classList = ['n-info__field', 'n-info__field--' + this.column.type];
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": classList
+    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "style": 'background-image: url(\'' + this.input + '\');'
+    }, null)]);
+  }
+});
+
+/***/ }),
+
+/***/ "./src/info/src/info-field/types/info-field-option.js":
+/*!************************************************************!*\
+  !*** ./src/info/src/info-field/types/info-field-option.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _info_field__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../info-field */ "./src/info/src/info-field/info-field.js");
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'NInfoFieldOption',
+  "extends": _info_field__WEBPACK_IMPORTED_MODULE_2__["default"],
+  render: function render() {
+    var _this = this;
+
+    var options = typeof this.column.options === 'function' ? this.column.options(this.value) : this.column.options;
+    options = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].map(nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].keys(options), function (index) {
+      return {
+        $value: options[index],
+        $index: index
+      };
+    });
+    var className = ['n-info__field', 'n-info__field--' + this.column.type];
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": className
+    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", null, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isArray(this.veValue) ? [this.veValue] : this.veValue, function (value) {
+      var option = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].find(options, function (option) {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].string(nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(option, _this.column.optionsValue)) === nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].string(value);
+      });
+      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(option, _this.column.optionsLabel, value);
+    }).join(', ') || this.column.emptyText])]);
+  }
+});
+
+/***/ }),
+
+/***/ "./src/info/src/info-field/types/info-field-string.js":
+/*!************************************************************!*\
+  !*** ./src/info/src/info-field/types/info-field-string.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _info_field__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../info-field */ "./src/info/src/info-field/info-field.js");
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'NInfoFieldString',
+  "extends": _info_field__WEBPACK_IMPORTED_MODULE_2__["default"],
+  render: function render() {
+    var className = ['n-info__field', 'n-info__field--' + this.column.type];
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": className
+    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", null, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].convertString(this.input, this.column.emptyText)])]);
+  }
+});
+
+/***/ }),
+
+/***/ "./src/info/src/info/info.js":
+/*!***********************************!*\
+  !*** ./src/info/src/info/info.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+
+
+function _isSlot(s) {
+  return typeof s === 'function' || Object.prototype.toString.call(s) === '[object Object]' && !Object(vue__WEBPACK_IMPORTED_MODULE_0__["isVNode"])(s);
+}
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'NInfo',
+  model: {
+    prop: 'item'
+  },
+  props: {
+    item: {
+      "default": function _default() {
+        return null;
+      }
+    },
+    syncEvent: {
+      "default": function _default() {
+        return null;
+      }
+    },
+    type: {
+      "default": function _default() {
+        return 'primary';
+      },
+      type: [String]
+    },
+    size: {
+      "default": function _default() {
+        return 'md';
+      },
+      type: [String]
+    },
+    relative: {
+      "default": function _default() {
+        return true;
+      },
+      type: [Boolean]
+    },
+    showEmptyIcon: {
+      "default": function _default() {
+        return true;
+      },
+      type: [Boolean]
+    }
+  },
+  data: function data() {
+    return {
+      uid: Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])(),
+      elements: [],
+      options: [],
+      tempValue: this.item
+    };
+  },
+  mounted: function mounted() {
+    this.bindSyncEvent();
+  },
+  beforeUnmount: function beforeUnmount() {
+    this.unbindSyncEvent();
+  },
+  methods: {
+    bindSyncEvent: function bindSyncEvent() {
+      var _this = this;
+
+      if (!this.syncEvent) {
+        return;
+      }
+
+      this.options = this.syncEvent;
+
+      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isFunction(this.options)) {
+        this.options = this.options(this);
+      }
+
+      var syncFunction = function syncFunction(value) {
+        var uid = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+        if (uid === _this.options[1]) {
+          _this.setValue(value);
+        }
+      };
+
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].bind(this.options[0], syncFunction, this.uid);
+    },
+    unbindSyncEvent: function unbindSyncEvent() {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].unbind(this.options[0], this.uid);
+    },
+    setValue: function setValue(value) {
+      this.$emit('update:modelValue', this.tempValue = value);
+    },
+    addColumn: function addColumn(column) {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(this.elements, column, {
+        uid: column.uid
+      });
+    },
+    removeColumn: function removeColumn(column) {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(this.elements, {
+        uid: column.uid
+      });
+    }
+  },
+  provide: function provide() {
+    return {
+      NInfo: this
+    };
+  },
+  renderEmpty: function renderEmpty() {
+    var _this2 = this;
+
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NEmptyIcon"), {
+      "disabled": !this.showEmptyIcon,
+      "class": "n-info__empty"
+    }, {
+      "default": function _default() {
+        return [_this2.$slots.empty && _this2.$slots.empty() || _this2.trans('No entry')];
+      }
+    });
+  },
+  renderBody: function renderBody() {
+    var _this3 = this;
+
+    if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(this.tempValue)) {
+      return this.ctor('renderEmpty')();
+    }
+
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": "n-info__body"
+    }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.elements, function (column) {
+      return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+        "class": "n-info__column"
+      }, [column.ctor('renderLabel')({
+        item: _this3.tempValue
+      }), column.ctor('renderBody')({
+        item: _this3.tempValue
+      })]);
+    })]);
+  },
+  render: function render() {
+    var _slot;
+
+    var classList = ['n-info', 'n-info--' + this.type, 'n-info--' + this.size];
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": classList
+    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NScrollbar"), {
+      "relative": this.relative
+    }, _isSlot(_slot = this.ctor('renderBody')()) ? _slot : {
+      "default": function _default() {
+        return [_slot];
+      }
+    }), this.$slots["default"]()]);
+  }
+});
 
 /***/ }),
 
@@ -8896,6 +9450,8 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
+      delete this.timer;
+
       if (scrollClose) {
         this.$emit('scrollClose');
       }
@@ -9231,6 +9787,10 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
+      if (!this.timer) {
+        this.timer = Date.now();
+      }
+
       this.passedSize = size;
 
       if (this.width) {
@@ -9251,8 +9811,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).css(style);
+      var isScrollClose = this.passedOffset && isSameSize && Date.now() - this.timer > 1200;
 
-      if (this.scrollClose && this.passedOffset && isSameSize) {
+      if (this.scrollClose && isScrollClose) {
         this.close(true);
       }
 
@@ -12999,6 +13560,9 @@ function _isSlot(s) {
     highlightNode: function highlightNode(value) {
       var key = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       this.$refs.draggable.highlightNode(value, key);
+    },
+    syncCurrent: function syncCurrent() {
+      return this.$refs.draggable.syncCurrent();
     },
     refreshCurrent: function refreshCurrent() {
       this.$refs.draggable.refreshCurrent();

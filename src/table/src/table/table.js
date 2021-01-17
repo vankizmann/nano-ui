@@ -469,6 +469,11 @@ export default {
             this.$refs.draggable.highlightNode(value, key);
         },
 
+        syncCurrent()
+        {
+            return this.$refs.draggable.syncCurrent();
+        },
+
         refreshCurrent()
         {
             this.$refs.draggable.refreshCurrent();
