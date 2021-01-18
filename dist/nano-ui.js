@@ -15368,9 +15368,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       safezone: function safezone() {
         return -10;
       },
-      // viewportHeight: true,
-      // disableMove: true,
-      // updateDelay: 100,
+      disableMove: true,
       renderNode: this.ctor('renderNode'),
       onMove: this.moveItemsSource,
       'onRowDblclick': this.moveRowSource,
@@ -15458,9 +15456,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       safezone: function safezone() {
         return -1;
       },
-      // viewportHeight: true,
-      // disableMove: true,
-      // updateDelay: 100,
+      disableMove: true,
       renderNode: this.ctor('renderNode'),
       onMove: this.moveItemsTarget,
       'onRowDblclick': this.moveRowTarget,
@@ -15478,7 +15474,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": "n-transfer__item"
-    }, [props.item.label]);
+    }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(props.item, this.labelProp)]);
   },
   renderMoveSource: function renderMoveSource() {
     var props = {
@@ -15488,9 +15484,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       square: true,
       icon: this.icons.angleRight,
       onClick: this.moveToTarget
-    }; // props.disabled = ! this.$refs.source ||
-    //     this.$refs.source.tempSelected.length;
-
+    };
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NButton"), props, null);
   },
   renderMoveTarget: function renderMoveTarget() {
@@ -15501,9 +15495,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       square: true,
       icon: this.icons.angleLeft,
       onClick: this.moveToSource
-    }; // props.disabled = ! this.$refs.target||
-    //     this.$refs.target.tempSelected.length;
-
+    };
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NButton"), props, null);
   },
   render: function render($render) {

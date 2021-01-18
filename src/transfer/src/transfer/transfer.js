@@ -345,9 +345,7 @@ export default {
             renderSelect: true,
             selected: this.selectedSource,
             safezone: () => -10,
-            // viewportHeight: true,
-            // disableMove: true,
-            // updateDelay: 100,
+            disableMove: true,
             renderNode: this.ctor('renderNode'),
             onMove: this.moveItemsSource,
             'onRowDblclick': this.moveRowSource,
@@ -447,9 +445,7 @@ export default {
             renderSelect: true,
             selected: this.selectedTarget,
             safezone: () => -1,
-            // viewportHeight: true,
-            // disableMove: true,
-            // updateDelay: 100,
+            disableMove: true,
             renderNode: this.ctor('renderNode'),
             onMove: this.moveItemsTarget,
             'onRowDblclick': this.moveRowTarget,
@@ -466,8 +462,11 @@ export default {
         if ( this.$slots.default ) {
             return this.$slots.default(props);
         }
+
         return (
-            <div class="n-transfer__item">{ props.item.label }</div>
+            <div class="n-transfer__item">
+                { Obj.get(props.item, this.labelProp) }
+            </div>
         );
     },
 
@@ -481,9 +480,6 @@ export default {
             icon: this.icons.angleRight,
             onClick: this.moveToTarget
         };
-
-        // props.disabled = ! this.$refs.source ||
-        //     this.$refs.source.tempSelected.length;
 
         return (
             <NButton {...props} />
@@ -500,10 +496,6 @@ export default {
             icon: this.icons.angleLeft,
             onClick: this.moveToSource
         };
-
-        // props.disabled = ! this.$refs.target||
-        //     this.$refs.target.tempSelected.length;
-
         return (
             <NButton {...props} />
         );
