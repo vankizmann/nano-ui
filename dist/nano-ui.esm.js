@@ -138,7 +138,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _src
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ \"vue\");\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  name: 'NButtonGroup',\n  render: function render() {\n    return Object(vue__WEBPACK_IMPORTED_MODULE_0__[\"createVNode\"])(\"div\", {\n      \"class\": \"n-button-group\"\n    }, [this.$slots[\"default\"]]);\n  }\n});\n\n//# sourceURL=webpack://nano-ui/./src/button/src/button-group/button-group.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ \"vue\");\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  name: 'NButtonGroup',\n  render: function render() {\n    return Object(vue__WEBPACK_IMPORTED_MODULE_0__[\"createVNode\"])(\"div\", {\n      \"class\": \"n-button-group\"\n    }, [this.$slots[\"default\"] && this.$slots[\"default\"]()]);\n  }\n});\n\n//# sourceURL=webpack://nano-ui/./src/button/src/button-group/button-group.js?");
 
 /***/ }),
 

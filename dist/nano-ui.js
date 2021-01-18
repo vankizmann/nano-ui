@@ -1030,7 +1030,7 @@ __webpack_require__.r(__webpack_exports__);
   render: function render() {
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": "n-button-group"
-    }, [this.$slots["default"]]);
+    }, [this.$slots["default"] && this.$slots["default"]()]);
   }
 });
 

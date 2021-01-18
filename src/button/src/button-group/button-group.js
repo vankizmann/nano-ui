@@ -4,9 +4,11 @@ export default {
 
     render()
     {
-        return <div class="n-button-group">
-            { this.$slots.default }
-        </div>;
+        return (
+            <div class="n-button-group">
+                { this.$slots.default && this.$slots.default() }
+            </div>
+        );
     }
 
 }
