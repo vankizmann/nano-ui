@@ -10676,12 +10676,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateWidth: function updateWidth() {
       var width = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).width();
+      this.updateHandle();
 
       if (width === this.tempValue) {
         return;
       }
 
-      this.updateHandle();
       this.$emit('update:modelValue', this.tempValue = width);
     },
     updateHandle: function updateHandle() {

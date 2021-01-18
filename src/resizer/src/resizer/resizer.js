@@ -141,11 +141,11 @@ export default {
             let width = Dom.find(this.$el)
                 .width();
 
+            this.updateHandle();
+
             if ( width === this.tempValue ) {
                 return;
             }
-
-            this.updateHandle();
 
             this.$emit('update:modelValue', 
                 this.tempValue = width);
