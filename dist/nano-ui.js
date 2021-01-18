@@ -10675,9 +10675,14 @@ __webpack_require__.r(__webpack_exports__);
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).css(style);
     },
     updateWidth: function updateWidth() {
-      this.tempValue = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).width();
+      var width = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).width();
+
+      if (width === this.tempValue) {
+        return;
+      }
+
       this.updateHandle();
-      this.$emit('update:modelValue', this.tempValue);
+      this.$emit('update:modelValue', this.tempValue = width);
     },
     updateHandle: function updateHandle() {
       var style = {};
