@@ -7044,13 +7044,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     legend: {
       "default": function _default() {
-        return this.$slots.legend;
+        return '';
       },
       type: [String]
     },
     icon: {
       "default": function _default() {
-        return null;
+        return '';
       }
     },
     align: {
@@ -7067,7 +7067,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     tooltip: {
       "default": function _default() {
-        return this.$slots.tooltip;
+        return '';
       },
       type: [String]
     },

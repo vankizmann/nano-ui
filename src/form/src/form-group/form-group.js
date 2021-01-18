@@ -23,7 +23,7 @@ export default {
         legend: {
             default()
             {
-                return this.$slots.legend;
+                return '';
             },
             type: [String]
         },
@@ -31,7 +31,7 @@ export default {
         icon: {
             default()
             {
-                return null;
+                return '';
             }
         },
 
@@ -54,7 +54,7 @@ export default {
         tooltip: {
             default()
             {
-                return this.$slots.tooltip;
+                return '';
             },
             type: [String]
         },
