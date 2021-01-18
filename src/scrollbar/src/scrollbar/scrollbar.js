@@ -201,6 +201,10 @@ export default {
 
         adaptWidth()
         {
+            if ( this.resizeTimer ) {
+                return;
+            }
+
             let width = Dom.find(this.$refs.content)
                 .child().width();
 
@@ -266,21 +270,15 @@ export default {
                 return;
             }
 
-            if ( ! this.counter ) {
-                this.counter = 0;
-            }
-
-            this.counter++;
-
-            if ( counter = 1 ) {
-                Dom.find(this.$refs.content)
-                    .child().css(null);
-            }
+            Dom.find(this.$refs.content)
+                .child().css(null);
 
             clearTimeout(this.resizeTimer);
 
             this.resizeTimer = setTimeout(
-                this.onUpdate, 200);
+                this.onUpdate, 500);
+            
+            Dom.find(this.$el).fire('resized');
         },
 
         onUpdate()
@@ -308,7 +306,7 @@ export default {
                 $child.css({ width: width + 'px' });
             }
 
-            Dom.find(this.$el).fire('resized');
+            delete this.resizeTimer;
         }
 
     },

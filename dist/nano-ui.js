@@ -10639,7 +10639,7 @@ __webpack_require__.r(__webpack_exports__);
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.handle).css(style);
     },
     bindSizechange: function bindSizechange() {
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.NScrollbar.$el).on('resized', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.updateWidth, 500), this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.NScrollbar.$el).on('resized', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.updateWidth, 50), this._.uid);
     },
     unbindSizechange: function unbindSizechange() {
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.NScrollbar.$el).off('resized', null, this._.uid);
@@ -11031,6 +11031,10 @@ __webpack_require__.r(__webpack_exports__);
       clearInterval(this.refreshHeight);
     },
     adaptWidth: function adaptWidth() {
+      if (this.resizeTimer) {
+        return;
+      }
+
       var width = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.content).child().width();
       var window = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).width();
 
@@ -11080,18 +11084,10 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      if (!this.counter) {
-        this.counter = 0;
-      }
-
-      this.counter++;
-
-      if (counter = 1) {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.content).child().css(null);
-      }
-
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.content).child().css(null);
       clearTimeout(this.resizeTimer);
-      this.resizeTimer = setTimeout(this.onUpdate, 200);
+      this.resizeTimer = setTimeout(this.onUpdate, 500);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).fire('resized');
     },
     onUpdate: function onUpdate() {
       if (!this.fixture) {
@@ -11119,7 +11115,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
 
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).fire('resized');
+      delete this.resizeTimer;
     }
   },
   render: function render() {
