@@ -11082,10 +11082,13 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      this.onUpdate();
-      this.$nextTick(function () {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this3.$el).fire('resized');
-      });
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(function () {
+        _this3.onUpdate();
+
+        _this3.$nextTick(function () {
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this3.$el).fire('resized');
+        });
+      }, 200);
     },
     onUpdate: function onUpdate() {
       if (!this.fixture) {
