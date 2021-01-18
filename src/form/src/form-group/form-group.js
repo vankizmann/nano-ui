@@ -12,7 +12,7 @@ export default {
 
     props: {
 
-        value: {
+        modelValue: {
             default()
             {
                 return true;
@@ -20,7 +20,7 @@ export default {
             type: [Boolean]
         },
 
-        legend: {
+        label: {
             default()
             {
                 return '';
@@ -35,6 +35,22 @@ export default {
             }
         },
 
+        size: {
+            default()
+            {
+                return 'md';
+            },
+            type: [String]
+        },
+
+        type: {
+            default()
+            {
+                return 'primary';
+            },
+            type: [String]
+        },
+
         align: {
             default()
             {
@@ -43,7 +59,7 @@ export default {
             type: [String]
         },
 
-        checkable: {
+        collapse: {
             default()
             {
                 return false;
@@ -62,7 +78,7 @@ export default {
         tooltipPosition: {
             default()
             {
-                return 'right-center';
+                return 'bottom-start';
             },
             type: [String]
         }
@@ -72,16 +88,16 @@ export default {
     data()
     {
         return {
-            nativeValue: this.value
+            tempValue: this.modelValue
         };
     },
 
     watch: {
 
-        value()
+        modelValue(value)
         {
-            if ( this.value !== this.nativeValue ) {
-                this.nativeValue = this.value;
+            if ( value !== this.tempValue ) {
+                this.tempValue = value;
             }
         }
 
@@ -89,53 +105,111 @@ export default {
 
     methods: {
 
-        toggleValue()
+        collapseGroup()
         {
-            if ( this.checkable === false ) {
-                return;
-            }
-
-            this.$emit('input', this.nativeValue = ! this.nativeValue);
+            this.$emit('update:modelValue', this.tempValue = ! this.tempValue);
         }
 
+    },
+
+    renderCollapse()
+    {
+        if ( ! this.collapse ) {
+            return null;
+        }
+
+        return (
+            <NSwitch size="sm" modelValue={this.tempValue} />
+        );
+    },
+
+    renderIcon()
+    {
+        if ( ! this.icon ) {
+            return null;
+        }
+
+        return (
+            <i class={['n-icon', this.icon]}></i>
+        );
+    },
+
+    renderText()
+    {
+        return (
+            <div class="n-form-group__label">
+                { this.ctor('renderIcon')() } <span>{ this.label }</span>
+            </div>
+        );
+    },
+
+    renderAction()
+    {
+        if ( ! this.$slots.action ) {
+            return null;
+        }
+
+        return (
+            <div class="n-form-group__action">
+                { this.$slots.action() }
+            </div>
+        );
+    },
+
+    renderLabel()
+    {
+        return (
+            <legend class="n-form-group__legend" onClick={this.collapseGroup}>
+                { this.ctor('renderCollapse')() }
+                { this.ctor('renderText')() }
+                { this.ctor('renderAction')() }
+            </legend>
+        );
+    },
+
+    renderTooltip()
+    {
+        if ( ! this.tooltip ) {
+            return null;
+        }
+
+        return (
+            <NPopover type="tooltip" position={this.tooltipPosition}>
+                {this.tooltip}
+            </NPopover>
+        );
+    },
+
+    renderBody()
+    {
+        return (
+            <div class="n-form-group__body">
+                { this.$slots.default && this.$slots.default() }
+            </div>
+        );
     },
 
     render()
     {
         let classList = [
-            'n-form-group', 'n-form--' + this.align
+            'n-form-group', 
+            'n-form-group--' + this.align
         ];
 
-        if ( this.checkable === true ) {
-            classList.push('n-form-group--checkable');
+        if ( this.collapse ) {
+            classList.push('n-collapse');
         }
 
-        return <fieldset class={classList}>
-            { this.legend &&
-                <div class="n-form-group__legend">
-                    <legend class="n-form-group__label">
-                        { this.checkable &&
-                            <NSwitch size="small" value={this.nativeValue} vOn:input={this.toggleValue} />
-                        }
-                        <div class="n-form-group__label-text" vOn:click={this.toggleValue}>
-                            { this.icon && <i class={['n-icon', this.icon]}></i>} <span>{this.legend}</span>
-                        </div>
-                        { this.tooltip &&
-                            <NPopover type="tooltip" position={this.tooltipPosition}>{this.tooltip}</NPopover>
-                        }
-                        { this.$slots.actions &&
-                            <div class="n-form-group__actions">
-                                { this.$slots.actions() }
-                            </div>
-                        }
-                    </legend>
-                </div>
-            }
-            { this.nativeValue &&
-                <div class="n-form-group__body">
-                    {this.$slots.default && this.$slots.default()}
-                </div>
-            }
-        </fieldset>;
+        if ( ! this.tempValue ) {
+            classList.push('n-hidden');
+        }
+
+        return (
+            <fieldset class={classList}>
+                { this.ctor('renderLabel')() }
+                { this.ctor('renderTooltip')() }
+                { this.ctor('renderBody')() }
+            </fieldset>
+        );
     }
 }

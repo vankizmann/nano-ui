@@ -1050,45 +1050,14 @@
 .n-loader--danger.n-load:before {
   border-color: #fd2f51; }
 
-.n-form-group {
-  position: relative; }
-
-.n-form-group:not(:last-child) {
-  margin-bottom: 25px; }
-
-.n-form-group__label {
+.n-form-group__legend {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  padding: 5px 0; }
+  align-items: stretch;
+  justify-content: stretch; }
 
-.n-form-group__label .n-switch,
-.n-form-group__label .n-checkbox {
-  flex: 0 0 auto;
-  margin-right: 9px; }
-
-.n-form-group__label .n-form-group__label-text {
-  cursor: default;
-  flex: 0 1 auto;
-  margin-right: auto;
-  font-size: 15px;
-  color: #1b2229;
-  transition: color 0.15s; }
-
-.n-form-group__label .n-form-group__label-text .n-icon {
-  font-size: 13.125px;
-  margin-right: 5px;
-  color: #4e7bff; }
-
-.n-inverse .n-form-group__label .n-form-group__label-text {
-  color: #ffffff; }
-
-.n-form-group__actions {
-  flex: 0 0 auto;
-  margin-left: 20px; }
-
-.n-form-group__body {
-  margin-top: 9px; }
+.n-form-group.n-hidden .n-form-group__body {
+  display: none; }
 
 .n-form-item {
   position: relative;

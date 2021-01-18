@@ -34,10 +34,10 @@ export default {
             type: [String]
         },
 
-        propagation: {
+        prevent: {
             default()
             {
-                return false;
+                return true;
             },
             type: [Boolean]
         },
@@ -62,26 +62,24 @@ export default {
 
     methods: {
 
-        stopPropagation(event)
+        onSubmit(event)
         {
-            if ( this.propagation ) {
-                return;
+            if ( this.prevent ) {
+                event.preventDefault();
+                event.stopPropagation();
             }
-            
-            event.preventDefault();
-            event.stopPropagation();
         },
 
         addItem(item)
         {
-            Arr.add(this.veItems, item, {
+            Arr.add(this.elements, item, {
                 uid: item.uid
             });
         },
 
         removeItem(item)
         {
-            Arr.remove(this.veItems,{
+            Arr.remove(this.elements,{
                 uid: item.uid
             });
         },
@@ -113,7 +111,8 @@ export default {
     data()
     {
         return {
-            veItems: []
+            uid: UUID(),
+            elements: []
         };
     },
 
@@ -141,7 +140,7 @@ export default {
         // }
 
         Dom.find(this.$el).on('submit', 
-            this.stopPropagation, this._.uid);
+            this.onSubmit, this._.uid);
     },
 
     beforeUnmount()
@@ -167,7 +166,7 @@ export default {
 
         return (
             <form class={classList}>
-                { this.$slots.default() }
+                { this.$slots.default && this.$slots.default() }
             </form>
         );
     }

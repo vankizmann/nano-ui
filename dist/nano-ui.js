@@ -7026,8 +7026,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NFormGroup',
   inject: {
@@ -7036,13 +7034,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   props: {
-    value: {
+    modelValue: {
       "default": function _default() {
         return true;
       },
       type: [Boolean]
     },
-    legend: {
+    label: {
       "default": function _default() {
         return '';
       },
@@ -7053,13 +7051,25 @@ __webpack_require__.r(__webpack_exports__);
         return '';
       }
     },
+    size: {
+      "default": function _default() {
+        return 'md';
+      },
+      type: [String]
+    },
+    type: {
+      "default": function _default() {
+        return 'primary';
+      },
+      type: [String]
+    },
     align: {
       "default": function _default() {
         return 'vertical';
       },
       type: [String]
     },
-    checkable: {
+    collapse: {
       "default": function _default() {
         return false;
       },
@@ -7073,66 +7083,102 @@ __webpack_require__.r(__webpack_exports__);
     },
     tooltipPosition: {
       "default": function _default() {
-        return 'right-center';
+        return 'bottom-start';
       },
       type: [String]
     }
   },
   data: function data() {
     return {
-      nativeValue: this.value
+      tempValue: this.modelValue
     };
   },
   watch: {
-    value: function value() {
-      if (this.value !== this.nativeValue) {
-        this.nativeValue = this.value;
+    modelValue: function modelValue(value) {
+      if (value !== this.tempValue) {
+        this.tempValue = value;
       }
     }
   },
   methods: {
-    toggleValue: function toggleValue() {
-      if (this.checkable === false) {
-        return;
-      }
-
-      this.$emit('input', this.nativeValue = !this.nativeValue);
+    collapseGroup: function collapseGroup() {
+      this.$emit('update:modelValue', this.tempValue = !this.tempValue);
     }
   },
-  render: function render() {
-    var _this = this;
-
-    var classList = ['n-form-group', 'n-form--' + this.align];
-
-    if (this.checkable === true) {
-      classList.push('n-form-group--checkable');
+  renderCollapse: function renderCollapse() {
+    if (!this.collapse) {
+      return null;
     }
 
-    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("fieldset", {
-      "class": classList
-    }, [this.legend && Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
-      "class": "n-form-group__legend"
-    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("legend", {
-      "class": "n-form-group__label"
-    }, [this.checkable && Object(vue__WEBPACK_IMPORTED_MODULE_0__["withDirectives"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NSwitch"), {
-      "size": "small",
-      "value": this.nativeValue
-    }, null), [[Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveDirective"])("on:input"), this.toggleValue]]), Object(vue__WEBPACK_IMPORTED_MODULE_0__["withDirectives"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
-      "class": "n-form-group__label-text"
-    }, [this.icon && Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("i", {
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NSwitch"), {
+      "size": "sm",
+      "modelValue": this.tempValue
+    }, null);
+  },
+  renderIcon: function renderIcon() {
+    if (!this.icon) {
+      return null;
+    }
+
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("i", {
       "class": ['n-icon', this.icon]
-    }, null), Object(vue__WEBPACK_IMPORTED_MODULE_0__["createTextVNode"])(" "), Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", null, [this.legend])]), [[Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveDirective"])("on:click"), this.toggleValue]]), this.tooltip && Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NPopover"), {
+    }, null);
+  },
+  renderText: function renderText() {
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": "n-form-group__label"
+    }, [this.ctor('renderIcon')(), Object(vue__WEBPACK_IMPORTED_MODULE_0__["createTextVNode"])(" "), Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", null, [this.label])]);
+  },
+  renderAction: function renderAction() {
+    if (!this.$slots.action) {
+      return null;
+    }
+
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": "n-form-group__action"
+    }, [this.$slots.action()]);
+  },
+  renderLabel: function renderLabel() {
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("legend", {
+      "class": "n-form-group__legend",
+      "onClick": this.collapseGroup
+    }, [this.ctor('renderCollapse')(), this.ctor('renderText')(), this.ctor('renderAction')()]);
+  },
+  renderTooltip: function renderTooltip() {
+    var _this = this;
+
+    if (!this.tooltip) {
+      return null;
+    }
+
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NPopover"), {
       "type": "tooltip",
       "position": this.tooltipPosition
     }, {
       "default": function _default() {
         return [_this.tooltip];
       }
-    }), this.$slots.actions && Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
-      "class": "n-form-group__actions"
-    }, [this.$slots.actions()])])]), this.nativeValue && Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+    });
+  },
+  renderBody: function renderBody() {
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": "n-form-group__body"
-    }, [this.$slots["default"] && this.$slots["default"]()])]);
+    }, [this.$slots["default"] && this.$slots["default"]()]);
+  },
+  render: function render() {
+    var classList = ['n-form-group', 'n-form-group--' + this.align];
+
+    if (this.collapse) {
+      classList.push('n-collapse');
+    }
+
+    if (!this.tempValue) {
+      classList.push('n-hidden');
+    }
+
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("fieldset", {
+      "class": classList
+    }, [this.ctor('renderLabel')(), this.ctor('renderTooltip')(), this.ctor('renderBody')()]);
   }
 });
 
@@ -7151,7 +7197,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
 /* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
-
 
 
 
@@ -7190,7 +7235,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     tooltipPosition: {
       "default": function _default() {
-        return 'right-center';
+        return 'bottom-start';
       },
       type: [String]
     },
@@ -7205,11 +7250,17 @@ __webpack_require__.r(__webpack_exports__);
     focusInput: function focusInput() {
       var $input = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).find('input');
 
-      if ($input.empty()) {
-        return;
+      if (!$input.empty()) {
+        return $input.get(0).focus();
       }
 
-      $input.get(0).focus();
+      $input = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.input).childs();
+
+      if (!$input.empty()) {
+        return $input.get(0).click();
+      }
+
+      console.log('I dont belong here :o');
     },
     gotoInput: function gotoInput() {
       var errors = this.NForm.errors;
@@ -7252,16 +7303,13 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     var props = {
-      position: this.tooltipPosition,
-      window: this.tooltipWindow,
-      contain: this.tooltipWindow
+      position: this.tooltipPosition
     };
-    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NPopover"), {
-      "type": "tooltip",
-      "props": props
-    }, {
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NPopover"), Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
+      "type": "tooltip"
+    }, props), {
       "default": function _default() {
-        return [_this.$slots.tooltip || _this.tooltip];
+        return [_this.$slots.tooltip && _this.$slots.tooltip() || _this.tooltip];
       }
     });
   },
@@ -7270,9 +7318,13 @@ __webpack_require__.r(__webpack_exports__);
       return null;
     }
 
-    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+    var labelHtml = Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": "n-form-item__label"
-    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["withDirectives"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("label", null, [this.$slots.label || this.label]), [[Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveDirective"])("on:click"), this.focusInput]]), this.ctor('renderTooltip')()]);
+    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("label", {
+      "onClick": this.focusInput
+    }, [this.$slots.label && this.$slots.label() || this.label])]);
+
+    return [labelHtml, this.ctor('renderTooltip')()];
   },
   renderError: function renderError() {
     if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].has(this.NForm.errors, this.prop)) {
@@ -7283,12 +7335,16 @@ __webpack_require__.r(__webpack_exports__);
       "class": "n-form-item__error"
     }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.NForm.errors, this.prop)]);
   },
+  renderInput: function renderInput() {
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "ref": "input",
+      "class": "n-form-item__input"
+    }, [this.$slots["default"] && this.$slots["default"]()]);
+  },
   render: function render() {
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": "n-form-item"
-    }, [this.ctor('renderLabel')(), Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
-      "class": "n-form-item__input"
-    }, [this.$slots["default"]()]), this.ctor('renderError')()]);
+    }, [this.ctor('renderLabel')(), this.ctor('renderInput')(), this.ctor('renderError')()]);
   }
 });
 
@@ -7333,9 +7389,9 @@ __webpack_require__.r(__webpack_exports__);
       },
       type: [String]
     },
-    propagation: {
+    prevent: {
       "default": function _default() {
-        return false;
+        return true;
       },
       type: [Boolean]
     },
@@ -7353,21 +7409,19 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    stopPropagation: function stopPropagation(event) {
-      if (this.propagation) {
-        return;
+    onSubmit: function onSubmit(event) {
+      if (this.prevent) {
+        event.preventDefault();
+        event.stopPropagation();
       }
-
-      event.preventDefault();
-      event.stopPropagation();
     },
     addItem: function addItem(item) {
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(this.veItems, item, {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(this.elements, item, {
         uid: item.uid
       });
     },
     removeItem: function removeItem(item) {
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(this.veItems, {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(this.elements, {
         uid: item.uid
       });
     },
@@ -7392,7 +7446,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      veItems: []
+      uid: Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])(),
+      elements: []
     };
   },
   provide: function provide() {
@@ -7411,7 +7466,7 @@ __webpack_require__.r(__webpack_exports__);
     // if ( this.propagation ) {
     //     return;
     // }
-    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).on('submit', this.stopPropagation, this._.uid);
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).on('submit', this.onSubmit, this._.uid);
   },
   beforeUnmount: function beforeUnmount() {
     // let ident = {
@@ -7426,7 +7481,7 @@ __webpack_require__.r(__webpack_exports__);
     var classList = ['n-form', 'n-form--' + this.align];
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("form", {
       "class": classList
-    }, [this.$slots["default"]()]);
+    }, [this.$slots["default"] && this.$slots["default"]()]);
   }
 });
 

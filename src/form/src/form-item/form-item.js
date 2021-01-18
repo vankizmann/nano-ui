@@ -49,7 +49,7 @@ export default {
         tooltipPosition: {
             default()
             {
-                return 'right-center';
+                return 'bottom-start';
             },
             type: [String]
         },
@@ -70,11 +70,17 @@ export default {
         {
             let $input = Dom.find(this.$el).find('input');
 
-            if ( $input.empty() ) {
-                return;
+            if ( ! $input.empty() ) {
+                return $input.get(0).focus();
             }
 
-            $input.get(0).focus();
+            $input = Dom.find(this.$refs.input).childs();
+
+            if ( ! $input.empty() ) {
+                return $input.get(0).click();
+            }
+
+            console.log('I dont belong here :o');
         },
 
         gotoInput()
@@ -130,13 +136,11 @@ export default {
 
         let props = {
             position: this.tooltipPosition,
-            window: this.tooltipWindow,
-            contain: this.tooltipWindow
         };
 
         return (
-            <NPopover type="tooltip" props={props}>
-                { this.$slots.tooltip || this.tooltip }
+            <NPopover type="tooltip" {...props}>
+                { this.$slots.tooltip && this.$slots.tooltip() || this.tooltip }
             </NPopover>
         );
     },
@@ -147,14 +151,17 @@ export default {
             return null;
         }
 
-        return (
+        let labelHtml = (
             <div class="n-form-item__label">
-                <label vOn:click={this.focusInput}>
-                    { this.$slots.label || this.label }
+                <label onClick={this.focusInput}>
+                    { this.$slots.label && this.$slots.label() || this.label }
                 </label>
-                { this.ctor('renderTooltip')() }
             </div>
-        )
+        );
+
+        return [
+            labelHtml, this.ctor('renderTooltip')()
+        ]
     },
 
     renderError()
@@ -170,13 +177,20 @@ export default {
         );
     },
 
+    renderInput()
+    {
+        return (
+            <div ref="input" class="n-form-item__input">
+                { this.$slots.default && this.$slots.default() }
+            </div>
+        );
+    },
+
     render()
     {
         return <div class="n-form-item">
             { this.ctor('renderLabel')() }
-            <div class="n-form-item__input">
-                { this.$slots.default() }
-            </div>
+            { this.ctor('renderInput')() }
             { this.ctor('renderError')() }
         </div>;
     }

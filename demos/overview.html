@@ -64,6 +64,33 @@
 <div id="app">
     <div class="app-container">
 
+        <h2>NForm</h2>
+
+        <n-form :errors="{ foo: 'ERROR' }">
+            <n-form-group label="FormGroup" :model-value="false" :collapse="true" icon="fa fa-ghost">
+
+                <n-form-item label="Foo" prop="foo" tooltip="lorem ipsum dolore">
+                    <n-input></n-input>
+                </n-form-item>
+
+                <n-form-item label="Bar" prop="bar">
+                    <n-input></n-input>
+                </n-form-item>
+
+            </n-form-group>
+            <n-form-group label="FormGroup2">
+
+                <n-form-item label="Foo" prop="foo" tooltip="lorem ipsum dolore">
+                    <n-input></n-input>
+                </n-form-item>
+
+                <n-form-item label="Bar" prop="bar">
+                    <n-input></n-input>
+                </n-form-item>
+
+            </n-form-group>
+        </n-form>
+
         <h2>NButton</h2>
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
