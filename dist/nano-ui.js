@@ -13009,6 +13009,11 @@ function _isSlot(s) {
       }
 
       this.filter = this.getDefaultFilter();
+
+      if (!this.canApply) {
+        return;
+      }
+
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(this.NTable.tempFilter, this.filter, {
         property: this.getFilterProp()
       });
@@ -13715,7 +13720,7 @@ function _isSlot(s) {
       tempSelected: [],
       tempSortProp: this.sortProp,
       tempSortDir: this.sortDir,
-      tempFilter: this.filter,
+      tempFilter: nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].clone(this.filter),
       tempFilterProps: []
     };
   },

@@ -92,6 +92,10 @@ export default {
 
             this.filter = this.getDefaultFilter();
 
+            if ( ! this.canApply ) {
+                return;
+            }
+
             Arr.add(this.NTable.tempFilter, this.filter, {
                 property: this.getFilterProp()
             });
