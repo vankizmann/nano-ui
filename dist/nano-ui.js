@@ -10644,6 +10644,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (value !== this.tempValue) {
         this.tempValue = value;
       }
+    },
+    tempValue: function tempValue() {
+      this.updateHandle();
     }
   },
   mounted: function mounted() {
@@ -10688,7 +10691,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     updateWidth: function updateWidth() {
       var width = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).width();
-      this.updateHandle();
 
       if (width === this.tempValue) {
         return;

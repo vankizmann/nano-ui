@@ -87,6 +87,11 @@ export default {
             if ( value !== this.tempValue ) {
                 this.tempValue = value;
             }
+        },
+
+        tempValue()
+        {
+            this.updateHandle();
         }
 
     },
@@ -151,8 +156,6 @@ export default {
         {
             let width = Dom.find(this.$el)
                 .width();
-
-            this.updateHandle();
 
             if ( width === this.tempValue ) {
                 return;
