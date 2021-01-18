@@ -100,10 +100,8 @@ export default {
 
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
         let classList = [
             'n-form-group', 'n-form--' + this.align
         ];
@@ -127,7 +125,7 @@ export default {
                         }
                         { this.$slots.actions &&
                             <div class="n-form-group__actions">
-                                { this.$slots.actions }
+                                { this.$slots.actions() }
                             </div>
                         }
                     </legend>
@@ -135,7 +133,7 @@ export default {
             }
             { this.nativeValue &&
                 <div class="n-form-group__body">
-                    {this.$slots.default}
+                    {this.$slots.default && this.$slots.default()}
                 </div>
             }
         </fieldset>;

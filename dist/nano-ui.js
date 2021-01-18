@@ -7099,10 +7099,9 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('input', this.nativeValue = !this.nativeValue);
     }
   },
-  render: function render($render) {
+  render: function render() {
     var _this = this;
 
-    this.$render = $render;
     var classList = ['n-form-group', 'n-form--' + this.align];
 
     if (this.checkable === true) {
@@ -7131,9 +7130,9 @@ __webpack_require__.r(__webpack_exports__);
       }
     }), this.$slots.actions && Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": "n-form-group__actions"
-    }, [this.$slots.actions])])]), this.nativeValue && Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+    }, [this.$slots.actions()])])]), this.nativeValue && Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": "n-form-group__body"
-    }, [this.$slots["default"]])]);
+    }, [this.$slots["default"] && this.$slots["default"]()])]);
   }
 });
 
