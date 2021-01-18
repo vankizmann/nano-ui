@@ -10639,7 +10639,13 @@ __webpack_require__.r(__webpack_exports__);
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.handle).css(style);
     },
     bindSizechange: function bindSizechange() {
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.NScrollbar.$el).on('resized', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.updateWidth, 100), this._.uid);
+      var _this = this;
+
+      var updateFunc = function updateFunc() {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(_this.updateWidth, 200);
+      };
+
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.NScrollbar.$el).on('resized', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.updateWidth, 200), this._.uid);
     },
     unbindSizechange: function unbindSizechange() {
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.NScrollbar.$el).off('resized', null, this._.uid);
@@ -11082,13 +11088,10 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(function () {
-        _this3.onUpdate();
-
-        _this3.$nextTick(function () {
-          nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this3.$el).fire('resized');
-        });
-      }, 200);
+      this.onUpdate();
+      this.$nextTick(function () {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this3.$el).fire('resized');
+      });
     },
     onUpdate: function onUpdate() {
       if (!this.fixture) {

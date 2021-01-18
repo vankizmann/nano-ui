@@ -266,14 +266,11 @@ export default {
                 return;
             }
 
-            Any.delay(() => {
+            this.onUpdate();
 
-                this.onUpdate();
-
-                this.$nextTick(() => {
-                    Dom.find(this.$el).fire('resized');
-                });
-            }, 200);
+            this.$nextTick(() => {
+                Dom.find(this.$el).fire('resized');
+            });
         },
 
         onUpdate()

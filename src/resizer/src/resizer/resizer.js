@@ -164,8 +164,12 @@ export default {
 
         bindSizechange()
         {
+            let updateFunc = () => {
+                Any.delay(this.updateWidth, 200);
+            }
+
             Dom.find(this.NScrollbar.$el).on('resized', 
-                Any.debounce(this.updateWidth, 100), this._.uid);
+                Any.debounce(this.updateWidth, 200), this._.uid);
         },
 
         unbindSizechange()
