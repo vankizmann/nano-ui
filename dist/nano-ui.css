@@ -349,12 +349,6 @@
 .n-resizer {
   position: relative; }
 
-.n-resizer--left {
-  padding-left: 9px; }
-
-.n-resizer--right {
-  padding-right: 9px; }
-
 .n-resizer__handle {
   cursor: col-resize;
   -webkit-user-select: none;
@@ -378,12 +372,19 @@
 .n-resizer__handle:before {
   content: '\00a0';
   position: absolute;
-  top: 2px;
-  bottom: 2px;
-  left: 2px;
-  right: 2px;
-  border-radius: 500px;
-  background: rgba(141, 145, 148, 0.5); }
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(27, 34, 41, 0.5); }
+
+.n-resizer--left .n-resizer__handle:before {
+  left: -1px;
+  right: 5px; }
+
+.n-resizer--right .n-resizer__handle:before {
+  left: 5px;
+  right: -1px; }
 
 .n-resizer--left .n-resizer__handle {
   top: 0;
