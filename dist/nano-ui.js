@@ -15231,6 +15231,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       selectedTarget: []
     };
   },
+  watch: {
+    modelValue: function modelValue(value) {
+      if (value !== this.tempValue) {
+        this.tempValue = value;
+      }
+    }
+  },
   methods: {
     moveItemsTarget: function moveItemsTarget(options) {
       var _this3 = this;

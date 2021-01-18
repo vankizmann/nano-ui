@@ -149,6 +149,17 @@ export default {
         };
     },
 
+    watch: {
+
+        modelValue(value)
+        {
+            if ( value !== this.tempValue ) {
+                this.tempValue = value;
+            }
+        }
+
+    },
+
     methods: {
 
         moveItemsTarget(options)
