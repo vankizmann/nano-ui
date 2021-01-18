@@ -202,7 +202,7 @@ export default {
         adaptWidth()
         {
             let width = Dom.find(this.$refs.content)
-                .child().width();
+                .child().width() - 1;
 
             let window = Dom.find(this.$el)
                 .width();
