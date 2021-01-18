@@ -11031,7 +11031,7 @@ __webpack_require__.r(__webpack_exports__);
       clearInterval(this.refreshHeight);
     },
     adaptWidth: function adaptWidth() {
-      var width = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.content).child().width() - 1;
+      var width = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.content).child().width();
       var window = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).width();
 
       if (width === this.passedWidth) {
