@@ -5,6 +5,7 @@
 }
 
 .n-resizer__handle {
+    z-index: 200;
     cursor: col-resize;
     user-select: none;
     position: absolute;

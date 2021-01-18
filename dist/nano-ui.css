@@ -350,6 +350,7 @@
   position: relative; }
 
 .n-resizer__handle {
+  z-index: 200;
   cursor: col-resize;
   -webkit-user-select: none;
      -moz-user-select: none;
