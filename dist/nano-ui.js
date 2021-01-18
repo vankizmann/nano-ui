@@ -13720,7 +13720,7 @@ function _isSlot(s) {
       tempSelected: [],
       tempSortProp: this.sortProp,
       tempSortDir: this.sortDir,
-      tempFilter: nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].clone(this.filter),
+      tempFilter: this.filter,
       tempFilterProps: []
     };
   },

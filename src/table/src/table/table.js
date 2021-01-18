@@ -289,7 +289,7 @@ export default {
             tempSelected: [],
             tempSortProp: this.sortProp,
             tempSortDir: this.sortDir,
-            tempFilter: Arr.clone(this.filter),
+            tempFilter: this.filter,
             tempFilterProps: [],
         }
     },
