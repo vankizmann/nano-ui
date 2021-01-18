@@ -10577,7 +10577,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/* harmony default export */ __webpack_exports__["default"] = ({
+var _name$inject$props$da;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+/* harmony default export */ __webpack_exports__["default"] = (_name$inject$props$da = {
   name: 'NResizer',
   inject: {
     NScrollbar: {
@@ -10633,6 +10638,13 @@ __webpack_require__.r(__webpack_exports__);
       sizeFixed: false,
       tempValue: this.modelValue
     };
+  },
+  watch: {
+    modelValue: function modelValue(value) {
+      if (value !== this.tempValue) {
+        this.tempValue = value;
+      }
+    }
   },
   mounted: function mounted() {
     if (!this.modelValue) {
@@ -10861,53 +10873,50 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$emit('update:modelValue', this.tempValue);
     }
-  },
-  watch: {
-    modelValue: function modelValue(value) {
-      if (value !== this.tempValue) {
-        this.tempValue = value;
-      }
-    }
-  },
-  renderHandle: function renderHandle() {
-    if (this.disabled) {
-      return null;
-    }
-
-    var classList = ['n-resizer__handle'];
-    var props = {};
-
-    if (this.position === 'right') {
-      props.onMousedown = this.onRightMousedown;
-    }
-
-    if (this.position === 'left') {
-      props.onMousedown = this.onLeftMousedown;
-    }
-
-    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
-      "ref": "handle",
-      "class": classList
-    }, props), null);
-  },
-  render: function render() {
-    var classList = ['n-resizer', 'n-resizer--' + this.position];
-    var style = {};
-
-    if (this.minWidth) {
-      style['min-width'] = this.minWidth + 'px';
-    }
-
-    if (this.maxWidth) {
-      style['max-width'] = this.maxWidth + 'px';
-    }
-
-    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
-      "class": classList,
-      "style": style
-    }, [[this.$slots["default"](), this.ctor('renderHandle')()]]);
   }
-});
+}, _defineProperty(_name$inject$props$da, "watch", {
+  modelValue: function modelValue(value) {
+    if (value !== this.tempValue) {
+      this.tempValue = value;
+    }
+  }
+}), _defineProperty(_name$inject$props$da, "renderHandle", function renderHandle() {
+  if (this.disabled) {
+    return null;
+  }
+
+  var classList = ['n-resizer__handle'];
+  var props = {};
+
+  if (this.position === 'right') {
+    props.onMousedown = this.onRightMousedown;
+  }
+
+  if (this.position === 'left') {
+    props.onMousedown = this.onLeftMousedown;
+  }
+
+  return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
+    "ref": "handle",
+    "class": classList
+  }, props), null);
+}), _defineProperty(_name$inject$props$da, "render", function render() {
+  var classList = ['n-resizer', 'n-resizer--' + this.position];
+  var style = {};
+
+  if (this.minWidth) {
+    style['min-width'] = this.minWidth + 'px';
+  }
+
+  if (this.maxWidth) {
+    style['max-width'] = this.maxWidth + 'px';
+  }
+
+  return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+    "class": classList,
+    "style": style
+  }, [[this.$slots["default"](), this.ctor('renderHandle')()]]);
+}), _name$inject$props$da);
 
 /***/ }),
 
