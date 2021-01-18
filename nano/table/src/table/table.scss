@@ -47,9 +47,16 @@
     justify-content: stretch;
 }
 
-.n-table__body > .n-scrollbar {
+.n-table__body .n-scrollbar {
     flex: 1 1 auto;
-    margin-right: -1px;
+}
+
+.n-table__body .n-scrollbar-content {
+    overflow-x: hidden !important;
+}
+
+.n-table__body .n-scrollbar-h {
+    visibility: hidden !important;
 }
 
 .n-table__body .n-scrollbar-v {
