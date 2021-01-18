@@ -10639,13 +10639,7 @@ __webpack_require__.r(__webpack_exports__);
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.handle).css(style);
     },
     bindSizechange: function bindSizechange() {
-      var _this = this;
-
-      var updateFunc = function updateFunc() {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(_this.updateWidth, 200);
-      };
-
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.NScrollbar.$el).on('resized', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.updateWidth, 200), this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.NScrollbar.$el).on('resized', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.updateWidth, 500), this._.uid);
     },
     unbindSizechange: function unbindSizechange() {
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.NScrollbar.$el).off('resized', null, this._.uid);
@@ -10937,8 +10931,8 @@ __webpack_require__.r(__webpack_exports__);
     this.bindAdaptWidth();
     this.bindOptiscroll();
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].bind('NScrollbar:resize', this.onResize, this._.uid);
-    nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].bind('NResizer:moved', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.onUpdate, 200), this._.uid);
-    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(window).on('resize', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].debounce(this.onResize, 500), this._.uid);
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].bind('NResizer:moved', this.onUpdate, this._.uid);
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(window).on('resize', this.onResize, this._.uid);
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).on('sizechange', this.onSizechange, this._.uid);
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).on('scroll', this.onScroll, this._.uid);
   },
@@ -11082,16 +11076,22 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('sizechange', height);
     },
     onResize: function onResize(event) {
-      var _this3 = this;
-
       if (!this.fixture) {
         return;
       }
 
-      this.onUpdate();
-      this.$nextTick(function () {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this3.$el).fire('resized');
-      });
+      if (!this.counter) {
+        this.counter = 0;
+      }
+
+      this.counter++;
+
+      if (counter = 1) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.content).child().css(null);
+      }
+
+      clearTimeout(this.resizeTimer);
+      this.resizeTimer = setTimeout(this.onUpdate, 200);
     },
     onUpdate: function onUpdate() {
       if (!this.fixture) {
@@ -11118,6 +11118,8 @@ __webpack_require__.r(__webpack_exports__);
           width: width + 'px'
         });
       }
+
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).fire('resized');
     }
   },
   render: function render() {

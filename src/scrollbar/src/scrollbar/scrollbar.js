@@ -65,10 +65,10 @@ export default {
             this.onResize, this._.uid);
 
         Event.bind('NResizer:moved',
-            Any.debounce(this.onUpdate, 200), this._.uid);
+            this.onUpdate, this._.uid);
 
         Dom.find(window).on('resize', 
-            Any.debounce(this.onResize, 500), this._.uid);
+            this.onResize, this._.uid);
 
         Dom.find(this.$el).on('sizechange', 
             this.onSizechange, this._.uid);
@@ -266,11 +266,21 @@ export default {
                 return;
             }
 
-            this.onUpdate();
+            if ( ! this.counter ) {
+                this.counter = 0;
+            }
 
-            this.$nextTick(() => {
-                Dom.find(this.$el).fire('resized');
-            });
+            this.counter++;
+
+            if ( counter = 1 ) {
+                Dom.find(this.$refs.content)
+                    .child().css(null);
+            }
+
+            clearTimeout(this.resizeTimer);
+
+            this.resizeTimer = setTimeout(
+                this.onUpdate, 200);
         },
 
         onUpdate()
@@ -297,6 +307,8 @@ export default {
             if ( width !== this.passedWidth ) {
                 $child.css({ width: width + 'px' });
             }
+
+            Dom.find(this.$el).fire('resized');
         }
 
     },
