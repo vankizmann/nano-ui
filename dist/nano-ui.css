@@ -380,12 +380,12 @@
   background: rgba(27, 34, 41, 0.5); }
 
 .n-resizer--left .n-resizer__handle:before {
-  left: -1px;
+  left: 0;
   right: 5px; }
 
 .n-resizer--right .n-resizer__handle:before {
   left: 5px;
-  right: -1px; }
+  right: 0; }
 
 .n-resizer--left .n-resizer__handle {
   top: 0;

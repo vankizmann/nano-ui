@@ -574,6 +574,14 @@ export default {
             renderNode: this.ctor('renderBody')
         });
 
+        props['onRowClick'] = (...args) => {
+            this.$emit('row-click', ...args);
+        }
+
+        props['onRowDblclick'] = (...args) => {
+            this.$emit('row-click', ...args);
+        }
+
         props['onUpdate:items'] = (value) => {
             this.$emit('update:items', value);
         }

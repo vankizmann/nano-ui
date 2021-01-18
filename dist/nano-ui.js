@@ -13955,6 +13955,22 @@ function _isSlot(s) {
       renderNode: this.ctor('renderBody')
     });
 
+    props['onRowClick'] = function () {
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      _this3.$emit.apply(_this3, ['row-click'].concat(args));
+    };
+
+    props['onRowDblclick'] = function () {
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      _this3.$emit.apply(_this3, ['row-click'].concat(args));
+    };
+
     props['onUpdate:items'] = function (value) {
       _this3.$emit('update:items', value);
     };
