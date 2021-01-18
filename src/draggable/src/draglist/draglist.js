@@ -480,7 +480,7 @@ export default {
                 return;
             }
 
-            let reset = this.items.length - 1;
+            let reset = this.visible.length - 1;
 
             if ( ! this.tempCurrent ) {
                 return this.setRawCurrent(reset);

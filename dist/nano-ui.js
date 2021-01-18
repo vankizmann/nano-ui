@@ -6743,7 +6743,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      var reset = this.items.length - 1;
+      var reset = this.visible.length - 1;
 
       if (!this.tempCurrent) {
         return this.setRawCurrent(reset);
