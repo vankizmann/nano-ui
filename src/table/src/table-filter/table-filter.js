@@ -140,24 +140,24 @@ export default {
         {
             let filter = Obj.clone(this.filter);
 
+            Arr.add(this.NTable.tempFilterProps, 
+                this.getFilterProp());
+
             this.NTable.replaceFilter(filter, {
                 property: this.getFilterProp()
             });
-
-            Arr.add(this.NTable.tempFilterProps, 
-                this.getFilterProp());
         },
 
         clearFilter()
         {
             let filter = this.getDefaultFilter();
 
+            Arr.remove(this.NTable.tempFilterProps, 
+                this.getFilterProp());
+
             this.NTable.replaceFilter(filter, {
                 property: this.getFilterProp()
             });
-
-            Arr.remove(this.NTable.tempFilterProps, 
-                this.getFilterProp());
 
             this.filter = filter;
         }

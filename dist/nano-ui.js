@@ -13049,17 +13049,17 @@ function _isSlot(s) {
     },
     applyFilter: function applyFilter() {
       var filter = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].clone(this.filter);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(this.NTable.tempFilterProps, this.getFilterProp());
       this.NTable.replaceFilter(filter, {
         property: this.getFilterProp()
       });
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].add(this.NTable.tempFilterProps, this.getFilterProp());
     },
     clearFilter: function clearFilter() {
       var filter = this.getDefaultFilter();
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(this.NTable.tempFilterProps, this.getFilterProp());
       this.NTable.replaceFilter(filter, {
         property: this.getFilterProp()
       });
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(this.NTable.tempFilterProps, this.getFilterProp());
       this.filter = filter;
     }
   },
