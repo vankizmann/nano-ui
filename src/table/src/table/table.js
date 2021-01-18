@@ -579,7 +579,7 @@ export default {
         }
 
         props['onRowDblclick'] = (...args) => {
-            this.$emit('row-click', ...args);
+            this.$emit('row-dblclick', ...args);
         }
 
         props['onUpdate:items'] = (value) => {

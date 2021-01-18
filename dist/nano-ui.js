@@ -13968,7 +13968,7 @@ function _isSlot(s) {
         args[_key2] = arguments[_key2];
       }
 
-      _this3.$emit.apply(_this3, ['row-click'].concat(args));
+      _this3.$emit.apply(_this3, ['row-dblclick'].concat(args));
     };
 
     props['onUpdate:items'] = function (value) {
