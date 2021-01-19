@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../dist/nano-ui.css">
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.5/vue.global.prod.js"></script> -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- <script src="../node_modules/nano-js/dist/nano-js.js"></script> -->
+    <script src="https://vankizmann.github.io/nano-js/dist/nano-js.js"></script>
+    <script src="../dist/nano-ui.js"></script>
+
+    <link rel="stylesheet" href="../docs/dist/index.css">
+
+    <style>
+
+        body {
+            font-family: 'Helvetica', 'Roboto', 'Arial', sans-serif;
+            font-size: 14px;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        #app {
+            overflow-x: hidden;
+        }
+
+        .app-scrollbar {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .app-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 20px 30px 40px 30px;
+        }
+
+        .app-options {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: bold;
+            padding-bottom: 10px;
+            margin: 50px 0 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div id="app">
+    <div class="app-container">
+        
+        <h2>NVirtualscroller</h2>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--auto">
+                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(0)">
+                    Scroll to first item
+                </n-button>
+            </div>
+            <div class="col--auto">
+                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(2000)">
+                    Scroll to item 2000
+                </n-button>
+            </div>
+            <div class="col--auto">
+                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(7100)">
+                    Scroll to item 7100
+                </n-button>
+            </div>
+            <div class="col--auto">
+                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(-1)">
+                    Scroll to last item
+                </n-button>
+            </div>
+        </div>
+
+        <n-virtualscroller ref="virtualscroller" :items="virtualData" style="height: 500px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
+            <template v-slot:default="{ value }">
+                <div style="padding: 0 15px; line-height: 30px;">{{ value.label }}</div>
+            </template>
+        </n-virtualscroller>
+
+    </div>
+</div>
+
+<script>
+    (function (Nano) {
+
+        'use strict';
+
+        Nano.Dom.ready(function () {
+
+            let data = {};
+
+            data.sizes = {
+                xs: 'XS', 
+                sm: 'SM', 
+                md: 'MD', 
+                lg: 'LG'
+            };
+
+            data.types = {
+                primary:    'Primary', 
+                secondary:  'Secondary', 
+                success:    'Success', 
+                warning:    'Warning', 
+                danger:     'Danger', 
+                info:       'Info'
+            };
+
+            data.modals = {
+                default:    'Default', 
+                preview:    'Preview',
+            };
+
+            data.demoConfig = {
+                'div': {
+                    class: [
+                        'foobar'
+                    ],
+                    content: {
+                        'NInput:page_id': {
+                            model: {
+                                path: 'page_id'
+                            }
+                        },
+                        'NInput:page_id2': {
+                            model: {
+                                path: 'page_id'
+                            }
+                        }
+                    }
+                }
+            };
+
+            data.configData = {};
+
+            data.testData = [];
+
+            let itemGenerator = function (count = 100, index = 0) {
+                return Nano.Arr.each(Nano.Arr.make(count), function (value) {
+
+                    let id = Nano.UUID();
+
+                    return {
+                        id:     id, 
+                        value:  id, 
+                        label:  `Item ${index++}`, 
+                        image:  'https://picsum.photos/400/400?' + id,
+                        date: Nano.Now.make().format('YYYY-MM-DD HH:mm:ss', true),
+                        enabled: !! Math.floor(Math.random() * 2)
+                    };
+                });
+            };
+
+
+            data.cascaderData = Nano.Arr.each(itemGenerator(5), function (item) {
+
+                let children  = Nano.Arr.each(itemGenerator(5), function (item) {
+                    return Nano.Obj.assign(item, { children: itemGenerator(5) });
+                });
+
+                return Nano.Obj.assign(item, { children: children });
+            });
+
+            data.virtualData = itemGenerator(1000);
+
+            data.virtualTree = Nano.Arr.each(itemGenerator(100), function (item) {
+                return Nano.Obj.assign(item, { children: itemGenerator(20) });
+            });
+
+            data.n_button = {
+                icon: 'fa fa-ghost', size: 'md', square: false, link: false, disabled: false
+            };
+
+            data.n_textarea = {
+                size: 'md', placeholder: 'Placeholder', autoRows: false, disabled: false
+            };
+
+            data.n_input = {
+                value: 'Demo', icon: 'fa fa-ghost', size: 'md', placeholder: 'Placeholder', disabled: false
+            };
+
+            data.n_select = {
+                size: 'md', allowCreate: false, clearable: true, disabled: false
+            };
+
+            data.n_cascader = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_checkbox = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_radio = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_switch = {
+                size: 'md', disabled: false
+            };
+
+            data.n_datepicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_timepicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_transfer = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_modal = {
+                size: 'md', type: 'default', disabled: false
+            };
+
+            data.n_confirm = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_tabs = {
+                value: 'default', size: 'md', type: 'primary'
+            };
+
+            data.n_paginator = {
+                size: 'md', type: 'primary'
+            };
+
+            data.n_draggable = {
+                count: 0
+            };
+
+            data.n_loader = {
+                size: 'md', type: 'primary', visible: true
+            };
+
+            let methods = {};
+
+            methods.log = function (val) {
+                console.log(val || 'Log fired');
+            };
+
+            methods.notify = function (type) {
+                this.Notify('Lorem ipsum dolore', type);
+            };
+
+            var config = {
+                data: function () {
+
+                    this.icons.ghost = 'fa fa-ghost'
+
+                    data.demoIcons = Nano.Arr.reduce(Nano.Obj.values(this.icons), function (merge, icon) {
+                        return Nano.Obj.assign(merge, { [icon]: icon });
+                    }, {});
+
+                    return data;
+                },
+                methods: methods
+            };
+
+            window.App = Vue.createApp(config);
+
+            window.App.config.devtools = true;
+
+            window.App.use(function (App) {
+                NanoInstall(App);
+            });
+
+            window.App.mount('#app');
+        });
+
+    })(window.Nano);
+</script>
+</body>
+</html>

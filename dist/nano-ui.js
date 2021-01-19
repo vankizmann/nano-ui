@@ -10644,9 +10644,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (value !== this.tempValue) {
         this.tempValue = value;
       }
-    },
-    tempValue: function tempValue() {
-      this.updateHandle();
     }
   },
   mounted: function mounted() {
@@ -10663,6 +10660,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   updated: function updated() {
     this.updateWidth();
+    this.updateHandle();
   },
   unmounted: function unmounted() {
     if (this.NScrollbar) {
@@ -10931,18 +10929,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _src_scrollbar_scrollbar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/scrollbar/scrollbar */ "./src/scrollbar/src/scrollbar/scrollbar.js");
+/* harmony import */ var _src_scrollbar_scrollbar_next__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/scrollbar/scrollbar.next */ "./src/scrollbar/src/scrollbar/scrollbar.next.js");
 
 /* harmony default export */ __webpack_exports__["default"] = (function (App) {
-  App.component(_src_scrollbar_scrollbar__WEBPACK_IMPORTED_MODULE_0__["default"].name, _src_scrollbar_scrollbar__WEBPACK_IMPORTED_MODULE_0__["default"]);
+  App.component(_src_scrollbar_scrollbar_next__WEBPACK_IMPORTED_MODULE_0__["default"].name, _src_scrollbar_scrollbar_next__WEBPACK_IMPORTED_MODULE_0__["default"]);
 });
 
 /***/ }),
 
-/***/ "./src/scrollbar/src/scrollbar/scrollbar.js":
-/*!**************************************************!*\
-  !*** ./src/scrollbar/src/scrollbar/scrollbar.js ***!
-  \**************************************************/
+/***/ "./src/scrollbar/src/scrollbar/scrollbar.next.js":
+/*!*******************************************************!*\
+  !*** ./src/scrollbar/src/scrollbar/scrollbar.next.js ***!
+  \*******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -10998,8 +10996,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.bindAdaptHeight();
-    this.bindAdaptWidth();
-    this.bindOptiscroll();
+    this.bindAdaptWidth(); // this.bindOptiscroll();
+
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].bind('NScrollbar:resize', this.onResize, this._.uid);
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].bind('NResizer:moved', this.onUpdate, this._.uid);
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(window).on('resize', this.onResize, this._.uid);
@@ -11007,18 +11005,17 @@ __webpack_require__.r(__webpack_exports__);
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).on('scroll', this.onScroll, this._.uid);
   },
   updated: function updated() {
-    if (this.optiscroll) {
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('is-enabled');
-    }
-
+    // if ( this.optiscroll ) {
+    //     Dom.find(this.$el).addClass('is-enabled');
+    // }
     if (this.passedHeight || this.passedWidth) {
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('is-ready');
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('n-ready');
     }
   },
   beforeUnmount: function beforeUnmount() {
     this.unbindAdaptHeight();
-    this.unbindAdaptWidth();
-    this.unbindOptiscroll();
+    this.unbindAdaptWidth(); // this.unbindOptiscroll();
+
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].unbind('NScrollbar:resize', this._.uid);
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].unbind('NResizer:moved', this._.uid);
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(window).off('resize', null, this._.uid);
@@ -11052,25 +11049,96 @@ __webpack_require__.r(__webpack_exports__);
     onScrollIntoView: function onScrollIntoView(selector) {
       this.optiscroll.scrollIntoView(selector, 0);
     },
-    bindOptiscroll: function bindOptiscroll() {
-      optiscroll__WEBPACK_IMPORTED_MODULE_2___default.a.globalSettings.checkFrequency = 250;
-      optiscroll__WEBPACK_IMPORTED_MODULE_2___default.a.globalSettings.scrollMinUpdateInterval = 15;
-      var options = {
-        classPrefix: 'n-scrollbar-',
-        minTrackSize: 15,
-        forceScrollbars: true,
-        autoUpdate: true,
-        preventParentScroll: true,
-        wrapContent: false
-      };
-      this.optiscroll = new optiscroll__WEBPACK_IMPORTED_MODULE_2___default.a(this.$el, options);
+    adaptScrollHeight: function adaptScrollHeight(fallback) {
+      var outerHeight = this.$refs.content.clientHeight || 0,
+          innerHeight = this.$refs.content.scrollHeight || 0;
+
+      if (outerHeight === this.outerHeight && innerHeight === this.innerHeight) {
+        return;
+      }
+
+      this.outerHeight = outerHeight;
+      this.innerHeight = innerHeight;
+      console.log("WAT");
+      console.log(innerHeight, outerHeight);
+
+      if (outerHeight && outerHeight < innerHeight) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-vtrack');
+      }
+
+      if (!outerHeight || outerHeight >= innerHeight) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).removeClass('has-vtrack');
+      }
+
+      var height = outerHeight / innerHeight * outerHeight;
+
+      var _final = Math.max(height, 50);
+
+      var max = Math.ceil(outerHeight / innerHeight * (innerHeight - outerHeight));
+      this.heightRatio = (max - (_final - height)) / max;
+      console.log(this.heightRatio, this.heightOffset);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.vbar).css({
+        height: Math.abs(_final) + 'px'
+      });
     },
-    unbindOptiscroll: function unbindOptiscroll() {
-      this.optiscroll.destroy();
+    adaptScrollWidth: function adaptScrollWidth() {
+      var ouWid = this.$refs.content.clientWidth,
+          inWid = this.$refs.content.scrollWidth;
+
+      if (!ouWid) {
+        return;
+      }
+
+      if (ouWid < inWid) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-htrack');
+      }
+
+      if (ouWid >= inWid) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).removeClass('has-htrack');
+      }
+
+      var width = Math.ceil(ouWid / inWid * ouWid);
+
+      var _final2 = Math.max(width, 50);
+
+      this.widthRatio = 1;
+
+      if (width < _final2) {
+        this.widthRatio = Math.sqrt(_final2 * inWid) / ouWid;
+      }
+
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.hbar).css({
+        width: _final2 + 'px'
+      });
+    },
+    adaptScrollPosition: function adaptScrollPosition(scroll) {
+      var _this3 = this;
+
+      clearTimeout(this.scrollTimer);
+      var ouHei = this.$refs.content.clientHeight,
+          inHei = this.$refs.content.scrollHeight;
+      var top = Math.ceil(ouHei / inHei * scroll.top * this.heightRatio);
+      var ouWid = this.$refs.content.clientWidth,
+          inWid = this.$refs.content.scrollWidth;
+      var left = Math.ceil(ouWid / inWid * scroll.left * this.widthRatio);
+      this.scrollTimer = setTimeout(function () {
+        _this3.updateScrollbars(top, left);
+      }, 10);
+    },
+    updateScrollbars: function updateScrollbars(top, left) {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.vbar).css({
+        transform: "translateY(".concat(top, "px)")
+      });
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.hbar).css({
+        transform: "translateX(".concat(left, "px)")
+      });
+    },
+    unbindOptiscroll: function unbindOptiscroll() {// this.optiscroll.destroy();
     },
     adaptHeight: function adaptHeight() {
       var height = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.content).child().height();
       var window = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).height();
+      this.adaptScrollHeight(height);
 
       if (height === this.passedHeight) {
         return;
@@ -11112,6 +11180,8 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
+      this.adaptScrollWidth();
+
       if (window) {
         this.passedWidth = width;
       }
@@ -11137,8 +11207,12 @@ __webpack_require__.r(__webpack_exports__);
       clearInterval(this.refreshWidth);
     },
     onScroll: function onScroll(event) {
-      var scrollTop = this.$refs.content.scrollTop;
-      this.$emit('scrollupdate', scrollTop);
+      var scroll = {
+        top: this.$refs.content.scrollTop,
+        left: this.$refs.content.scrollLeft
+      };
+      this.adaptScrollPosition(scroll);
+      this.$emit('scrollupdate', scroll.top, scroll.left);
     },
     onSizechange: function onSizechange(event) {
       var height = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).height();
@@ -11202,7 +11276,13 @@ __webpack_require__.r(__webpack_exports__);
       "ref": "spacer"
     }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": this.wrapClass
-    }, null)])]);
+    }, null)]), Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "ref": "hbar",
+      "class": "n-scrollbar-h"
+    }, null), Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "ref": "vbar",
+      "class": "n-scrollbar-v"
+    }, null)]);
   }
 });
 

@@ -89,11 +89,6 @@ export default {
             }
         },
 
-        tempValue()
-        {
-            this.updateHandle();
-        }
-
     },
 
     mounted()
@@ -116,6 +111,7 @@ export default {
     updated()
     {
         this.updateWidth();
+        this.updateHandle();
     },
 
     unmounted()

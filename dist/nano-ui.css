@@ -239,25 +239,19 @@
   color: #ffffff; }
 
 .n-scrollbar {
-  position: relative; }
-
-.n-scrollbar.is-fixed {
-  position: absolute; }
-
-.n-scrollbar.is-enabled {
+  position: relative;
   overflow: hidden; }
 
 .n-scrollbar-content {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0; }
+  right: -15px;
+  bottom: -15px; }
 
-.n-scrollbar.is-enabled > .n-scrollbar-content {
+.n-scrollbar > .n-scrollbar-content {
   z-index: 1;
   overflow: scroll;
-  bottom: 0;
   -webkit-overflow-scrolling: touch; }
 
 /**************************************
@@ -266,22 +260,27 @@
 .n-scrollbar-v,
 .n-scrollbar-h {
   position: absolute;
-  visibility: hidden;
   z-index: 2;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
-          user-select: none; }
+          user-select: none;
+  background: rgba(78, 123, 255, 0.6);
+  transition: transform 0.05s; }
 
 .n-scrollbar-v {
-  right: 0; }
+  top: 0;
+  right: 0;
+  width: 8px; }
 
 .n-scrollbar-h {
-  bottom: 0; }
+  left: 0;
+  bottom: 0;
+  height: 8px; }
 
-.n-scrollbar.has-vtrack > .n-scrollbar-v,
-.n-scrollbar.has-htrack > .n-scrollbar-h {
-  visibility: visible; }
+.n-scrollbar:not(.has-vtrack) > .n-scrollbar-v,
+.n-scrollbar:not(.has-htrack) > .n-scrollbar-h {
+  display: none; }
 
 /**************************************
  *  Optiscroll tracks base style
@@ -302,24 +301,6 @@
  **************************************/
 /***
  ***  Scrollbars style  ***/
-.n-scrollbar-v {
-  top: 2px;
-  bottom: 10px;
-  width: 7px; }
-
-.n-scrollbar-h {
-  left: 2px;
-  right: 10px;
-  height: 7px; }
-
-.n-scrollbar-v,
-.n-scrollbar-h {
-  opacity: 0; }
-
-.n-scrollbar.is-ready.has-vtrack:hover > .n-scrollbar-v,
-.n-scrollbar.is-ready.has-htrack:hover > .n-scrollbar-h {
-  opacity: 1; }
-
 /***
  ***  Tracks style  ***/
 .n-scrollbar-vtrack,
@@ -407,9 +388,6 @@
   flex-direction: row;
   align-items: stretch;
   justify-content: stretch; }
-
-.n-scrollbar:not(.is-enabled):not(.has-vtrack) .n-virtualscroller__item {
-  right: 15px; }
 
 .n-draggable__indicator {
   pointer-events: none;
@@ -5173,7 +5151,8 @@
   flex: 1 1 auto; }
 
 .n-table__body .n-scrollbar-content {
-  overflow-x: hidden !important; }
+  overflow-x: hidden !important;
+  bottom: 0 !important; }
 
 .n-table__body .n-scrollbar-h {
   visibility: hidden !important; }
