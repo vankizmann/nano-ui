@@ -265,8 +265,7 @@
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
-          user-select: none;
-  transition: transform 0.05s; }
+          user-select: none; }
 
 .n-scrollbar-v {
   top: 0;
@@ -293,12 +292,7 @@
   display: block;
   border-radius: 500px;
   background: rgba(27, 34, 41, 0.3);
-  opacity: 0;
   transition: opacity 0.15s; }
-
-.n-scrollbar.has-vtrack:hover > .n-scrollbar-v:before,
-.n-scrollbar.has-htrack:hover > .n-scrollbar-h:before {
-  opacity: 1; }
 
 .n-resizer {
   position: relative; }
@@ -5129,12 +5123,11 @@
 .n-table__body .n-scrollbar {
   flex: 1 1 auto; }
 
-.n-table__body .n-scrollbar-content {
-  overflow-x: hidden !important;
-  bottom: 0 !important; }
-
 .n-table__body .n-scrollbar-h {
   visibility: hidden !important; }
+
+.n-table__body .n-scrollbar-v {
+  right: 1px; }
 
 .n-table .n-scrollbar--touch .n-virtualscroller__item {
   right: 17px; }

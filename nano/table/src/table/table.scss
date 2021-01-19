@@ -55,17 +55,20 @@
     flex: 1 1 auto;
 }
 
-.n-table__body .n-scrollbar-content {
-    overflow-x: hidden !important;
-    bottom: 0 !important;
-}
+// .n-table__body .n-scrollbar-content {
+//     overflow-x: hidden !important;
+// }
+
+// .n-table__body .n-scrollbar--touch .n-scrollbar-content {
+//     bottom: 0 !important;
+// }
 
 .n-table__body .n-scrollbar-h {
     visibility: hidden !important;
 }
 
 .n-table__body .n-scrollbar-v {
-    // right: 1px;
+    right: 1px;
 }
 
 .n-table .n-scrollbar--touch .n-virtualscroller__item {

@@ -185,8 +185,16 @@ export default {
             let outerHeight = this.$refs.content.
                 clientHeight || 0;
 
+            if ( this.touch ) {
+                outerHeight -= 15;
+            }
+            
             let innerHeight = this.$refs.content.
                 scrollHeight || 0;
+
+            if ( this.touch ) {
+                innerHeight -= 15;
+            }
 
             let isSameOld = outerHeight === this.outerHeight && 
                 innerHeight === this.innerHeight;
@@ -227,9 +235,17 @@ export default {
             let outerWidth = this.$refs.content.
                 clientWidth || 0;
 
+            if ( this.touch ) {
+                outerWidth -= 15;
+            }
+
             let innerWidth = this.$refs.content.
                 scrollWidth || 0;
 
+            if ( this.touch ) {
+                innerWidth -= 15;
+            }
+            
             let isSameOld = outerWidth === this.outerWidth && 
                 innerWidth === this.innerWidth;
 
@@ -284,8 +300,16 @@ export default {
             let outerHeight = this.$refs.content.
                 clientHeight || 0;
 
+            if ( this.touch ) {
+                outerHeight -= 15;
+            }
+
             let innerHeight = this.$refs.content.
                 scrollHeight || 0;
+
+            if ( this.touch ) {
+                innerHeight -= 15;
+            }
 
             let top = Math.ceil((outerHeight / innerHeight) * 
                 scroll.top * this.heightRatio);
@@ -293,9 +317,17 @@ export default {
             let outerWidth = this.$refs.content.
                 clientWidth || 0;
 
+            if ( this.touch ) {
+                outerWidth -= 15;
+            }
+
             let innerWidth = this.$refs.content.
                 scrollWidth || 0;
 
+            if ( this.touch ) {
+                innerWidth -= 15;
+            }
+            
             let left = Math.ceil((outerWidth / innerWidth) * 
                 scroll.left * this.widthRatio);
 

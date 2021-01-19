@@ -29,7 +29,6 @@
     position: absolute;
     z-index: 2;
     user-select: none;
-    transition: transform 0.05s;
 }
 
 .n-scrollbar-v {
@@ -60,11 +59,11 @@
     display: block;
     border-radius: 500px;
     background: rgba($color-black, 0.3);
-    opacity: 0;
+    // opacity: 0;
     transition: opacity 0.15s;
 }
 
 .n-scrollbar.has-vtrack:hover > .n-scrollbar-v:before,
 .n-scrollbar.has-htrack:hover > .n-scrollbar-h:before {
-    opacity: 1;
+    // opacity: 1;
 }

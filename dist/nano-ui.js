@@ -11137,7 +11137,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     adaptScrollHeight: function adaptScrollHeight() {
       var outerHeight = this.$refs.content.clientHeight || 0;
+
+      if (this.touch) {
+        outerHeight -= 15;
+      }
+
       var innerHeight = this.$refs.content.scrollHeight || 0;
+
+      if (this.touch) {
+        innerHeight -= 15;
+      }
+
       var isSameOld = outerHeight === this.outerHeight && innerHeight === this.innerHeight;
 
       if (isSameOld) {
@@ -11164,7 +11174,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     adaptScrollWidth: function adaptScrollWidth() {
       var outerWidth = this.$refs.content.clientWidth || 0;
+
+      if (this.touch) {
+        outerWidth -= 15;
+      }
+
       var innerWidth = this.$refs.content.scrollWidth || 0;
+
+      if (this.touch) {
+        innerWidth -= 15;
+      }
+
       var isSameOld = outerWidth === this.outerWidth && innerWidth === this.innerWidth;
 
       if (isSameOld) {
@@ -11208,10 +11228,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.scrollTimer = Date.now();
       var outerHeight = this.$refs.content.clientHeight || 0;
+
+      if (this.touch) {
+        outerHeight -= 15;
+      }
+
       var innerHeight = this.$refs.content.scrollHeight || 0;
+
+      if (this.touch) {
+        innerHeight -= 15;
+      }
+
       var top = Math.ceil(outerHeight / innerHeight * scroll.top * this.heightRatio);
       var outerWidth = this.$refs.content.clientWidth || 0;
+
+      if (this.touch) {
+        outerWidth -= 15;
+      }
+
       var innerWidth = this.$refs.content.scrollWidth || 0;
+
+      if (this.touch) {
+        innerWidth -= 15;
+      }
+
       var left = Math.ceil(outerWidth / innerWidth * scroll.left * this.widthRatio);
       this.updateScrollbars(top, left);
     },
