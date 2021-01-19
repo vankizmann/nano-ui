@@ -11231,7 +11231,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (!isFirstRun && Date.now() - this.scrollTimer < 1000 / this.framerate) {
         return this.scrollTimeout = setTimeout(function () {
           return _this5.adaptScrollPosition(scroll);
-        }, 50);
+        }, 1000 / this.framerate + 50);
       }
 
       this.scrollTimer = Date.now();

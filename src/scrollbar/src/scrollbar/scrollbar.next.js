@@ -300,7 +300,7 @@ export default {
 
             if ( ! isFirstRun && Date.now() - this.scrollTimer < 1000 / this.framerate ) {
                 return this.scrollTimeout = setTimeout(() => 
-                    this.adaptScrollPosition(scroll), 50);
+                    this.adaptScrollPosition(scroll), (1000 / this.framerate) + 50);
             }
 
             this.scrollTimer = Date.now();
