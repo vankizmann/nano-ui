@@ -13416,7 +13416,7 @@ function _isSlot(s) {
       "class": 'n-table-filter__popover',
       trigger: 'click',
       size: 'sm',
-      width: 190
+      width: 220
     };
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NPopover"), Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
       "ref": "popover",

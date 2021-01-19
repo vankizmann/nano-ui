@@ -217,7 +217,7 @@ export default {
             class: 'n-table-filter__popover',
             trigger: 'click',
             size: 'sm',
-            width: 190,
+            width: 220,
         }
 
         return (

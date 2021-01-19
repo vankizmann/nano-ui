@@ -78,9 +78,9 @@
   font-size: 13px; }
 
 .n-empty-icon--sm .n-empty-icon__frame {
-  max-width: 78px;
-  max-height: 78px;
-  margin-bottom: 9px; }
+  max-width: 72.8px;
+  max-height: 72.8px;
+  margin-bottom: 8.4px; }
 
 .n-empty-icon--md {
   font-size: 14px; }
@@ -265,7 +265,8 @@
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
-          user-select: none; }
+          user-select: none;
+  transition: transform 0.05s; }
 
 .n-scrollbar-v {
   top: 0;
@@ -277,6 +278,10 @@
   bottom: 0;
   height: 10px; }
 
+.n-scrollbar:not(.has-vtrack) > .n-scrollbar-v,
+.n-scrollbar:not(.has-htrack) > .n-scrollbar-h {
+  display: none; }
+
 .n-scrollbar-v:before,
 .n-scrollbar-h:before {
   content: '\00a0';
@@ -287,11 +292,13 @@
   right: 2px;
   display: block;
   border-radius: 500px;
-  background: rgba(27, 34, 41, 0.3); }
+  background: rgba(27, 34, 41, 0.3);
+  opacity: 0;
+  transition: opacity 0.15s; }
 
-.n-scrollbar:not(.has-vtrack) > .n-scrollbar-v,
-.n-scrollbar:not(.has-htrack) > .n-scrollbar-h {
-  display: none; }
+.n-scrollbar.has-vtrack:hover > .n-scrollbar-v:before,
+.n-scrollbar.has-htrack:hover > .n-scrollbar-h:before {
+  opacity: 1; }
 
 .n-resizer {
   position: relative; }
@@ -395,7 +402,7 @@
   font-size: 13px; }
 
 .n-draglist--sm .n-draglist__empty {
-  padding: 30px 15px; }
+  padding: 28px 14px; }
 
 .n-draglist--md {
   font-size: 14px; }
@@ -517,13 +524,13 @@
   font-size: 13px; }
 
 .n-draglist--sm .n-draglist__empty {
-  padding: 30px 15px; }
+  padding: 28px 14px; }
 
 .n-draglist--sm .n-draglist-item__ellipsis,
 .n-draglist--sm .n-draglist-item__angle,
 .n-draglist--sm .n-draglist-item__checkbox {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   border-radius: 2px; }
 
 .n-draglist--sm .n-draglist-item__ellipsis,
@@ -965,9 +972,9 @@
   margin: -12px 0 0 -12px; }
 
 .n-loader--sm.n-load:before {
-  width: 34px;
-  height: 34px;
-  margin: -17px 0 0 -17px; }
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px; }
 
 .n-loader--md.n-load:before {
   width: 38px;
@@ -1089,14 +1096,14 @@
   font-size: 13px; }
 
 .n-button--sm:not(.n-button--link) {
-  height: 30px;
+  height: 28px;
   border-radius: 3px; }
 
 .n-button--sm.n-button--square:not(.n-button--link) {
-  width: 30px; }
+  width: 28px; }
 
 .n-button--sm:not(.n-button--link):not(.n-button--square) {
-  padding: 0 12px; }
+  padding: 0 11.2px; }
 
 .n-button--sm .n-icon.n-icon--before:not(:last-child) {
   margin-right: 5.2px; }
@@ -1422,15 +1429,15 @@
   font-size: 13px; }
 
 .n-input--sm input {
-  height: 30px;
-  padding: 0 12px;
+  height: 28px;
+  padding: 0 11.2px;
   border-radius: 3px; }
 
 .n-input--sm.n-input--icon.n-input--icon-before input {
-  padding-left: 42px; }
+  padding-left: 39.2px; }
 
 .n-input--sm.n-input--icon.n-input--icon-after input {
-  padding-right: 42px; }
+  padding-right: 39.2px; }
 
 .n-input--md {
   font-size: 14px; }
@@ -1571,8 +1578,8 @@
   font-size: 13px; }
 
 .n-textarea--sm textarea {
-  min-height: 30px;
-  padding: 6.2px 12px;
+  min-height: 28px;
+  padding: 5.2px 11.2px;
   border-radius: 3px; }
 
 .n-textarea--md {
@@ -1731,22 +1738,22 @@
   padding: 0 0 0 5.2px; }
 
 .n-switch--sm {
-  min-height: 30px;
+  min-height: 28px;
   font-size: 13px; }
 
 .n-switch--sm .n-switch__switch {
   width: 29.9px;
-  height: 16px; }
+  height: 14px; }
 
 .n-switch--sm .n-switch__switch span {
-  width: 10px;
-  height: 10px; }
+  width: 8px;
+  height: 8px; }
 
 .n-switch--sm.n-on .n-switch__switch span {
-  left: 15.9px; }
+  left: 17.9px; }
 
 .n-switch--sm .n-switch__label {
-  padding: 0 0 0 6px; }
+  padding: 0 0 0 5.6px; }
 
 .n-switch--md {
   min-height: 32px;
@@ -1954,17 +1961,17 @@
   padding: 0 0 0 5.2px; }
 
 .n-checkbox--sm {
-  min-height: 30px;
+  min-height: 28px;
   font-size: 13px; }
 
 .n-checkbox--sm .n-checkbox__checkbox {
   font-size: 9px;
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   border-radius: 2px; }
 
 .n-checkbox--sm .n-checkbox__label {
-  padding: 0 0 0 6px; }
+  padding: 0 0 0 5.6px; }
 
 .n-checkbox--md {
   min-height: 32px;
@@ -2153,7 +2160,7 @@
   min-height: 0; }
 
 .n-checkbox-group--sm.n-checkbox-group--horizontal .n-checkbox:not(:first-child) {
-  margin-left: 12px; }
+  margin-left: 11.2px; }
 
 .n-checkbox-group--sm.n-checkbox-group--horizontal .n-checkbox:last-child {
   padding-right: 0; }
@@ -2162,7 +2169,7 @@
   min-height: 0; }
 
 .n-checkbox-group--sm.n-checkbox-group--vertical .n-checkbox:not(:first-child) {
-  margin-top: 6px; }
+  margin-top: 5.6px; }
 
 .n-checkbox-group--sm.n-checkbox-group--vertical .n-checkbox:last-child {
   padding-bottom: 0; }
@@ -2255,19 +2262,19 @@
   padding: 0 0 0 5.2px; }
 
 .n-radio--sm {
-  min-height: 30px;
+  min-height: 28px;
   font-size: 13px; }
 
 .n-radio--sm .n-radio__radio {
-  width: 14px;
-  height: 14px; }
+  width: 12px;
+  height: 12px; }
 
 .n-radio--sm .n-radio__radio span {
-  width: 4px;
-  height: 4px; }
+  width: 2px;
+  height: 2px; }
 
 .n-radio--sm .n-radio__label {
-  padding: 0 0 0 6px; }
+  padding: 0 0 0 5.6px; }
 
 .n-radio--md {
   min-height: 32px;
@@ -2457,7 +2464,7 @@
   min-height: 0; }
 
 .n-radio-group--sm.n-radio-group--horizontal .n-radio:not(:first-child) {
-  margin-left: 12px; }
+  margin-left: 11.2px; }
 
 .n-radio-group--sm.n-radio-group--horizontal .n-radio:last-child {
   padding-right: 0; }
@@ -2466,7 +2473,7 @@
   min-height: 0; }
 
 .n-radio-group--sm.n-radio-group--vertical .n-radio:not(:first-child) {
-  margin-top: 6px; }
+  margin-top: 5.6px; }
 
 .n-radio-group--sm.n-radio-group--vertical .n-radio:last-child {
   padding-bottom: 0; }
@@ -2674,26 +2681,26 @@
   padding: 10.4px 5.2px; }
 
 .n-select--sm {
-  min-height: 30px;
+  min-height: 28px;
   font-size: 13px;
   border-radius: 3px; }
 
 .n-select--sm .n-select__input input {
-  min-height: 24px; }
+  min-height: 22px; }
 
 .n-select--sm .n-select__display {
-  padding: 0 6px; }
+  padding: 0 5.6px; }
 
 .n-select--sm .n-select__clear,
 .n-select--sm .n-select__angle {
-  width: 30px;
-  margin: 0 -6px 0 -6px; }
+  width: 28px;
+  margin: 0 -5.6px 0 -5.6px; }
 
 .n-select--sm .n-select__clear i,
 .n-select--sm .n-select__angle i {
-  width: 16px;
-  height: 16px;
-  line-height: 16px; }
+  width: 14px;
+  height: 14px;
+  line-height: 14px; }
 
 .n-select--sm .n-select__angle i {
   font-size: 11px; }
@@ -2702,32 +2709,32 @@
   font-size: 9px; }
 
 .n-select--sm .n-select__input input {
-  padding: 0 6px; }
+  padding: 0 5.6px; }
 
 .n-select--sm .n-select__items {
   padding: 2px 0;
-  margin-left: -1.5px; }
+  margin-left: -1.4px; }
 
 .n-select--sm .n-select__item {
-  height: 20px;
-  margin: 2px 0 2px 3px;
-  padding: 0 3px;
+  height: 18px;
+  margin: 2px 0 2px 2.8px;
+  padding: 0 2.8px;
   border-radius: 2px; }
 
 .n-select--sm .n-select__item span {
   font-size: 10px;
-  padding: 0 3px; }
+  padding: 0 2.8px; }
 
 .n-select--sm .n-select__item i {
   font-size: 8px;
-  padding: 0 3px; }
+  padding: 0 2.8px; }
 
 .n-popover--sm .n-select__body,
 .n-popover--sm .n-select__empty {
   border-radius: 3px; }
 
 .n-popover--sm .n-select__empty {
-  padding: 12px 6px; }
+  padding: 11.2px 5.6px; }
 
 .n-select--md {
   min-height: 32px;
@@ -3080,24 +3087,24 @@
   padding: 5.2px; }
 
 .n-cascader--sm {
-  min-height: 30px;
+  min-height: 28px;
   font-size: 13px;
   border-radius: 3px; }
 
 .n-cascader--sm .n-cascader__display,
 .n-cascader--sm .n-cascader__placeholder {
-  padding: 0 6px; }
+  padding: 0 5.6px; }
 
 .n-cascader--sm .n-cascader__clear,
 .n-cascader--sm .n-cascader__angle {
-  width: 30px;
-  margin: 0 -6px 0 -6px; }
+  width: 28px;
+  margin: 0 -5.6px 0 -5.6px; }
 
 .n-cascader--sm .n-cascader__clear i,
 .n-cascader--sm .n-cascader__angle i {
-  width: 16px;
-  height: 16px;
-  line-height: 16px; }
+  width: 14px;
+  height: 14px;
+  line-height: 14px; }
 
 .n-cascader--sm .n-cascader__angle i {
   font-size: 11px; }
@@ -3106,20 +3113,20 @@
   font-size: 9px; }
 
 .n-cascader--sm .n-cascader__items {
-  padding: 0 3px; }
+  padding: 0 2.8px; }
 
 .n-cascader--sm .n-cascader__item {
-  padding: 0 3px; }
+  padding: 0 2.8px; }
 
 .n-cascader--sm .n-cascader__item:after {
-  margin-left: 6px; }
+  margin-left: 5.6px; }
 
 .n-popover--sm .n-cascader__body,
 .n-popover--sm .n-cascader__empty {
   border-radius: 3px; }
 
 .n-popover--sm .n-cascader__empty {
-  padding: 6px; }
+  padding: 5.6px; }
 
 .n-cascader--md {
   min-height: 32px;
@@ -3392,37 +3399,37 @@
 
 .n-datepicker-panel--sm .n-datepicker-panel__display .n-datepicker-panel__month,
 .n-datepicker-panel--sm .n-datepicker-panel__display .n-datepicker-panel__year {
-  height: 26px;
-  padding: 0 6px;
+  height: 24px;
+  padding: 0 5.6px;
   border-radius: 3px; }
 
 .n-datepicker-panel--sm .n-datepicker-panel__toolbar .n-button {
-  width: 26px;
-  height: 26px; }
+  width: 24px;
+  height: 24px; }
 
 .n-datepicker-panel--sm .n-datepicker-panel__header,
 .n-datepicker-panel--sm .n-datepicker-panel__footer {
-  padding: 8.4px 12px; }
+  padding: 7.84px 11.2px; }
 
 .n-datepicker-panel--sm .n-datepicker-panel__dateview .n-datepicker-panel__panel,
 .n-datepicker-panel--sm .n-datepicker-panel__monthview .n-datepicker-panel__body,
 .n-datepicker-panel--sm .n-datepicker-panel__yearview .n-datepicker-panel__body {
-  width: 234px; }
+  width: 218.4px; }
 
 .n-datepicker-panel--sm .n-datepicker-panel__monthview .n-datepicker-panel__body,
 .n-datepicker-panel--sm .n-datepicker-panel__yearview .n-datepicker-panel__body {
-  padding: 10px; }
+  padding: 9.2px; }
 
 .n-datepicker-panel--sm .n-datepicker-panel__dateview .n-datepicker-panel__panel {
-  padding: 6px; }
+  padding: 5.6px; }
 
 .n-datepicker-panel--sm .n-datepicker-panel__dateview .n-datepicker-panel__day {
-  width: 30px;
-  height: 30px; }
+  width: 28px;
+  height: 28px; }
 
 .n-datepicker-panel--sm .n-datepicker-panel__year > .n-datepicker-panel__month,
 .n-datepicker-panel--sm .n-datepicker-panel__decade > .n-datepicker-panel__year {
-  height: 30px;
+  height: 28px;
   border-radius: 3px; }
 
 .n-datepicker-panel--md {
@@ -3686,25 +3693,25 @@
   padding: 5.2px; }
 
 .n-datepicker--sm {
-  min-height: 30px;
+  min-height: 28px;
   font-size: 13px;
   border-radius: 3px; }
 
 .n-datepicker--sm .n-datepicker__display,
 .n-datepicker--sm .n-datepicker__seperator,
 .n-datepicker--sm .n-datepicker__input input {
-  padding: 0 6px; }
+  padding: 0 5.6px; }
 
 .n-datepicker--sm .n-datepicker__clear,
 .n-datepicker--sm .n-datepicker__angle {
-  width: 30px;
-  margin: 0 -6px 0 -6px; }
+  width: 28px;
+  margin: 0 -5.6px 0 -5.6px; }
 
 .n-datepicker--sm .n-datepicker__clear i,
 .n-datepicker--sm .n-datepicker__angle i {
-  width: 16px;
-  height: 16px;
-  line-height: 16px; }
+  width: 14px;
+  height: 14px;
+  line-height: 14px; }
 
 .n-datepicker--sm .n-datepicker__angle i {
   font-size: 11px; }
@@ -3717,7 +3724,7 @@
   border-radius: 3px; }
 
 .n-popover--sm .n-datepicker__empty {
-  padding: 6px; }
+  padding: 5.6px; }
 
 .n-datepicker--md {
   min-height: 32px;
@@ -3866,19 +3873,19 @@
   border-radius: 3px; }
 
 .n-timepicker-panel--sm .n-timepicker-panel__panel {
-  width: 60px;
-  height: 150px; }
+  width: 56px;
+  height: 140px; }
 
 .n-timepicker-panel--sm .n-timepicker-panel__header,
 .n-timepicker-panel--sm .n-timepicker-panel__footer {
-  padding: 8.4px 12px; }
+  padding: 7.84px 11.2px; }
 
 .n-timepicker-panel--sm .n-timepicker-panel__wrap {
-  padding: 2.5px 10px; }
+  padding: 2.3px 9.2px; }
 
 .n-timepicker-panel--sm .n-timepicker-panel__item {
-  height: 26px;
-  padding: 0 12px;
+  height: 24px;
+  padding: 0 11.2px;
   border-radius: 3px; }
 
 .n-timepicker-panel--md {
@@ -4092,25 +4099,25 @@
   padding: 5.2px; }
 
 .n-timepicker--sm {
-  min-height: 30px;
+  min-height: 28px;
   font-size: 13px;
   border-radius: 3px; }
 
 .n-timepicker--sm .n-timepicker__display,
 .n-timepicker--sm .n-timepicker__seperator,
 .n-timepicker--sm .n-timepicker__input input {
-  padding: 0 6px; }
+  padding: 0 5.6px; }
 
 .n-timepicker--sm .n-timepicker__clear,
 .n-timepicker--sm .n-timepicker__angle {
-  width: 30px;
-  margin: 0 -6px 0 -6px; }
+  width: 28px;
+  margin: 0 -5.6px 0 -5.6px; }
 
 .n-timepicker--sm .n-timepicker__clear i,
 .n-timepicker--sm .n-timepicker__angle i {
-  width: 16px;
-  height: 16px;
-  line-height: 16px; }
+  width: 14px;
+  height: 14px;
+  line-height: 14px; }
 
 .n-timepicker--sm .n-timepicker__angle i {
   font-size: 11px; }
@@ -4123,7 +4130,7 @@
   border-radius: 3px; }
 
 .n-popover--sm .n-timepicker__empty {
-  padding: 6px; }
+  padding: 5.6px; }
 
 .n-timepicker--md {
   min-height: 32px;
@@ -4324,25 +4331,25 @@
 
 .n-transfer--sm .n-transfer__header {
   font-size: 15px;
-  padding: 6px; }
+  padding: 5.6px; }
 
 .n-transfer--sm .n-transfer__title {
-  padding: 0 6px; }
+  padding: 0 5.6px; }
 
 .n-transfer--sm .n-transfer__item-count {
-  margin-left: 6px; }
+  margin-left: 5.6px; }
 
 .n-transfer--sm .n-transfer__controls {
-  padding: 0 12px; }
+  padding: 0 11.2px; }
 
 .n-transfer--sm .n-transfer__controls > button:not(:last-child) {
-  margin-bottom: 6px; }
+  margin-bottom: 5.6px; }
 
 .n-transfer--sm .n-draglist-item {
-  padding: 0 6px; }
+  padding: 0 5.6px; }
 
 .n-transfer--sm .n-transfer__body .n-draglist-item__element {
-  padding: 0 6px; }
+  padding: 0 5.6px; }
 
 .n-transfer--md {
   font-size: 14px; }
@@ -4513,25 +4520,25 @@
   border-radius: 3px; }
 
 .n-popover--sm .n-popover__header {
-  padding: 8.4px 12px; }
+  padding: 7.84px 11.2px; }
 
 .n-popover--sm .n-popover__body {
-  padding: 8.4px 12px; }
+  padding: 7.84px 11.2px; }
 
 .n-popover--sm .n-popover__footer {
-  padding: 8.4px 12px; }
+  padding: 7.84px 11.2px; }
 
 .n-popover-option.n-popover-option--sm {
-  padding: 4.8px 12px; }
+  padding: 4.48px 11.2px; }
 
 .n-popover--sm .n-popover__body .n-popover-option {
-  margin: 0 -12px; }
+  margin: 0 -11.2px; }
 
 .n-popover--sm .n-popover__body .n-popover-option:first-child {
-  margin-top: -8.4px; }
+  margin-top: -7.84px; }
 
 .n-popover--sm .n-popover__body .n-popover-option:last-child {
-  margin-bottom: -8.4px; }
+  margin-bottom: -7.84px; }
 
 .n-popover-option--sm .n-icon {
   width: 13px;
@@ -4861,20 +4868,20 @@
   border-radius: 5px; }
 
 .n-modal--sm .n-modal__header {
-  padding: 9.6px 12px; }
+  padding: 8.96px 11.2px; }
 
 .n-modal--sm.n-closable .n-modal__header {
-  padding-right: 42px; }
+  padding-right: 39.2px; }
 
 .n-modal--sm:not(.n-raw) .n-modal__wrap {
-  padding: 12px 12px; }
+  padding: 11.2px 11.2px; }
 
 .n-modal--sm .n-modal__footer {
-  padding: 9.6px 12px; }
+  padding: 8.96px 11.2px; }
 
 .n-modal__close {
-  width: 30px;
-  height: 30px; }
+  width: 28px;
+  height: 28px; }
 
 .n-modal--md {
   font-size: 14px; }
@@ -4994,16 +5001,16 @@
 
 .n-confirm--sm .n-confirm__icon {
   font-size: 17px;
-  padding: 14.4px 12px; }
+  padding: 13.44px 11.2px; }
 
 .n-confirm--sm .n-confirm__body {
-  padding: 0 12px; }
+  padding: 0 11.2px; }
 
 .n-confirm--sm .n-confirm__action {
-  padding: 14.4px 12px; }
+  padding: 13.44px 11.2px; }
 
 .n-confirm--sm .n-confirm__action > button {
-  margin: 0 12px; }
+  margin: 0 11.2px; }
 
 .n-confirm--sm .n-confirm__action > button:first-child {
   margin-left: 0; }
@@ -5374,7 +5381,7 @@
   font-size: 13px; }
 
 .n-paginator--sm > div {
-  padding: 0 6px; }
+  padding: 0 5.6px; }
 
 .n-paginator--sm > div:first-child {
   padding-left: 0; }
@@ -5383,13 +5390,13 @@
   padding-right: 0; }
 
 .n-paginator--sm .n-paginator__limit .n-select {
-  width: 126px; }
+  width: 117.6px; }
 
 .n-paginator--sm .n-paginator__goto .n-select {
-  width: 96px; }
+  width: 89.6px; }
 
 .n-paginator--sm .n-paginator__pages > button {
-  margin: 0 2.4px; }
+  margin: 0 2.24px; }
 
 .n-paginator--sm .n-paginator__pages > button:first-child {
   margin-left: 0; }
@@ -5496,7 +5503,7 @@
   padding: 5.2px 10.4px; }
 
 .n-tabs--sm .n-tabs__tab {
-  padding: 6px 12px; }
+  padding: 5.6px 11.2px; }
 
 .n-tabs--md .n-tabs__tab {
   padding: 6.4px 12.8px; }
@@ -5544,11 +5551,11 @@
   font-size: 11px; }
 
 .n-tabs--sm .n-tabs-item {
-  margin-top: 12px; }
+  margin-top: 11.2px; }
 
 .n-tabs--sm .n-tabs__tab-icon {
   font-size: 11px;
-  margin-right: 8.4px; }
+  margin-right: 7.84px; }
 
 .n-tabs--sm .n-tabs__tab-label {
   font-size: 13px; }
@@ -5629,10 +5636,10 @@
   border-radius: 5px; }
 
 .n-info--sm .n-info__body {
-  padding: 9px 15px; }
+  padding: 8.4px 14px; }
 
 .n-info--sm .n-info__empty {
-  padding: 30px 15px; }
+  padding: 28px 14px; }
 
 .n-info--md {
   font-size: 14px;
@@ -5674,7 +5681,7 @@
   font-size: 13px; }
 
 .n-info--sm .n-info__column:not(:last-child) {
-  margin-bottom: 9px; }
+  margin-bottom: 8.4px; }
 
 .n-info--md .n-info__label {
   font-size: 14px; }
