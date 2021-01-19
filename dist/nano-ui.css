@@ -254,9 +254,6 @@
   overflow: scroll;
   -webkit-overflow-scrolling: touch; }
 
-/**************************************
- *  Optiscroll scrollbars base style
- */
 .n-scrollbar-v,
 .n-scrollbar-h {
   position: absolute;
@@ -265,67 +262,33 @@
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  background: rgba(78, 123, 255, 0.6);
   transition: transform 0.05s; }
 
 .n-scrollbar-v {
   top: 0;
   right: 0;
-  width: 8px; }
+  width: 10px; }
 
 .n-scrollbar-h {
   left: 0;
   bottom: 0;
-  height: 8px; }
+  height: 10px; }
+
+.n-scrollbar-v:before,
+.n-scrollbar-h:before {
+  content: '\00a0';
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 2px;
+  right: 2px;
+  display: block;
+  border-radius: 500px;
+  background: rgba(27, 34, 41, 0.3); }
 
 .n-scrollbar:not(.has-vtrack) > .n-scrollbar-v,
 .n-scrollbar:not(.has-htrack) > .n-scrollbar-h {
   display: none; }
-
-/**************************************
- *  Optiscroll tracks base style
- */
-.n-scrollbar-vtrack,
-.n-scrollbar-htrack {
-  display: block;
-  position: absolute;
-  transform: translate(0%, 0%);
-  box-sizing: border-box; }
-
-/**************************************
- *  Prevent parent scroll
- *  even when content is not longer enough.
- */
-/**************************************
- *  DEFAULT STYLE
- **************************************/
-/***
- ***  Scrollbars style  ***/
-/***
- ***  Tracks style  ***/
-.n-scrollbar-vtrack,
-.n-scrollbar-htrack {
-  position: relative; }
-
-.n-scrollbar-vtrack {
-  width: 8px;
-  right: 2px; }
-
-.n-scrollbar-htrack {
-  height: 8px;
-  bottom: 2px; }
-
-.n-scrollbar-vtrack:before,
-.n-scrollbar-htrack:before {
-  content: '\00a0';
-  position: absolute;
-  top: 1px;
-  bottom: 1px;
-  left: 1px;
-  right: 1px;
-  display: block;
-  background: rgba(141, 145, 148, 0.4);
-  border-radius: 500px; }
 
 .n-resizer {
   position: relative; }

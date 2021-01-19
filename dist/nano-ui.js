@@ -10984,9 +10984,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     framerate: {
       "default": function _default() {
-        return 5;
+        return 30;
       },
       type: [Number]
+    },
+    offset: {
+      "default": function _default() {
+        return 10;
+      }
     },
     wrapClass: {
       "default": function _default() {
@@ -11005,9 +11010,6 @@ __webpack_require__.r(__webpack_exports__);
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).on('scroll', this.onScroll, this._.uid);
   },
   updated: function updated() {
-    // if ( this.optiscroll ) {
-    //     Dom.find(this.$el).addClass('is-enabled');
-    // }
     if (this.passedHeight || this.passedWidth) {
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('n-ready');
     }
@@ -11036,31 +11038,39 @@ __webpack_require__.r(__webpack_exports__);
     onScrollTo: function onScrollTo() {
       var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
       var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-      this.optiscroll.scrollTo(x, y, 0);
+      this.$refs.content.scrollTop = y;
+      this.$refs.content.scrollLeft = x;
     },
     scrollIntoView: function scrollIntoView(selector) {
       var _this2 = this;
 
-      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
+      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(function () {
         return _this2.onScrollIntoView(selector);
-      }, delay);
+      }, 0);
     },
     onScrollIntoView: function onScrollIntoView(selector) {
-      this.optiscroll.scrollIntoView(selector, 0);
+      this.$refs.content.scrollTop = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).find(selector).offsetTop(this.$el);
+      this.$refs.content.scrollLeft = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).find(selector).offsetLeft(this.$el);
     },
-    adaptScrollHeight: function adaptScrollHeight(fallback) {
-      var outerHeight = this.$refs.content.clientHeight || 0,
-          innerHeight = this.$refs.content.scrollHeight || 0;
+    adaptScrollHeight: function adaptScrollHeight() {
+      var outerHeight = this.$refs.content.clientHeight || 0;
+      var innerHeight = this.$refs.content.scrollHeight || 0;
+      var isSameOld = outerHeight === this.outerHeight && innerHeight === this.innerHeight;
 
-      if (outerHeight === this.outerHeight && innerHeight === this.innerHeight) {
+      if (isSameOld) {
         return;
       }
 
       this.outerHeight = outerHeight;
       this.innerHeight = innerHeight;
-      console.log("WAT");
-      console.log(innerHeight, outerHeight);
+      var height = outerHeight / innerHeight * outerHeight;
+      var barHeight = Math.max(height, 50);
+      var maxHeight = Math.ceil(outerHeight / innerHeight * (innerHeight - outerHeight));
+      this.heightRatio = (maxHeight - (barHeight - height) - this.offset) / maxHeight;
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.vbar).css({
+        height: (this.barHeight = Math.abs(barHeight)) + 'px'
+      });
 
       if (outerHeight && outerHeight < innerHeight) {
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-vtrack');
@@ -11069,61 +11079,59 @@ __webpack_require__.r(__webpack_exports__);
       if (!outerHeight || outerHeight >= innerHeight) {
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).removeClass('has-vtrack');
       }
-
-      var height = outerHeight / innerHeight * outerHeight;
-
-      var _final = Math.max(height, 50);
-
-      var max = Math.ceil(outerHeight / innerHeight * (innerHeight - outerHeight));
-      this.heightRatio = (max - (_final - height)) / max;
-      console.log(this.heightRatio, this.heightOffset);
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.vbar).css({
-        height: Math.abs(_final) + 'px'
-      });
     },
     adaptScrollWidth: function adaptScrollWidth() {
-      var ouWid = this.$refs.content.clientWidth,
-          inWid = this.$refs.content.scrollWidth;
+      var outerWidth = this.$refs.content.clientWidth || 0;
+      var innerWidth = this.$refs.content.scrollWidth || 0;
+      var isSameOld = outerWidth === this.outerWidth && innerWidth === this.innerWidth;
 
-      if (!ouWid) {
+      if (isSameOld) {
         return;
       }
 
-      if (ouWid < inWid) {
+      this.outerWidth = outerWidth;
+      this.innerWidth = innerWidth;
+      var width = outerWidth / innerWidth * outerWidth;
+      var barWidth = Math.max(width, 50);
+      var maxWidth = Math.ceil(outerWidth / innerWidth * (innerWidth - outerWidth));
+      this.widthRatio = (maxWidth - (barWidth - width) - this.offset) / maxWidth;
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.hbar).css({
+        width: (this.barWidth = Math.abs(barWidth)) + 'px'
+      });
+
+      if (outerWidth && outerWidth < innerWidth) {
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-htrack');
       }
 
-      if (ouWid >= inWid) {
+      if (!outerWidth || outerWidth >= innerWidth) {
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).removeClass('has-htrack');
       }
-
-      var width = Math.ceil(ouWid / inWid * ouWid);
-
-      var _final2 = Math.max(width, 50);
-
-      this.widthRatio = 1;
-
-      if (width < _final2) {
-        this.widthRatio = Math.sqrt(_final2 * inWid) / ouWid;
-      }
-
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.hbar).css({
-        width: _final2 + 'px'
-      });
     },
     adaptScrollPosition: function adaptScrollPosition(scroll) {
       var _this3 = this;
 
-      clearTimeout(this.scrollTimer);
-      var ouHei = this.$refs.content.clientHeight,
-          inHei = this.$refs.content.scrollHeight;
-      var top = Math.ceil(ouHei / inHei * scroll.top * this.heightRatio);
-      var ouWid = this.$refs.content.clientWidth,
-          inWid = this.$refs.content.scrollWidth;
-      var left = Math.ceil(ouWid / inWid * scroll.left * this.widthRatio);
-      this.scrollTimer = setTimeout(function () {
-        _this3.updateScrollbars(top, left);
-      }, 10);
+      var isFirstRun = !this.scrollTimer;
+
+      if (!this.scrollTimer) {
+        this.scrollTimer = Date.now();
+      }
+
+      clearTimeout(this.scrollTimeout);
+
+      if (!isFirstRun && Date.now() - this.scrollTimer < 32) {
+        return this.scrollTimeout = setTimeout(function () {
+          return _this3.adaptScrollPosition(scroll);
+        }, 65);
+      }
+
+      this.scrollTimer = Date.now();
+      var outerHeight = this.$refs.content.clientHeight || 0;
+      var innerHeight = this.$refs.content.scrollHeight || 0;
+      var top = Math.ceil(outerHeight / innerHeight * scroll.top * this.heightRatio);
+      var outerWidth = this.$refs.content.clientWidth || 0;
+      var innerWidth = this.$refs.content.scrollWidth || 0;
+      var left = Math.ceil(outerWidth / innerWidth * scroll.left * this.widthRatio);
+      this.updateScrollbars(top, left);
     },
     updateScrollbars: function updateScrollbars(top, left) {
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.vbar).css({
@@ -11260,10 +11268,50 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       delete this.resizeTimer;
+    },
+    onVbarMousedown: function onVbarMousedown(event) {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mousemove', this.onVbarMousemove, this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mouseup', this.onVbarMouseup, this._.uid);
+      this.scrollTop = this.$refs.content.scrollTop;
+      this.clientY = event.clientY;
+    },
+    onVbarMousemove: function onVbarMousemove(event) {
+      var rect = this.$refs.content.getBoundingClientRect();
+      var top = this.outerHeight / this.innerHeight * this.scrollTop * this.heightRatio;
+      var offset = event.clientY - this.clientY + top;
+      var height = this.outerHeight - this.barHeight - this.offset;
+      this.$refs.content.scrollTop = offset / height * (this.innerHeight - this.outerHeight);
+    },
+    onVbarMouseup: function onVbarMouseup(event) {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off('mousemove', null, this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off('mouseup', null, this._.uid);
+    },
+    onHbarMousedown: function onHbarMousedown(event) {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mousemove', this.onHbarMousemove, this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mouseup', this.onHbarMouseup, this._.uid);
+      this.scrollLeft = this.$refs.content.scrollLeft;
+      this.clientX = event.clientX;
+    },
+    onHbarMousemove: function onHbarMousemove(event) {
+      var rect = this.$refs.content.getBoundingClientRect();
+      var top = this.outerWidth / this.innerWidth * this.scrollLeft * this.widthRatio;
+      var offset = event.clientX - this.clientX + top;
+      var width = this.outerWidth - this.barWidth - this.offset;
+      this.$refs.content.scrollLeft = offset / width * (this.innerWidth - this.outerWidth);
+    },
+    onHbarMouseup: function onHbarMouseup(event) {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off('mousemove', null, this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off('mouseup', null, this._.uid);
     }
   },
   render: function render() {
     var classList = ['n-scrollbar'];
+    var vbarProps = {
+      onMousedown: this.onVbarMousedown
+    };
+    var hbarProps = {
+      onMousedown: this.onHbarMousedown
+    };
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
       "class": classList
     }, nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].except(this.$attrs, ['class'])), [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
@@ -11276,13 +11324,13 @@ __webpack_require__.r(__webpack_exports__);
       "ref": "spacer"
     }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": this.wrapClass
-    }, null)]), Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+    }, null)]), Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
       "ref": "hbar",
       "class": "n-scrollbar-h"
-    }, null), Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+    }, hbarProps), null), Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
       "ref": "vbar",
       "class": "n-scrollbar-v"
-    }, null)]);
+    }, vbarProps), null)]);
   }
 });
 

@@ -41,9 +41,16 @@ export default {
         framerate: {
             default()
             {
-                return 5;
+                return 30;
             },
             type: [Number]
+        },
+
+        offset: {
+            default()
+            {
+                return 10;
+            }
         },
 
         wrapClass: {
@@ -79,10 +86,6 @@ export default {
 
     updated()
     {
-        // if ( this.optiscroll ) {
-        //     Dom.find(this.$el).addClass('is-enabled');
-        // }
-
         if ( this.passedHeight || this.passedWidth ) {
             Dom.find(this.$el).addClass('n-ready');
         }
@@ -119,33 +122,56 @@ export default {
 
         onScrollTo(x = 0, y = 0)
         {
-            this.optiscroll.scrollTo(x, y, 0);
+            this.$refs.content.scrollTop = y;
+            this.$refs.content.scrollLeft = x;
         },
 
-        scrollIntoView(selector, delay = 200)
+        scrollIntoView(selector, delay = 0)
         {
-            Any.delay(() => this.onScrollIntoView(selector), delay);
+            Any.delay(() => this.onScrollIntoView(selector), 0);
         },
 
         onScrollIntoView(selector)
         {
-            this.optiscroll.scrollIntoView(selector, 0);
+            this.$refs.content.scrollTop = Dom.find(this.$el)
+                .find(selector).offsetTop(this.$el);
+
+            this.$refs.content.scrollLeft = Dom.find(this.$el)
+                .find(selector).offsetLeft(this.$el);
         },
 
-        adaptScrollHeight(fallback)
+        adaptScrollHeight()
         {
-            let outerHeight = this.$refs.content.clientHeight || 0,
-                innerHeight = this.$refs.content.scrollHeight || 0;
+            let outerHeight = this.$refs.content.
+                clientHeight || 0;
 
-            if ( outerHeight === this.outerHeight && innerHeight === this.innerHeight ) {
+            let innerHeight = this.$refs.content.
+                scrollHeight || 0;
+
+            let isSameOld = outerHeight === this.outerHeight && 
+                innerHeight === this.innerHeight;
+
+            if ( isSameOld ) {
                 return;
             }
 
             this.outerHeight = outerHeight;
             this.innerHeight = innerHeight;
-            
-            console.log("WAT");
-            console.log(innerHeight, outerHeight);
+
+            let height = (outerHeight / innerHeight) 
+                * outerHeight;
+
+            let barHeight = Math.max(height, 50);
+
+            let maxHeight = Math.ceil((outerHeight / innerHeight) * 
+                (innerHeight - outerHeight));
+        
+            this.heightRatio = (maxHeight - (barHeight - height) 
+                - this.offset) / maxHeight;
+
+            Dom.find(this.$refs.vbar).css({
+                height: (this.barHeight = Math.abs(barHeight)) + 'px'
+            });
 
             if ( outerHeight && outerHeight < innerHeight ) {
                 Dom.find(this.$el).addClass('has-vtrack');
@@ -154,76 +180,86 @@ export default {
             if ( ! outerHeight || outerHeight >= innerHeight ) {
                 Dom.find(this.$el).removeClass('has-vtrack');
             }
-
-            let height = (outerHeight / innerHeight) 
-                * outerHeight;
-
-            let final = Math.max(height, 50);
-
-            let max = Math.ceil((outerHeight / innerHeight) * 
-                (innerHeight - outerHeight));
-
-            this.heightRatio = (max - (final - height)) / max;
-
-            console.log(this.heightRatio, this.heightOffset)
-
-            Dom.find(this.$refs.vbar).css({
-                height: Math.abs(final) + 'px'
-            });
         },
 
         adaptScrollWidth()
         {
-            let ouWid = this.$refs.content.clientWidth,
-                inWid = this.$refs.content.scrollWidth;
+            let outerWidth = this.$refs.content.
+                clientWidth || 0;
 
-            if ( ! ouWid ) {
+            let innerWidth = this.$refs.content.
+                scrollWidth || 0;
+
+            let isSameOld = outerWidth === this.outerWidth && 
+                innerWidth === this.innerWidth;
+
+            if ( isSameOld ) {
                 return;
             }
 
-            if ( ouWid < inWid ) {
+            this.outerWidth = outerWidth;
+            this.innerWidth = innerWidth;
+
+            let width = (outerWidth / innerWidth) 
+                * outerWidth;
+
+            let barWidth = Math.max(width, 50);
+
+            let maxWidth = Math.ceil((outerWidth / innerWidth) * 
+                (innerWidth - outerWidth));
+        
+            this.widthRatio = (maxWidth - (barWidth - width) 
+                - this.offset) / maxWidth;
+
+            Dom.find(this.$refs.hbar).css({
+                width: (this.barWidth = Math.abs(barWidth)) + 'px'
+            });
+
+            if ( outerWidth && outerWidth < innerWidth ) {
                 Dom.find(this.$el).addClass('has-htrack');
             }
 
-            if ( ouWid >= inWid ) {
+            if ( ! outerWidth || outerWidth >= innerWidth ) {
                 Dom.find(this.$el).removeClass('has-htrack');
             }
-
-            let width = Math.ceil((ouWid / 
-                inWid) * ouWid)
-            
-            let final = Math.max(width, 50);
-
-            this.widthRatio = 1;
-
-            if ( width < final ) {
-                this.widthRatio = Math.sqrt(final * inWid) / ouWid;
-            }
-
-            Dom.find(this.$refs.hbar).css({
-                width: final + 'px'
-            });
         },
 
         adaptScrollPosition(scroll)
         {
-            clearTimeout(this.scrollTimer);
+            let isFirstRun = ! this.scrollTimer;
 
-            let ouHei = this.$refs.content.clientHeight,
-                inHei = this.$refs.content.scrollHeight;
+            if ( ! this.scrollTimer ) {
+                this.scrollTimer = Date.now();
+            }
 
-            let top = Math.ceil((ouHei / inHei) * 
+            clearTimeout(this.scrollTimeout);
+
+            if ( ! isFirstRun && Date.now() - this.scrollTimer < 32 ) {
+                return this.scrollTimeout = setTimeout(() => 
+                    this.adaptScrollPosition(scroll), 65);
+            }
+
+            this.scrollTimer = Date.now();
+
+            let outerHeight = this.$refs.content.
+                clientHeight || 0;
+
+            let innerHeight = this.$refs.content.
+                scrollHeight || 0;
+
+            let top = Math.ceil((outerHeight / innerHeight) * 
                 scroll.top * this.heightRatio);
 
-            let ouWid = this.$refs.content.clientWidth,
-                inWid = this.$refs.content.scrollWidth;
+            let outerWidth = this.$refs.content.
+                clientWidth || 0;
 
-            let left = Math.ceil((ouWid / inWid) * 
+            let innerWidth = this.$refs.content.
+                scrollWidth || 0;
+
+            let left = Math.ceil((outerWidth / innerWidth) * 
                 scroll.left * this.widthRatio);
 
-            this.scrollTimer = setTimeout(() => {
-                this.updateScrollbars(top, left);
-            }, 10);
+            this.updateScrollbars(top, left);
         },
 
         updateScrollbars(top, left)
@@ -400,6 +436,84 @@ export default {
             }
 
             delete this.resizeTimer;
+        },
+
+        onVbarMousedown(event)
+        {
+            Dom.find(document).on('mousemove', 
+                this.onVbarMousemove, this._.uid);
+
+            Dom.find(document).on('mouseup', 
+                this.onVbarMouseup, this._.uid);
+
+            this.scrollTop = this.$refs.content
+                .scrollTop;
+
+            this.clientY = event.clientY;
+        },
+
+        onVbarMousemove(event)
+        {
+            let rect = this.$refs.content.getBoundingClientRect();
+
+            let top = (this.outerHeight / this.innerHeight) * 
+                this.scrollTop * this.heightRatio;
+
+            let offset = (event.clientY - this.clientY) + top;
+
+            let height = (this.outerHeight - 
+                    this.barHeight - this.offset);
+
+            this.$refs.content.scrollTop = offset / height * 
+                (this.innerHeight - this.outerHeight);
+        },
+
+        onVbarMouseup(event)
+        {
+            Dom.find(document).off('mousemove', 
+                null, this._.uid);
+
+            Dom.find(document).off('mouseup', 
+                null, this._.uid);
+        },
+
+        onHbarMousedown(event)
+        {
+            Dom.find(document).on('mousemove', 
+                this.onHbarMousemove, this._.uid);
+
+            Dom.find(document).on('mouseup', 
+                this.onHbarMouseup, this._.uid);
+
+            this.scrollLeft = this.$refs.content
+                .scrollLeft;
+
+            this.clientX = event.clientX;
+        },
+
+        onHbarMousemove(event)
+        {
+            let rect = this.$refs.content.getBoundingClientRect();
+
+            let top = (this.outerWidth / this.innerWidth) * 
+                this.scrollLeft * this.widthRatio;
+
+            let offset = (event.clientX - this.clientX) + top;
+
+            let width = (this.outerWidth - 
+                    this.barWidth - this.offset);
+
+            this.$refs.content.scrollLeft = offset / width * 
+                (this.innerWidth - this.outerWidth);
+        },
+
+        onHbarMouseup(event)
+        {
+            Dom.find(document).off('mousemove', 
+                null, this._.uid);
+
+            Dom.find(document).off('mouseup', 
+                null, this._.uid);
         }
 
     },
@@ -409,6 +523,14 @@ export default {
         let classList = [
             'n-scrollbar'
         ];
+
+        let vbarProps = {
+            onMousedown: this.onVbarMousedown
+        };
+
+        let hbarProps = {
+            onMousedown: this.onHbarMousedown
+        };
 
         return (
             <div class={classList} {...Obj.except(this.$attrs, ['class'])}>
@@ -422,8 +544,8 @@ export default {
                         { /* Adapt inner height */ }
                     </div>
                 </div>
-                <div ref="hbar" class="n-scrollbar-h"></div>
-                <div ref="vbar" class="n-scrollbar-v"></div>
+                <div ref="hbar" class="n-scrollbar-h" {...hbarProps}></div>
+                <div ref="vbar" class="n-scrollbar-v" {...vbarProps}></div>
             </div>
         );
     }
