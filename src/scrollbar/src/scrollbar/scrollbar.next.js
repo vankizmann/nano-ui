@@ -217,17 +217,21 @@ export default {
             this.heightRatio = (maxHeight - (barHeight - height) 
                 - this.offset) / maxHeight;
 
-            Dom.find(this.$refs.vbar).css({
-                height: (this.barHeight = Math.abs(barHeight)) + 'px'
+            window.requestAnimationFrame(() => {
+
+                Dom.find(this.$refs.vbar).css({
+                    height: (this.barHeight = Math.abs(barHeight)) + 'px'
+                });
+    
+                if ( outerHeight && outerHeight < innerHeight ) {
+                    Dom.find(this.$el).addClass('has-vtrack');
+                }
+    
+                if ( ! outerHeight || outerHeight >= innerHeight ) {
+                    Dom.find(this.$el).removeClass('has-vtrack');
+                }
+
             });
-
-            if ( outerHeight && outerHeight < innerHeight ) {
-                Dom.find(this.$el).addClass('has-vtrack');
-            }
-
-            if ( ! outerHeight || outerHeight >= innerHeight ) {
-                Dom.find(this.$el).removeClass('has-vtrack');
-            }
         },
 
         adaptScrollWidth()
@@ -267,17 +271,21 @@ export default {
             this.widthRatio = (maxWidth - (barWidth - width) 
                 - this.offset) / maxWidth;
 
-            Dom.find(this.$refs.hbar).css({
-                width: (this.barWidth = Math.abs(barWidth)) + 'px'
+            window.requestAnimationFrame(() => {
+
+                Dom.find(this.$refs.hbar).css({
+                    width: (this.barWidth = Math.abs(barWidth)) + 'px'
+                });
+    
+                if ( outerWidth && outerWidth < innerWidth ) {
+                    Dom.find(this.$el).addClass('has-htrack');
+                }
+    
+                if ( ! outerWidth || outerWidth >= innerWidth ) {
+                    Dom.find(this.$el).removeClass('has-htrack');
+                }
+
             });
-
-            if ( outerWidth && outerWidth < innerWidth ) {
-                Dom.find(this.$el).addClass('has-htrack');
-            }
-
-            if ( ! outerWidth || outerWidth >= innerWidth ) {
-                Dom.find(this.$el).removeClass('has-htrack');
-            }
         },
 
         adaptScrollPosition(scroll)
@@ -290,9 +298,9 @@ export default {
 
             clearTimeout(this.scrollTimeout);
 
-            if ( ! isFirstRun && Date.now() - this.scrollTimer < 32 ) {
+            if ( ! isFirstRun && Date.now() - this.scrollTimer < 15 ) {
                 return this.scrollTimeout = setTimeout(() => 
-                    this.adaptScrollPosition(scroll), 65);
+                    this.adaptScrollPosition(scroll), 35);
             }
 
             this.scrollTimer = Date.now();
@@ -331,7 +339,8 @@ export default {
             let left = Math.ceil((outerWidth / innerWidth) * 
                 scroll.left * this.widthRatio);
 
-            this.updateScrollbars(top, left);
+            window.requestAnimationFrame(() => 
+                this.updateScrollbars(top, left));
         },
 
         updateScrollbars(top, left)

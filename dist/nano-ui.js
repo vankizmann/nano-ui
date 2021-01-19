@@ -11136,6 +11136,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$refs.content.scrollLeft = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).find(selector).offsetLeft(this.$el);
     },
     adaptScrollHeight: function adaptScrollHeight() {
+      var _this3 = this;
+
       var outerHeight = this.$refs.content.clientHeight || 0;
 
       if (this.touch) {
@@ -11160,19 +11162,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var barHeight = Math.max(height, 50);
       var maxHeight = Math.ceil(outerHeight / innerHeight * (innerHeight - outerHeight));
       this.heightRatio = (maxHeight - (barHeight - height) - this.offset) / maxHeight;
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.vbar).css({
-        height: (this.barHeight = Math.abs(barHeight)) + 'px'
+      window.requestAnimationFrame(function () {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this3.$refs.vbar).css({
+          height: (_this3.barHeight = Math.abs(barHeight)) + 'px'
+        });
+
+        if (outerHeight && outerHeight < innerHeight) {
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this3.$el).addClass('has-vtrack');
+        }
+
+        if (!outerHeight || outerHeight >= innerHeight) {
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this3.$el).removeClass('has-vtrack');
+        }
       });
-
-      if (outerHeight && outerHeight < innerHeight) {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-vtrack');
-      }
-
-      if (!outerHeight || outerHeight >= innerHeight) {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).removeClass('has-vtrack');
-      }
     },
     adaptScrollWidth: function adaptScrollWidth() {
+      var _this4 = this;
+
       var outerWidth = this.$refs.content.clientWidth || 0;
 
       if (this.touch) {
@@ -11197,20 +11203,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var barWidth = Math.max(width, 50);
       var maxWidth = Math.ceil(outerWidth / innerWidth * (innerWidth - outerWidth));
       this.widthRatio = (maxWidth - (barWidth - width) - this.offset) / maxWidth;
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.hbar).css({
-        width: (this.barWidth = Math.abs(barWidth)) + 'px'
+      window.requestAnimationFrame(function () {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this4.$refs.hbar).css({
+          width: (_this4.barWidth = Math.abs(barWidth)) + 'px'
+        });
+
+        if (outerWidth && outerWidth < innerWidth) {
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this4.$el).addClass('has-htrack');
+        }
+
+        if (!outerWidth || outerWidth >= innerWidth) {
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this4.$el).removeClass('has-htrack');
+        }
       });
-
-      if (outerWidth && outerWidth < innerWidth) {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-htrack');
-      }
-
-      if (!outerWidth || outerWidth >= innerWidth) {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).removeClass('has-htrack');
-      }
     },
     adaptScrollPosition: function adaptScrollPosition(scroll) {
-      var _this3 = this;
+      var _this5 = this;
 
       var isFirstRun = !this.scrollTimer;
 
@@ -11220,10 +11228,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       clearTimeout(this.scrollTimeout);
 
-      if (!isFirstRun && Date.now() - this.scrollTimer < 32) {
+      if (!isFirstRun && Date.now() - this.scrollTimer < 15) {
         return this.scrollTimeout = setTimeout(function () {
-          return _this3.adaptScrollPosition(scroll);
-        }, 65);
+          return _this5.adaptScrollPosition(scroll);
+        }, 35);
       }
 
       this.scrollTimer = Date.now();
@@ -11253,7 +11261,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       var left = Math.ceil(outerWidth / innerWidth * scroll.left * this.widthRatio);
-      this.updateScrollbars(top, left);
+      window.requestAnimationFrame(function () {
+        return _this5.updateScrollbars(top, left);
+      });
     },
     updateScrollbars: function updateScrollbars(top, left) {
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.vbar).css({
