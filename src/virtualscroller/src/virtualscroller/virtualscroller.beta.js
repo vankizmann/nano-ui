@@ -165,6 +165,7 @@ export default {
 
         onScrollupdate(scrollTop)
         {
+            console.log('update');
             if ( ! Any.isNumber(scrollTop) ) {
                 return;
             }
@@ -278,7 +279,7 @@ export default {
             overflowY: this.overflowY,
             overflowX: this.overflowX,
             onSizechange: this.onSizechange,
-            onScrollupdate: this.onScrollupdate,
+            onScrollupdate: Any.framerate(this.onScrollupdate, 7.5),
         };
 
         let style = {};

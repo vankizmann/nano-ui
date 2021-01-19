@@ -11228,10 +11228,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       clearTimeout(this.scrollTimeout);
 
-      if (!isFirstRun && Date.now() - this.scrollTimer < 15) {
+      if (!isFirstRun && Date.now() - this.scrollTimer < 1000 / this.framerate) {
         return this.scrollTimeout = setTimeout(function () {
           return _this5.adaptScrollPosition(scroll);
-        }, 35);
+        }, 50);
       }
 
       this.scrollTimer = Date.now();
@@ -15991,6 +15991,8 @@ function _isSlot(s) {
       this.refreshDriver();
     },
     onScrollupdate: function onScrollupdate(scrollTop) {
+      console.log('update');
+
       if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isNumber(scrollTop)) {
         return;
       }
@@ -16087,7 +16089,7 @@ function _isSlot(s) {
       overflowY: this.overflowY,
       overflowX: this.overflowX,
       onSizechange: this.onSizechange,
-      onScrollupdate: this.onScrollupdate
+      onScrollupdate: nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onScrollupdate, 7.5)
     };
     var style = {};
 
