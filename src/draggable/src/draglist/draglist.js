@@ -118,6 +118,22 @@ export default {
             type: [Number]
         },
 
+        overflowY: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
+        overflowX: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         scrollTopOnChange: {
             default()
             {

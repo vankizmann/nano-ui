@@ -111,16 +111,26 @@ export default {
 
     },
 
-    watch: {
+    computed: {
 
-        modelValue()
-        {
-            this.tempValue = this.modelValue;
+        touch() {
+            return !! ('ontouchstart' in window || 
+                navigator.msMaxTouchPoints);
         },
 
-        tempValue()
-        {
-            Any.delay(this.refreshVisible, 50);
+        mousedown() {
+            return this.touch ? 'touchstart' :
+                'mousedown';
+        },
+
+        mousemove() {
+            return this.touch ? 'touchmove' :
+                'mousemove';
+        },
+
+        mouseup() {
+            return this.touch ? 'touchend' :
+                'mouseup';
         }
 
     },
@@ -134,6 +144,20 @@ export default {
             target: null,
             prevent: false,
         };
+    },
+
+    watch: {
+
+        modelValue()
+        {
+            this.tempValue = this.modelValue;
+        },
+
+        tempValue()
+        {
+            Any.delay(this.refreshVisible, 50);
+        }
+
     },
 
     beforeMount()
@@ -159,7 +183,7 @@ export default {
         }
 
         if ( this.listen && this.trigger === 'click' ) {
-            Dom.find(document.body).on(['mousedown', 'touchstart'], 
+            Dom.find(document.body).on(this.mousedown, 
                 Any.framerate(this.onClick, 30), this._.uid);
         }
 
@@ -168,7 +192,7 @@ export default {
                 Any.framerate(this.onContext, 30), this._.uid);
         }
 
-        Dom.find(document.body).on(['mousedown', 'touchstart'], 
+        Dom.find(document.body).on(this.mousedown, 
             Any.framerate(this.onExit, 30), this._.uid);
 
         Event.bind('NPopover:close', this.onCloseEvent, this._.uid);

@@ -13,6 +13,11 @@
     bottom: -15px;
 }
 
+.n-scrollbar--touch .n-scrollbar-content {
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
 .n-scrollbar > .n-scrollbar-content {
     z-index: 1;
     overflow: scroll;
@@ -24,7 +29,7 @@
     position: absolute;
     z-index: 2;
     user-select: none;
-    transition: transform 0.05s;
+    // transition: transform 0.05s;
 }
 
 .n-scrollbar-v {

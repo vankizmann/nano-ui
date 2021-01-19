@@ -571,6 +571,7 @@ export default {
         let props = Obj.except(this.$props, except, {
             items: this.items, 
             selected: this.tempSelected,
+            overflowX: false,
             renderNode: this.ctor('renderBody')
         });
 

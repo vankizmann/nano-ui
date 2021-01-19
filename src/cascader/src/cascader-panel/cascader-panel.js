@@ -1,4 +1,4 @@
-import { Arr, Obj, Any } from "nano-js";
+import { Arr, Obj, Any, Str } from "nano-js";
 
 export default {
 
@@ -104,6 +104,30 @@ export default {
 
     },
 
+    computed: {
+
+        touch() {
+            return !! ('ontouchstart' in window || 
+                navigator.msMaxTouchPoints);
+        },
+
+        mousedown() {
+            return this.touch ? 'touchstart' :
+                'mousedown';
+        },
+
+        mousemove() {
+            return this.touch ? 'touchmove' :
+                'mousemove';
+        },
+
+        mouseup() {
+            return this.touch ? 'touchend' :
+                'mouseup';
+        }
+
+    },
+
     data()
     {
         return {
@@ -169,10 +193,7 @@ export default {
 
             this.lastclick++;
 
-            let isTouchDevice = !! ('ontouchstart' in window || 
-                navigator.msMaxTouchPoints);
-
-            let trigger = isTouchDevice ? 'click' : 
+            let trigger = this.touch ? 'click' : 
                 this.trigger ;
             
             this.clickTimer = setTimeout(() => 
@@ -255,8 +276,7 @@ export default {
             props.onMousemove = Any.framerate(this.onHover(tempCascade), 30);
         }
 
-        props.onMousedown = this.onSelect(tempCascade);
-        props.onTouchstart = this.onSelect(tempCascade);
+        props['on' + Str.ucfirst(this.mousedown)] = this.onSelect(tempCascade);
 
         let children = Obj.get(item, this.childProp);
 

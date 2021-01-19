@@ -21,6 +21,10 @@
     justify-content: stretch;
 }
 
+.n-table > .n-scrollbar > .n-scrollbar-content > .n-scrollbar__wrap {
+    width: calc(100% - 1px);
+}
+
 .n-table .n-draglist-item {
     border-bottom: 1px solid $color-gray-10;
 }
@@ -61,7 +65,11 @@
 }
 
 .n-table__body .n-scrollbar-v {
-    right: 1px;
+    // right: 1px;
+}
+
+.n-table .n-virtualscroller__item {
+    right: 17px;
 }
 
 .n-table .n-draglist-item__element {

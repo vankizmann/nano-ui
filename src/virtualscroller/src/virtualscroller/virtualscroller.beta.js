@@ -31,6 +31,22 @@ export default {
             }
         },
 
+        overflowY: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
+        overflowX: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         threshold: {
             default()
             {
@@ -259,6 +275,8 @@ export default {
     render()
     {
         let props = {
+            overflowY: this.overflowY,
+            overflowX: this.overflowX,
             onSizechange: this.onSizechange,
             onScrollupdate: this.onScrollupdate,
         };

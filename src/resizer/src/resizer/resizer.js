@@ -1,4 +1,4 @@
-import { UUID, Arr, Obj, Dom, Any, Locale, Event, Num } from "nano-js";
+import { UUID, Arr, Obj, Dom, Any, Str, Locale, Event, Num } from "nano-js";
 
 export default {
 
@@ -68,6 +68,30 @@ export default {
                 return 8;
             },
             type: [Number]
+        }
+
+    },
+
+    computed: {
+
+        touch() {
+            return !! ('ontouchstart' in window || 
+                navigator.msMaxTouchPoints);
+        },
+
+        mousedown() {
+            return this.touch ? 'touchstart' :
+                'mousedown';
+        },
+
+        mousemove() {
+            return this.touch ? 'touchmove' :
+                'mousemove';
+        },
+
+        mouseup() {
+            return this.touch ? 'touchend' :
+                'mouseup';
         }
 
     },
@@ -198,13 +222,21 @@ export default {
             this.updateWidth();
         },
 
+        getTouchEvent(event)
+        {
+            if ( ! this.touch ) {
+                return event;
+            }
+
+            return event.touches[0] || event.changedTouches[0];
+        },
+
         onLeftMousedown(event)
         {
             if ( event.which !== 1 ) {
                 return;
             }
 
-            event.preventDefault();
             event.stopPropagation();
 
             if ( this.group.length ) {
@@ -214,18 +246,17 @@ export default {
             Dom.find(this.$el).addClass('n-move');
             Dom.find(document.body).addClass('n-move');
 
-            Dom.find(document).on('mouseup',
+            Dom.find(document).on(this.mouseup,
                 Any.framerate(this.onLeftMouseup, 60), this._.uid);
 
-            Dom.find(document).on('mousemove',
+            Dom.find(document).on(this.mousemove,
                 Any.framerate(this.onLeftMousemove, 60), this._.uid);
         },
 
         onLeftMousemove(event)
         {
-            this.clientX = (window.innerWidth - event.clientX);
-
-            event.preventDefault();
+            this.clientX = (window.innerWidth - 
+                this.getTouchEvent(event).clientX);
 
             let offsetX = Dom.find(this.$el)
                 .offset('right');
@@ -255,11 +286,10 @@ export default {
 
         onLeftMouseup(event)
         {
-            event.preventDefault();
             event.stopPropagation();
 
-            Dom.find(document).off('mouseup', null, this._.uid);
-            Dom.find(document).off('mousemove', null, this._.uid);
+            Dom.find(document).off(this.mouseup, null, this._.uid);
+            Dom.find(document).off(this.mousemove, null, this._.uid);
 
             if ( ! this.clientX ) {
                 return;
@@ -302,11 +332,10 @@ export default {
 
         onRightMousedown(event)
         {
-            if ( event.which !== 1 ) {
+            if ( ! Arr.has([0, 1], event.which) ) {
                 return;
             }
 
-            event.preventDefault();
             event.stopPropagation();
 
             if ( this.group.length ) {
@@ -316,18 +345,16 @@ export default {
             Dom.find(this.$el).addClass('n-move');
             Dom.find(document.body).addClass('n-move');
 
-            Dom.find(document).on('mouseup',
+            Dom.find(document).on(this.mouseup,
                 Any.framerate(this.onRightMouseup, 60), this._.uid);
 
-            Dom.find(document).on('mousemove',
+            Dom.find(document).on(this.mousemove,
                 Any.framerate(this.onRightMousemove, 60), this._.uid);
         },
 
         onRightMousemove(event)
         {
-            this.clientX = event.clientX;
-
-            event.preventDefault();
+            this.clientX = this.getTouchEvent(event).clientX;
 
             let offsetX = Dom.find(this.$el)
                 .offset('left');
@@ -357,11 +384,10 @@ export default {
 
         onRightMouseup(event)
         {
-            event.preventDefault();
             event.stopPropagation();
 
-            Dom.find(document).off('mousemove', null, this._.uid);
-            Dom.find(document).off('mouseup', null, this._.uid);
+            Dom.find(document).off(this.mousemove, null, this._.uid);
+            Dom.find(document).off(this.mouseup, null, this._.uid);
 
             if ( ! this.clientX ) {
                 return;
@@ -434,11 +460,11 @@ export default {
         let props = {};
 
         if ( this.position === 'right' ) {
-            props.onMousedown = this.onRightMousedown;
+            props['on' + Str.ucfirst(this.mousedown)] = this.onRightMousedown;
         }
 
         if ( this.position === 'left' ) {
-            props.onMousedown = this.onLeftMousedown;
+            props['on' + Str.ucfirst(this.mousedown)] = this.onLeftMousedown;
         }
 
         return (

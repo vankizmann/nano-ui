@@ -1289,6 +1289,20 @@ function _isSlot(s) {
       type: [String]
     }
   },
+  computed: {
+    touch: function touch() {
+      return !!('ontouchstart' in window || navigator.msMaxTouchPoints);
+    },
+    mousedown: function mousedown() {
+      return this.touch ? 'touchstart' : 'mousedown';
+    },
+    mousemove: function mousemove() {
+      return this.touch ? 'touchmove' : 'mousemove';
+    },
+    mouseup: function mouseup() {
+      return this.touch ? 'touchend' : 'mouseup';
+    }
+  },
   data: function data() {
     return {
       tempValue: this.modelValue,
@@ -1349,8 +1363,7 @@ function _isSlot(s) {
       }
 
       this.lastclick++;
-      var isTouchDevice = !!('ontouchstart' in window || navigator.msMaxTouchPoints);
-      var trigger = isTouchDevice ? 'click' : this.trigger;
+      var trigger = this.touch ? 'click' : this.trigger;
       this.clickTimer = setTimeout(function () {
         return _this4.lastclick = 0;
       }, 240);
@@ -1415,8 +1428,7 @@ function _isSlot(s) {
       props.onMousemove = nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onHover(tempCascade), 30);
     }
 
-    props.onMousedown = this.onSelect(tempCascade);
-    props.onTouchstart = this.onSelect(tempCascade);
+    props['on' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.mousedown)] = this.onSelect(tempCascade);
     var children = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(item, this.childProp);
 
     if (!props.icon && !nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEmpty(children)) {
@@ -6466,6 +6478,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       type: [Number]
     },
+    overflowY: {
+      "default": function _default() {
+        return true;
+      },
+      type: [Boolean]
+    },
+    overflowX: {
+      "default": function _default() {
+        return true;
+      },
+      type: [Boolean]
+    },
     scrollTopOnChange: {
       "default": function _default() {
         return false;
@@ -9733,12 +9757,18 @@ __webpack_require__.r(__webpack_exports__);
       type: [Number]
     }
   },
-  watch: {
-    modelValue: function modelValue() {
-      this.tempValue = this.modelValue;
+  computed: {
+    touch: function touch() {
+      return !!('ontouchstart' in window || navigator.msMaxTouchPoints);
     },
-    tempValue: function tempValue() {
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.refreshVisible, 50);
+    mousedown: function mousedown() {
+      return this.touch ? 'touchstart' : 'mousedown';
+    },
+    mousemove: function mousemove() {
+      return this.touch ? 'touchmove' : 'mousemove';
+    },
+    mouseup: function mouseup() {
+      return this.touch ? 'touchend' : 'mouseup';
     }
   },
   data: function data() {
@@ -9749,6 +9779,14 @@ __webpack_require__.r(__webpack_exports__);
       target: null,
       prevent: false
     };
+  },
+  watch: {
+    modelValue: function modelValue() {
+      this.tempValue = this.modelValue;
+    },
+    tempValue: function tempValue() {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.refreshVisible, 50);
+    }
   },
   beforeMount: function beforeMount() {
     this.tempValue = this.modelValue;
@@ -9769,14 +9807,14 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     if (this.listen && this.trigger === 'click') {
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).on(['mousedown', 'touchstart'], nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onClick, 30), this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).on(this.mousedown, nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onClick, 30), this._.uid);
     }
 
     if (this.listen && this.trigger === 'context') {
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).on('contextmenu', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onContext, 30), this._.uid);
     }
 
-    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).on(['mousedown', 'touchstart'], nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onExit, 30), this._.uid);
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).on(this.mousedown, nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onExit, 30), this._.uid);
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].bind('NPopover:close', this.onCloseEvent, this._.uid);
   },
   beforeUnmount: function beforeUnmount() {
@@ -10577,12 +10615,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _name$inject$props$da;
+var _name$inject$props$co;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
-/* harmony default export */ __webpack_exports__["default"] = (_name$inject$props$da = {
+/* harmony default export */ __webpack_exports__["default"] = (_name$inject$props$co = {
   name: 'NResizer',
   inject: {
     NScrollbar: {
@@ -10631,6 +10669,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return 8;
       },
       type: [Number]
+    }
+  },
+  computed: {
+    touch: function touch() {
+      return !!('ontouchstart' in window || navigator.msMaxTouchPoints);
+    },
+    mousedown: function mousedown() {
+      return this.touch ? 'touchstart' : 'mousedown';
+    },
+    mousemove: function mousemove() {
+      return this.touch ? 'touchmove' : 'mousemove';
+    },
+    mouseup: function mouseup() {
+      return this.touch ? 'touchend' : 'mouseup';
     }
   },
   data: function data() {
@@ -10722,12 +10774,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.updateWidth();
     },
+    getTouchEvent: function getTouchEvent(event) {
+      if (!this.touch) {
+        return event;
+      }
+
+      return event.touches[0] || event.changedTouches[0];
+    },
     onLeftMousedown: function onLeftMousedown(event) {
       if (event.which !== 1) {
         return;
       }
 
-      event.preventDefault();
       event.stopPropagation();
 
       if (this.group.length) {
@@ -10736,12 +10794,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('n-move');
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).addClass('n-move');
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mouseup', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onLeftMouseup, 60), this._.uid);
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mousemove', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onLeftMousemove, 60), this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on(this.mouseup, nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onLeftMouseup, 60), this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on(this.mousemove, nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onLeftMousemove, 60), this._.uid);
     },
     onLeftMousemove: function onLeftMousemove(event) {
-      this.clientX = window.innerWidth - event.clientX;
-      event.preventDefault();
+      this.clientX = window.innerWidth - this.getTouchEvent(event).clientX;
       var offsetX = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).offset('right');
       var scrollX = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).scroll('right');
       var targetWidth = this.clientX + scrollX - offsetX - this.resizerWidth / 2;
@@ -10760,10 +10817,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.handle).css(style);
     },
     onLeftMouseup: function onLeftMouseup(event) {
-      event.preventDefault();
       event.stopPropagation();
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off('mouseup', null, this._.uid);
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off('mousemove', null, this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off(this.mouseup, null, this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off(this.mousemove, null, this._.uid);
 
       if (!this.clientX) {
         return;
@@ -10796,11 +10852,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$emit('update:modelValue', this.tempValue);
     },
     onRightMousedown: function onRightMousedown(event) {
-      if (event.which !== 1) {
+      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has([0, 1], event.which)) {
         return;
       }
 
-      event.preventDefault();
       event.stopPropagation();
 
       if (this.group.length) {
@@ -10809,12 +10864,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('n-move');
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document.body).addClass('n-move');
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mouseup', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onRightMouseup, 60), this._.uid);
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mousemove', nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onRightMousemove, 60), this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on(this.mouseup, nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onRightMouseup, 60), this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on(this.mousemove, nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onRightMousemove, 60), this._.uid);
     },
     onRightMousemove: function onRightMousemove(event) {
-      this.clientX = event.clientX;
-      event.preventDefault();
+      this.clientX = this.getTouchEvent(event).clientX;
       var offsetX = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).offset('left');
       var scrollX = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).scroll('left');
       var targetWidth = this.clientX + scrollX - offsetX - this.resizerWidth / 2;
@@ -10833,10 +10887,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.handle).css(style);
     },
     onRightMouseup: function onRightMouseup(event) {
-      event.preventDefault();
       event.stopPropagation();
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off('mousemove', null, this._.uid);
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off('mouseup', null, this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off(this.mousemove, null, this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off(this.mouseup, null, this._.uid);
 
       if (!this.clientX) {
         return;
@@ -10874,13 +10927,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$emit('update:modelValue', this.tempValue);
     }
   }
-}, _defineProperty(_name$inject$props$da, "watch", {
+}, _defineProperty(_name$inject$props$co, "watch", {
   modelValue: function modelValue(value) {
     if (value !== this.tempValue) {
       this.tempValue = value;
     }
   }
-}), _defineProperty(_name$inject$props$da, "renderHandle", function renderHandle() {
+}), _defineProperty(_name$inject$props$co, "renderHandle", function renderHandle() {
   if (this.disabled) {
     return null;
   }
@@ -10889,18 +10942,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   var props = {};
 
   if (this.position === 'right') {
-    props.onMousedown = this.onRightMousedown;
+    props['on' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.mousedown)] = this.onRightMousedown;
   }
 
   if (this.position === 'left') {
-    props.onMousedown = this.onLeftMousedown;
+    props['on' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.mousedown)] = this.onLeftMousedown;
   }
 
   return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
     "ref": "handle",
     "class": classList
   }, props), null);
-}), _defineProperty(_name$inject$props$da, "render", function render() {
+}), _defineProperty(_name$inject$props$co, "render", function render() {
   var classList = ['n-resizer', 'n-resizer--' + this.position];
   var style = {};
 
@@ -10916,7 +10969,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     "class": classList,
     "style": style
   }, [[this.$slots["default"](), this.ctor('renderHandle')()]]);
-}), _name$inject$props$da);
+}), _name$inject$props$co);
 
 /***/ }),
 
@@ -10955,6 +11008,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NScrollbar',
@@ -10982,6 +11038,18 @@ __webpack_require__.r(__webpack_exports__);
       },
       type: [Boolean]
     },
+    overflowY: {
+      "default": function _default() {
+        return true;
+      },
+      type: [Boolean]
+    },
+    overflowX: {
+      "default": function _default() {
+        return true;
+      },
+      type: [Boolean]
+    },
     framerate: {
       "default": function _default() {
         return 30;
@@ -10997,6 +11065,20 @@ __webpack_require__.r(__webpack_exports__);
       "default": function _default() {
         return 'n-scrollbar__wrap';
       }
+    }
+  },
+  computed: {
+    touch: function touch() {
+      return !!('ontouchstart' in window || navigator.msMaxTouchPoints);
+    },
+    mousedown: function mousedown() {
+      return this.touch ? 'touchstart' : 'mousedown';
+    },
+    mousemove: function mousemove() {
+      return this.touch ? 'touchmove' : 'mousemove';
+    },
+    mouseup: function mouseup() {
+      return this.touch ? 'touchend' : 'mouseup';
     }
   },
   mounted: function mounted() {
@@ -11135,10 +11217,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateScrollbars: function updateScrollbars(top, left) {
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.vbar).css({
-        transform: "translateY(".concat(top, "px)")
+        transform: "translateY(".concat(top || 0, "px)")
       });
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.hbar).css({
-        transform: "translateX(".concat(left, "px)")
+        transform: "translateX(".concat(left || 0, "px)")
       });
     },
     unbindOptiscroll: function unbindOptiscroll() {// this.optiscroll.destroy();
@@ -11146,7 +11228,10 @@ __webpack_require__.r(__webpack_exports__);
     adaptHeight: function adaptHeight() {
       var height = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.content).child().height();
       var window = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).height();
-      this.adaptScrollHeight(height);
+
+      if (this.overflowY) {
+        this.adaptScrollHeight();
+      }
 
       if (height === this.passedHeight) {
         return;
@@ -11188,7 +11273,9 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      this.adaptScrollWidth();
+      if (this.overflowX) {
+        this.adaptScrollWidth();
+      }
 
       if (window) {
         this.passedWidth = width;
@@ -11269,49 +11356,68 @@ __webpack_require__.r(__webpack_exports__);
 
       delete this.resizeTimer;
     },
+    getTouchEvent: function getTouchEvent(event) {
+      if (!this.touch) {
+        return event;
+      }
+
+      return event.touches[0] || event.changedTouches[0];
+    },
     onVbarMousedown: function onVbarMousedown(event) {
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mousemove', this.onVbarMousemove, this._.uid);
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mouseup', this.onVbarMouseup, this._.uid);
+      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has([0, 1], event.which)) {
+        return;
+      }
+
+      event.stopPropagation();
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on(this.mousemove, this.onVbarMousemove, this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on(this.mouseup, this.onVbarMouseup, this._.uid);
       this.scrollTop = this.$refs.content.scrollTop;
-      this.clientY = event.clientY;
+      this.clientY = this.getTouchEvent(event).clientY;
     },
     onVbarMousemove: function onVbarMousemove(event) {
-      var rect = this.$refs.content.getBoundingClientRect();
+      var clientY = this.getTouchEvent(event).clientY;
       var top = this.outerHeight / this.innerHeight * this.scrollTop * this.heightRatio;
-      var offset = event.clientY - this.clientY + top;
+      var offset = clientY - this.clientY + top;
       var height = this.outerHeight - this.barHeight - this.offset;
       this.$refs.content.scrollTop = offset / height * (this.innerHeight - this.outerHeight);
     },
     onVbarMouseup: function onVbarMouseup(event) {
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off('mousemove', null, this._.uid);
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off('mouseup', null, this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off(this.mousemove, null, this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off(this.mouseup, null, this._.uid);
     },
     onHbarMousedown: function onHbarMousedown(event) {
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mousemove', this.onHbarMousemove, this._.uid);
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on('mouseup', this.onHbarMouseup, this._.uid);
+      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has([0, 1], event.which)) {
+        return;
+      }
+
+      event.stopPropagation();
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on(this.mousemove, this.onHbarMousemove, this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).on(this.mouseup, this.onHbarMouseup, this._.uid);
       this.scrollLeft = this.$refs.content.scrollLeft;
       this.clientX = event.clientX;
     },
     onHbarMousemove: function onHbarMousemove(event) {
-      var rect = this.$refs.content.getBoundingClientRect();
       var top = this.outerWidth / this.innerWidth * this.scrollLeft * this.widthRatio;
       var offset = event.clientX - this.clientX + top;
       var width = this.outerWidth - this.barWidth - this.offset;
       this.$refs.content.scrollLeft = offset / width * (this.innerWidth - this.outerWidth);
     },
     onHbarMouseup: function onHbarMouseup(event) {
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off('mousemove', null, this._.uid);
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off('mouseup', null, this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off(this.mousemove, null, this._.uid);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off(this.mouseup, null, this._.uid);
     }
   },
   render: function render() {
     var classList = ['n-scrollbar'];
-    var vbarProps = {
-      onMousedown: this.onVbarMousedown
-    };
-    var hbarProps = {
-      onMousedown: this.onHbarMousedown
-    };
+
+    if (this.touch) {
+      classList.push('n-scrollbar--touch');
+    }
+
+    var vbarProps = _defineProperty({}, 'on' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.mousedown), this.onVbarMousedown);
+
+    var hbarProps = _defineProperty({}, 'on' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.mousedown), this.onHbarMousedown);
+
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
       "class": classList
     }, nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].except(this.$attrs, ['class'])), [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
@@ -14150,6 +14256,7 @@ function _isSlot(s) {
     var props = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].except(this.$props, except, {
       items: this.items,
       selected: this.tempSelected,
+      overflowX: false,
       renderNode: this.ctor('renderBody')
     });
 
@@ -15726,6 +15833,18 @@ function _isSlot(s) {
         return null;
       }
     },
+    overflowY: {
+      "default": function _default() {
+        return true;
+      },
+      type: [Boolean]
+    },
+    overflowX: {
+      "default": function _default() {
+        return true;
+      },
+      type: [Boolean]
+    },
     threshold: {
       "default": function _default() {
         return 40;
@@ -15915,6 +16034,8 @@ function _isSlot(s) {
     var _slot;
 
     var props = {
+      overflowY: this.overflowY,
+      overflowX: this.overflowX,
       onSizechange: this.onSizechange,
       onScrollupdate: this.onScrollupdate
     };

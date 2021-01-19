@@ -1,4 +1,4 @@
-import { UUID, Arr, Obj, Dom, Any, Locale, Event, Num } from "nano-js";
+import { UUID, Arr, Obj, Dom, Any, Str, Locale, Event, Num } from "nano-js";
 import Optiscroll from 'optiscroll';
 
 export default {
@@ -38,6 +38,22 @@ export default {
             type: [Boolean]
         },
 
+        overflowY: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
+        overflowX: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         framerate: {
             default()
             {
@@ -58,6 +74,30 @@ export default {
             {
                 return 'n-scrollbar__wrap';
             }
+        }
+
+    },
+
+    computed: {
+
+        touch() {
+            return !! ('ontouchstart' in window || 
+                navigator.msMaxTouchPoints);
+        },
+
+        mousedown() {
+            return this.touch ? 'touchstart' :
+                'mousedown';
+        },
+
+        mousemove() {
+            return this.touch ? 'touchmove' :
+                'mousemove';
+        },
+
+        mouseup() {
+            return this.touch ? 'touchend' :
+                'mouseup';
         }
 
     },
@@ -265,11 +305,11 @@ export default {
         updateScrollbars(top, left)
         {
             Dom.find(this.$refs.vbar).css({
-                transform: `translateY(${top}px)`
+                transform: `translateY(${top||0}px)`
             });
 
             Dom.find(this.$refs.hbar).css({
-                transform: `translateX(${left}px)`
+                transform: `translateX(${left||0}px)`
             });
         },
 
@@ -286,7 +326,9 @@ export default {
             let window = Dom.find(this.$el)
                 .height();
 
-            this.adaptScrollHeight(height);
+            if ( this.overflowY ) {
+                this.adaptScrollHeight();
+            }
 
             if ( height === this.passedHeight ) {
                 return;
@@ -338,7 +380,9 @@ export default {
                 return;
             }
 
-            this.adaptScrollWidth();
+            if ( this.overflowX ) {
+                this.adaptScrollWidth();
+            }
 
             if ( window ) {
                 this.passedWidth = width;
@@ -438,28 +482,45 @@ export default {
             delete this.resizeTimer;
         },
 
+        getTouchEvent(event)
+        {
+            if ( ! this.touch ) {
+                return event;
+            }
+
+            return event.touches[0] || event.changedTouches[0];
+        },
+
         onVbarMousedown(event)
         {
-            Dom.find(document).on('mousemove', 
+            if ( ! Arr.has([0, 1], event.which) ) {
+                return;
+            }
+
+            event.stopPropagation();
+
+            Dom.find(document).on(this.mousemove, 
                 this.onVbarMousemove, this._.uid);
 
-            Dom.find(document).on('mouseup', 
+            Dom.find(document).on(this.mouseup, 
                 this.onVbarMouseup, this._.uid);
 
             this.scrollTop = this.$refs.content
                 .scrollTop;
 
-            this.clientY = event.clientY;
+            this.clientY = this.getTouchEvent(event)
+                .clientY;
         },
 
         onVbarMousemove(event)
         {
-            let rect = this.$refs.content.getBoundingClientRect();
+            let clientY = this.getTouchEvent(event)
+                .clientY;
 
             let top = (this.outerHeight / this.innerHeight) * 
                 this.scrollTop * this.heightRatio;
 
-            let offset = (event.clientY - this.clientY) + top;
+            let offset = (clientY - this.clientY) + top;
 
             let height = (this.outerHeight - 
                     this.barHeight - this.offset);
@@ -470,19 +531,25 @@ export default {
 
         onVbarMouseup(event)
         {
-            Dom.find(document).off('mousemove', 
+            Dom.find(document).off(this.mousemove, 
                 null, this._.uid);
 
-            Dom.find(document).off('mouseup', 
+            Dom.find(document).off(this.mouseup, 
                 null, this._.uid);
         },
 
         onHbarMousedown(event)
         {
-            Dom.find(document).on('mousemove', 
+            if ( ! Arr.has([0, 1], event.which) ) {
+                return;
+            }
+            
+            event.stopPropagation();
+
+            Dom.find(document).on(this.mousemove, 
                 this.onHbarMousemove, this._.uid);
 
-            Dom.find(document).on('mouseup', 
+            Dom.find(document).on(this.mouseup, 
                 this.onHbarMouseup, this._.uid);
 
             this.scrollLeft = this.$refs.content
@@ -493,8 +560,6 @@ export default {
 
         onHbarMousemove(event)
         {
-            let rect = this.$refs.content.getBoundingClientRect();
-
             let top = (this.outerWidth / this.innerWidth) * 
                 this.scrollLeft * this.widthRatio;
 
@@ -509,10 +574,10 @@ export default {
 
         onHbarMouseup(event)
         {
-            Dom.find(document).off('mousemove', 
+            Dom.find(document).off(this.mousemove, 
                 null, this._.uid);
 
-            Dom.find(document).off('mouseup', 
+            Dom.find(document).off(this.mouseup, 
                 null, this._.uid);
         }
 
@@ -524,12 +589,16 @@ export default {
             'n-scrollbar'
         ];
 
+        if ( this.touch ) {
+            classList.push('n-scrollbar--touch');
+        }
+
         let vbarProps = {
-            onMousedown: this.onVbarMousedown
+            ['on' + Str.ucfirst(this.mousedown)]: this.onVbarMousedown
         };
 
         let hbarProps = {
-            onMousedown: this.onHbarMousedown
+            ['on' + Str.ucfirst(this.mousedown)]: this.onHbarMousedown
         };
 
         return (

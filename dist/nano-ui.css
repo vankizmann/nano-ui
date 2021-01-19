@@ -249,6 +249,10 @@
   right: -15px;
   bottom: -15px; }
 
+.n-scrollbar--touch .n-scrollbar-content {
+  padding-right: 15px;
+  padding-bottom: 15px; }
+
 .n-scrollbar > .n-scrollbar-content {
   z-index: 1;
   overflow: scroll;
@@ -261,8 +265,7 @@
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
-          user-select: none;
-  transition: transform 0.05s; }
+          user-select: none; }
 
 .n-scrollbar-v {
   top: 0;
@@ -346,7 +349,7 @@
 .n-virtualscroller__item {
   position: absolute;
   left: 0;
-  right: 0;
+  right: 15px;
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -5088,6 +5091,9 @@
   align-items: stretch;
   justify-content: stretch; }
 
+.n-table > .n-scrollbar > .n-scrollbar-content > .n-scrollbar__wrap {
+  width: calc(100% - 1px); }
+
 .n-table .n-draglist-item {
   border-bottom: 1px solid #e8e9ea; }
 
@@ -5120,8 +5126,8 @@
 .n-table__body .n-scrollbar-h {
   visibility: hidden !important; }
 
-.n-table__body .n-scrollbar-v {
-  right: 1px; }
+.n-table .n-virtualscroller__item {
+  right: 17px; }
 
 .n-table .n-draglist-item__element {
   display: flex;
