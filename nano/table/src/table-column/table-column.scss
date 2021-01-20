@@ -22,10 +22,8 @@
 // Column
 
 .n-table__header .n-table-column {
+    margin-left: -1px;
     border-left: 1px solid $--color-gray-10;
-}
-
-.n-table__header .n-table-column:last-child {
     border-right: 1px solid $--color-gray-10;
 }
 

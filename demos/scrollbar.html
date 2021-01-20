@@ -89,7 +89,7 @@
             </div>
         </div>
 
-        <n-virtualscroller ref="virtualscroller" :items="virtualData" style="height: 500px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
+        <n-virtualscroller ref="virtualscroller" :items="virtualData" style="height: 500px; margin-top: 30px; box-shadow: 0 0 2px 2px #dddedf; border-radius: 4px;">
             <template v-slot:default="{ value }">
                 <div style="padding: 0 15px; line-height: 30px;">{{ value.label }}</div>
             </template>

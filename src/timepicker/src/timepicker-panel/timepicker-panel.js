@@ -248,8 +248,10 @@ export default {
         }
 
         return (
-            <NScrollbar class="n-timepicker-panel__panel" wrapClass="n-timepicker-panel__wrap">
-                { Arr.each(this.secondsGrid, this.ctor('renderSecondItem')) }
+            <NScrollbar class="n-timepicker-panel__panel">
+                <div class="n-timepicker-panel__wrap">
+                    { Arr.each(this.secondsGrid, this.ctor('renderSecondItem')) }
+                </div>
             </NScrollbar>
         );
     },

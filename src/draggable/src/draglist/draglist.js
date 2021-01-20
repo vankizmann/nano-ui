@@ -134,6 +134,22 @@ export default {
             type: [Boolean]
         },
 
+        offsetY: {
+            default()
+            {
+                return 10;
+            },
+            type: [Number]
+        },
+
+        offsetX: {
+            default()
+            {
+                return 10;
+            },
+            type: [Number]
+        },
+
         scrollTopOnChange: {
             default()
             {
@@ -705,7 +721,13 @@ export default {
             classList.push('n-empty');
         }
 
-        let props = Obj.only(this.$props, ['threshold', 'itemHeight'], {
+        let passed = [
+            'threshold', 'itemHeight', 
+            'overflowX', 'overflowY', 
+            'offsetX', 'offsetY'
+        ];
+
+        let props = Obj.only(this.$props, passed, {
             items: this.visible,
             onMouseenter: this.bindKeydown,
             onMouseleave: this.unbindKeydown

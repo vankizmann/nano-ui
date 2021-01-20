@@ -1,5 +1,9 @@
 @import "../../../root/vars";
 
+.n-virtualscroller__inner {
+    position: relative;
+}
+
 .n-virtualscroller__item {
     position: absolute;
     left: 0;
@@ -10,6 +14,6 @@
     justify-content: stretch;
 }
 
-.n-scrollbar--touch .n-virtualscroller__item {
-    right: 15px;
-}
+// .n-scrollbar--touch .n-virtualscroller__item {
+//     right: 17px;
+// }

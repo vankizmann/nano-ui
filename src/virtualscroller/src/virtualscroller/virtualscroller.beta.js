@@ -47,6 +47,22 @@ export default {
             type: [Boolean]
         },
 
+        offsetY: {
+            default()
+            {
+                return 10;
+            },
+            type: [Number]
+        },
+
+        offsetX: {
+            default()
+            {
+                return 10;
+            },
+            type: [Number]
+        },
+
         threshold: {
             default()
             {
@@ -278,6 +294,8 @@ export default {
         let props = {
             overflowY: this.overflowY,
             overflowX: this.overflowX,
+            offsetY: this.offsetY,
+            offsetX: this.offsetX,
             onSizechange: this.onSizechange,
             onScrollupdate: Any.framerate(this.onScrollupdate, 7.5),
         };

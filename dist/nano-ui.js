@@ -6490,6 +6490,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       type: [Boolean]
     },
+    offsetY: {
+      "default": function _default() {
+        return 10;
+      },
+      type: [Number]
+    },
+    offsetX: {
+      "default": function _default() {
+        return 10;
+      },
+      type: [Number]
+    },
     scrollTopOnChange: {
       "default": function _default() {
         return false;
@@ -6926,7 +6938,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       classList.push('n-empty');
     }
 
-    var props = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].only(this.$props, ['threshold', 'itemHeight'], {
+    var passed = ['threshold', 'itemHeight', 'overflowX', 'overflowY', 'offsetX', 'offsetY'];
+    var props = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].only(this.$props, passed, {
       items: this.visible,
       onMouseenter: this.bindKeydown,
       onMouseleave: this.unbindKeydown
@@ -10666,7 +10679,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     resizerWidth: {
       "default": function _default() {
-        return 8;
+        return 9;
       },
       type: [Number]
     }
@@ -10712,7 +10725,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   updated: function updated() {
     this.updateWidth();
-    this.updateHandle();
   },
   unmounted: function unmounted() {
     if (this.NScrollbar) {
@@ -10747,12 +10759,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       this.$emit('update:modelValue', this.tempValue = width);
+      this.updateHandle();
     },
     updateHandle: function updateHandle() {
       var style = {};
 
       if (this.position === 'left') {
-        style.transform = "translateX(-".concat(this.tempValue - this.resizerWidth, "px)");
+        style.transform = "translateX(-".concat(this.tempValue + this.resizerWidth, "px)");
       }
 
       if (this.position === 'right') {
@@ -11050,16 +11063,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       type: [Boolean]
     },
+    offsetY: {
+      "default": function _default() {
+        return 10;
+      },
+      type: [Number]
+    },
+    offsetX: {
+      "default": function _default() {
+        return 10;
+      },
+      type: [Number]
+    },
     framerate: {
       "default": function _default() {
         return 30;
       },
       type: [Number]
-    },
-    offset: {
-      "default": function _default() {
-        return 10;
-      }
     },
     wrapClass: {
       "default": function _default() {
@@ -11079,6 +11099,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     mouseup: function mouseup() {
       return this.touch ? 'touchend' : 'mouseup';
+    },
+    balanceHbar: function balanceHbar() {
+      return this.$refs.content.clientHeight !== this.$refs.content.offsetHeight;
     }
   },
   mounted: function mounted() {
@@ -11138,15 +11161,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     adaptScrollHeight: function adaptScrollHeight() {
       var _this3 = this;
 
+      var offsetHeight = this.$refs.content.clientHeight - this.$refs.content.offsetHeight;
+      var offsetWidth = this.$refs.content.clientWidth - this.$refs.content.offsetWidth;
       var outerHeight = this.$refs.content.clientHeight || 0;
 
-      if (this.touch) {
+      if (offsetHeight === 0 && this.overflowX) {
         outerHeight -= 15;
       }
 
       var innerHeight = this.$refs.content.scrollHeight || 0;
 
-      if (this.touch) {
+      if (offsetHeight === 0 && this.overflowX) {
         innerHeight -= 15;
       }
 
@@ -11161,11 +11186,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var height = outerHeight / innerHeight * outerHeight;
       var barHeight = Math.max(height, 50);
       var maxHeight = Math.ceil(outerHeight / innerHeight * (innerHeight - outerHeight));
-      this.heightRatio = (maxHeight - (barHeight - height) - this.offset) / maxHeight;
+      this.heightRatio = (maxHeight - (barHeight - height) - this.offsetY) / maxHeight;
       window.requestAnimationFrame(function () {
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this3.$refs.vbar).css({
-          height: (_this3.barHeight = Math.abs(barHeight)) + 'px'
+          height: (_this3.barHeight = Math.ceil(barHeight)) + 'px'
         });
+
+        if (offsetWidth !== 0 && _this3.overflowY) {
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this3.$el).addClass('has-native-vbar');
+        }
 
         if (outerHeight && outerHeight < innerHeight) {
           nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this3.$el).addClass('has-vtrack');
@@ -11175,19 +11204,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this3.$el).removeClass('has-vtrack');
         }
       });
+      this.adaptScrollPosition();
     },
     adaptScrollWidth: function adaptScrollWidth() {
       var _this4 = this;
 
+      var offsetWidth = this.$refs.content.clientWidth - this.$refs.content.offsetWidth;
+      var offsetHeight = this.$refs.content.clientHeight - this.$refs.content.offsetHeight;
       var outerWidth = this.$refs.content.clientWidth || 0;
 
-      if (this.touch) {
+      if (offsetWidth === 0 && this.overflowY) {
         outerWidth -= 15;
       }
 
       var innerWidth = this.$refs.content.scrollWidth || 0;
 
-      if (this.touch) {
+      if (offsetWidth === 0 && this.overflowY) {
         innerWidth -= 15;
       }
 
@@ -11202,11 +11234,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var width = outerWidth / innerWidth * outerWidth;
       var barWidth = Math.max(width, 50);
       var maxWidth = Math.ceil(outerWidth / innerWidth * (innerWidth - outerWidth));
-      this.widthRatio = (maxWidth - (barWidth - width) - this.offset) / maxWidth;
+      this.widthRatio = (maxWidth - (barWidth - width) - this.offsetX) / maxWidth;
       window.requestAnimationFrame(function () {
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this4.$refs.hbar).css({
-          width: (_this4.barWidth = Math.abs(barWidth)) + 'px'
+          width: (_this4.barWidth = Math.ceil(barWidth)) + 'px'
         });
+
+        if (offsetHeight && _this4.overflowX) {
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this4.$el).addClass('has-native-hbar');
+        }
 
         if (outerWidth && outerWidth < innerWidth) {
           nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this4.$el).addClass('has-htrack');
@@ -11216,10 +11252,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this4.$el).removeClass('has-htrack');
         }
       });
+      this.adaptScrollPosition();
     },
-    adaptScrollPosition: function adaptScrollPosition(scroll) {
+    adaptScrollPosition: function adaptScrollPosition() {
       var _this5 = this;
 
+      var scroll = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var isFirstRun = !this.scrollTimer;
 
       if (!this.scrollTimer) {
@@ -11234,29 +11272,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, 1000 / this.framerate + 50);
       }
 
+      if (!scroll.top) {
+        scroll.top = this.$refs.content.scrollTop;
+      }
+
+      if (!scroll.left) {
+        scroll.left = this.$refs.content.scrollLeft;
+      }
+
       this.scrollTimer = Date.now();
+      var offsetHeight = this.$refs.content.clientHeight - this.$refs.content.offsetHeight;
+      var offsetWidth = this.$refs.content.clientWidth - this.$refs.content.offsetWidth;
       var outerHeight = this.$refs.content.clientHeight || 0;
 
-      if (this.touch) {
+      if (offsetHeight === 0 && this.overflowX) {
         outerHeight -= 15;
       }
 
       var innerHeight = this.$refs.content.scrollHeight || 0;
 
-      if (this.touch) {
+      if (offsetHeight === 0 && this.overflowX) {
         innerHeight -= 15;
       }
 
       var top = Math.ceil(outerHeight / innerHeight * scroll.top * this.heightRatio);
       var outerWidth = this.$refs.content.clientWidth || 0;
 
-      if (this.touch) {
+      if (offsetWidth === 0 && this.overflowY) {
         outerWidth -= 15;
       }
 
       var innerWidth = this.$refs.content.scrollWidth || 0;
 
-      if (this.touch) {
+      if (offsetWidth === 0 && this.overflowY) {
         innerWidth -= 15;
       }
 
@@ -11273,11 +11321,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         transform: "translateX(".concat(left || 0, "px)")
       });
     },
-    unbindOptiscroll: function unbindOptiscroll() {// this.optiscroll.destroy();
-    },
     adaptHeight: function adaptHeight() {
       var height = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.content).child().height();
-      var window = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).height();
+      var window = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).innerHeight();
 
       if (this.overflowY) {
         this.adaptScrollHeight();
@@ -11294,10 +11340,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var style = {
         height: height + 'px'
       };
-
-      if (this.fixture) {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.content).child().css(style);
-      }
 
       if (!this.relative) {
         return nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].delay(this.onSizechange, 100);
@@ -11317,7 +11359,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       var width = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.content).child().width();
-      var window = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).width();
+      var window = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).innerWidth();
 
       if (width === this.passedWidth) {
         return;
@@ -11383,23 +11425,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      var $child = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.content).child();
-      var height = $child.actual(function () {
-        return $child.scrollHeight();
+      var $inner = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.content).child();
+      var height = $inner.actual(function () {
+        return $inner.scrollHeight();
       });
 
       if (height !== this.passedHeight) {
-        $child.css({
+        $inner.css({
           height: height + 'px'
         });
       }
 
-      var width = $child.actual(function () {
-        return $child.scrollWidth();
+      var width = $inner.actual(function () {
+        return $inner.scrollWidth();
       });
 
       if (width !== this.passedWidth) {
-        $child.css({
+        $inner.css({
           width: width + 'px'
         });
       }
@@ -11428,7 +11470,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var clientY = this.getTouchEvent(event).clientY;
       var top = this.outerHeight / this.innerHeight * this.scrollTop * this.heightRatio;
       var offset = clientY - this.clientY + top;
-      var height = this.outerHeight - this.barHeight - this.offset;
+      var height = this.outerHeight - this.barHeight - this.offsetY;
       this.$refs.content.scrollTop = offset / height * (this.innerHeight - this.outerHeight);
     },
     onVbarMouseup: function onVbarMouseup(event) {
@@ -11449,7 +11491,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     onHbarMousemove: function onHbarMousemove(event) {
       var top = this.outerWidth / this.innerWidth * this.scrollLeft * this.widthRatio;
       var offset = event.clientX - this.clientX + top;
-      var width = this.outerWidth - this.barWidth - this.offset;
+      var width = this.outerWidth - this.barWidth - this.offsetX;
       this.$refs.content.scrollLeft = offset / width * (this.innerWidth - this.outerWidth);
     },
     onHbarMouseup: function onHbarMouseup(event) {
@@ -11462,6 +11504,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     if (this.touch) {
       classList.push('n-scrollbar--touch');
+    }
+
+    if (this.overflowY) {
+      classList.push('n-overflow-y');
+    }
+
+    if (this.overflowX) {
+      classList.push('n-overflow-x');
     }
 
     var vbarProps = _defineProperty({}, 'on' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.mousedown), this.onVbarMousedown);
@@ -14300,6 +14350,8 @@ function _isSlot(s) {
     }, [defaultRender, Object(vue__WEBPACK_IMPORTED_MODULE_0__["createTextVNode"])(" "), nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].values(columns)]);
   },
   render: function render() {
+    var _slot3;
+
     var _this3 = this;
 
     var except = ['visible', 'filter', 'sortProp', 'sortDir', 'closeFilterOnEnter'];
@@ -14346,7 +14398,9 @@ function _isSlot(s) {
       "class": "n-table__body"
     }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NDraglist"), Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
       "ref": "draggable"
-    }, props), {
+    }, props, {
+      "offsetX": 25
+    }), {
       "default": function _default() {
         return _this3.ctor('renderBody')();
       }
@@ -14357,10 +14411,13 @@ function _isSlot(s) {
       "style": "min-height: 500px;"
     }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NScrollbar"), {
       "class": "n-table__wrap",
-      "fixture": true
-    }, {
+      "fixture": true,
+      "overflowY": false
+    }, _isSlot(_slot3 = Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": "n-table__inner"
+    }, [[this.ctor('renderHead')(), draggableHtml]])) ? _slot3 : {
       "default": function _default() {
-        return [[_this3.ctor('renderHead')(), draggableHtml]];
+        return [_slot3];
       }
     }), this.$slots["default"] && this.$slots["default"]()]);
   }
@@ -15100,9 +15157,10 @@ function _isSlot(s) {
     }
 
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NScrollbar"), {
-      "class": "n-timepicker-panel__panel",
-      "wrapClass": "n-timepicker-panel__wrap"
-    }, _isSlot(_slot3 = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.secondsGrid, this.ctor('renderSecondItem'))) ? _slot3 : {
+      "class": "n-timepicker-panel__panel"
+    }, _isSlot(_slot3 = Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": "n-timepicker-panel__wrap"
+    }, [nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.secondsGrid, this.ctor('renderSecondItem'))])) ? _slot3 : {
       "default": function _default() {
         return [_slot3];
       }
@@ -15895,6 +15953,18 @@ function _isSlot(s) {
       },
       type: [Boolean]
     },
+    offsetY: {
+      "default": function _default() {
+        return 10;
+      },
+      type: [Number]
+    },
+    offsetX: {
+      "default": function _default() {
+        return 10;
+      },
+      type: [Number]
+    },
     threshold: {
       "default": function _default() {
         return 40;
@@ -16088,6 +16158,8 @@ function _isSlot(s) {
     var props = {
       overflowY: this.overflowY,
       overflowX: this.overflowX,
+      offsetY: this.offsetY,
+      offsetX: this.offsetX,
       onSizechange: this.onSizechange,
       onScrollupdate: nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onScrollupdate, 7.5)
     };

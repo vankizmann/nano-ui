@@ -25,6 +25,18 @@
     transition: opacity 0.15s;
 }
 
+.n-resizer--left .n-resizer__handle {
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.n-resizer--right .n-resizer__handle {
+    top: 0;
+    bottom: 0;
+    left: 0;
+}
+
 .n-resizer__handle:before {
     content: '\00a0';
     position: absolute;
@@ -32,54 +44,15 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba($color-black, 0.5);
+    background: rgba($color-black, 0.3);
 }
 
 .n-resizer--left .n-resizer__handle:before {
     left: 0;
-    right: 5px;
+    right: 4px;
 }
 
 .n-resizer--right .n-resizer__handle:before {
-    left: 5px;
+    left: 4px;
     right: 0;
 }
-
-.n-resizer--left .n-resizer__handle {
-    top: 0;
-    bottom: 0;
-    right: 0;
-    margin-right: -1px;
-}
-
-.n-resizer--right .n-resizer__handle {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    margin-left: -1px;
-}
-
-// .n-resize,
-// .n-resize * {
-//     user-select: none !important;
-//     cursor: col-resize !important;
-// }
-
-// .n-resizer {
-//     cursor: col-resize;
-//     position: absolute;
-//     width: 5px;
-//     height: 100%;
-//     background: rgba($color-gray-50, 0.5);
-//     opacity: 0;
-//     transition: opacity 200ms;
-// }
-
-// .n-resizer.n-disabled {
-//     display: none;
-// }
-
-// .n-resizer:hover  {
-//     opacity: 1;
-//     transition: opacity 200ms 200ms ease;
-// }

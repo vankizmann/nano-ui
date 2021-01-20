@@ -10,6 +10,8 @@
     border: 1px solid $--color-gray-15;
 }
 
+.n-table .n-table__wrap,
+.n-table .n-table__inner,
 .n-table > .n-scrollbar,
 .n-table > .n-scrollbar > .n-scrollbar-content,
 .n-table > .n-scrollbar > .n-scrollbar-content > .n-scrollbar__wrap {
@@ -21,9 +23,20 @@
     justify-content: stretch;
 }
 
-.n-table > .n-scrollbar > .n-scrollbar-content > .n-scrollbar__wrap {
-    width: calc(100% - 1px);
+.n-table .n-table__wrap {
+    margin-right: -1px;
+    margin-bottom: -1px;
 }
+
+.n-table .n-table__inner {
+    position: relative;
+    // right: -15px;
+    width: calc(100% + 15px);
+}
+
+// .n-table > .n-scrollbar > .n-scrollbar-content > .n-scrollbar__wrap {
+//     overflow-x: hidden;
+// }
 
 .n-table .n-draglist-item {
     border-bottom: 1px solid $color-gray-10;
@@ -55,34 +68,13 @@
     flex: 1 1 auto;
 }
 
-// .n-table__body .n-scrollbar-content {
-//     overflow-x: hidden !important;
-// }
-
-// .n-table__body .n-scrollbar--touch .n-scrollbar-content {
-//     bottom: 0 !important;
-// }
-
-.n-table__body .n-scrollbar-h {
-    visibility: hidden !important;
-}
-
-.n-table__body .n-scrollbar-v {
-    right: 1px;
-}
-
-.n-table .n-scrollbar--touch .n-virtualscroller__item {
-    right: 17px;
+.n-table__body .n-scrollbar__wrap {
+    padding-bottom: 0 !important;
 }
 
 .n-table .n-draglist-item__element {
     display: flex;
     flex-direction: row;
-}
-
-.n-table .n-table__wrap {
-    margin-right: -1px;
-    margin-bottom: -1px;
 }
 
 .n-table .n-table__header {

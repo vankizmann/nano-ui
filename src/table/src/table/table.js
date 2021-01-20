@@ -601,7 +601,7 @@ export default {
         
         let draggableHtml = (
             <div class="n-table__body">
-                <NDraglist ref="draggable" {...props}>
+                <NDraglist ref="draggable" {...props} offsetX={25}>
                     { { default: () => this.ctor('renderBody')() } }
                 </NDraglist>
             </div>
@@ -609,8 +609,10 @@ export default {
     
         return (
             <div class="n-table" style="min-height: 500px;">
-                <NScrollbar class="n-table__wrap" fixture={true}>
-                    { [this.ctor('renderHead')(), draggableHtml] }
+                <NScrollbar class="n-table__wrap" fixture={true} overflowY={false}>
+                    <div class="n-table__inner">
+                        { [this.ctor('renderHead')(), draggableHtml] }
+                    </div>
                 </NScrollbar>
                 { this.$slots.default && this.$slots.default()}
             </div>

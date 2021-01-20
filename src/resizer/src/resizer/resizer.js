@@ -65,7 +65,7 @@ export default {
         resizerWidth: {
             default()
             {
-                return 8;
+                return 9;
             },
             type: [Number]
         }
@@ -135,7 +135,6 @@ export default {
     updated()
     {
         this.updateWidth();
-        this.updateHandle();
     },
 
     unmounted()
@@ -183,6 +182,8 @@ export default {
 
             this.$emit('update:modelValue', 
                 this.tempValue = width);
+            
+            this.updateHandle();
         },
 
         updateHandle()
@@ -190,7 +191,7 @@ export default {
             let style = {};
 
             if ( this.position === 'left' ) {
-                style.transform =`translateX(-${this.tempValue - this.resizerWidth}px)`
+                style.transform =`translateX(-${this.tempValue + this.resizerWidth}px)`
             }
     
             if ( this.position === 'right' ) {
