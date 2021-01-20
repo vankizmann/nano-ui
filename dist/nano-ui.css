@@ -448,7 +448,7 @@
   align-items: stretch;
   justify-content: stretch;
   width: 100%;
-  transition: background 0ms 100ms; }
+  transition: background 0ms 10ms; }
 
 .n-draglist-item.n-current {
   background: rgba(141, 145, 148, 0.075); }
