@@ -11333,12 +11333,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
+      var offsetHeight = this.$refs.content.clientHeight - this.$refs.content.offsetHeight;
+
       if (window) {
         this.passedHeight = height;
       }
 
+      if (offsetHeight === 0 && this.touch) {
+        height -= 15;
+      }
+
       var style = {
-        height: height + 'px'
+        height: height + 1 + 'px'
       };
 
       if (!this.relative) {
@@ -11365,6 +11371,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
+      var offsetWidth = this.$refs.content.clientWidth - this.$refs.content.offsetWidth;
+
       if (this.overflowX) {
         this.adaptScrollWidth();
       }
@@ -11373,8 +11381,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.passedWidth = width;
       }
 
+      if (offsetWidth === 0 && this.touch) {
+        width -= 15;
+      }
+
       var style = {
-        width: width + 'px'
+        width: width + 1 + 'px'
       };
 
       if (this.fixture) {

@@ -323,7 +323,7 @@ export default {
                 }
 
             });
-            
+
             this.adaptScrollPosition();
         },
 
@@ -423,12 +423,19 @@ export default {
                 return;
             }
 
+            let offsetHeight = this.$refs.content.clientHeight -
+                this.$refs.content.offsetHeight;
+
             if ( window ) {
                 this.passedHeight = height;
             }
 
+            if ( offsetHeight === 0 && this.touch ) {
+                height -= 15;
+            }
+
             let style = {
-                height: height + 'px'
+                height: (height + 1) + 'px'
             };
 
             if ( ! this.relative ) {
@@ -465,6 +472,9 @@ export default {
                 return;
             }
 
+            let offsetWidth = this.$refs.content.clientWidth -
+                this.$refs.content.offsetWidth;
+
             if ( this.overflowX ) {
                 this.adaptScrollWidth();
             }
@@ -473,8 +483,12 @@ export default {
                 this.passedWidth = width;
             }
 
+            if ( offsetWidth === 0 && this.touch ) {
+                width -= 15;
+            }
+
             let style = {
-                width: width + 'px'
+                width: (width + 1) + 'px'
             };
 
             if ( this.fixture ) {
