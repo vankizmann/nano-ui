@@ -10795,10 +10795,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return event.touches[0] || event.changedTouches[0];
     },
     onLeftMousedown: function onLeftMousedown(event) {
-      if (event.which !== 1) {
+      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has([0, 1], event.which)) {
         return;
       }
 
+      event.preventDefault();
       event.stopPropagation();
 
       if (this.group.length) {
@@ -10830,6 +10831,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.handle).css(style);
     },
     onLeftMouseup: function onLeftMouseup(event) {
+      event.preventDefault();
       event.stopPropagation();
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off(this.mouseup, null, this._.uid);
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off(this.mousemove, null, this._.uid);
@@ -10869,6 +10871,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
+      event.preventDefault();
       event.stopPropagation();
 
       if (this.group.length) {
@@ -10900,6 +10903,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.handle).css(style);
     },
     onRightMouseup: function onRightMouseup(event) {
+      event.preventDefault();
       event.stopPropagation();
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off(this.mousemove, null, this._.uid);
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off(this.mouseup, null, this._.uid);
@@ -11386,7 +11390,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       var style = {
-        width: width + 1 + 'px'
+        width: width + 'px'
       };
 
       if (this.fixture) {
@@ -13232,7 +13236,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
 
     if (this.sort) {
-      props.onClick = this.sortByColumn;
+      props.onMousedown = this.sortByColumn;
     }
 
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NResizer"), Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({

@@ -488,7 +488,7 @@ export default {
             }
 
             let style = {
-                width: (width + 1) + 'px'
+                width: width + 'px'
             };
 
             if ( this.fixture ) {

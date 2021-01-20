@@ -234,10 +234,11 @@ export default {
 
         onLeftMousedown(event)
         {
-            if ( event.which !== 1 ) {
+            if ( ! Arr.has([0, 1], event.which) ) {
                 return;
             }
 
+            event.preventDefault();
             event.stopPropagation();
 
             if ( this.group.length ) {
@@ -287,6 +288,7 @@ export default {
 
         onLeftMouseup(event)
         {
+            event.preventDefault();
             event.stopPropagation();
 
             Dom.find(document).off(this.mouseup, null, this._.uid);
@@ -337,6 +339,7 @@ export default {
                 return;
             }
 
+            event.preventDefault();
             event.stopPropagation();
 
             if ( this.group.length ) {
@@ -385,6 +388,7 @@ export default {
 
         onRightMouseup(event)
         {
+            event.preventDefault();
             event.stopPropagation();
 
             Dom.find(document).off(this.mousemove, null, this._.uid);

@@ -330,7 +330,7 @@ export default {
         };
 
         if ( this.sort ) {
-            props.onClick = this.sortByColumn;
+            props.onMousedown = this.sortByColumn;
         }
 
         return (
