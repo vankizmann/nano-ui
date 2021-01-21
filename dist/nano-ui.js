@@ -11163,8 +11163,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$refs.content.scrollLeft = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).find(selector).offsetLeft(this.$el);
     },
     adaptScrollHeight: function adaptScrollHeight() {
-      var _this3 = this;
-
       var offsetHeight = this.$refs.content.clientHeight - this.$refs.content.offsetHeight;
       var offsetWidth = this.$refs.content.clientWidth - this.$refs.content.offsetWidth;
       var outerHeight = this.$refs.content.clientHeight || 0;
@@ -11191,28 +11189,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var barHeight = Math.max(height, 50);
       var maxHeight = Math.ceil(outerHeight / innerHeight * (innerHeight - outerHeight));
       this.heightRatio = (maxHeight - (barHeight - height) - this.offsetY) / maxHeight;
-      window.requestAnimationFrame(function () {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this3.$refs.vbar).css({
-          height: (_this3.barHeight = Math.ceil(barHeight)) + 'px'
-        });
-
-        if (offsetWidth !== 0 && _this3.overflowY) {
-          nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this3.$el).addClass('has-native-vbar');
-        }
-
-        if (outerHeight && outerHeight < innerHeight) {
-          nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this3.$el).addClass('has-vtrack');
-        }
-
-        if (!outerHeight || outerHeight >= innerHeight) {
-          nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this3.$el).removeClass('has-vtrack');
-        }
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.vbar).css({
+        height: (this.barHeight = Math.ceil(barHeight)) + 'px'
       });
+
+      if (offsetWidth !== 0 && this.overflowY) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-native-vbar');
+      }
+
+      if (outerHeight && outerHeight < innerHeight) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-vtrack');
+      }
+
+      if (!outerHeight || outerHeight >= innerHeight) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).removeClass('has-vtrack');
+      }
+
       this.adaptScrollPosition();
     },
     adaptScrollWidth: function adaptScrollWidth() {
-      var _this4 = this;
-
       var offsetWidth = this.$refs.content.clientWidth - this.$refs.content.offsetWidth;
       var offsetHeight = this.$refs.content.clientHeight - this.$refs.content.offsetHeight;
       var outerWidth = this.$refs.content.clientWidth || 0;
@@ -11239,42 +11234,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var barWidth = Math.max(width, 50);
       var maxWidth = Math.ceil(outerWidth / innerWidth * (innerWidth - outerWidth));
       this.widthRatio = (maxWidth - (barWidth - width) - this.offsetX) / maxWidth;
-      window.requestAnimationFrame(function () {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this4.$refs.hbar).css({
-          width: (_this4.barWidth = Math.ceil(barWidth)) + 'px'
-        });
-
-        if (offsetHeight && _this4.overflowX) {
-          nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this4.$el).addClass('has-native-hbar');
-        }
-
-        if (outerWidth && outerWidth < innerWidth) {
-          nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this4.$el).addClass('has-htrack');
-        }
-
-        if (!outerWidth || outerWidth >= innerWidth) {
-          nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(_this4.$el).removeClass('has-htrack');
-        }
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.hbar).css({
+        width: (this.barWidth = Math.ceil(barWidth)) + 'px'
       });
+
+      if (offsetHeight && this.overflowX) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-native-hbar');
+      }
+
+      if (outerWidth && outerWidth < innerWidth) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-htrack');
+      }
+
+      if (!outerWidth || outerWidth >= innerWidth) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).removeClass('has-htrack');
+      }
+
       this.adaptScrollPosition();
     },
     adaptScrollPosition: function adaptScrollPosition() {
-      var _this5 = this;
+      var _this3 = this;
 
       var scroll = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var isFirstRun = !this.scrollTimer;
-
-      if (!this.scrollTimer) {
-        this.scrollTimer = Date.now();
-      }
-
-      clearTimeout(this.scrollTimeout);
-
-      if (!isFirstRun && Date.now() - this.scrollTimer < 1000 / this.framerate) {
-        return this.scrollTimeout = setTimeout(function () {
-          return _this5.adaptScrollPosition(scroll);
-        }, 1000 / this.framerate + 50);
-      }
 
       if (!scroll.top) {
         scroll.top = this.$refs.content.scrollTop;
@@ -11284,38 +11265,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         scroll.left = this.$refs.content.scrollLeft;
       }
 
-      this.scrollTimer = Date.now();
-      var offsetHeight = this.$refs.content.clientHeight - this.$refs.content.offsetHeight;
-      var offsetWidth = this.$refs.content.clientWidth - this.$refs.content.offsetWidth;
-      var outerHeight = this.$refs.content.clientHeight || 0;
-
-      if (offsetHeight === 0 && this.overflowX) {
-        outerHeight -= 15;
-      }
-
-      var innerHeight = this.$refs.content.scrollHeight || 0;
-
-      if (offsetHeight === 0 && this.overflowX) {
-        innerHeight -= 15;
-      }
-
-      var top = Math.ceil(outerHeight / innerHeight * scroll.top * this.heightRatio);
-      var outerWidth = this.$refs.content.clientWidth || 0;
-
-      if (offsetWidth === 0 && this.overflowY) {
-        outerWidth -= 15;
-      }
-
-      var innerWidth = this.$refs.content.scrollWidth || 0;
-
-      if (offsetWidth === 0 && this.overflowY) {
-        innerWidth -= 15;
-      }
-
-      var left = Math.ceil(outerWidth / innerWidth * scroll.left * this.widthRatio);
-      window.requestAnimationFrame(function () {
-        return _this5.updateScrollbars(top, left);
+      var rainbow = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(['top', 'left'], function (key) {
+        return scroll[key] === nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(_this3.scroll, key, -1);
       });
+
+      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has(rainbow, false)) {
+        return;
+      }
+
+      var isFirstRun = !this.scrollTimer;
+
+      if (!this.scrollTimer) {
+        this.scrollTimer = Date.now();
+      }
+
+      clearTimeout(this.scrollTimeout);
+      var delay = 1000 / this.framerate;
+
+      if (!isFirstRun && Date.now() - this.scrollTimer < delay) {
+        return this.scrollTimeout = setTimeout(this.adaptScrollPosition, delay + 30);
+      }
+
+      this.scrollTimer = Date.now();
+      var top = Math.ceil(this.outerHeight / this.innerHeight * scroll.top * this.heightRatio);
+      var left = Math.ceil(this.outerWidth / this.innerWidth * scroll.left * this.widthRatio);
+      this.updateScrollbars(top, left);
     },
     updateScrollbars: function updateScrollbars(top, left) {
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.vbar).css({
@@ -11915,8 +11889,6 @@ function _isSlot(s) {
       this.$refs.input.focus();
     },
     onFocusInput: function onFocusInput() {
-      console.log('focus');
-
       if (!this.focus) {
         this.$refs.popover.open();
       }
@@ -16077,11 +16049,17 @@ function _isSlot(s) {
       this.refreshDriver();
     },
     onScrollupdate: function onScrollupdate(scrollTop) {
-      console.log('update');
-
       if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isNumber(scrollTop)) {
         return;
       }
+
+      var unchangedState = this.scrollTop && Math.abs(this.scrollTop - scrollTop) < this.bufferItems * this.itemHeight / 3;
+
+      if (unchangedState) {
+        return;
+      }
+
+      this.scrollTop = scrollTop;
 
       if (this.items.length <= this.threshold) {
         return this.clearState();
@@ -16177,7 +16155,7 @@ function _isSlot(s) {
       offsetY: this.offsetY,
       offsetX: this.offsetX,
       onSizechange: this.onSizechange,
-      onScrollupdate: nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onScrollupdate, 7.5)
+      onScrollupdate: nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onScrollupdate, 15)
     };
     var style = {};
 

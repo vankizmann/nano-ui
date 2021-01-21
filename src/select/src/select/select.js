@@ -233,7 +233,6 @@ export default {
 
         onFocusInput()
         {
-            console.log('focus')
             if ( ! this.focus ) {
                 this.$refs.popover.open();
             }

@@ -181,10 +181,18 @@ export default {
 
         onScrollupdate(scrollTop)
         {
-            console.log('update');
             if ( ! Any.isNumber(scrollTop) ) {
                 return;
             }
+            
+            let unchangedState = this.scrollTop && Math.abs(this.scrollTop - 
+                scrollTop) < this.bufferItems * this.itemHeight / 3;
+
+            if ( unchangedState ) {
+                return;
+            }
+
+            this.scrollTop = scrollTop;
 
             if ( this.items.length <= this.threshold ) {
                 return this.clearState();
@@ -297,7 +305,7 @@ export default {
             offsetY: this.offsetY,
             offsetX: this.offsetX,
             onSizechange: this.onSizechange,
-            onScrollupdate: Any.framerate(this.onScrollupdate, 7.5),
+            onScrollupdate: Any.framerate(this.onScrollupdate, 15),
         };
 
         let style = {};

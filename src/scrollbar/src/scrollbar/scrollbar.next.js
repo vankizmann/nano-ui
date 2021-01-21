@@ -238,25 +238,21 @@ export default {
             this.heightRatio = (maxHeight - (barHeight - height) 
                 - this.offsetY) / maxHeight;
 
-            window.requestAnimationFrame(() => {
-
-                Dom.find(this.$refs.vbar).css({
-                    height: (this.barHeight = Math.ceil(barHeight)) + 'px'
-                });
-
-                if ( offsetWidth !== 0 && this.overflowY ) {
-                    Dom.find(this.$el).addClass('has-native-vbar');
-                }
-    
-                if ( outerHeight && outerHeight < innerHeight) {
-                    Dom.find(this.$el).addClass('has-vtrack');
-                }
-    
-                if ( ! outerHeight || outerHeight >= innerHeight ) {
-                    Dom.find(this.$el).removeClass('has-vtrack');
-                }
-
+            Dom.find(this.$refs.vbar).css({
+                height: (this.barHeight = Math.ceil(barHeight)) + 'px'
             });
+
+            if ( offsetWidth !== 0 && this.overflowY ) {
+                Dom.find(this.$el).addClass('has-native-vbar');
+            }
+
+            if ( outerHeight && outerHeight < innerHeight) {
+                Dom.find(this.$el).addClass('has-vtrack');
+            }
+
+            if ( ! outerHeight || outerHeight >= innerHeight ) {
+                Dom.find(this.$el).removeClass('has-vtrack');
+            }
 
             this.adaptScrollPosition();
         },
@@ -304,44 +300,27 @@ export default {
             this.widthRatio = (maxWidth - (barWidth - width) 
                 - this.offsetX) / maxWidth;
 
-            window.requestAnimationFrame(() => {
-
-                Dom.find(this.$refs.hbar).css({
-                    width: (this.barWidth = Math.ceil(barWidth)) + 'px'
-                });
-        
-                if ( offsetHeight && this.overflowX ) {
-                    Dom.find(this.$el).addClass('has-native-hbar');
-                }
-    
-                if ( outerWidth && outerWidth < innerWidth ) {
-                    Dom.find(this.$el).addClass('has-htrack');
-                }
-    
-                if ( ! outerWidth || outerWidth >= innerWidth ) {
-                    Dom.find(this.$el).removeClass('has-htrack');
-                }
-
+            Dom.find(this.$refs.hbar).css({
+                width: (this.barWidth = Math.ceil(barWidth)) + 'px'
             });
+    
+            if ( offsetHeight && this.overflowX ) {
+                Dom.find(this.$el).addClass('has-native-hbar');
+            }
+
+            if ( outerWidth && outerWidth < innerWidth ) {
+                Dom.find(this.$el).addClass('has-htrack');
+            }
+
+            if ( ! outerWidth || outerWidth >= innerWidth ) {
+                Dom.find(this.$el).removeClass('has-htrack');
+            }
 
             this.adaptScrollPosition();
         },
 
         adaptScrollPosition(scroll = {})
         {
-            let isFirstRun = ! this.scrollTimer;
-
-            if ( ! this.scrollTimer ) {
-                this.scrollTimer = Date.now();
-            }
-
-            clearTimeout(this.scrollTimeout);
-
-            if ( ! isFirstRun && Date.now() - this.scrollTimer < 1000 / this.framerate ) {
-                return this.scrollTimeout = setTimeout(() => 
-                    this.adaptScrollPosition(scroll), (1000 / this.framerate) + 50);
-            }
-
             if ( ! scroll.top ) {
                 scroll.top = this.$refs.content.scrollTop;
             }
@@ -350,50 +329,38 @@ export default {
                 scroll.left = this.$refs.content.scrollLeft;
             }
 
+            let rainbow = Arr.each(['top', 'left'], (key) => {
+                return scroll[key] === Obj.get(this.scroll, key, -1);
+            });
+
+            if ( ! Arr.has(rainbow, false) ) {
+                return;
+            }
+
+            let isFirstRun = ! this.scrollTimer;
+
+            if ( ! this.scrollTimer ) {
+                this.scrollTimer = Date.now();
+            }
+
+            clearTimeout(this.scrollTimeout);
+
+            let delay = 1000 / this.framerate;
+
+            if ( ! isFirstRun && Date.now() - this.scrollTimer < delay ) {
+                return this.scrollTimeout = setTimeout(
+                    this.adaptScrollPosition, delay + 30);
+            }
+
             this.scrollTimer = Date.now();
 
-            let offsetHeight = this.$refs.content.clientHeight -
-                this.$refs.content.offsetHeight;
-
-            let offsetWidth = this.$refs.content.clientWidth -
-                this.$refs.content.offsetWidth;
-
-            let outerHeight = this.$refs.content.
-                clientHeight || 0;
-
-            if ( offsetHeight === 0 && this.overflowX ) {
-                outerHeight -= 15;
-            }
-
-            let innerHeight = this.$refs.content.
-                scrollHeight || 0;
-
-            if ( offsetHeight === 0 && this.overflowX ) {
-                innerHeight -= 15;
-            }
-
-            let top = Math.ceil((outerHeight / innerHeight) * 
+            let top = Math.ceil((this.outerHeight / this.innerHeight) * 
                 scroll.top * this.heightRatio);
-
-            let outerWidth = this.$refs.content.
-                clientWidth || 0;
-
-            if ( offsetWidth === 0 && this.overflowY ) {
-                outerWidth -= 15;
-            }
-
-            let innerWidth = this.$refs.content.
-                scrollWidth || 0;
-
-            if ( offsetWidth === 0 && this.overflowY ) {
-                innerWidth -= 15;
-            }
             
-            let left = Math.ceil((outerWidth / innerWidth) * 
+            let left = Math.ceil((this.outerWidth / this.innerWidth) * 
                 scroll.left * this.widthRatio);
 
-            window.requestAnimationFrame(() => 
-                this.updateScrollbars(top, left));
+            this.updateScrollbars(top, left);
         },
 
         updateScrollbars(top, left)
