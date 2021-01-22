@@ -1,5 +1,4 @@
-import { UUID, Arr, Obj, Dom, Any, Str, Locale, Event, Num } from "nano-js";
-import Optiscroll from 'optiscroll';
+import { Arr, Obj, Dom, Any, Str, Event } from "nano-js";
 
 export default {
 
@@ -107,14 +106,15 @@ export default {
         mouseup() {
             return this.touch ? 'touchend' :
                 'mouseup';
-        },
-
-        balanceHbar()
-        {
-            return this.$refs.content.clientHeight !==
-                this.$refs.content.offsetHeight;
         }
 
+    },
+
+    data()
+    {
+        return {
+            vbar: 0, hbar: 0
+        };
     },
 
     mounted()
@@ -188,11 +188,35 @@ export default {
 
         onScrollIntoView(selector)
         {
-            this.$refs.content.scrollTop = Dom.find(this.$el)
-                .find(selector).offsetTop(this.$el);
+            let $el = Dom.find(this.$el).find(selector);
 
-            this.$refs.content.scrollLeft = Dom.find(this.$el)
-                .find(selector).offsetLeft(this.$el);
+            let scrollTop = this.$refs.content
+                .scrollTop;
+
+            let offsetTop = $el.offsetTop(this.$el);
+            
+            if ( offsetTop < scrollTop ) {
+                this.$refs.content.scrollTop = offsetTop;
+            }
+
+            if ( offsetTop + $el.height() >= scrollTop + this.outerHeight ) {
+                this.$refs.content.scrollTop = offsetTop - 
+                    this.outerHeight + $el.height();
+            }
+
+            let scrollLeft = this.$refs.content
+                .scrollLeft;
+
+            let offsetLeft = $el.offsetLeft(this.$el);
+
+            if ( offsetLeft < scrollLeft ) {
+                this.$refs.content.scrollLeft = offsetLeft;
+            }
+
+            if ( offsetLeft + $el.width() >= scrollLeft + this.outerWidth ) {
+                this.$refs.content.scrollLeft = offsetLeft - 
+                    this.outerWidth + $el.width();
+            }
         },
 
         adaptScrollHeight()
@@ -329,49 +353,11 @@ export default {
                 scroll.left = this.$refs.content.scrollLeft;
             }
 
-            let rainbow = Arr.each(['top', 'left'], (key) => {
-                return scroll[key] === Obj.get(this.scroll, key, -1);
-            });
-
-            if ( ! Arr.has(rainbow, false) ) {
-                return;
-            }
-
-            let isFirstRun = ! this.scrollTimer;
-
-            if ( ! this.scrollTimer ) {
-                this.scrollTimer = Date.now();
-            }
-
-            clearTimeout(this.scrollTimeout);
-
-            let delay = 1000 / this.framerate;
-
-            if ( ! isFirstRun && Date.now() - this.scrollTimer < delay ) {
-                return this.scrollTimeout = setTimeout(
-                    this.adaptScrollPosition, delay + 30);
-            }
-
-            this.scrollTimer = Date.now();
-
-            let top = Math.ceil((this.outerHeight / this.innerHeight) * 
-                scroll.top * this.heightRatio);
+            this.vbar = Math.ceil((this.outerHeight / this.innerHeight) * 
+                scroll.top * this.heightRatio) || 0;
             
-            let left = Math.ceil((this.outerWidth / this.innerWidth) * 
-                scroll.left * this.widthRatio);
-
-            this.updateScrollbars(top, left);
-        },
-
-        updateScrollbars(top, left)
-        {
-            Dom.find(this.$refs.vbar).css({
-                transform: `translateY(${top||0}px)`
-            });
-
-            Dom.find(this.$refs.hbar).css({
-                transform: `translateX(${left||0}px)`
-            });
+            this.hbar =  Math.ceil((this.outerWidth / this.innerWidth) * 
+                scroll.left * this.widthRatio) || 0;
         },
 
         adaptHeight()
@@ -487,9 +473,10 @@ export default {
                 left: this.$refs.content.scrollLeft
             };
             
-            this.adaptScrollPosition(scroll);
+            this.$emit('scrollupdate', scroll.top, 
+                scroll.left)
 
-            this.$emit('scrollupdate', scroll.top, scroll.left);
+            this.adaptScrollPosition(scroll);
         },
 
         onSizechange(event)
@@ -668,10 +655,16 @@ export default {
         }
 
         let vbarProps = {
+            style: {
+                transform: `translateY(${this.vbar}px)`
+            },
             ['on' + Str.ucfirst(this.mousedown)]: this.onVbarMousedown
         };
 
         let hbarProps = {
+            style: {
+                transform: `translateX(${this.hbar}px)`
+            },
             ['on' + Str.ucfirst(this.mousedown)]: this.onHbarMousedown
         };
 

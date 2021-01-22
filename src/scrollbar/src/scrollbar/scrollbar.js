@@ -131,32 +131,7 @@ export default {
         {
             this.optiscroll.scrollIntoView(selector, 0);
         },
-
-        bindOptiscroll()
-        {
-            Optiscroll.globalSettings.
-                checkFrequency = 250;
-
-            Optiscroll.globalSettings.
-                scrollMinUpdateInterval = 15;
-
-            let options = {
-                classPrefix: 'n-scrollbar-',
-                minTrackSize: 15,
-                forceScrollbars: true,
-                autoUpdate: true,
-                preventParentScroll: true,
-                wrapContent: false,
-            };
-
-            this.optiscroll = new Optiscroll(this.$el, options);
-        },
-
-        unbindOptiscroll()
-        {
-            this.optiscroll.destroy();
-        },
-
+        
         adaptHeight()
         {
             let height = Dom.find(this.$refs.content)

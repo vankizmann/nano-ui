@@ -240,7 +240,7 @@ export default {
         threshold: {
             default()
             {
-                return 40;
+                return 20;
             },
             type: [Number]
         },

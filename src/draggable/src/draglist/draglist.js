@@ -371,7 +371,7 @@ export default {
         filterVirtuals()
         {
             this.visible = Arr.filter(this.virtuals, (node) => {
-                return ! node.depth || Arr.has(this.tempExpanded, node.parent);
+                return Arr.contains(this.tempExpanded, node.cascade.slice(0, -1));
             });
         },
 

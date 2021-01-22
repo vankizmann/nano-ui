@@ -184,15 +184,6 @@ export default {
             if ( ! Any.isNumber(scrollTop) ) {
                 return;
             }
-            
-            let unchangedState = this.scrollTop && Math.abs(this.scrollTop - 
-                scrollTop) < this.bufferItems * this.itemHeight / 3;
-
-            if ( unchangedState ) {
-                return;
-            }
-
-            this.scrollTop = scrollTop;
 
             if ( this.items.length <= this.threshold ) {
                 return this.clearState();

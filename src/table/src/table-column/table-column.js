@@ -7,10 +7,6 @@ export default {
 
     inject: {
 
-        NDraggable: {
-            default: undefined
-        },
-
         NTable: {
             default: undefined
         }

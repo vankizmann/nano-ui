@@ -30,13 +30,8 @@
 
 .n-table .n-table__inner {
     position: relative;
-    // right: -15px;
     width: calc(100% + 15px);
 }
-
-// .n-table > .n-scrollbar > .n-scrollbar-content > .n-scrollbar__wrap {
-//     overflow-x: hidden;
-// }
 
 .n-table .n-draglist-item {
     border-bottom: 1px solid $color-gray-10;
