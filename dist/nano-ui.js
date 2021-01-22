@@ -9825,7 +9825,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     resizerWidth: {
       "default": function _default() {
-        return 9;
+        return 6;
       },
       type: [Number]
     }
@@ -11727,6 +11727,10 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   render: function render() {
+    if (this.column.$slots["default"]) {
+      return this.column.$slots["default"](this);
+    }
+
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", null, [this.input])]);
   }
 });
@@ -11754,6 +11758,10 @@ __webpack_require__.r(__webpack_exports__);
   name: 'NTableCellBoolean',
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_1__["default"],
   render: function render() {
+    if (this.column.$slots["default"]) {
+      return this.column.$slots["default"](this);
+    }
+
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", null, [nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].convertBoolean(this.input, this.column.trueText, this.column.falseText)])]);
   }
 });
@@ -11781,6 +11789,10 @@ __webpack_require__.r(__webpack_exports__);
   name: 'NTableCellDatetime',
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_1__["default"],
   render: function render() {
+    if (this.column.$slots["default"]) {
+      return this.column.$slots["default"](this);
+    }
+
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", null, [nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].convertDatetime(this.input, this.column.datetimeFormat, this.column.emptyText)])]);
   }
 });
@@ -11931,6 +11943,10 @@ function _isSlot(s) {
     });
   },
   render: function render() {
+    if (this.column.$slots["default"]) {
+      return this.column.$slots["default"](this);
+    }
+
     var classList = ['n-table-cell', 'n-table-cell--' + this.column.type];
 
     if (this.preview) {
@@ -11965,7 +11981,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
@@ -11975,7 +11990,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_1__["default"],
   methods: {
     toggleMatrix: function toggleMatrix() {
-      var item = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].find(this.column.veValue, _defineProperty({}, this.NTable.uniqueProp, this.value[this.NTable.uniqueProp]));
+      var item = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].find(this.column.modelValue, _defineProperty({}, this.NTable.uniqueProp, this.value[this.NTable.uniqueProp]));
 
       if (!item) {
         item = nano_js__WEBPACK_IMPORTED_MODULE_2__["Obj"].assign({}, this.value, _defineProperty({}, this.column.prop, 0));
@@ -12003,15 +12018,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   render: function render() {
+    if (this.column.$slots["default"]) {
+      return this.column.$slots["default"](this);
+    }
+
     var classList = ['n-table-cell', 'n-table-cell--' + this.column.type];
     var checkedState = this.isChecked();
-    var disabled = nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].isFunction(this.column.disabled) ? this.column.disabled(this.value) : this.column.disabled;
+    var disabled = nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].isFunction(this.column.disabled) ? this.column.disabled(this.input) : this.column.disabled;
+    var props = {
+      'onUpdate:modelValue': this.toggleMatrix
+    };
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": classList
-    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["withDirectives"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NCheckbox"), {
+    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NCheckbox"), Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
       "checked": checkedState,
       "disabled": disabled && !checkedState
-    }, null), [[Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveDirective"])("on:input"), this.toggleMatrix]])]);
+    }, props), null)]);
   }
 });
 
@@ -12082,6 +12104,10 @@ __webpack_require__.r(__webpack_exports__);
   name: 'NTableCellString',
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_1__["default"],
   render: function render() {
+    if (this.column.$slots["default"]) {
+      return this.column.$slots["default"](this);
+    }
+
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", null, [nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].convertString(this.input, this.column.emptyText)])]);
   }
 });
@@ -12121,7 +12147,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   props: {
-    value: {
+    modelValue: {
       "default": function _default() {
         return null;
       }
@@ -12307,6 +12333,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return visible;
     },
     sortByColumn: function sortByColumn(event) {
+      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].has([0, 1], event.which)) {
+        return;
+      }
+
       if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(event.target).closest('.n-table-column__filter')) {
         this.NTable.sortByColumn(this);
       }

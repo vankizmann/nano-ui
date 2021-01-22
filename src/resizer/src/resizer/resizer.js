@@ -65,7 +65,7 @@ export default {
         resizerWidth: {
             default()
             {
-                return 9;
+                return 6;
             },
             type: [Number]
         }

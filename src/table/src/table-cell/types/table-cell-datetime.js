@@ -9,6 +9,10 @@ export default {
 
     render()
     {
+        if ( this.column.$slots.default ) {
+            return this.column.$slots.default(this);
+        }
+        
         return (
             <div>
                 <span>{ Any.convertDatetime(this.input, this.column.datetimeFormat, this.column.emptyText) }</span>

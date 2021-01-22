@@ -318,7 +318,7 @@
       -ms-user-select: none;
           user-select: none;
   position: absolute;
-  width: 8px;
+  width: 6px;
   opacity: 0;
   transition: opacity 0.15s 0.50s; }
 
@@ -348,14 +348,14 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(27, 34, 41, 0.3); }
+  background: rgba(78, 123, 255, 0.65); }
 
 .n-resizer--left .n-resizer__handle:before {
   left: 0;
-  right: 4px; }
+  right: 2px; }
 
 .n-resizer--right .n-resizer__handle:before {
-  left: 4px;
+  left: 2px;
   right: 0; }
 
 .n-virtualscroller__inner {

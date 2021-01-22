@@ -11,7 +11,7 @@ export default {
 
         toggleMatrix()
         {
-            let item = Arr.find(this.column.veValue, {
+            let item = Arr.find(this.column.modelValue, {
                 [this.NTable.uniqueProp]: this.value[this.NTable.uniqueProp]
             });
 
@@ -55,6 +55,10 @@ export default {
 
     render()
     {
+        if ( this.column.$slots.default ) {
+            return this.column.$slots.default(this);
+        }
+
         let classList = [
             'n-table-cell',
             'n-table-cell--' + this.column.type
@@ -63,11 +67,15 @@ export default {
         let checkedState = this.isChecked();
 
         let disabled = Any.isFunction(this.column.disabled) ?
-            this.column.disabled(this.value) : this.column.disabled;
+            this.column.disabled(this.input) : this.column.disabled;
+
+            let props = {
+                'onUpdate:modelValue': this.toggleMatrix
+            }
 
         return (
             <div class={classList}>
-                <NCheckbox checked={checkedState} disabled={disabled && ! checkedState} vOn:input={this.toggleMatrix} />
+                <NCheckbox checked={checkedState} disabled={disabled && ! checkedState} {...props} />
             </div>
         );
     }

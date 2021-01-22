@@ -15,7 +15,7 @@ export default {
 
     props: {
 
-        value: {
+        modelValue: {
             default()
             {
                 return null;
@@ -265,6 +265,10 @@ export default {
 
         sortByColumn(event)
         {
+            if ( ! Arr.has([0, 1], event.which) ) {
+                return;
+            }
+            
             if ( ! Dom.find(event.target).closest('.n-table-column__filter') ) {
                 this.NTable.sortByColumn(this);
             }
