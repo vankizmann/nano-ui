@@ -11759,7 +11759,7 @@ __webpack_require__.r(__webpack_exports__);
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_1__["default"],
   render: function render() {
     if (this.column.$slots["default"]) {
-      return this.column.$slots["default"](this);
+      return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [this.column.$slots["default"](this)]);
     }
 
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", null, [nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].convertBoolean(this.input, this.column.trueText, this.column.falseText)])]);
@@ -11790,7 +11790,7 @@ __webpack_require__.r(__webpack_exports__);
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_1__["default"],
   render: function render() {
     if (this.column.$slots["default"]) {
-      return this.column.$slots["default"](this);
+      return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [this.column.$slots["default"](this)]);
     }
 
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", null, [nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].convertDatetime(this.input, this.column.datetimeFormat, this.column.emptyText)])]);
@@ -11944,7 +11944,7 @@ function _isSlot(s) {
   },
   render: function render() {
     if (this.column.$slots["default"]) {
-      return this.column.$slots["default"](this);
+      return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [this.column.$slots["default"](this)]);
     }
 
     var classList = ['n-table-cell', 'n-table-cell--' + this.column.type];
@@ -12019,7 +12019,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   render: function render() {
     if (this.column.$slots["default"]) {
-      return this.column.$slots["default"](this);
+      return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [this.column.$slots["default"](this)]);
     }
 
     var classList = ['n-table-cell', 'n-table-cell--' + this.column.type];
@@ -12061,6 +12061,10 @@ __webpack_require__.r(__webpack_exports__);
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_1__["default"],
   render: function render() {
     var _this = this;
+
+    if (this.column.$slots["default"]) {
+      return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [this.column.$slots["default"](this)]);
+    }
 
     var options = nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].isFunction(this.column.options) ? this.column.options(this.value) : this.column.options;
     options = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].map(nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].clone(options), function (value, index) {
@@ -12105,7 +12109,7 @@ __webpack_require__.r(__webpack_exports__);
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_1__["default"],
   render: function render() {
     if (this.column.$slots["default"]) {
-      return this.column.$slots["default"](this);
+      return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [this.column.$slots["default"](this)]);
     }
 
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", null, [nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].convertString(this.input, this.column.emptyText)])]);

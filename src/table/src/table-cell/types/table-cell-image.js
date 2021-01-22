@@ -135,9 +135,11 @@ export default {
     render()
     {
         if ( this.column.$slots.default ) {
-            return this.column.$slots.default(this);
+            return (
+                <div>{ this.column.$slots.default(this) }</div> 
+            );
         }
-        
+
         let classList = [
             'n-table-cell',
             'n-table-cell--' + this.column.type

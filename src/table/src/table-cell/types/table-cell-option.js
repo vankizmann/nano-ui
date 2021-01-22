@@ -9,6 +9,12 @@ export default {
 
     render()
     {
+        if ( this.column.$slots.default ) {
+            return (
+                <div>{ this.column.$slots.default(this) }</div> 
+            );
+        }
+        
         let options = Any.isFunction(this.column.options) ?
             this.column.options(this.value) : this.column.options;
 

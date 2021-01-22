@@ -10,9 +10,11 @@ export default {
     render()
     {
         if ( this.column.$slots.default ) {
-            return this.column.$slots.default(this);
+            return (
+                <div>{ this.column.$slots.default(this) }</div> 
+            );
         }
-        
+
         return (
             <div>
                 <span>{ Any.convertBoolean(this.input, this.column.trueText, this.column.falseText) }</span>
