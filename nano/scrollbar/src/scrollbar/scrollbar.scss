@@ -60,6 +60,7 @@
     position: absolute;
     z-index: 2;
     user-select: none;
+    will-change: transform;
 }
 
 .n-scrollbar-v {

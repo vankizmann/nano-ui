@@ -5315,10 +5315,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
 /* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../.. */ "./src/draggable/index.js");
-/* harmony import */ var _draggable_item_draggable_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../draggable-item/draggable-item */ "./src/draggable/src/draggable-item/draggable-item.js");
-
-
 
 
 
@@ -5340,7 +5336,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    this.NDraggable.drag.bindNode(this);
+    var _this = this;
+
+    this.$nextTick(function () {
+      _this.NDraggable.drag.bindNode(_this);
+    });
   },
   beforeUnmount: function beforeUnmount() {
     this.NDraggable.drag.unbindNode(this);
@@ -5609,6 +5609,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     itemOffset: {
       "default": function _default() {
         return 30;
+      },
+      type: [Number]
+    },
+    threshold: {
+      "default": function _default() {
+        return 40;
+      },
+      type: [Number]
+    },
+    bufferItems: {
+      "default": function _default() {
+        return 40;
       },
       type: [Number]
     },
@@ -6072,7 +6084,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       classList.push('n-empty');
     }
 
-    var passed = ['threshold', 'itemHeight', 'overflowX', 'overflowY', 'offsetX', 'offsetY'];
+    var passed = ['threshold', 'bufferItems', 'itemHeight', 'overflowX', 'overflowY', 'offsetX', 'offsetY'];
     var props = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].only(this.$props, passed, {
       items: this.visible,
       onMouseenter: this.bindKeydown,
@@ -10236,21 +10248,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.touch ? 'touchend' : 'mouseup';
     }
   },
-  data: function data() {
-    return {
-      vbar: 0,
-      hbar: 0
-    };
-  },
   mounted: function mounted() {
     this.bindAdaptHeight();
-    this.bindAdaptWidth(); // this.bindOptiscroll();
-
+    this.bindAdaptWidth();
+    var passive = {
+      passive: true,
+      uid: this._.uid
+    };
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].bind('NScrollbar:resize', this.onResize, this._.uid);
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].bind('NResizer:moved', this.onUpdate, this._.uid);
-    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(window).on('resize', this.onResize, this._.uid);
-    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).on('sizechange', this.onSizechange, this._.uid);
-    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).on('scroll', this.onScroll, this._.uid);
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(window).on('resize', this.onResize, passive);
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.content).on('scroll', this.onScroll, passive);
   },
   updated: function updated() {
     if (this.passedHeight || this.passedWidth) {
@@ -10259,13 +10267,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   beforeUnmount: function beforeUnmount() {
     this.unbindAdaptHeight();
-    this.unbindAdaptWidth(); // this.unbindOptiscroll();
-
+    this.unbindAdaptWidth();
+    var passive = {
+      passive: true,
+      uid: this._.uid
+    };
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].unbind('NScrollbar:resize', this._.uid);
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].unbind('NResizer:moved', this._.uid);
-    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(window).off('resize', null, this._.uid);
-    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).off('sizechange', null, this._.uid);
-    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).off('scroll', null, this._.uid);
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(window).off('resize', null, passive);
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).off('scroll', null, passive);
   },
   methods: {
     scrollTo: function scrollTo() {
@@ -10417,8 +10427,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         scroll.left = this.$refs.content.scrollLeft;
       }
 
-      this.vbar = Math.ceil(this.outerHeight / this.innerHeight * scroll.top * this.heightRatio) || 0;
-      this.hbar = Math.ceil(this.outerWidth / this.innerWidth * scroll.left * this.widthRatio) || 0;
+      var vbarTop = Math.ceil(this.outerHeight / this.innerHeight * scroll.top * this.heightRatio) || 0;
+
+      if (!this.vbarTop || vbarTop !== this.vbarTop) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.vbar).css({
+          transform: "translateY(".concat(vbarTop, "px) translateZ(0)")
+        });
+        this.vbarTop - vbarTop;
+      }
+
+      var hbarLeft = Math.ceil(this.outerWidth / this.innerWidth * scroll.left * this.widthRatio) || 0;
+
+      if (!this.hbarLeft || hbarLeft !== this.hbarLeft) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.hbar).css({
+          transform: "translateX(".concat(hbarLeft, "px) translateZ(0)")
+        });
+        this.hbarLeft - hbarLeft;
+      }
     },
     adaptHeight: function adaptHeight() {
       var height = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.content).child().height();
@@ -10505,11 +10530,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       clearInterval(this.refreshWidth);
     },
     onScroll: function onScroll(event) {
+      var _this3 = this;
+
       var scroll = {
         top: this.$refs.content.scrollTop,
         left: this.$refs.content.scrollLeft
       };
-      this.$emit('scrollupdate', scroll.top, scroll.left);
+
+      var scrollUpdate = function scrollUpdate() {
+        _this3.$emit('scrollupdate', scroll.top, scroll.left);
+      };
+
+      this.$nextTick(scrollUpdate);
       this.adaptScrollPosition(scroll);
     },
     onSizechange: function onSizechange(event) {
@@ -10625,17 +10657,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       classList.push('n-overflow-x');
     }
 
-    var vbarProps = _defineProperty({
-      style: {
-        transform: "translateY(".concat(this.vbar, "px)")
-      }
-    }, 'on' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.mousedown), this.onVbarMousedown);
+    var vbarProps = _defineProperty({}, 'on' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.mousedown), this.onVbarMousedown);
 
-    var hbarProps = _defineProperty({
-      style: {
-        transform: "translateX(".concat(this.hbar, "px)")
-      }
-    }, 'on' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.mousedown), this.onHbarMousedown);
+    var hbarProps = _defineProperty({}, 'on' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.mousedown), this.onHbarMousedown);
 
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
       "class": classList
@@ -13196,15 +13220,15 @@ function _isSlot(s) {
         };
       }
     },
-    bufferItems: {
+    threshold: {
       "default": function _default() {
-        return 24;
+        return 40;
       },
       type: [Number]
     },
-    threshold: {
+    bufferItems: {
       "default": function _default() {
-        return 20;
+        return 40;
       },
       type: [Number]
     },
@@ -15273,7 +15297,7 @@ function _isSlot(s) {
       offsetY: this.offsetY,
       offsetX: this.offsetX,
       onSizechange: this.onSizechange,
-      onScrollupdate: nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onScrollupdate, 15)
+      onScrollupdate: this.onScrollupdate
     };
     var style = {};
 

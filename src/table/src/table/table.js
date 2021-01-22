@@ -229,18 +229,18 @@ export default {
             }
         },
 
-        bufferItems: {
+        threshold: {
             default()
             {
-                return 24;
+                return 40;
             },
             type: [Number]
         },
 
-        threshold: {
+        bufferItems: {
             default()
             {
-                return 20;
+                return 40;
             },
             type: [Number]
         },

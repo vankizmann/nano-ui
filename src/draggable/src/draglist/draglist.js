@@ -118,6 +118,22 @@ export default {
             type: [Number]
         },
 
+        threshold: {
+            default()
+            {
+                return 40;
+            },
+            type: [Number]
+        },
+
+        bufferItems: {
+            default()
+            {
+                return 40;
+            },
+            type: [Number]
+        },
+
         overflowY: {
             default()
             {
@@ -722,9 +738,8 @@ export default {
         }
 
         let passed = [
-            'threshold', 'itemHeight', 
-            'overflowX', 'overflowY', 
-            'offsetX', 'offsetY'
+            'threshold', 'bufferItems', 'itemHeight', 
+            'overflowX', 'overflowY',  'offsetX', 'offsetY'
         ];
 
         let props = Obj.only(this.$props, passed, {

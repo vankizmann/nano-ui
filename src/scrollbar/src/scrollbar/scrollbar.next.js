@@ -110,18 +110,14 @@ export default {
 
     },
 
-    data()
-    {
-        return {
-            vbar: 0, hbar: 0
-        };
-    },
-
     mounted()
     {
         this.bindAdaptHeight();
         this.bindAdaptWidth();
-        // this.bindOptiscroll();
+
+        let passive = {
+            passive: true, uid: this._.uid
+        };
 
         Event.bind('NScrollbar:resize',
             this.onResize, this._.uid);
@@ -130,13 +126,10 @@ export default {
             this.onUpdate, this._.uid);
 
         Dom.find(window).on('resize', 
-            this.onResize, this._.uid);
-
-        Dom.find(this.$el).on('sizechange', 
-            this.onSizechange, this._.uid);
-
-        Dom.find(this.$el).on('scroll', 
-            this.onScroll, this._.uid);
+            this.onResize, passive);
+    
+        Dom.find(this.$refs.content).on('scroll', 
+            this.onScroll, passive);
     },
 
     updated()
@@ -150,7 +143,10 @@ export default {
     {
         this.unbindAdaptHeight();
         this.unbindAdaptWidth();
-        // this.unbindOptiscroll();
+
+        let passive = {
+            passive: true, uid: this._.uid
+        };
 
         Event.unbind('NScrollbar:resize', 
             this._.uid);
@@ -159,13 +155,10 @@ export default {
             this._.uid);
 
         Dom.find(window).off('resize', 
-            null, this._.uid);
-
-        Dom.find(this.$el).off('sizechange', 
-            null, this._.uid);
+            null, passive);
 
         Dom.find(this.$el).off('scroll', 
-            null, this._.uid);
+            null, passive);
     },
 
     methods: {
@@ -353,11 +346,29 @@ export default {
                 scroll.left = this.$refs.content.scrollLeft;
             }
 
-            this.vbar = Math.ceil((this.outerHeight / this.innerHeight) * 
+            let vbarTop= Math.ceil((this.outerHeight / this.innerHeight) * 
                 scroll.top * this.heightRatio) || 0;
-            
-            this.hbar =  Math.ceil((this.outerWidth / this.innerWidth) * 
+
+            if ( ! this.vbarTop || vbarTop !== this.vbarTop ) {
+
+                Dom.find(this.$refs.vbar).css({
+                    transform: `translateY(${vbarTop}px) translateZ(0)`
+                });
+
+                this.vbarTop - vbarTop;
+            }
+
+            let hbarLeft =  Math.ceil((this.outerWidth / this.innerWidth) * 
                 scroll.left * this.widthRatio) || 0;
+
+            if ( ! this.hbarLeft || hbarLeft !== this.hbarLeft ) {
+
+                Dom.find(this.$refs.hbar).css({
+                    transform: `translateX(${hbarLeft}px) translateZ(0)`
+                });
+                
+                this.hbarLeft - hbarLeft;
+            }
         },
 
         adaptHeight()
@@ -472,10 +483,12 @@ export default {
                 top: this.$refs.content.scrollTop,
                 left: this.$refs.content.scrollLeft
             };
-            
-            this.$emit('scrollupdate', scroll.top, 
-                scroll.left)
 
+            let scrollUpdate = () => {
+                this.$emit('scrollupdate', scroll.top, scroll.left);
+            }
+            
+            this.$nextTick(scrollUpdate);
             this.adaptScrollPosition(scroll);
         },
 
@@ -655,16 +668,10 @@ export default {
         }
 
         let vbarProps = {
-            style: {
-                transform: `translateY(${this.vbar}px)`
-            },
             ['on' + Str.ucfirst(this.mousedown)]: this.onVbarMousedown
         };
 
         let hbarProps = {
-            style: {
-                transform: `translateX(${this.hbar}px)`
-            },
             ['on' + Str.ucfirst(this.mousedown)]: this.onHbarMousedown
         };
 

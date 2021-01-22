@@ -277,7 +277,8 @@
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
-          user-select: none; }
+          user-select: none;
+  will-change: transform; }
 
 .n-scrollbar-v {
   top: 0;
@@ -358,7 +359,8 @@
   right: 0; }
 
 .n-virtualscroller__inner {
-  position: relative; }
+  position: relative;
+  will-change: contents; }
 
 .n-virtualscroller__item {
   position: absolute;
@@ -367,7 +369,8 @@
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  justify-content: stretch; }
+  justify-content: stretch;
+  will-change: scroll-position; }
 
 .n-draggable__indicator {
   pointer-events: none;

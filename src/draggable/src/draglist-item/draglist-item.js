@@ -1,6 +1,4 @@
 import { UUID, Num, Arr, Obj, Dom, Any, Event } from "nano-js";
-import draggable from "../..";
-import NDraggableItem from "../draggable-item/draggable-item";
 
 export default {
 
@@ -33,7 +31,9 @@ export default {
 
     mounted()
     {
-        this.NDraggable.drag.bindNode(this);
+        this.$nextTick(() => {
+            this.NDraggable.drag.bindNode(this);
+        });
     },
 
     beforeUnmount()

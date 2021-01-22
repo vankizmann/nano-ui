@@ -2,6 +2,7 @@
 
 .n-virtualscroller__inner {
     position: relative;
+    will-change: contents;
 }
 
 .n-virtualscroller__item {
@@ -12,6 +13,7 @@
     flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
+    will-change: scroll-position;
 }
 
 // .n-scrollbar--touch .n-virtualscroller__item {
