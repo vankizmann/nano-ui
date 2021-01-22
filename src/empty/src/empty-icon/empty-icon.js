@@ -15,7 +15,7 @@ export default {
         type: {
             default()
             {
-                return 'ufo';
+                return 'default';
             },
             type: [String]
         },

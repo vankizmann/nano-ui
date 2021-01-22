@@ -29,14 +29,6 @@
     position: relative;
 }
 
-// .n-scrollbar:not(.n-overflow-x) > .n-scrollbar-content > .n-scrollbar__wrap {
-//     overflow-x: hidden;
-// }
-
-// .n-scrollbar:not(.n-overflow-y) > .n-scrollbar-content > .n-scrollbar__wrap {
-//     overflow-y: hidden;
-// }
-
 .n-scrollbar--touch:not(.has-native-vbar) > .n-scrollbar-content > .n-scrollbar__wrap,
 .n-scrollbar.n-overflow-x:not(.has-native-vbar) > .n-scrollbar-content > .n-scrollbar__wrap {
     padding-right: 15px;
@@ -46,14 +38,6 @@
 .n-scrollba.n-overflow-y:not(.has-native-hbar) > .n-scrollbar-content > .n-scrollbar__wrap {
     padding-bottom: 15px;
 }
-
-// .n-scrollbar:not(.n-overflow-y) > .n-scrollbar-content {
-//     right: 0;
-// }
-
-// .n-scrollbar:not(.n-scrollbar--touch):not(.n-overflow-x) > .n-scrollbar-content {
-//     bottom: 0;
-// }
 
 .n-scrollbar-v,
 .n-scrollbar-h {
@@ -91,11 +75,16 @@
     display: block;
     border-radius: 500px;
     background: rgba($color-black, 0.3);
-    // opacity: 0;
+    opacity: 0;
     transition: opacity 0.15s;
 }
 
 .n-scrollbar.has-vtrack:hover > .n-scrollbar-v:before,
 .n-scrollbar.has-htrack:hover > .n-scrollbar-h:before {
-    // opacity: 1;
+    opacity: 1;
+}
+
+.n-scrollbar--touch.has-vtrack > .n-scrollbar-v:before,
+.n-scrollbar--touch.has-htrack > .n-scrollbar-h:before {
+    opacity: 1;
 }

@@ -161,7 +161,7 @@ export default {
         fluid: {
             default()
             {
-                return true;
+                return false;
             },
             type: [Boolean]
         },
@@ -176,7 +176,7 @@ export default {
         width: {
             default()
             {
-                return 170;
+                return 0;
             }
         },
 
@@ -300,7 +300,7 @@ export default {
             classList.push('n-sorted', 'n-' + sortDirection);
         }
 
-        if ( this.fluid ) {
+        if ( this.fluid || ! this.width ) {
             classList.push('n-fluid');
         }
 
@@ -323,6 +323,7 @@ export default {
         }
 
         let props = {
+            width: this.width,
             minWidth: this.minWidth,
             maxWidth: this.maxWidth,
             disabled: !! this.fixedWidth,

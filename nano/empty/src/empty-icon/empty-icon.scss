@@ -13,6 +13,7 @@
 .n-empty-icon__frame {
     display: block;
     width: 35%;
+    min-width: 36px;
     margin: 0 auto;
     opacity: 0.3;
 }
@@ -29,8 +30,12 @@
     padding-bottom: 100%;
 }
 
+.n-empty-icon--default .n-empty-icon__frame {
+    background-image: svg-load('empty-default.svg', fill=$color-black);
+}
+
 .n-empty-icon--ufo .n-empty-icon__frame {
-    background-image: svg-load('empty.svg', fill=$color-black);
+    background-image: svg-load('empty-space.svg', fill=$color-black);
 }
 
 .n-empty-icon__text {
@@ -49,9 +54,9 @@
     }
 
     .n-empty-icon--#{$suffix} .n-empty-icon__frame {
-        max-width: $-empty-icon-size * 2.6;
-        max-height: $-empty-icon-size * 2.6;
-        margin-bottom: $-empty-icon-size * 0.3;
+        max-width: $-empty-icon-size * 2.5;
+        max-height: $-empty-icon-size * 2.5;
+        margin-bottom: $-empty-icon-size * 0.2;
     }
 
 }

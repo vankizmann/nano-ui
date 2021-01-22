@@ -472,6 +472,10 @@ export default {
             props['on' + Str.ucfirst(this.mousedown)] = this.onLeftMousedown;
         }
 
+        if ( this.width ) {
+            props.width = this.width + 'px';
+        }
+
         return (
             <div ref="handle" class={classList} {...props}/>
         );

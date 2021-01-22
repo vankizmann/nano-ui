@@ -6142,7 +6142,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     type: {
       "default": function _default() {
-        return 'ufo';
+        return 'default';
       },
       type: [String]
     },
@@ -10112,6 +10112,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     props['on' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.mousedown)] = this.onLeftMousedown;
   }
 
+  if (this.width) {
+    props.width = this.width + 'px';
+  }
+
   return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
     "ref": "handle",
     "class": classList
@@ -12260,7 +12264,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     fluid: {
       "default": function _default() {
-        return true;
+        return false;
       },
       type: [Boolean]
     },
@@ -12271,7 +12275,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     width: {
       "default": function _default() {
-        return 170;
+        return 0;
       }
     },
     minWidth: {
@@ -12362,7 +12366,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       classList.push('n-sorted', 'n-' + sortDirection);
     }
 
-    if (this.fluid) {
+    if (this.fluid || !this.width) {
       classList.push('n-fluid');
     }
 
@@ -12385,6 +12389,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
 
     var props = {
+      width: this.width,
       minWidth: this.minWidth,
       maxWidth: this.maxWidth,
       disabled: !!this.fixedWidth,
