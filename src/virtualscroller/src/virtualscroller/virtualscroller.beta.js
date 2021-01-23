@@ -88,16 +88,22 @@ export default {
         };
 
         return {
-            state, height: 0, scrollTop: 0
+            uid: UUID(), state, height: 0, scrollTop: 0
         };
     },
 
     watch: {
 
         'items': function () {
-            this.updateRender();
+            this.prevRender = {};
+            this.$nextTick(this.updateRender);
         }
 
+    },
+
+    beforeMount()
+    {
+        this.prevRender = {};
     },
 
     methods: {
@@ -242,7 +248,13 @@ export default {
 
     renderItem(passed)
     {
-        passed.index = (passed.index + 
+        let uid = passed.value.id;
+
+        if ( this.prevRender[uid] ) {
+            return this.prevRender[uid];
+        }
+
+        passed.index = (passed.index +
             this.state.startIndex);
 
         let topOffset = Math.round(this.itemHeight * 
@@ -256,25 +268,27 @@ export default {
         }
 
         let props = {
-            'data-index': passed.index
+            key: uid, 'data-index': passed.index
         };
 
         props.style = {
             top: topOffset + 'px', height: this.itemHeight + 'px'
         };
         
-        return (
+        this.prevRender[uid] = (
             <div class="n-virtualscroller__item" {...props}>
                 { renderFunction(passed) }
             </div>
         );
+
+        return this.prevRender[uid];
     },
 
     renderItems()
     {
         if ( ! this.items.length ) {
             return this.$slots.empty && this.$slots.empty() || null;
-        };
+        }
 
         let items = Arr.slice(this.items, this.state.startIndex,
             this.state.endIndex);

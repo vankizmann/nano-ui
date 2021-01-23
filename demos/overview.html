@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="../dist/nano-ui.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.5/vue.global.prod.js"></script>
-    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.5/vue.global.prod.js"></script>-->
+     <script src="https://unpkg.com/vue@next"></script>
     <!-- <script src="../node_modules/nano-js/dist/nano-js.js"></script> -->
     <script src="https://vankizmann.github.io/nano-js/dist/nano-js.js"></script>
     <script src="../dist/nano-ui.js"></script>
@@ -311,6 +311,9 @@
             </div>
             <div class="col--auto">
                 <n-checkbox v-model="n_checkbox.disabled">Disabled</n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_checkbox.allowUncheck">Allow uncheck while disabled</n-checkbox>
             </div>
         </div>
 
@@ -685,8 +688,19 @@
             <n-table-column label="Image" type="image" prop="image" :fixed-width="130"></n-table-column>
             <n-table-column label="Date" type="datetime" prop="date" :sort="true" :filter="true"></n-table-column>
             <n-table-column label="Enabled 3123 asd as" type="boolean" prop="enabled" :sort="true" :filter="true"></n-table-column>
-            <n-table-column label="Value" type="string" prop="value" :sort="true" :filter="true" width="150"></n-table-column>
+            <n-table-column label="Value" type="string" prop="value" :sort="true" :filter="true" width="200"></n-table-column>
             <n-table-column label="ID" type="string" prop="id" :breakpoint="1300"></n-table-column>
+        </n-table>
+
+        <n-table ref="table" v-model:items="virtualTree" :render-expand="true" :item-height="36" style="margin-top: 30px;">
+            <n-table-column label="Label" type="string" prop="label"></n-table-column>
+            <n-table-column v-model="treeMatrix" label="Matrix 1" type="matrix" :matrix="1" :width="120">
+                <template v-slot:default>Text wohoo</template>
+            </n-table-column>
+            <n-table-column v-model="treeMatrix" label="Matrix 2" type="matrix" :matrix="2" align="center" :fixed-width="120"></n-table-column>
+            <n-table-column v-model="treeMatrix" label="Matrix 4" type="matrix" :matrix="4" align="center" :fixed-width="120"></n-table-column>
+            <n-table-column v-model="treeMatrix" label="Matrix 8" type="matrix" :matrix="8" align="center" :fixed-width="120"></n-table-column>
+            <n-table-column v-model="treeMatrix" label="Matrix 16" type="matrix" :matrix="16" align="center" :fixed-width="120"></n-table-column>
         </n-table>
 
         <!-- <n-table ref="table2" v-model:items="virtualTree" :render-expand="true" :item-height="100" style="margin-top: 30px;">
@@ -825,6 +839,8 @@
             data.virtualTree = Nano.Arr.each(itemGenerator(100), function (item) {
                 return Nano.Obj.assign(item, { children: itemGenerator(20) });
             });
+
+            data.treeMatrix = [];
 
             data.n_button = {
                 icon: 'fa fa-ghost', size: 'md', square: false, link: false, disabled: false

@@ -684,8 +684,12 @@ export default {
                 null, this.uid)
         },
 
-        onKeydown(event)
+        onKeydown(event, el)
         {
+            if ( Dom.find(el).closest('input') ) {
+                return;
+            }
+
             if ( event.which === 32 ) {
                 event.preventDefault();
                 event.stopPropagation();

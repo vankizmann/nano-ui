@@ -1164,6 +1164,12 @@ __webpack_require__.r(__webpack_exports__);
         return null;
       }
     },
+    allowUncheck: {
+      "default": function _default() {
+        return false;
+      },
+      type: [Boolean]
+    },
     disabled: {
       "default": function _default() {
         return false;
@@ -1262,6 +1268,12 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('update:modelValue', this.tempChecked = true);
     },
     eventLocalClick: function eventLocalClick(event) {
+      var canClick = !this.tempDisabled || this.allowUncheck && this.tempChecked;
+
+      if (!canClick) {
+        return;
+      }
+
       event.preventDefault();
 
       if (event.shiftKey) {
@@ -1275,6 +1287,12 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('update:modelValue', this.tempChecked = !this.tempChecked);
     },
     eventGlobalClick: function eventGlobalClick() {
+      var canClick = !this.tempDisabled || this.allowUncheck && this.tempChecked;
+
+      if (!canClick) {
+        return;
+      }
+
       this.NCheckboxGroup.toggleAll();
     },
     updateFromGroup: function updateFromGroup() {
@@ -1326,6 +1344,10 @@ __webpack_require__.r(__webpack_exports__);
 
     var classList = ['n-checkbox', 'n-checkbox--' + size, 'n-checkbox--' + this.type];
 
+    if (this.allowUncheck) {
+      classList.push('n-uncheck');
+    }
+
     if (this.tempComputed) {
       classList.push('n-checked');
     }
@@ -1338,13 +1360,17 @@ __webpack_require__.r(__webpack_exports__);
       classList.push('n-disabled');
     }
 
+    if (this.tempComputed && this.allowUncheck) {
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].remove(classList, 'n-disabled');
+    }
+
     var props = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].clone(this.$attrs);
 
-    if (!this.tempDisabled && this.global) {
+    if (this.global) {
       props.onMousedown = this.eventGlobalClick;
     }
 
-    if (!this.tempDisabled && !this.global) {
+    if (!this.global) {
       props.onMousedown = this.eventLocalClick;
     }
 
@@ -6047,7 +6073,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(document).off('keydown', null, this.uid);
     },
-    onKeydown: function onKeydown(event) {
+    onKeydown: function onKeydown(event, el) {
+      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(el).closest('input')) {
+        return;
+      }
+
       if (event.which === 32) {
         event.preventDefault();
         event.stopPropagation();
@@ -6337,7 +6367,7 @@ __webpack_require__.r(__webpack_exports__);
     }, [this.$slots.action()]);
   },
   renderLabel: function renderLabel() {
-    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("legend", {
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": "n-form-group__legend",
       "onClick": this.collapseGroup
     }, [this.ctor('renderCollapse')(), this.ctor('renderText')(), this.ctor('renderAction')()]);
@@ -6365,6 +6395,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   render: function render() {
     var classList = ['n-form-group', 'n-form-group--' + this.size, 'n-form-group--' + this.type, 'n-form-group--' + this.align];
+
+    if (this.collapse) {
+      classList.push('n-form-group--collapse');
+    }
 
     if (!this.tempValue) {
       classList.push('n-hidden');
@@ -6697,6 +6731,8 @@ __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NanoInstall", function() { return NanoInstall; });
 /* harmony import */ var _mixins_src_ctor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mixins/src/ctor */ "./src/mixins/src/ctor.js");
 /* harmony import */ var _mixins_src_cmer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mixins/src/cmer */ "./src/mixins/src/cmer.js");
+/* harmony import */ var _mixins_src_cslo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mixins/src/cslo */ "./src/mixins/src/cslo.js");
+
 
 
 var NanoIcons = {
@@ -6734,6 +6770,7 @@ function NanoInstall(App) {
   global.Nano.install(App.config.globalProperties);
   App.config.globalProperties.ctor = _mixins_src_ctor__WEBPACK_IMPORTED_MODULE_0__["default"].ctor;
   App.config.globalProperties.cmer = _mixins_src_cmer__WEBPACK_IMPORTED_MODULE_1__["default"].cmer;
+  App.config.globalProperties.cslo = _mixins_src_cslo__WEBPACK_IMPORTED_MODULE_2__["default"].cslo;
   App.config.globalProperties.trans = global.Nano.Locale.trans;
   App.config.globalProperties.choice = global.Nano.Locale.choice;
 
@@ -7473,11 +7510,9 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('update:modelValue', this.tempValue = event.target.value);
     },
     onFocus: function onFocus(event) {
-      console.log('focus');
       this.focus = true;
     },
     onBlur: function onBlur(event) {
-      console.log('blur');
       this.focus = false;
     }
   },
@@ -7724,6 +7759,37 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     return attrsList;
+  }
+});
+
+/***/ }),
+
+/***/ "./src/mixins/src/cslo.js":
+/*!********************************!*\
+  !*** ./src/mixins/src/cslo.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! nano-js */ "nano-js");
+/* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  cslo: function cslo() {
+    var slot = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'default';
+
+    if (!this.$slots[slot]) {
+      return false;
+    }
+
+    return this.$slots[slot]().findIndex(function (o) {
+      return o.type !== vue__WEBPACK_IMPORTED_MODULE_1__["Comment"];
+    }) !== -1;
   }
 });
 
@@ -9801,12 +9867,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _name$inject$props$co;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-/* harmony default export */ __webpack_exports__["default"] = (_name$inject$props$co = {
+/* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NResizer',
   inject: {
     NScrollbar: {
@@ -9815,6 +9876,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   props: {
     modelValue: {
+      "default": function _default() {
+        return 0;
+      },
+      type: [Number]
+    },
+    width: {
       "default": function _default() {
         return 0;
       },
@@ -10116,54 +10183,54 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.$emit('update:modelValue', this.tempValue);
     }
-  }
-}, _defineProperty(_name$inject$props$co, "watch", {
-  modelValue: function modelValue(value) {
-    if (value !== this.tempValue) {
-      this.tempValue = value;
+  },
+  renderHandle: function renderHandle() {
+    if (this.disabled) {
+      return null;
     }
+
+    var classList = ['n-resizer__handle'];
+    var props = {};
+
+    if (this.position === 'right') {
+      props['on' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.mousedown)] = this.onRightMousedown;
+    }
+
+    if (this.position === 'left') {
+      props['on' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.mousedown)] = this.onLeftMousedown;
+    }
+
+    if (this.resizerWidth) {
+      props.width = this.resizerWidth + 'px';
+    }
+
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
+      "ref": "handle",
+      "class": classList
+    }, props), null);
+  },
+  render: function render() {
+    var classList = ['n-resizer', 'n-resizer--' + this.position];
+    var style = {};
+
+    if (this.width && !this.tempValue) {
+      style['width'] = this.width + 'px';
+    }
+
+    if (this.minWidth) {
+      style['min-width'] = this.minWidth + 'px';
+    }
+
+    if (this.maxWidth) {
+      style['max-width'] = this.maxWidth + 'px';
+    }
+
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": classList,
+      "style": style
+    }, [[this.$slots["default"](), this.ctor('renderHandle')()]]);
   }
-}), _defineProperty(_name$inject$props$co, "renderHandle", function renderHandle() {
-  if (this.disabled) {
-    return null;
-  }
-
-  var classList = ['n-resizer__handle'];
-  var props = {};
-
-  if (this.position === 'right') {
-    props['on' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.mousedown)] = this.onRightMousedown;
-  }
-
-  if (this.position === 'left') {
-    props['on' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.mousedown)] = this.onLeftMousedown;
-  }
-
-  if (this.width) {
-    props.width = this.width + 'px';
-  }
-
-  return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
-    "ref": "handle",
-    "class": classList
-  }, props), null);
-}), _defineProperty(_name$inject$props$co, "render", function render() {
-  var classList = ['n-resizer', 'n-resizer--' + this.position];
-  var style = {};
-
-  if (this.minWidth) {
-    style['min-width'] = this.minWidth + 'px';
-  }
-
-  if (this.maxWidth) {
-    style['max-width'] = this.maxWidth + 'px';
-  }
-
-  return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
-    "class": classList,
-    "style": style
-  }, [[this.$slots["default"](), this.ctor('renderHandle')()]]);
-}), _name$inject$props$co);
+});
 
 /***/ }),
 
@@ -10279,6 +10346,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.touch ? 'touchend' : 'mouseup';
     }
   },
+  data: function data() {
+    return {
+      "native": false
+    };
+  },
   mounted: function mounted() {
     this.bindAdaptHeight();
     this.bindAdaptWidth();
@@ -10287,6 +10359,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       uid: this._.uid
     };
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].bind('NScrollbar:resize', this.onResize, this._.uid);
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].bind('NScrollbar:native', this.onNative, this._.uid);
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].bind('NResizer:moved', this.onUpdate, this._.uid);
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(window).on('resize', this.onResize, passive);
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.content).on('scroll', this.onScroll, passive);
@@ -10304,6 +10377,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       uid: this._.uid
     };
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].unbind('NScrollbar:resize', this._.uid);
+    nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].unbind('NScrollbar:native', this._.uid);
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].unbind('NResizer:moved', this._.uid);
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(window).off('resize', null, passive);
     nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).off('scroll', null, passive);
@@ -10358,6 +10432,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     adaptScrollHeight: function adaptScrollHeight() {
+      if (this["native"]) {
+        return;
+      }
+
       var offsetHeight = this.$refs.content.clientHeight - this.$refs.content.offsetHeight;
       var offsetWidth = this.$refs.content.clientWidth - this.$refs.content.offsetWidth;
       var outerHeight = this.$refs.content.clientHeight || 0;
@@ -10387,22 +10465,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.vbar).css({
         height: (this.barHeight = Math.ceil(barHeight)) + 'px'
       });
+      var hasNativeBar = offsetWidth !== 0 && this.overflowY;
 
-      if (offsetWidth !== 0 && this.overflowY) {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-native-vbar');
+      if (hasNativeBar) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-native-hbar');
       }
 
-      if (outerHeight && outerHeight < innerHeight) {
+      var hasVtrack = outerHeight && outerHeight < innerHeight;
+
+      if (hasVtrack) {
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-vtrack');
       }
 
-      if (!outerHeight || outerHeight >= innerHeight) {
+      if (!hasVtrack) {
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).removeClass('has-vtrack');
+      }
+
+      if (hasVtrack && !hasNativeBar) {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].fire('NScrollbar:native');
       }
 
       this.adaptScrollPosition();
     },
     adaptScrollWidth: function adaptScrollWidth() {
+      if (this["native"]) {
+        return;
+      }
+
       var offsetWidth = this.$refs.content.clientWidth - this.$refs.content.offsetWidth;
       var offsetHeight = this.$refs.content.clientHeight - this.$refs.content.offsetHeight;
       var outerWidth = this.$refs.content.clientWidth || 0;
@@ -10432,23 +10521,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$refs.hbar).css({
         width: (this.barWidth = Math.ceil(barWidth)) + 'px'
       });
+      var hasNativeBar = offsetHeight && this.overflowX;
 
-      if (offsetHeight && this.overflowX) {
+      if (hasNativeBar) {
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-native-hbar');
       }
 
-      if (outerWidth && outerWidth < innerWidth) {
+      var hasHtrack = outerWidth && outerWidth < innerWidth;
+
+      if (hasHtrack) {
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-htrack');
       }
 
-      if (!outerWidth || outerWidth >= innerWidth) {
+      if (!hasHtrack) {
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).removeClass('has-htrack');
+      }
+
+      if (hasHtrack && !hasNativeBar) {
+        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].fire('NScrollbar:native');
       }
 
       this.adaptScrollPosition();
     },
     adaptScrollPosition: function adaptScrollPosition() {
       var scroll = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+      if (this["native"]) {
+        return;
+      }
 
       if (!scroll.top) {
         scroll.top = this.$refs.content.scrollTop;
@@ -10584,6 +10684,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.$emit('sizechange', height);
     },
+    onNative: function onNative() {
+      if (this["native"]) {
+        return;
+      }
+
+      this["native"] = true;
+      this.onResize();
+    },
     onResize: function onResize(event) {
       if (!this.fixture) {
         return;
@@ -10675,6 +10783,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   render: function render() {
     var classList = ['n-scrollbar'];
+
+    if (this["native"]) {
+      classList.push('n-scrollbar--native');
+    }
 
     if (this.touch) {
       classList.push('n-scrollbar--touch');
@@ -11789,7 +11901,7 @@ __webpack_require__.r(__webpack_exports__);
   name: 'NTableCellBoolean',
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_1__["default"],
   render: function render() {
-    if (this.column.$slots["default"]) {
+    if (this.column.cslo('default')) {
       return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [this.column.$slots["default"](this)]);
     }
 
@@ -11820,7 +11932,7 @@ __webpack_require__.r(__webpack_exports__);
   name: 'NTableCellDatetime',
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_1__["default"],
   render: function render() {
-    if (this.column.$slots["default"]) {
+    if (this.column.cslo('default')) {
       return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [this.column.$slots["default"](this)]);
     }
 
@@ -11974,7 +12086,7 @@ function _isSlot(s) {
     });
   },
   render: function render() {
-    if (this.column.$slots["default"]) {
+    if (this.column.cslo('default')) {
       return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [this.column.$slots["default"](this)]);
     }
 
@@ -12011,7 +12123,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
@@ -12021,50 +12132,61 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_1__["default"],
   methods: {
     toggleMatrix: function toggleMatrix() {
-      var item = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].find(this.column.modelValue, _defineProperty({}, this.NTable.uniqueProp, this.value[this.NTable.uniqueProp]));
+      var itemList = this.column.modelValue;
 
-      if (!item) {
-        item = nano_js__WEBPACK_IMPORTED_MODULE_2__["Obj"].assign({}, this.value, _defineProperty({}, this.column.prop, 0));
+      if (itemList === null) {
+        itemList = [];
       }
 
-      var matrix = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].toggle(nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"].matrix(nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"]["int"](item[this.column.prop])), nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"]["int"](this.column.matrix));
-      item[this.column.prop] = nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"].combine(matrix);
-      nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].replace(this.column.veValue, item, _defineProperty({}, this.NTable.uniqueProp, item[this.NTable.uniqueProp]));
-      this.column.$emit('input', this.column.veValue);
+      var item = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].find(itemList, _defineProperty({}, this.NTable.uniqueProp, this.value[this.NTable.uniqueProp]));
+
+      if (!item) {
+        item = nano_js__WEBPACK_IMPORTED_MODULE_2__["Obj"].assign({}, this.item, _defineProperty({}, this.column.matrixProp, 0));
+      }
+
+      var currentMatrix = nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"]["int"](item[this.column.matrixProp]);
+      var matrix = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].toggle(nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"].matrix(currentMatrix), nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"]["int"](this.column.matrix));
+      item[this.column.matrixProp] = nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"].combine(matrix);
+      nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].replace(itemList, item, _defineProperty({}, this.NTable.uniqueProp, item[this.NTable.uniqueProp]));
+      this.column.$emit('update:modelValue', itemList);
     },
     isChecked: function isChecked() {
-      var item = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].find(this.column.veValue, _defineProperty({}, this.NTable.uniqueProp, this.value[this.NTable.uniqueProp]));
+      var item = nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].find(this.column.modelValue, _defineProperty({}, this.NTable.uniqueProp, this.value[this.NTable.uniqueProp]));
 
       if (!item) {
         return false;
       }
 
-      var matrix = nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"].matrix(item[this.column.prop]);
+      var matrix = nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"].matrix(item[this.column.matrixProp]);
 
       if (nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"]["int"](this.column.matrix) === -1) {
         return true;
       }
 
       return nano_js__WEBPACK_IMPORTED_MODULE_2__["Arr"].has(matrix, nano_js__WEBPACK_IMPORTED_MODULE_2__["Num"]["int"](this.column.matrix));
+    },
+    isDisabled: function isDisabled() {
+      if (!nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].isFunction(this.column.disabled)) {
+        return this.column.disabled;
+      }
+
+      return this.column.disabled(this);
     }
   },
   render: function render() {
-    if (this.column.$slots["default"]) {
-      return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [this.column.$slots["default"](this)]);
-    }
+    var _this = this;
 
-    var classList = ['n-table-cell', 'n-table-cell--' + this.column.type];
-    var checkedState = this.isChecked();
-    var disabled = nano_js__WEBPACK_IMPORTED_MODULE_2__["Any"].isFunction(this.column.disabled) ? this.column.disabled(this.input) : this.column.disabled;
     var props = {
+      modelValue: this.isChecked(),
+      disabled: this.isDisabled(),
+      allowUncheck: true,
       'onUpdate:modelValue': this.toggleMatrix
     };
-    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
-      "class": classList
-    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NCheckbox"), Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
-      "checked": checkedState,
-      "disabled": disabled && !checkedState
-    }, props), null)]);
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NCheckbox"), props, {
+      "default": function _default() {
+        return [_this.column.cslo('default') && _this.column.$slots["default"](_this)];
+      }
+    })]);
   }
 });
 
@@ -12139,7 +12261,7 @@ __webpack_require__.r(__webpack_exports__);
   name: 'NTableCellString',
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_1__["default"],
   render: function render() {
-    if (this.column.$slots["default"]) {
+    if (this.column.cslo('default')) {
       return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [this.column.$slots["default"](this)]);
     }
 
@@ -12189,7 +12311,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     prop: {
       "default": function _default() {
-        return 'id';
+        return Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])();
       },
       type: [String]
     },
@@ -12258,6 +12380,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return 1;
       },
       type: [Number, String]
+    },
+    matrixProp: {
+      "default": function _default() {
+        return 'matrix';
+      },
+      type: [String]
     },
     options: {
       "default": function _default() {
@@ -12378,6 +12506,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   beforeMount: function beforeMount() {
+    this.prevRender = {};
     this.NTable.addColumn(this);
   },
   beforeUnmount: function beforeUnmount() {
@@ -12416,11 +12545,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
 
     var props = {
+      modelValue: this.tempWidth,
       width: this.width,
       minWidth: this.minWidth,
       maxWidth: this.maxWidth,
       disabled: !!this.fixedWidth,
       group: [this.NTable.uid]
+    };
+
+    props['onUpdate:modelValue'] = function (value) {
+      _this.prevRender = {};
+      _this.tempWidth = value;
     };
 
     if (this.sort) {
@@ -12430,11 +12565,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NResizer"), Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
       "ref": "column",
       "class": classList,
-      "style": style,
-      "modelValue": _this.tempWidth,
-      "onUpdate:modelValue": function onUpdateModelValue($event) {
-        return _this.tempWidth = $event;
-      }
+      "style": style
     }, props), {
       "default": function _default() {
         return [_this.ctor('renderHeadSort')(), _this.ctor('renderHeadLabel')(), _this.ctor('renderHeadFilter')()];
@@ -12490,6 +12621,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     })];
   },
   renderBody: function renderBody(props) {
+    var uid = props.value.id + this.uid;
+
+    if (this.prevRender[uid]) {
+      return this.prevRender[uid];
+    }
+
     var classList = ['n-table-cell', 'n-table-cell--' + this.align, 'n-table-cell--' + this.type];
 
     if (this.fluid) {
@@ -12529,7 +12666,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       column: this
     }));
     var component = Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])('NTableCell' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.type));
-    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["h"])(component, passed);
+    this.prevRender[uid] = Object(vue__WEBPACK_IMPORTED_MODULE_0__["h"])(component, passed);
+    return this.prevRender[uid];
   },
   render: function render() {
     return null;
@@ -13288,7 +13426,7 @@ function _isSlot(s) {
     },
     threshold: {
       "default": function _default() {
-        return 40;
+        return 10;
       },
       type: [Number]
     },
@@ -15188,6 +15326,7 @@ function _isSlot(s) {
       endIndex: 0
     };
     return {
+      uid: Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])(),
       state: state,
       height: 0,
       scrollTop: 0
@@ -15195,8 +15334,12 @@ function _isSlot(s) {
   },
   watch: {
     'items': function items() {
-      this.updateRender();
+      this.prevRender = {};
+      this.$nextTick(this.updateRender);
     }
+  },
+  beforeMount: function beforeMount() {
+    this.prevRender = {};
   },
   methods: {
     isIndexRendered: function isIndexRendered(index) {
@@ -15314,6 +15457,12 @@ function _isSlot(s) {
     }
   },
   renderItem: function renderItem(passed) {
+    var uid = passed.value.id;
+
+    if (this.prevRender[uid]) {
+      return this.prevRender[uid];
+    }
+
     passed.index = passed.index + this.state.startIndex;
     var topOffset = Math.round(this.itemHeight * passed.index);
     var renderFunction = this.$slots["default"]; // Finally render node
@@ -15323,15 +15472,17 @@ function _isSlot(s) {
     }
 
     var props = {
+      key: uid,
       'data-index': passed.index
     };
     props.style = {
       top: topOffset + 'px',
       height: this.itemHeight + 'px'
     };
-    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
+    this.prevRender[uid] = Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
       "class": "n-virtualscroller__item"
     }, props), [renderFunction(passed)]);
+    return this.prevRender[uid];
   },
   renderItems: function renderItems() {
     var _this = this;
@@ -15340,7 +15491,6 @@ function _isSlot(s) {
       return this.$slots.empty && this.$slots.empty() || null;
     }
 
-    ;
     var items = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].slice(this.items, this.state.startIndex, this.state.endIndex);
 
     if (this.items.length <= this.threshold) {

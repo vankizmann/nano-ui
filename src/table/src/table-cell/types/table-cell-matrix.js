@@ -1,5 +1,5 @@
 import TableCell from "../table-cell";
-import { Num, Any, Obj, Arr } from "nano-js";
+import { Num, Any, Obj, Arr, UUID } from "nano-js";
 
 export default {
 
@@ -11,30 +11,37 @@ export default {
 
         toggleMatrix()
         {
-            let item = Arr.find(this.column.modelValue, {
+            let itemList = this.column.modelValue;
+
+            if ( itemList === null ) {
+                itemList = [];
+            }
+
+            let item = Arr.find(itemList, {
                 [this.NTable.uniqueProp]: this.value[this.NTable.uniqueProp]
             });
 
             if ( ! item ) {
-                item = Obj.assign({}, this.value, { [this.column.prop]: 0 });
+                item = Obj.assign({}, this.item, { [this.column.matrixProp]: 0 });
             }
 
-            let matrix = Arr.toggle(
-                Num.matrix(Num.int(item[this.column.prop])), Num.int(this.column.matrix)
-            );
+            let currentMatrix = Num.int(item[this.column.matrixProp]);
 
-            item[this.column.prop] = Num.combine(matrix);
+            let matrix = Arr.toggle(Num.matrix(currentMatrix),
+                Num.int(this.column.matrix));
 
-            Arr.replace(this.column.veValue, item, {
+            item[this.column.matrixProp] = Num.combine(matrix);
+
+            Arr.replace(itemList, item, {
                 [this.NTable.uniqueProp]: item[this.NTable.uniqueProp]
             });
 
-            this.column.$emit('input', this.column.veValue);
+            this.column.$emit('update:modelValue', itemList);
         },
 
         isChecked()
         {
-            let item = Arr.find(this.column.veValue, {
+            let item = Arr.find(this.column.modelValue, {
                 [this.NTable.uniqueProp]: this.value[this.NTable.uniqueProp]
             });
 
@@ -42,7 +49,7 @@ export default {
                 return false;
             }
 
-            let matrix = Num.matrix(item[this.column.prop]);
+            let matrix = Num.matrix(item[this.column.matrixProp]);
 
             if ( Num.int(this.column.matrix) === -1 ) {
                 return true;
@@ -51,33 +58,31 @@ export default {
             return Arr.has(matrix, Num.int(this.column.matrix));
         },
 
+        isDisabled()
+        {
+            if ( ! Any.isFunction(this.column.disabled) ) {
+                return this.column.disabled;
+            }
+
+            return this.column.disabled(this);
+        }
+
     },
 
     render()
     {
-        if ( this.column.$slots.default ) {
-            return (
-                <div>{ this.column.$slots.default(this) }</div> 
-            );
-        }
-
-        let classList = [
-            'n-table-cell',
-            'n-table-cell--' + this.column.type
-        ];
-
-        let checkedState = this.isChecked();
-
-        let disabled = Any.isFunction(this.column.disabled) ?
-            this.column.disabled(this.input) : this.column.disabled;
-
-            let props = {
-                'onUpdate:modelValue': this.toggleMatrix
-            }
+        let props = {
+            modelValue: this.isChecked(),
+            disabled: this.isDisabled(),
+            allowUncheck: true,
+            'onUpdate:modelValue': this.toggleMatrix
+        };
 
         return (
-            <div class={classList}>
-                <NCheckbox checked={checkedState} disabled={disabled && ! checkedState} {...props} />
+            <div>
+                <NCheckbox {...props}>
+                    { this.column.cslo('default') && this.column.$slots.default(this) }
+                </NCheckbox>
             </div>
         );
     }

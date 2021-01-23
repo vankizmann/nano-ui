@@ -1,5 +1,6 @@
 import CtorMixin from "./mixins/src/ctor";
 import CmerMixin from "./mixins/src/cmer";
+import CsloMixin from "./mixins/src/cslo";
 
 let NanoIcons = {
     handle: 'fa fa-ellipsis-v',
@@ -37,6 +38,7 @@ export function NanoInstall(App, Icons = {}, Styles = {})
 
     App.config.globalProperties.ctor = CtorMixin.ctor;
     App.config.globalProperties.cmer = CmerMixin.cmer;
+    App.config.globalProperties.cslo = CsloMixin.cslo;
 
     App.config.globalProperties.trans = global.Nano.Locale.trans;
     App.config.globalProperties.choice = global.Nano.Locale.choice;

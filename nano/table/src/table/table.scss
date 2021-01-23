@@ -30,6 +30,9 @@
 
 .n-table .n-table__inner {
     position: relative;
+}
+
+.n-table .n-scrollbar:not(.n-scrollbar--native) .n-table__inner {
     width: calc(100% + 15px);
 }
 

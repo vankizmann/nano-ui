@@ -232,7 +232,7 @@ export default {
         threshold: {
             default()
             {
-                return 40;
+                return 10;
             },
             type: [Number]
         },

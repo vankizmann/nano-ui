@@ -22,6 +22,14 @@ export default {
             type: [Number]
         },
 
+        width: {
+            default()
+            {
+                return 0;
+            },
+            type: [Number]
+        },
+
         minWidth: {
             default()
             {
@@ -441,17 +449,6 @@ export default {
 
     },
 
-    watch: {
-
-        modelValue(value)
-        {
-            if ( value !== this.tempValue ) {
-                this.tempValue = value;
-            }
-        }
-
-    },
-
     renderHandle()
     {
         if ( this.disabled ) {
@@ -472,8 +469,8 @@ export default {
             props['on' + Str.ucfirst(this.mousedown)] = this.onLeftMousedown;
         }
 
-        if ( this.width ) {
-            props.width = this.width + 'px';
+        if ( this.resizerWidth ) {
+            props.width = this.resizerWidth + 'px';
         }
 
         return (
@@ -489,6 +486,10 @@ export default {
         ];
 
         let style = {};
+
+        if ( this.width && ! this.tempValue ) {
+            style['width'] = this.width + 'px';
+        }
 
         if ( this.minWidth ) {
             style['min-width'] = this.minWidth + 'px';

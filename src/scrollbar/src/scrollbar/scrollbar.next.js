@@ -110,6 +110,13 @@ export default {
 
     },
 
+    data()
+    {
+        return {
+            native: false
+        };
+    },
+
     mounted()
     {
         this.bindAdaptHeight();
@@ -121,6 +128,9 @@ export default {
 
         Event.bind('NScrollbar:resize',
             this.onResize, this._.uid);
+
+        Event.bind('NScrollbar:native',
+            this.onNative, this._.uid);
 
         Event.bind('NResizer:moved',
             this.onUpdate, this._.uid);
@@ -149,6 +159,9 @@ export default {
         };
 
         Event.unbind('NScrollbar:resize', 
+            this._.uid);
+
+        Event.unbind('NScrollbar:native',
             this._.uid);
 
         Event.unbind('NResizer:moved', 
@@ -214,6 +227,10 @@ export default {
 
         adaptScrollHeight()
         {
+            if ( this.native ) {
+                return;
+            }
+
             let offsetHeight = this.$refs.content.clientHeight -
                 this.$refs.content.offsetHeight;
 
@@ -259,16 +276,24 @@ export default {
                 height: (this.barHeight = Math.ceil(barHeight)) + 'px'
             });
 
-            if ( offsetWidth !== 0 && this.overflowY ) {
-                Dom.find(this.$el).addClass('has-native-vbar');
+            let hasNativeBar = offsetWidth !== 0 && this.overflowY;
+
+            if ( hasNativeBar ) {
+                Dom.find(this.$el).addClass('has-native-hbar');
             }
 
-            if ( outerHeight && outerHeight < innerHeight) {
+            let hasVtrack = outerHeight && outerHeight < innerHeight;
+
+            if ( hasVtrack ) {
                 Dom.find(this.$el).addClass('has-vtrack');
             }
 
-            if ( ! outerHeight || outerHeight >= innerHeight ) {
+            if ( ! hasVtrack ) {
                 Dom.find(this.$el).removeClass('has-vtrack');
+            }
+
+            if ( hasVtrack && ! hasNativeBar ) {
+                return Event.fire('NScrollbar:native');
             }
 
             this.adaptScrollPosition();
@@ -276,6 +301,10 @@ export default {
 
         adaptScrollWidth()
         {
+            if ( this.native ) {
+                return;
+            }
+
             let offsetWidth = this.$refs.content.clientWidth -
                 this.$refs.content.offsetWidth;
 
@@ -320,17 +349,25 @@ export default {
             Dom.find(this.$refs.hbar).css({
                 width: (this.barWidth = Math.ceil(barWidth)) + 'px'
             });
+
+            let hasNativeBar = offsetHeight && this.overflowX;
     
-            if ( offsetHeight && this.overflowX ) {
+            if ( hasNativeBar ) {
                 Dom.find(this.$el).addClass('has-native-hbar');
             }
 
-            if ( outerWidth && outerWidth < innerWidth ) {
+            let hasHtrack = outerWidth && outerWidth < innerWidth;
+
+            if ( hasHtrack ) {
                 Dom.find(this.$el).addClass('has-htrack');
             }
 
-            if ( ! outerWidth || outerWidth >= innerWidth ) {
+            if ( ! hasHtrack ) {
                 Dom.find(this.$el).removeClass('has-htrack');
+            }
+
+            if ( hasHtrack && ! hasNativeBar ) {
+                return Event.fire('NScrollbar:native');
             }
 
             this.adaptScrollPosition();
@@ -338,6 +375,10 @@ export default {
 
         adaptScrollPosition(scroll = {})
         {
+            if ( this.native ) {
+                return;
+            }
+
             if ( ! scroll.top ) {
                 scroll.top = this.$refs.content.scrollTop;
             }
@@ -503,6 +544,17 @@ export default {
             this.$emit('sizechange', height);
         },
 
+        onNative()
+        {
+            if ( this.native ) {
+                return;
+            }
+
+            this.native = true;
+
+            this.onResize();
+        },
+
         onResize(event)
         {
             if ( ! this.fixture ) {
@@ -654,6 +706,10 @@ export default {
         let classList = [
             'n-scrollbar'
         ];
+
+        if ( this.native ) {
+            classList.push('n-scrollbar--native');
+        }
 
         if ( this.touch ) {
             classList.push('n-scrollbar--touch');

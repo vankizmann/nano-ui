@@ -15,6 +15,11 @@
     -webkit-overflow-scrolling: touch;
 }
 
+.n-scrollbar--native > .n-scrollbar-content {
+    right: 0;
+    bottom: 0;
+}
+
 .n-scrollbar:not(.n-overflow-x) > .n-scrollbar-content {
     bottom: 0;
     overflow-x: hidden;
@@ -29,13 +34,13 @@
     position: relative;
 }
 
-.n-scrollbar--touch:not(.has-native-vbar) > .n-scrollbar-content > .n-scrollbar__wrap,
-.n-scrollbar.n-overflow-x:not(.has-native-vbar) > .n-scrollbar-content > .n-scrollbar__wrap {
+.n-scrollbar--touch:not(.n-scrollbar--native):not(.has-native-vbar) > .n-scrollbar-content > .n-scrollbar__wrap,
+.n-scrollbar.n-overflow-x:not(.n-scrollbar--native):not(.has-native-vbar) > .n-scrollbar-content > .n-scrollbar__wrap {
     padding-right: 15px;
 }
 
-.n-scrollbar--touch:not(.has-native-hbar) > .n-scrollbar-content > .n-scrollbar__wrap,
-.n-scrollba.n-overflow-y:not(.has-native-hbar) > .n-scrollbar-content > .n-scrollbar__wrap {
+.n-scrollbar--touch:not(.n-scrollbar--native):not(.has-native-hbar) > .n-scrollbar-content > .n-scrollbar__wrap,
+.n-scrollba.n-overflow-y:not(.n-scrollbar--native):not(.has-native-hbar) > .n-scrollbar-content > .n-scrollbar__wrap {
     padding-bottom: 15px;
 }
 
@@ -59,7 +64,9 @@
     height: 10px;
 }
 
+.n-scrollbar--native > .n-scrollbar-v,
 .n-scrollbar:not(.has-vtrack) > .n-scrollbar-v,
+.n-scrollbar--native > .n-scrollbar-h,
 .n-scrollbar:not(.has-htrack) > .n-scrollbar-h {
     display: none;
 }

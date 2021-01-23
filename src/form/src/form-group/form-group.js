@@ -169,11 +169,11 @@ export default {
     renderLabel()
     {
         return (
-            <legend class="n-form-group__legend" onClick={this.collapseGroup}>
+            <div class="n-form-group__legend" onClick={this.collapseGroup}>
                 { this.ctor('renderCollapse')() }
                 { this.ctor('renderText')() }
                 { this.ctor('renderAction')() }
-            </legend>
+            </div>
         );
     },
 
@@ -207,6 +207,10 @@ export default {
             'n-form-group--' + this.type,
             'n-form-group--' + this.align, 
         ];
+
+        if ( this.collapse ) {
+            classList.push('n-form-group--collapse');
+        }
 
         if ( ! this.tempValue ) {
             classList.push('n-hidden');

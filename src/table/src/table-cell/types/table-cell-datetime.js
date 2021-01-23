@@ -9,7 +9,7 @@ export default {
 
     render()
     {
-        if ( this.column.$slots.default ) {
+        if ( this.column.cslo('default') ) {
             return (
                 <div>{ this.column.$slots.default(this) }</div> 
             );

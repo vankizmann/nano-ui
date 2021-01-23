@@ -115,13 +115,11 @@ export default {
 
         onFocus(event)
         {
-            console.log('focus')
             this.focus = true;
         },
 
         onBlur(event)
         {
-            console.log('blur')
             this.focus = false;
         }
 

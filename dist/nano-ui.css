@@ -255,6 +255,10 @@
   overflow: scroll;
   -webkit-overflow-scrolling: touch; }
 
+.n-scrollbar--native > .n-scrollbar-content {
+  right: 0;
+  bottom: 0; }
+
 .n-scrollbar:not(.n-overflow-x) > .n-scrollbar-content {
   bottom: 0;
   overflow-x: hidden; }
@@ -266,12 +270,12 @@
 .n-scrollbar > .n-scrollbar-content > .n-scrollbar__wrap {
   position: relative; }
 
-.n-scrollbar--touch:not(.has-native-vbar) > .n-scrollbar-content > .n-scrollbar__wrap,
-.n-scrollbar.n-overflow-x:not(.has-native-vbar) > .n-scrollbar-content > .n-scrollbar__wrap {
+.n-scrollbar--touch:not(.n-scrollbar--native):not(.has-native-vbar) > .n-scrollbar-content > .n-scrollbar__wrap,
+.n-scrollbar.n-overflow-x:not(.n-scrollbar--native):not(.has-native-vbar) > .n-scrollbar-content > .n-scrollbar__wrap {
   padding-right: 15px; }
 
-.n-scrollbar--touch:not(.has-native-hbar) > .n-scrollbar-content > .n-scrollbar__wrap,
-.n-scrollba.n-overflow-y:not(.has-native-hbar) > .n-scrollbar-content > .n-scrollbar__wrap {
+.n-scrollbar--touch:not(.n-scrollbar--native):not(.has-native-hbar) > .n-scrollbar-content > .n-scrollbar__wrap,
+.n-scrollba.n-overflow-y:not(.n-scrollbar--native):not(.has-native-hbar) > .n-scrollbar-content > .n-scrollbar__wrap {
   padding-bottom: 15px; }
 
 .n-scrollbar-v,
@@ -294,7 +298,9 @@
   bottom: 0;
   height: 10px; }
 
+.n-scrollbar--native > .n-scrollbar-v,
 .n-scrollbar:not(.has-vtrack) > .n-scrollbar-v,
+.n-scrollbar--native > .n-scrollbar-h,
 .n-scrollbar:not(.has-htrack) > .n-scrollbar-h {
   display: none; }
 
@@ -1061,7 +1067,7 @@
   flex: 1 1 auto;
   font-weight: bold; }
 
-.n-form-group.n-hidden .n-form-group__body {
+.n-form-group--collapse.n-hidden .n-form-group__body {
   display: none; }
 
 .n-form-group--xs .n-form-group__legend {
@@ -2068,6 +2074,7 @@
   align-items: center;
   justify-content: center;
   color: #1b2229;
+  background: #ffffff;
   border: 1px solid #dddedf;
   transition: border 0.15s, background 0.15s; }
 
@@ -5249,7 +5256,9 @@
   margin-bottom: -1px; }
 
 .n-table .n-table__inner {
-  position: relative;
+  position: relative; }
+
+.n-table .n-scrollbar:not(.n-scrollbar--native) .n-table__inner {
   width: calc(100% + 15px); }
 
 .n-table .n-draglist-item {

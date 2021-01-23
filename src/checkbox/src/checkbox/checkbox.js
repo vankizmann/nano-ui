@@ -29,6 +29,14 @@ export default {
             }
         },
 
+        allowUncheck: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         disabled: {
             default()
             {
@@ -170,6 +178,13 @@ export default {
 
         eventLocalClick(event)
         {
+            let canClick = ! this.tempDisabled || (this.allowUncheck &&
+                this.tempChecked);
+
+            if ( ! canClick ) {
+                return;
+            }
+
             event.preventDefault();
 
             if ( event.shiftKey ) {
@@ -185,6 +200,13 @@ export default {
 
         eventGlobalClick()
         {
+            let canClick = ! this.tempDisabled || (this.allowUncheck &&
+                this.tempChecked);
+
+            if ( ! canClick ) {
+                return;
+            }
+
             this.NCheckboxGroup.toggleAll();
         },
 
@@ -251,6 +273,10 @@ export default {
             'n-checkbox--' + this.type,
         ];
 
+        if ( this.allowUncheck ) {
+            classList.push('n-uncheck');
+        }
+
         if ( this.tempComputed ) {
             classList.push('n-checked');
         }
@@ -263,13 +289,17 @@ export default {
             classList.push('n-disabled');
         }
 
+        if ( this.tempComputed && this.allowUncheck ) {
+            Arr.remove(classList, 'n-disabled');
+        }
+
         let props = Obj.clone(this.$attrs);
 
-        if ( ! this.tempDisabled && this.global ) {
+        if ( this.global ) {
             props.onMousedown = this.eventGlobalClick;
         }
 
-        if ( ! this.tempDisabled && ! this.global ) {
+        if ( ! this.global ) {
             props.onMousedown = this.eventLocalClick;
         }
 

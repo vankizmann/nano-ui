@@ -25,7 +25,7 @@ export default {
         prop: {
             default()
             {
-                return 'id';
+                return UUID();
             },
             type: [String]
         },
@@ -116,6 +116,14 @@ export default {
                 return 1;
             },
             type: [Number, String]
+        },
+
+        matrixProp: {
+            default()
+            {
+                return 'matrix';
+            },
+            type: [String]
         },
 
         options: {
@@ -278,6 +286,7 @@ export default {
 
     beforeMount()
     {
+        this.prevRender = {};
         this.NTable.addColumn(this);
     },
 
@@ -323,6 +332,7 @@ export default {
         }
 
         let props = {
+            modelValue: this.tempWidth,
             width: this.width,
             minWidth: this.minWidth,
             maxWidth: this.maxWidth,
@@ -330,12 +340,16 @@ export default {
             group: [this.NTable.uid],
         };
 
+        props['onUpdate:modelValue'] = (value) => {
+            this.prevRender = {}; this.tempWidth = value;
+        }
+
         if ( this.sort ) {
             props.onMousedown = this.sortByColumn;
         }
 
         return (
-            <NResizer ref="column" class={classList} style={style} vModel={this.tempWidth} {...props}>
+            <NResizer ref="column" class={classList} style={style} {...props}>
                 { this.ctor('renderHeadSort')() }
                 { this.ctor('renderHeadLabel')() }
                 { this.ctor('renderHeadFilter')() }
@@ -401,6 +415,12 @@ export default {
 
     renderBody(props)
     {
+        let uid = props.value.id + this.uid;
+
+        if ( this.prevRender[uid] ) {
+            return this.prevRender[uid];
+        }
+
         let classList = [
             'n-table-cell',
             'n-table-cell--' + this.align,
@@ -446,11 +466,14 @@ export default {
         let component = resolveComponent('NTableCell' + 
             Str.ucfirst(this.type));
 
-        return h(component, passed);
+        this.prevRender[uid] = h(component, passed);
+
+        return this.prevRender[uid];
     },
 
     render()
     {
         return null;
     }
+
 }
