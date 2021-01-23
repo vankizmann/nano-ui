@@ -1469,7 +1469,7 @@
   border-radius: 0;
   margin-right: -1px; }
 
-.n-button-group > *:first-child {
+.n-button-group > *:not(:last-child):first-child {
   margin-right: -1px; }
 
 .n-button-group > .n-button {
@@ -1479,28 +1479,28 @@
 .n-button-group > *.n-focus {
   z-index: 10; }
 
-.n-button-group--xs > *:last-child {
+.n-button-group--xs > *:not(:first-child):last-child {
   border-radius: 0 2px 2px 0; }
 
-.n-button-group--xs > *:first-child {
+.n-button-group--xs > *:not(:last-child):first-child {
   border-radius: 2px 0 0 2px; }
 
-.n-button-group--sm > *:last-child {
+.n-button-group--sm > *:not(:first-child):last-child {
   border-radius: 0 3px 3px 0; }
 
-.n-button-group--sm > *:first-child {
+.n-button-group--sm > *:not(:last-child):first-child {
   border-radius: 3px 0 0 3px; }
 
-.n-button-group--md > *:last-child {
+.n-button-group--md > *:not(:first-child):last-child {
   border-radius: 0 3px 3px 0; }
 
-.n-button-group--md > *:first-child {
+.n-button-group--md > *:not(:last-child):first-child {
   border-radius: 3px 0 0 3px; }
 
-.n-button-group--lg > *:last-child {
+.n-button-group--lg > *:not(:first-child):last-child {
   border-radius: 0 5px 5px 0; }
 
-.n-button-group--lg > *:first-child {
+.n-button-group--lg > *:not(:last-child):first-child {
   border-radius: 5px 0 0 5px; }
 
 .n-input {
