@@ -1,4 +1,4 @@
-<p align="center"><img width="100" src="https://github.com/vankizmann/nano-ui/blob/origin/next/nano.svg?raw=true" alt="nano-ui"></p>
+<p align="center"><img width="300" src="https://github.com/vankizmann/nano-ui/blob/origin/next/nano.svg?raw=true" alt="nano-ui"></p>
 <h2 align="center">nano-ui Version 0.1.0</h2>
 
 ### Done and reworked
