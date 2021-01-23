@@ -119,7 +119,9 @@ export default {
         }
 
         return (
-            <NSwitch size="sm" modelValue={this.tempValue} />
+            <div class="n-form-group__collapse">
+                <i class={this.icons.angleDown}></i>
+            </div>
         );
     },
 
@@ -130,15 +132,23 @@ export default {
         }
 
         return (
-            <i class={['n-icon', this.icon]}></i>
+            <div class="n-form-group__icon">
+                <i class={['n-icon', this.icon]}></i>
+            </div>
         );
     },
 
     renderText()
     {
+        let textHtml = (
+            <div class="n-form-group__text">
+                <span>{ this.label }</span>
+            </div>
+        );
+
         return (
             <div class="n-form-group__label">
-                { this.ctor('renderIcon')() } <span>{ this.label }</span>
+                { [this.ctor('renderIcon')(), textHtml] } 
             </div>
         );
     },
@@ -193,15 +203,17 @@ export default {
     {
         let classList = [
             'n-form-group', 
-            'n-form-group--' + this.align
+            'n-form-group--' + this.size, 
+            'n-form-group--' + this.type,
+            'n-form-group--' + this.align, 
         ];
-
-        if ( this.collapse ) {
-            classList.push('n-collapse');
-        }
 
         if ( ! this.tempValue ) {
             classList.push('n-hidden');
+        }
+
+        if ( this.$slots.action ) {
+            classList.push('n-action');
         }
 
         return (

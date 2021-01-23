@@ -6,6 +6,7 @@
     align-items: stretch;
     justify-content: stretch;
     width: 100%;
+    border: 1px solid $color-gray-15;
 }
 
 .n-input.n-disabled {
@@ -23,7 +24,6 @@
     border: none;
     background: transparent;
     box-shadow: none;
-    border: 1px solid $color-gray-15;
 }
 
 .n-input.n-disabled input  {
@@ -57,12 +57,12 @@
 
     .n-input--#{$suffix} {
         font-size: $-input-font;
+        border-radius: $-input-radius;
     }
 
     .n-input--#{$suffix} input {
-        height: $-input-size;
+        height: $-input-size - 2;
         padding: 0 $-input-size * $-input-ratio;
-        border-radius: $-input-radius;
     }
 
     .n-input--#{$suffix}.n-input--icon.n-input--icon-before input {
@@ -85,11 +85,11 @@
      * Button primary
      */
 
-    .n-input--#{$color}:not(.n-disabled):hover input {
+    .n-input--#{$color}:not(.n-disabled):hover {
         border-color: $-color-base;
     }
 
-    .n-input--#{$color}:not(.n-disabled) input:focus{
+    .n-input--#{$color}:not(.n-disabled).n-focus {
         border-color: $-color-light;
     }
 

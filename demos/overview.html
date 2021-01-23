@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Nano UI</title>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="../dist/nano-ui.css">
@@ -26,7 +26,7 @@
         }
 
         body {
-            font-family: 'Helvetica', 'Roboto', 'Arial', sans-serif;
+            font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
             font-size: 14px;
             height: 100%;
             overflow-x: hidden;
@@ -283,6 +283,20 @@
             </div>
             <div class="col--1-1 col--1-4@md col--right">
                 <n-cascader v-bind="n_cascader" :options="cascaderData"></n-cascader>
+            </div>
+        </div>
+
+
+        <h2>NButtonGroup</h2>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1">
+                <n-button-group>
+                    <n-input v-model="n_input.value" v-bind="n_input" type="primary"></n-input>
+                    <n-datepicker v-bind="n_datepicker" ></n-datepicker>
+                    <n-select v-bind="n_select" :multiple="true" type="primary" :options="icons"></n-select>
+                    <n-button v-bind="n_button" type="primary">Button</n-button>
+                </n-button-group>
             </div>
         </div>
 

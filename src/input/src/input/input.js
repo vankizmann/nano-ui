@@ -82,6 +82,13 @@ export default {
 
     },
 
+    data()
+    {
+        return {
+            focus: false, tempValue: this.modelValue || ''
+        };
+    },
+
     watch: {
 
         modelValue(value)
@@ -95,24 +102,29 @@ export default {
 
     methods: {
 
-        eventIconClick(event)
+        onIconClick(event)
         {
             this.$emit('icon-click', event);
         },
 
-        eventInput(event)
+        onInput(event)
         {
             this.$emit('update:modelValue', 
                 this.tempValue = event.target.value);
+        },
+
+        onFocus(event)
+        {
+            console.log('focus')
+            this.focus = true;
+        },
+
+        onBlur(event)
+        {
+            console.log('blur')
+            this.focus = false;
         }
 
-    },
-
-    data()
-    {
-        return {
-            tempValue: this.modelValue || ''
-        };
     },
 
     renderIcon()
@@ -130,7 +142,7 @@ export default {
             size:       this.size,
             square:     true,
             disabled:   disabled,
-            onClick:    this.eventIconClick,
+            onClick:    this.onIconClick,
         };
 
         return (<NButton {...props} />);
@@ -145,7 +157,9 @@ export default {
             type:           this.nativeType,
             disabled:       this.disabled,
             placeholder:    this.placeholder,
-            onInput:        this.eventInput
+            onInput:        this.onInput,
+            onFocus:        this.onFocus,
+            onBlur:         this.onBlur,
         });
 
         return h('input', props);
@@ -166,6 +180,10 @@ export default {
 
         if ( this.disabled ) {
             classList.push('n-disabled');
+        }
+
+        if ( this.focus ) {
+            classList.push('n-focus');
         }
 
         let props = Obj.only(this.$attrs, ['style'], {

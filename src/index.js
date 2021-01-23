@@ -60,10 +60,10 @@ export function NanoInstall(App, Icons = {}, Styles = {})
     require('./virtualscroller/index').default(App);
     require('./draggable/index').default(App);
     require('./loader/index').default(App);
-    require('./resizer/index').default(App); //check
+    require('./resizer/index').default(App);
     require('./popover/index').default(App);
     require('./modal/index').default(App);
-    require('./button/index').default(App); // group 17.1
+    require('./button/index').default(App);
     require('./input/index').default(App);
     require('./textarea/index').default(App);
     require('./select/index').default(App);
@@ -75,7 +75,7 @@ export function NanoInstall(App, Icons = {}, Styles = {})
     require('./datepicker/index').default(App);
     require('./timepicker/index').default(App);
     // require('./datetimepicker/index'); 18.1
-    require('./transfer/index').default(App); // check
+    require('./transfer/index').default(App);
     require('./form/index').default(App); // check
     require('./tabs/index').default(App);
     require('./table/index').default(App); // 18.1 matrix, options, select

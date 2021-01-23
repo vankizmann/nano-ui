@@ -6,10 +6,10 @@ $popover: (
         'border': $color-gray-10,
         'background': $color-white,
     ),
-    'tooltip': (
+    'negative': (
         'color': $color-white,
         'border': $color-gray-95,
-        'background': rgba($color-black, 0.95),
+        'background': $color-black,
     )
 ) !default;
 
@@ -182,4 +182,13 @@ $popover: (
         color: $-color-base;
     }
 
+}
+
+.n-popover--tooltip .n-popover__frame {
+    color: $color-white;
+    background: rgba($color-black, 0.9);
+}
+
+.n-popover--tooltip .n-popover__body {
+    padding: 3px 8px;
 }

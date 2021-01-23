@@ -161,9 +161,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NButtonGroup',
+  props: {
+    size: {
+      "default": function _default() {
+        return 'md';
+      },
+      type: [String]
+    }
+  },
   render: function render() {
+    var classList = ['n-button-group', 'n-button-group--' + this.size];
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
-      "class": "n-button-group"
+      "class": classList
     }, [this.$slots["default"] && this.$slots["default"]()]);
   }
 });
@@ -6208,7 +6217,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NFormGroup',
   inject: {
@@ -6293,24 +6301,31 @@ __webpack_require__.r(__webpack_exports__);
       return null;
     }
 
-    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NSwitch"), {
-      "size": "sm",
-      "modelValue": this.tempValue
-    }, null);
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": "n-form-group__collapse"
+    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("i", {
+      "class": this.icons.angleDown
+    }, null)]);
   },
   renderIcon: function renderIcon() {
     if (!this.icon) {
       return null;
     }
 
-    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("i", {
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": "n-form-group__icon"
+    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("i", {
       "class": ['n-icon', this.icon]
-    }, null);
+    }, null)]);
   },
   renderText: function renderText() {
+    var textHtml = Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+      "class": "n-form-group__text"
+    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", null, [this.label])]);
+
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": "n-form-group__label"
-    }, [this.ctor('renderIcon')(), Object(vue__WEBPACK_IMPORTED_MODULE_0__["createTextVNode"])(" "), Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("span", null, [this.label])]);
+    }, [[this.ctor('renderIcon')(), textHtml]]);
   },
   renderAction: function renderAction() {
     if (!this.$slots.action) {
@@ -6349,14 +6364,14 @@ __webpack_require__.r(__webpack_exports__);
     }, [this.$slots["default"] && this.$slots["default"]()]);
   },
   render: function render() {
-    var classList = ['n-form-group', 'n-form-group--' + this.align];
-
-    if (this.collapse) {
-      classList.push('n-collapse');
-    }
+    var classList = ['n-form-group', 'n-form-group--' + this.size, 'n-form-group--' + this.type, 'n-form-group--' + this.align];
 
     if (!this.tempValue) {
       classList.push('n-hidden');
+    }
+
+    if (this.$slots.action) {
+      classList.push('n-action');
     }
 
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("fieldset", {
@@ -6749,15 +6764,13 @@ function NanoInstall(App) {
 
   __webpack_require__(/*! ./loader/index */ "./src/loader/index.js")["default"](App);
 
-  __webpack_require__(/*! ./resizer/index */ "./src/resizer/index.js")["default"](App); //check
-
+  __webpack_require__(/*! ./resizer/index */ "./src/resizer/index.js")["default"](App);
 
   __webpack_require__(/*! ./popover/index */ "./src/popover/index.js")["default"](App);
 
   __webpack_require__(/*! ./modal/index */ "./src/modal/index.js")["default"](App);
 
-  __webpack_require__(/*! ./button/index */ "./src/button/index.js")["default"](App); // group 17.1
-
+  __webpack_require__(/*! ./button/index */ "./src/button/index.js")["default"](App);
 
   __webpack_require__(/*! ./input/index */ "./src/input/index.js")["default"](App);
 
@@ -6780,8 +6793,7 @@ function NanoInstall(App) {
   __webpack_require__(/*! ./timepicker/index */ "./src/timepicker/index.js")["default"](App); // require('./datetimepicker/index'); 18.1
 
 
-  __webpack_require__(/*! ./transfer/index */ "./src/transfer/index.js")["default"](App); // check
-
+  __webpack_require__(/*! ./transfer/index */ "./src/transfer/index.js")["default"](App);
 
   __webpack_require__(/*! ./form/index */ "./src/form/index.js")["default"](App); // check
 
@@ -7440,6 +7452,12 @@ __webpack_require__.r(__webpack_exports__);
       type: [String]
     }
   },
+  data: function data() {
+    return {
+      focus: false,
+      tempValue: this.modelValue || ''
+    };
+  },
   watch: {
     modelValue: function modelValue(value) {
       if (value !== this.tempValue) {
@@ -7448,17 +7466,20 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    eventIconClick: function eventIconClick(event) {
+    onIconClick: function onIconClick(event) {
       this.$emit('icon-click', event);
     },
-    eventInput: function eventInput(event) {
+    onInput: function onInput(event) {
       this.$emit('update:modelValue', this.tempValue = event.target.value);
+    },
+    onFocus: function onFocus(event) {
+      console.log('focus');
+      this.focus = true;
+    },
+    onBlur: function onBlur(event) {
+      console.log('blur');
+      this.focus = false;
     }
-  },
-  data: function data() {
-    return {
-      tempValue: this.modelValue || ''
-    };
   },
   renderIcon: function renderIcon() {
     if (!this.icon) {
@@ -7472,7 +7493,7 @@ __webpack_require__.r(__webpack_exports__);
       size: this.size,
       square: true,
       disabled: disabled,
-      onClick: this.eventIconClick
+      onClick: this.onIconClick
     };
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NButton"), props, null);
   },
@@ -7483,7 +7504,9 @@ __webpack_require__.r(__webpack_exports__);
       type: this.nativeType,
       disabled: this.disabled,
       placeholder: this.placeholder,
-      onInput: this.eventInput
+      onInput: this.onInput,
+      onFocus: this.onFocus,
+      onBlur: this.onBlur
     });
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["h"])('input', props);
   },
@@ -7497,6 +7520,10 @@ __webpack_require__.r(__webpack_exports__);
 
     if (this.disabled) {
       classList.push('n-disabled');
+    }
+
+    if (this.focus) {
+      classList.push('n-focus');
     }
 
     var props = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].only(this.$attrs, ['style'], {
