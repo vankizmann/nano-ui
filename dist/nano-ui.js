@@ -5547,7 +5547,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
 /* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
@@ -5561,6 +5561,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+global.DEBUG_NDLIST = false;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NDraglist',
   model: {
@@ -5837,7 +5838,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     refreshVirtuals: function refreshVirtuals() {
       this.virtuals = this.drag.reduce(this.items);
-      console.log('Total virtual items mounted: ' + this.virtuals.length);
+
+      if (global.DEBUG_NDLIST) {
+        console.log('Total virtual items mounted: ' + this.virtuals.length);
+      }
     },
     filterVirtuals: function filterVirtuals() {
       var _this = this;
@@ -6132,6 +6136,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     });
   }
 });
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -15251,7 +15256,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nano-js */ "nano-js");
 /* harmony import */ var nano_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nano_js__WEBPACK_IMPORTED_MODULE_1__);
@@ -15265,6 +15270,7 @@ function _isSlot(s) {
   return typeof s === 'function' || Object.prototype.toString.call(s) === '[object Object]' && !Object(vue__WEBPACK_IMPORTED_MODULE_0__["isVNode"])(s);
 }
 
+global.DEBUG_NVSCROLL = false;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NVirtualscroller',
   model: {
@@ -15451,7 +15457,7 @@ function _isSlot(s) {
     refreshDriver: function refreshDriver() {
       var _this3 = this;
 
-      var ignoreBuffer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+      var staggerBuffer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
       if (this.items.length <= this.threshold) {
         return this.clearState();
@@ -15459,12 +15465,7 @@ function _isSlot(s) {
 
       this.lastTop = this.scrollTop;
       var itemBuffer = Math.round(this.height / this.itemHeight) - 2;
-      var bufferItems = Math.max(itemBuffer, 2) * 2;
-
-      if (!ignoreBuffer) {
-        bufferItems += Math.round(bufferItems * 1.5);
-      }
-
+      var bufferItems = Math.round(Math.max(itemBuffer, 2) * (1 + staggerBuffer));
       var startItem = Math.round(this.scrollTop / this.itemHeight);
       var endItem = Math.round((this.scrollTop + this.height) / this.itemHeight);
       var startIndex = startItem - bufferItems;
@@ -15493,10 +15494,18 @@ function _isSlot(s) {
         return;
       }
 
-      clearTimeout(this.refresh);
-      this.refresh = setTimeout(function () {
-        return _this3.refreshDriver(false);
-      }, 2000);
+      if (global.DEBUG_NVSCROLL) {
+        console.log('staggerRun: ' + staggerBuffer, bufferItems);
+      }
+
+      var staggerFunction = function staggerFunction() {
+        _this3.refreshDriver(staggerBuffer + 1);
+      };
+
+      if (staggerBuffer < 3) {
+        this.refresh = setTimeout(staggerFunction, 650);
+      }
+
       this.state = newState;
     }
   },
@@ -15577,6 +15586,7 @@ function _isSlot(s) {
     });
   }
 });
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 

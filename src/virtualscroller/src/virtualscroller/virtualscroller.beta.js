@@ -1,5 +1,7 @@
 import { UUID, Arr, Obj, Num, Dom, Any, Locale, Event } from "nano-js";
 
+global.DEBUG_NVSCROLL = false;
+
 export default {
 
     name: 'NVirtualscroller',
@@ -221,7 +223,7 @@ export default {
             Any.async(() => this.refreshDriver());
         },
 
-        refreshDriver(ignoreBuffer = true)
+        refreshDriver(staggerBuffer = 0)
         {
             if ( this.items.length <= this.threshold ) {
                 return this.clearState();
@@ -232,11 +234,8 @@ export default {
             let itemBuffer = Math.round(this.height /
                 this.itemHeight) - 2;
 
-            let bufferItems = Math.max(itemBuffer, 2) * 2;
-
-            if ( ! ignoreBuffer ) {
-                bufferItems += Math.round(bufferItems * 1.5);
-            }
+            let bufferItems = Math.round(Math.max(itemBuffer,
+                2) * (1 + staggerBuffer));
 
             let startItem = Math.round(this.scrollTop /
                 this.itemHeight);
@@ -271,10 +270,17 @@ export default {
                 return;
             }
 
-            clearTimeout(this.refresh);
+            if ( global.DEBUG_NVSCROLL ) {
+                console.log('staggerRun: ' + staggerBuffer, bufferItems);
+            }
 
-            this.refresh = setTimeout(() =>
-                this.refreshDriver(false), 2000);
+            let staggerFunction = () => {
+                this.refreshDriver(staggerBuffer + 1);
+            }
+
+            if ( staggerBuffer < 3 ) {
+                this.refresh = setTimeout(staggerFunction, 650);
+            }
 
             this.state = newState;
         },

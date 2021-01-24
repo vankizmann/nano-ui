@@ -2,6 +2,8 @@ import { UUID, Num, Arr, Obj, Dom, Any, Event, Locale } from "nano-js";
 import { h } from "vue";
 import NDraghandler from "../draghandler/draghandler";
 
+global.DEBUG_NDLIST = false;
+
 export default {
 
     name: 'NDraglist',
@@ -373,7 +375,10 @@ export default {
         refreshVirtuals()
         {
             this.virtuals = this.drag.reduce(this.items);
-            console.log('Total virtual items mounted: ' + this.virtuals.length);
+
+            if ( global.DEBUG_NDLIST ) {
+                console.log('Total virtual items mounted: ' + this.virtuals.length);
+            }
         },
 
         filterVirtuals()
