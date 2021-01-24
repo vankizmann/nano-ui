@@ -90,7 +90,7 @@ export default {
 
         'items': function () {
             this.prevRender = {};
-            this.updateRender();
+            this.$nextTick(this.updateRender);
         }
 
     },

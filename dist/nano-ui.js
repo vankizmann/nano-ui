@@ -15334,7 +15334,7 @@ global.DEBUG_NVSCROLL = false;
   watch: {
     'items': function items() {
       this.prevRender = {};
-      this.updateRender();
+      this.$nextTick(this.updateRender);
     }
   },
   beforeMount: function beforeMount() {
