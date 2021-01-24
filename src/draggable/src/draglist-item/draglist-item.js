@@ -31,9 +31,7 @@ export default {
 
     mounted()
     {
-        this.$nextTick(() => {
-            this.NDraggable.drag.bindNode(this);
-        });
+        this.NDraggable.drag.bindNode(this);
     },
 
     beforeUnmount()

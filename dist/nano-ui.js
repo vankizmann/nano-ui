@@ -5371,11 +5371,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    var _this = this;
-
-    this.$nextTick(function () {
-      _this.NDraggable.drag.bindNode(_this);
-    });
+    this.NDraggable.drag.bindNode(this);
   },
   beforeUnmount: function beforeUnmount() {
     this.NDraggable.drag.unbindNode(this);
@@ -15314,18 +15310,13 @@ global.DEBUG_NVSCROLL = false;
         return 10;
       },
       type: [Number]
-    },
-    threshold: {
-      "default": function _default() {
-        return 0;
-      },
-      type: [Number]
     }
   },
   data: function data() {
     var state = {
       startIndex: 0,
-      endIndex: 0
+      endIndex: 0,
+      isBuffer: false
     };
     return {
       state: state,
@@ -15336,11 +15327,10 @@ global.DEBUG_NVSCROLL = false;
   watch: {
     'items': function items() {
       this.prevRender = {};
-      this.updateRender();
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].async(this.updateRender);
     }
   },
   beforeMount: function beforeMount() {
-    this.isBigStep = false;
     this.scrollTop = 0;
     this.prevRender = {};
   },
@@ -15426,14 +15416,14 @@ global.DEBUG_NVSCROLL = false;
         _this.onScrollupdate(scrollTop);
       };
 
-      var isNotReady = this.timer && Date.now() - this.timer < 35;
+      var isNotReady = this.timer && Date.now() - this.timer <= 35;
 
       if (!this.timer) {
         this.timer = Date.now();
       }
 
       if (isNotReady) {
-        return this.timeout = setTimeout(updateCallback, 30);
+        return this.timeout = setTimeout(updateCallback, 5);
       }
 
       this.timer = Date.now();
@@ -15457,14 +15447,12 @@ global.DEBUG_NVSCROLL = false;
       var _this3 = this;
 
       var staggerBuffer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
-      if (this.items.length <= this.threshold) {
-        return this.clearState();
-      }
-
+      // if ( this.items.length <= this.threshold ) {
+      //     return this.clearState();
+      // }
       this.lastTop = this.scrollTop;
       var itemBuffer = Math.round(this.height / this.itemHeight) - 2;
-      var bufferItems = Math.round(Math.max(itemBuffer, 2) * (1 + staggerBuffer));
+      var bufferItems = Math.round(Math.max(itemBuffer, 2) * (1.5 + staggerBuffer));
       var startItem = Math.round(this.scrollTop / this.itemHeight);
       var endItem = Math.round((this.scrollTop + this.height) / this.itemHeight);
       var startIndex = startItem - bufferItems;
@@ -15485,13 +15473,15 @@ global.DEBUG_NVSCROLL = false;
 
       var newState = {
         startIndex: startIndex,
-        endIndex: endIndex
+        endIndex: endIndex,
+        isBuffer: false
       };
-      var isInRange = this.state.startIndex <= startIndex && this.state.endIndex >= endIndex;
 
-      if (isInRange || nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEqual(newState, this.state)) {
+      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEqual(newState, this.state)) {
         return;
       }
+
+      clearTimeout(this.refresh);
 
       if (global.DEBUG_NVSCROLL) {
         console.log('staggerRun: ' + staggerBuffer, bufferItems);
@@ -15501,8 +15491,22 @@ global.DEBUG_NVSCROLL = false;
         _this3.refreshDriver(staggerBuffer + 0.5);
       };
 
-      if (staggerBuffer < 3) {
+      if (staggerBuffer < 2.5) {
         this.refresh = setTimeout(staggerFunction, 350);
+      }
+
+      clearTimeout(this.refreshBuffer);
+      this.refreshBuffer = setTimeout(function () {
+        return _this3.state.isBuffer = true;
+      }, 500);
+      var isInRange = this.state.startIndex <= startIndex && this.state.endIndex >= endIndex;
+
+      if (isInRange) {
+        return;
+      }
+
+      if (global.DEBUG_NVSCROLL) {
+        console.log('Initiate rerender');
       }
 
       this.state = newState;
@@ -15510,12 +15514,24 @@ global.DEBUG_NVSCROLL = false;
   },
   renderItem: function renderItem(passed) {
     var uid = passed.value.id;
+    var isMounted = this.prevRender[uid] !== undefined;
 
-    if (this.prevRender[uid]) {
+    if (isMounted && this.state.isBuffer) {
       return this.prevRender[uid];
     }
 
-    passed.index = passed.index + this.state.startIndex;
+    var isRanged = this.state.startIndex <= passed.index && this.state.endIndex >= passed.index;
+
+    if (!isRanged) {
+      return null;
+    }
+
+    if (isMounted) {
+      return this.prevRender[uid];
+    } // passed.index = (passed.index +
+    //     this.state.startIndex);
+
+
     var topOffset = Math.round(this.itemHeight * passed.index);
     var renderFunction = this.$slots["default"];
 
@@ -15524,13 +15540,14 @@ global.DEBUG_NVSCROLL = false;
     }
 
     var props = {
+      key: uid,
       'data-index': passed.index
     };
     props.style = {
       top: topOffset + 'px',
       height: this.itemHeight + 'px'
     };
-    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
+    this.prevRender[uid] = Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
       "class": "n-virtualscroller__item"
     }, props), [renderFunction(passed)]);
     return this.prevRender[uid];
@@ -15540,15 +15557,15 @@ global.DEBUG_NVSCROLL = false;
 
     if (!this.items.length) {
       return this.$slots.empty && this.$slots.empty() || null;
-    }
+    } // let items = Arr.slice(this.items, this.state.startIndex,
+    //     this.state.endIndex);
+    //
+    // if ( this.items.length <= this.threshold ) {
+    //     items = this.items;
+    // }
 
-    var items = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].slice(this.items, this.state.startIndex, this.state.endIndex);
 
-    if (this.items.length <= this.threshold) {
-      items = this.items;
-    }
-
-    return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(items, function (value, index) {
+    return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.items, function (value, index) {
       return _this4.ctor('renderItem')({
         value: value,
         index: index
