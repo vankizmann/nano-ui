@@ -240,7 +240,7 @@ export default {
         bufferItems: {
             default()
             {
-                return 40;
+                return 60;
             },
             type: [Number]
         },

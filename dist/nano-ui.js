@@ -5649,13 +5649,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     threshold: {
       "default": function _default() {
-        return 40;
+        return 10;
       },
       type: [Number]
     },
     bufferItems: {
       "default": function _default() {
-        return 40;
+        return 60;
       },
       type: [Number]
     },
@@ -13447,7 +13447,7 @@ function _isSlot(s) {
     },
     bufferItems: {
       "default": function _default() {
-        return 40;
+        return 60;
       },
       type: [Number]
     },
@@ -15324,13 +15324,13 @@ function _isSlot(s) {
     },
     threshold: {
       "default": function _default() {
-        return 40;
+        return 10;
       },
       type: [Number]
     },
     bufferItems: {
       "default": function _default() {
-        return 40;
+        return 60;
       },
       type: [Number]
     }
@@ -15343,8 +15343,7 @@ function _isSlot(s) {
     return {
       uid: Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])(),
       state: state,
-      height: 0,
-      scrollTop: 0
+      height: 0
     };
   },
   watch: {
@@ -15354,6 +15353,7 @@ function _isSlot(s) {
     }
   },
   beforeMount: function beforeMount() {
+    this.scrollTop = 0;
     this.prevRender = {};
   },
   methods: {
@@ -15431,27 +15431,31 @@ function _isSlot(s) {
         _this.onScrollupdate(scrollTop);
       };
 
-      var limit = 150;
+      var limit = 200;
 
-      if (Math.abs(scrollTop - this.scrollTop) > 700) {
-        limit = 35;
+      if (Math.abs(scrollTop - this.scrollTop) > 500) {
+        limit = 45 + Math.abs(scrollTop - this.scrollTop) / 250;
       }
 
-      if (this.timer && Date.now() - this.timer < limit) {
-        return this.timeout = setTimeout(updateCallback, 25);
+      this.scrollTop = scrollTop;
+
+      if (this.timer && Date.now() - this.timer < Math.max(limit, 300)) {
+        return this.timeout = setTimeout(updateCallback, 60);
       }
 
+      console.log('update');
       this.timer = Date.now();
 
       if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isNumber(scrollTop)) {
         return;
       }
 
+      this.timeout = -1;
+
       if (this.items.length <= this.threshold) {
         return this.clearState();
       }
 
-      this.scrollTop = scrollTop;
       this.refreshDriver();
     },
     onSizechange: function onSizechange(height) {

@@ -66,7 +66,7 @@ export default {
         threshold: {
             default()
             {
-                return 40;
+                return 10;
             },
             type: [Number]
         },
@@ -74,7 +74,7 @@ export default {
         bufferItems: {
             default()
             {
-                return 40;
+                return 60;
             },
             type: [Number]
         },
@@ -88,7 +88,7 @@ export default {
         };
 
         return {
-            uid: UUID(), state, height: 0, scrollTop: 0
+            uid: UUID(), state, height: 0
         };
     },
 
@@ -102,6 +102,7 @@ export default {
 
     beforeMount()
     {
+        this.scrollTop = 0;
         this.prevRender = {};
     },
 
@@ -192,15 +193,19 @@ export default {
                 this.onScrollupdate(scrollTop);
             };
 
-            let limit = 150;
+            let limit = 200;
 
-            if ( Math.abs(scrollTop - this.scrollTop) > 700 ) {
-                limit = 35;
+            if ( Math.abs(scrollTop - this.scrollTop) > 500 ) {
+                limit = 45 + Math.abs(scrollTop - this.scrollTop) / 250;
             }
 
-            if ( this.timer && Date.now() - this.timer < limit ) {
-                return this.timeout = setTimeout(updateCallback, 25);
+            this.scrollTop = scrollTop;
+
+            if ( this.timer && Date.now() - this.timer < Math.max(limit, 300) ) {
+                return this.timeout = setTimeout(updateCallback, 60);
             }
+
+            console.log('update');
 
             this.timer = Date.now();
 
@@ -208,11 +213,11 @@ export default {
                 return;
             }
 
+            this.timeout = -1;
+
             if ( this.items.length <= this.threshold ) {
                 return this.clearState();
             }
-            
-            this.scrollTop = scrollTop;
 
             this.refreshDriver();
         },
