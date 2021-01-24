@@ -15330,7 +15330,7 @@ function _isSlot(s) {
     },
     bufferItems: {
       "default": function _default() {
-        return 60;
+        return 10;
       },
       type: [Number]
     }
@@ -15353,6 +15353,7 @@ function _isSlot(s) {
     }
   },
   beforeMount: function beforeMount() {
+    this.isBigStep = false;
     this.scrollTop = 0;
     this.prevRender = {};
   },
@@ -15431,19 +15432,20 @@ function _isSlot(s) {
         _this.onScrollupdate(scrollTop);
       };
 
-      var limit = 200;
+      var isBigStep = Math.abs(scrollTop - this.scrollTop) > 300 || this.isBigStep;
+      var limit = 160;
 
-      if (Math.abs(scrollTop - this.scrollTop) > 200) {
-        limit = 45 + Math.abs(scrollTop - this.scrollTop) / 250;
+      if (isBigStep) {
+        limit = Math.abs(scrollTop - this.scrollTop) / 150;
       }
 
       this.scrollTop = scrollTop;
+      var inTimeRange = Date.now() - this.timer < Math.max(limit, 300);
 
-      if (this.timer && Date.now() - this.timer < Math.max(limit, 300)) {
+      if (this.timer && inTimeRange) {
         return this.timeout = setTimeout(updateCallback, 60);
       }
 
-      console.log('update');
       this.timer = Date.now();
 
       if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isNumber(scrollTop)) {
@@ -15456,7 +15458,21 @@ function _isSlot(s) {
         return this.clearState();
       }
 
-      this.refreshDriver();
+      clearTimeout(this.fulltimer);
+
+      var stepCallbacks = function stepCallbacks() {
+        _this.refreshDriver();
+
+        _this.isBigStep = false;
+      };
+
+      this.isBigStep = isBigStep;
+
+      if (isBigStep) {
+        this.fulltimer = setTimeout(stepCallbacks, 500);
+      }
+
+      this.refreshDriver(isBigStep);
     },
     onSizechange: function onSizechange(height) {
       if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isNumber(height)) {
@@ -15471,15 +15487,23 @@ function _isSlot(s) {
       this.refreshDriver();
     },
     refreshDriver: function refreshDriver() {
+      var ignoreBuffer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      var itemBuffer = Math.round(this.height / this.itemHeight);
+      var bufferItems = itemBuffer;
+
+      if (!ignoreBuffer) {
+        bufferItems += itemBuffer * 4;
+      }
+
       var startItem = Math.round(this.scrollTop / this.itemHeight);
       var endItem = Math.round((this.scrollTop + this.height) / this.itemHeight);
-      var startIndex = startItem - this.bufferItems;
+      var startIndex = startItem - bufferItems;
 
       if (startIndex < 0) {
         startIndex = 0;
       }
 
-      var endIndex = endItem + this.bufferItems;
+      var endIndex = endItem + bufferItems;
 
       if (endIndex > this.items.length) {
         endIndex = this.items.length;
@@ -15489,10 +15513,13 @@ function _isSlot(s) {
         startIndex: startIndex,
         endIndex: endIndex
       };
+      var isInRange = this.state.startIndex <= startIndex && this.state.endIndex >= endIndex;
 
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEqual(newState, this.state)) {
-        this.state = newState;
+      if (isInRange || nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEqual(newState, this.state)) {
+        return;
       }
+
+      this.state = newState;
     }
   },
   renderItem: function renderItem(passed) {

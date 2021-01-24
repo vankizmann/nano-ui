@@ -74,7 +74,7 @@ export default {
         bufferItems: {
             default()
             {
-                return 60;
+                return 10;
             },
             type: [Number]
         },
@@ -102,6 +102,7 @@ export default {
 
     beforeMount()
     {
+        this.isBigStep = false;
         this.scrollTop = 0;
         this.prevRender = {};
     },
@@ -193,19 +194,23 @@ export default {
                 this.onScrollupdate(scrollTop);
             };
 
-            let limit = 200;
+            let isBigStep = Math.abs(scrollTop -
+                this.scrollTop) > 300 || this.isBigStep;
 
-            if ( Math.abs(scrollTop - this.scrollTop) > 200 ) {
-                limit = 45 + Math.abs(scrollTop - this.scrollTop) / 250;
+            let limit = 160;
+
+            if ( isBigStep ) {
+                limit = Math.abs(scrollTop - this.scrollTop) / 150;
             }
 
             this.scrollTop = scrollTop;
 
-            if ( this.timer && Date.now() - this.timer < Math.max(limit, 300) ) {
+            let inTimeRange = Date.now() - this.timer <
+                Math.max(limit, 300)
+
+            if ( this.timer && inTimeRange ) {
                 return this.timeout = setTimeout(updateCallback, 60);
             }
-
-            console.log('update');
 
             this.timer = Date.now();
 
@@ -219,7 +224,20 @@ export default {
                 return this.clearState();
             }
 
-            this.refreshDriver();
+            clearTimeout(this.fulltimer);
+
+            let stepCallbacks = () => {
+                this.refreshDriver();
+                this.isBigStep = false;
+            }
+
+            this.isBigStep = isBigStep;
+
+            if ( isBigStep ) {
+                this.fulltimer = setTimeout(stepCallbacks, 500);
+            }
+
+            this.refreshDriver(isBigStep);
         },
 
         onSizechange(height)
@@ -237,21 +255,30 @@ export default {
             this.refreshDriver();
         },
 
-        refreshDriver()
+        refreshDriver(ignoreBuffer = false)
         {
-            let startItem = Math.round(this.scrollTop / 
+            let itemBuffer = Math.round(this.height /
+                this.itemHeight);
+
+            let bufferItems = itemBuffer;
+
+            if ( ! ignoreBuffer ) {
+                bufferItems += itemBuffer * 4;
+            }
+
+            let startItem = Math.round(this.scrollTop /
                 this.itemHeight);
 
             let endItem = Math.round((this.scrollTop + 
-                this.height) /  this.itemHeight);
+                this.height) / this.itemHeight);
 
-            let startIndex = startItem - this.bufferItems;
+            let startIndex = startItem - bufferItems;
 
             if ( startIndex < 0 ) {
                 startIndex = 0;
             }
 
-            let endIndex = endItem + this.bufferItems;
+            let endIndex = endItem + bufferItems;
 
             if ( endIndex > this.items.length ) {
                 endIndex = this.items.length;
@@ -261,9 +288,14 @@ export default {
                 startIndex, endIndex
             };
 
-            if ( ! Any.isEqual(newState, this.state) ) {
-                this.state = newState;
+            let isInRange = this.state.startIndex <= startIndex &&
+                this.state.endIndex >= endIndex;
+
+            if ( isInRange || Any.isEqual(newState, this.state) ) {
+                return;
             }
+
+            this.state = newState;
         },
 
     },
