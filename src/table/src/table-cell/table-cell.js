@@ -6,6 +6,10 @@ export default {
 
         NTable: {
             default: undefined
+        },
+
+        NDraggableItem: {
+            default: undefined
         }
 
     },
@@ -30,7 +34,7 @@ export default {
 
         input()
         {
-            return Obj.get(this.item, this.column.prop);
+            return Obj.get(this.NDraggableItem.item, this.column.prop);
         }
 
     },

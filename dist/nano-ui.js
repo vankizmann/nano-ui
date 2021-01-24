@@ -5363,6 +5363,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "default": undefined
     }
   },
+  provide: function provide() {
+    return {
+      NDraggableItem: this
+    };
+  },
   props: {
     value: {
       required: true
@@ -11877,6 +11882,9 @@ __webpack_require__.r(__webpack_exports__);
   inject: {
     NTable: {
       "default": undefined
+    },
+    NDraggableItem: {
+      "default": undefined
     }
   },
   props: {
@@ -11892,7 +11900,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     input: function input() {
-      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.item, this.column.prop);
+      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.NDraggableItem.item, this.column.prop);
     }
   },
   render: function render() {
@@ -15352,20 +15360,17 @@ global.DEBUG_NVSCROLL = false;
       load: true
     };
   },
+  watch: {
+    'items': function items() {
+      this.prevRender = {};
+      this.updateRender();
+    }
+  },
   beforeMount: function beforeMount() {
     this.scrollTop = 0;
     this.prevRender = {};
   },
   mounted: function mounted() {
-    var _this = this;
-
-    this.$watch('items', function () {
-      _this.prevRender = {};
-
-      _this.updateRender();
-    }, {
-      deep: true
-    });
     this.bindAdaptScroll();
   },
   beforeUnmount: function beforeUnmount() {
@@ -15466,7 +15471,7 @@ global.DEBUG_NVSCROLL = false;
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].async(this.refreshDriver);
     },
     refreshDriver: function refreshDriver() {
-      var _this2 = this;
+      var _this = this;
 
       var staggerBuffer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
@@ -15509,7 +15514,7 @@ global.DEBUG_NVSCROLL = false;
       }
 
       var staggerFunction = function staggerFunction() {
-        _this2.refreshDriver(staggerBuffer + 0.5);
+        _this.refreshDriver(staggerBuffer + 0.5);
       };
 
       if (staggerBuffer < 2) {
@@ -15558,7 +15563,7 @@ global.DEBUG_NVSCROLL = false;
     return this.prevRender[uid];
   },
   renderItems: function renderItems() {
-    var _this3 = this;
+    var _this2 = this;
 
     if (!this.items.length) {
       return this.$slots.empty && this.$slots.empty() || null;
@@ -15571,7 +15576,7 @@ global.DEBUG_NVSCROLL = false;
     }
 
     return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(items, function (value, index) {
-      return _this3.ctor('renderItem')({
+      return _this2.ctor('renderItem')({
         value: value,
         index: index
       });

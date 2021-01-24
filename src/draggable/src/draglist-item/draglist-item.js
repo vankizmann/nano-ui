@@ -12,6 +12,13 @@ export default {
     
     },
 
+    provide()
+    {
+        return {
+            NDraggableItem: this
+        };
+    },
+
     props: {
 
         value: {

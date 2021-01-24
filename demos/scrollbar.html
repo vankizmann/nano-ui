@@ -68,6 +68,9 @@
 
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--auto">
+                <n-button type="primary" @click="virtualTree = virtualData">
+                    Swap items
+                </n-button>
                 <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(0)">
                     Scroll to first item
                 </n-button>
@@ -190,7 +193,7 @@
                 return Nano.Obj.assign(item, { children: children });
             });
 
-            data.virtualData = itemGenerator(10000);
+            data.virtualData = itemGenerator(1000);
 
             data.virtualTree = Nano.Arr.each(itemGenerator(1000), function (item) {
                 return Nano.Obj.assign(item, { children: itemGenerator(10) });
