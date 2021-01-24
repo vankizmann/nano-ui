@@ -15265,7 +15265,7 @@ function _isSlot(s) {
   return typeof s === 'function' || Object.prototype.toString.call(s) === '[object Object]' && !Object(vue__WEBPACK_IMPORTED_MODULE_0__["isVNode"])(s);
 }
 
-global.DEBUG_NVSCROLL = false;
+global.DEBUG_NVSCROLL = true;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NVirtualscroller',
   model: {
@@ -15310,13 +15310,24 @@ global.DEBUG_NVSCROLL = false;
         return 10;
       },
       type: [Number]
+    },
+    threshold: {
+      "default": function _default() {
+        return 1;
+      },
+      type: [Number]
+    },
+    framerate: {
+      "default": function _default() {
+        return 30;
+      },
+      type: [Number]
     }
   },
   data: function data() {
     var state = {
       startIndex: 0,
-      endIndex: 0,
-      isBuffer: false
+      endIndex: 0
     };
     return {
       state: state,
@@ -15326,15 +15337,28 @@ global.DEBUG_NVSCROLL = false;
   },
   watch: {
     'items': function items() {
+      console.log('items changehd');
       this.prevRender = {};
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].async(this.updateRender);
+      this.updateRender();
     }
   },
   beforeMount: function beforeMount() {
     this.scrollTop = 0;
     this.prevRender = {};
   },
+  mounted: function mounted() {
+    this.bindAdaptScroll();
+  },
+  beforeUnmount: function beforeUnmount() {
+    this.unbindAdaptScroll();
+  },
   methods: {
+    bindAdaptScroll: function bindAdaptScroll() {
+      this.refreshScroll = setInterval(this.onScrollupdate, 1000 / this.framerate);
+    },
+    unbindAdaptScroll: function unbindAdaptScroll() {
+      clearInterval(this.refreshScroll);
+    },
     isIndexRendered: function isIndexRendered(index) {
       if (this.items.length <= this.threshold) {
         return true;
@@ -15400,59 +15424,60 @@ global.DEBUG_NVSCROLL = false;
       this.scrollTop = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.$refs.scrollbar, '$refs.content.scrollTop');
       this.refreshDriver();
     },
-    onScrollupdate: function onScrollupdate(scrollTop) {
-      var _this = this;
+    onScrollupdate: function onScrollupdate() {
+      var scrollTop = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.$refs.scrollbar, '$refs.content.scrollTop');
 
-      var el = this.$refs.scrollbar.$el;
-
-      if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isNumber(scrollTop)) {
+      if (scrollTop === this.scrollTop) {
         return;
-      }
+      } // clearTimeout(this.timeout);
+      // let updateCallback = () => {
+      //     this.onScrollupdate(scrollTop);
+      // };
 
-      this.scrollTop = scrollTop;
-      clearTimeout(this.timeout);
 
-      var updateCallback = function updateCallback() {
-        _this.onScrollupdate(scrollTop);
-      };
+      this.scrollTop = scrollTop; // let isNotReady = this.timer && Date.now() -
+      //     this.timer <= limit;
+      //
+      // if ( ! this.timer ) {
+      //     this.timer = Date.now();
+      // }
+      //
+      // if ( isNotReady ) {
+      //     return this.timeout = setTimeout(
+      //         updateCallback, 6);
+      // }
+      // this.timer = Date.now();
 
-      var isNotReady = this.timer && Date.now() - this.timer <= 35;
-
-      if (!this.timer) {
-        this.timer = Date.now();
-      }
-
-      if (isNotReady) {
-        return this.timeout = setTimeout(updateCallback, 5);
-      }
-
-      this.timer = Date.now();
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].async(function () {
-        return _this.refreshDriver();
-      });
+      console.log('scoll changed');
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].async(this.refreshDriver);
     },
     onSizechange: function onSizechange(height) {
-      var _this2 = this;
-
       if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isNumber(height)) {
         return;
       }
 
       this.height = height;
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].async(function () {
-        return _this2.refreshDriver();
-      });
+      console.log('size changed');
+      this.refreshDriver();
     },
     refreshDriver: function refreshDriver() {
-      var _this3 = this;
+      var _this = this;
 
       var staggerBuffer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      // if ( this.items.length <= this.threshold ) {
-      //     return this.clearState();
-      // }
       this.lastTop = this.scrollTop;
-      var itemBuffer = Math.round(this.height / this.itemHeight) - 2;
-      var bufferItems = Math.round(Math.max(itemBuffer, 2) * (1.5 + staggerBuffer));
+
+      if (!this.items.length) {
+        return;
+      }
+
+      if (this.state.endIndex === 0) {
+        staggerBuffer = 2;
+      }
+
+      var itemBuffer = Math.round(this.height / this.itemHeight);
+      itemBuffer = Math.max(itemBuffer, 6);
+      var bufferItems = Math.round(itemBuffer * (0.5 + staggerBuffer));
+      bufferItems = Math.min(bufferItems, itemBuffer * 2);
       var startItem = Math.round(this.scrollTop / this.itemHeight);
       var endItem = Math.round((this.scrollTop + this.height) / this.itemHeight);
       var startIndex = startItem - bufferItems;
@@ -15471,10 +15496,15 @@ global.DEBUG_NVSCROLL = false;
         endIndex = this.items.length;
       }
 
+      var isInRange = this.state.startIndex <= startIndex && this.state.endIndex >= endIndex;
+
+      if (isInRange) {
+        return;
+      }
+
       var newState = {
         startIndex: startIndex,
-        endIndex: endIndex,
-        isBuffer: false
+        endIndex: endIndex
       };
 
       if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEqual(newState, this.state)) {
@@ -15488,22 +15518,16 @@ global.DEBUG_NVSCROLL = false;
       }
 
       var staggerFunction = function staggerFunction() {
-        _this3.refreshDriver(staggerBuffer + 0.5);
+        _this.refreshDriver(staggerBuffer + 0.5);
       };
 
-      if (staggerBuffer < 2.5) {
+      if (staggerBuffer < 2) {
         this.refresh = setTimeout(staggerFunction, 350);
-      }
+      } // clearTimeout(this.refreshBuffer);
+      //
+      // this.refreshBuffer = setTimeout(() =>
+      //     this.state.isBuffer = true, 500);
 
-      clearTimeout(this.refreshBuffer);
-      this.refreshBuffer = setTimeout(function () {
-        return _this3.state.isBuffer = true;
-      }, 500);
-      var isInRange = this.state.startIndex <= startIndex && this.state.endIndex >= endIndex;
-
-      if (isInRange) {
-        return;
-      }
 
       if (global.DEBUG_NVSCROLL) {
         console.log('Initiate rerender');
@@ -15514,24 +15538,12 @@ global.DEBUG_NVSCROLL = false;
   },
   renderItem: function renderItem(passed) {
     var uid = passed.value.id;
-    var isMounted = this.prevRender[uid] !== undefined;
 
-    if (isMounted && this.state.isBuffer) {
+    if (this.prevRender[uid]) {
       return this.prevRender[uid];
     }
 
-    var isRanged = this.state.startIndex <= passed.index && this.state.endIndex >= passed.index;
-
-    if (!isRanged) {
-      return null;
-    }
-
-    if (isMounted) {
-      return this.prevRender[uid];
-    } // passed.index = (passed.index +
-    //     this.state.startIndex);
-
-
+    passed.index = passed.index + this.state.startIndex;
     var topOffset = Math.round(this.itemHeight * passed.index);
     var renderFunction = this.$slots["default"];
 
@@ -15553,20 +15565,20 @@ global.DEBUG_NVSCROLL = false;
     return this.prevRender[uid];
   },
   renderItems: function renderItems() {
-    var _this4 = this;
+    var _this2 = this;
 
     if (!this.items.length) {
       return this.$slots.empty && this.$slots.empty() || null;
-    } // let items = Arr.slice(this.items, this.state.startIndex,
-    //     this.state.endIndex);
-    //
-    // if ( this.items.length <= this.threshold ) {
-    //     items = this.items;
-    // }
+    }
 
+    var items = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].slice(this.items, this.state.startIndex, this.state.endIndex);
 
-    return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.items, function (value, index) {
-      return _this4.ctor('renderItem')({
+    if (this.items.length <= this.threshold) {
+      items = this.items;
+    }
+
+    return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(items, function (value, index) {
+      return _this2.ctor('renderItem')({
         value: value,
         index: index
       });

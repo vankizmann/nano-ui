@@ -1,6 +1,6 @@
 import { UUID, Arr, Obj, Num, Dom, Any, Locale, Event } from "nano-js";
 
-global.DEBUG_NVSCROLL = false;
+global.DEBUG_NVSCROLL = true;
 
 export default {
 
@@ -65,12 +65,28 @@ export default {
             type: [Number]
         },
 
+        threshold: {
+            default()
+            {
+                return 1;
+            },
+            type: [Number]
+        },
+
+        framerate: {
+            default()
+            {
+                return 30;
+            },
+            type: [Number]
+        },
+
     },
 
     data()
     {
         let state = {
-            startIndex: 0, endIndex: 0, isBuffer: false
+            startIndex: 0, endIndex: 0
         };
 
         return {
@@ -81,8 +97,9 @@ export default {
     watch: {
 
         'items': function () {
+            console.log('items changehd');
             this.prevRender = {};
-            Any.async(this.updateRender);
+            this.updateRender();
         }
 
     },
@@ -93,7 +110,29 @@ export default {
         this.prevRender = {};
     },
 
+    mounted()
+    {
+        this.bindAdaptScroll()
+    },
+
+
+    beforeUnmount()
+    {
+        this.unbindAdaptScroll()
+    },
+
     methods: {
+
+        bindAdaptScroll()
+        {
+            this.refreshScroll = setInterval(this.onScrollupdate,
+                1000 / this.framerate);
+        },
+
+        unbindAdaptScroll()
+        {
+            clearInterval(this.refreshScroll);
+        },
 
         isIndexRendered(index)
         {
@@ -172,37 +211,39 @@ export default {
             this.refreshDriver();
         },
 
-        onScrollupdate(scrollTop)
+        onScrollupdate()
         {
-            let el = this.$refs.scrollbar.$el;
+            let scrollTop = Obj.get(this.$refs.scrollbar,
+                '$refs.content.scrollTop');
 
-            if ( ! Any.isNumber(scrollTop) ) {
+            if ( scrollTop === this.scrollTop ) {
                 return;
             }
 
+            // clearTimeout(this.timeout);
+
+            // let updateCallback = () => {
+            //     this.onScrollupdate(scrollTop);
+            // };
+
             this.scrollTop = scrollTop;
 
-            clearTimeout(this.timeout);
+            // let isNotReady = this.timer && Date.now() -
+            //     this.timer <= limit;
+            //
+            // if ( ! this.timer ) {
+            //     this.timer = Date.now();
+            // }
+            //
+            // if ( isNotReady ) {
+            //     return this.timeout = setTimeout(
+            //         updateCallback, 6);
+            // }
 
-            let updateCallback = () => {
-                this.onScrollupdate(scrollTop);
-            };
+            // this.timer = Date.now();
 
-            let isNotReady = this.timer && Date.now() -
-                this.timer <= 35;
-
-            if ( ! this.timer ) {
-                this.timer = Date.now();
-            }
-
-            if ( isNotReady ) {
-                return this.timeout = setTimeout(
-                    updateCallback, 5);
-            }
-
-            this.timer = Date.now();
-
-            Any.async(() => this.refreshDriver());
+            console.log('scoll changed')
+            Any.async(this.refreshDriver);
         },
 
         onSizechange(height)
@@ -213,23 +254,32 @@ export default {
 
             this.height = height;
 
-            Any.async(() => this.refreshDriver());
+            console.log('size changed');
+            this.refreshDriver()
         },
 
 
         refreshDriver(staggerBuffer = 0)
         {
-            // if ( this.items.length <= this.threshold ) {
-            //     return this.clearState();
-            // }
-
             this.lastTop = this.scrollTop;
 
-            let itemBuffer = Math.round(this.height /
-                this.itemHeight) - 2;
+            if ( ! this.items.length ) {
+                return;
+            }
 
-            let bufferItems = Math.round(Math.max(
-                itemBuffer, 2) * (1.5 + staggerBuffer));
+            if ( this.state.endIndex === 0 ) {
+                staggerBuffer = 2;
+            }
+
+            let itemBuffer = Math.round(this.height /
+                this.itemHeight);
+
+            itemBuffer = Math.max(itemBuffer, 6);
+
+            let bufferItems = Math.round(itemBuffer *
+                (0.5 + staggerBuffer));
+
+            bufferItems = Math.min(bufferItems, itemBuffer * 2);
 
             let startItem = Math.round(this.scrollTop /
                 this.itemHeight);
@@ -253,8 +303,15 @@ export default {
                 endIndex = this.items.length;
             }
 
+            let isInRange = this.state.startIndex <= startIndex &&
+                this.state.endIndex >= endIndex;
+
+            if ( isInRange ) {
+                return;
+            }
+
             let newState = {
-                startIndex, endIndex, isBuffer: false
+                startIndex, endIndex
             };
 
             if ( Any.isEqual(newState, this.state) ) {
@@ -269,23 +326,16 @@ export default {
 
             let staggerFunction = () => {
                 this.refreshDriver(staggerBuffer + 0.5);
-            }
+            };
 
-            if ( staggerBuffer < 2.5 ) {
+            if ( staggerBuffer < 2 ) {
                 this.refresh = setTimeout(staggerFunction, 350);
             }
 
-            clearTimeout(this.refreshBuffer);
-
-            this.refreshBuffer = setTimeout(() =>
-                this.state.isBuffer = true, 500);
-
-            let isInRange = this.state.startIndex <= startIndex &&
-                this.state.endIndex >= endIndex;
-
-            if ( isInRange ) {
-                return;
-            }
+            // clearTimeout(this.refreshBuffer);
+            //
+            // this.refreshBuffer = setTimeout(() =>
+            //     this.state.isBuffer = true, 500);
 
             if ( global.DEBUG_NVSCROLL ) {
                 console.log('Initiate rerender');
@@ -300,25 +350,12 @@ export default {
     {
         let uid = passed.value.id;
 
-        let isMounted = this.prevRender[uid] !== undefined;
-
-        if ( isMounted && this.state.isBuffer ) {
+        if ( this.prevRender[uid] ) {
             return this.prevRender[uid];
         }
 
-        let isRanged = this.state.startIndex <= passed.index &&
-            this.state.endIndex >= passed.index;
-
-        if ( ! isRanged ) {
-            return null;
-        }
-
-        if ( isMounted ) {
-            return this.prevRender[uid];
-        }
-
-        // passed.index = (passed.index +
-        //     this.state.startIndex);
+        passed.index = (passed.index +
+            this.state.startIndex);
 
         let topOffset = Math.round(this.itemHeight * 
             passed.index);
@@ -352,14 +389,14 @@ export default {
             return this.$slots.empty && this.$slots.empty() || null;
         }
 
-        // let items = Arr.slice(this.items, this.state.startIndex,
-        //     this.state.endIndex);
-        //
-        // if ( this.items.length <= this.threshold ) {
-        //     items = this.items;
-        // }
+        let items = Arr.slice(this.items, this.state.startIndex,
+            this.state.endIndex);
 
-        return Arr.each(this.items, (value, index) => {
+        if ( this.items.length <= this.threshold ) {
+            items = this.items;
+        }
+
+        return Arr.each(items, (value, index) => {
             return this.ctor('renderItem')({ value, index });
         });
     },
