@@ -10475,7 +10475,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var hasNativeBar = offsetWidth !== 0 && this.overflowY;
 
       if (hasNativeBar) {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-native-hbar');
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-native-vbar');
       }
 
       var hasVtrack = outerHeight && outerHeight < innerHeight;

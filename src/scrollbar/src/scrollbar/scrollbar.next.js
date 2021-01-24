@@ -287,7 +287,7 @@ export default {
             let hasNativeBar = offsetWidth !== 0 && this.overflowY;
 
             if ( hasNativeBar ) {
-                Dom.find(this.$el).addClass('has-native-hbar');
+                Dom.find(this.$el).addClass('has-native-vbar');
             }
 
             let hasVtrack = outerHeight && outerHeight < innerHeight;
