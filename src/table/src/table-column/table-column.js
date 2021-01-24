@@ -460,7 +460,7 @@ export default {
         }
 
         let passed = Obj.except(this.$attrs, [], {
-            ...props, class: classList, style: style, column: this
+            class: classList, style: style, column: this
         });
 
         let component = resolveComponent('NTableCell' + 

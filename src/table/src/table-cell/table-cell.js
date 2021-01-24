@@ -18,23 +18,25 @@ export default {
 
         column: {
             required: true
-        },
-
-        value: {
-            required: true
-        },
-
-        item: {
-            required: true
         }
 
     },
 
     computed: {
 
+        item()
+        {
+            return this.NDraggableItem.item;
+        },
+
+        value()
+        {
+            return this.NDraggableItem.value;
+        },
+
         input()
         {
-            return Obj.get(this.NDraggableItem.item, this.column.prop);
+            return Obj.get(this.item, this.column.prop);
         }
 
     },

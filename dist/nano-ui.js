@@ -11890,17 +11890,17 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     column: {
       required: true
-    },
-    value: {
-      required: true
-    },
-    item: {
-      required: true
     }
   },
   computed: {
+    item: function item() {
+      return this.NDraggableItem.item;
+    },
+    value: function value() {
+      return this.NDraggableItem.value;
+    },
     input: function input() {
-      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.NDraggableItem.item, this.column.prop);
+      return nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.item, this.column.prop);
     }
   },
   render: function render() {
@@ -12322,13 +12322,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NTableColumn',
@@ -12694,11 +12687,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       style.display = 'none';
     }
 
-    var passed = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].except(this.$attrs, [], _objectSpread(_objectSpread({}, props), {}, {
+    var passed = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].except(this.$attrs, [], {
       "class": classList,
       style: style,
       column: this
-    }));
+    });
     var component = Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])('NTableCell' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.type));
     this.prevRender[uid] = Object(vue__WEBPACK_IMPORTED_MODULE_0__["h"])(component, passed);
     return this.prevRender[uid];
