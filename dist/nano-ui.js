@@ -5353,6 +5353,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NDraglistItem',
   inject: {
@@ -5368,6 +5371,18 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     item: function item() {
       return nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.NDraggable, this.value.route);
+    },
+    touch: function touch() {
+      return !!('ontouchstart' in window || navigator.msMaxTouchPoints);
+    },
+    mousedown: function mousedown() {
+      return this.touch ? 'touchstart' : 'mousedown';
+    },
+    mousemove: function mousemove() {
+      return this.touch ? 'touchmove' : 'mousemove';
+    },
+    mouseup: function mouseup() {
+      return this.touch ? 'touchend' : 'mouseup';
     }
   },
   mounted: function mounted() {
@@ -5467,10 +5482,11 @@ __webpack_require__.r(__webpack_exports__);
       return null;
     }
 
-    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
-      "class": "n-draglist-item__expand",
-      "onMousedown": this.expandItem
-    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+    var props = _defineProperty({}, 'on' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.mousedown), this.expandItem);
+
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
+      "class": "n-draglist-item__expand"
+    }, props), [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": "n-draglist-item__angle"
     }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("i", {
       "class": this.icons.angleRight
@@ -5481,10 +5497,11 @@ __webpack_require__.r(__webpack_exports__);
       return null;
     }
 
-    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
-      "class": "n-draglist-item__select",
-      "onMousedown": this.selectItem
-    }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
+    var props = _defineProperty({}, 'on' + nano_js__WEBPACK_IMPORTED_MODULE_1__["Str"].ucfirst(this.mousedown), this.selectItem);
+
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
+      "class": "n-draglist-item__select"
+    }, props), [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": "n-draglist-item__checkbox"
     }, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("i", {
       "class": this.icons.checked
@@ -15337,7 +15354,6 @@ global.DEBUG_NVSCROLL = true;
   },
   watch: {
     'items': function items() {
-      console.log('items changehd');
       this.prevRender = {};
       this.updateRender();
     }
@@ -15425,30 +15441,17 @@ global.DEBUG_NVSCROLL = true;
       this.refreshDriver();
     },
     onScrollupdate: function onScrollupdate() {
+      if (this.items.length <= this.threshold) {
+        return;
+      }
+
       var scrollTop = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.$refs.scrollbar, '$refs.content.scrollTop');
 
       if (scrollTop === this.scrollTop) {
         return;
-      } // clearTimeout(this.timeout);
-      // let updateCallback = () => {
-      //     this.onScrollupdate(scrollTop);
-      // };
+      }
 
-
-      this.scrollTop = scrollTop; // let isNotReady = this.timer && Date.now() -
-      //     this.timer <= limit;
-      //
-      // if ( ! this.timer ) {
-      //     this.timer = Date.now();
-      // }
-      //
-      // if ( isNotReady ) {
-      //     return this.timeout = setTimeout(
-      //         updateCallback, 6);
-      // }
-      // this.timer = Date.now();
-
-      console.log('scoll changed');
+      this.scrollTop = scrollTop;
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].async(this.refreshDriver);
     },
     onSizechange: function onSizechange(height) {
@@ -15457,14 +15460,12 @@ global.DEBUG_NVSCROLL = true;
       }
 
       this.height = height;
-      console.log('size changed');
-      this.refreshDriver();
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].async(this.refreshDriver);
     },
     refreshDriver: function refreshDriver() {
       var _this = this;
 
       var staggerBuffer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      this.lastTop = this.scrollTop;
 
       if (this.state.endIndex === 0) {
         staggerBuffer = 2;

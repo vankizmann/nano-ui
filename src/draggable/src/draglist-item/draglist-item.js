@@ -1,4 +1,4 @@
-import { UUID, Num, Arr, Obj, Dom, Any, Event } from "nano-js";
+import { Str, Obj } from "nano-js";
 
 export default {
 
@@ -25,6 +25,26 @@ export default {
         item()
         {
             return Obj.get(this.NDraggable, this.value.route);
+        },
+
+        touch() {
+            return !! ('ontouchstart' in window ||
+                navigator.msMaxTouchPoints);
+        },
+
+        mousedown() {
+            return this.touch ? 'touchstart' :
+                'mousedown';
+        },
+
+        mousemove() {
+            return this.touch ? 'touchmove' :
+                'mousemove';
+        },
+
+        mouseup() {
+            return this.touch ? 'touchend' :
+                'mouseup';
         }
 
     },
@@ -168,8 +188,12 @@ export default {
             return null;
         }
 
+        let props = {
+            ['on' + Str.ucfirst(this.mousedown)]: this.expandItem
+        };
+
         return (
-            <div class="n-draglist-item__expand" onMousedown={this.expandItem}>
+            <div class="n-draglist-item__expand" {...props}>
                 <div class="n-draglist-item__angle">
                     <i class={ this.icons.angleRight }></i>
                 </div>
@@ -183,8 +207,12 @@ export default {
             return null;
         }
 
+        let props = {
+            ['on' + Str.ucfirst(this.mousedown)]: this.selectItem
+        };
+
         return (
-            <div class="n-draglist-item__select" onMousedown={this.selectItem}>
+            <div class="n-draglist-item__select" {...props}>
                 <div class="n-draglist-item__checkbox">
                     <i class={ this.icons.checked }></i>
                 </div>

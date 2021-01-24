@@ -97,7 +97,6 @@ export default {
     watch: {
 
         'items': function () {
-            console.log('items changehd');
             this.prevRender = {};
             this.updateRender();
         }
@@ -213,6 +212,10 @@ export default {
 
         onScrollupdate()
         {
+            if ( this.items.length <= this.threshold ) {
+                return;
+            }
+
             let scrollTop = Obj.get(this.$refs.scrollbar,
                 '$refs.content.scrollTop');
 
@@ -220,29 +223,8 @@ export default {
                 return;
             }
 
-            // clearTimeout(this.timeout);
-
-            // let updateCallback = () => {
-            //     this.onScrollupdate(scrollTop);
-            // };
-
             this.scrollTop = scrollTop;
 
-            // let isNotReady = this.timer && Date.now() -
-            //     this.timer <= limit;
-            //
-            // if ( ! this.timer ) {
-            //     this.timer = Date.now();
-            // }
-            //
-            // if ( isNotReady ) {
-            //     return this.timeout = setTimeout(
-            //         updateCallback, 6);
-            // }
-
-            // this.timer = Date.now();
-
-            console.log('scoll changed')
             Any.async(this.refreshDriver);
         },
 
@@ -254,15 +236,12 @@ export default {
 
             this.height = height;
 
-            console.log('size changed');
-            this.refreshDriver()
+            Any.async(this.refreshDriver);
         },
 
 
         refreshDriver(staggerBuffer = 0)
         {
-            this.lastTop = this.scrollTop;
-
             if ( this.state.endIndex === 0 ) {
                 staggerBuffer = 2;
             }
