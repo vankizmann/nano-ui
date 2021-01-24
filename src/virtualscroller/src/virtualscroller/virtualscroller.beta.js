@@ -78,7 +78,7 @@ export default {
     data()
     {
         let state = {
-            startIndex: 0, endIndex: 0,
+            startIndex: 0, endIndex: 0, isBuffer: false
         };
 
         return {
@@ -89,14 +89,14 @@ export default {
     watch: {
 
         'items': function () {
-            this.prevRender = {}; this.updateRender();
+            this.prevRender = {};
+            this.updateRender();
         }
 
     },
 
     beforeMount()
     {
-        this.isBigStep = false;
         this.scrollTop = 0;
         this.prevRender = {};
     },
@@ -197,14 +197,15 @@ export default {
             };
 
             let isNotReady = this.timer && Date.now() -
-                this.timer < 35;
+                this.timer <= 30;
 
             if ( ! this.timer ) {
                 this.timer = Date.now();
             }
 
             if ( isNotReady ) {
-                return this.timeout = setTimeout(updateCallback, 30);
+                return this.timeout = setTimeout(
+                    updateCallback, 20);
             }
 
             this.timer = Date.now();
@@ -234,8 +235,8 @@ export default {
             let itemBuffer = Math.round(this.height /
                 this.itemHeight) - 2;
 
-            let bufferItems = Math.round(Math.max(itemBuffer,
-                2) * (1 + staggerBuffer));
+            let bufferItems = Math.round(Math.max(
+                itemBuffer, 2) * (1 + staggerBuffer));
 
             let startItem = Math.round(this.scrollTop /
                 this.itemHeight);
@@ -259,27 +260,39 @@ export default {
                 endIndex = this.items.length;
             }
 
+            let isBuffer = staggerBuffer < 2.75;
+
             let newState = {
-                startIndex, endIndex
+                startIndex, endIndex, isBuffer
             };
 
-            let isInRange = this.state.startIndex <= startIndex &&
-                this.state.endIndex >= endIndex;
-
-            if ( isInRange || Any.isEqual(newState, this.state) ) {
+            if ( Any.isEqual(newState, this.state) ) {
                 return;
             }
+
+            clearTimeout(this.refresh);
 
             if ( global.DEBUG_NVSCROLL ) {
                 console.log('staggerRun: ' + staggerBuffer, bufferItems);
             }
 
             let staggerFunction = () => {
-                this.refreshDriver(staggerBuffer + 0.5);
+                this.refreshDriver(staggerBuffer + 0.25);
             }
 
-            if ( staggerBuffer < 3 ) {
-                this.refresh = setTimeout(staggerFunction, 350);
+            if ( staggerBuffer < 2.75 ) {
+                this.refresh = setTimeout(staggerFunction, 360);
+            }
+
+            let isInRange = this.state.startIndex <= startIndex &&
+                this.state.endIndex >= endIndex;
+
+            if ( isInRange ) {
+                return;
+            }
+
+            if ( global.DEBUG_NVSCROLL ) {
+                console.log('Initiate rerender');
             }
 
             this.state = newState;
@@ -291,12 +304,36 @@ export default {
     {
         let uid = passed.value.id;
 
-        if ( this.prevRender[uid] ) {
+        let isMounted = this.prevRender[uid] !== undefined;
+
+        if ( this.state.isBuffer ) {
+
+            let isLoose = this.state.startIndex - 100 <= passed.index &&
+                this.state.endIndex + 100 >= passed.index;
+
+            if ( isMounted && isLoose ) {
+                return this.prevRender[uid];
+            }
+
+            if ( isMounted && ! isLoose ) {
+                return null;
+            }
+
+        }
+
+        let isRanged = this.state.startIndex <= passed.index &&
+            this.state.endIndex >= passed.index;
+
+        if ( ! isRanged ) {
+            return null;
+        }
+
+        if ( isMounted ) {
             return this.prevRender[uid];
         }
 
-        passed.index = (passed.index +
-            this.state.startIndex);
+        // passed.index = (passed.index +
+        //     this.state.startIndex);
 
         let topOffset = Math.round(this.itemHeight * 
             passed.index);
@@ -308,14 +345,14 @@ export default {
         }
 
         let props = {
-            'data-index': passed.index
+            key: uid, 'data-index': passed.index
         };
 
         props.style = {
             top: topOffset + 'px', height: this.itemHeight + 'px'
         };
         
-        return (
+        this.prevRender[uid] = (
             <div class="n-virtualscroller__item" {...props}>
                 { renderFunction(passed) }
             </div>
@@ -326,18 +363,18 @@ export default {
 
     renderItems()
     {
-        if ( ! this.items.length ) {
+        if ( ! this.items.length || ! this.state.endIndex ) {
             return this.$slots.empty && this.$slots.empty() || null;
         }
 
-        let items = Arr.slice(this.items, this.state.startIndex,
-            this.state.endIndex);
+        // let items = Arr.slice(this.items, this.state.startIndex,
+        //     this.state.endIndex);
+        //
+        // if ( this.items.length <= this.threshold ) {
+        //     items = this.items;
+        // }
 
-        if ( this.items.length <= this.threshold ) {
-            items = this.items;
-        }
-
-        return Arr.each(items, (value, index) => {
+        return Arr.each(this.items, (value, index) => {
             return this.ctor('renderItem')({ value, index });
         });
     },

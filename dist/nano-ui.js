@@ -5371,11 +5371,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    var _this = this;
-
-    this.$nextTick(function () {
-      _this.NDraggable.drag.bindNode(_this);
-    });
+    this.NDraggable.drag.bindNode(this);
   },
   beforeUnmount: function beforeUnmount() {
     this.NDraggable.drag.unbindNode(this);
@@ -15326,7 +15322,8 @@ global.DEBUG_NVSCROLL = false;
   data: function data() {
     var state = {
       startIndex: 0,
-      endIndex: 0
+      endIndex: 0,
+      isBuffer: false
     };
     return {
       state: state,
@@ -15341,7 +15338,6 @@ global.DEBUG_NVSCROLL = false;
     }
   },
   beforeMount: function beforeMount() {
-    this.isBigStep = false;
     this.scrollTop = 0;
     this.prevRender = {};
   },
@@ -15427,14 +15423,14 @@ global.DEBUG_NVSCROLL = false;
         _this.onScrollupdate(scrollTop);
       };
 
-      var isNotReady = this.timer && Date.now() - this.timer < 35;
+      var isNotReady = this.timer && Date.now() - this.timer <= 30;
 
       if (!this.timer) {
         this.timer = Date.now();
       }
 
       if (isNotReady) {
-        return this.timeout = setTimeout(updateCallback, 30);
+        return this.timeout = setTimeout(updateCallback, 20);
       }
 
       this.timer = Date.now();
@@ -15484,26 +15480,39 @@ global.DEBUG_NVSCROLL = false;
         endIndex = this.items.length;
       }
 
+      var isBuffer = staggerBuffer < 2.75;
       var newState = {
         startIndex: startIndex,
-        endIndex: endIndex
+        endIndex: endIndex,
+        isBuffer: isBuffer
       };
-      var isInRange = this.state.startIndex <= startIndex && this.state.endIndex >= endIndex;
 
-      if (isInRange || nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEqual(newState, this.state)) {
+      if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEqual(newState, this.state)) {
         return;
       }
+
+      clearTimeout(this.refresh);
 
       if (global.DEBUG_NVSCROLL) {
         console.log('staggerRun: ' + staggerBuffer, bufferItems);
       }
 
       var staggerFunction = function staggerFunction() {
-        _this3.refreshDriver(staggerBuffer + 0.5);
+        _this3.refreshDriver(staggerBuffer + 0.25);
       };
 
-      if (staggerBuffer < 3) {
-        this.refresh = setTimeout(staggerFunction, 350);
+      if (staggerBuffer < 2.75) {
+        this.refresh = setTimeout(staggerFunction, 360);
+      }
+
+      var isInRange = this.state.startIndex <= startIndex && this.state.endIndex >= endIndex;
+
+      if (isInRange) {
+        return;
+      }
+
+      if (global.DEBUG_NVSCROLL) {
+        console.log('Initiate rerender');
       }
 
       this.state = newState;
@@ -15511,12 +15520,32 @@ global.DEBUG_NVSCROLL = false;
   },
   renderItem: function renderItem(passed) {
     var uid = passed.value.id;
+    var isMounted = this.prevRender[uid] !== undefined;
 
-    if (this.prevRender[uid]) {
-      return this.prevRender[uid];
+    if (this.state.isBuffer) {
+      var isLoose = this.state.startIndex - 100 <= passed.index && this.state.endIndex + 100 >= passed.index;
+
+      if (isMounted && isLoose) {
+        return this.prevRender[uid];
+      }
+
+      if (isMounted && !isLoose) {
+        return null;
+      }
     }
 
-    passed.index = passed.index + this.state.startIndex;
+    var isRanged = this.state.startIndex <= passed.index && this.state.endIndex >= passed.index;
+
+    if (!isRanged) {
+      return null;
+    }
+
+    if (isMounted) {
+      return this.prevRender[uid];
+    } // passed.index = (passed.index +
+    //     this.state.startIndex);
+
+
     var topOffset = Math.round(this.itemHeight * passed.index);
     var renderFunction = this.$slots["default"];
 
@@ -15525,13 +15554,14 @@ global.DEBUG_NVSCROLL = false;
     }
 
     var props = {
+      key: uid,
       'data-index': passed.index
     };
     props.style = {
       top: topOffset + 'px',
       height: this.itemHeight + 'px'
     };
-    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
+    this.prevRender[uid] = Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
       "class": "n-virtualscroller__item"
     }, props), [renderFunction(passed)]);
     return this.prevRender[uid];
@@ -15539,17 +15569,17 @@ global.DEBUG_NVSCROLL = false;
   renderItems: function renderItems() {
     var _this4 = this;
 
-    if (!this.items.length) {
+    if (!this.items.length || !this.state.endIndex) {
       return this.$slots.empty && this.$slots.empty() || null;
-    }
+    } // let items = Arr.slice(this.items, this.state.startIndex,
+    //     this.state.endIndex);
+    //
+    // if ( this.items.length <= this.threshold ) {
+    //     items = this.items;
+    // }
 
-    var items = nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].slice(this.items, this.state.startIndex, this.state.endIndex);
 
-    if (this.items.length <= this.threshold) {
-      items = this.items;
-    }
-
-    return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(items, function (value, index) {
+    return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(this.items, function (value, index) {
       return _this4.ctor('renderItem')({
         value: value,
         index: index
