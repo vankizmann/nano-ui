@@ -1,5 +1,4 @@
 import { UUID, Num, Arr, Obj, Dom, Any, Event, Locale } from "nano-js";
-import { h } from "vue";
 import NDraghandler from "../draghandler/draghandler";
 
 global.DEBUG_NDLIST = false;

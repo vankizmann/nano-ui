@@ -223,6 +223,7 @@ export default {
             Any.async(() => this.refreshDriver());
         },
 
+
         refreshDriver(staggerBuffer = 0)
         {
             if ( this.items.length <= this.threshold ) {

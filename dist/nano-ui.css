@@ -2082,8 +2082,7 @@
   justify-content: center;
   color: #1b2229;
   background: #ffffff;
-  border: 1px solid #dddedf;
-  transition: border 0.15s, background 0.15s; }
+  border: 1px solid #dddedf; }
 
 .n-checkbox__checkbox span {
   opacity: 0; }
