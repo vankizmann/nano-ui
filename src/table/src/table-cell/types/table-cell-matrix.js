@@ -81,7 +81,7 @@ export default {
         return (
             <div>
                 <NCheckbox {...props}>
-                    { this.column.cslo('default') && this.column.$slots.default(this) }
+                    { this.column.cslo('default', this) && this.column.$slots.default(this) }
                 </NCheckbox>
             </div>
         );

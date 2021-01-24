@@ -7782,12 +7782,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   cslo: function cslo() {
     var slot = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'default';
+    var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     if (!this.$slots[slot]) {
       return false;
     }
 
-    return this.$slots[slot]().findIndex(function (o) {
+    return this.$slots[slot](props).findIndex(function (o) {
       return o.type !== vue__WEBPACK_IMPORTED_MODULE_1__["Comment"];
     }) !== -1;
   }
@@ -11901,7 +11902,7 @@ __webpack_require__.r(__webpack_exports__);
   name: 'NTableCellBoolean',
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_1__["default"],
   render: function render() {
-    if (this.column.cslo('default')) {
+    if (this.column.cslo('default', this)) {
       return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [this.column.$slots["default"](this)]);
     }
 
@@ -11932,7 +11933,7 @@ __webpack_require__.r(__webpack_exports__);
   name: 'NTableCellDatetime',
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_1__["default"],
   render: function render() {
-    if (this.column.cslo('default')) {
+    if (this.column.cslo('default', this)) {
       return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [this.column.$slots["default"](this)]);
     }
 
@@ -12086,7 +12087,7 @@ function _isSlot(s) {
     });
   },
   render: function render() {
-    if (this.column.cslo('default')) {
+    if (this.column.cslo('default', this)) {
       return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [this.column.$slots["default"](this)]);
     }
 
@@ -12184,7 +12185,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NCheckbox"), props, {
       "default": function _default() {
-        return [_this.column.cslo('default') && _this.column.$slots["default"](_this)];
+        return [_this.column.cslo('default', _this) && _this.column.$slots["default"](_this)];
       }
     })]);
   }
@@ -12215,7 +12216,7 @@ __webpack_require__.r(__webpack_exports__);
   render: function render() {
     var _this = this;
 
-    if (this.column.$slots["default"]) {
+    if (this.column.cslo('default', this)) {
       return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [this.column.$slots["default"](this)]);
     }
 
@@ -12261,7 +12262,7 @@ __webpack_require__.r(__webpack_exports__);
   name: 'NTableCellString',
   "extends": _table_cell__WEBPACK_IMPORTED_MODULE_1__["default"],
   render: function render() {
-    if (this.column.cslo('default')) {
+    if (this.column.cslo('default', this)) {
       return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", null, [this.column.$slots["default"](this)]);
     }
 

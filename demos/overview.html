@@ -684,7 +684,11 @@
         </div>
 
         <n-table ref="table" v-model:items="virtualTree" :render-expand="true" :item-height="100" style="margin-top: 30px;">
-            <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true">
+                <template v-slot:default="{item}">
+                    {{ item.value }}
+                </template>
+            </n-table-column>
             <n-table-column label="Image" type="image" prop="image" :fixed-width="130"></n-table-column>
             <n-table-column label="Date" type="datetime" prop="date" :sort="true" :filter="true"></n-table-column>
             <n-table-column label="Enabled 3123 asd as" type="boolean" prop="enabled" :sort="true" :filter="true"></n-table-column>
