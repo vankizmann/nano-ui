@@ -278,6 +278,8 @@ export default {
             bufferItems = Math.min(bufferItems,
                 itemBuffer * 2);
 
+            bufferItems = Math.min(bufferItems, 60);
+
             let startItem = Math.round(this.scrollTop /
                 this.itemHeight);
 

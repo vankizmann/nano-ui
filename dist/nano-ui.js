@@ -15474,6 +15474,7 @@ global.DEBUG_NVSCROLL = true;
       itemBuffer = Math.max(itemBuffer, 6);
       var bufferItems = Math.round(itemBuffer * (0.5 + staggerBuffer));
       bufferItems = Math.min(bufferItems, itemBuffer * 2);
+      bufferItems = Math.min(bufferItems, 60);
       var startItem = Math.round(this.scrollTop / this.itemHeight);
       var endItem = Math.round((this.scrollTop + this.height) / this.itemHeight);
       var startIndex = startItem - bufferItems;
