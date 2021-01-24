@@ -677,7 +677,7 @@
                 </n-button>
             </div>
             <div class="col--auto">
-                <n-button type="primary" @click="$refs.table.highlightNode(virtualTree[0]['children'][3]['id'])">
+                <n-button type="primary" @click="$refs.table.highlightNode(virtualTree[2]['children'][3]['id'])">
                     Highlight node
                 </n-button>
             </div>
@@ -685,9 +685,7 @@
 
         <n-table ref="table" v-model:items="virtualTree" :render-expand="true" :item-height="100" style="margin-top: 30px;">
             <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true">
-                <template v-slot:default="{item}">
-                    {{ item.value }}
-                </template>
+<!--                <template v-slot:default="{item}">{{ item.value }}</template>-->
             </n-table-column>
             <n-table-column label="Image" type="image" prop="image" :fixed-width="130"></n-table-column>
             <n-table-column label="Date" type="datetime" prop="date" :sort="true" :filter="true"></n-table-column>
@@ -840,8 +838,8 @@
 
             data.virtualData = itemGenerator(5000);
 
-            data.virtualTree = Nano.Arr.each(itemGenerator(1000), function (item) {
-                return Nano.Obj.assign(item, { children: [] });
+            data.virtualTree = Nano.Arr.each(itemGenerator(120), function (item) {
+                return Nano.Obj.assign(item, { children: itemGenerator(20) });
             });
 
             data.treeMatrix = [];

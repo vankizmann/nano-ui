@@ -1,4 +1,4 @@
-import { UUID, Arr, Obj, Num, Dom, Any, Locale, Event } from "nano-js";
+import { Arr, Obj, Any } from "nano-js";
 
 global.DEBUG_NVSCROLL = false;
 
@@ -76,7 +76,7 @@ export default {
         framerate: {
             default()
             {
-                return 30;
+                return 24;
             },
             type: [Number]
         },
@@ -208,7 +208,7 @@ export default {
             this.scrollTop = Obj.get(this.$refs.scrollbar, 
                 '$refs.content.scrollTop');
 
-            this.refreshDriver();
+            Any.async(this.refreshDriver);
         },
 
         onScrollupdate()
@@ -243,17 +243,13 @@ export default {
 
         refreshDriver(staggerBuffer = 0)
         {
-            if ( this.state.endIndex === 0 ) {
-                staggerBuffer = 2;
-            }
-
             let itemBuffer = Math.round(this.height /
                 this.itemHeight);
 
-            itemBuffer = Math.max(itemBuffer, 6);
+            itemBuffer = Math.max(itemBuffer, 3);
 
             let bufferItems = Math.round(itemBuffer *
-                (0.5 + staggerBuffer));
+                Math.pow(0.2 + staggerBuffer, 2));
 
             bufferItems = Math.min(bufferItems,
                 itemBuffer * 2);
@@ -286,22 +282,29 @@ export default {
                 return;
             }
 
-            clearTimeout(this.refresh);
-
-            if ( global.DEBUG_NVSCROLL ) {
-                console.log('staggerRun: ' + staggerBuffer, bufferItems);
-            }
-
-            let staggerFunction = () => {
-                this.refreshDriver(staggerBuffer + 0.5);
-            };
-
-            if ( staggerBuffer < 2 ) {
-                this.refresh = setTimeout(staggerFunction, 250);
-            }
-
             let isInRange = this.state.startIndex <= startIndex &&
                 this.state.endIndex >= endIndex;
+
+            clearTimeout(this.refresh);
+
+            if ( ! this.lastStagger ) {
+                this.lastStagger = staggerBuffer;
+            }
+
+            let realStagger = (isInRange ? this.lastStagger :
+                staggerBuffer);
+
+            let staggerFunction = () => {
+                this.refreshDriver(this.lastStagger = realStagger + 0.5);
+            };
+
+            if ( global.DEBUG_NVSCROLL ) {
+                console.log('staggerRun: ' + realStagger, bufferItems);
+            }
+
+            if ( staggerBuffer < 2 ) {
+                this.refresh = setTimeout(staggerFunction, 200);
+            }
 
             if ( isInRange ) {
                 return;
@@ -379,7 +382,7 @@ export default {
             offsetY: this.offsetY,
             offsetX: this.offsetX,
             onSizechange: this.onSizechange,
-            onScrollupdate: this.onScrollupdate,
+            // onScrollupdate: this.onScrollupdate,
         };
 
         let style = {};

@@ -340,16 +340,17 @@
   position: absolute;
   width: 6px;
   opacity: 0;
-  transition: opacity 0.15s 0.25s;
+  transition: opacity 0s 0.25s;
   will-change: transform; }
 
 .n-resizer__handle:hover {
-  opacity: 1; }
+  opacity: 1;
+  transition: opacity 0s; }
 
 .n-resizer.n-move > .n-resizer__handle {
   z-index: 99999;
   opacity: 1;
-  transition: opacity 0.15s; }
+  transition: opacity 0s; }
 
 .n-resizer--left .n-resizer__handle {
   top: 0;
@@ -368,7 +369,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(27, 34, 41, 0.85); }
+  background: rgba(78, 123, 255, 0.9); }
 
 .n-resizer--left .n-resizer__handle:before {
   left: 0;

@@ -207,19 +207,24 @@ export default {
             let scrollTop = this.$refs.content
                 .scrollTop;
 
+            let outerHeight = this.$refs.content.
+                clientHeight;
+
             let offsetTop = $el.offsetTop(this.$el);
             
             if ( offsetTop < scrollTop ) {
                 this.$refs.content.scrollTop = offsetTop;
             }
 
-            if ( offsetTop + $el.height() >= scrollTop + this.outerHeight ) {
-                this.$refs.content.scrollTop = offsetTop - 
-                    this.outerHeight + $el.height();
+            if ( offsetTop + $el.height() >= scrollTop + outerHeight ) {
+                this.$refs.content.scrollTop = offsetTop - outerHeight + $el.height();
             }
 
             let scrollLeft = this.$refs.content
                 .scrollLeft;
+
+            let outerWidth = this.$refs.content.
+                clientWidth;
 
             let offsetLeft = $el.offsetLeft(this.$el);
 
@@ -227,9 +232,8 @@ export default {
                 this.$refs.content.scrollLeft = offsetLeft;
             }
 
-            if ( offsetLeft + $el.width() >= scrollLeft + this.outerWidth ) {
-                this.$refs.content.scrollLeft = offsetLeft - 
-                    this.outerWidth + $el.width();
+            if ( offsetLeft + $el.width() >= scrollLeft + outerWidth ) {
+                this.$refs.content.scrollLeft = offsetLeft - outerWidth + $el.width();
             }
         },
 

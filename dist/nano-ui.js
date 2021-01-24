@@ -10433,25 +10433,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     onScrollIntoView: function onScrollIntoView(selector) {
       var $el = nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).find(selector);
       var scrollTop = this.$refs.content.scrollTop;
+      var outerHeight = this.$refs.content.clientHeight;
       var offsetTop = $el.offsetTop(this.$el);
 
       if (offsetTop < scrollTop) {
         this.$refs.content.scrollTop = offsetTop;
       }
 
-      if (offsetTop + $el.height() >= scrollTop + this.outerHeight) {
-        this.$refs.content.scrollTop = offsetTop - this.outerHeight + $el.height();
+      if (offsetTop + $el.height() >= scrollTop + outerHeight) {
+        this.$refs.content.scrollTop = offsetTop - outerHeight + $el.height();
       }
 
       var scrollLeft = this.$refs.content.scrollLeft;
+      var outerWidth = this.$refs.content.clientWidth;
       var offsetLeft = $el.offsetLeft(this.$el);
 
       if (offsetLeft < scrollLeft) {
         this.$refs.content.scrollLeft = offsetLeft;
       }
 
-      if (offsetLeft + $el.width() >= scrollLeft + this.outerWidth) {
-        this.$refs.content.scrollLeft = offsetLeft - this.outerWidth + $el.width();
+      if (offsetLeft + $el.width() >= scrollLeft + outerWidth) {
+        this.$refs.content.scrollLeft = offsetLeft - outerWidth + $el.width();
       }
     },
     adaptScrollHeight: function adaptScrollHeight() {
@@ -15337,7 +15339,7 @@ global.DEBUG_NVSCROLL = false;
     },
     framerate: {
       "default": function _default() {
-        return 30;
+        return 24;
       },
       type: [Number]
     }
@@ -15439,7 +15441,7 @@ global.DEBUG_NVSCROLL = false;
       }
 
       this.scrollTop = nano_js__WEBPACK_IMPORTED_MODULE_1__["Obj"].get(this.$refs.scrollbar, '$refs.content.scrollTop');
-      this.refreshDriver();
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].async(this.refreshDriver);
     },
     onScrollupdate: function onScrollupdate() {
       if (this.items.length <= this.threshold) {
@@ -15467,14 +15469,9 @@ global.DEBUG_NVSCROLL = false;
       var _this = this;
 
       var staggerBuffer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
-      if (this.state.endIndex === 0) {
-        staggerBuffer = 2;
-      }
-
       var itemBuffer = Math.round(this.height / this.itemHeight);
-      itemBuffer = Math.max(itemBuffer, 6);
-      var bufferItems = Math.round(itemBuffer * (0.5 + staggerBuffer));
+      itemBuffer = Math.max(itemBuffer, 3);
+      var bufferItems = Math.round(itemBuffer * Math.pow(0.2 + staggerBuffer, 2));
       bufferItems = Math.min(bufferItems, itemBuffer * 2);
       bufferItems = Math.min(bufferItems, 60);
       var startItem = Math.round(this.scrollTop / this.itemHeight);
@@ -15500,21 +15497,26 @@ global.DEBUG_NVSCROLL = false;
         return;
       }
 
+      var isInRange = this.state.startIndex <= startIndex && this.state.endIndex >= endIndex;
       clearTimeout(this.refresh);
 
-      if (global.DEBUG_NVSCROLL) {
-        console.log('staggerRun: ' + staggerBuffer, bufferItems);
+      if (!this.lastStagger) {
+        this.lastStagger = staggerBuffer;
       }
+
+      var realStagger = isInRange ? this.lastStagger : staggerBuffer;
 
       var staggerFunction = function staggerFunction() {
-        _this.refreshDriver(staggerBuffer + 0.5);
+        _this.refreshDriver(_this.lastStagger = realStagger + 0.5);
       };
 
-      if (staggerBuffer < 2) {
-        this.refresh = setTimeout(staggerFunction, 250);
+      if (global.DEBUG_NVSCROLL) {
+        console.log('staggerRun: ' + realStagger, bufferItems);
       }
 
-      var isInRange = this.state.startIndex <= startIndex && this.state.endIndex >= endIndex;
+      if (staggerBuffer < 2) {
+        this.refresh = setTimeout(staggerFunction, 200);
+      }
 
       if (isInRange) {
         return;
@@ -15583,8 +15585,8 @@ global.DEBUG_NVSCROLL = false;
       overflowX: this.overflowX,
       offsetY: this.offsetY,
       offsetX: this.offsetX,
-      onSizechange: this.onSizechange,
-      onScrollupdate: this.onScrollupdate
+      onSizechange: this.onSizechange // onScrollupdate: this.onScrollupdate,
+
     };
     var style = {};
 
