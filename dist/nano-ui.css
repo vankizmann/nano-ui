@@ -344,8 +344,7 @@
   will-change: transform; }
 
 .n-resizer__handle:hover {
-  opacity: 1;
-  transition: opacity 0s; }
+  opacity: 1; }
 
 .n-resizer.n-move > .n-resizer__handle {
   z-index: 99999;
