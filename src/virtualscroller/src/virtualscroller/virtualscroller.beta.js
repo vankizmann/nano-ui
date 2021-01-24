@@ -1,6 +1,6 @@
 import { UUID, Arr, Obj, Num, Dom, Any, Locale, Event } from "nano-js";
 
-global.DEBUG_NVSCROLL = true;
+global.DEBUG_NVSCROLL = false;
 
 export default {
 
@@ -94,15 +94,6 @@ export default {
         };
     },
 
-    watch: {
-
-        'items': function () {
-            this.prevRender = {};
-            this.updateRender();
-        }
-
-    },
-
     beforeMount()
     {
         this.scrollTop = 0;
@@ -111,6 +102,12 @@ export default {
 
     mounted()
     {
+
+        this.$watch('items', () => {
+            this.prevRender = {};
+            this.updateRender();
+        }, { deep: true });
+
         this.bindAdaptScroll()
     },
 

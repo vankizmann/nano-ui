@@ -15282,7 +15282,7 @@ function _isSlot(s) {
   return typeof s === 'function' || Object.prototype.toString.call(s) === '[object Object]' && !Object(vue__WEBPACK_IMPORTED_MODULE_0__["isVNode"])(s);
 }
 
-global.DEBUG_NVSCROLL = true;
+global.DEBUG_NVSCROLL = false;
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NVirtualscroller',
   model: {
@@ -15352,17 +15352,20 @@ global.DEBUG_NVSCROLL = true;
       load: true
     };
   },
-  watch: {
-    'items': function items() {
-      this.prevRender = {};
-      this.updateRender();
-    }
-  },
   beforeMount: function beforeMount() {
     this.scrollTop = 0;
     this.prevRender = {};
   },
   mounted: function mounted() {
+    var _this = this;
+
+    this.$watch('items', function () {
+      _this.prevRender = {};
+
+      _this.updateRender();
+    }, {
+      deep: true
+    });
     this.bindAdaptScroll();
   },
   beforeUnmount: function beforeUnmount() {
@@ -15463,7 +15466,7 @@ global.DEBUG_NVSCROLL = true;
       nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].async(this.refreshDriver);
     },
     refreshDriver: function refreshDriver() {
-      var _this = this;
+      var _this2 = this;
 
       var staggerBuffer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
@@ -15506,7 +15509,7 @@ global.DEBUG_NVSCROLL = true;
       }
 
       var staggerFunction = function staggerFunction() {
-        _this.refreshDriver(staggerBuffer + 0.5);
+        _this2.refreshDriver(staggerBuffer + 0.5);
       };
 
       if (staggerBuffer < 2) {
@@ -15555,7 +15558,7 @@ global.DEBUG_NVSCROLL = true;
     return this.prevRender[uid];
   },
   renderItems: function renderItems() {
-    var _this2 = this;
+    var _this3 = this;
 
     if (!this.items.length) {
       return this.$slots.empty && this.$slots.empty() || null;
@@ -15568,7 +15571,7 @@ global.DEBUG_NVSCROLL = true;
     }
 
     return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(items, function (value, index) {
-      return _this2.ctor('renderItem')({
+      return _this3.ctor('renderItem')({
         value: value,
         index: index
       });
