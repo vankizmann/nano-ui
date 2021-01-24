@@ -66,15 +66,7 @@ export default {
         threshold: {
             default()
             {
-                return 10;
-            },
-            type: [Number]
-        },
-
-        bufferItems: {
-            default()
-            {
-                return 10;
+                return 0;
             },
             type: [Number]
         },
@@ -194,18 +186,41 @@ export default {
                 return;
             }
 
+            this.scrollTop = scrollTop;
+
             clearTimeout(this.timeout);
-            clearTimeout(this.fulltimer);
-            clearTimeout(this.loadtimer);
 
             let updateCallback = () => {
                 this.onScrollupdate(scrollTop);
             };
 
-            let isGiantStep = Math.abs(scrollTop -
-                this.scrollTop) > this.height * 5;
+            let isNotReady = this.timer && Date.now() -
+                this.timer < 35;
 
-            if ( isGiantStep ) {
+            if ( ! this.timer ) {
+                this.timer = Date.now();
+            }
+
+            if ( isNotReady ) {
+                return this.timeout = setTimeout(updateCallback, 30);
+            }
+
+            this.timer = Date.now();
+
+            Any.async(this.refreshDriver);
+
+            return;
+            clearTimeout(this.timeout);
+
+            clearTimeout(this.fulltimer);
+            clearTimeout(this.loadtimer);
+
+
+
+            let isGiantStep = Math.abs(scrollTop -
+                this.scrollTop) > this.height * 4;
+
+            if ( isGiantStep && this.items.length > 200 ) {
                 Dom.find(el).addClass('n-load');
             }
 
@@ -213,28 +228,24 @@ export default {
                 this.scrollTop) < this.height / 1.5;
 
             let isBigStep = Math.abs(scrollTop - this.scrollTop) >
-                this.height * 4 || this.isBigStep;
+                this.height * 3 || this.isBigStep;
 
             this.isBigStep = isBigStep;
 
             let inTimeRange = Date.now() - this.timer <
-                (isSmallStep ? 75 : 150);
+                (isSmallStep ? 45 : 170);
 
             if ( this.timer && inTimeRange ) {
-                return this.timeout = setTimeout(updateCallback, 30);
+                return this.timeout = setTimeout(updateCallback, 50);
             }
 
             this.scrollTop = scrollTop;
-
-            this.timer = Date.now();
 
             this.timeout = setTimeout(() => {
 
                 this.loadtimer = setTimeout(() => {
                     Dom.find(el).removeClass('n-load');
                 }, 300);
-
-                console.log('REFRESH', isBigStep);
 
                 if ( this.items.length <= this.threshold ) {
                     return this.clearState();
@@ -250,17 +261,15 @@ export default {
                 }
 
                 this.refreshDriver(isBigStep);
-            }, 35);
+            }, 10);
+
+            this.timer = Date.now();
         },
 
         onSizechange(height)
         {
             if ( ! Any.isNumber(height) ) {
                 return;
-            }
-
-            if ( this.items.length <= this.threshold ) {
-                return this.clearState();
             }
 
             this.height = height;
@@ -270,13 +279,19 @@ export default {
 
         refreshDriver(ignoreBuffer = false)
         {
+            if ( this.items.length <= this.threshold ) {
+                return this.clearState();
+            }
+
+            this.lastTop = this.scrollTop;
+
             let itemBuffer = Math.round(this.height /
-                this.itemHeight);
+                this.itemHeight) - 2;
 
             let bufferItems = itemBuffer;
 
             if ( ! ignoreBuffer ) {
-                bufferItems += itemBuffer * 4;
+                bufferItems += itemBuffer * 2;
             }
 
             let startItem = Math.round(this.scrollTop /
@@ -334,7 +349,7 @@ export default {
         }
 
         let props = {
-            key: uid, 'data-index': passed.index
+            'data-index': passed.index
         };
 
         props.style = {

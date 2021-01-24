@@ -5653,12 +5653,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       type: [Number]
     },
-    bufferItems: {
-      "default": function _default() {
-        return 60;
-      },
-      type: [Number]
-    },
     overflowY: {
       "default": function _default() {
         return true;
@@ -10299,7 +10293,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     allowNative: {
       "default": function _default() {
-        return false;
+        return true;
       },
       type: [Boolean]
     },
@@ -13445,12 +13439,6 @@ function _isSlot(s) {
       },
       type: [Number]
     },
-    bufferItems: {
-      "default": function _default() {
-        return 60;
-      },
-      type: [Number]
-    },
     keyEvents: {
       "default": function _default() {
         return true;
@@ -15324,13 +15312,7 @@ function _isSlot(s) {
     },
     threshold: {
       "default": function _default() {
-        return 10;
-      },
-      type: [Number]
-    },
-    bufferItems: {
-      "default": function _default() {
-        return 10;
+        return 0;
       },
       type: [Number]
     }
@@ -15432,36 +15414,49 @@ function _isSlot(s) {
         return;
       }
 
+      this.scrollTop = scrollTop;
       clearTimeout(this.timeout);
-      clearTimeout(this.fulltimer);
-      clearTimeout(this.loadtimer);
 
       var updateCallback = function updateCallback() {
         _this.onScrollupdate(scrollTop);
       };
 
-      var isGiantStep = Math.abs(scrollTop - this.scrollTop) > this.height * 5;
+      var isNotReady = this.timer && Date.now() - this.timer < 35;
 
-      if (isGiantStep) {
+      if (!this.timer) {
+        this.timer = Date.now();
+      }
+
+      if (isNotReady) {
+        return this.timeout = setTimeout(updateCallback, 30);
+      }
+
+      this.timer = Date.now();
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].async(this.refreshDriver);
+      return;
+      clearTimeout(this.timeout);
+      clearTimeout(this.fulltimer);
+      clearTimeout(this.loadtimer);
+      var isGiantStep = Math.abs(scrollTop - this.scrollTop) > this.height * 4;
+
+      if (isGiantStep && this.items.length > 200) {
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(el).addClass('n-load');
       }
 
       var isSmallStep = Math.abs(scrollTop - this.scrollTop) < this.height / 1.5;
-      var isBigStep = Math.abs(scrollTop - this.scrollTop) > this.height * 4 || this.isBigStep;
+      var isBigStep = Math.abs(scrollTop - this.scrollTop) > this.height * 3 || this.isBigStep;
       this.isBigStep = isBigStep;
-      var inTimeRange = Date.now() - this.timer < (isSmallStep ? 75 : 150);
+      var inTimeRange = Date.now() - this.timer < (isSmallStep ? 45 : 170);
 
       if (this.timer && inTimeRange) {
-        return this.timeout = setTimeout(updateCallback, 30);
+        return this.timeout = setTimeout(updateCallback, 50);
       }
 
       this.scrollTop = scrollTop;
-      this.timer = Date.now();
       this.timeout = setTimeout(function () {
         _this.loadtimer = setTimeout(function () {
           nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(el).removeClass('n-load');
         }, 300);
-        console.log('REFRESH', isBigStep);
 
         if (_this.items.length <= _this.threshold) {
           return _this.clearState();
@@ -15480,15 +15475,12 @@ function _isSlot(s) {
         }
 
         _this.refreshDriver(isBigStep);
-      }, 35);
+      }, 10);
+      this.timer = Date.now();
     },
     onSizechange: function onSizechange(height) {
       if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isNumber(height)) {
         return;
-      }
-
-      if (this.items.length <= this.threshold) {
-        return this.clearState();
       }
 
       this.height = height;
@@ -15496,11 +15488,17 @@ function _isSlot(s) {
     },
     refreshDriver: function refreshDriver() {
       var ignoreBuffer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-      var itemBuffer = Math.round(this.height / this.itemHeight);
+
+      if (this.items.length <= this.threshold) {
+        return this.clearState();
+      }
+
+      this.lastTop = this.scrollTop;
+      var itemBuffer = Math.round(this.height / this.itemHeight) - 2;
       var bufferItems = itemBuffer;
 
       if (!ignoreBuffer) {
-        bufferItems += itemBuffer * 4;
+        bufferItems += itemBuffer * 2;
       }
 
       var startItem = Math.round(this.scrollTop / this.itemHeight);
@@ -15546,7 +15544,6 @@ function _isSlot(s) {
     }
 
     var props = {
-      key: uid,
       'data-index': passed.index
     };
     props.style = {

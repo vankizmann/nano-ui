@@ -189,10 +189,10 @@
                 return Nano.Obj.assign(item, { children: children });
             });
 
-            data.virtualData = itemGenerator(200);
+            data.virtualData = itemGenerator(1000);
 
-            data.virtualTree = Nano.Arr.each(itemGenerator(100), function (item) {
-                return Nano.Obj.assign(item, { children: itemGenerator(20) });
+            data.virtualTree = Nano.Arr.each(itemGenerator(1000), function (item) {
+                return Nano.Obj.assign(item, { children: itemGenerator(10) });
             });
 
             data.n_button = {

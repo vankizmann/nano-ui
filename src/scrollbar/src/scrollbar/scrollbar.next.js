@@ -40,7 +40,7 @@ export default {
         allowNative: {
             default()
             {
-                return false;
+                return true;
             },
             type: [Boolean]
         },

@@ -237,14 +237,6 @@ export default {
             type: [Number]
         },
 
-        bufferItems: {
-            default()
-            {
-                return 60;
-            },
-            type: [Number]
-        },
-
         keyEvents: {
             default()
             {

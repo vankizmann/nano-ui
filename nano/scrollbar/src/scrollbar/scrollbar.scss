@@ -46,6 +46,7 @@
 
 .n-scrollbar-v,
 .n-scrollbar-h {
+    cursor: default;
     position: absolute;
     z-index: 100;
     user-select: none;
