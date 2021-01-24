@@ -10478,6 +10478,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-native-vbar');
       }
 
+      if (hasNativeBar && this.overflowX) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-native-hbar');
+      }
+
       var hasVtrack = outerHeight && outerHeight < innerHeight;
 
       if (hasVtrack) {
@@ -10532,6 +10536,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (hasNativeBar) {
         nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-native-hbar');
+      }
+
+      if (hasNativeBar && this.overflowY) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(this.$el).addClass('has-native-vbar');
       }
 
       var hasHtrack = outerWidth && outerWidth < innerWidth;
@@ -15520,7 +15528,7 @@ function _isSlot(s) {
       offsetY: this.offsetY,
       offsetX: this.offsetX,
       onSizechange: this.onSizechange,
-      onScrollupdate: this.onScrollupdate
+      onScrollupdate: nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onScrollupdate, 8)
     };
     var style = {};
 

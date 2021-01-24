@@ -696,7 +696,7 @@
             <n-table-column label="ID" type="string" prop="id" :breakpoint="1300"></n-table-column>
         </n-table>
 
-        <n-table ref="table" v-model:items="virtualTree" :render-expand="true" :item-height="36" style="margin-top: 30px;">
+        <n-table v-model:items="virtualTree" :render-expand="true" :item-height="36" style="margin-top: 30px;">
             <n-table-column label="Label" type="string" prop="label"></n-table-column>
             <n-table-column v-model="treeMatrix" label="Matrix 1" type="matrix" :matrix="1" :width="120">
                 <template v-slot:default>Text wohoo</template>

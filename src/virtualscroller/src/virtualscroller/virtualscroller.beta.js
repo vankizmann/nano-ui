@@ -309,7 +309,7 @@ export default {
             offsetY: this.offsetY,
             offsetX: this.offsetX,
             onSizechange: this.onSizechange,
-            onScrollupdate: this.onScrollupdate,
+            onScrollupdate: Any.framerate(this.onScrollupdate, 8),
         };
 
         let style = {};

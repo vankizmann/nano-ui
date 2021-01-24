@@ -290,6 +290,10 @@ export default {
                 Dom.find(this.$el).addClass('has-native-vbar');
             }
 
+            if ( hasNativeBar && this.overflowX ) {
+                Dom.find(this.$el).addClass('has-native-hbar');
+            }
+
             let hasVtrack = outerHeight && outerHeight < innerHeight;
 
             if ( hasVtrack ) {
@@ -362,6 +366,10 @@ export default {
     
             if ( hasNativeBar ) {
                 Dom.find(this.$el).addClass('has-native-hbar');
+            }
+
+            if ( hasNativeBar && this.overflowY ) {
+                Dom.find(this.$el).addClass('has-native-vbar');
             }
 
             let hasHtrack = outerWidth && outerWidth < innerWidth;
