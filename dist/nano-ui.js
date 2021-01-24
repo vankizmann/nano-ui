@@ -15311,12 +15311,6 @@ global.DEBUG_NVSCROLL = false;
         return 10;
       },
       type: [Number]
-    },
-    threshold: {
-      "default": function _default() {
-        return 0;
-      },
-      type: [Number]
     }
   },
   data: function data() {
@@ -15334,7 +15328,7 @@ global.DEBUG_NVSCROLL = false;
   watch: {
     'items': function items() {
       this.prevRender = {};
-      this.$nextTick(this.updateRender);
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].async(this.updateRender);
     }
   },
   beforeMount: function beforeMount() {
@@ -15454,11 +15448,9 @@ global.DEBUG_NVSCROLL = false;
       var _this3 = this;
 
       var staggerBuffer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
-      if (this.items.length <= this.threshold) {
-        return this.clearState();
-      }
-
+      // if ( this.items.length <= this.threshold ) {
+      //     return this.clearState();
+      // }
       this.lastTop = this.scrollTop;
       var itemBuffer = Math.round(this.height / this.itemHeight) - 2;
       var bufferItems = Math.round(Math.max(itemBuffer, 2) * (1.5 + staggerBuffer));

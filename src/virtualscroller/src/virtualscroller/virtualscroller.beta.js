@@ -65,14 +65,6 @@ export default {
             type: [Number]
         },
 
-        threshold: {
-            default()
-            {
-                return 0;
-            },
-            type: [Number]
-        },
-
     },
 
     data()
@@ -90,7 +82,7 @@ export default {
 
         'items': function () {
             this.prevRender = {};
-            this.$nextTick(this.updateRender);
+            Any.async(this.updateRender);
         }
 
     },
@@ -226,9 +218,9 @@ export default {
 
         refreshDriver(staggerBuffer = 0)
         {
-            if ( this.items.length <= this.threshold ) {
-                return this.clearState();
-            }
+            // if ( this.items.length <= this.threshold ) {
+            //     return this.clearState();
+            // }
 
             this.lastTop = this.scrollTop;
 
