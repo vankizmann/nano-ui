@@ -15432,62 +15432,26 @@ function _isSlot(s) {
       }
 
       this.timer = Date.now();
-      nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].async(this.refreshDriver);
-      return;
-      clearTimeout(this.timeout);
-      clearTimeout(this.fulltimer);
-      clearTimeout(this.loadtimer);
-      var isGiantStep = Math.abs(scrollTop - this.scrollTop) > this.height * 4;
-
-      if (isGiantStep && this.items.length > 200) {
-        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(el).addClass('n-load');
-      }
-
-      var isSmallStep = Math.abs(scrollTop - this.scrollTop) < this.height / 1.5;
-      var isBigStep = Math.abs(scrollTop - this.scrollTop) > this.height * 3 || this.isBigStep;
-      this.isBigStep = isBigStep;
-      var inTimeRange = Date.now() - this.timer < (isSmallStep ? 45 : 170);
-
-      if (this.timer && inTimeRange) {
-        return this.timeout = setTimeout(updateCallback, 50);
-      }
-
-      this.scrollTop = scrollTop;
-      this.timeout = setTimeout(function () {
-        _this.loadtimer = setTimeout(function () {
-          nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(el).removeClass('n-load');
-        }, 300);
-
-        if (_this.items.length <= _this.threshold) {
-          return _this.clearState();
-        }
-
-        var stepCallbacks = function stepCallbacks() {
-          console.log('big update');
-
-          _this.refreshDriver();
-
-          _this.isBigStep = false;
-        };
-
-        if (isBigStep) {
-          _this.fulltimer = setTimeout(stepCallbacks, 400);
-        }
-
-        _this.refreshDriver(isBigStep);
-      }, 10);
-      this.timer = Date.now();
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].async(function () {
+        return _this.refreshDriver();
+      });
     },
     onSizechange: function onSizechange(height) {
+      var _this2 = this;
+
       if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isNumber(height)) {
         return;
       }
 
       this.height = height;
-      this.refreshDriver();
+      nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].async(function () {
+        return _this2.refreshDriver();
+      });
     },
     refreshDriver: function refreshDriver() {
-      var ignoreBuffer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      var _this3 = this;
+
+      var ignoreBuffer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 
       if (this.items.length <= this.threshold) {
         return this.clearState();
@@ -15495,10 +15459,10 @@ function _isSlot(s) {
 
       this.lastTop = this.scrollTop;
       var itemBuffer = Math.round(this.height / this.itemHeight) - 2;
-      var bufferItems = itemBuffer;
+      var bufferItems = Math.max(itemBuffer, 2) * 2;
 
       if (!ignoreBuffer) {
-        bufferItems += itemBuffer * 2;
+        bufferItems += Math.round(bufferItems * 1.5);
       }
 
       var startItem = Math.round(this.scrollTop / this.itemHeight);
@@ -15510,6 +15474,10 @@ function _isSlot(s) {
       }
 
       var endIndex = endItem + bufferItems;
+
+      if (this.state.endIndex === 0) {
+        endIndex = Math.max(endIndex, 25);
+      }
 
       if (endIndex > this.items.length) {
         endIndex = this.items.length;
@@ -15525,6 +15493,10 @@ function _isSlot(s) {
         return;
       }
 
+      clearTimeout(this.refresh);
+      this.refresh = setTimeout(function () {
+        return _this3.refreshDriver(false);
+      }, 2000);
       this.state = newState;
     }
   },
@@ -15556,7 +15528,7 @@ function _isSlot(s) {
     return this.prevRender[uid];
   },
   renderItems: function renderItems() {
-    var _this2 = this;
+    var _this4 = this;
 
     if (!this.items.length) {
       return this.$slots.empty && this.$slots.empty() || null;
@@ -15569,7 +15541,7 @@ function _isSlot(s) {
     }
 
     return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(items, function (value, index) {
-      return _this2.ctor('renderItem')({
+      return _this4.ctor('renderItem')({
         value: value,
         index: index
       });

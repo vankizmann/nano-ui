@@ -207,63 +207,7 @@ export default {
 
             this.timer = Date.now();
 
-            Any.async(this.refreshDriver);
-
-            return;
-            clearTimeout(this.timeout);
-
-            clearTimeout(this.fulltimer);
-            clearTimeout(this.loadtimer);
-
-
-
-            let isGiantStep = Math.abs(scrollTop -
-                this.scrollTop) > this.height * 4;
-
-            if ( isGiantStep && this.items.length > 200 ) {
-                Dom.find(el).addClass('n-load');
-            }
-
-            let isSmallStep = Math.abs(scrollTop -
-                this.scrollTop) < this.height / 1.5;
-
-            let isBigStep = Math.abs(scrollTop - this.scrollTop) >
-                this.height * 3 || this.isBigStep;
-
-            this.isBigStep = isBigStep;
-
-            let inTimeRange = Date.now() - this.timer <
-                (isSmallStep ? 45 : 170);
-
-            if ( this.timer && inTimeRange ) {
-                return this.timeout = setTimeout(updateCallback, 50);
-            }
-
-            this.scrollTop = scrollTop;
-
-            this.timeout = setTimeout(() => {
-
-                this.loadtimer = setTimeout(() => {
-                    Dom.find(el).removeClass('n-load');
-                }, 300);
-
-                if ( this.items.length <= this.threshold ) {
-                    return this.clearState();
-                }
-
-                let stepCallbacks = () => {
-                    console.log('big update');
-                    this.refreshDriver(); this.isBigStep = false;
-                }
-
-                if ( isBigStep ) {
-                    this.fulltimer = setTimeout(stepCallbacks, 400);
-                }
-
-                this.refreshDriver(isBigStep);
-            }, 10);
-
-            this.timer = Date.now();
+            Any.async(() => this.refreshDriver());
         },
 
         onSizechange(height)
@@ -274,10 +218,10 @@ export default {
 
             this.height = height;
 
-            this.refreshDriver();
+            Any.async(() => this.refreshDriver());
         },
 
-        refreshDriver(ignoreBuffer = false)
+        refreshDriver(ignoreBuffer = true)
         {
             if ( this.items.length <= this.threshold ) {
                 return this.clearState();
@@ -288,10 +232,10 @@ export default {
             let itemBuffer = Math.round(this.height /
                 this.itemHeight) - 2;
 
-            let bufferItems = itemBuffer;
+            let bufferItems = Math.max(itemBuffer, 2) * 2;
 
             if ( ! ignoreBuffer ) {
-                bufferItems += itemBuffer * 2;
+                bufferItems += Math.round(bufferItems * 1.5);
             }
 
             let startItem = Math.round(this.scrollTop /
@@ -308,6 +252,10 @@ export default {
 
             let endIndex = endItem + bufferItems;
 
+            if ( this.state.endIndex === 0 ) {
+                endIndex = Math.max(endIndex, 25);
+            }
+
             if ( endIndex > this.items.length ) {
                 endIndex = this.items.length;
             }
@@ -322,6 +270,11 @@ export default {
             if ( isInRange || Any.isEqual(newState, this.state) ) {
                 return;
             }
+
+            clearTimeout(this.refresh);
+
+            this.refresh = setTimeout(() =>
+                this.refreshDriver(false), 2000);
 
             this.state = newState;
         },
