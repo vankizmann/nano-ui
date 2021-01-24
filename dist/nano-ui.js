@@ -15499,11 +15499,11 @@ global.DEBUG_NVSCROLL = false;
       }
 
       var staggerFunction = function staggerFunction() {
-        _this3.refreshDriver(staggerBuffer + 1);
+        _this3.refreshDriver(staggerBuffer + 0.5);
       };
 
       if (staggerBuffer < 3) {
-        this.refresh = setTimeout(staggerFunction, 650);
+        this.refresh = setTimeout(staggerFunction, 350);
       }
 
       this.state = newState;

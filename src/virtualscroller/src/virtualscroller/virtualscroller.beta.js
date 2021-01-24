@@ -275,11 +275,11 @@ export default {
             }
 
             let staggerFunction = () => {
-                this.refreshDriver(staggerBuffer + 1);
+                this.refreshDriver(staggerBuffer + 0.5);
             }
 
             if ( staggerBuffer < 3 ) {
-                this.refresh = setTimeout(staggerFunction, 650);
+                this.refresh = setTimeout(staggerFunction, 350);
             }
 
             this.state = newState;
