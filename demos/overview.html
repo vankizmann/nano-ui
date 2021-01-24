@@ -838,10 +838,10 @@
                 return Nano.Obj.assign(item, { children: children });
             });
 
-            data.virtualData = itemGenerator(10000);
+            data.virtualData = itemGenerator(5000);
 
             data.virtualTree = Nano.Arr.each(itemGenerator(1000), function (item) {
-                return Nano.Obj.assign(item, { children: itemGenerator(20) });
+                return Nano.Obj.assign(item, { children: [] });
             });
 
             data.treeMatrix = [];

@@ -15423,14 +15423,14 @@ global.DEBUG_NVSCROLL = false;
         _this.onScrollupdate(scrollTop);
       };
 
-      var isNotReady = this.timer && Date.now() - this.timer <= 30;
+      var isNotReady = this.timer && Date.now() - this.timer <= 35;
 
       if (!this.timer) {
         this.timer = Date.now();
       }
 
       if (isNotReady) {
-        return this.timeout = setTimeout(updateCallback, 20);
+        return this.timeout = setTimeout(updateCallback, 5);
       }
 
       this.timer = Date.now();
@@ -15461,7 +15461,7 @@ global.DEBUG_NVSCROLL = false;
 
       this.lastTop = this.scrollTop;
       var itemBuffer = Math.round(this.height / this.itemHeight) - 2;
-      var bufferItems = Math.round(Math.max(itemBuffer, 2) * (1 + staggerBuffer));
+      var bufferItems = Math.round(Math.max(itemBuffer, 2) * (1.5 + staggerBuffer));
       var startItem = Math.round(this.scrollTop / this.itemHeight);
       var endItem = Math.round((this.scrollTop + this.height) / this.itemHeight);
       var startIndex = startItem - bufferItems;
@@ -15480,11 +15480,10 @@ global.DEBUG_NVSCROLL = false;
         endIndex = this.items.length;
       }
 
-      var isBuffer = staggerBuffer < 2.75;
       var newState = {
         startIndex: startIndex,
         endIndex: endIndex,
-        isBuffer: isBuffer
+        isBuffer: false
       };
 
       if (nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isEqual(newState, this.state)) {
@@ -15498,13 +15497,17 @@ global.DEBUG_NVSCROLL = false;
       }
 
       var staggerFunction = function staggerFunction() {
-        _this3.refreshDriver(staggerBuffer + 0.25);
+        _this3.refreshDriver(staggerBuffer + 0.5);
       };
 
-      if (staggerBuffer < 2.75) {
-        this.refresh = setTimeout(staggerFunction, 360);
+      if (staggerBuffer < 2.5) {
+        this.refresh = setTimeout(staggerFunction, 350);
       }
 
+      clearTimeout(this.refreshBuffer);
+      this.refreshBuffer = setTimeout(function () {
+        return _this3.state.isBuffer = true;
+      }, 500);
       var isInRange = this.state.startIndex <= startIndex && this.state.endIndex >= endIndex;
 
       if (isInRange) {
@@ -15522,16 +15525,8 @@ global.DEBUG_NVSCROLL = false;
     var uid = passed.value.id;
     var isMounted = this.prevRender[uid] !== undefined;
 
-    if (this.state.isBuffer) {
-      var isLoose = this.state.startIndex - 100 <= passed.index && this.state.endIndex + 100 >= passed.index;
-
-      if (isMounted && isLoose) {
-        return this.prevRender[uid];
-      }
-
-      if (isMounted && !isLoose) {
-        return null;
-      }
+    if (isMounted && this.state.isBuffer) {
+      return this.prevRender[uid];
     }
 
     var isRanged = this.state.startIndex <= passed.index && this.state.endIndex >= passed.index;
@@ -15569,7 +15564,7 @@ global.DEBUG_NVSCROLL = false;
   renderItems: function renderItems() {
     var _this4 = this;
 
-    if (!this.items.length || !this.state.endIndex) {
+    if (!this.items.length) {
       return this.$slots.empty && this.$slots.empty() || null;
     } // let items = Arr.slice(this.items, this.state.startIndex,
     //     this.state.endIndex);

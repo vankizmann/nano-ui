@@ -197,7 +197,7 @@ export default {
             };
 
             let isNotReady = this.timer && Date.now() -
-                this.timer <= 30;
+                this.timer <= 35;
 
             if ( ! this.timer ) {
                 this.timer = Date.now();
@@ -205,7 +205,7 @@ export default {
 
             if ( isNotReady ) {
                 return this.timeout = setTimeout(
-                    updateCallback, 20);
+                    updateCallback, 5);
             }
 
             this.timer = Date.now();
@@ -236,7 +236,7 @@ export default {
                 this.itemHeight) - 2;
 
             let bufferItems = Math.round(Math.max(
-                itemBuffer, 2) * (1 + staggerBuffer));
+                itemBuffer, 2) * (1.5 + staggerBuffer));
 
             let startItem = Math.round(this.scrollTop /
                 this.itemHeight);
@@ -260,10 +260,8 @@ export default {
                 endIndex = this.items.length;
             }
 
-            let isBuffer = staggerBuffer < 2.75;
-
             let newState = {
-                startIndex, endIndex, isBuffer
+                startIndex, endIndex, isBuffer: false
             };
 
             if ( Any.isEqual(newState, this.state) ) {
@@ -277,12 +275,17 @@ export default {
             }
 
             let staggerFunction = () => {
-                this.refreshDriver(staggerBuffer + 0.25);
+                this.refreshDriver(staggerBuffer + 0.5);
             }
 
-            if ( staggerBuffer < 2.75 ) {
-                this.refresh = setTimeout(staggerFunction, 360);
+            if ( staggerBuffer < 2.5 ) {
+                this.refresh = setTimeout(staggerFunction, 350);
             }
+
+            clearTimeout(this.refreshBuffer);
+
+            this.refreshBuffer = setTimeout(() =>
+                this.state.isBuffer = true, 500);
 
             let isInRange = this.state.startIndex <= startIndex &&
                 this.state.endIndex >= endIndex;
@@ -306,19 +309,8 @@ export default {
 
         let isMounted = this.prevRender[uid] !== undefined;
 
-        if ( this.state.isBuffer ) {
-
-            let isLoose = this.state.startIndex - 100 <= passed.index &&
-                this.state.endIndex + 100 >= passed.index;
-
-            if ( isMounted && isLoose ) {
-                return this.prevRender[uid];
-            }
-
-            if ( isMounted && ! isLoose ) {
-                return null;
-            }
-
+        if ( isMounted && this.state.isBuffer ) {
+            return this.prevRender[uid];
         }
 
         let isRanged = this.state.startIndex <= passed.index &&
@@ -363,7 +355,7 @@ export default {
 
     renderItems()
     {
-        if ( ! this.items.length || ! this.state.endIndex ) {
+        if ( ! this.items.length ) {
             return this.$slots.empty && this.$slots.empty() || null;
         }
 
