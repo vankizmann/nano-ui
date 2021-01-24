@@ -195,7 +195,7 @@ export default {
 
             let limit = 200;
 
-            if ( Math.abs(scrollTop - this.scrollTop) > 500 ) {
+            if ( Math.abs(scrollTop - this.scrollTop) > 200 ) {
                 limit = 45 + Math.abs(scrollTop - this.scrollTop) / 250;
             }
 
