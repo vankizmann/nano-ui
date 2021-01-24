@@ -263,10 +263,6 @@ export default {
         {
             this.lastTop = this.scrollTop;
 
-            if ( ! this.items.length ) {
-                return;
-            }
-
             if ( this.state.endIndex === 0 ) {
                 staggerBuffer = 2;
             }
@@ -279,7 +275,8 @@ export default {
             let bufferItems = Math.round(itemBuffer *
                 (0.5 + staggerBuffer));
 
-            bufferItems = Math.min(bufferItems, itemBuffer * 2);
+            bufferItems = Math.min(bufferItems,
+                itemBuffer * 2);
 
             let startItem = Math.round(this.scrollTop /
                 this.itemHeight);
@@ -295,19 +292,8 @@ export default {
 
             let endIndex = endItem + bufferItems;
 
-            if ( this.state.endIndex === 0 ) {
-                endIndex = Math.max(endIndex, 25);
-            }
-
             if ( endIndex > this.items.length ) {
                 endIndex = this.items.length;
-            }
-
-            let isInRange = this.state.startIndex <= startIndex &&
-                this.state.endIndex >= endIndex;
-
-            if ( isInRange ) {
-                return;
             }
 
             let newState = {
@@ -329,13 +315,15 @@ export default {
             };
 
             if ( staggerBuffer < 2 ) {
-                this.refresh = setTimeout(staggerFunction, 350);
+                this.refresh = setTimeout(staggerFunction, 250);
             }
 
-            // clearTimeout(this.refreshBuffer);
-            //
-            // this.refreshBuffer = setTimeout(() =>
-            //     this.state.isBuffer = true, 500);
+            let isInRange = this.state.startIndex <= startIndex &&
+                this.state.endIndex >= endIndex;
+
+            if ( isInRange ) {
+                return;
+            }
 
             if ( global.DEBUG_NVSCROLL ) {
                 console.log('Initiate rerender');

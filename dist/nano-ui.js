@@ -15466,10 +15466,6 @@ global.DEBUG_NVSCROLL = true;
       var staggerBuffer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
       this.lastTop = this.scrollTop;
 
-      if (!this.items.length) {
-        return;
-      }
-
       if (this.state.endIndex === 0) {
         staggerBuffer = 2;
       }
@@ -15488,18 +15484,8 @@ global.DEBUG_NVSCROLL = true;
 
       var endIndex = endItem + bufferItems;
 
-      if (this.state.endIndex === 0) {
-        endIndex = Math.max(endIndex, 25);
-      }
-
       if (endIndex > this.items.length) {
         endIndex = this.items.length;
-      }
-
-      var isInRange = this.state.startIndex <= startIndex && this.state.endIndex >= endIndex;
-
-      if (isInRange) {
-        return;
       }
 
       var newState = {
@@ -15522,12 +15508,14 @@ global.DEBUG_NVSCROLL = true;
       };
 
       if (staggerBuffer < 2) {
-        this.refresh = setTimeout(staggerFunction, 350);
-      } // clearTimeout(this.refreshBuffer);
-      //
-      // this.refreshBuffer = setTimeout(() =>
-      //     this.state.isBuffer = true, 500);
+        this.refresh = setTimeout(staggerFunction, 250);
+      }
 
+      var isInRange = this.state.startIndex <= startIndex && this.state.endIndex >= endIndex;
+
+      if (isInRange) {
+        return;
+      }
 
       if (global.DEBUG_NVSCROLL) {
         console.log('Initiate rerender');
