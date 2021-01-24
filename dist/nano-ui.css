@@ -281,7 +281,7 @@
 .n-scrollbar-v,
 .n-scrollbar-h {
   position: absolute;
-  z-index: 2;
+  z-index: 100;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -376,6 +376,12 @@
 .n-resizer--right .n-resizer__handle:before {
   left: 2px;
   right: 0; }
+
+.n-virtualscroller:before {
+  z-index: 10 !important; }
+
+.n-virtualscroller:after {
+  z-index: 5 !important; }
 
 .n-virtualscroller__inner {
   position: relative;

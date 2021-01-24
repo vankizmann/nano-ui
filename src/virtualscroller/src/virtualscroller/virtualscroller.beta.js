@@ -88,7 +88,7 @@ export default {
         };
 
         return {
-            uid: UUID(), state, height: 0
+            state, height: 0, load: true
         };
     },
 
@@ -188,56 +188,69 @@ export default {
 
         onScrollupdate(scrollTop)
         {
-            clearTimeout(this.timeout);
-
-            let updateCallback = () => {
-                this.onScrollupdate(scrollTop);
-            };
-
-            let isBigStep = Math.abs(scrollTop -
-                this.scrollTop) > 300 || this.isBigStep;
-
-            let limit = 160;
-
-            if ( isBigStep ) {
-                limit = Math.abs(scrollTop - this.scrollTop) / 150;
-            }
-
-            this.scrollTop = scrollTop;
-
-            let inTimeRange = Date.now() - this.timer <
-                Math.max(limit, 300)
-
-            if ( this.timer && inTimeRange ) {
-                return this.timeout = setTimeout(updateCallback, 60);
-            }
-
-            this.timer = Date.now();
+            let el = this.$refs.scrollbar.$el;
 
             if ( ! Any.isNumber(scrollTop) ) {
                 return;
             }
 
-            this.timeout = -1;
-
-            if ( this.items.length <= this.threshold ) {
-                return this.clearState();
-            }
-
+            clearTimeout(this.timeout);
             clearTimeout(this.fulltimer);
+            clearTimeout(this.loadtimer);
 
-            let stepCallbacks = () => {
-                this.refreshDriver();
-                this.isBigStep = false;
+            let updateCallback = () => {
+                this.onScrollupdate(scrollTop);
+            };
+
+            let isGiantStep = Math.abs(scrollTop -
+                this.scrollTop) > this.height * 5;
+
+            if ( isGiantStep ) {
+                Dom.find(el).addClass('n-load');
             }
+
+            let isSmallStep = Math.abs(scrollTop -
+                this.scrollTop) < this.height / 1.5;
+
+            let isBigStep = Math.abs(scrollTop - this.scrollTop) >
+                this.height * 4 || this.isBigStep;
 
             this.isBigStep = isBigStep;
 
-            if ( isBigStep ) {
-                this.fulltimer = setTimeout(stepCallbacks, 500);
+            let inTimeRange = Date.now() - this.timer <
+                (isSmallStep ? 75 : 150);
+
+            if ( this.timer && inTimeRange ) {
+                return this.timeout = setTimeout(updateCallback, 30);
             }
 
-            this.refreshDriver(isBigStep);
+            this.scrollTop = scrollTop;
+
+            this.timer = Date.now();
+
+            this.timeout = setTimeout(() => {
+
+                this.loadtimer = setTimeout(() => {
+                    Dom.find(el).removeClass('n-load');
+                }, 300);
+
+                console.log('REFRESH', isBigStep);
+
+                if ( this.items.length <= this.threshold ) {
+                    return this.clearState();
+                }
+
+                let stepCallbacks = () => {
+                    console.log('big update');
+                    this.refreshDriver(); this.isBigStep = false;
+                }
+
+                if ( isBigStep ) {
+                    this.fulltimer = setTimeout(stepCallbacks, 400);
+                }
+
+                this.refreshDriver(isBigStep);
+            }, 35);
         },
 
         onSizechange(height)
@@ -373,7 +386,7 @@ export default {
         }
 
         return (
-            <NScrollbar ref="scrollbar" {...props}>
+            <NScrollbar class="n-virtualscroller" ref="scrollbar" {...props}>
                 <div class="n-virtualscroller__inner" style={style}>
                     { this.ctor('renderItems')() }
                 </div>

@@ -15341,9 +15341,9 @@ function _isSlot(s) {
       endIndex: 0
     };
     return {
-      uid: Object(nano_js__WEBPACK_IMPORTED_MODULE_1__["UUID"])(),
       state: state,
-      height: 0
+      height: 0,
+      load: true
     };
   },
   watch: {
@@ -15426,53 +15426,61 @@ function _isSlot(s) {
     onScrollupdate: function onScrollupdate(scrollTop) {
       var _this = this;
 
-      clearTimeout(this.timeout);
-
-      var updateCallback = function updateCallback() {
-        _this.onScrollupdate(scrollTop);
-      };
-
-      var isBigStep = Math.abs(scrollTop - this.scrollTop) > 300 || this.isBigStep;
-      var limit = 160;
-
-      if (isBigStep) {
-        limit = Math.abs(scrollTop - this.scrollTop) / 150;
-      }
-
-      this.scrollTop = scrollTop;
-      var inTimeRange = Date.now() - this.timer < Math.max(limit, 300);
-
-      if (this.timer && inTimeRange) {
-        return this.timeout = setTimeout(updateCallback, 60);
-      }
-
-      this.timer = Date.now();
+      var el = this.$refs.scrollbar.$el;
 
       if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isNumber(scrollTop)) {
         return;
       }
 
-      this.timeout = -1;
-
-      if (this.items.length <= this.threshold) {
-        return this.clearState();
-      }
-
+      clearTimeout(this.timeout);
       clearTimeout(this.fulltimer);
+      clearTimeout(this.loadtimer);
 
-      var stepCallbacks = function stepCallbacks() {
-        _this.refreshDriver();
-
-        _this.isBigStep = false;
+      var updateCallback = function updateCallback() {
+        _this.onScrollupdate(scrollTop);
       };
 
-      this.isBigStep = isBigStep;
+      var isGiantStep = Math.abs(scrollTop - this.scrollTop) > this.height * 5;
 
-      if (isBigStep) {
-        this.fulltimer = setTimeout(stepCallbacks, 500);
+      if (isGiantStep) {
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(el).addClass('n-load');
       }
 
-      this.refreshDriver(isBigStep);
+      var isSmallStep = Math.abs(scrollTop - this.scrollTop) < this.height / 1.5;
+      var isBigStep = Math.abs(scrollTop - this.scrollTop) > this.height * 4 || this.isBigStep;
+      this.isBigStep = isBigStep;
+      var inTimeRange = Date.now() - this.timer < (isSmallStep ? 75 : 150);
+
+      if (this.timer && inTimeRange) {
+        return this.timeout = setTimeout(updateCallback, 30);
+      }
+
+      this.scrollTop = scrollTop;
+      this.timer = Date.now();
+      this.timeout = setTimeout(function () {
+        _this.loadtimer = setTimeout(function () {
+          nano_js__WEBPACK_IMPORTED_MODULE_1__["Dom"].find(el).removeClass('n-load');
+        }, 300);
+        console.log('REFRESH', isBigStep);
+
+        if (_this.items.length <= _this.threshold) {
+          return _this.clearState();
+        }
+
+        var stepCallbacks = function stepCallbacks() {
+          console.log('big update');
+
+          _this.refreshDriver();
+
+          _this.isBigStep = false;
+        };
+
+        if (isBigStep) {
+          _this.fulltimer = setTimeout(stepCallbacks, 400);
+        }
+
+        _this.refreshDriver(isBigStep);
+      }, 35);
     },
     onSizechange: function onSizechange(height) {
       if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isNumber(height)) {
@@ -15588,6 +15596,7 @@ function _isSlot(s) {
     }
 
     return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(Object(vue__WEBPACK_IMPORTED_MODULE_0__["resolveComponent"])("NScrollbar"), Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
+      "class": "n-virtualscroller",
       "ref": "scrollbar"
     }, props), _isSlot(_slot = Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", {
       "class": "n-virtualscroller__inner",

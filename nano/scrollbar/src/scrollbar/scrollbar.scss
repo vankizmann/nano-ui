@@ -47,7 +47,7 @@
 .n-scrollbar-v,
 .n-scrollbar-h {
     position: absolute;
-    z-index: 2;
+    z-index: 100;
     user-select: none;
     will-change: transform;
 }
