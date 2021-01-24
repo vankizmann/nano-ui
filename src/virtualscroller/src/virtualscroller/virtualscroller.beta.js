@@ -262,7 +262,6 @@ export default {
 
         let renderFunction = this.$slots.default;
 
-        // Finally render node
         if ( this.renderNode ) {
             renderFunction = this.renderNode;
         }
@@ -275,7 +274,7 @@ export default {
             top: topOffset + 'px', height: this.itemHeight + 'px'
         };
         
-        this.prevRender[uid] = (
+        return (
             <div class="n-virtualscroller__item" {...props}>
                 { renderFunction(passed) }
             </div>

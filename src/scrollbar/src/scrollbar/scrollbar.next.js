@@ -37,6 +37,14 @@ export default {
             type: [Boolean]
         },
 
+        allowNative: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         overflowY: {
             default()
             {
@@ -293,7 +301,7 @@ export default {
             }
 
             if ( hasVtrack && ! hasNativeBar ) {
-                return Event.fire('NScrollbar:native');
+                Event.fire('NScrollbar:native');
             }
 
             this.adaptScrollPosition();
@@ -367,7 +375,7 @@ export default {
             }
 
             if ( hasHtrack && ! hasNativeBar ) {
-                return Event.fire('NScrollbar:native');
+                Event.fire('NScrollbar:native');
             }
 
             this.adaptScrollPosition();
@@ -546,7 +554,7 @@ export default {
 
         onNative()
         {
-            if ( this.native ) {
+            if ( this.native || ! this.allowNative ) {
                 return;
             }
 

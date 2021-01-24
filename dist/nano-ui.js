@@ -10297,6 +10297,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       type: [Boolean]
     },
+    allowNative: {
+      "default": function _default() {
+        return false;
+      },
+      type: [Boolean]
+    },
     overflowY: {
       "default": function _default() {
         return true;
@@ -10483,7 +10489,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (hasVtrack && !hasNativeBar) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].fire('NScrollbar:native');
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].fire('NScrollbar:native');
       }
 
       this.adaptScrollPosition();
@@ -10539,7 +10545,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (hasHtrack && !hasNativeBar) {
-        return nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].fire('NScrollbar:native');
+        nano_js__WEBPACK_IMPORTED_MODULE_1__["Event"].fire('NScrollbar:native');
       }
 
       this.adaptScrollPosition();
@@ -10686,7 +10692,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$emit('sizechange', height);
     },
     onNative: function onNative() {
-      if (this["native"]) {
+      if (this["native"] || !this.allowNative) {
         return;
       }
 
@@ -15466,7 +15472,7 @@ function _isSlot(s) {
 
     passed.index = passed.index + this.state.startIndex;
     var topOffset = Math.round(this.itemHeight * passed.index);
-    var renderFunction = this.$slots["default"]; // Finally render node
+    var renderFunction = this.$slots["default"];
 
     if (this.renderNode) {
       renderFunction = this.renderNode;
@@ -15480,7 +15486,7 @@ function _isSlot(s) {
       top: topOffset + 'px',
       height: this.itemHeight + 'px'
     };
-    this.prevRender[uid] = Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
+    return Object(vue__WEBPACK_IMPORTED_MODULE_0__["createVNode"])("div", Object(vue__WEBPACK_IMPORTED_MODULE_0__["mergeProps"])({
       "class": "n-virtualscroller__item"
     }, props), [renderFunction(passed)]);
     return this.prevRender[uid];
