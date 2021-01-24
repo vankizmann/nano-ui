@@ -95,8 +95,7 @@ export default {
     watch: {
 
         'items': function () {
-            this.prevRender = {};
-            this.$nextTick(this.updateRender);
+            this.prevRender = {}; this.updateRender();
         }
 
     },
@@ -187,6 +186,24 @@ export default {
 
         onScrollupdate(scrollTop)
         {
+            clearTimeout(this.timeout);
+
+            let updateCallback = () => {
+                this.onScrollupdate(scrollTop);
+            };
+
+            let limit = 150;
+
+            if ( Math.abs(scrollTop - this.scrollTop) > 700 ) {
+                limit = 35;
+            }
+
+            if ( this.timer && Date.now() - this.timer < limit ) {
+                return this.timeout = setTimeout(updateCallback, 25);
+            }
+
+            this.timer = Date.now();
+
             if ( ! Any.isNumber(scrollTop) ) {
                 return;
             }
@@ -309,7 +326,7 @@ export default {
             offsetY: this.offsetY,
             offsetX: this.offsetX,
             onSizechange: this.onSizechange,
-            onScrollupdate: Any.framerate(this.onScrollupdate, 8),
+            onScrollupdate: this.onScrollupdate,
         };
 
         let style = {};

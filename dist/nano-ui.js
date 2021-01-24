@@ -15350,7 +15350,7 @@ function _isSlot(s) {
   watch: {
     'items': function items() {
       this.prevRender = {};
-      this.$nextTick(this.updateRender);
+      this.updateRender();
     }
   },
   beforeMount: function beforeMount() {
@@ -15423,6 +15423,26 @@ function _isSlot(s) {
       this.refreshDriver();
     },
     onScrollupdate: function onScrollupdate(scrollTop) {
+      var _this = this;
+
+      clearTimeout(this.timeout);
+
+      var updateCallback = function updateCallback() {
+        _this.onScrollupdate(scrollTop);
+      };
+
+      var limit = 150;
+
+      if (Math.abs(scrollTop - this.scrollTop) > 700) {
+        limit = 35;
+      }
+
+      if (this.timer && Date.now() - this.timer < limit) {
+        return this.timeout = setTimeout(updateCallback, 25);
+      }
+
+      this.timer = Date.now();
+
       if (!nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].isNumber(scrollTop)) {
         return;
       }
@@ -15500,7 +15520,7 @@ function _isSlot(s) {
     return this.prevRender[uid];
   },
   renderItems: function renderItems() {
-    var _this = this;
+    var _this2 = this;
 
     if (!this.items.length) {
       return this.$slots.empty && this.$slots.empty() || null;
@@ -15513,7 +15533,7 @@ function _isSlot(s) {
     }
 
     return nano_js__WEBPACK_IMPORTED_MODULE_1__["Arr"].each(items, function (value, index) {
-      return _this.ctor('renderItem')({
+      return _this2.ctor('renderItem')({
         value: value,
         index: index
       });
@@ -15528,7 +15548,7 @@ function _isSlot(s) {
       offsetY: this.offsetY,
       offsetX: this.offsetX,
       onSizechange: this.onSizechange,
-      onScrollupdate: nano_js__WEBPACK_IMPORTED_MODULE_1__["Any"].framerate(this.onScrollupdate, 8)
+      onScrollupdate: this.onScrollupdate
     };
     var style = {};
 

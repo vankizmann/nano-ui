@@ -389,7 +389,7 @@
   flex-direction: row;
   align-items: stretch;
   justify-content: stretch;
-  will-change: scroll-position; }
+  will-change: top; }
 
 .n-draggable__indicator {
   pointer-events: none;
