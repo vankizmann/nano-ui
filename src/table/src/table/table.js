@@ -1,4 +1,4 @@
-import { Any, Arr, Obj, Event, UUID } from "nano-js";
+import { Any, Arr, Obj, Dom, Event, UUID } from "nano-js";
 import { h, resolveComponent } from "vue";
 
 export default {
@@ -391,6 +391,8 @@ export default {
         {
             this.tempVisibleProps = Arr.intersect(
                 Arr.extract(this.elements, 'prop'), this.tempVisible);
+
+            this.$nextTick(this.$refs.scrollbar.onResize);
         },
 
         sortByColumn(column)
@@ -601,7 +603,7 @@ export default {
     
         return (
             <div class="n-table" style="min-height: 500px;">
-                <NScrollbar class="n-table__wrap" fixture={true} overflowY={false}>
+                <NScrollbar ref="scrollbar" class="n-table__wrap" fixture={true} overflowY={false}>
                     <div class="n-table__inner">
                         { [this.ctor('renderHead')(), draggableHtml] }
                     </div>

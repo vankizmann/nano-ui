@@ -1,0 +1,94 @@
+@import "../../../root/vars";
+
+.n-input-number {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 100%;
+    border: 1px solid $color-gray-15;
+}
+
+.n-input-number.n-disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.n-input-number input {
+    appearance: none;
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    text-decoration: none;
+    line-height: 1.2;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.n-input-number.n-disabled input  {
+    background: rgba($color-gray-15, 0.3);
+}
+
+.n-input-number .n-button {
+    flex: 0 0 auto;
+    border-radius: 0;
+    color: $color-gray-60;
+    background: rgba($color-gray-15, 0.5);
+}
+
+.n-input-number .n-button:not(.n-disabled) {
+    cursor: default;
+}
+
+
+@each $suffix, $values in $form {
+
+    $-input-number-font: map-get($values, 'font');
+    $-input-number-size: map-get($values, 'size');
+    $-input-number-radius: map-get($values, 'radius');
+    $-input-number-ratio: map-get($values, 'ratio');
+
+    .n-input-number--#{$suffix} {
+        font-size: $-input-number-font;
+        border-radius: $-input-number-radius;
+    }
+
+    .n-input-number--#{$suffix} input {
+        height: $-input-number-size - 2;
+        padding: 0 $-input-number-size * $-input-number-ratio;
+    }
+
+    .n-input-number--#{$suffix} .n-button {
+        font-size: $-input-number-font - 4;
+    }
+
+    .n-input-number--#{$suffix} .n-button.n-button--square:not(.n-button--link) {
+        width: $-input-number-size - 2;
+        height: $-input-number-size - 2;
+    }
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+    /**
+     * Button primary
+     */
+
+    .n-input-number--#{$color}:not(.n-disabled):hover {
+        border-color: $-color-base;
+    }
+
+    .n-input-number--#{$color}:not(.n-disabled).n-focus {
+        border-color: $-color-light;
+    }
+
+    .n-input-number--#{$color}:not(.n-disabled) .n-button:hover {
+        color: $-color-base;
+    }
+
+}

@@ -310,7 +310,10 @@ export default {
 
     mounted()
     {
-        this.drag.bindRoot();
+        let frame = this.$refs.virtualscroller.
+            $refs.inner;
+
+        this.drag.bindRoot(frame);
 
         this.$watch('tempSelected', this.watchSelected, 
             { deep: true });

@@ -416,7 +416,7 @@ export default {
                     transform: `translateY(${vbarTop}px) translateZ(0)`
                 });
 
-                this.vbarTop - vbarTop;
+                this.vbarTop = vbarTop;
             }
 
             let hbarLeft =  Math.ceil((this.outerWidth / this.innerWidth) * 
@@ -428,7 +428,7 @@ export default {
                     transform: `translateX(${hbarLeft}px) translateZ(0)`
                 });
                 
-                this.hbarLeft - hbarLeft;
+                this.hbarLeft = hbarLeft;
             }
         },
 
@@ -575,7 +575,7 @@ export default {
             this.onResize();
         },
 
-        onResize(event)
+        onResize()
         {
             if ( ! this.fixture ) {
                 return;

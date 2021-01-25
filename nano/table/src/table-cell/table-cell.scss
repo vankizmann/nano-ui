@@ -31,6 +31,19 @@
     justify-content: flex-end;
 }
 
+.n-table-cell.n-changed:before {
+    content: '\00a0';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    display: block;
+    width: 0;
+    height: 0;
+    border: 3px solid transparent;
+    border-bottom-color: $color-danger;
+    transform: rotate(-45deg);
+}
+
 .n-table-cell > a,
 .n-table-cell > span {
     overflow: hidden;

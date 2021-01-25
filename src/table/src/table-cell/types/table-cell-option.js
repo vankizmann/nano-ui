@@ -7,6 +7,22 @@ export default {
 
     extends: TableCell,
 
+    renderOption(value)
+    {
+        let prop = this.column.optionsValue;
+
+        let option = Arr.find(options, (item) => {
+            return Obj.get(item, prop) == value;
+        });
+
+        if ( ! option ) {
+            return [this.column.emptyText];
+        }
+
+        return Obj.get(option, this.column.optionsLabel,
+            this.column.undefinedText);
+    },
+
     render()
     {
         if ( this.column.cslo('default', this) ) {
@@ -15,33 +31,24 @@ export default {
             );
         }
         
-        let options = Any.isFunction(this.column.options) ?
-            this.column.options(this.value) : this.column.options;
+        let options = this.column.options;
 
-        options = Arr.map(Arr.clone(options), (value, index) => {
+        if ( Any.isFunction(options) ) {
+            options = this.column.options(this);
+        }
+
+        let input = ! Any.isObject(this.input) ?
+            [this.input] : this.input;
+
+        options = Arr.each(options, (value, index) => {
             return { $value: value, $index: index };
         });
 
-        let className = [
-            'n-table-cell',
-            'n-table-cell--' + this.column.type
-        ];
-
-        return <div class={className}>
-            <span>
-                {
-                    Arr.each(! Any.isObject(this.input) ? [this.input] : this.input, (value) => {
-
-                        let option = Arr.find(options, (item) => {
-                            return Obj.get(item, this.column.optionsValue) == value;
-                        });
-
-                        return Obj.get(option, this.column.optionsLabel, this.column.undefinedText);
-
-                    }).join(', ') || this.column.emptyText
-                }
-            </span>
-        </div>;
+        return (
+            <div>
+                <span>{ Arr.each(input, this.ctor('renderOption')) }</span>
+            </div>
+        );
     }
 
 }

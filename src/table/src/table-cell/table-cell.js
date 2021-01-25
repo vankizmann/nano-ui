@@ -24,6 +24,11 @@ export default {
 
     computed: {
 
+        uid()
+        {
+            return Obj.get(this._, 'vnode.key');
+        },
+
         item()
         {
             return this.NDraggableItem.item;

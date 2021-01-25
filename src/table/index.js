@@ -1,25 +1,15 @@
 import Table from './src/table/table';
-
 import TableColumn from './src/table-column/table-column';
-
 import TableCellString from './src/table-cell/types/table-cell-string';
-
 import TableCellBoolean from './src/table-cell/types/table-cell-boolean';
-
 import TableCellDatetime from './src/table-cell/types/table-cell-datetime';
-
 import TableCellOption from './src/table-cell/types/table-cell-option';
-
 import TableCellImage from './src/table-cell/types/table-cell-image';
-
 import TableCellMatrix from './src/table-cell/types/table-cell-matrix';
-
+import TableCellSelect from './src/table-cell/types/table-cell-select';
 import TableFilterString from './src/table-filter/types/table-filter-string';
-
 import TableFilterBoolean from './src/table-filter/types/table-filter-boolean';
-
 import TableFilterDatetime from './src/table-filter/types/table-filter-datetime';
-
 import TableFilterOption from './src/table-filter/types/table-filter-option';
 
 
@@ -32,6 +22,7 @@ export default function (App) {
     App.component(TableCellOption.name, TableCellOption);
     App.component(TableCellImage.name, TableCellImage);
     App.component(TableCellMatrix.name, TableCellMatrix);
+    App.component(TableCellSelect.name, TableCellSelect);
     App.component(TableFilterString.name, TableFilterString);
     App.component(TableFilterBoolean.name, TableFilterBoolean);
     App.component(TableFilterDatetime.name, TableFilterDatetime);

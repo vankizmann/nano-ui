@@ -29,6 +29,11 @@ export default {
 
     computed: {
 
+        uid()
+        {
+            return Obj.get(this.value, this.NDraggable.uniqueProp);
+        },
+
         item()
         {
             return Obj.get(this.NDraggable, this.value.route);

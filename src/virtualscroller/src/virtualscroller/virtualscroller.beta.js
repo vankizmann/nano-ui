@@ -97,7 +97,6 @@ export default {
     watch: {
 
         'items': function () {
-            this.prevRender = {};
             this.updateRender();
         }
 
@@ -106,7 +105,6 @@ export default {
     beforeMount()
     {
         this.scrollTop = 0;
-        this.prevRender = {};
     },
 
     mounted()
@@ -249,10 +247,12 @@ export default {
             itemBuffer = Math.max(itemBuffer, 3);
 
             let bufferItems = Math.round(itemBuffer *
-                Math.pow(0.2 + staggerBuffer, 2));
+                Math.pow(0.2 + staggerBuffer, 2.5));
+
+            bufferItems = Math.max(bufferItems, 2);
 
             bufferItems = Math.min(bufferItems,
-                itemBuffer * 2);
+                itemBuffer * 3);
 
             bufferItems = Math.min(bufferItems, 60);
 
@@ -323,10 +323,6 @@ export default {
     {
         let uid = passed.value.id;
 
-        if ( this.prevRender[uid] ) {
-            return this.prevRender[uid];
-        }
-
         passed.index = (passed.index +
             this.state.startIndex);
 
@@ -347,13 +343,11 @@ export default {
             top: topOffset + 'px', height: this.itemHeight + 'px'
         };
         
-        this.prevRender[uid] = (
+        return (
             <div class="n-virtualscroller__item" {...props}>
                 { renderFunction(passed) }
             </div>
         );
-
-        return this.prevRender[uid];
     },
 
     renderItems()
@@ -382,7 +376,6 @@ export default {
             offsetY: this.offsetY,
             offsetX: this.offsetX,
             onSizechange: this.onSizechange,
-            // onScrollupdate: this.onScrollupdate,
         };
 
         let style = {};
@@ -393,7 +386,7 @@ export default {
 
         return (
             <NScrollbar class="n-virtualscroller" ref="scrollbar" {...props}>
-                <div class="n-virtualscroller__inner" style={style}>
+                <div ref="inner" class="n-virtualscroller__inner" style={style}>
                     { this.ctor('renderItems')() }
                 </div>
             </NScrollbar>

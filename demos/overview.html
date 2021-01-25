@@ -187,6 +187,41 @@
             </div>
         </div>
 
+        <h2>NInputNumber</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 80px;" v-model="n_number.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-input v-model="n_number.placeholder"></n-input>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_number.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-input-number v-model="n_number.value" v-bind="n_number" format=":count USD" type="primary"></n-input-number>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-input-number v-model="n_number.value" v-bind="n_number" format=":count €" :precision="2" :step-size="0.1" type="secondary"></n-input-number>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-input-number v-model="n_number.value" v-bind="n_number" type="success"></n-input-number>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-input-number v-model="n_number.value" v-bind="n_number" type="warning"></n-input-number>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-input-number v-model="n_number.value" v-bind="n_number" type="danger"></n-input-number>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-input-number v-model="n_number.value" v-bind="n_number" type="info"></n-input-number>
+            </div>
+        </div>
+
         <h2>NTextarea</h2>
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
@@ -690,14 +725,14 @@
             <n-table-column label="Image" type="image" prop="image" :fixed-width="130"></n-table-column>
             <n-table-column label="Date" type="datetime" prop="date" :sort="true" :filter="true"></n-table-column>
             <n-table-column label="Enabled 3123 asd as" type="boolean" prop="enabled" :sort="true" :filter="true"></n-table-column>
-            <n-table-column label="Value" type="string" prop="value" :sort="true" :filter="true" width="200"></n-table-column>
+            <n-table-column label="Value" type="string" prop="value" :sort="true" :filter="true" :width="200"></n-table-column>
             <n-table-column label="ID" type="string" prop="id" :breakpoint="1300"></n-table-column>
         </n-table>
 
         <n-table v-model:items="virtualTree" :render-expand="true" :item-height="36" style="margin-top: 30px;">
             <n-table-column label="Label" type="string" prop="label"></n-table-column>
-            <n-table-column v-model="treeMatrix" label="Matrix 1" type="matrix" :matrix="1" :width="120">
-                <template v-slot:default>Text wohoo</template>
+            <n-table-column v-model="treeSelect" label="Select" type="select" :allow-uncheck="false" :width="120">
+                <template v-slot:default="{ item }">{{ item.label }}</template>
             </n-table-column>
             <n-table-column v-model="treeMatrix" label="Matrix 2" type="matrix" :matrix="2" align="center" :fixed-width="120"></n-table-column>
             <n-table-column v-model="treeMatrix" label="Matrix 4" type="matrix" :matrix="4" align="center" :fixed-width="120"></n-table-column>
@@ -817,7 +852,8 @@
 
                     return {
                         id:     id, 
-                        value:  id, 
+                        value:  id,
+                        matrix: 10,
                         label:  `Item ${index++}`, 
                         image:  'https://picsum.photos/400/400?' + id,
                         date: Nano.Now.make().format('YYYY-MM-DD HH:mm:ss', true),
@@ -836,13 +872,14 @@
                 return Nano.Obj.assign(item, { children: children });
             });
 
-            data.virtualData = itemGenerator(5000);
+            data.virtualData = itemGenerator(10000);
 
-            data.virtualTree = Nano.Arr.each(itemGenerator(120), function (item) {
+            data.virtualTree = Nano.Arr.each(itemGenerator(500), function (item) {
                 return Nano.Obj.assign(item, { children: itemGenerator(20) });
             });
 
-            data.treeMatrix = [];
+            data.treeSelect = null;
+            data.treeMatrix = [data.virtualTree[3]];
 
             data.n_button = {
                 icon: 'fa fa-ghost', size: 'md', square: false, link: false, disabled: false
@@ -854,6 +891,10 @@
 
             data.n_input = {
                 value: 'Demo', icon: 'fa fa-ghost', size: 'md', placeholder: 'Placeholder', disabled: false
+            };
+
+            data.n_number = {
+                value: 3, size: 'md', placeholder: '', disabled: false
             };
 
             data.n_select = {

@@ -113,7 +113,7 @@ export default {
         matrix: {
             default()
             {
-                return 1;
+                return -1;
             },
             type: [Number, String]
         },
@@ -240,7 +240,15 @@ export default {
                 return 'YYYY-MM-DD HH:mm';
             },
             type: [String]
-        }
+        },
+
+        allowUncheck: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
 
     },
 
@@ -287,6 +295,7 @@ export default {
     beforeMount()
     {
         this.prevRender = {};
+        this.changedStates = {};
         this.NTable.addColumn(this);
     },
 
@@ -297,6 +306,10 @@ export default {
 
     renderHead()
     {
+        if ( ! this.NTable.getColumnVisiblity(this) ) {
+            return null;
+        }
+
         let classList = [
             'n-table-column', 
             'n-table-column--' + this.align,
@@ -322,10 +335,6 @@ export default {
         }
 
         let style = {};
-
-        if ( ! this.NTable.getColumnVisiblity(this) ) {
-            style.display = 'none';
-        }
 
         if ( this.fixedWidth ) {
             style.width = this.fixedWidth + 'px';
@@ -415,11 +424,11 @@ export default {
 
     renderBody(props)
     {
-        let uid = props.value.id + this.uid;
-
-        if ( this.prevRender[uid] ) {
-            return this.prevRender[uid];
+        if ( ! this.NTable.getColumnVisiblity(this) ) {
+            return null;
         }
+
+        let uid = props.value.id + this.uid;
 
         let classList = [
             'n-table-cell',
@@ -455,20 +464,14 @@ export default {
             style.maxWidth = (this.maxWidth - offset) + 'px';
         }
 
-        if ( ! this.NTable.getColumnVisiblity(this) ) {
-            style.display = 'none';
-        }
-
         let passed = Obj.except(this.$attrs, [], {
-            class: classList, style: style, column: this
+            key: uid, class: classList, style: style, column: this
         });
 
         let component = resolveComponent('NTableCell' + 
             Str.ucfirst(this.type));
 
-        this.prevRender[uid] = h(component, passed);
-
-        return this.prevRender[uid];
+        return h(component, passed);
     },
 
     render()

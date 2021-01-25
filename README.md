@@ -16,110 +16,110 @@ yarn add https://github.com/vankizmann/nano-ui.git
 ### Input Elements
 These are the html replacements for input, button, etc.
 
-- [NButton](#coming-soon)<br>
-  Classic button 
+[NButton](#coming-soon)<br>
+Classic button 
   
 
-- [NInpt](#coming-soon)<br>
-  Classic input field
+[NInpt](#coming-soon)<br>
+Classic input field
   
 
-- [NTextarea](#coming-soon)<br>
-  Classic textarea
+[NTextarea](#coming-soon)<br>
+Classic textarea
 
 
-- [NNumber (WIP)](#coming-soon)<br>
-  *Description following soon*
+[NInputNumber](#coming-soon)<br>
+Number input with steps and formats
   
 
-- [NSelect](#coming-soon)<br>
-  Single or multiselect field
+[NSelect](#coming-soon)<br>
+Single or multiselect field
   
 
-- [NCascader](#coming-soon)<br>
-  Tree select box
+[NCascader](#coming-soon)<br>
+Tree select box
   
 
-- [NCheckbox](#coming-soon)<br>
-  Classic checkbox or grouped checkboxes
+[NCheckbox](#coming-soon)<br>
+Classic checkbox or grouped checkboxes
 
 
-- [NRadio](#coming-soon)<br>
-  Classic radio groups
+[NRadio](#coming-soon)<br>
+Classic radio groups
 
 
-- [NSwitch](#coming-soon)<br>
-  On/off toggle like on iOS
+[NSwitch](#coming-soon)<br>
+On/off toggle like on iOS
   
 
-- [NDatepicker](#coming-soon)<br>
-  Datepicker for single or daterange
+[NDatepicker](#coming-soon)<br>
+Datepicker for single or daterange
 
 
-- [NTimepicker](#coming-soon)<br>
-  Regular timepicker
+[NTimepicker](#coming-soon)<br>
+Regular timepicker
 
 
-- [NDatetimepicker (WIP)](#coming-soon)<br>
-  *Description following soon*
+[NDatetimepicker (WIP)](#coming-soon)<br>
+*Description following soon*
 
 
-- [NTransfer](#coming-soon)<br>
-  Transfers items into a list, also supports drag and drop
+[NTransfer](#coming-soon)<br>
+Transfers items into a list, also supports drag and drop
 
 ### List Elements
 These are components which are used to disaplay items.
 
-- [NDraglist](#coming-soon)<br>
-  Drag and drop list with tree support
+[NDraglist](#coming-soon)<br>
+Drag and drop list with tree support
   
 
-- [NTable](#coming-soon)<br>
-  Drag and drop table with tree support
+[NTable](#coming-soon)<br>
+Drag and drop table with tree support
 
 
-- [NPaginator](#coming-soon)<br>
-  *Description following soon*
+[NPaginator](#coming-soon)<br>
+*Description following soon*
   
 ### Overlay Elements
 These components display information above your application layer.
 
-- [NPopover](#coming-soon)<br>
-  Popover element (tooltip e.g.)
+[NPopover](#coming-soon)<br>
+Popover element (tooltip e.g.)
 
 
-- [NModal](#coming-soon)<br>
-  Classic modal component
+[NModal](#coming-soon)<br>
+Classic modal component
 
 
-- [NConfirm](#coming-soon)<br>
-  Confirmation box
+[NConfirm](#coming-soon)<br>
+Confirmation box
 
 
-- [Notify](#coming-soon)<br>
-  Notification popup
+[Notify](#coming-soon)<br>
+Notification popup
 
 ### Other Elements
 These components display information above your application layer.
 
-- [NForm](#coming-soon)<br>
-  *Description following soon*
+[NForm](#coming-soon)<br>
+*Description following soon*
 
 
-- [NTabs](#coming-soon)<br>
-  *Description following soon*
+[NTabs](#coming-soon)<br>
+*Description following soon*
 
 
-- [NLoader](#coming-soon)<br>
-  *Description following soon*
+[NLoader](#coming-soon)<br>
+*Description following soon*
 
-- [NMap](#coming-soon)<br>
-  *Description following soon*
-
-
-- [NScrollbar](#coming-soon)<br>
-  *Description following soon*
+[NMap](#coming-soon)<br>
+*Description following soon*
 
 
-- [NVirtualscroller](#coming-soon)<br>
-  *Description following soon*
+[NScrollbar](#coming-soon)<br>
+*Description following soon*
+
+
+[NVirtualscroller](#coming-soon)<br>
+*Description following soon*

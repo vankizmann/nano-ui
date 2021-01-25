@@ -7,71 +7,77 @@ export default {
 
     extends: TableCell,
 
+    beforeMount()
+    {
+        this.firstState = Obj.get(this.column.changedStates,
+            this.uid);
+    },
+
     methods: {
 
-        toggleSelect()
+        toggleSelect(value)
         {
-            let item = Arr.find(this.column.veValue, {
-                [this.NTable.uniqueProp]: this.value[this.NTable.uniqueProp]
-            });
+            let item = null;
 
-            if ( ! item ) {
-                item = Obj.assign({}, this.value, { [this.column.prop]: 0 });
+            if ( value ) {
+                item = Obj.assign({}, this.item);
             }
 
-            let matrix = Arr.toggle(
-                Num.matrix(Num.int(item[this.column.prop])), Num.int(this.column.matrix)
-            );
-
-            item[this.column.prop] = Num.combine(matrix);
-
-            Arr.replace(this.column.veValue, item, {
-                [this.NTable.uniqueProp]: item[this.NTable.uniqueProp]
-            });
-
-            this.column.$emit('input', this.column.veValue);
+            this.column.$emit('update:modelValue', item);
         },
 
-        isSelected()
+        isChecked()
         {
-            let item = Arr.find(this.column.veValue, {
-                [this.NTable.uniqueProp]: this.value[this.NTable.uniqueProp]
-            });
-
-            if ( ! item ) {
+            if ( Any.isEmpty(this.column.modelValue) ) {
                 return false;
             }
 
-            let matrix = Num.matrix(item[this.column.prop]);
+            return Obj.get(this.column.modelValue, this.NTable.uniqueProp) ===
+                this.value[this.NTable.uniqueProp];
+        },
 
-            if ( Num.int(this.column.matrix) === -1 ) {
+        isDisabled()
+        {
+            if ( ! Any.isEmpty(this.column.modelValue) ) {
                 return true;
             }
 
-            return Arr.has(matrix, Num.int(this.column.matrix));
+            if ( ! Any.isFunction(this.column.disabled) ) {
+                return this.column.disabled;
+            }
+
+            return this.column.disabled(this);
         },
 
     },
 
     render()
     {
-        if ( this.column.$slots.default ) {
-            return (
-                <div>{ this.column.$slots.default(this) }</div> 
-            );
-        }
-        
-        let classList = [
-            'n-table-cell',
-            'n-table-cell--' + this.column.type
-        ];
+        let modelValue = this.isChecked();
 
-        let disabled = Any.isFunction(this.column.disabled) ?
-            this.column.disabled(this.value) : this.column.disabled;
+        if ( this.firstState === null ) {
+            Obj.set(this.column.changedStates,
+                this.uid, this.firstState = modelValue);
+        }
+
+        let classList = [];
+
+        if ( this.firstState !== modelValue ) {
+            classList.push('n-changed');
+        }
+
+        let props = {
+            modelValue: modelValue,
+            disabled: this.isDisabled(),
+            allowUncheck: this.column.allowUncheck,
+            'onUpdate:modelValue': this.toggleSelect
+        };
 
         return (
             <div class={classList}>
-                <NCheckbox checked={this.isSelected()} disabled={disabled} vOn:input={this.toggleSelect} />
+                <NCheckbox {...props}>
+                    { this.column.cslo('default', this) && this.column.$slots.default(this) }
+                </NCheckbox>
             </div>
         );
     }
