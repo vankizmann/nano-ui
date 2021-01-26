@@ -1,4 +1,4 @@
-import { Num, Obj, Any, Locale, Arr, Dom } from "nano-js";
+import { Num, Obj, Any, Locale, Arr, Dom } from "@kizmann/pico-js";
 import CtorMixin from "../../../mixins/src/ctor";
 
 export default {
@@ -334,7 +334,7 @@ export default {
                 <div class={className}>
                     <div class="n-matrix__column n-matrix__column--item" vOn:dblclick={toggleRow}>
                         <div class="n-matrix__expand" vOn:click={toggleRow}>
-                            <span class={this.icons.angleRight}></span>
+                            <span class={nano.Icons.angleRight}></span>
                         </div>
                         <div class="n-matrix__title">
                             { this.use ? this.h(this.use, { props }) : this.$slots.title || title }

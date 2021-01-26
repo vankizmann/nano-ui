@@ -1,4 +1,4 @@
-import { Arr, Obj, Str, Any } from "nano-js";
+import { Arr, Obj, Str, Any } from "@kizmann/pico-js";
 
 export default {
 
@@ -159,7 +159,7 @@ export default {
                     </div>
                 </div>
                 <a class="n-file-list-item__remove" href="javascript:void(0)" vOn:click={this.remove}>
-                    <span class={this.icons.times}></span>
+                    <span class={nano.Icons.times}></span>
                 </a>
             </div>
         );

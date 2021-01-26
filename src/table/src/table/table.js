@@ -1,4 +1,4 @@
-import { Any, Arr, Obj, Dom, Event, UUID } from "nano-js";
+import { Any, Arr, Obj, Dom, Event, UUID } from "@kizmann/pico-js";
 import { h, resolveComponent } from "vue";
 
 export default {

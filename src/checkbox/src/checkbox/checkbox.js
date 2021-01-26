@@ -1,4 +1,4 @@
-import { Arr, Obj, Any, UUID } from "nano-js";
+import { Arr, Obj, Any, UUID } from "@kizmann/pico-js";
 
 export default {
 
@@ -229,14 +229,14 @@ export default {
             this.$slots.intermediate();
 
         if ( ! interHtml )  {
-            interHtml = (<span class={this.icons.intermediate}></span>);
+            interHtml = (<span class={nano.Icons.intermediate}></span>);
         }
 
         let checkHtml = this.$slots.checked &&
             this.$slots.checked();
 
         if ( ! checkHtml )  {
-            checkHtml = (<span class={this.icons.checked}></span>);
+            checkHtml = (<span class={nano.Icons.checked}></span>);
         }
 
         return (

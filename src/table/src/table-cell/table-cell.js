@@ -1,4 +1,4 @@
-import { Obj } from "nano-js";
+import { Obj } from "@kizmann/pico-js";
 
 export default {
 

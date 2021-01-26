@@ -1,4 +1,4 @@
-import { UUID, Num, Arr, Obj, Dom, Any, Event } from "nano-js";
+import { UUID, Num, Arr, Obj, Dom, Any, Event } from "@kizmann/pico-js";
 import NDraggableItem from "../draggable-item/draggable-item";
 
 export default {

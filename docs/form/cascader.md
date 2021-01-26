@@ -22,7 +22,7 @@ Drag and drop list or tree.
                     this.total = 0;
                 }
                 
-                return Nano.Arr.each(Nano.Arr.make(count), () => {
+                return pi.Arr.each(pi.Arr.make(count), () => {
                         
                     this.total++;
    

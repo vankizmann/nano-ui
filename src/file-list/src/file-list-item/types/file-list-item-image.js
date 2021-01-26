@@ -1,5 +1,5 @@
 import FileListItem from "../file-list-item";
-import { Str } from "nano-js";
+import { Str } from "@kizmann/pico-js";
 
 export default {
 

@@ -1,4 +1,4 @@
-import { Str, Obj } from "nano-js";
+import { Str, Obj } from "@kizmann/pico-js";
 
 export default {
 
@@ -188,7 +188,7 @@ export default {
         return (
             <div class="n-draglist-item__handle" {...props}>
                 <div class="n-draglist-item__ellipsis">
-                    <i class={ this.icons.handle }></i>
+                    <i class={ nano.Icons.handle }></i>
                 </div>
             </div>
         );
@@ -207,7 +207,7 @@ export default {
         return (
             <div class="n-draglist-item__expand" {...props}>
                 <div class="n-draglist-item__angle">
-                    <i class={ this.icons.angleRight }></i>
+                    <i class={ nano.Icons.angleRight }></i>
                 </div>
             </div>
         );
@@ -226,7 +226,7 @@ export default {
         return (
             <div class="n-draglist-item__select" {...props}>
                 <div class="n-draglist-item__checkbox">
-                    <i class={ this.icons.checked }></i>
+                    <i class={ nano.Icons.checked }></i>
                 </div>
             </div>
         );

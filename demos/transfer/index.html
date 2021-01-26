@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../style.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
-    <script src="https://vankizmann.github.io/nano-js/dist/nano-js.js"></script>
+    <script src="https://vankizmann.github.io/@kizmann/pico-js/dist/@kizmann/pico-js.js"></script>
     <script src="../../dist/nano-ui.js"></script>
 
 </head>
@@ -41,7 +41,7 @@
 
         'use strict';
 
-        Nano.Dom.ready(() => {
+        pi.Dom.ready(() => {
 
             Vue.config.devtools = true;
 
@@ -54,7 +54,7 @@
 
                         let children = Array(count).fill(null);
 
-                        Nano.Arr.map(children, function(item) {
+                        pi.Arr.map(children, function(item) {
 
                             total++;
 

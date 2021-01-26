@@ -12,8 +12,8 @@ Drag and drop list or tree.
     export default {
         data() {
             
-            let items = Nano.Arr.make(40).map((index) => {
-                return { id: Nano.UUID(), title: 'foo-' + index };
+            let items = pi.Arr.make(40).map((index) => {
+                return { id: pi.UUID(), title: 'foo-' + index };
             });
             
             return {

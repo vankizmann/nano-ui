@@ -120,7 +120,7 @@ export default {
 
         return (
             <div class="n-form-group__collapse">
-                <i class={this.icons.angleDown}></i>
+                <i class={nano.Icons.angleDown}></i>
             </div>
         );
     },

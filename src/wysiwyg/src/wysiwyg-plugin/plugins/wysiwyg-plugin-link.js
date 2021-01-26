@@ -1,6 +1,6 @@
 import NWysiwygPlugin from "../wysiwyg-plugin";
 import Link from "../extensions/link";
-import { Obj } from "nano-js";
+import { Obj } from "@kizmann/pico-js";
 
 export default {
 

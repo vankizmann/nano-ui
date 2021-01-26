@@ -1,4 +1,4 @@
-import { Obj, Locale } from "nano-js";
+import { Obj, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -110,7 +110,7 @@ export default {
     {
         return (
             <div class="n-confirm__icon">
-                <span class={this.icons[this.type]}></span>
+                <span class={nano.Icons[this.type]}></span>
             </div>
         );
     },

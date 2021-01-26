@@ -1,4 +1,4 @@
-import { Str, Num, Arr, Any } from "nano-js";
+import { Str, Num, Arr, Any } from "@kizmann/pico-js";
 
 export default {
 
@@ -246,7 +246,7 @@ export default {
             type: this.type,
             square: true,
             size: this.size,
-            icon: this.icons.angleLeft,
+            icon: nano.Icons.angleLeft,
             onClick: this.onPrevPage
         };
 
@@ -265,7 +265,7 @@ export default {
             type: this.type,
             square: true,
             size: this.size,
-            icon: this.icons.angleRight,
+            icon: nano.Icons.angleRight,
             onClick: this.onNextPage
         };
 
@@ -288,7 +288,7 @@ export default {
             type: this.type,
             square: true,
             size: this.size,
-            icon: this.icons.angleDoubleLeft,
+            icon: nano.Icons.angleDoubleLeft,
             onClick: this.onFirstPage
         };
 
@@ -311,7 +311,7 @@ export default {
             type: this.type,
             square: true,
             size: this.size,
-            icon: this.icons.angleDoubleRight,
+            icon: nano.Icons.angleDoubleRight,
             onClick: this.onLastPage
         };
 

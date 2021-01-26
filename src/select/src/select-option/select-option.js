@@ -1,4 +1,4 @@
-import { Num, Arr, Obj, Any } from "nano-js";
+import { Num, Arr, Obj, Any } from "@kizmann/pico-js";
 
 export default {
 
@@ -137,7 +137,7 @@ export default {
         };
 
         if ( isSingleActive || isMultipleActive ) {
-            props.icon = this.icons.checked;
+            props.icon = nano.Icons.checked;
         }
 
         // Required for scrolldown

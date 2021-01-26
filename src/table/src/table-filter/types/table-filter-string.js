@@ -1,5 +1,5 @@
 import TableFilter from "../table-filter";
-import { Dom, Any, Locale } from "nano-js";
+import { Dom, Any, Locale } from "@kizmann/pico-js";
 
 export default {
 

@@ -1,4 +1,4 @@
-import { Arr, Obj, Num, Any, Dom, Event, Locale, UUID } from "nano-js";
+import { Arr, Obj, Num, Any, Dom, Event, Locale, UUID } from "@kizmann/pico-js";
 
 class NDragCounter {
 

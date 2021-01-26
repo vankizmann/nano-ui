@@ -1,4 +1,4 @@
-import { UUID, Str, Obj, Dom } from "nano-js";
+import { UUID, Str, Obj, Dom } from "@kizmann/pico-js";
 
 class Notification {
 
@@ -12,12 +12,12 @@ class Notification {
 
     options = {
         duration: 4500,
-        iconPrimary: global.NanoIcons.info,
-        iconSecondary: global.NanoIcons.info,
-        iconSuccess: global.NanoIcons.success,
-        iconWarning: global.NanoIcons.warning,
-        iconDanger: global.NanoIcons.danger,
-        iconInfo: global.NanoIcons.info
+        iconPrimary: nano.Icons.info,
+        iconSecondary: nano.Icons.info,
+        iconSuccess: nano.Icons.success,
+        iconWarning: nano.Icons.warning,
+        iconDanger: nano.Icons.danger,
+        iconInfo: nano.Icons.info
     };
 
     constructor(text, type = 'primary', options = {})
@@ -89,7 +89,7 @@ export default class Notify {
 
     static alias = 'Notify';
 
-    static position = global.NanoStyles.notifyPosition;
+    static position = nano.Settings.notifyPosition;
 
     static notifications = {};
 

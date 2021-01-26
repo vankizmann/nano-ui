@@ -1,4 +1,4 @@
-import { Num, Arr } from "nano-js";
+import { Num, Arr } from "@kizmann/pico-js";
 import CtorMixin from "../../../mixins/src/ctor";
 
 export default {

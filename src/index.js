@@ -1,8 +1,10 @@
+import { Obj, Locale } from "@kizmann/pico-js";
+
 import CtorMixin from "./mixins/src/ctor";
 import CmerMixin from "./mixins/src/cmer";
 import CsloMixin from "./mixins/src/cslo";
 
-let NanoIcons = {
+export const Icons = {
     handle: 'fa fa-ellipsis-v',
     checked: 'fa fa-check',
     circle: 'fa fa-circle',
@@ -23,37 +25,43 @@ let NanoIcons = {
     angleDoubleRight: 'fa fa-angle-double-right'
 };
 
-let NanoStyles = {
+export const Settings = {
     iconPosition: 'before',
     notifyPosition: 'bottom-start'
 };
 
-export function NanoInstall(App, Icons = {}, Styles = {})
+export function Install(App, Icons = {}, Styles = {})
 {
-    if ( global.Nano === undefined ) {
-        return console.error('Nano JS is not available in scope.');
+    /**
+     * @const global.pi
+     */
+
+    if ( typeof global.pi === 'undefined' ) {
+        return console.error('pico-js is not available.');
     }
 
-    global.Nano.install(App.config.globalProperties);
+    Obj.each(global.pi, (value, key) => {
+        App.config.globalProperties[key] = value;
+    });
 
     App.config.globalProperties.ctor = CtorMixin.ctor;
     App.config.globalProperties.cmer = CmerMixin.cmer;
     App.config.globalProperties.cslo = CsloMixin.cslo;
 
-    App.config.globalProperties.trans = global.Nano.Locale.trans;
-    App.config.globalProperties.choice = global.Nano.Locale.choice;
+    App.config.globalProperties.trans = Locale.trans;
+    App.config.globalProperties.choice = Locale.choice;
 
-    if ( ! global.NanoIcons ) {
-        global.NanoIcons = Nano.Obj.assign(NanoIcons, global.NanoIcons);
+    if ( ! global.nano_icons ) {
+        global.nano_icons = Obj.assign(Icons, global.nano_icons);
     }
 
-    App.config.globalProperties.icons = Nano.Obj.assign(global.NanoIcons, Icons);
+    App.config.globalProperties.nano_icons = global.nano_icons;
 
-    if ( ! global.NanoStyles ) {
-        global.NanoStyles = Nano.Obj.assign(NanoStyles, global.NanoStyles);
+    if ( ! global.nano_settings ) {
+        global.nano_settings = Obj.assign(Settings, global.nano_settings);
     }
 
-    App.config.globalProperties.styles = Nano.Obj.assign(global.NanoStyles, Styles);
+    App.config.globalProperties.nano_settings = global.nano_settings;
 
     require('./notification/index').default(App);
     require('./empty/index').default(App);
@@ -93,6 +101,12 @@ export function NanoInstall(App, Icons = {}, Styles = {})
     // require('./wysiwyg/index'); // Ignore
 }
 
-global.NanoInstall = NanoInstall;
+const Nano = {
+    Icons: Icons, Settings: Settings, Install: Install
+};
 
-export default NanoInstall;
+if ( typeof global.nano === 'undefined' ) {
+    global.nano = Nano;
+}
+
+export default Nano;

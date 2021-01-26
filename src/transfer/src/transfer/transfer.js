@@ -1,4 +1,4 @@
-import { Str, Arr, Obj, Any, UUID } from "nano-js";
+import { Str, Arr, Obj, Any, UUID } from "@kizmann/pico-js";
 
 export default {
 
@@ -326,7 +326,7 @@ export default {
             placeholder: this.trans('Search item'),
             size: this.size,
             type: this.type,
-            icon: this.icons.times,
+            icon: nano.Icons.times,
             iconDisabled: ! this.sourceSearch
         };
 
@@ -426,7 +426,7 @@ export default {
             placeholder: this.trans('Search item'),
             size: this.size,
             type: this.type,
-            icon: this.icons.times,
+            icon: nano.Icons.times,
             iconDisabled: ! this.targetSearch
         };
 
@@ -488,7 +488,7 @@ export default {
             size: this.size,
             type: this.type,
             square: true, 
-            icon: this.icons.angleRight,
+            icon: nano.Icons.angleRight,
             onClick: this.moveToTarget
         };
 
@@ -504,7 +504,7 @@ export default {
             size: this.size,
             type: this.type,
             square: true, 
-            icon: this.icons.angleLeft,
+            icon: nano.Icons.angleLeft,
             onClick: this.moveToSource
         };
         return (

@@ -1,4 +1,4 @@
-import { Arr, Map } from "nano-js";
+import { Arr, Map } from "@kizmann/pico-js";
 
 export default {
 

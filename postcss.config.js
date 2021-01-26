@@ -1,12 +1,14 @@
-let postcssAutoprefixer = require('autoprefixer')();
+/**
+ * @const __dirname
+ */
 
-let postcssSvg = require('postcss-inline-svg')({
+let svgOptions = {
     paths: [__dirname + '/nano/root/image']
-});
-
+};
 
 module.exports = {
     plugins: [
-        postcssSvg, postcssAutoprefixer
+        require('postcss-inline-svg')(svgOptions),
+        require('autoprefixer')()
     ],
 };

@@ -1,5 +1,5 @@
 import { Editor, EditorContent } from "tiptap";
-import { Arr } from "nano-js";
+import { Arr } from "@kizmann/pico-js";
 import CtorMixin from "../../../mixins/src/ctor";
 
 export default {

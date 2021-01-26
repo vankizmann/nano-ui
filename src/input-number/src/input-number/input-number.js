@@ -1,4 +1,4 @@
-import { Arr, Obj, Num, Now, Any, Dom, Locale } from "nano-js";
+import { Arr, Obj, Num, Now, Any, Dom, Locale } from "@kizmann/pico-js";
 import { h } from "vue";
 
 export default {

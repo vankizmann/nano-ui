@@ -1,4 +1,4 @@
-import { Arr, Obj, Any, Locale } from "nano-js";
+import { Arr, Obj, Any, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -64,7 +64,7 @@ export default {
         clearableIcon: {
             default()
             {
-                return this.icons.times;
+                return nano.Icons.times;
             },
             type: [String]
         },

@@ -1,4 +1,4 @@
-import { Arr, Obj, Any } from "nano-js";
+import { Arr, Obj, Any } from "@kizmann/pico-js";
 
 global.DEBUG_NVSCROLL = false;
 

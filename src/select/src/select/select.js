@@ -1,4 +1,4 @@
-import { Str, Arr, Obj, Any, Locale, Dom } from "nano-js";
+import { Str, Arr, Obj, Any, Locale, Dom } from "@kizmann/pico-js";
 
 export default {
 
@@ -463,7 +463,7 @@ export default {
 
         return (
             <div class="n-select__clear" {...props}>
-                <i class={this.icons.times}></i>
+                <i class={nano.Icons.times}></i>
             </div>
         );
     },
@@ -472,7 +472,7 @@ export default {
     {
         return (
             <div class="n-select__angle">
-                <i class={this.icons.angleDown}></i>
+                <i class={nano.Icons.angleDown}></i>
             </div>
         );
     },
@@ -484,7 +484,7 @@ export default {
         ];
 
         let props = {
-            class: this.icons.times,
+            class: nano.Icons.times,
         };
 
         if ( ! this.disabled ) {

@@ -12,9 +12,10 @@
     <link rel="stylesheet" href="../dist/nano-ui.css">
 
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.5/vue.global.prod.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://unpkg.com/vue@next"></script>
-    <!-- <script src="../node_modules/nano-js/dist/nano-js.js"></script> -->
-    <script src="https://vankizmann.github.io/nano-js/dist/nano-js.js"></script>
+    <!-- <script src="../node_modules/pico-js/dist/pico-js.js"></script> -->
+    <script src="https://vankizmann.github.io/pico-js/dist/pico-js.js"></script>
     <script src="../dist/nano-ui.js"></script>
 
     <link rel="stylesheet" href="../docs/dist/index.css">
@@ -113,32 +114,32 @@
 </div>
 
 <script>
-    (function (Nano) {
+    (function (nano) {
 
         'use strict';
 
-        Nano.Dom.ready(function () {
+        pi.Dom.ready(function () {
 
             let data = {};
 
             data.sizes = {
-                xs: 'XS', 
-                sm: 'SM', 
-                md: 'MD', 
+                xs: 'XS',
+                sm: 'SM',
+                md: 'MD',
                 lg: 'LG'
             };
 
             data.types = {
-                primary:    'Primary', 
-                secondary:  'Secondary', 
-                success:    'Success', 
-                warning:    'Warning', 
-                danger:     'Danger', 
+                primary:    'Primary',
+                secondary:  'Secondary',
+                success:    'Success',
+                warning:    'Warning',
+                danger:     'Danger',
                 info:       'Info'
             };
 
             data.modals = {
-                default:    'Default', 
+                default:    'Default',
                 preview:    'Preview',
             };
 
@@ -165,39 +166,42 @@
             data.configData = {};
 
             data.testData = [];
-            data.treeMatrix = [];
 
             let itemGenerator = function (count = 100, index = 0) {
-                return Nano.Arr.each(Nano.Arr.make(count), function (value) {
+                return pi.Arr.each(pi.Arr.make(count), function (value) {
 
-                    let id = Nano.UUID();
+                    let id = pi.UUID();
 
                     return {
-                        id:     id, 
-                        value:  id, 
-                        label:  `Item ${index++}`, 
+                        id:     id,
+                        value:  id,
+                        matrix: 10,
+                        label:  `Item ${index++}`,
                         image:  'https://picsum.photos/400/400?' + id,
-                        date: Nano.Now.make().format('YYYY-MM-DD HH:mm:ss', true),
+                        date: pi.Now.make().format('YYYY-MM-DD HH:mm:ss', true),
                         enabled: !! Math.floor(Math.random() * 2)
                     };
                 });
             };
 
 
-            data.cascaderData = Nano.Arr.each(itemGenerator(5), function (item) {
+            data.cascaderData = pi.Arr.each(itemGenerator(5), function (item) {
 
-                let children  = Nano.Arr.each(itemGenerator(5), function (item) {
-                    return Nano.Obj.assign(item, { children: itemGenerator(5) });
+                let children  = pi.Arr.each(itemGenerator(5), function (item) {
+                    return pi.Obj.assign(item, { children: itemGenerator(5) });
                 });
 
-                return Nano.Obj.assign(item, { children: children });
+                return pi.Obj.assign(item, { children: children });
             });
 
-            data.virtualData = itemGenerator(1000);
+            data.virtualData = itemGenerator(10000);
 
-            data.virtualTree = Nano.Arr.each(itemGenerator(1000), function (item) {
-                return Nano.Obj.assign(item, { children: itemGenerator(10) });
+            data.virtualTree = pi.Arr.each(itemGenerator(500), function (item) {
+                return pi.Obj.assign(item, { children: itemGenerator(20) });
             });
+
+            data.treeSelect = null;
+            data.treeMatrix = [data.virtualTree[3]];
 
             data.n_button = {
                 icon: 'fa fa-ghost', size: 'md', square: false, link: false, disabled: false
@@ -209,6 +213,10 @@
 
             data.n_input = {
                 value: 'Demo', icon: 'fa fa-ghost', size: 'md', placeholder: 'Placeholder', disabled: false
+            };
+
+            data.n_number = {
+                value: 3, size: 'md', placeholder: '', disabled: false
             };
 
             data.n_select = {
@@ -280,10 +288,12 @@
             var config = {
                 data: function () {
 
-                    this.icons.ghost = 'fa fa-ghost'
+                    this.icons = pi.Obj.assign(nano.Icons, {
+                        ghost: 'fa fa-ghost'
+                    });
 
-                    data.demoIcons = Nano.Arr.reduce(Nano.Obj.values(this.icons), function (merge, icon) {
-                        return Nano.Obj.assign(merge, { [icon]: icon });
+                    data.demoIcons = pi.Arr.reduce(pi.Obj.values(nano.Icons), function (merge, icon) {
+                        return pi.Obj.assign(merge, { [icon]: icon });
                     }, {});
 
                     return data;
@@ -296,13 +306,13 @@
             window.App.config.devtools = true;
 
             window.App.use(function (App) {
-                NanoInstall(App);
+                nano.Install(App);
             });
 
             window.App.mount('#app');
         });
 
-    })(window.Nano);
+    })(window.nano);
 </script>
 </body>
 </html>

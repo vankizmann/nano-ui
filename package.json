@@ -1,6 +1,11 @@
 {
-    "name": "nano-ui",
+    "name": "@kizmann/nano-ui",
     "version": "0.1.0",
+    "license": "MIT",
+    "private": false,
+    "author": "Eduard Kizmann <kizmann@protonmail.ch>",
+    "repository": "https://github.com/vankizmann/nano-ui",
+    "module": "src/index.js",
     "main": "dist/nano-ui.esm.js",
     "scripts": {
         "build": "webpack --hide-modules --mode=production",
@@ -12,27 +17,23 @@
         "@babel/plugin-proposal-export-default-from": "^7.2.0",
         "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
         "@babel/preset-env": "^7.4.4",
+        "@kizmann/pico-js": "^0.1.1",
         "@vue/babel-plugin-jsx": "^1.0.0",
         "@vue/babel-preset-jsx": "^1.2.4",
         "autoprefixer": "^9.6.1",
         "babel-loader": "^8.0.6",
-        "core-js": "2",
         "cross-env": "^5.1",
         "css-loader": "^3.2.0",
         "mini-css-extract-plugin": "^0.8.0",
-        "nano-js": "https://github.com/vankizmann/nano-js",
         "node-sass": "^4.12.0",
         "postcss": "^8.1.1",
         "postcss-inline-svg": "^5.0.0",
         "postcss-loader": "^4.0.0",
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
-        "uglifyjs-webpack-plugin": "^2.2.0",
+        "terser-webpack-plugin": "^4.2.3",
         "vue": "^3.0.0",
         "webpack": "^4.39.1",
         "webpack-cli": "^3.3.9"
-    },
-    "dependencies": {
-        "@babel/polyfill": "^7.4.4"
     }
 }

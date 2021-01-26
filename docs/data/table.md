@@ -35,7 +35,7 @@ Draggable table with diffrent styles.
                     this.total = 0;
                 }
                 
-                return Nano.Arr.each(Nano.Arr.make(count), () => {
+                return pi.Arr.each(pi.Arr.make(count), () => {
                         
                     this.total++;
    
@@ -91,7 +91,7 @@ Draggable table with diffrent styles.
                     this.total = 0;
                 }
                 
-                return Nano.Arr.each(Nano.Arr.make(count), () => {
+                return pi.Arr.each(pi.Arr.make(count), () => {
                         
                     this.total++;
    
@@ -150,7 +150,7 @@ Draggable table with diffrent styles.
                     this.total = 0;
                 }
                 
-                return Nano.Arr.each(Nano.Arr.make(count), () => {
+                return pi.Arr.each(pi.Arr.make(count), () => {
                         
                     this.total++;
    

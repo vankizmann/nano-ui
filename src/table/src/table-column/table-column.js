@@ -1,4 +1,4 @@
-import { Any, Arr, Obj, Str, Dom, UUID } from "nano-js";
+import { Any, Arr, Obj, Str, Dom, UUID } from "@kizmann/pico-js";
 import { h, resolveComponent } from "vue";
 
 export default {
@@ -410,7 +410,7 @@ export default {
 
         let angleHtml = (
             <div class="n-table-column__filter">
-                <i class={this.icons.angleDown}></i>
+                <i class={nano.Icons.angleDown}></i>
             </div>
         );
 

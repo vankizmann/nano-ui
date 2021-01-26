@@ -1,4 +1,4 @@
-import { Arr, Obj, Any, Str } from "nano-js";
+import { Arr, Obj, Any, Str } from "@kizmann/pico-js";
 
 export default {
 
@@ -267,7 +267,7 @@ export default {
         };
 
         if ( Arr.last(this.tempValue) === value ) {
-            props.icon = this.icons.checked;
+            props.icon = nano.Icons.checked;
         }
 
         let tempCascade = Arr.merge(Arr.clone(cascade), [value]);
@@ -281,7 +281,7 @@ export default {
         let children = Obj.get(item, this.childProp);
 
         if (  ! props.icon && ! Any.isEmpty(children) ) {
-            props.icon = this.icons.angleRight;
+            props.icon = nano.Icons.angleRight;
         }
 
         return (

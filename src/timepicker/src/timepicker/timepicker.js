@@ -1,4 +1,4 @@
-import { Arr, Obj, Now, Any } from "nano-js";
+import { Arr, Obj, Now, Any } from "@kizmann/pico-js";
 
 export default {
 
@@ -215,7 +215,7 @@ export default {
 
         return (
             <div class="n-timepicker__clear" {...props}>
-                <i class={ this.icons.times }></i>
+                <i class={ nano.Icons.times }></i>
             </div>
         );
     },
@@ -224,7 +224,7 @@ export default {
     {
         return (
             <div class="n-timepicker__angle">
-                <i class={ this.icons.angleDown }></i>
+                <i class={ nano.Icons.angleDown }></i>
             </div>
         );
     },

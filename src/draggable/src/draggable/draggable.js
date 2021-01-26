@@ -1,4 +1,4 @@
-import { UUID, Num, Arr, Obj, Dom, Any, Event, Locale } from "nano-js";
+import { UUID, Num, Arr, Obj, Dom, Any, Event, Locale } from "@kizmann/pico-js";
 
 export default {
 

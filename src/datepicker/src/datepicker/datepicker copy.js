@@ -1,4 +1,4 @@
-import { Arr, Obj, Str, Now, Any, UUID } from "nano-js";
+import { Arr, Obj, Str, Now, Any, UUID } from "@kizmann/pico-js";
 
 export default {
 
@@ -389,7 +389,7 @@ export default {
     {
         let props = {
             link: true,
-            icon: this.icons.angleLeft,
+            icon: nano.Icons.angleLeft,
         };
 
         let events = {
@@ -405,7 +405,7 @@ export default {
     {
         let props = {
             link: true,
-            icon: this.icons.angleRight,
+            icon: nano.Icons.angleRight,
         };
 
         let events = {
@@ -751,7 +751,7 @@ export default {
     {
         return (
             <div class="n-datepicker__icon">
-                <span class={this.icons.calendar}></span>
+                <span class={nano.Icons.calendar}></span>
             </div>
         );
     },
@@ -764,7 +764,7 @@ export default {
 
         let props = {
             type: 'input',
-            icon: this.icons.times,
+            icon: nano.Icons.times,
             disabled: this.disabled
         };
 
@@ -883,7 +883,7 @@ export default {
 
         let props = {
             type: 'input',
-            icon: this.icons.times,
+            icon: nano.Icons.times,
             disabled: this.disabled
         };
 

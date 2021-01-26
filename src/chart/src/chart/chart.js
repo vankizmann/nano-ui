@@ -1,4 +1,4 @@
-import { Num, Arr, Obj, Any } from "nano-js";
+import { Num, Arr, Obj, Any } from "@kizmann/pico-js";
 
 export default {
 

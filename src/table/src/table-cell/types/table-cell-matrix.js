@@ -1,5 +1,5 @@
 import TableCell from "../table-cell";
-import { Num, Any, Obj, Arr, UUID } from "nano-js";
+import { Num, Any, Obj, Arr, UUID } from "@kizmann/pico-js";
 
 export default {
 

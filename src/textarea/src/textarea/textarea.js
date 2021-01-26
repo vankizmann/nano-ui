@@ -1,5 +1,5 @@
 import { h } from "vue";
-import {Obj, Any, UUID} from "nano-js";
+import {Obj, Any, UUID} from "@kizmann/pico-js";
 
 export default {
 

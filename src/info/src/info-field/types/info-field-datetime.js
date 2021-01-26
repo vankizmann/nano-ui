@@ -1,4 +1,4 @@
-import { Any } from "nano-js";
+import { Any } from "@kizmann/pico-js";
 import InfoField from "../info-field";
 
 export default {

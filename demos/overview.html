@@ -11,10 +11,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="../dist/nano-ui.css">
 
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.5/vue.global.prod.js"></script>-->
-     <script src="https://unpkg.com/vue@next"></script>
-    <!-- <script src="../node_modules/nano-js/dist/nano-js.js"></script> -->
-    <script src="https://vankizmann.github.io/nano-js/dist/nano-js.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.5/vue.global.prod.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<!--     <script src="https://unpkg.com/vue@next"></script>-->
+    <!-- <script src="../node_modules/pico-js/dist/pico-js.js"></script> -->
+    <script src="https://vankizmann.github.io/pico-js/dist/pico-js.js"></script>
     <script src="../dist/nano-ui.js"></script>
 
     <link rel="stylesheet" href="../docs/dist/index.css">
@@ -127,7 +128,7 @@
                 <n-checkbox v-model="n_button.disabled">Disabled</n-checkbox>
             </div>
         </div>
-        
+
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--1-1 col--1-3@md">
                 <n-button v-bind="n_button" type="primary">Button</n-button>
@@ -165,7 +166,7 @@
                 <n-checkbox v-model="n_input.disabled">Disabled</n-checkbox>
             </div>
         </div>
-        
+
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--1-1 col--1-3@md">
                 <n-input v-model="n_input.value" v-bind="n_input" type="primary"></n-input>
@@ -235,7 +236,7 @@
                 <n-checkbox v-model="n_textarea.disabled">Disabled</n-checkbox>
             </div>
         </div>
-        
+
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--1-1 col--1-3@md">
                 <n-textarea class="test" v-bind="n_textarea" type="primary"></n-textarea>
@@ -273,7 +274,7 @@
                 <n-checkbox v-model="n_select.disabled">Disabled</n-checkbox>
             </div>
         </div>
-        
+
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--1-1 col--1-3@md">
                 <n-select v-bind="n_select" :multiple="true" type="primary" :options="icons"></n-select>
@@ -302,7 +303,7 @@
                 <n-select style="width: 80px;" v-model="n_cascader.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
-                <n-select style="width: 210px;" v-model="n_cascader.type" :options="types"></n-checkbox>
+                <n-select style="width: 210px;" v-model="n_cascader.type" :options="types"></n-select>
             </div>
             <div class="col--auto">
                 <n-checkbox v-model="n_cascader.clearable">Clearable</n-checkbox>
@@ -311,7 +312,7 @@
                 <n-checkbox v-model="n_cascader.disabled">Disabled</n-checkbox>
             </div>
         </div>
-        
+
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--1-1">
                 <n-cascader-panel v-bind="n_cascader" trigger="click" :options="cascaderData"></n-cascader-panel>
@@ -339,10 +340,10 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_checkbox.size" :options="sizes"></n-checkbox>
+                <n-select style="width: 80px;" v-model="n_checkbox.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
-                <n-select style="width: 210px;" v-model="n_checkbox.type" :options="types"></n-checkbox>
+                <n-select style="width: 210px;" v-model="n_checkbox.type" :options="types"></n-select>
             </div>
             <div class="col--auto">
                 <n-checkbox v-model="n_checkbox.disabled">Disabled</n-checkbox>
@@ -368,10 +369,10 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_radio.size" :options="sizes"></n-checkbox>
+                <n-select style="width: 80px;" v-model="n_radio.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
-                <n-select style="width: 210px;" v-model="n_radio.type" :options="types"></n-checkbox>
+                <n-select style="width: 210px;" v-model="n_radio.type" :options="types"></n-select>
             </div>
             <div class="col--auto">
                 <n-checkbox v-model="n_radio.disabled">Disabled</n-checkbox>
@@ -393,7 +394,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_switch.size" :options="sizes"></n-checkbox>
+                <n-select style="width: 80px;" v-model="n_switch.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-checkbox v-model="n_switch.disabled">Disabled</n-checkbox>
@@ -428,7 +429,7 @@
                 <n-select style="width: 80px;" v-model="n_datepicker.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
-                <n-select style="width: 210px;" v-model="n_datepicker.type" :options="types"></n-checkbox>
+                <n-select style="width: 210px;" v-model="n_datepicker.type" :options="types"></n-select>
             </div>
             <div class="col--auto">
                 <n-checkbox v-model="n_datepicker.clearable">Clearable</n-checkbox>
@@ -437,7 +438,7 @@
                 <n-checkbox v-model="n_datepicker.disabled">Disabled</n-checkbox>
             </div>
         </div>
-        
+
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--1-1">
                 <n-datepicker-panel v-bind="n_datepicker" min-date="now" :month-panels="2" :range="true"></n-datepicker-panel>
@@ -457,7 +458,7 @@
                 <n-select style="width: 80px;" v-model="n_timepicker.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
-                <n-select style="width: 210px;" v-model="n_timepicker.type" :options="types"></n-checkbox>
+                <n-select style="width: 210px;" v-model="n_timepicker.type" :options="types"></n-select>
             </div>
             <div class="col--auto">
                 <n-checkbox v-model="n_timepicker.clearable">Clearable</n-checkbox>
@@ -466,7 +467,7 @@
                 <n-checkbox v-model="n_timepicker.disabled">Disabled</n-checkbox>
             </div>
         </div>
-        
+
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--1-1">
                 <n-timepicker-panel v-bind="n_timepicker"></n-timepicker-panel>
@@ -483,13 +484,13 @@
                 <n-select style="width: 80px;" v-model="n_transfer.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
-                <n-select style="width: 210px;" v-model="n_transfer.type" :options="types"></n-checkbox>
+                <n-select style="width: 210px;" v-model="n_transfer.type" :options="types"></n-select>
             </div>
             <div class="col--auto">
                 <n-checkbox v-model="n_cascader.disabled">Disabled</n-checkbox>
             </div>
         </div>
-        
+
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--1-1">
                 <n-transfer v-bind="n_transfer" trigger="hover" :options="cascaderData"></n-transfer>
@@ -500,10 +501,10 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_modal.size" :options="sizes"></n-checkbox>
+                <n-select style="width: 80px;" v-model="n_modal.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
-                <n-select style="width: 210px;" v-model="n_modal.type" :options="modals"></n-checkbox>
+                <n-select style="width: 210px;" v-model="n_modal.type" :options="modals"></n-select>
             </div>
             <div class="col--auto">
                 <n-checkbox v-model="n_modal.disabled">Disabled</n-checkbox>
@@ -531,10 +532,10 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_confirm.size" :options="sizes"></n-checkbox>
+                <n-select style="width: 80px;" v-model="n_confirm.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
-                <n-select style="width: 210px;" v-model="n_confirm.type" :options="types"></n-checkbox>
+                <n-select style="width: 210px;" v-model="n_confirm.type" :options="types"></n-select>
             </div>
             <div class="col--auto">
                 <n-checkbox v-model="n_confirm.disabled">Disabled</n-checkbox>
@@ -555,10 +556,10 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_loader.size" :options="sizes"></n-checkbox>
+                <n-select style="width: 80px;" v-model="n_loader.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
-                <n-select style="width: 210px;" v-model="n_loader.type" :options="types"></n-checkbox>
+                <n-select style="width: 210px;" v-model="n_loader.type" :options="types"></n-select>
             </div>
             <div class="col--auto">
                 <n-checkbox v-model="n_loader.visible">Visible</n-checkbox>
@@ -570,7 +571,7 @@
         </n-loader>
 
         <h2>Notify</h2>
-        
+
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--1-1 col--1-3@md">
                 <n-button type="primary" @click="notify('primary')">Notify</n-button>
@@ -596,10 +597,10 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_tabs.size" :options="sizes"></n-checkbox>
+                <n-select style="width: 80px;" v-model="n_tabs.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
-                <n-select style="width: 210px;" v-model="n_tabs.type" :options="types"></n-checkbox>
+                <n-select style="width: 210px;" v-model="n_tabs.type" :options="types"></n-select>
             </div>
         </div>
 
@@ -619,10 +620,10 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_paginator.size" :options="sizes"></n-checkbox>
+                <n-select style="width: 80px;" v-model="n_paginator.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
-                <n-select style="width: 210px;" v-model="n_paginator.type" :options="types"></n-checkbox>
+                <n-select style="width: 210px;" v-model="n_paginator.type" :options="types"></n-select>
             </div>
         </div>
 
@@ -685,7 +686,7 @@
                 <div style="padding: 0 15px; line-height: 34px;">{{ item.label }}</div>
             </template>
         </n-draglist>
-        
+
 
         <template v-for="index in Arr.make(n_draggable.count)">
             <n-draglist v-model:items="virtualTree" :render-expand="true" :render-select="true" style="height: 500px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
@@ -785,18 +786,18 @@
             <n-info-column label="Enabled" type="boolean" prop="enabled"></n-info-column>
             <n-info-column label="ID" type="string" prop="id"></n-info-column>
         </n-info>
-        
+
         <n-config v-if="false" :config="demoConfig" v-model="configData"></n-config>
         
     </div>
 </div>
 
 <script>
-    (function (Nano) {
+    (function (nano) {
 
         'use strict';
 
-        Nano.Dom.ready(function () {
+        pi.Dom.ready(function () {
 
             let data = {};
 
@@ -846,9 +847,9 @@
             data.testData = [];
 
             let itemGenerator = function (count = 100, index = 0) {
-                return Nano.Arr.each(Nano.Arr.make(count), function (value) {
+                return pi.Arr.each(pi.Arr.make(count), function (value) {
 
-                    let id = Nano.UUID();
+                    let id = pi.UUID();
 
                     return {
                         id:     id, 
@@ -856,26 +857,26 @@
                         matrix: 10,
                         label:  `Item ${index++}`, 
                         image:  'https://picsum.photos/400/400?' + id,
-                        date: Nano.Now.make().format('YYYY-MM-DD HH:mm:ss', true),
+                        date: pi.Now.make().format('YYYY-MM-DD HH:mm:ss', true),
                         enabled: !! Math.floor(Math.random() * 2)
                     };
                 });
             };
 
 
-            data.cascaderData = Nano.Arr.each(itemGenerator(5), function (item) {
+            data.cascaderData = pi.Arr.each(itemGenerator(5), function (item) {
 
-                let children  = Nano.Arr.each(itemGenerator(5), function (item) {
-                    return Nano.Obj.assign(item, { children: itemGenerator(5) });
+                let children  = pi.Arr.each(itemGenerator(5), function (item) {
+                    return pi.Obj.assign(item, { children: itemGenerator(5) });
                 });
 
-                return Nano.Obj.assign(item, { children: children });
+                return pi.Obj.assign(item, { children: children });
             });
 
             data.virtualData = itemGenerator(10000);
 
-            data.virtualTree = Nano.Arr.each(itemGenerator(500), function (item) {
-                return Nano.Obj.assign(item, { children: itemGenerator(20) });
+            data.virtualTree = pi.Arr.each(itemGenerator(500), function (item) {
+                return pi.Obj.assign(item, { children: itemGenerator(20) });
             });
 
             data.treeSelect = null;
@@ -966,10 +967,12 @@
             var config = {
                 data: function () {
 
-                    this.icons.ghost = 'fa fa-ghost'
+                    this.icons = pi.Obj.assign(nano.Icons, {
+                        ghost: 'fa fa-ghost'
+                    });
 
-                    data.demoIcons = Nano.Arr.reduce(Nano.Obj.values(this.icons), function (merge, icon) {
-                        return Nano.Obj.assign(merge, { [icon]: icon });
+                    data.demoIcons = pi.Arr.reduce(pi.Obj.values(nano.Icons), function (merge, icon) {
+                        return pi.Obj.assign(merge, { [icon]: icon });
                     }, {});
 
                     return data;
@@ -982,13 +985,13 @@
             window.App.config.devtools = true;
 
             window.App.use(function (App) {
-                NanoInstall(App);
+                nano.Install(App);
             });
 
             window.App.mount('#app');
         });
 
-    })(window.Nano);
+    })(window.nano);
 </script>
 </body>
 </html>

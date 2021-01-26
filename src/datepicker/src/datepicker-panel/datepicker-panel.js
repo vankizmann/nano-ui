@@ -1,4 +1,4 @@
-import { Arr, Str, Now, Any } from "nano-js";
+import { Arr, Str, Now, Any } from "@kizmann/pico-js";
 
 export default {
 
@@ -293,7 +293,7 @@ export default {
         let props = {
             type: this.type,
             link: true,
-            icon: this.icons.angleLeft,
+            icon: nano.Icons.angleLeft,
             onClick: closure
         };
 
@@ -305,7 +305,7 @@ export default {
         let props = {
             type: this.type,
             link: true,
-            icon: this.icons.angleRight,
+            icon: nano.Icons.angleRight,
             onClick: closure
         };
 
