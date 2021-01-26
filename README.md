@@ -19,6 +19,10 @@
 npm install @kizmann/nano-ui [or] yarn add @kizmann/nano-ui
 ```
 
+### Demo
+
+[Click me to see demo :cat:](https://vankizmann.github.io/nano-ui/demos/overview.html)
+
 ### Input Elements
 These are the html replacements for input, button, etc.
 
