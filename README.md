@@ -1,4 +1,15 @@
 <p align="center"><img width="170" src="https://github.com/vankizmann/nano-ui/blob/master/nano.svg?raw=true" alt="nano-ui"></p>
+
+<p align="center">
+  <a href="https://www.npmjs.org/package/@kizmann/nano-ui">
+    <img src="https://img.shields.io/npm/v/@kizmann/nano-ui.svg">
+  </a>
+  <a href="https://npmcharts.com/compare/@kizmann/nano-ui?minimal=true">
+    <img src="http://img.shields.io/npm/dm/@kizmann/nano-ui.svg">
+  </a>
+  <br>
+</p>
+
 <p align="center">A vue3 based ui library optimized for desktop applications with drag and drop in mind.</p>
 <br>
 
@@ -6,11 +17,7 @@
 Right now you can install this ui kit from github only, npm is currently in the works.
 
 ```bash
-npm install https://github.com/vankizmann/nano-ui.git
-
-#[OR]
-
-yarn add https://github.com/vankizmann/nano-ui.git
+npm install @kizmann/nano-ui
 ```
 
 ### Input Elements
