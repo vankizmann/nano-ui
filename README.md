@@ -14,10 +14,9 @@
 <br>
 
 ### Installation
-Right now you can install this ui kit from github only, npm is currently in the works.
 
 ```bash
-npm install @kizmann/nano-ui
+npm install @kizmann/nano-ui [or] yarn add @kizmann/nano-ui
 ```
 
 ### Input Elements

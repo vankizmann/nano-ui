@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="../dist/nano-ui.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.5/vue.global.prod.js"></script>
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.5/vue.global.prod.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<!--     <script src="https://unpkg.com/vue@next"></script>-->
+     <script src="https://unpkg.com/vue@next"></script>
     <!-- <script src="../node_modules/pico-js/dist/pico-js.js"></script> -->
     <script src="https://vankizmann.github.io/pico-js/dist/pico-js.js"></script>
     <script src="../dist/nano-ui.js"></script>
@@ -875,8 +875,8 @@
 
             data.virtualData = itemGenerator(10000);
 
-            data.virtualTree = pi.Arr.each(itemGenerator(500), function (item) {
-                return pi.Obj.assign(item, { children: itemGenerator(20) });
+            data.virtualTree = pi.Arr.each(itemGenerator(100), function (item) {
+                return pi.Obj.assign(item, { children: itemGenerator(10) });
             });
 
             data.treeSelect = null;

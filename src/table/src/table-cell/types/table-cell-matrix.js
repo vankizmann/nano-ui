@@ -77,21 +77,21 @@ export default {
 
     render()
     {
-        let modelValue = this.isChecked();
+        let checked = this.isChecked();
 
         if ( this.firstState === null ) {
             Obj.set(this.column.changedStates,
-                this.uid, this.firstState = modelValue);
+                this.uid, this.firstState = checked);
         }
 
         let classList = [];
 
-        if ( this.firstState !== modelValue ) {
+        if ( this.firstState !== checked ) {
             classList.push('n-changed');
         }
 
         let props = {
-            modelValue: modelValue,
+            modelValue: checked,
             disabled: this.isDisabled(),
             allowUncheck: this.column.allowUncheck,
             'onUpdate:modelValue': this.toggleMatrix

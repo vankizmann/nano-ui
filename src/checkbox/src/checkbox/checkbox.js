@@ -229,14 +229,14 @@ export default {
             this.$slots.intermediate();
 
         if ( ! interHtml )  {
-            interHtml = (<span class={nano.Icons.intermediate}></span>);
+            interHtml = (<i class={nano.Icons.intermediate}></i>);
         }
 
         let checkHtml = this.$slots.checked &&
             this.$slots.checked();
 
         if ( ! checkHtml )  {
-            checkHtml = (<span class={nano.Icons.checked}></span>);
+            checkHtml = (<i class={nano.Icons.checked}></i>);
         }
 
         return (
@@ -248,7 +248,7 @@ export default {
 
     renderLabel()
     {
-        if ( ! this.$slots.default && ! this.$slots.label ) {
+        if ( ! this.cslo('default') && ! this.cslo('label') ) {
             return null;
         }
 

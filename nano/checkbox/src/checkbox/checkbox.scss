@@ -25,12 +25,12 @@
     //transition: border 0.15s, background 0.15s;
 }
 
-.n-checkbox__checkbox span {
+.n-checkbox__checkbox i {
     opacity: 0;
 }
 
-.n-checkbox.n-checked .n-checkbox__checkbox span,
-.n-checkbox.n-intermediate .n-checkbox__checkbox span {
+.n-checkbox.n-checked .n-checkbox__checkbox i,
+.n-checkbox.n-intermediate .n-checkbox__checkbox i {
     opacity: 1;
 }
 

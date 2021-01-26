@@ -22,7 +22,7 @@ export default {
         itemHeight: {
             default()
             {
-                return 30;
+                return 34;
             }
         },
 
@@ -241,6 +241,10 @@ export default {
 
         refreshDriver(staggerBuffer = 0)
         {
+            if ( ! this.lastStagger ) {
+                staggerBuffer = 2;
+            }
+
             let itemBuffer = Math.round(this.height /
                 this.itemHeight);
 
@@ -254,7 +258,7 @@ export default {
             bufferItems = Math.min(bufferItems,
                 itemBuffer * 3);
 
-            bufferItems = Math.min(bufferItems, 60);
+            bufferItems = Math.min(bufferItems, 36);
 
             let startItem = Math.round(this.scrollTop /
                 this.itemHeight);
