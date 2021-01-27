@@ -1,5 +1,5 @@
+import { Obj } from "@kizmann/pico-js";
 import { h } from "vue";
-import { Obj, Any } from "@kizmann/pico-js";
 
 export default {
 
