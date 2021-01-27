@@ -22,7 +22,7 @@ npm install @kizmann/nano-ui [or] yarn add @kizmann/nano-ui
 ### CDN Usage
 
 ```html
-<script src="//unpkg.com/@kizmann/nano-js@latest/dist/nano-js.js"></script>
+<script src="//unpkg.com/@kizmann/nano-ui@latest/dist/nano-ui.js"></script>
 ```
 
 ### Demo
