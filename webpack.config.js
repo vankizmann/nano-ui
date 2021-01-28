@@ -21,9 +21,15 @@ let config = {
 
     },
     externals: {
-        'vue': 'Vue',
-        'moment': 'moment',
-        '@kizmann/pico-js': 'pi'
+        'vue': {
+            root: 'Vue', commonjs2: 'vue', commonjs: 'vue', amd: 'vue'
+        },
+        'moment': {
+            root: 'moment', commonjs2: 'moment', commonjs: 'moment', amd: 'moment'
+        },
+        '@kizmann/pico-js': {
+            root: 'pi', commonjs2: '@kizmann/pico-js', commonjs: '@kizmann/pico-js', amd: '@kizmann/pico-js'
+        }
     },
     plugins: []
 };
@@ -72,7 +78,7 @@ module.exports = function (env, argv) {
         output:{
             filename: "nano-ui.esm.js",
             path: path.resolve(__dirname, "dist"),
-            libraryTarget: "commonjs-module",
+            libraryTarget: "umd",
         }
 
     }, config);

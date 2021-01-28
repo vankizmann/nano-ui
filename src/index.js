@@ -101,7 +101,7 @@ export function Install(App, Icons = {}, Styles = {})
     // require('./wysiwyg/index'); // Ignore
 }
 
-const Nano = {
+export const Nano = {
     Icons: Icons, Settings: Settings, Install: Install
 };
 
