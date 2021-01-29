@@ -101,6 +101,14 @@ export default {
             type: [Boolean]
         },
 
+        multiClose: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         framerate: {
             default()
             {
@@ -223,7 +231,7 @@ export default {
                 this.tempValue = true);
         },
 
-        close(scrollClose = false)
+        close(type = null)
         {
             if ( this.prevent ) {
                 return;
@@ -231,12 +239,16 @@ export default {
 
             delete this.timer;
 
-            if ( ! scrollClose ) {
+            if ( ! type ) {
                 this.$emit('close');
             }
 
-            if ( scrollClose ) {
+            if ( type === 'scroll' ) {
                 this.$emit('scrollClose');
+            }
+
+            if ( type === 'multi' ) {
+                this.$emit('multiClose');
             }
 
             this.$emit('update:modelValue', 
@@ -255,8 +267,8 @@ export default {
 
         onCloseEvent(uid)
         {
-            if ( this.tempValue && this._.uid !== uid ) {
-                this.close();
+            if ( this.multiClose && this.tempValue && this._.uid !== uid ) {
+                this.close('multi');
             }
         },
 
@@ -602,7 +614,7 @@ export default {
                 (Date.now() - this.timer) > 500;
 
             if ( this.scrollClose && isScrollClose ) {
-                this.close(true);
+                this.close('scroll');
             }
 
             this.passedOffset = rect;
