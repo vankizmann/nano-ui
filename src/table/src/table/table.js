@@ -602,7 +602,7 @@ export default {
         );
     
         return (
-            <div class="n-table" style="min-height: 500px;">
+            <div class="n-table">
                 <NScrollbar ref="scrollbar" class="n-table__wrap" fixture={true} overflowY={false}>
                     <div class="n-table__inner">
                         { [this.ctor('renderHead')(), draggableHtml] }

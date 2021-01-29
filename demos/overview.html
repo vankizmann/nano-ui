@@ -11,10 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="../dist/nano-ui.css">
 
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.5/vue.global.prod.js"></script>-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-     <script src="https://unpkg.com/vue@next"></script>
-    <!-- <script src="../node_modules/pico-js/dist/pico-js.js"></script> -->
+    <script src="https://unpkg.com/moment"></script>
+    <script src="https://unpkg.com/vue@next"></script>
     <script src="https://vankizmann.github.io/pico-js/dist/pico-js.js"></script>
     <script src="../dist/nano-ui.js"></script>
 
@@ -788,7 +786,7 @@
         </n-info>
 
         <n-config v-if="false" :config="demoConfig" v-model="configData"></n-config>
-        
+
     </div>
 </div>
 
@@ -857,7 +855,7 @@
                         matrix: 10,
                         label:  `Item ${index++}`, 
                         image:  'https://picsum.photos/400/400?' + id,
-                        date: pi.Now.make().format('YYYY-MM-DD HH:mm:ss', true),
+                        date: pi.Now.make('now').format('YYYY-MM-DD HH:mm:ss', true),
                         enabled: !! Math.floor(Math.random() * 2)
                     };
                 });

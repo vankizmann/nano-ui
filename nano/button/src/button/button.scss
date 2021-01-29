@@ -64,7 +64,7 @@
      */
 
     .n-button--#{$color}:not(.n-button--link) {
-        color: $--color-white;
+        color: $color-white;
         background: $-color-base;
         border-color: $-color-base;
     }

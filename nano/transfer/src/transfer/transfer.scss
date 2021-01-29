@@ -32,7 +32,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    border-bottom: 1px solid $--color-gray-15;
+    border-bottom: 1px solid $color-gray-15;
 }
 
 .n-transfer__title {
@@ -53,7 +53,7 @@
 
 .n-transfer__search {
     flex: 0 0 auto;
-    border-bottom: 1px solid $--color-gray-15;
+    border-bottom: 1px solid $color-gray-15;
 }
 
 .n-transfer__search .n-input {

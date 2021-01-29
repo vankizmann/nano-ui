@@ -28,7 +28,7 @@
     $-radio-group-ratio: map-get($values, 'ratio');
 
     .n-radio-group--#{$suffix}.n-radio-group--horizontal .n-radio {
-        min-height: 0;
+        $min-height: 0;
     }
 
     .n-radio-group--#{$suffix}.n-radio-group--horizontal .n-radio:not(:first-child) {

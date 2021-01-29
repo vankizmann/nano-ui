@@ -12,7 +12,7 @@ $select-option-padding: 6px 12px !default;
 
 .n-select-option.n-select-option--disabled {
     cursor: not-allowed;
-    color: $--color-gray-30;
+    color: $color-gray-30;
 }
 
 .n-select-option:hover {
@@ -24,5 +24,5 @@ $select-option-padding: 6px 12px !default;
 }
 
 .n-select-option.n-select-option--active {
-    color: $--color-primary;
+    color: $color-primary;
 }

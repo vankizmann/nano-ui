@@ -210,7 +210,7 @@
     .n-datepicker-panel--#{$color} .n-datepicker-panel__body .n-datepicker-panel__day.n-selected,
     .n-datepicker-panel--#{$color} .n-datepicker-panel__body .n-datepicker-panel__month.n-selected,
     .n-datepicker-panel--#{$color} .n-datepicker-panel__body .n-datepicker-panel__year.n-selected {
-        color: $--color-white;
+        color: $color-white;
         background: $-color-base;
     }
 

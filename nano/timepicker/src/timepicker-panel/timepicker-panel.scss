@@ -79,7 +79,7 @@
     $-color-dark: map_get($values, 'dark');
 
     .n-timepicker-panel--#{$color} .n-timepicker-panel__item.n-selected {
-        color: $--color-white;
+        color: $color-white;
         background: $-color-base;
     }
 

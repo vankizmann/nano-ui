@@ -41,7 +41,7 @@ $draglist-loader-size: 40px !default;
     width: $draglist-loader-size;
     height: $draglist-loader-size;
     border-radius: 500px;
-    border: 2px solid $--color-primary;
+    border: 2px solid $color-primary;
     border-bottom-color: transparent;
     animation: LoadingSpinner 1s linear infinite;
 }
@@ -66,7 +66,7 @@ $draglist-loader-size: 40px !default;
 }
 
 .n-draggrid .n-draggrid__empty span {
-    color: $--color-gray-50;
+    color: $color-gray-50;
 }
 
 .n-draggrid.n-dragover > .n-draggrid__empty {

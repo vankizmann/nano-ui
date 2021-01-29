@@ -21,15 +21,9 @@ let config = {
 
     },
     externals: {
-        'vue': {
-            root: 'Vue', commonjs2: 'vue', commonjs: 'vue', amd: 'vue'
-        },
-        'moment': {
-            root: 'moment', commonjs2: 'moment', commonjs: 'moment', amd: 'moment'
-        },
-        '@kizmann/pico-js': {
-            root: 'pi', commonjs2: '@kizmann/pico-js', commonjs: '@kizmann/pico-js', amd: '@kizmann/pico-js'
-        }
+        'vue': 'Vue',
+        'moment': 'moment',
+        '@kizmann/pico-js': 'pi'
     },
     plugins: []
 };
