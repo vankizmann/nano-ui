@@ -68,6 +68,17 @@ export default {
         };
     },
 
+    watch: {
+
+        item(value)
+        {
+            if ( value !== this.tempValue ) {
+                this.tempValue = value;
+            }
+        }
+
+    },
+
     mounted()
     {
         this.bindSyncEvent();

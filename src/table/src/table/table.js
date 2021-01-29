@@ -34,8 +34,7 @@ export default {
             default()
             {
                 return null;
-            },
-            type: [Array]
+            }
         },
 
         selected: {
