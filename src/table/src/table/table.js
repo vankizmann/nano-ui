@@ -231,7 +231,7 @@ export default {
         threshold: {
             default()
             {
-                return 10;
+                return 0;
             },
             type: [Number]
         },
@@ -565,7 +565,7 @@ export default {
             items: this.items, 
             selected: this.tempSelected,
             overflowX: false,
-            renderNode: this.ctor('renderBody')
+            // renderNode: this.ctor('renderBody')
         });
 
         props['onRowClick'] = (...args) => {
@@ -595,7 +595,7 @@ export default {
         let draggableHtml = (
             <div class="n-table__body">
                 <NDraglist ref="draggable" {...props} offsetX={25}>
-                    { { default: () => this.ctor('renderBody')() } }
+                    { { default: this.ctor('renderBody') } }
                 </NDraglist>
             </div>
         );

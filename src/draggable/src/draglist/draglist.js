@@ -122,7 +122,7 @@ export default {
         threshold: {
             default()
             {
-                return 10;
+                return 0;
             },
             type: [Number]
         },
@@ -722,7 +722,7 @@ export default {
     renderItem(props)
     {
         return (
-            <NDraglistItem data-unique={props.value[this.uniqueProp]} {...Obj.except(props, ['index'])}>
+            <NDraglistItem {...Obj.except(props, ['index'])}>
                 { { default: this.$slots.default } }
             </NDraglistItem>
         );

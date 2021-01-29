@@ -399,26 +399,14 @@ class NDraghandler {
             this.DragIndicator.hide();
         }
 
-        let hasDragover = Dom.find(node.$el)
-            .hasClass('n-dragover');
-
-        if ( this.strategy !== 'nodrop' && ! hasDragover ) {
+        if ( this.strategy !== 'nodrop' ) {
             Dom.find(node.$el).addClass('n-dragover');
-        }
-
-        if ( this.strategy === 'nodrop' && hasDragover ) {
-            Dom.find(node.$el).removeClass('n-dragover');
-        }
-
-        let hasNodrop = Dom.find(node.$el)
-            .hasClass('n-nodrop');
-
-        if ( this.strategy === 'nodrop' && ! hasNodrop ) {
-            Dom.find(node.$el).addClass('n-nodrop');
-        }
-
-        if ( this.strategy !== 'nodrop' && hasNodrop ) {
             Dom.find(node.$el).removeClass('n-nodrop');
+        }
+
+        if ( this.strategy === 'nodrop' ) {
+            Dom.find(node.$el).removeClass('n-dragover');
+            Dom.find(node.$el).addClass('n-nodrop');
         }
 
         this.frames = Date.now();

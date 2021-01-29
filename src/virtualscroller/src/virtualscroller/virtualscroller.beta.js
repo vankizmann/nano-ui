@@ -68,7 +68,7 @@ export default {
         threshold: {
             default()
             {
-                return 1;
+                return 0;
             },
             type: [Number]
         },
@@ -76,7 +76,7 @@ export default {
         framerate: {
             default()
             {
-                return 24;
+                return 30;
             },
             type: [Number]
         },
@@ -90,7 +90,7 @@ export default {
         };
 
         return {
-            state, height: 0, load: true
+            state, buffer: [], height: 0, load: true
         };
     },
 
@@ -124,7 +124,7 @@ export default {
         bindAdaptScroll()
         {
             this.refreshScroll = setInterval(this.onScrollupdate,
-                1000 / this.framerate);
+                500 / this.framerate);
         },
 
         unbindAdaptScroll()
@@ -203,8 +203,8 @@ export default {
                 return this.clearState();
             }
 
-            this.scrollTop = Obj.get(this.$refs.scrollbar, 
-                '$refs.content.scrollTop');
+            this.scrollTop = this.$refs.scrollbar.
+                $refs.content.scrollTop;
 
             Any.async(this.refreshDriver);
         },
@@ -215,8 +215,8 @@ export default {
                 return;
             }
 
-            let scrollTop = Obj.get(this.$refs.scrollbar,
-                '$refs.content.scrollTop');
+            let scrollTop = this.$refs.scrollbar.
+                $refs.content.scrollTop;
 
             if ( scrollTop === this.scrollTop ) {
                 return;
@@ -239,26 +239,10 @@ export default {
         },
 
 
-        refreshDriver(staggerBuffer = 0)
+        refreshDriver()
         {
-            if ( ! this.lastStagger ) {
-                staggerBuffer = 2;
-            }
-
-            let itemBuffer = Math.round(this.height /
-                this.itemHeight);
-
-            itemBuffer = Math.max(itemBuffer, 3);
-
-            let bufferItems = Math.round(itemBuffer *
-                Math.pow(0.2 + staggerBuffer, 2.5));
-
-            bufferItems = Math.max(bufferItems, 2);
-
-            bufferItems = Math.min(bufferItems,
-                itemBuffer * 3);
-
-            bufferItems = Math.min(bufferItems, 36);
+            let bufferItems = Math.round((this.height /
+                this.itemHeight) * 0.6);
 
             let startItem = Math.round(this.scrollTop /
                 this.itemHeight);
@@ -278,55 +262,20 @@ export default {
                 endIndex = this.items.length;
             }
 
-            let newState = {
-                startIndex, endIndex
-            };
+            let isSameState = endIndex === this.state.endIndex &&
+                startIndex === this.state.startIndex;
 
-            if ( Any.isEqual(newState, this.state) ) {
+            if ( isSameState ) {
                 return;
             }
 
-            let isInRange = this.state.startIndex <= startIndex &&
-                this.state.endIndex >= endIndex;
-
-            clearTimeout(this.refresh);
-
-            if ( ! this.lastStagger ) {
-                this.lastStagger = staggerBuffer;
-            }
-
-            let realStagger = (isInRange ? this.lastStagger :
-                staggerBuffer);
-
-            let staggerFunction = () => {
-                this.refreshDriver(this.lastStagger = realStagger + 0.5);
-            };
-
-            if ( global.DEBUG_NVSCROLL ) {
-                console.log('staggerRun: ' + realStagger, bufferItems);
-            }
-
-            if ( staggerBuffer < 2 ) {
-                this.refresh = setTimeout(staggerFunction, 200);
-            }
-
-            if ( isInRange ) {
-                return;
-            }
-
-            if ( global.DEBUG_NVSCROLL ) {
-                console.log('Initiate rerender');
-            }
-
-            this.state = newState;
+            this.state = { startIndex, endIndex };
         },
 
     },
 
     renderItem(passed)
     {
-        let uid = passed.value.id;
-
         passed.index = (passed.index +
             this.state.startIndex);
 
@@ -340,7 +289,7 @@ export default {
         }
 
         let props = {
-            key: uid, 'data-index': passed.index
+            'data-index': passed.index
         };
 
         props.style = {
@@ -363,7 +312,8 @@ export default {
         let items = Arr.slice(this.items, this.state.startIndex,
             this.state.endIndex);
 
-        if ( this.items.length <= this.threshold ) {
+
+        if ( this.items.length < this.threshold ) {
             items = this.items;
         }
 

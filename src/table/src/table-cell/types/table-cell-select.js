@@ -56,8 +56,11 @@ export default {
         let checked = this.isChecked();
 
         if ( this.firstState === null ) {
-            Obj.set(this.column.changedStates,
-                this.uid, this.firstState = checked);
+            this.setFirstState(checked);
+        }
+
+        if ( ! this.init ) {
+            return null;
         }
 
         let classList = [];

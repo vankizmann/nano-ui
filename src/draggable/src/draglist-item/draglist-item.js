@@ -61,13 +61,25 @@ export default {
 
     },
 
+    data()
+    {
+        return { init: false };
+    },
+
     mounted()
     {
-        this.NDraggable.drag.bindNode(this);
+        this.timer = setTimeout(() => {
+
+            this.init = true;
+
+            this.NDraggable.drag.bindNode(this);
+        }, 5);
     },
 
     beforeUnmount()
     {
+        clearTimeout(this.timer);
+
         this.NDraggable.drag.unbindNode(this);
     },
 
@@ -136,6 +148,10 @@ export default {
 
     renderElement()
     {
+        if ( ! this.init ) {
+            return null;
+        }
+
         let props = {
             value: this.value, item: this.item
         };
@@ -270,6 +286,8 @@ export default {
         if ( ! this.NDraggable.handle && this.isDraggable() ) {
             props.draggable = true;
         }
+
+        props['data-unique'] = this.value[this.NDraggable.uniqueProp];
 
         return (
             <div class={classList} {...props}>

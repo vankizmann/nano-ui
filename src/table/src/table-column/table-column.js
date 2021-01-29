@@ -465,7 +465,7 @@ export default {
         }
 
         let passed = Obj.except(this.$attrs, [], {
-            key: uid, class: classList, style: style, column: this
+            ...props, uid: uid, class: classList, style: style, column: this
         });
 
         let component = resolveComponent('NTableCell' + 

@@ -125,6 +125,11 @@ export default {
         };
     },
 
+    beforeMount()
+    {
+        this.adaptScrollBehavior();
+    },
+
     mounted()
     {
         this.bindAdaptHeight();
@@ -136,9 +141,6 @@ export default {
 
         Event.bind('NScrollbar:resize',
             this.onResize, this._.uid);
-
-        Event.bind('NScrollbar:native',
-            this.onNative, this._.uid);
 
         Event.bind('NResizer:moved',
             this.onUpdate, this._.uid);
@@ -167,9 +169,6 @@ export default {
         };
 
         Event.unbind('NScrollbar:resize', 
-            this._.uid);
-
-        Event.unbind('NScrollbar:native',
             this._.uid);
 
         Event.unbind('NResizer:moved', 
@@ -237,31 +236,44 @@ export default {
             }
         },
 
+        adaptScrollBehavior()
+        {
+            let $dom = Dom.make('div', { classList: ['n-schrollbar__test'] })
+                .appendTo(document.body).get(0);
+
+            Dom.make('div').appendTo($dom);
+
+            this.native = $dom.clientWidth === $dom.offsetWidth ||
+                $dom.clientHeight === $dom.offsetHeight;
+
+            $dom.remove();
+        },
+
         adaptScrollHeight()
         {
             if ( this.native ) {
                 return;
             }
 
-            let offsetHeight = this.$refs.content.clientHeight -
-                this.$refs.content.offsetHeight;
-
-            let offsetWidth = this.$refs.content.clientWidth -
-                this.$refs.content.offsetWidth;
+            // let offsetHeight = this.$refs.content.clientHeight -
+            //     this.$refs.content.offsetHeight;
+            //
+            // let offsetWidth = this.$refs.content.clientWidth -
+            //     this.$refs.content.offsetWidth;
 
             let outerHeight = this.$refs.content.
                 clientHeight|| 0;
-            
-            if ( offsetHeight === 0 && this.overflowX ) {
-                outerHeight -= 15;
-            }
+
+            // if ( offsetHeight === 0 && this.overflowX ) {
+            //     outerHeight -= 15;
+            // }
 
             let innerHeight = this.$refs.content
                 .scrollHeight || 0;
 
-            if ( offsetHeight === 0 && this.overflowX ) {
-                innerHeight -= 15;
-            }
+            // if ( offsetHeight === 0 && this.overflowX ) {
+            //     innerHeight -= 15;
+            // }
 
             let isSameOld = outerHeight === this.outerHeight && 
                 innerHeight === this.innerHeight;
@@ -288,15 +300,15 @@ export default {
                 height: (this.barHeight = Math.ceil(barHeight)) + 'px'
             });
 
-            let hasNativeBar = offsetWidth !== 0 && this.overflowY;
-
-            if ( hasNativeBar ) {
-                Dom.find(this.$el).addClass('has-native-vbar');
-            }
-
-            if ( hasNativeBar && this.overflowX ) {
-                Dom.find(this.$el).addClass('has-native-hbar');
-            }
+            // let hasNativeBar = offsetWidth !== 0 && this.overflowY;
+            //
+            // if ( hasNativeBar ) {
+            //     Dom.find(this.$el).addClass('has-native-vbar');
+            // }
+            //
+            // if ( hasNativeBar && this.overflowX ) {
+            //     Dom.find(this.$el).addClass('has-native-hbar');
+            // }
 
             let hasVtrack = outerHeight && outerHeight < innerHeight;
 
@@ -308,9 +320,9 @@ export default {
                 Dom.find(this.$el).removeClass('has-vtrack');
             }
 
-            if ( hasVtrack && ! hasNativeBar ) {
-                Event.fire('NScrollbar:native');
-            }
+            // if ( hasVtrack && ! hasNativeBar ) {
+            //     Event.fire('NScrollbar:native');
+            // }
 
             this.adaptScrollPosition();
         },
@@ -321,25 +333,25 @@ export default {
                 return;
             }
 
-            let offsetWidth = this.$refs.content.clientWidth -
-                this.$refs.content.offsetWidth;
-
-            let offsetHeight = this.$refs.content.clientHeight -
-                this.$refs.content.offsetHeight;
+            // let offsetWidth = this.$refs.content.clientWidth -
+            //     this.$refs.content.offsetWidth;
+            //
+            // let offsetHeight = this.$refs.content.clientHeight -
+            //     this.$refs.content.offsetHeight;
 
             let outerWidth = this.$refs.content.
                 clientWidth || 0;
                 
-            if ( offsetWidth === 0 && this.overflowY ) {
-                outerWidth -= 15;
-            }
+            // if ( offsetWidth === 0 && this.overflowY ) {
+            //     outerWidth -= 15;
+            // }
 
             let innerWidth = this.$refs.content
                 .scrollWidth || 0;
 
-            if ( offsetWidth === 0 && this.overflowY ) {
-                innerWidth -= 15;
-            }
+            // if ( offsetWidth === 0 && this.overflowY ) {
+            //     innerWidth -= 15;
+            // }
 
             let isSameOld = outerWidth === this.outerWidth && 
                 innerWidth === this.innerWidth;
@@ -366,15 +378,15 @@ export default {
                 width: (this.barWidth = Math.ceil(barWidth)) + 'px'
             });
 
-            let hasNativeBar = offsetHeight && this.overflowX;
+            // let hasNativeBar = offsetHeight && this.overflowX;
     
-            if ( hasNativeBar ) {
-                Dom.find(this.$el).addClass('has-native-hbar');
-            }
-
-            if ( hasNativeBar && this.overflowY ) {
-                Dom.find(this.$el).addClass('has-native-vbar');
-            }
+            // if ( hasNativeBar ) {
+            //     Dom.find(this.$el).addClass('has-native-hbar');
+            // }
+            //
+            // if ( hasNativeBar && this.overflowY ) {
+            //     Dom.find(this.$el).addClass('has-native-vbar');
+            // }
 
             let hasHtrack = outerWidth && outerWidth < innerWidth;
 
@@ -386,9 +398,9 @@ export default {
                 Dom.find(this.$el).removeClass('has-htrack');
             }
 
-            if ( hasHtrack && ! hasNativeBar ) {
-                Event.fire('NScrollbar:native');
-            }
+            // if ( hasHtrack && ! hasNativeBar ) {
+            //     Event.fire('NScrollbar:native');
+            // }
 
             this.adaptScrollPosition();
         },
@@ -435,7 +447,7 @@ export default {
         adaptHeight()
         {
             let height = Dom.find(this.$refs.content)
-                .child().height();
+                .child().scrollHeight();
 
             let window = Dom.find(this.$el)
                 .innerHeight();
@@ -448,15 +460,8 @@ export default {
                 return;
             }
 
-            let offsetHeight = this.$refs.content.clientHeight -
-                this.$refs.content.offsetHeight;
-
             if ( window ) {
                 this.passedHeight = height;
-            }
-
-            if ( offsetHeight === 0 && this.touch ) {
-                height -= 15;
             }
 
             let style = {
@@ -488,7 +493,7 @@ export default {
             }
 
             let width = Dom.find(this.$refs.content)
-                .child().width();
+                .child().scrollWidth();
 
             let window = Dom.find(this.$el)
                 .innerWidth();
@@ -497,19 +502,12 @@ export default {
                 return;
             }
 
-            let offsetWidth = this.$refs.content.clientWidth -
-                this.$refs.content.offsetWidth;
-
             if ( this.overflowX ) {
                 this.adaptScrollWidth();
             }
 
             if ( window ) {
                 this.passedWidth = width;
-            }
-
-            if ( offsetWidth === 0 && this.touch ) {
-                width -= 15;
             }
 
             let style = {
@@ -562,17 +560,6 @@ export default {
             }
 
             this.$emit('sizechange', height);
-        },
-
-        onNative()
-        {
-            if ( this.native || ! this.allowNative ) {
-                return;
-            }
-
-            this.native = true;
-
-            this.onResize();
         },
 
         onResize()

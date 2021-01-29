@@ -225,24 +225,23 @@ export default {
 
     renderCheckbox()
     {
-        let interHtml = this.$slots.intermediate &&
-            this.$slots.intermediate();
+        let classList = [
+            'n-checkbox__checkbox'
+        ];
 
-        if ( ! interHtml )  {
-            interHtml = (<i class={nano.Icons.intermediate}></i>);
+        if ( this.tempIntermediate )  {
+            classList.push(nano.Icons.intermediate);
         }
 
         let checkHtml = this.$slots.checked &&
             this.$slots.checked();
 
-        if ( ! checkHtml )  {
-            checkHtml = (<i class={nano.Icons.checked}></i>);
+        if ( this.tempChecked )  {
+            classList.push(nano.Icons.checked);
         }
 
         return (
-            <div class="n-checkbox__checkbox">
-                { this.tempIntermediate ? interHtml : checkHtml }
-            </div>
+            <div class={classList}></div>
         );
     },
 

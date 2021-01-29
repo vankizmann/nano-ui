@@ -16,32 +16,55 @@ export default {
 
     props: {
 
+        uid: {
+            required: true
+        },
+
         column: {
             required: true
-        }
+        },
+
+        item: {
+            required: true
+        },
+
+        value: {
+            required: true
+        },
+
 
     },
 
     computed: {
 
-        uid()
-        {
-            return Obj.get(this._, 'vnode.key');
-        },
-
-        item()
-        {
-            return this.NDraggableItem.item;
-        },
-
-        value()
-        {
-            return this.NDraggableItem.value;
-        },
-
         input()
         {
             return Obj.get(this.item, this.column.prop);
+        }
+
+    },
+
+    data()
+    {
+        return { init: false };
+    },
+
+    mounted()
+    {
+        this.timer = setTimeout(() => this.init = true, 5);
+    },
+
+    beforeUnmount()
+    {
+        clearTimeout(this.timer);
+    },
+
+    methods: {
+
+        setFirstState(state)
+        {
+            Obj.set(this.column.changedStates,
+                this.uid, this.firstState = state);
         }
 
     },
@@ -53,9 +76,7 @@ export default {
         }
         
         return (
-            <div>
-                <span>{ this.input }</span>
-            </div>
+            <div>{ this.input }</div>
         );
     }
 
