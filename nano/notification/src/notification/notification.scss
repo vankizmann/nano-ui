@@ -59,7 +59,7 @@ $notification-icon-size: 16px !default;
     margin: 5px;
     background: $color-white;
     border-radius: $md-radius;
-    box-shadow: 0 1px 5px 2px rgba($color-black, 0.20);
+    box-shadow: 0 1px 5px 1px rgba($color-shadow, 0.20);
     transition: transform 0.15s;
 }
 

@@ -37,6 +37,8 @@ $color-info:            #37C4EF !default;
 
 $color-background:      #F0F3F7 !default;
 
+$color-shadow:              mix($color-black, $color-primary, 30%) !default;
+
 $color-white-light:         lighten($color-white, 5%) !default;
 $color-white-lighter:       lighten($color-white, 10%) !default;
 
