@@ -35,12 +35,12 @@
 }
 
 .n-scrollbar--touch:not(.n-scrollbar--native):not(.has-native-vbar) > .n-scrollbar-content > .n-scrollbar__wrap,
-.n-scrollbar.n-overflow-x:not(.n-scrollbar--native):not(.has-native-vbar) > .n-scrollbar-content > .n-scrollbar__wrap {
+.n-scrollbar.n-overflow-x:not(.n-scrollbar--native):not(.has-native-vbar).has-vtrack > .n-scrollbar-content > .n-scrollbar__wrap {
     padding-right: 15px;
 }
 
 .n-scrollbar--touch:not(.n-scrollbar--native):not(.has-native-hbar) > .n-scrollbar-content > .n-scrollbar__wrap,
-.n-scrollba.n-overflow-y:not(.n-scrollbar--native):not(.has-native-hbar) > .n-scrollbar-content > .n-scrollbar__wrap {
+.n-scrollba.n-overflow-y:not(.n-scrollbar--native):not(.has-native-hbar).has-htrack > .n-scrollbar-content > .n-scrollbar__wrap {
     padding-bottom: 15px;
 }
 

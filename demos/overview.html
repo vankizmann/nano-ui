@@ -14,7 +14,7 @@
     <script src="https://unpkg.com/moment"></script>
     <script src="https://unpkg.com/vue@next"></script>
     <script src="https://vankizmann.github.io/pico-js/dist/pico-js.js"></script>
-    <script src="../dist/nano-ui.js"></script>
+    <script src="../dist/nano-ui.esm.js"></script>
 
     <link rel="stylesheet" href="../docs/dist/index.css">
 
@@ -717,7 +717,7 @@
             </div>
         </div>
 
-        <n-table ref="table" v-model:items="virtualTree" :render-expand="true" :item-height="100" style="margin-top: 30px;">
+        <n-table ref="table" v-model:items="virtualTree" :render-expand="true" :item-height="100" style="margin-top: 30px; min-height: 500px;">
             <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true">
 <!--                <template v-slot:default="{item}">{{ item.value }}</template>-->
             </n-table-column>
@@ -728,7 +728,7 @@
             <n-table-column label="ID" type="string" prop="id" :breakpoint="1300"></n-table-column>
         </n-table>
 
-        <n-table v-model:items="virtualTree" :render-expand="true" :item-height="36" style="margin-top: 30px;">
+        <n-table v-model:items="virtualTree" :render-expand="true" :item-height="36" style="margin-top: 30px; min-height: 500px;">
             <n-table-column label="Label" type="string" prop="label"></n-table-column>
             <n-table-column v-model="treeSelect" label="Select" type="select" :allow-uncheck="false" :width="120">
                 <template v-slot:default="{ item }">{{ item.label }}</template>
