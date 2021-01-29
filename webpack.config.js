@@ -22,13 +22,13 @@ let config = {
     },
     externals: {
         'vue': {
-            roo: 'Vue', global: 'Vue', commonjs2: 'vue', commonjs: 'vue', amd: 'vue'
+            root: 'Vue', global: 'Vue', commonjs2: 'vue', commonjs: 'vue', amd: 'vue'
         },
         'moment': {
-            roo: 'moment', global: 'moment', commonjs2: 'moment', commonjs: 'moment', amd: 'moment'
+            root: 'moment', global: 'moment', commonjs2: 'moment', commonjs: 'moment', amd: 'moment'
         },
         '@kizmann/pico-js': {
-            roo: 'pi', global: 'pi', commonjs2: '@kizmann/pico-js', commonjs: '@kizmann/pico-js', amd: '@kizmann/pico-js'
+            root: 'pi', global: 'pi', commonjs2: '@kizmann/pico-js', commonjs: '@kizmann/pico-js', amd: '@kizmann/pico-js'
         }
     },
     plugins: []
@@ -93,6 +93,10 @@ module.exports = function (env, argv) {
         }
 
     }, config);
+
+    Object.keys(globalPackage.externals).forEach((key) => {
+        globalPackage.externals[key] = globalPackage.externals[key].root;
+    });
 
     let stylePackage = Object.assign({
 
