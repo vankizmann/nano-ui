@@ -6,6 +6,14 @@ export default {
 
     name: 'NVirtualscroller',
 
+    inject: {
+
+        NDraggable: {
+            default: undefined
+        }
+
+    },
+
     model: {
         prop: 'items'
     },
@@ -317,6 +325,10 @@ export default {
         let props = {
             'data-index': passed.index
         };
+
+        if ( this.NDraggable ) {
+            passed.uid = passed.value[this.NDraggable.uniqueProp];
+        }
 
         let style = {
             height: this.itemHeight + 'px'

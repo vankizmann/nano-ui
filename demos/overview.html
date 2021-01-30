@@ -679,7 +679,7 @@
             </template>
         </n-draglist>
 
-        <n-draglist v-model:items="testData" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
+        <n-draglist v-model:items="testData" unique-prop="uid" :transform-drop="transDrop" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
             <template v-slot:default="{ value, item }">
                 <div style="padding: 0 15px; line-height: 34px;">{{ item.label }}</div>
             </template>
@@ -953,6 +953,13 @@
             };
 
             let methods = {};
+
+            methods.transDrop = function (node) {
+
+                node.uid = pi.UUID();
+
+                return node;
+            }
 
             methods.log = function (val) {
                 console.log(val || 'Log fired');

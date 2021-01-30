@@ -325,7 +325,7 @@ class NDraghandler {
         }
 
         let cache = Arr.each(this.rootNode.tempSelected, (id) => {
-            return Arr.find(this.rootNode.virtuals, { id });
+            return Arr.find(this.rootNode.virtuals, { [this.rootNode.uniqueProp]: id });
         });
 
         global.DragCounter.get(event, cache.length);
@@ -536,8 +536,9 @@ class NDraghandler {
         }
 
         if ( ! this.dropNodes.length ) {
-            this.cacheNodes = Arr.each(this.cacheNodes,
-                this.rootNode.transformDrop);
+            Arr.each(this.cacheNodes, (value, key) => {
+                this.cacheNodes[key]['item'] = this.rootNode.transformDrop(value.item);
+            });
         }
 
         if ( this.rootNode.insertNode && strategy === 'root' ) {
@@ -567,7 +568,7 @@ class NDraghandler {
         this.dropNodes = this.rootNode.tempSelected = [];
 
         this.rootNode.$emit('move', sources, 
-            Obj.get(target, 'value.id'), strategy);
+            Obj.get(target, 'uid'), strategy);
 
         this.rootNode.$emit('moveraw', this.cacheNodes, 
             target, strategy);

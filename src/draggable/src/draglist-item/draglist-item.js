@@ -21,18 +21,17 @@ export default {
 
     props: {
 
+        uid: {
+            required: true
+        },
+
         value: {
             required: true
-        }
+        },
 
     },
 
     computed: {
-
-        uid()
-        {
-            return Obj.get(this.value, this.NDraggable.uniqueProp);
-        },
 
         item()
         {
@@ -68,12 +67,10 @@ export default {
 
     mounted()
     {
-        this.timer = setTimeout(() => {
+        this.timer = setTimeout(() =>
+            this.init = true, 10);
 
-            this.init = true;
-
-            this.NDraggable.drag.bindNode(this);
-        }, 5);
+        this.NDraggable.drag.bindNode(this);
     },
 
     beforeUnmount()
