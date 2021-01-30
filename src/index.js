@@ -1,4 +1,4 @@
-import { Obj, Locale } from "@kizmann/pico-js";
+import { Arr, Obj, Dom, Locale } from "@kizmann/pico-js";
 
 import CtorMixin from "./mixins/src/ctor";
 import CmerMixin from "./mixins/src/cmer";
@@ -104,6 +104,16 @@ export function Install(App, Icons = {}, Styles = {})
 export const Nano = {
     Icons: Icons, Settings: Settings, Install: Install
 };
+
+global.keyMods = [];
+
+Dom.find(document).on('keydown', (event) => {
+    Arr.add(global.keyMods, event.which);
+});
+
+Dom.find(document).on('keyup', (event) => {
+    Arr.remove(global.keyMods, event.which);
+});
 
 if ( typeof global.nano === 'undefined' ) {
     global.nano = Nano;

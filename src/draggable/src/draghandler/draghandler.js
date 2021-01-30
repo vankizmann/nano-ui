@@ -324,7 +324,7 @@ class NDraghandler {
     {
         if ( ! this.rootNode.isSelected(node) ) {
             this.rootNode.$emit('update:selected', 
-                this.rootNode.tempSelected = [node.value.id]);
+                this.rootNode.tempSelected = [node.uid]);
         }
 
         let cache = Arr.each(this.rootNode.tempSelected, (id) => {
@@ -562,7 +562,7 @@ class NDraghandler {
         }
 
         let sources = Arr.each(this.cacheNodes, (node) => {
-            return node.value.id;
+            return node.uid;
         });
 
         this.dropNodes = this.rootNode.tempSelected = [];
@@ -632,7 +632,6 @@ class NDraghandler {
 
         Arr.each(this.cacheNodes, (node) => {
             children.push(node.item);
-            console.log(node, children);
         });
 
         Obj.set(clone, targetRoute, children);
@@ -689,7 +688,7 @@ class NDraghandler {
     {
         // Get a unique id
         let unique = Obj.get(item, 
-            this.uniqueProp, UUID());
+            this.rootNode.uniqueProp, UUID());
 
         // Add unique to cascader
         let tempCascade = Arr.merge(cascades, 
@@ -703,7 +702,7 @@ class NDraghandler {
             cascade: tempCascade,
         };
 
-        virtual[this.uniqueProp] = unique;
+        virtual[this.rootNode.uniqueProp] = unique;
 
         let children = Obj.get(item, this.childProp, []);
 

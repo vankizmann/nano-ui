@@ -99,7 +99,13 @@
             </template>
         </n-virtualscroller>
 
-        <n-table ref="table" v-model:items="virtualTree" :render-expand="true" :item-height="36" style="margin-top: 30px; min-height: 500px;">
+        <n-draglist v-model:items="virtualTree" unique-prop="uid" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
+            <template v-slot:default="{ value, item }">
+                <div style="padding: 0 15px; line-height: 34px;">{{ item.label }}</div>
+            </template>
+        </n-draglist>
+
+        <n-table ref="table" v-model:items="virtualTree" unique-prop="uid" :render-expand="true" :item-height="36" style="margin-top: 30px; min-height: 500px;">
             <n-table-column label="Label" type="string" prop="label"></n-table-column>
             <n-table-column v-model="treeSelect" label="Matrix 1" type="select" :matrix="1" :width="120">
                 <template v-slot:default>Text wohoo</template>
@@ -173,7 +179,7 @@
                     let id = pi.UUID();
 
                     return {
-                        id:     id,
+                        uid:    id,
                         value:  id,
                         matrix: 10,
                         label:  `Item ${index++}`,

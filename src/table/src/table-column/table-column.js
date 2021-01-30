@@ -428,7 +428,8 @@ export default {
             return null;
         }
 
-        let uid = props.value.id + this.uid;
+        let uid = props.value[this.NTable.uniqueProp]
+            + this.uid;
 
         let classList = [
             'n-table-cell',

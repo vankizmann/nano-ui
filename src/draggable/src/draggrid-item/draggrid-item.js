@@ -1,4 +1,4 @@
-import { Str, Obj } from "@kizmann/pico-js";
+import { Str, Arr, Obj } from "@kizmann/pico-js";
 
 export default {
 
@@ -118,6 +118,10 @@ export default {
         onClick()
         {
             this.NDraggable.setCurrent(this);
+
+            if ( Arr.has(global.keyMods, 91) ) {
+                this.NDraggable.selectItem(this);
+            }
 
             this.NDraggable.$emit('row-click', this);
         },
