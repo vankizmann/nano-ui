@@ -6,6 +6,6 @@ import DraggridItem from './src/draggrid-item/draggrid-item';
 export default function (App) {
     App.component(Draglist.name, Draglist);
     App.component(DraglistItem.name, DraglistItem);
-    // App.component(Draggrid.name, Draggrid);
-    // App.component(DraggridItem.name, DraggridItem);
+    App.component(Draggrid.name, Draggrid);
+    App.component(DraggridItem.name, DraggridItem);
 }

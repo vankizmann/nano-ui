@@ -554,12 +554,17 @@ export default {
         onSizechange(event)
         {
             let height = Dom.find(this.$el).height();
+            let width = Dom.find(this.$el).width();
+
+            if ( ! height && ! width ) {
+                return;
+            }
 
             if ( this.passedHeight || this.passedWidth ) {
                 Dom.find(this.$el).addClass('is-ready');
             }
 
-            this.$emit('sizechange', height);
+            this.$emit('sizechange', height, width);
         },
 
         onResize()

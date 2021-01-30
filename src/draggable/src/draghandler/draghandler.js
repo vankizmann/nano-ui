@@ -632,6 +632,7 @@ class NDraghandler {
 
         Arr.each(this.cacheNodes, (node) => {
             children.push(node.item);
+            console.log(node, children);
         });
 
         Obj.set(clone, targetRoute, children);

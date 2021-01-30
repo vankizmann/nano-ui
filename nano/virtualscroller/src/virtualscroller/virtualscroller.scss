@@ -11,13 +11,29 @@
     position: relative;
 }
 
-.n-virtualscroller__item {
+.n-virtualscroller__row {
     position: absolute;
     left: 0;
     right: 0;
     width: 100%;
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.n-virtualscroller__item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
+}
+
+div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    flex-direction: row;
 }

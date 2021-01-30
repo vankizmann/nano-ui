@@ -1,42 +1,177 @@
-import { UUID, Num, Arr, Obj, Dom, Any, Event } from "@kizmann/pico-js";
-import NDraggableItem from "../draggable-item/draggable-item";
+import { Str, Obj } from "@kizmann/pico-js";
 
 export default {
 
     name: 'NDraggridItem',
 
-    extends: NDraggableItem,
+    inject: {
 
-    renderNode()
+        NDraggable: {
+            default: undefined
+        }
+
+    },
+
+    provide()
     {
+        return {
+            NDraggableItem: this
+        };
+    },
+
+    props: {
+
+        value: {
+            required: true
+        }
+
+    },
+
+    computed: {
+
+        uid()
+        {
+            return Obj.get(this.value, this.NDraggable.uniqueProp);
+        },
+
+        item()
+        {
+            return Obj.get(this.NDraggable, this.value.route);
+        },
+
+        touch() {
+            return !! ('ontouchstart' in window ||
+                navigator.msMaxTouchPoints);
+        },
+
+        mousedown() {
+            return this.touch ? 'touchstart' :
+                'mousedown';
+        },
+
+        mousemove() {
+            return this.touch ? 'touchmove' :
+                'mousemove';
+        },
+
+        mouseup() {
+            return this.touch ? 'touchend' :
+                'mouseup';
+        }
+
+    },
+
+    data()
+    {
+        return { init: false };
+    },
+
+    mounted()
+    {
+        this.timer = setTimeout(() => {
+
+            this.init = true;
+
+            this.NDraggable.drag.bindNode(this);
+        }, 5);
+    },
+
+    beforeUnmount()
+    {
+        clearTimeout(this.timer);
+
+        this.NDraggable.drag.unbindNode(this);
+    },
+
+    methods: {
+
+        isDisabled()
+        {
+            return this.NDraggable.isDisabled(this);
+        },
+
+        isHighlight()
+        {
+            return this.NDraggable.isHighlight(this);
+        },
+
+        isCurrent()
+        {
+            return this.NDraggable.isCurrent(this);
+        },
+
+        isDraggable()
+        {
+            return this.NDraggable.isDraggable(this);
+        },
+
+        isSelected()
+        {
+            return this.NDraggable.isSelected(this);
+        },
+
+        selectItem()
+        {
+            this.NDraggable.selectItem(this);
+        },
+
+        onClick()
+        {
+            this.NDraggable.setCurrent(this);
+
+            this.NDraggable.$emit('row-click', this);
+        },
+
+        onDblclick()
+        {
+            this.NDraggable.setCurrent(this);
+
+            this.NDraggable.$emit('row-dblclick', this);
+        }
+
+    },
+
+    renderElement()
+    {
+        if ( ! this.init ) {
+            return null;
+        }
+
         let props = {
-            index: this[this.NDraggable.indexProp],
-            value: this.veItem,
-            remove: this.remove,
-            copy: this.copy,
-            export: this.export,
+            value: this.value, item: this.item
         };
 
-        let renderNode = null;
+        let renderFunction = this.$slots.default;
 
-        if ( Any.isFunction(this.NDraggable.renderNode) ) {
-            renderNode = this.NDraggable.renderNode(props);
+        if ( this.NDraggable.renderNode ) {
+            renderFunction = this.NDraggable.renderNode;
         }
-
-        if ( Any.isString(this.NDraggable.renderNode) ) {
-            renderNode = this.$render(this.NDraggable.renderNode, { props })
-        }
-
-        if ( Any.isEmpty(renderNode) && this.$scopedSlots.default ) {
-            renderNode = this.$scopedSlots.default(props);
-        }
-
-        let attrs = {
-            width: '100%', flex: '1 1 auto'
-        };
 
         return (
-            this.NDraggable.wrapNode ? this.$render('div', { attrs }, [renderNode]) : renderNode
+            <div class="n-draggrid-item__element">
+                { renderFunction(props) }
+            </div>
+        );
+    },
+
+    renderHandle()
+    {
+        if ( ! this.NDraggable.renderHandle ) {
+            return null;
+        }
+
+        let props = {};
+
+        if ( this.isDraggable() ) {
+            props.draggable = true;
+        }
+
+        return (
+            <div class="n-draggrid-item__handle" {...props}>
+                <div class="n-draggrid-item__ellipsis">
+                    <i class={ nano.Icons.handle }></i>
+                </div>
+            </div>
         );
     },
 
@@ -46,92 +181,57 @@ export default {
             return null;
         }
 
-        let allowSelect = this.NDraggable.canSelect(this);
-
-        allowSelect = allowSelect && (Any.isFunction(this.NDraggable.allowSelect) ?
-            this.NDraggable.allowSelect(this) : this.NDraggable.allowSelect);
-
-        let isChecked = this.NDraggable.isSelected(this);
-
-        // TODO: Decouple is checked from draggable (Not anynmore?)
+        let props = {
+            ['on' + Str.ucfirst(this.mousedown)]: this.selectItem
+        };
 
         return (
-            <div ref="select" class="n-draggrid-item__select">
-                <NCheckbox disabled={!allowSelect} checked={isChecked} onInput={this.select} />
+            <div class="n-draggrid-item__select" {...props}>
+                <div class="n-draggrid-item__checkbox">
+                    <i class={ nano.Icons.checked }></i>
+                </div>
             </div>
         );
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
-        let style = {};
-
-        if ( this.NDraggable.itemHeight ) {
-            style.height = this.NDraggable.itemHeight + 'px'
-        }
-
-        let isBelowThreshold = this.NDraggable.veItems.length <=
-            this.NDraggable.threshold;
-
-        if ( ! this.NDraggable.ghostMode || isBelowThreshold ) {
-            this.veInit = true;
-        }
-
-        let events = {
-            click: this.eventClick,
-            dblclick: this.eventDblclick,
-            dragenter: this.eventDragenter,
-            dragover: this.eventDragover,
-            dragleave: this.eventDragleave,
-            dragend: this.eventDragend,
-            dragdrop: this.eventDragdrop,
-            drop: this.eventDragdrop
-        };
-
         let classList = [
             'n-draggrid-item'
         ];
 
-        if ( this.NDraggable.isSelected(this) ) {
+        if ( this.isDisabled() ) {
+            classList.push('n-disabled');
+        }
+
+        if ( this.isSelected() ) {
             classList.push('n-selected');
         }
 
-        if ( this.NDraggable.isCurrent(this) ) {
+        if ( this.isCurrent() ) {
             classList.push('n-current');
         }
 
-        if ( this.NDraggable.isExpanded(this) ) {
-            classList.push('n-expanded');
+        if ( this.isHighlight() ) {
+            classList.push('n-highlight');
         }
 
-        if ( ! this.veInit ) {
+        let props = {
+            onClick: this.onClick,
+            onDblclick: this.onDblclick,
+        };
 
-            classList.push('n-ghost');
-
-            return (
-                <div class={classList} style={style}></div>
-            );
+        if ( ! this.NDraggable.handle && this.isDraggable() ) {
+            props.draggable = true;
         }
 
-        let allowDrag = ! this.NDraggable.handle;
-        
-        // Is selectable
-        allowDrag = allowDrag && (Any.isFunction(this.NDraggable.allowSelect) ?
-            this.NDraggable.allowSelect(this) : this.NDraggable.allowSelect);
-
-        // Is draggable
-        allowDrag = allowDrag && (Any.isFunction(this.NDraggable.allowDrag) ?
-            this.NDraggable.allowDrag(this) : this.NDraggable.allowDrag);
-
-        // Get unique prop
-        let id = this.value[this.NDraggable.uniqueProp];
+        props['data-unique'] = this.value[this.NDraggable.uniqueProp];
 
         return (
-            <div data-id={id} class={classList} style={style} on={events} draggable={allowDrag}>
-                { this.ctor('renderNode')() }
+            <div class={classList} {...props}>
+                { this.ctor('renderHandle')() }
                 { this.ctor('renderSelect')() }
+                { this.ctor('renderElement')() }
             </div>
         );
     }

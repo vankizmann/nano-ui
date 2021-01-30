@@ -26,6 +26,13 @@ export default {
             }
         },
 
+        itemWidth: {
+            default()
+            {
+                return 0;
+            }
+        },
+
         renderNode: {
             default()
             {
@@ -86,11 +93,11 @@ export default {
     data()
     {
         let state = {
-            startIndex: 0, endIndex: 0
+            start: 0, end: 0, grid: 1
         };
 
         return {
-            state, buffer: [], height: 0, load: true
+            state, buffer: [], width: 0, height: 0, load: true
         };
     },
 
@@ -138,8 +145,8 @@ export default {
                 return true;
             }
 
-            return this.state.startIndex < index && 
-                this.state.endIndex > index;
+            return this.state.start < index &&
+                this.state.end > index;
         },
 
         scrollIntoView(index)
@@ -167,8 +174,13 @@ export default {
                 return;
             }
 
-            if ( index === -1 || index >= this.items.length ) {
-                index = this.items.length;
+            let total = Math.ceil(this.items.length /
+                this.state.grid);
+
+            index = Math.floor(index / this.state.grid);
+
+            if ( index === -1 || index >= total ) {
+                index = total;
             }
 
             let targetTop = index * this.itemHeight;
@@ -194,7 +206,7 @@ export default {
 
         clearState()
         {
-            this.state = { startIndex: 0, endIndex: 0 };
+            this.state = { start: 0, end: 0 };
         },
 
         updateRender()
@@ -227,12 +239,9 @@ export default {
             Any.async(this.refreshDriver);
         },
 
-        onSizechange(height)
+        onSizechange(height, width)
         {
-            if ( ! Any.isNumber(height) ) {
-                return;
-            }
-
+            this.width = width;
             this.height = height;
 
             Any.async(this.refreshDriver);
@@ -241,6 +250,14 @@ export default {
 
         refreshDriver()
         {
+            let grid = 1;
+
+            if ( this.itemWidth ) {
+                grid = Math.floor(this.width / this.itemWidth) || 1;
+            }
+
+            let total = Math.ceil(this.items.length / grid);
+
             let bufferItems = Math.round((this.height /
                 this.itemHeight) * 0.6);
 
@@ -250,26 +267,26 @@ export default {
             let endItem = Math.round((this.scrollTop + 
                 this.height) / this.itemHeight);
 
-            let startIndex = startItem - bufferItems;
+            let start = (startItem - bufferItems);
 
-            if ( startIndex < 0 ) {
-                startIndex = 0;
+            if ( start < 0 ) {
+                start = 0;
             }
 
-            let endIndex = endItem + bufferItems;
+            let end = endItem + bufferItems;
 
-            if ( endIndex > this.items.length ) {
-                endIndex = this.items.length;
+            if ( end > total ) {
+                end = total;
             }
 
-            let isSameState = endIndex === this.state.endIndex &&
-                startIndex === this.state.startIndex;
+            let isSameState = end === this.state.end &&
+                start === this.state.start;
 
             if ( isSameState ) {
                 return;
             }
 
-            this.state = { startIndex, endIndex };
+            this.state = { start, end, grid };
         },
 
     },
@@ -277,7 +294,7 @@ export default {
     renderItem(passed)
     {
         passed.index = (passed.index +
-            this.state.startIndex);
+            this.state.start);
 
         let topOffset = Math.round(this.itemHeight * 
             passed.index);
@@ -292,26 +309,29 @@ export default {
             'data-index': passed.index
         };
 
-        props.style = {
-            top: topOffset + 'px', height: this.itemHeight + 'px'
+        let style = {
+            height: this.itemHeight + 'px'
         };
+
+        if ( this.state.grid === 1 ) {
+            style.top = topOffset + 'px';
+        }
+
+        if ( this.state.grid !== 1 ) {
+            style.width = this.itemWidth + 'px';
+        }
         
         return (
-            <div class="n-virtualscroller__item" {...props}>
+            <div class="n-virtualscroller__item" style={style} {...props}>
                 { renderFunction(passed) }
             </div>
         );
     },
 
-    renderItems()
+    renderRows()
     {
-        if ( ! this.items.length ) {
-            return this.$slots.empty && this.$slots.empty() || null;
-        }
-
-        let items = Arr.slice(this.items, this.state.startIndex,
-            this.state.endIndex);
-
+        let items = Arr.slice(this.items, this.state.start,
+            this.state.end);
 
         if ( this.items.length < this.threshold ) {
             items = this.items;
@@ -320,6 +340,56 @@ export default {
         return Arr.each(items, (value, index) => {
             return this.ctor('renderItem')({ value, index });
         });
+    },
+
+    renderGridRows(passed)
+    {
+        let topOffset = Math.round(this.itemHeight *
+            (passed.index + this.state.start));
+
+        let style = {
+            top: topOffset + 'px'
+        };
+
+        let counter = passed.index * this.state.start;
+
+        return (
+            <div class="n-virtualscroller__row" style={style}>
+                {
+                    Arr.each(passed.chunk, (value, index) => {
+                        return this.ctor('renderItem')({
+                            value, index: index + counter
+                        });
+                    })
+                }
+            </div>
+        );
+    },
+
+    renderGrid()
+    {
+        let chunks = Arr.chunk(this.items,
+            this.state.grid);
+
+        let items = Arr.slice(chunks, this.state.start,
+            this.state.end);
+
+        return Arr.each(items, (chunk, index) => {
+            return this.ctor('renderGridRows')({ chunk, index });
+        });
+    },
+
+    renderItems()
+    {
+        if ( ! this.items.length ) {
+            return this.$slots.empty && this.$slots.empty() || null;
+        }
+
+        if ( this.state.grid === 1 ) {
+            return this.ctor('renderRows')();
+        }
+
+        return this.ctor('renderGrid')();
     },
 
     render()
@@ -334,8 +404,11 @@ export default {
 
         let style = {};
 
+        let totalHeight = this.items.length / this.state.grid *
+            this.itemHeight;
+
         if ( this.items.length ) {
-            style.height = (this.items.length * this.itemHeight) + 'px';
+            style.height = Math.ceil(totalHeight) + 'px';
         }
 
         return (

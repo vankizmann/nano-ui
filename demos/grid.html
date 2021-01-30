@@ -93,22 +93,18 @@
             </div>
         </div>
 
-        <n-virtualscroller ref="virtualscroller" :items="virtualData" style="height: 500px; margin-top: 30px; box-shadow: 0 0 2px 2px #dddedf; border-radius: 4px;">
+        <n-virtualscroller ref="virtualscroller" :items="virtualData" :item-height="100" :item-width="200" style="height: 500px; margin-top: 30px; box-shadow: 0 0 2px 2px #dddedf; border-radius: 4px;">
             <template v-slot:default="{ value }">
                 <div style="padding: 0 15px; line-height: 30px;">{{ value.label }}</div>
             </template>
         </n-virtualscroller>
 
-        <n-table ref="table" v-model:items="virtualTree" :render-expand="true" :item-height="36" style="margin-top: 30px; min-height: 500px;">
-            <n-table-column label="Label" type="string" prop="label"></n-table-column>
-            <n-table-column v-model="treeSelect" label="Matrix 1" type="select" :matrix="1" :width="120">
-                <template v-slot:default>Text wohoo</template>
-            </n-table-column>
-            <n-table-column v-model="treeMatrix" label="Matrix 2" type="matrix" :matrix="2" align="center" :fixed-width="120"></n-table-column>
-            <n-table-column v-model="treeMatrix" label="Matrix 4" type="matrix" :matrix="4" align="center" :fixed-width="120"></n-table-column>
-            <n-table-column v-model="treeMatrix" label="Matrix 8" type="matrix" :matrix="8" align="center" :fixed-width="120"></n-table-column>
-            <n-table-column v-model="treeMatrix" label="Matrix 16" type="matrix" :matrix="16" align="center" :fixed-width="120"></n-table-column>
-        </n-table>
+        <n-draggrid ref="draggrid" v-model:items="virtualTree" :item-height="100" :item-width="200" style="height: 500px; margin-top: 30px; box-shadow: 0 0 2px 2px #dddedf; border-radius: 4px;">
+            <template v-slot:default="{ item }">
+                <div style="width: 200px; height: 100px; padding: 0 15px; line-height: 30px;">{{ item.label }}</div>
+            </template>
+        </n-draggrid>
+
 
     </div>
 </div>

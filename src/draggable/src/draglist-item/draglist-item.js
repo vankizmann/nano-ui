@@ -291,6 +291,7 @@ export default {
 
         return (
             <div class={classList} {...props}>
+                { this.ctor('renderHandle')() }
                 { this.ctor('renderSpacer')() }
                 { this.ctor('renderExpand')() }
                 { this.ctor('renderSelect')() }

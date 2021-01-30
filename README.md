@@ -142,7 +142,9 @@ These are components which are used to disaplay items.
 
 [NDraglist](#coming-soon)<br>
 Drag and drop list with tree support
-  
+
+[NDraggrid](#coming-soon)<br>
+Drag and drop grid with virtual scrolling
 
 [NTable](#coming-soon)<br>
 Drag and drop table with tree support

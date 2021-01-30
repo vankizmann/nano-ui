@@ -1,83 +1,139 @@
 @import "../../../root/vars";
 
-/**
- * Fix flickering by set transition delay
- */
-
 .n-draggrid-item {
-    width: 25%;
+    cursor: default;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
-    box-sizing: border-box;
-    transition: background 0ms 100ms;
+    width: 100%;
 }
 
-.n-draggrid-item.n-highlight {
-    background: rgba($color-warning, 0.1);
-    transition: background 0ms;
+.n-draggrid-item.n-nodrop > * > * {
+    pointer-events: none;
 }
 
 .n-draggrid-item.n-current {
-    background: rgba($color-primary, 0.1);
-}
-
-.n-draggrid-item.n-ghost:after {
-    position: relative;
-}
-
-.n-dragged .n-draggrid-item.n-selected {
-    opacity: 0.5;
-}
-
-.n-draggrid-item.n-dragover {
-    background: rgba($color-primary, 0.1);
-    transition: background 0ms;
+    background: rgba($color-gray-50, 0.1);
 }
 
 .n-draggrid-item.n-nodrop {
     background: rgba($color-danger, 0.1);
-    transition: background 0ms;
 }
 
-.n-draggrid-item__spacer {
-    flex: 0 0 auto;
+.n-draggrid-item__element {
+    position: relative;
+    flex: 1 1 auto;
 }
 
-.n-draggrid-item__expand,
+.n-draggrid-item__handle,
 .n-draggrid-item__select {
     flex: 0 0 auto;
-    width: 30px;
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    width: 28px;
 }
 
-.n-draggrid-item.n-ghost .n-draggrid-item__select {
-    display: none !important;
-}
-
-.n-draggrid-item__expand > div,
-.n-draggrid-item__select > div {
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
+.n-draggrid-item__ellipsis,
+.n-draggrid-item__checkbox {
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 
-.n-draggrid-item__expand > div {
-    color: $color-gray-65;
+.n-draggrid-item .n-draggrid-item__ellipsis {
+    color: $color-gray-25;
 }
 
-.n-inverse .n-draggrid-item__expand > div {
-    color: $color-gray-35;
+.n-draggrid-item__checkbox {
+    background: $color-white;
+    border: 1px solid $color-gray-15;
 }
 
-.n-draggrid-item:not(.n-expanded) .n-draggrid-item__expand > div {
-    transform: rotate(90deg);
+.n-draggrid-item.n-disabled .n-draggrid-item__checkbox {
+    cursor: not-allowed;
+    opacity: 0.7;
+    background:rgba($color-gray-15, 0.3);
+}
+
+.n-draggrid-item:not(.n-selected) .n-draggrid-item__checkbox i {
+    display: none;
+}
+
+@each $suffix, $values in $form {
+
+    $-draggrid-font: map-get($values, 'font');
+    $-draggrid-size: map-get($values, 'size');
+    $-draggrid-radius: map-get($values, 'radius');
+    $-draggrid-ratio: map-get($values, 'ratio');
+
+    .n-draggrid--#{$suffix} {
+        font-size: $-draggrid-font;
+    }
+
+    .n-draggrid--#{$suffix} .n-draggrid__empty {
+        padding: $-draggrid-size $-draggrid-size * 0.5;
+    }
+
+    .n-draggrid--#{$suffix} .n-draggrid-item__ellipsis,
+    .n-draggrid--#{$suffix} .n-draggrid-item__checkbox {
+        width: $-draggrid-size - 16;
+        height: $-draggrid-size - 16;
+        border-radius: $-draggrid-radius - 1;
+    }
+
+    .n-draggrid--#{$suffix} .n-draggrid-item__ellipsis {
+        font-size: $-draggrid-font - 2;
+    }
+
+    .n-draggrid--#{$suffix} .n-draggrid-item__checkbox {
+        font-size: $-draggrid-font - 4;
+    }
+
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+    .n-draggrid--#{$color}.n-empty.n-dragover {
+        background: rgba($-color-base, 0.075);
+    }
+
+    .n-draggrid--#{$color} .n-draggrid-item.n-dragover {
+        background: rgba($-color-base, 0.075);
+    }
+
+    .n-draggrid--#{$color} .n-draggrid-item.n-highlight {
+        animation: NDraggridItem#{$color} 1s linear infinite;
+    }
+
+    .n-draggrid--#{$color} .n-draggrid-item.n-selected .n-draggrid-item__checkbox {
+        color: $color-white;
+        background: $-color-base;
+        border-color: $-color-base;
+    }
+
+    .n-draggrid--#{$color} .n-draggrid-item.n-selected .n-draggrid-item__checkbox:hover {
+        background: $-color-light;
+        border-color: $-color-light;
+    }
+
+    @keyframes NDraggridItem#{$color} {
+        0% {
+            background: rgba($-color-base, 0);
+        }
+        50% {
+            background: rgba($-color-base, 0.150);
+        }
+        100% {
+            background: rgba($-color-base, 0);
+        }
+    }
+
 }
