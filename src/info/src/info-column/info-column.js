@@ -137,7 +137,6 @@ export default {
             column: this
         });
 
-
         let component = resolveComponent('NInfoField' + 
             Str.ucfirst(this.type));
 

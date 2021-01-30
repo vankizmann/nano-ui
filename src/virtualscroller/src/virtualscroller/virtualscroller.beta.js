@@ -327,7 +327,7 @@ export default {
         };
 
         if ( this.NDraggable ) {
-            passed.uid = passed.value[this.NDraggable.uniqueProp];
+            props.key = passed.uid = passed.value[this.NDraggable.uniqueProp];
         }
 
         let style = {

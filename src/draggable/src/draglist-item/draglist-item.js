@@ -21,10 +21,6 @@ export default {
 
     props: {
 
-        uid: {
-            required: true
-        },
-
         value: {
             required: true
         },
@@ -32,6 +28,11 @@ export default {
     },
 
     computed: {
+
+        uid()
+        {
+            return Obj.get(this.value, this.NDraggable.uniqueProp);
+        },
 
         item()
         {
