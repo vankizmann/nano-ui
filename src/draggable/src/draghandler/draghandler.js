@@ -103,9 +103,6 @@ class NDraghandler {
 
     uid = null;
 
-    uniqueProp = 'id';
-    childProp = 'children';
-
     rootNode = null;
     childNodes = {};
 
@@ -538,8 +535,10 @@ class NDraghandler {
             this.unlinkNodes(clone);
         }
 
-        this.cacheNodes = Arr.each(this.cacheNodes,
-            this.rootNode.transformDrop);
+        if ( ! this.dropNodes.length ) {
+            this.cacheNodes = Arr.each(this.cacheNodes,
+                this.rootNode.transformDrop);
+        }
 
         if ( this.rootNode.insertNode && strategy === 'root' ) {
             clone = this.moveNodesRoot(clone, target);
@@ -594,12 +593,12 @@ class NDraghandler {
 
         Arr.map(clone[prop], (node) => {
 
-            if ( ! node[this.childProp] ) {
+            if ( ! node[this.rootNode.childProp] ) {
                 return node;
             }
 
             return this.removeNodes(node, 
-                this.childProp);
+                this.rootNode.childProp);
         });
 
         return clone;
@@ -625,7 +624,7 @@ class NDraghandler {
         }
 
         let targetRoute = [target.value.route, 
-            this.childProp].join('.');
+            this.rootNode.childProp].join('.');
 
         let children = Obj.get(clone, 
             targetRoute, []);
@@ -704,14 +703,15 @@ class NDraghandler {
 
         virtual[this.rootNode.uniqueProp] = unique;
 
-        let children = Obj.get(item, this.childProp, []);
+        let children = Obj.get(item,
+            this.rootNode.childProp, []);
 
         if ( Any.isEmpty(children) ) {
             return Arr.merge(merge, [virtual]);
         }
 
         let childRoute = [route, index, 
-            this.childProp].join('.');
+            this.rootNode.childProp].join('.');
 
         let props = [
             depth + 1, childRoute, tempCascade
