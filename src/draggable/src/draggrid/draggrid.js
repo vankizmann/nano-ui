@@ -552,8 +552,8 @@ export default {
                 canSelect = () => this.allowSelect;
             }
 
-            return canSelect(node) && this.firstSelected &&
-                node.value.depth !== this.firstSelected.depth;
+            return ! canSelect(node) || (this.firstSelected &&
+                node.value.depth !== this.firstSelected.depth);
         },
 
         isSelected(node)
@@ -687,7 +687,7 @@ export default {
         }
 
         let passed = [
-            'threshold', 'bufferItems', 'itemHeight', 'itemWidth',
+            'threshold', 'deathzone', 'itemHeight', 'itemWidth',
             'overflowX', 'overflowY',  'offsetX', 'offsetY'
         ];
 

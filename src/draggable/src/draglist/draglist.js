@@ -561,8 +561,8 @@ export default {
                 canSelect = () => this.allowSelect;
             }
 
-            return canSelect(node) && this.firstSelected &&
-                node.value.depth !== this.firstSelected.depth;
+            return ! canSelect(node) || (this.firstSelected &&
+                node.value.depth !== this.firstSelected.depth);
         },
 
         hasChildren(node)
