@@ -447,18 +447,20 @@ export default {
         adaptHeight()
         {
             let height = Dom.find(this.$refs.content)
-                .child().scrollHeight();
+                .child().height();
 
             let window = Dom.find(this.$el)
                 .innerHeight();
+
+            if ( height === this.passedHeight ) {
+                return;
+            }
 
             if ( this.overflowY ) {
                 this.adaptScrollHeight();
             }
 
-            if ( height === this.passedHeight ) {
-                return;
-            }
+            this.windowHeight = window;
 
             if ( window ) {
                 this.passedHeight = height;
@@ -493,7 +495,7 @@ export default {
             }
 
             let width = Dom.find(this.$refs.content)
-                .child().scrollWidth();
+                .child().width();
 
             let window = Dom.find(this.$el)
                 .innerWidth();
@@ -559,6 +561,8 @@ export default {
             if ( ! height && ! width ) {
                 return;
             }
+
+            console.log(height, width)
 
             if ( this.passedHeight || this.passedWidth ) {
                 Dom.find(this.$el).addClass('is-ready');

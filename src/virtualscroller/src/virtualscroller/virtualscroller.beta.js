@@ -253,10 +253,12 @@ export default {
             let grid = 1;
 
             if ( this.itemWidth ) {
-                grid = Math.floor(this.width / this.itemWidth) || 1;
+                grid = Math.floor(this.width /
+                    this.itemWidth) || 1;
             }
 
-            let total = Math.ceil(this.items.length / grid);
+            let total = Math.ceil(this.items.length
+                / grid);
 
             let bufferItems = Math.round((this.height /
                 this.itemHeight) * 0.6);
@@ -279,14 +281,13 @@ export default {
                 end = total;
             }
 
-            let isSameState = end === this.state.end &&
-                start === this.state.start;
+            let state = { start, end, grid };
 
-            if ( isSameState ) {
+            if ( Any.isEqual(this.state, state) ) {
                 return;
             }
 
-            this.state = { start, end, grid };
+            this.state = state;
         },
 
     },
