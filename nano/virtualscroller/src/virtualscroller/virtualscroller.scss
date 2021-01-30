@@ -30,6 +30,10 @@
     justify-content: stretch;
 }
 
+.n-virtualscroller__row > .n-virtualscroller__item {
+    flex: 0 0 auto;
+}
+
 div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
     position: absolute;
     left: 0;

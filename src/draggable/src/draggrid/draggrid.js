@@ -120,6 +120,14 @@ export default {
             type: [Number]
         },
 
+        deathzone: {
+            default()
+            {
+                return 0;
+            },
+            type: [Number]
+        },
+
         overflowY: {
             default()
             {
@@ -538,10 +546,15 @@ export default {
 
         isDisabled(node)
         {
-            return this.firstSelected &&
+            let canSelect = this.allowSelect;
+
+            if ( ! Any.isFunction(canSelect) ) {
+                canSelect = () => this.allowSelect;
+            }
+
+            return canSelect(node) && this.firstSelected &&
                 node.value.depth !== this.firstSelected.depth;
         },
-
 
         isSelected(node)
         {

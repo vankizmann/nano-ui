@@ -40,6 +40,14 @@ export default {
             }
         },
 
+        deathzone: {
+            default()
+            {
+                return 0;
+            },
+            type: [Number]
+        },
+
         overflowY: {
             default()
             {
@@ -253,7 +261,7 @@ export default {
             let grid = 1;
 
             if ( this.itemWidth ) {
-                grid = Math.floor(this.width /
+                grid = Math.floor((this.width - this.deathzone) /
                     this.itemWidth) || 1;
             }
 

@@ -558,11 +558,9 @@ export default {
             let height = Dom.find(this.$el).height();
             let width = Dom.find(this.$el).width();
 
-            if ( ! height && ! width ) {
+            if ( ! height || ! width ) {
                 return;
             }
-
-            console.log(height, width)
 
             if ( this.passedHeight || this.passedWidth ) {
                 Dom.find(this.$el).addClass('is-ready');
