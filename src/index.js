@@ -51,17 +51,8 @@ export function Install(App, Icons = {}, Styles = {})
     App.config.globalProperties.trans = Locale.trans;
     App.config.globalProperties.choice = Locale.choice;
 
-    if ( ! global.nano_icons ) {
-        global.nano_icons = Obj.assign(Icons, global.nano_icons);
-    }
-
-    App.config.globalProperties.nano_icons = global.nano_icons;
-
-    if ( ! global.nano_settings ) {
-        global.nano_settings = Obj.assign(Settings, global.nano_settings);
-    }
-
-    App.config.globalProperties.nano_settings = global.nano_settings;
+    global.nano.Icons = Obj.assign(Icons, global.nano.Icons);
+    global.nano.Settings = Obj.assign(Settings, global.nano.Settings);
 
     require('./notification/index').default(App);
     require('./empty/index').default(App);

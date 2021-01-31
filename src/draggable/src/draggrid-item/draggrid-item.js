@@ -70,9 +70,11 @@ export default {
     {
         this.timer = setTimeout(() => {
 
-            this.init = true;
+            this.$nextTick(() => {
+                this.NDraggable.drag.bindNode(this);
+            });
 
-            this.NDraggable.drag.bindNode(this);
+            this.init = true;
         }, 5);
     },
 

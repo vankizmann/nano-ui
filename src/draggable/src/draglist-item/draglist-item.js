@@ -68,10 +68,14 @@ export default {
 
     mounted()
     {
-        this.timer = setTimeout(() =>
-            this.init = true, 10);
+        this.timer = setTimeout(() => {
 
-        this.NDraggable.drag.bindNode(this);
+            this.$nextTick(() => {
+                this.NDraggable.drag.bindNode(this);
+            });
+
+            this.init = true;
+        }, 5);
     },
 
     beforeUnmount()
