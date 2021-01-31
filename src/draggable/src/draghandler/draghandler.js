@@ -562,7 +562,7 @@ class NDraghandler {
         }
 
         let sources = Arr.each(this.cacheNodes, (node) => {
-            return node.uid;
+            return node.item[this.rootNode.uniqueProp];
         });
 
         this.dropNodes = this.rootNode.tempSelected = [];
