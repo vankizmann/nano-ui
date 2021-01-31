@@ -679,6 +679,47 @@ class NDraghandler {
         return clone;
     }
 
+    copyNode(node)
+    {
+        let clone = {
+            items: Obj.clone(this.rootNode.items)
+        };
+
+        let targetRoute = node.value.route
+            .replace(/\.[0-9]+$/, '');
+
+        let items = Obj.get(clone, targetRoute);
+
+        let target = Obj.except(node.item, [], {
+            [this.rootNode.uniqueProp]: UUID()
+        });
+
+        items.splice(node.value.index + 1,
+            0, target);
+
+        Obj.set(clone, targetRoute, items);
+
+        this.rootNode.$emit('update:items', clone.items);
+    }
+
+    removeNode(node)
+    {
+        let clone = {
+            items: Obj.clone(this.rootNode.items)
+        };
+
+        let targetRoute = node.value.route
+            .replace(/\.[0-9]+$/, '');
+
+        let items = Obj.get(clone, targetRoute);
+
+        items.splice(node.value.index, 1);
+
+        Obj.set(clone, targetRoute, items);
+
+        this.rootNode.$emit('update:items', clone.items);
+    }
+
     reduce(items, ...props) {
         return Arr.reduce(items, (merge, item, index) => 
             this.reduceItem(merge, item, Num.int(index), ...props), []);

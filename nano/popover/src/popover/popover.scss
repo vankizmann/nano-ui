@@ -17,12 +17,11 @@ $popover: (
     position: absolute;
     display: inline-flex;
     flex-direction: column;
-    opacity: 0;
-    transition: opacity 0.15s ease-in;
+    transition: opacity 0.1s ease-out;
 }
 
-.n-popover.n-ready {
-    opacity: 1;
+.n-popover:not(.n-ready) {
+    opacity: 0;
 }
 
 .n-popover > div:first-child:last-child {

@@ -85,6 +85,16 @@ export default {
 
     methods: {
 
+        copy()
+        {
+            return this.NDraggable.drag.copyNode(this);
+        },
+
+        remove()
+        {
+            return this.NDraggable.drag.removeNode(this);
+        },
+
         isDisabled()
         {
             return this.NDraggable.isDisabled(this);
@@ -142,7 +152,10 @@ export default {
         }
 
         let props = {
-            value: this.value, item: this.item
+            value: this.value,
+            item: this.item,
+            copy: this.copy,
+            remove: this.remove,
         };
 
         let renderFunction = this.$slots.default;

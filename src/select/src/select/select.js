@@ -670,6 +670,7 @@ export default {
     renderPopover()
     {
         let props = {
+            class: 'n-popover--select',
             trigger: 'click',
             width: -1,
             listen: true,
