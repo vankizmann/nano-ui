@@ -12,14 +12,17 @@
 }
 
 .n-virtualscroller__row {
-    position: absolute;
-    left: 0;
-    right: 0;
-    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: flex-start;
+}
+
+.n-virtualscroller--absolute .n-virtualscroller__row {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
 }
 
 .n-virtualscroller__item {
@@ -35,6 +38,10 @@
 }
 
 div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
+    flex-direction: row;
+}
+
+.n-virtualscroller--absolute div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
     position: absolute;
     left: 0;
     right: 0;

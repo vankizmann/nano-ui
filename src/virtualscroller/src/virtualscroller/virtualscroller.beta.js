@@ -91,7 +91,7 @@ export default {
         threshold: {
             default()
             {
-                return 0;
+                return 1;
             },
             type: [Number]
         },
@@ -157,7 +157,7 @@ export default {
 
         isIndexRendered(index)
         {
-            if ( this.items.length <= this.threshold ) {
+            if ( ! this.itemHeight ) {
                 return true;
             }
 
@@ -227,10 +227,6 @@ export default {
 
         updateRender()
         {
-            if ( this.items.length <= this.threshold ) {
-                return this.clearState();
-            }
-
             this.scrollTop = this.$refs.scrollbar.
                 $refs.content.scrollTop;
 
@@ -239,7 +235,7 @@ export default {
 
         onScrollupdate()
         {
-            if ( this.items.length <= this.threshold ) {
+            if ( ! this.threshold ) {
                 return;
             }
 
@@ -271,6 +267,10 @@ export default {
             if ( this.itemWidth ) {
                 grid = Math.floor((this.width - this.deathzone) /
                     this.itemWidth) || 1;
+            }
+
+            if ( ! this.threshold || this.threshold > this.items.length ) {
+                return this.state = { start: 0, end: 0, grid };
             }
 
             let total = Math.ceil(this.items.length
@@ -327,15 +327,20 @@ export default {
         };
 
         if ( this.NDraggable ) {
-            props.key = passed.uid = passed.value[this.NDraggable.uniqueProp];
+            props.key = passed.value[this.NDraggable.uniqueProp];
         }
 
-        let style = {
-            height: this.itemHeight + 'px'
-        };
+        let style = {};
 
-        if ( this.state.grid === 1 ) {
+        let isLazy = this.threshold && this.threshold <=
+            this.items.length;
+
+        if ( isLazy && this.state.grid === 1 ) {
             style.top = topOffset + 'px';
+        }
+
+        if ( this.itemHeight ) {
+            style.height = this.itemHeight + 'px';
         }
 
         if ( this.state.grid !== 1 ) {
@@ -354,7 +359,7 @@ export default {
         let items = Arr.slice(this.items, this.state.start,
             this.state.end);
 
-        if ( this.items.length < this.threshold ) {
+        if ( ! this.threshold || this.threshold > this.items.length ) {
             items = this.items;
         }
 
@@ -368,9 +373,11 @@ export default {
         let topOffset = Math.round(this.itemHeight *
             (passed.index + this.state.start));
 
-        let style = {
-            top: topOffset + 'px'
-        };
+        let style = {};
+
+        if ( this.threshold && this.threshold <= this.items.length ) {
+            style.top = topOffset + 'px';
+        }
 
         let counter = passed.index * this.state.start;
 
@@ -395,6 +402,10 @@ export default {
         let items = Arr.slice(chunks, this.state.start,
             this.state.end);
 
+        if ( this.threshold > this.items.length ) {
+            items = chunks;
+        }
+
         return Arr.each(items, (chunk, index) => {
             return this.ctor('renderGridRows')({ chunk, index });
         });
@@ -415,6 +426,14 @@ export default {
 
     render()
     {
+        let classList = [
+            'n-virtualscroller'
+        ];
+
+        if ( this.threshold && this.threshold <= this.items.length ) {
+            classList.push('n-virtualscroller--absolute');
+        }
+
         let props = {
             overflowY: this.overflowY,
             overflowX: this.overflowX,
@@ -433,7 +452,7 @@ export default {
         }
 
         return (
-            <NScrollbar class="n-virtualscroller" ref="scrollbar" {...props}>
+            <NScrollbar class={classList} ref="scrollbar" {...props}>
                 <div ref="inner" class="n-virtualscroller__inner" style={style}>
                     { this.ctor('renderItems')() }
                 </div>

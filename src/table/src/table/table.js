@@ -231,7 +231,7 @@ export default {
         threshold: {
             default()
             {
-                return 0;
+                return 1;
             },
             type: [Number]
         },

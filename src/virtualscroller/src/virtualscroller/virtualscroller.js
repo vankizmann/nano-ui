@@ -134,8 +134,6 @@ export default {
                 return;
             }
 
-            console.log('update');
-
             this.veUpdate++;
         },
 
