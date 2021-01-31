@@ -105,6 +105,12 @@
             </template>
         </n-draggrid>
 
+        <n-draggrid ref="draggrid" v-model:items="testData" :item-height="100" :item-width="200" :threshold="0" style="height: 500px; margin-top: 30px; box-shadow: 0 0 2px 2px #dddedf; border-radius: 4px;">
+            <template v-slot:default="{ item }">
+                <div style="width: 200px; height: 100px; padding: 0 15px; line-height: 30px;">{{ item.label }}</div>
+            </template>
+        </n-draggrid>
+
 
     </div>
 </div>
@@ -190,9 +196,9 @@
                 return pi.Obj.assign(item, { children: children });
             });
 
-            data.virtualData = itemGenerator(10000);
+            data.virtualData = itemGenerator(100);
 
-            data.virtualTree = pi.Arr.each(itemGenerator(500), function (item) {
+            data.virtualTree = pi.Arr.each(itemGenerator(50), function (item) {
                 return pi.Obj.assign(item, { children: itemGenerator(20) });
             });
 

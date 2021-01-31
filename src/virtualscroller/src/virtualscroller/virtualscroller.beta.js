@@ -402,7 +402,7 @@ export default {
         let items = Arr.slice(chunks, this.state.start,
             this.state.end);
 
-        if ( this.threshold > this.items.length ) {
+        if ( ! this.threshold || this.threshold > chunks.length ) {
             items = chunks;
         }
 
