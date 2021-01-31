@@ -95,6 +95,14 @@ export default {
             }
         },
 
+        lazyload: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         showEmptyIcon: {
             default()
             {

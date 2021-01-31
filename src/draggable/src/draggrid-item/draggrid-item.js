@@ -63,16 +63,18 @@ export default {
 
     data()
     {
-        return { init: false };
+        return {
+            init: ! this.NDraggable.lazyload
+        };
     },
 
     mounted()
     {
         this.timer = setTimeout(() => {
 
-            this.$nextTick(() => {
+            this.timer = setTimeout(() => {
                 this.NDraggable.drag.bindNode(this);
-            });
+            }, 50);
 
             this.init = true;
         }, 5);

@@ -679,9 +679,12 @@
             </template>
         </n-draglist>
 
-        <n-draglist v-model:items="testData" unique-prop="uid" :transform-drop="transDrop" :threshold="0" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
+        <n-draglist v-model:items="testData" unique-prop="uid" :transform-drop="transDrop" :threshold="0" :lazyload="true" :handle="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
             <template v-slot:default="{ value, item, copy, remove }">
                 <div class="grid grid--row grid--middle" style="height: 34px;">
+                    <div draggable="true" style="padding: 0 10px;">
+                        <i class="fa fa-ellipsis-v"></i>
+                    </div>
                     <div class="col--flex-1-1">
                         {{ item.label }}
                     </div>
