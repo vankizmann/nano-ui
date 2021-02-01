@@ -248,6 +248,13 @@ export default {
 
             this.scrollTop = scrollTop;
 
+            let isOutOfRange = scrollTop < 0 || scrollTop + this.height
+                > this.$refs.inner.scrollHeight;
+
+            if ( isOutOfRange ) {
+                return;
+            }
+
             Any.async(this.refreshDriver);
         },
 
@@ -447,7 +454,7 @@ export default {
         let totalHeight = this.items.length / this.state.grid *
             this.itemHeight;
 
-        if ( this.items.length ) {
+        if ( this.threshold && this.items.length ) {
             style.height = Math.ceil(totalHeight) + 'px';
         }
 
