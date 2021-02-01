@@ -75,7 +75,7 @@ export default {
                 tempValue = this.offValue;
             }
 
-            this.$emit('input', this.tempValue = tempValue);
+            this.$emit('update:modelValue', this.tempValue = tempValue);
         }
 
     },
