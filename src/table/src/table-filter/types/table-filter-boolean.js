@@ -31,7 +31,7 @@ export default {
         return (
             <NForm>
                 <NFormItem>
-                    <NSelect size="sm" vModel={this.filter.value} options={options} clearable={true} />
+                    <NSelect size="sm" vModel={this.filter.value} options={options} />
                 </NFormItem>
             </NForm>
         );
