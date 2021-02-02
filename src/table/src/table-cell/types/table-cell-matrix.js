@@ -47,21 +47,20 @@ export default {
 
         isChecked()
         {
-            let item = Arr.find(this.column.modelValue, {
-                [this.NTable.uniqueProp]: this.value[this.NTable.uniqueProp]
-            });
+            let matrix = Obj.get(this.column.matrixValues,
+                this.item[this.NTable.uniqueProp]);
 
-            if ( ! item ) {
+            if ( ! matrix ) {
                 return false;
             }
 
-            if ( Num.int(this.column.matrix) === -1 ) {
+            let value = Num.int(this.column.matrix);
+
+            if ( value === -1 ) {
                 return true;
             }
 
-            let matrix = Num.matrix(item[this.column.matrixProp]);
-
-            return Arr.has(matrix, Num.int(this.column.matrix));
+            return Arr.has(matrix, value);
         },
 
         isDisabled()
@@ -87,24 +86,37 @@ export default {
             return null;
         }
 
-        let classList = [];
+        let classList = [
+            'n-table-cell--checkbox'
+        ];
 
         if ( this.firstState !== checked ) {
             classList.push('n-changed');
         }
 
-        let props = {
-            modelValue: checked,
-            disabled: this.isDisabled(),
-            allowUncheck: this.column.allowUncheck,
-            'onUpdate:modelValue': this.toggleMatrix
-        };
+        if ( checked ) {
+            classList.push('n-checked');
+        }
+
+        let isDisabled = this.isDisabled();
+
+        if ( this.column.allowUncheck ) {
+            isDisabled = isDisabled && ! checked;
+        }
+
+        if ( isDisabled ) {
+            classList.push('n-disabled');
+        }
+
+        let props = {};
+
+        if ( ! isDisabled ) {
+            props.onClick = this.toggleMatrix;
+        }
 
         return (
-            <div class={classList}>
-                <NCheckbox {...props}>
-                    { this.column.cslo('default', this) && this.column.$slots.default(this) }
-                </NCheckbox>
+            <div class={classList} {...props}>
+                <i class={nano.Icons.checked}></i>
             </div>
         );
     }

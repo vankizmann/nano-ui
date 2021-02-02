@@ -67,3 +67,61 @@
     background-size: cover;
     background-color: $color-gray-05;
 }
+
+.n-table-cell--checkbox i {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: transparent;
+    background: $color-white;
+    border: 1px solid $color-gray-15;
+}
+
+.n-table-cell--checkbox.n-disabled {
+    cursor: not-allowed;
+}
+
+.n-table-cell--checkbox.n-disabled i {
+    opacity: 0.7;
+    background:rgba($color-gray-15, 0.3);
+}
+
+@each $suffix, $values in $form {
+
+    $-table-font: map-get($values, 'font');
+    $-table-size: map-get($values, 'size');
+    $-table-radius: map-get($values, 'radius');
+    $-table-ratio: map-get($values, 'ratio');
+
+    .n-draglist--#{$suffix} .n-table-cell--checkbox i {
+        width: $-table-size - 16;
+        height: $-table-size - 16;
+        border-radius: $-table-radius - 1;
+        font-size: $-table-font - 4;
+    }
+
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+    .n-draglist--#{$color} .n-table-cell--checkbox.n-checked:not(.n-disabled) i,
+    .n-draglist--#{$color} .n-table-cell--checkbox.n-checked:not(.n-uncheck) i {
+        color: $color-white;
+        background: $-color-base;
+        border-color: $-color-base;
+    }
+
+    .n-draglist--#{$color} .n-table-cell--checkbox:not(.n-disabled):hover i {
+        border-color: $-color-light;
+    }
+
+    .n-draglist--#{$color} .n-table-cell--checkbox.n-checked:not(.n-disabled):hover i {
+        background: $-color-light;
+    }
+
+}

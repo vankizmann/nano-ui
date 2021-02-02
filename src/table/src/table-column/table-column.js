@@ -1,4 +1,4 @@
-import { Any, Arr, Obj, Str, Dom, UUID } from "@kizmann/pico-js";
+import { Any, Arr, Obj, Str, Dom, UUID, Num } from "@kizmann/pico-js";
 import { h, resolveComponent } from "vue";
 
 export default {
@@ -252,6 +252,30 @@ export default {
 
     },
 
+    computed: {
+
+        matrixValues()
+        {
+            if ( this.type !== 'matrix' ) {
+                return;
+            }
+
+            let values = {};
+
+            if ( Any.isEmpty(this.modelValue) ) {
+                return values;
+            }
+
+            Arr.each(this.modelValue, (item) => {
+                Obj.set(values, item[this.NTable.uniqueProp],
+                    Num.matrix(item[this.matrixProp]));
+            });
+
+            return values;
+        }
+
+    },
+
     provide()
     {
         return {
@@ -262,7 +286,7 @@ export default {
     data()
     {
         return {
-            uid: UUID(), tempWidth: 0,
+            uid: UUID(), tempWidth: 0
         };
     },
 
@@ -294,7 +318,6 @@ export default {
 
     beforeMount()
     {
-        this.prevRender = {};
         this.changedStates = {};
         this.NTable.addColumn(this);
     },
@@ -350,7 +373,7 @@ export default {
         };
 
         props['onUpdate:modelValue'] = (value) => {
-            this.prevRender = {}; this.tempWidth = value;
+            this.tempWidth = value;
         }
 
         if ( this.sort ) {

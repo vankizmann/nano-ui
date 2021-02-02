@@ -139,9 +139,12 @@
         border-color: $-color-base;
     }
 
+    .n-draglist--#{$color} .n-draglist-item .n-draglist-item__checkbox:hover {
+        border-color: $-color-light;
+    }
+
     .n-draglist--#{$color} .n-draglist-item.n-selected .n-draglist-item__checkbox:hover {
         background: $-color-light;
-        border-color: $-color-light;
     }
 
     @keyframes NDraglistItem#{$color} {

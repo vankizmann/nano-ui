@@ -15,11 +15,11 @@ export default {
 
     methods: {
 
-        toggleSelect(value)
+        toggleSelect()
         {
             let item = null;
 
-            if ( value ) {
+            if ( ! this.isChecked() ) {
                 item = Obj.assign({}, this.item);
             }
 
@@ -63,24 +63,37 @@ export default {
             return null;
         }
 
-        let classList = [];
+        let classList = [
+            'n-table-cell--checkbox'
+        ];
 
         if ( this.firstState !== checked ) {
             classList.push('n-changed');
         }
 
-        let props = {
-            modelValue: checked,
-            disabled: this.isDisabled(),
-            allowUncheck: this.column.allowUncheck,
-            'onUpdate:modelValue': this.toggleSelect
-        };
+        if ( checked ) {
+            classList.push('n-checked');
+        }
+
+        let isDisabled = this.isDisabled();
+
+        if ( this.column.allowUncheck ) {
+            isDisabled = isDisabled && ! checked;
+        }
+
+        if ( isDisabled ) {
+            classList.push('n-disabled');
+        }
+
+        let props = {};
+
+        if ( ! isDisabled ) {
+            props.onClick = this.toggleSelect;
+        }
 
         return (
-            <div class={classList}>
-                <NCheckbox {...props}>
-                    { this.column.cslo('default', this) && this.column.$slots.default(this) }
-                </NCheckbox>
+            <div class={classList} {...props}>
+                <i class={nano.Icons.checked}></i>
             </div>
         );
     }

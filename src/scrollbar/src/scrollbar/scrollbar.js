@@ -135,7 +135,7 @@ export default {
         adaptHeight()
         {
             let height = Dom.find(this.$refs.content)
-                .child().height();
+                .child().innerHeight();
 
             let window = Dom.find(this.$el)
                 .height();
@@ -181,7 +181,7 @@ export default {
             }
 
             let width = Dom.find(this.$refs.content)
-                .child().width();
+                .child().innerWidth();
 
             let window = Dom.find(this.$el)
                 .width();

@@ -1,4 +1,4 @@
-import { Arr, Obj, Any } from "@kizmann/pico-js";
+import { Arr, Obj, Any, Dom } from "@kizmann/pico-js";
 
 global.DEBUG_NVSCROLL = false;
 
@@ -248,8 +248,11 @@ export default {
 
             this.scrollTop = scrollTop;
 
+            let offset = this.$refs.scrollbar.$el.offsetHeight -
+                this.$refs.scrollbar.$el.clientHeight;
+
             let isOutOfRange = scrollTop < 0 || scrollTop + this.height
-                > this.$refs.inner.scrollHeight;
+                > this.$refs.inner.scrollHeight + offset;
 
             if ( isOutOfRange ) {
                 return;
@@ -258,7 +261,7 @@ export default {
             Any.async(this.refreshDriver);
         },
 
-        onSizechange(height, width)
+        onSizechange(height, width, el)
         {
             this.width = width;
             this.height = height;

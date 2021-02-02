@@ -743,8 +743,8 @@
 
         <n-table v-model:items="virtualTree" :render-expand="true" :item-height="36" style="margin-top: 30px; min-height: 500px;">
             <n-table-column label="Label" type="string" prop="label"></n-table-column>
-            <n-table-column v-model="treeSelect" label="Select" type="select" :allow-uncheck="false" :width="120">
-                <template v-slot:default="{ item }">{{ item.label }}</template>
+            <n-table-column v-model="treeSelect" label="Select" type="select" :allow-uncheck="true" :fixed-width="120">
+                <template v-slot:default="{ item }"></template>
             </n-table-column>
             <n-table-column v-model="treeMatrix" label="Matrix 2" type="matrix" :matrix="2" align="center" :fixed-width="120"></n-table-column>
             <n-table-column v-model="treeMatrix" label="Matrix 4" type="matrix" :matrix="4" align="center" :fixed-width="120"></n-table-column>

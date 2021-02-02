@@ -566,7 +566,7 @@ export default {
                 Dom.find(this.$el).addClass('is-ready');
             }
 
-            this.$emit('sizechange', height, width);
+            this.$emit('sizechange', height, width, this.$el);
         },
 
         onResize()
