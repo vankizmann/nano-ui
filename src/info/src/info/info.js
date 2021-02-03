@@ -1,4 +1,4 @@
-import { Arr, Any, Dom, Event, UUID } from "@kizmann/pico-js";
+import { Arr, Any, Obj, Event, UUID } from "@kizmann/pico-js";
 
 export default {
 
@@ -160,18 +160,18 @@ export default {
             return this.ctor('renderEmpty')();
         }
 
+        let elements = Obj.each(this.elements, (column) => {
+            return (
+                <div class="n-info__column">
+                    { column.ctor('renderLabel')({ item: this.tempValue }) }
+                    { column.ctor('renderBody')({ item: this.tempValue }) }
+                </div>
+            );
+        });
+
         return (
                 <div class="n-info__body">
-                    {
-                        Arr.each(this.elements, (column) => {
-                            return (
-                                <div class="n-info__column">
-                                    { column.ctor('renderLabel')({ item: this.tempValue }) }
-                                    { column.ctor('renderBody')({ item: this.tempValue }) }
-                                </div>
-                            )
-                        })
-                    }
+                    { Any.vals(elements)}
                 </div>
         );
     },
