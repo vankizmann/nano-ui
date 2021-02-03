@@ -1,6 +1,4 @@
-@import "../../../root/vars";
-
-.n-info-column__label {
+.n-info-column {
     color: $color-gray-60;
 }
 
@@ -11,12 +9,8 @@
     $-info-radius: map-get($values, 'radius');
     $-info-ratio: map-get($values, 'ratio');
 
-    .n-info--#{$suffix} .n-info__label {
-        font-size: $-info-font;
-    }
-
-    .n-info--#{$suffix} .n-info__column:not(:last-child) {
-        margin-bottom: $-info-size * 0.3;
+    .n-info--#{$suffix} .n-info-column {
+        font-size: $-info-font - 2;
     }
 
 }

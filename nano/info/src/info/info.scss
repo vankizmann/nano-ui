@@ -40,4 +40,8 @@
         padding: $-info-size $-info-size * 0.5;
     }
 
+    .n-info--#{$suffix} .n-info__column:not(:last-child) {
+        margin-bottom: $-info-size * 0.5;
+    }
+
 }

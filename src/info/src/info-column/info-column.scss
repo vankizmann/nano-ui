@@ -12,11 +12,7 @@
     $-info-ratio: map-get($values, 'ratio');
 
     .n-info--#{$suffix} .n-info-column {
-        font-size: $-info-font;
-    }
-
-    .n-info--#{$suffix} .n-info-column:not(:last-child) {
-        margin-bottom: $-info-size * 0.5;
+        font-size: $-info-font - 2;
     }
 
 }
