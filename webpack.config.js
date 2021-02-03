@@ -78,6 +78,7 @@ module.exports = function (env, argv) {
         output:{
             filename: "nano-ui.js",
             path: path.resolve(__dirname, "dist"),
+            library: 'Nano',
             libraryTarget: "umd",
         }
 
