@@ -35,7 +35,7 @@ export default {
     render()
     {
         return (
-            <div class="n-info__field">
+            <div>
                 <span>{ this.input }</span>
             </div>
         );

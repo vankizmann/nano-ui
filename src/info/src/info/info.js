@@ -159,6 +159,7 @@ export default {
         if ( Any.isEmpty(this.tempValue) ) {
             return this.ctor('renderEmpty')();
         }
+
         return (
                 <div class="n-info__body">
                     {

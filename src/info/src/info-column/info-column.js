@@ -1,4 +1,4 @@
-import { UUID, Num, Arr, Obj, Any, Dom, Locale, Str } from "@kizmann/pico-js";
+import { UUID, Obj, Locale, Str } from "@kizmann/pico-js";
 import { h, resolveComponent } from "vue";
 
 export default {
@@ -14,6 +14,13 @@ export default {
     },
 
     props: {
+
+        modelValue: {
+            default()
+            {
+                return null;
+            }
+        },
 
         prop: {
             default()
@@ -121,7 +128,7 @@ export default {
         }
         
         return (
-            <div class="n-info-column__label">
+            <div class="n-info-column">
                 <span>{this.label}</span>
             </div>
         );
@@ -141,8 +148,8 @@ export default {
         }
 
         passed.class = [
-            'n-info__field',
-            'n-info__field--' + this.type
+            'n-info-field',
+            'n-info-field--' + this.type
         ];
 
          return h(component, passed);

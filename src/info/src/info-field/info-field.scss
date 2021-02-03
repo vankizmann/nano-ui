@@ -2,18 +2,18 @@
 
 $info-column-label-size: 14px !default;
 
-.n-info__field {
+.n-info-field {
     position: relative;
 }
 
-.n-info__field.n-info__field--image:before {
+.n-info-field.n-info-field--image:before {
     content: '\00a0';
     display: block;
     height: 0;
     padding-bottom: 100%;
 }
 
-.n-info__field.n-info__field--image div {
+.n-info-field.n-info-field--image div {
      position: absolute;
      top: 0;
      bottom: 0;
