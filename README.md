@@ -19,10 +19,15 @@
 npm install @kizmann/nano-ui [or] yarn add @kizmann/nano-ui
 ```
 
+### Dependencies
+
+This package is dependent of [@kizmann/pico-js](https://github.com/vankizmann/pico-js) as well as [moment](https://github.com/moment/moment).
+
 ### CDN Usage
 
 ```html
 <script src="//unpkg.com/@kizmann/nano-ui@latest/dist/nano-ui.js"></script>
+<link rel="stylesheet" href="//unpkg.com/@kizmann/nano-ui@latest/dist/nano-ui.css">
 ```
 
 ```js
@@ -38,6 +43,10 @@ import { Install } from "@kizmann/nano-ui";
 App.use(Install);
 ```
 
+```scss
+@import "@kizmann/nano-ui/nano/index.scss";
+```
+
 ### Demo
 
 [Click me to see demo :cat:](https://vankizmann.github.io/nano-ui/demos/overview.html)
@@ -51,7 +60,7 @@ Incase you are not using the babel plugins (ES6) used in *babel.config.js* you w
 module.exports = {
     resolve: {
         alias: {
-            '@kizmann/nano-ui': '@kizmann/nano-ui/dist/nano-ui.esm.js'
+            '@kizmann/nano-ui': '@kizmann/nano-ui/dist/nano-ui.js'
         }
     }
 }
@@ -62,7 +71,7 @@ module.exports = {
 mix.webpackConfig({
     resolve: {
         alias: {
-            '@kizmann/nano-ui': '@kizmann/nano-ui/dist/nano-ui.esm.js'
+            '@kizmann/nano-ui': '@kizmann/nano-ui/dist/nano-ui.js'
         }
     }
 });

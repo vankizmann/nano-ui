@@ -76,24 +76,9 @@ module.exports = function (env, argv) {
     let bundlerPackage = Object.assign({
 
         output:{
-            filename: "nano-ui.esm.js",
-            path: path.resolve(__dirname, "dist"),
-            libraryTarget: "umd",
-        }
-
-    }, config);
-
-    let globalPackage = Object.assign({
-
-        output: {
             filename: "nano-ui.js",
             path: path.resolve(__dirname, "dist"),
-            library: "nano",
-            libraryTarget: "var",
-        },
-
-        externals: {
-            'vue': 'Vue', 'moment': 'moment', '@kizmann/pico-js': 'pi'
+            libraryTarget: "umd",
         }
 
     }, config);
@@ -108,7 +93,7 @@ module.exports = function (env, argv) {
     }, style);
 
     if ( argv.mode === 'development' ) {
-        return [bundlerPackage, globalPackage, stylePackage];
+        return [bundlerPackage, stylePackage];
     }
 
     let loaderOptions = new webpack.LoaderOptionsPlugin({
@@ -116,7 +101,6 @@ module.exports = function (env, argv) {
     });
 
     bundlerPackage.plugins.push(loaderOptions);
-    globalPackage.plugins.push(loaderOptions);
     stylePackage.plugins.push(loaderOptions);
 
     let terserOptions = {
@@ -134,8 +118,7 @@ module.exports = function (env, argv) {
     optimization.minimizer.push(terser);
 
     bundlerPackage.optimization = optimization;
-    globalPackage.optimization = optimization;
     stylePackage.optimization = optimization;
 
-    return [bundlerPackage, globalPackage, stylePackage];
+    return [bundlerPackage, stylePackage];
 }
