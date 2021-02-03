@@ -332,11 +332,8 @@ export default {
     beforeUnmount()
     {
         this.drag.unbindRoot();
-    },
 
-    unmounted()
-    {
-        this.drag.destroy();
+        Dom.find(document).off('keydown', null, this.uid);
     },
 
     watch: {
@@ -375,11 +372,9 @@ export default {
                 return this.firstSelected = null;
             }
 
-            let first = Arr.find(this.virtuals, {
+            this.firstSelected = Arr.find(this.virtuals, {
                 [this.uniqueProp]: this.tempSelected[0]
             });
-
-            this.firstSelected = first;
         },
 
         refreshVirtuals()

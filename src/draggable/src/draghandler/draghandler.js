@@ -117,13 +117,6 @@ class NDraghandler {
     constructor(rootNode)
     {
         this.rootNode = rootNode;
-
-        Obj.set(global, ['DragHandler', this.uid = UUID()], this);
-    }
-
-    destroy()
-    {
-        Obj.unset(global, ['DragHandler', this.uid], this);
     }
 
     bindRoot(frame = null)

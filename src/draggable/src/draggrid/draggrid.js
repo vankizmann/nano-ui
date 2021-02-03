@@ -325,11 +325,8 @@ export default {
     beforeUnmount()
     {
         this.drag.unbindRoot();
-    },
 
-    unmounted()
-    {
-        this.drag.destroy();
+        Dom.find(document).off('keydown', null, this.uid);
     },
 
     watch: {

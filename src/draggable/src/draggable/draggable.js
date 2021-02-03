@@ -1633,6 +1633,7 @@ export default {
 
         Dom.find(document).off('mousemove', null, ident);
         Dom.find(document).off('keydown', null, ident);
+        Dom.find(document).off('keyup', null, ident);
     },
 
 }
