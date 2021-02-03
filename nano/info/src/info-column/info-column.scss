@@ -4,14 +4,6 @@
     color: $color-gray-60;
 }
 
-.n-info-column__value {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: stretch;
-}
-
 @each $suffix, $values in $form {
 
     $-info-font: map-get($values, 'font');

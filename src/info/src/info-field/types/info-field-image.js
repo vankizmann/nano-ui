@@ -1,4 +1,5 @@
 import InfoField from "../info-field";
+import { Any } from "@kizmann/pico-js";
 
 export default {
 
@@ -8,12 +9,14 @@ export default {
 
     render()
     {
-        let classList = [
-            'n-info__field', 'n-info__field--' + this.column.type
-        ];
+        if ( this.column.cslo('default', this) ) {
+            return (
+                <div>{ this.column.$slots.default(this) }</div>
+            );
+        }
 
         return (
-            <div class={classList}>
+            <div>
                 <div style={'background-image: url(\'' + this.input + '\');'} />
             </div>
         );

@@ -7,34 +7,48 @@ export default {
 
     extends: InfoField,
 
-    render()
+    renderOption(value)
     {
-        let options = typeof this.column.options === 'function' ?
-            this.column.options(this.value) : this.column.options;
+        let prop = this.column.optionsValue;
 
-        options = Arr.map(Any.keys(options), (index) => {
-            return { $value: options[index], $index: index };
+        let option = Arr.find(options, (item) => {
+            return Obj.get(item, prop) == value;
         });
 
-        let className = [
-            'n-info__field', 'n-info__field--' + this.column.type
-        ];
+        if ( ! option ) {
+            return [this.column.emptyText];
+        }
 
-        return <div class={className}>
-            <span>
-                {
-                    Arr.each(! Any.isArray(this.veValue) ? [this.veValue] : this.veValue, (value) => {
+        return Obj.get(option, this.column.optionsLabel,
+            this.column.undefinedText);
+    },
 
-                        let option = Arr.find(options, (option) => {
-                            return Any.string(Obj.get(option, this.column.optionsValue)) === Any.string(value);
-                        });
+    render()
+    {
+        if ( this.column.cslo('default', this) ) {
+            return (
+                <div>{ this.column.$slots.default(this) }</div>
+            );
+        }
 
-                        return Obj.get(option, this.column.optionsLabel, value);
+        let options = this.column.options;
 
-                    }).join(', ') || this.column.emptyText
-                }
-            </span>
-        </div>;
+        if ( Any.isFunction(options) ) {
+            options = this.column.options(this);
+        }
+
+        let input = ! Any.isObject(this.input) ?
+            [this.input] : this.input;
+
+        options = Arr.each(options, (value, index) => {
+            return { $value: value, $index: index };
+        });
+
+        return (
+            <div>
+                <span>{ Arr.each(input, this.ctor('renderOption')) }</span>
+            </div>
+        );
     }
 
 }

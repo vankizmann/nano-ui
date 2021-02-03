@@ -9,13 +9,17 @@ export default {
 
     render()
     {
-        let className = [
-            'n-info__field', 'n-info__field--' + this.column.type
-        ];
+        if ( this.column.cslo('default', this) ) {
+            return (
+                <div>{ this.column.$slots.default(this) }</div>
+            );
+        }
 
-        return <div class={className}>
-            <span>{ Any.convertString(this.input, this.column.emptyText) }</span>
-        </div>;
+        return (
+            <div>
+                <span>{ Any.convertString(this.input, this.column.emptyText) }</span>
+            </div>
+        );
     }
 
 }

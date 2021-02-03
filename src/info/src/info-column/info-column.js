@@ -129,10 +129,6 @@ export default {
 
     renderBody(props)
     {
-        if ( this.$slots.default ) {
-            return this.$slots.label();
-        }
-
         let passed = Obj.except(props, [], {
             column: this
         });
@@ -140,15 +136,16 @@ export default {
         let component = resolveComponent('NInfoField' + 
             Str.ucfirst(this.type));
 
-         return (
-             <div class="n-info-column__value">
-                 { h(component, passed) }
-             </div>
-         );
-    },
+        if ( ! component ) {
+            return null;
+        }
 
-    renderCell(props)
-    {
+        passed.class = [
+            'n-info__field',
+            'n-info__field--' + this.type
+        ];
+
+         return h(component, passed);
     },
 
     render()
