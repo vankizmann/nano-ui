@@ -178,24 +178,25 @@ $modal: (
     $-modal-padding: $-modal-size * $-modal-ratio;
 
     .n-modal--#{$suffix} .n-modal__header {
-        padding: $-modal-padding * 0.8 $-modal-padding;
+        padding: $-modal-padding * 1.5 $-modal-padding * 2;
     }
 
     .n-modal--#{$suffix}.n-closable .n-modal__header {
-        padding-right: $-modal-size + $-modal-padding;
+        padding-right: $-modal-size + ($-modal-padding * 2);
     }
     
     .n-modal--#{$suffix}:not(.n-raw) .n-modal__wrap {
-        padding: $-modal-padding $-modal-padding;
+        padding: $-modal-padding * 1.5 $-modal-padding * 2;
     }
     
     .n-modal--#{$suffix} .n-modal__footer {
-        padding: $-modal-padding * 0.8 $-modal-padding;
+        padding: $-modal-padding * 1.5 $-modal-padding * 2;
     }
 
     .n-modal__close {
         width: $-modal-size;
         height: $-modal-size;
+        right: $-modal-padding * 0.8;
     }
 
 }

@@ -196,7 +196,7 @@ export default {
 
         scrollIntoView(selector, delay = 0)
         {
-            Any.delay(() => this.onScrollIntoView(selector), 0);
+            Any.delay(() => this.onScrollIntoView(selector), delay);
         },
 
         onScrollIntoView(selector)
@@ -210,7 +210,7 @@ export default {
                 clientHeight;
 
             let offsetTop = $el.offsetTop(this.$el);
-            
+
             if ( offsetTop < scrollTop ) {
                 this.$refs.content.scrollTop = offsetTop;
             }

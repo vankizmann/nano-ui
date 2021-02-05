@@ -9,6 +9,11 @@
     border: 1px solid $color-gray-15;
 }
 
+
+.n-cascader-panel .n-popover-option:not(.n-active) i {
+    color: $color-gray-40;
+}
+
 .n-cascader-panel__items {
     width: 200px;
     display: flex;

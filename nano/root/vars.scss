@@ -28,7 +28,7 @@ $color-gray-90:         mix($color-darkmix, $color-lightmix, 0.90 * 100%) !defau
 $color-gray-95:         mix($color-darkmix, $color-lightmix, 0.95 * 100%) !default;
 
 $color-primary:         #4e7bff !default;
-$color-secondary:       #6e68e6 !default;
+$color-secondary:       $color-gray-50 !default;
 
 $color-success:         #3ed786 !default;
 $color-warning:         #ffac2f !default;

@@ -49,6 +49,7 @@ $popover: (
     flex: 0 0 auto;
 }
 
+.n-popover-group,
 .n-popover-option {
     cursor: default;
     display: flex;
@@ -56,6 +57,11 @@ $popover: (
     align-items: center;
     justify-content: stretch;
     text-decoration: none;
+    color: $color-black;
+}
+
+.n-popover-group {
+    font-weight: bold;
     color: $color-black;
 }
 
@@ -73,7 +79,8 @@ $popover: (
 .n-popover-option:not(.n-disabled).n-focus:hover {
     background: rgba($color-gray-50, 0.14);
 }
-//
+
+.n-popover-group span,
 .n-popover-option span {
     flex: 1 1 auto;
 }
@@ -105,36 +112,45 @@ $popover: (
     $-popover-padding: $-popover-size * $-popover-ratio;
 
     .n-popover--#{$suffix} .n-popover__header {
-        padding: $-popover-padding * 0.7 $-popover-padding;
+        padding: $-popover-padding $-popover-padding * 1.2;
     }
     
     .n-popover--#{$suffix} .n-popover__body {
-        padding: $-popover-padding * 0.7 $-popover-padding;
+        padding: $-popover-padding $-popover-padding * 1.2;
     }
     
     .n-popover--#{$suffix} .n-popover__footer {
-        padding: $-popover-padding * 0.7 $-popover-padding;
+        padding: $-popover-padding $-popover-padding * 1.2;
+    }
+
+    .n-popover-group.n-popover-group--#{$suffix} {
+        font-size: $-popover-font - 2;
+        padding: $-popover-padding * 0.8 $-popover-padding * 1.2 $-popover-padding * 0.4;
     }
 
     .n-popover-option.n-popover-option--#{$suffix} {
-        padding: $-popover-padding * 0.4 $-popover-padding;
+        padding: $-popover-padding * 0.4 $-popover-padding * 1.2;
     }
 
+    .n-popover--#{$suffix} .n-popover__body .n-popover-group,
     .n-popover--#{$suffix} .n-popover__body .n-popover-option {
-        margin: 0 -#{$-popover-padding};
+        margin: 0 -#{$-popover-padding * 1.2};
     }
 
+    .n-popover--#{$suffix} .n-popover__body .n-popover-group:first-child,
     .n-popover--#{$suffix} .n-popover__body .n-popover-option:first-child {
-        margin-top: -#{$-popover-padding * 0.7};
+        margin-top: -#{$-popover-padding};
     }
 
+    .n-popover--#{$suffix}  .n-popover__body .n-popover-group:last-child,
     .n-popover--#{$suffix}  .n-popover__body .n-popover-option:last-child {
-        margin-bottom: -#{$-popover-padding * 0.7};
+        margin-bottom: -#{$-popover-padding};
     }
 
     .n-popover-option--#{$suffix} .n-icon {
         width: $-popover-font;
         font-size: $-popover-font - 4;
+        margin-left: $-popover-padding;
     }
 
     .n-popover-option--#{$suffix} .n-icon.n-icon--before:not(:last-child) {
@@ -179,18 +195,8 @@ $popover: (
     $-color-dark: map_get($values, 'dark');
 
     .n-popover-option--#{$color}.n-active,
-    .n-popover-option--#{$color}.n-active .n-icon {
+    .n-popover-option--#{$color} .n-icon {
         color: $-color-base;
-    }
-
-    .n-popover-option--#{$color}.n-hover,
-    .n-popover-option--#{$color}:not(.n-disabled):hover {
-        color: $-color-light;
-    }
-
-    .n-popover-option--#{$color}.n-focus,
-    .n-popover-option--#{$color}.n-focus:hover {
-        color: $-color-dark;
     }
 
 }

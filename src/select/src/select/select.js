@@ -428,7 +428,7 @@ export default {
             }
 
             this.$refs.scrollbar.scrollIntoView(
-                `[data-option="${target._.uid}"]`);
+                `[data-option="${target._.uid}"]`, 150);
         }
 
     },

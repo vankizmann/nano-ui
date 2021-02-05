@@ -94,6 +94,41 @@
             </n-form-group>
         </n-form>
 
+        <h2>NPopover</h2>
+
+        <n-button icon="fa fa-paragraph">
+            Paragraph
+        </n-button>
+        <n-popover trigger="click" position="bottom-start">
+            <n-popover-group>
+                Group 01
+            </n-popover-group>
+            <n-popover-option icon="fa fa-paragraph">
+                Paragraph
+            </n-popover-option>
+            <n-popover-option icon="fa fa-heading">
+                Headline H1
+            </n-popover-option>
+            <n-popover-option icon="fa fa-heading">
+                Headline H2
+            </n-popover-option>
+            <n-popover-group>
+                Group 02
+            </n-popover-group>
+            <n-popover-option icon="fa fa-heading">
+                Headline H3
+            </n-popover-option>
+            <n-popover-option icon="fa fa-heading">
+                Headline H4
+            </n-popover-option>
+            <n-popover-option icon="fa fa-heading">
+                Headline H5
+            </n-popover-option>
+            <n-popover-option icon="fa fa-heading">
+                Headline H6
+            </n-popover-option>
+        </n-popover>
+
         <h2>NButton</h2>
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
@@ -517,7 +552,17 @@
                         Im the header
                     </template>
                     <div style="height: 2100px;">
-                        <p>This is a modal with a scrollbar</p>
+                        <n-form>
+                            <n-form-item label="Test">
+                                <n-input placeholder="Fill me"></n-input>
+                            </n-form-item>
+                            <n-form-item label="Test">
+                                <n-input placeholder="Fill me"></n-input>
+                            </n-form-item>
+                            <n-form-item label="Test">
+                                <n-input placeholder="Fill me"></n-input>
+                            </n-form-item>
+                        </n-form>
                     </div>
                     <template v-slot:footer>
                         Im the footer
@@ -867,7 +912,7 @@
                         value:  id,
                         matrix: 10,
                         label:  `Item ${index++}`, 
-                        image:  'https://picsum.photos/400/400?' + id,
+                        image:  'https://picsum.photos/10/10?' + id,
                         date: pi.Now.make('now').format('YYYY-MM-DD HH:mm:ss', true),
                         enabled: !! Math.floor(Math.random() * 2)
                     };
