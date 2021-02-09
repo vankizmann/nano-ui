@@ -292,6 +292,10 @@ export default {
 
             let onReady = () => {
 
+                if ( this.listen ) {
+                    Dom.find(this.target).addClass('n-open');
+                }
+
                 Dom.find(this.$el).addClass('n-ready');
 
                 if ( this.NPopover ) {
@@ -310,6 +314,10 @@ export default {
 
             if ( this.NPopover ) {
                 this.NPopover.unpause();
+            }
+
+            if ( this.listen ) {
+                Dom.find(this.target).removeClass('n-open');
             }
 
             Dom.find(this.$el).removeClass('n-ready');
