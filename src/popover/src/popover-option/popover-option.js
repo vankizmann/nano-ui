@@ -168,6 +168,14 @@ export default {
             'n-popover-option--' + this.tempSize,
         ];
 
+        if ( this.active ) {
+            classList.push('n-active');
+        }
+
+        if ( this.focus ) {
+            classList.push('n-focus');
+        }
+
         if ( this.disabled ) {
             classList.push('n-disabled');
         }
