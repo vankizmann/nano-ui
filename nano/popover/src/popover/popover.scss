@@ -87,6 +87,7 @@ $popover: (
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    line-height: 1.2;
 }
 
 
@@ -157,7 +158,7 @@ $popover: (
     }
 
     .n-popover-option.n-popover-option--#{$suffix} {
-        padding: $-popover-padding * 0.4 $-popover-padding * 1.2;
+        padding: $-popover-padding * 0.6 $-popover-padding * 1.2;
     }
 
     .n-popover--#{$suffix} .n-popover__body .n-popover-group,
@@ -187,12 +188,12 @@ $popover: (
 
     .n-popover-option--#{$suffix} .n-image--before,
     .n-popover-option--#{$suffix} .n-icon--before {
-        margin-right: $-popover-font * $-popover-ratio *  1.4;
+        margin-right: $-popover-padding;
     }
 
     .n-popover-option--#{$suffix} .n-image--after,
     .n-popover-option--#{$suffix} .n-icon--after {
-        margin-left: $-popover-font * $-popover-ratio *  1.4;
+        margin-left: $-popover-padding;
     }
 
 }

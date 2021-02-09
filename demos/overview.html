@@ -100,17 +100,14 @@
             Paragraph
         </n-button>
         <n-popover trigger="click" :width="200" position="bottom-start">
-            <n-popover-group>
-                Group 01
-            </n-popover-group>
             <n-popover-option image="https://picsum.photos/30/30" icon="fa fa-paragraph">
                 Paragraph<br><i style="font-style: initial; color: #555;">Demotext</i>
             </n-popover-option>
-            <n-popover-option icon="fa fa-heading">
-                Headline H1
+            <n-popover-option image="https://picsum.photos/30/30" icon="fa fa-paragraph">
+                Paragraph<br><i style="font-style: initial; color: #555;">Demotext</i>
             </n-popover-option>
-            <n-popover-option icon="fa fa-heading">
-                Headline H2
+            <n-popover-option image="https://picsum.photos/30/30" icon="fa fa-paragraph">
+                Paragraph<br><i style="font-style: initial; color: #555;">Demotext</i>
             </n-popover-option>
             <n-popover-group>
                 Group 02
@@ -121,6 +118,9 @@
             <n-popover-option icon="fa fa-heading">
                 Headline H4
             </n-popover-option>
+            <n-popover-group>
+                Group 01
+            </n-popover-group>
             <n-popover-option icon="fa fa-heading">
                 Headline H5
             </n-popover-option>
@@ -133,7 +133,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_button.size" :options="sizes"></n-select>
+                <n-select style="width: 100px;" v-model="n_button.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-select style="width: 200px;" v-model="n_button.icon" placeholder="Icon" :clearable="true" :options="demoIcons">
@@ -187,7 +187,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_input.size" :options="sizes"></n-select>
+                <n-select style="width: 100px;" v-model="n_input.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-select style="width: 200px;" v-model="n_input.icon" :clearable="true" placeholder="Icon" :options="demoIcons"></n-select>
@@ -225,7 +225,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_number.size" :options="sizes"></n-select>
+                <n-select style="width: 100px;" v-model="n_number.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-input v-model="n_number.placeholder"></n-input>
@@ -260,7 +260,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_textarea.size" :options="sizes"></n-select>
+                <n-select style="width: 100px;" v-model="n_textarea.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-checkbox v-model="n_textarea.autoRows">Auto rows</n-checkbox>
@@ -295,7 +295,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_select.size" :options="sizes"></n-select>
+                <n-select style="width: 100px;" v-model="n_select.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-checkbox v-model="n_select.clearable">Clearable</n-checkbox>
@@ -333,7 +333,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_cascader.size" :options="sizes"></n-select>
+                <n-select style="width: 100px;" v-model="n_cascader.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-select style="width: 210px;" v-model="n_cascader.type" :options="types"></n-select>
@@ -373,7 +373,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_checkbox.size" :options="sizes"></n-select>
+                <n-select style="width: 100px;" v-model="n_checkbox.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-select style="width: 210px;" v-model="n_checkbox.type" :options="types"></n-select>
@@ -402,7 +402,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_radio.size" :options="sizes"></n-select>
+                <n-select style="width: 100px;" v-model="n_radio.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-select style="width: 210px;" v-model="n_radio.type" :options="types"></n-select>
@@ -427,7 +427,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_switch.size" :options="sizes"></n-select>
+                <n-select style="width: 100px;" v-model="n_switch.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-checkbox v-model="n_switch.disabled">Disabled</n-checkbox>
@@ -459,7 +459,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_datepicker.size" :options="sizes"></n-select>
+                <n-select style="width: 100px;" v-model="n_datepicker.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-select style="width: 210px;" v-model="n_datepicker.type" :options="types"></n-select>
@@ -488,7 +488,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_timepicker.size" :options="sizes"></n-select>
+                <n-select style="width: 100px;" v-model="n_timepicker.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-select style="width: 210px;" v-model="n_timepicker.type" :options="types"></n-select>
@@ -514,7 +514,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_transfer.size" :options="sizes"></n-select>
+                <n-select style="width: 100px;" v-model="n_transfer.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-select style="width: 210px;" v-model="n_transfer.type" :options="types"></n-select>
@@ -534,7 +534,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_modal.size" :options="sizes"></n-select>
+                <n-select style="width: 100px;" v-model="n_modal.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-select style="width: 210px;" v-model="n_modal.type" :options="modals"></n-select>
@@ -575,7 +575,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_confirm.size" :options="sizes"></n-select>
+                <n-select style="width: 100px;" v-model="n_confirm.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-select style="width: 210px;" v-model="n_confirm.type" :options="types"></n-select>
@@ -599,7 +599,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_loader.size" :options="sizes"></n-select>
+                <n-select style="width: 100px;" v-model="n_loader.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-select style="width: 210px;" v-model="n_loader.type" :options="types"></n-select>
@@ -640,7 +640,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_tabs.size" :options="sizes"></n-select>
+                <n-select style="width: 100px;" v-model="n_tabs.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-select style="width: 210px;" v-model="n_tabs.type" :options="types"></n-select>
@@ -663,7 +663,7 @@
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
-                <n-select style="width: 80px;" v-model="n_paginator.size" :options="sizes"></n-select>
+                <n-select style="width: 100px;" v-model="n_paginator.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
                 <n-select style="width: 210px;" v-model="n_paginator.type" :options="types"></n-select>
