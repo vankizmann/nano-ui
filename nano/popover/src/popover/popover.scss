@@ -82,16 +82,44 @@ $popover: (
 
 .n-popover-group span,
 .n-popover-option span {
+    order: 2;
     flex: 1 1 auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-.n-popover-option i {
+
+.n-popover-option .n-image {
     flex: 0 0 auto;
+    margin-top: -2px;
+    margin-bottom: -2px;
+    text-align: center;
+    color: $color-gray-60;
+    border-radius: 500px;
+    object-fit: cover;
+}
+
+.n-popover-option .n-image--before {
+    order: 0;
+}
+
+.n-popover-option .n-image--after {
+    order: 4;
 }
 
 .n-popover-option .n-icon {
+    flex: 0 0 auto;
     text-align: center;
     color: $color-gray-60;
+}
+
+.n-popover-option .n-icon--before {
+    order: 1;
+}
+
+.n-popover-option .n-icon--after {
+    order: 3;
 }
 
 @each $suffix, $values in $form {
@@ -147,18 +175,24 @@ $popover: (
         margin-bottom: -#{$-popover-padding};
     }
 
+    .n-popover-option--#{$suffix} .n-image {
+        width: $-popover-font + 6;
+        height: $-popover-font + 6;
+    }
+
     .n-popover-option--#{$suffix} .n-icon {
         width: $-popover-font;
         font-size: $-popover-font - 4;
-        margin-left: $-popover-padding;
     }
 
-    .n-popover-option--#{$suffix} .n-icon.n-icon--before:not(:last-child) {
-        margin-right: $-popover-font * $-popover-ratio;
+    .n-popover-option--#{$suffix} .n-image--before,
+    .n-popover-option--#{$suffix} .n-icon--before {
+        margin-right: $-popover-font * $-popover-ratio *  1.4;
     }
 
-    .n-popover-option--#{$suffix} .n-icon.n-icon--after:not(:first-child) {
-        margin-left: $-popover-font * $-popover-ratio;
+    .n-popover-option--#{$suffix} .n-image--after,
+    .n-popover-option--#{$suffix} .n-icon--after {
+        margin-left: $-popover-font * $-popover-ratio *  1.4;
     }
 
 }

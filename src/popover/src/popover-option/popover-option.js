@@ -63,6 +63,22 @@ export default {
         iconPosition: {
             default()
             {
+                return 'after';
+            },
+            type: [String]
+        },
+
+        image: {
+            default()
+            {
+                return '';
+            },
+            type: [String]
+        },
+
+        imagePosition: {
+            default()
+            {
                 return 'before';
             },
             type: [String]
@@ -101,6 +117,20 @@ export default {
             }
         }
 
+    },
+
+    renderImage()
+    {
+        if ( ! this.image ) {
+            return null;
+        }
+
+        let classList = [
+            'n-image',
+            'n-image--' + this.imagePosition,
+        ];
+
+        return (<img class={classList} src={this.image} />);
     },
 
     renderIcon()
@@ -154,7 +184,9 @@ export default {
 
         return (
             <a class={classList} href="javascript:void(0)" {...props}>
-                { this.ctor('renderContent')() } { this.ctor('renderIcon')() }
+                { this.ctor('renderImage')() }
+                { this.ctor('renderContent')() }
+                { this.ctor('renderIcon')() }
             </a>
         );
     }
