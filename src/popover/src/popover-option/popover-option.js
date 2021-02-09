@@ -119,6 +119,17 @@ export default {
         return (<i class={classList}></i>);
     },
 
+    renderContent()
+    {
+        if ( this.$slots.raw ) {
+            return this.$slots.raw();
+        }
+
+        return (
+            <span>{ this.$slots.default() }</span>
+        );
+    },
+
     render()
     {
         let classList = [
@@ -143,7 +154,7 @@ export default {
 
         return (
             <a class={classList} href="javascript:void(0)" {...props}>
-                <span>{ this.$slots.default() }</span> { this.ctor('renderIcon')() }
+                { this.ctor('renderContent')() } { this.ctor('renderIcon')() }
             </a>
         );
     }
