@@ -146,7 +146,7 @@ $select-empty-padding: 6px 12px !default;
         border-radius: $-select-radius;
     }
 
-    .n-select--#{$suffix} .n-select__input input {
+    .n-select--#{$suffix} .n-select__display.n-multiple .n-select__input input {
         min-height: $-select-size - 6;
     }
 

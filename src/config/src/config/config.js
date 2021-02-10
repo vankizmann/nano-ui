@@ -236,8 +236,8 @@ export default {
             delete setup.vShow;
             delete setup.vAwait;
 
-            // Solve conten if is functional
-            let slots = this.solveContent(content, setup);
+            // Solve content if is functional
+            let slots = () => this.solveContent(content, setup);
 
             let domtypes = [
                 'div', 'span', 'a'
