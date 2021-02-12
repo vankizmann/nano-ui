@@ -101,6 +101,14 @@ export default {
             type: [Array]
         },
 
+        handle: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         safezone: {
             default()
             {
@@ -159,6 +167,14 @@ export default {
             default()
             {
                 return true;
+            },
+            type: [Boolean]
+        },
+
+        renderHandle: {
+            default()
+            {
+                return false;
             },
             type: [Boolean]
         },
@@ -474,6 +490,19 @@ export default {
 
     },
 
+    renderHandle()
+    {
+        if ( ! this.renderHandle ) {
+            return null;
+        }
+
+        return (
+            <div class="n-draglist-item__handle">
+                { /* Only used in row */ }
+            </div>
+        )
+    },
+
     renderExpand()
     {
         if ( ! this.renderExpand ) {
@@ -538,6 +567,7 @@ export default {
     renderHead()
     {
         let defaultRender = [
+            this.ctor('renderHandle')(),
             this.ctor('renderExpand')(),
             this.ctor('renderSelect')(), 
             this.ctor('renderContext')()

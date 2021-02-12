@@ -775,7 +775,7 @@
             </div>
         </div>
 
-        <n-table ref="table" v-model:items="virtualTree" :render-expand="true" :item-height="100" style="margin-top: 30px; min-height: 500px;">
+        <n-table ref="table" v-model:items="virtualTree" :handle="true" :render-handle="true" :render-expand="true" :item-height="100" style="margin-top: 30px; min-height: 500px;">
             <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true">
 <!--                <template v-slot:default="{item}">{{ item.value }}</template>-->
             </n-table-column>
@@ -843,7 +843,9 @@
             <n-info-column label="ID" type="string" prop="id"></n-info-column>
         </n-info>
 
-        <n-config :config="demoConfig" v-model="configData"></n-config>
+        <n-form>
+            <n-config :config="demoConfig" v-model="configData"></n-config>
+        </n-form>
 
     </div>
 </div>
@@ -879,23 +881,53 @@
             };
 
             data.demoConfig = {
-                'div': {
-                    class: [
-                        'foobar'
-                    ],
+                'NFormGroup:00': {
+                    $props: {
+                        label: pi.Locale.trans('Redirect'),
+                        icon: 'fa fa-directions'
+                    },
                     content: {
-                        'NInput:page_id': {
-                            model: {
-                                path: 'page_id'
-                            }
-                        },
-                        'NInput:page_id2': {
-                            model: {
-                                path: 'page_id'
+                        'div:00': {
+                            class: 'grid grid--row grid--wrap grid--30',
+                            content: {
+                                'div:00': {
+                                    class: 'col--1-1 col--1-2@sm',
+                                    content: {
+                                        'NFormItem:00': {
+                                            $props: {
+                                                label: pi.Locale.trans('URL')
+                                            },
+                                            content: {
+                                                'NInput:00': {
+                                                    model: {
+                                                        path: 'option.url'
+                                                    }
+                                                }
+                                            }
+                                        },
+                                    }
+                                },
+                                'div:10': {
+                                    class: 'col--1-1 col--1-2@sm',
+                                    content: {
+                                        'NFormItem:00': {
+                                            $props: {
+                                                label: pi.Locale.trans('Menu')
+                                            },
+                                            content: {
+                                                'NInput:00': {
+                                                    model: {
+                                                        path: 'option.redirect'
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
-                }
+                },
             };
 
             data.configData = {};

@@ -30,6 +30,10 @@
     flex: 1 1 auto;
 }
 
+.n-draglist-item__handle {
+    cursor: move;
+}
+
 .n-draglist-item__handle,
 .n-draglist-item__expand,
 .n-draglist-item__select {
@@ -51,7 +55,7 @@
 }
 
 .n-draglist-item .n-draglist-item__ellipsis {
-    color: $color-gray-25;
+    color: $color-gray-30;
 }
 
 .n-draglist-item .n-draglist-item__expand {

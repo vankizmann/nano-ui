@@ -32,6 +32,14 @@ export default {
             required: true
         },
 
+        copy: {
+            required: true
+        },
+
+        remove: {
+            required: true
+        },
+
 
     },
 

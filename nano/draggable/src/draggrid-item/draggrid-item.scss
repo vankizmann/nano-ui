@@ -26,6 +26,10 @@
     flex: 1 1 auto;
 }
 
+.n-draggrid-item__handle {
+    cursor: move;
+}
+
 .n-draggrid-item__handle,
 .n-draggrid-item__select {
     flex: 0 0 auto;
@@ -45,7 +49,7 @@
 }
 
 .n-draggrid-item .n-draggrid-item__ellipsis {
-    color: $color-gray-25;
+    color: $color-gray-30;
 }
 
 .n-draggrid-item__checkbox {

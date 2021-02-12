@@ -92,7 +92,7 @@ export default {
         solveContent(value, ...args)
         {
             if ( Any.isFunction(value) ) {
-                return value.apply(this.scope, [this.$render, this.tempValue, ...args]);
+                return value.apply(this.scope, [h, this.tempValue, ...args]);
             }
 
             return value;
@@ -161,7 +161,7 @@ export default {
     renderLayer(source)
     {
         if ( ! Any.isPlain(source) ) {
-            return source;
+            return [source];
         }
 
         return Arr.each(source, (setup, component) => {
@@ -237,7 +237,7 @@ export default {
             delete setup.vAwait;
 
             // Solve content if is functional
-            let slots = () => this.solveContent(content, setup);
+            let slots = this.solveContent(content, setup);
 
             let domtypes = [
                 'div', 'span', 'a'
@@ -249,14 +249,15 @@ export default {
                 resolved = resolveComponent(component);
             }
 
-            return h(resolved, setup,
-                this.ctor('renderLayer')(slots));
+            return () => h(resolved, setup, () => {
+                return Arr.each(this.ctor('renderLayer')(slots), (item) => item())
+            });
         });
     },
 
     render()
     {
-        return this.ctor('renderLayer')(this.config)[0];
+        return Arr.each(this.ctor('renderLayer')(this.config), (item) => item());
     }
 
 }
