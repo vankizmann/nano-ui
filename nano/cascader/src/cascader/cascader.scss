@@ -17,6 +17,7 @@
 }
 
 .n-cascader__display {
+    overflow: hidden;
     display: flex;
     flex-direction: row;
     align-items: stretch;
@@ -69,13 +70,14 @@
 
 .n-cascader__items,
 .n-cascader__placeholder {
+    overflow: hidden;
     flex: 1 1 auto;
     display: inline-flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    //flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
-    width: 100%;
+    //width: 100%;
 }
 
 .n-cascader__placeholder {
@@ -83,6 +85,8 @@
 }
 
 .n-cascader__item {
+    overflow: hidden;
+    flex: 1 1 auto;
     display: inline-flex;
     flex-direction: row;
     align-items: center;
@@ -92,6 +96,12 @@
 .n-cascader__item:not(:last-child):after {
     content: '/';
     opacity: 0.3;
+}
+
+.n-cascader__item span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .n-cascader__body,

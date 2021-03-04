@@ -230,9 +230,9 @@ export default {
             items = Obj.get(item, this.childProp);
 
             let itemLabel = (
-                <span class="n-cascader__item">
-                    { Obj.get(item, this.labelProp) }
-                </span>
+                <div class="n-cascader__item">
+                    <span>{ Obj.get(item, this.labelProp) }</span>
+                </div>
             );
 
             renderList.push(itemLabel);
