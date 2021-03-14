@@ -92,7 +92,7 @@ export default {
         solveContent(value, ...args)
         {
             if ( Any.isFunction(value) ) {
-                return value.apply(this.scope, [h, this.tempValue, ...args]);
+                return value.apply(this.scope, [this.$render, this.tempValue, ...args]);
             }
 
             return value;
@@ -161,7 +161,7 @@ export default {
     renderLayer(source)
     {
         if ( ! Any.isPlain(source) ) {
-            return [source];
+            return source;
         }
 
         return Arr.each(source, (setup, component) => {
@@ -228,10 +228,10 @@ export default {
 
             Obj.assign(setup, setup.$on);
             delete setup.$on;
-            
+
             let content = setup.content;
             delete setup.content;
-            
+
             delete setup.vIf;
             delete setup.vShow;
             delete setup.vAwait;
@@ -249,15 +249,14 @@ export default {
                 resolved = resolveComponent(component);
             }
 
-            return () => h(resolved, setup, () => {
-                return Arr.each(this.ctor('renderLayer')(slots), (item) => item())
-            });
+            return h(resolved, setup,
+                this.ctor('renderLayer')(slots));
         });
     },
 
     render()
     {
-        return Arr.each(this.ctor('renderLayer')(this.config), (item) => item());
+        return this.ctor('renderLayer')(this.config)[0];
     }
 
 }

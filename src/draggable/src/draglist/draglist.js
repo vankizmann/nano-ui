@@ -418,6 +418,9 @@ export default {
         {
             clearTimeout(this.refresh);
 
+            // Clear highlight items
+            this.highlight = [];
+
             Arr.recursive(this.items, this.childProp, (node, cascade) => {
 
                 if ( Obj.get(node, key || this.uniqueProp) !== value ) {

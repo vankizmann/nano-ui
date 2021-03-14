@@ -9,6 +9,12 @@ export default {
 
     renderOption(value)
     {
+        let options = this.column.options;
+
+        if ( Any.isFunction(options) ) {
+            options = this.column.options(this);
+        }
+
         let prop = this.column.optionsValue;
 
         let option = Arr.find(options, (item) => {

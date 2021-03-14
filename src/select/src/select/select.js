@@ -690,7 +690,7 @@ export default {
     renderOptions()
     {
         if ( Any.isEmpty(this.options) ) {
-            return this.$slots.default();
+            return this.$slots.default && this.$slots.default();
         }
 
         let optionRender = ($value, $index) => {

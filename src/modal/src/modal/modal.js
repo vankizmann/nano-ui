@@ -30,6 +30,13 @@ export default {
             type: [Boolean]
         },
 
+        selector: {
+            default()
+            {
+                return null;
+            },
+        },
+
         disabled: {
             default()
             {
@@ -136,7 +143,8 @@ export default {
 
     mounted()
     {
-        this.target = Dom.find(this.$el).previous().get(0);
+        this.target = Dom.find(this.selector || this.$el)
+            .previous().get(0);
 
         Dom.find(document.body).on('mousedown',
             this.eventClick, this._.uid);

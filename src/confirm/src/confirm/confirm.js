@@ -14,6 +14,14 @@ export default {
             type: [Boolean]
         },
 
+        listen: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         selector: {
             default()
             {
@@ -157,6 +165,7 @@ export default {
         let props = {
             type: 'default',
             selector: this.selector,
+            listen: this.listen,
             width: this.width,
             position: this.position,
             closable: this.closable,

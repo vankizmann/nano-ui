@@ -86,11 +86,11 @@
 
 .n-cascader__item {
     overflow: hidden;
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     display: inline-flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .n-cascader__item:not(:last-child):after {
