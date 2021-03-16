@@ -53,6 +53,14 @@ export default {
             type: [Number]
         },
 
+        relative: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         preload: {
             default()
             {
@@ -170,13 +178,13 @@ export default {
             style.display = 'none';
         }
 
-        if ( this.$slots.raw ) { 
+        if ( this.$slots.raw ) {
             return this.$slots.raw();
         }
 
         let element = 'div';
 
-        if ( ! this.NTabs.relative ) {
+        if ( ! this.relative && ! this.NTabs.relative ) {
             element = resolveComponent('NScrollbar');
         }
 

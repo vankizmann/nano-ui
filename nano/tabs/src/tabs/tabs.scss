@@ -10,21 +10,20 @@ $tabs-size: 14px;
 }
 
 .n-tabs__header {
+    position: relative;
+    overflow-x: auto;
     flex: 0 0 auto;
-    border-bottom: 1px solid $color-gray-15;
-}
-
-.n-tabs__header-inner {
     display: flex;
     flex-direction: row;
     align-items: stretch;
     justify-content: flex-start;
+    border-bottom: 1px solid $color-gray-15;
 }
 
 .n-tabs__indicator {
     z-index: 20;
     position: absolute;
-    bottom: 0;
+    bottom: -1px;
     left: 0;
     width: 100px;
     height: 2px;

@@ -164,11 +164,9 @@ export default {
         });
 
         return (
-            <NScrollbar class="n-tabs__header" relative={true}>
-                <div class="n-tabs__header-inner">
-                    { [tabs, this.ctor('renderHeaderIndicator')()] }
-                </div>
-            </NScrollbar>
+            <div class="n-tabs__header">
+                {[tabs, this.ctor('renderHeaderIndicator')()]}
+            </div>
         );
     },
 
