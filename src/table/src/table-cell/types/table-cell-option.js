@@ -15,6 +15,10 @@ export default {
             options = this.column.options(this);
         }
 
+        options = Arr.each(options, (value, index) => {
+            return { $value: value, $index: index };
+        });
+
         let prop = this.column.optionsValue;
 
         let option = Arr.find(options, (item) => {
@@ -40,19 +44,9 @@ export default {
                 <div>{ this.column.$slots.default(this) }</div> 
             );
         }
-        
-        let options = this.column.options;
-
-        if ( Any.isFunction(options) ) {
-            options = this.column.options(this);
-        }
 
         let input = ! Any.isObject(this.input) ?
             [this.input] : this.input;
-
-        options = Arr.each(options, (value, index) => {
-            return { $value: value, $index: index };
-        });
 
         return (
             <div>

@@ -17,6 +17,10 @@ export default {
 
         let prop = this.column.optionsValue;
 
+        options = Arr.each(options, (value, index) => {
+            return { $value: value, $index: index };
+        });
+
         let option = Arr.find(options, (item) => {
             return Obj.get(item, prop) == value;
         });
@@ -37,18 +41,8 @@ export default {
             );
         }
 
-        let options = this.column.options;
-
-        if ( Any.isFunction(options) ) {
-            options = this.column.options(this);
-        }
-
         let input = ! Any.isObject(this.input) ?
             [this.input] : this.input;
-
-        options = Arr.each(options, (value, index) => {
-            return { $value: value, $index: index };
-        });
 
         return (
             <div>
