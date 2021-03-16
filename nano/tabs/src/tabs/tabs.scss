@@ -17,13 +17,24 @@ $tabs-size: 14px;
     flex-direction: row;
     align-items: stretch;
     justify-content: flex-start;
+}
+
+.n-tabs__header:after {
+    z-index: 10;
+    content: '\00a0';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    height: 0;
     border-bottom: 1px solid $color-gray-15;
 }
 
 .n-tabs__indicator {
     z-index: 20;
     position: absolute;
-    bottom: -1px;
+    bottom: 0;
     left: 0;
     width: 100px;
     height: 2px;
