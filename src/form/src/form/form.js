@@ -4,6 +4,8 @@ export default {
 
     name: 'NForm',
 
+    inheritAttrs: false,
+
     model: {
         prop: 'form'
     },
@@ -62,15 +64,17 @@ export default {
 
     methods: {
 
-        // onSubmit(event)
-        // {
-        //     if ( this.prevent ) {
-        //         event.preventDefault();
-        //         event.stopPropagation();
-        //     }
-        //
-        //     return false;
-        // },
+        onSubmit(event)
+        {
+            if ( this.prevent ) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+            this.$emit('submit', event);
+
+            return this.prevent;
+        },
 
         addItem(item)
         {
@@ -167,7 +171,7 @@ export default {
         ];
 
         return (
-            <form class={classList}>
+            <form class={classList} onSubmit={this.onSubmit}>
                 { this.$slots.default && this.$slots.default() }
             </form>
         );
