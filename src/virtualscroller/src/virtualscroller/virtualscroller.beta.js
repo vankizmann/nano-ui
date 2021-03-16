@@ -227,6 +227,10 @@ export default {
 
         updateRender()
         {
+            if ( ! this.$refs.scrollbar ) {
+                return Any.delay(this.updateRender);
+            }
+
             this.scrollTop = this.$refs.scrollbar.
                 $refs.content.scrollTop;
 
