@@ -74,7 +74,7 @@ export default {
         getTab(updateEvent = true)
         {
             let currentTab = Arr.find(this.elements, {
-                name: this.value
+                name: this.modelValue
             });
 
             let sorted = Arr.sort(this.elements, 'sort');
