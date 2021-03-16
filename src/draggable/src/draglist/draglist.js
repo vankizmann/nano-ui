@@ -377,6 +377,21 @@ export default {
             });
         },
 
+        findVirtual(unique)
+        {
+            let value = Arr.find(this.virtuals, (item) => {
+                return item[this.uniqueProp] === unique;
+            });
+
+            if ( ! value ) {
+                return null;
+            }
+
+            return {
+                value, item: Obj.get(this, value.route, null)
+            };
+        },
+
         refreshVirtuals()
         {
             this.virtuals = this.drag.reduce(this.items);

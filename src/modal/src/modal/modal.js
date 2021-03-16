@@ -30,6 +30,14 @@ export default {
             type: [Boolean]
         },
 
+        update: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         selector: {
             default()
             {
@@ -200,6 +208,10 @@ export default {
                 return;
             }
 
+            if ( ! this.update ) {
+                return this.$emit('close', source);
+            }
+
             if ( this.closable || force ) {
                 this.tempValue = false;
             }
@@ -236,7 +248,7 @@ export default {
 
         eventClick(event, el)
         {
-            if ( ! this.listen || this.disabled || event.which !== 1 ) {
+            if ( this.disabled || event.which !== 1 ) {
                 return;
             }
 
@@ -257,8 +269,10 @@ export default {
             if ( ! result ) {
                 return this.closeModal(false, 'escape');
             }
-            
-            this.openModal(true, 'selector');
+
+            if ( this.listen ) {
+                this.openModal(true, 'selector');
+            }
         },
 
         eventKeydown(event, el)

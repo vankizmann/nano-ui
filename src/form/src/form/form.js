@@ -62,13 +62,15 @@ export default {
 
     methods: {
 
-        onSubmit(event)
-        {
-            if ( this.prevent ) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-        },
+        // onSubmit(event)
+        // {
+        //     if ( this.prevent ) {
+        //         event.preventDefault();
+        //         event.stopPropagation();
+        //     }
+        //
+        //     return false;
+        // },
 
         addItem(item)
         {
@@ -139,8 +141,8 @@ export default {
         //     return;
         // }
 
-        Dom.find(this.$el).on('submit', 
-            this.onSubmit, this._.uid);
+        // Dom.find(this.$el).on('submit',
+        //     this.onSubmit, this._.uid);
     },
 
     beforeUnmount()
@@ -153,8 +155,8 @@ export default {
         //     return;
         // }
 
-        Dom.find(this.$el).off('submit', 
-            null, this._.uid);
+        // Dom.find(this.$el).off('submit',
+        //     null, this._.uid);
     },
 
     render()

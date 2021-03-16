@@ -22,6 +22,14 @@ export default {
             type: [Boolean]
         },
 
+        update: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         selector: {
             default()
             {
@@ -166,6 +174,7 @@ export default {
             type: 'default',
             selector: this.selector,
             listen: this.listen,
+            update: this.update,
             width: this.width,
             position: this.position,
             closable: this.closable,
