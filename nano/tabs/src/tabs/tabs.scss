@@ -11,6 +11,7 @@ $tabs-size: 14px;
 
 .n-tabs__header {
     position: relative;
+    overflow-y: hidden;
     overflow-x: auto;
     flex: 0 0 auto;
     display: flex;
