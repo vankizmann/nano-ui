@@ -1,4 +1,4 @@
-import { Str, Obj, Arr } from "@kizmann/pico-js";
+import { Str, Obj, Arr, Dom } from "@kizmann/pico-js";
 
 export default {
 
@@ -129,12 +129,8 @@ export default {
             return this.NDraggable.isExpanded(this);
         },
 
-        expandItem(event)
+        expandItem()
         {
-            if ( event ) {
-                event.stopPropagation();
-            }
-
             this.NDraggable.expandItem(this);
         },
 
@@ -143,17 +139,20 @@ export default {
             return this.NDraggable.isSelected(this);
         },
 
-        selectItem(event)
+        selectItem()
         {
-            if ( event ) {
-                event.stopPropagation();
-            }
-
             this.NDraggable.selectItem(this);
         },
 
-        onClick()
+        onClick(event)
         {
+            let isExpand = Dom.find(event.target)
+                .closest('.n-draglist-item__expand');
+
+            if ( isExpand ) {
+                return;
+            }
+
             this.NDraggable.setCurrent(this);
 
             if ( Arr.has(global.keyMods, 91) ) {
