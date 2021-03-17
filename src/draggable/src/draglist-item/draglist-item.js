@@ -129,8 +129,12 @@ export default {
             return this.NDraggable.isExpanded(this);
         },
 
-        expandItem()
+        expandItem(event)
         {
+            if ( event ) {
+                event.stopPropagation();
+            }
+
             this.NDraggable.expandItem(this);
         },
 
@@ -139,8 +143,12 @@ export default {
             return this.NDraggable.isSelected(this);
         },
 
-        selectItem()
+        selectItem(event)
         {
+            if ( event ) {
+                event.stopPropagation();
+            }
+
             this.NDraggable.selectItem(this);
         },
 
