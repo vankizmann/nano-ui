@@ -148,13 +148,13 @@ class NDraghandler {
         });
 
         Event.bind('NDrag:start', this.bindDragstart.bind(this), 
-            this.uid);
+            this.rootNode.uid);
 
         Event.bind('NDrag:end', this.bindDragend.bind(this), 
-            this.uid);
+            this.rootNode.uid);
 
         Event.bind('NDrag:drop', this.bindDragdrop.bind(this), 
-            this.uid);
+            this.rootNode.uid);
     }
 
     unbindRoot()
@@ -171,9 +171,9 @@ class NDraghandler {
 
         Dom.find(this.rootNode.$el).off(events);
 
-        Event.unbind('NDrag:start', this.uid);
-        Event.unbind('NDrag:end', this.uid);
-        Event.unbind('NDrag:drop', this.uid);
+        Event.unbind('NDrag:start', this.rootNode.uid);
+        Event.unbind('NDrag:end', this.rootNode.uid);
+        Event.unbind('NDrag:drop', this.rootNode.uid);
     }
 
     onDragenterRoot(event)
