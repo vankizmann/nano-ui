@@ -104,6 +104,7 @@ export default {
 
         onIconClick(event)
         {
+            console.log(event, 'here')
             this.$emit('icon-click', event);
         },
 
@@ -152,7 +153,7 @@ export default {
     renderInput()
     {
         let props = Obj.except(this.$attrs, [
-            'class', 'style', 'icon', 'iconPosition', 'iconDisabled', 'onIconClick'
+            'class', 'style'
         ]);
 
         Obj.assign(props, {
