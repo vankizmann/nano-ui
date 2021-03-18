@@ -199,7 +199,7 @@ export default {
             let style = {};
 
             if ( this.position === 'left' ) {
-                style.transform =`translateX(-${this.tempValue + this.resizerWidth}px)`
+                style.transform =`translateX(-${this.tempValue - this.resizerWidth}px)`
             }
     
             if ( this.position === 'right' ) {
@@ -331,6 +331,12 @@ export default {
             };
 
             Dom.find(this.$refs.handle).css(style);
+
+            let frameStyle = {
+                width: this.tempValue + 'px', flex: '0 0 auto'
+            };
+
+            Dom.find(this.$el).css(frameStyle);
 
             delete this.clientX;
 
@@ -498,6 +504,8 @@ export default {
         if ( this.maxWidth ) {
             style['max-width'] = this.maxWidth + 'px';
         }
+
+        console.log(style);
 
         return (
             <div class={classList} style={style}>

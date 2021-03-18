@@ -756,8 +756,15 @@
 
         <h2>NResizer</h2>
 
-        <div style="display: flex; flex-direction: row;">
-            <n-resizer style="width: 60%; height: 200px; flex: 1 1 auto; background: #eee;">
+        <div style="display: flex; flex-direction: row; justify-content: flex-start;">
+            <n-resizer style="width: 60%; height: 200px; flex: 0 1 auto; background: #eee;" position="right">
+                Resizercontent
+            </n-resizer>
+        </div>
+
+
+        <div style="display: flex; flex-direction: row; justify-content: flex-end;">
+            <n-resizer style="width: 60%; height: 200px; flex: 0 1 auto; background: #eee;" position="left">
                 Resizercontent
             </n-resizer>
         </div>
