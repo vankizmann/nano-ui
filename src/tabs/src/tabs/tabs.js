@@ -66,7 +66,7 @@ export default {
                 { name: tab.name });
 
             if ( this.init) {
-                this.$forceUpdate();
+                this.$nextTick(this.$forceUpdate);
             }
         },
 
@@ -76,7 +76,7 @@ export default {
                 { name: tab.name });
 
             if ( this.init) {
-                this.$forceUpdate();
+                this.$nextTick(this.$forceUpdate);
             }
         },
 
