@@ -50,6 +50,7 @@ export default {
     data()
     {
         return {
+            init: false,
             elements: [], 
             width: 0, 
             offset: 0, 
@@ -64,7 +65,9 @@ export default {
             Arr.add(this.elements, tab, 
                 { name: tab.name });
 
-            this.$forceUpdate();
+            if ( this.init) {
+                this.$forceUpdate();
+            }
         },
 
         removeTab(tab)
@@ -72,7 +75,9 @@ export default {
             Arr.remove(this.elements, 
                 { name: tab.name });
 
-            this.$forceUpdate();
+            if ( this.init) {
+                this.$forceUpdate();
+            }
         },
 
         getTab(updateEvent = true)
@@ -126,6 +131,7 @@ export default {
 
     mounted()
     {
+        this.init = true;
         this.getTab(false);
     },
 
