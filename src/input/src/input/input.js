@@ -140,15 +140,20 @@ export default {
             size:       this.size,
             square:     true,
             disabled:   disabled,
-            onClick:    this.onIconClick,
         };
+
+        if ( ! disabled ) {
+            props.onClick = this.onIconClick;
+        }
 
         return (<NButton {...props} />);
     },
 
     renderInput()
     {
-        let props = Obj.except(this.$attrs, ['class', 'style']);
+        let props = Obj.except(this.$attrs, [
+            'class', 'style', 'icon', 'iconPosition', 'iconDisabled', 'onIconClick'
+        ]);
 
         Obj.assign(props, {
             value:          this.tempValue,
