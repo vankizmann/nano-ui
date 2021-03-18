@@ -33,6 +33,11 @@
     bottom: -15px;
 }
 
+.n-scrollbar.n-windows:not(.n-scrollbar--native) > .n-scrollbar-content {
+    right: -17px;
+    bottom: -17px;
+}
+
 .n-scrollbar:not(.n-overflow-x) > .n-scrollbar-content {
     bottom: 0;
     overflow-x: hidden;

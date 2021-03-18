@@ -1,7 +1,8 @@
-import Vue from "vue";
-
 import Map from './src/map/map';
-Vue.component(Map.name, Map);
-
 import MapMarker from './src/map-marker/map-marker';
-Vue.component(MapMarker.name, MapMarker);
+
+export default function (App) {
+    App.component(Map.name, Map);
+    App.component(MapMarker.name, MapMarker);
+}
+

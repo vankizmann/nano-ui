@@ -238,7 +238,7 @@ export default {
 
         adaptScrollBehavior()
         {
-            let $dom = Dom.make('div', { classList: ['n-schrollbar__test'] })
+            let $dom = Dom.make('div', { classList: ['n-scroll-test'] })
                 .appendTo(document.body).get(0);
 
             Dom.make('div').appendTo($dom);
@@ -459,8 +459,6 @@ export default {
             if ( this.overflowY ) {
                 this.adaptScrollHeight();
             }
-
-            this.windowHeight = window;
 
             if ( window ) {
                 this.passedHeight = height;
@@ -727,6 +725,10 @@ export default {
 
         if ( this.touch ) {
             classList.push('n-scrollbar--touch');
+        }
+
+        if ( window.WIN ) {
+            classList.push('n-windows');
         }
 
         if ( this.overflowY ) {

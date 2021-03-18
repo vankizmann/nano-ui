@@ -30,7 +30,7 @@ export default {
             type: [Number]
         },
 
-        draggable: {
+        drag: {
             default()
             {
                 return false;
@@ -51,8 +51,7 @@ export default {
     data()
     {
         return {
-            veID: UUID(),
-            veMarker: null
+            id: UUID(), tempMarker: null
         };
     },
 
@@ -60,43 +59,43 @@ export default {
 
         importMarkerPosition()
         {
-            this.veMarker.marker.setPosition({
+            this.tempMarker.marker.setPosition({
                 lat: this.lat, lng: this.lng
             });
         },
 
         updateMarkerPosition()
         {
-            this.$emit('update:lat', this.veMarker.marker.getPosition().lat());
-            this.$emit('update:lng', this.veMarker.marker.getPosition().lng());
+            this.$emit('update:lat', this.tempMarker.marker.getPosition().lat());
+            this.$emit('update:lng', this.tempMarker.marker.getPosition().lng());
         },
 
         initializeMarker()
         {
             let options = Obj.assign({
-                lat: Num.float(this.lat), lng: Num.float(this.lng), draggable: this.draggable
+                lat: Num.float(this.lat), lng: Num.float(this.lng), draggable: this.drag
             }, this.options);
 
             if ( ! Any.isEmpty(this.$slots.default) ) {
                 options.html = this.$el.innerHTML;
             }
 
-            this.veMarker = this.NMap.getMap().createMarker(this.veID, options);
+            this.tempMarker = this.NMap.getMap().createMarker(this.id, options);
 
-            this.veMarker.marker.addListener('position_changed',
+            this.tempMarker.marker.addListener('position_changed',
                 Any.debounce(this.updateMarkerPosition));
 
-            this.veMarker.marker.addListener('dragstart',
-                () => this.$emit('dragstart', this.veMarker));
+            this.tempMarker.marker.addListener('dragstart',
+                () => this.$emit('dragstart', this.tempMarker));
 
-            this.veMarker.marker.addListener('dragend',
-                () => this.$emit('dragend', this.veMarker));
+            this.tempMarker.marker.addListener('dragend',
+                () => this.$emit('dragend', this.tempMarker));
 
-            this.veMarker.marker.addListener('mouseover',
-                () => this.$emit('mouseenter', this.veMarker));
+            this.tempMarker.marker.addListener('mouseover',
+                () => this.$emit('mouseenter', this.tempMarker));
 
-            this.veMarker.marker.addListener('mouseout',
-                () => this.$emit('mouseleave', this.veMarker));
+            this.tempMarker.marker.addListener('mouseout',
+                () => this.$emit('mouseleave', this.tempMarker));
         },
 
         setMarkerByAddress(address)
@@ -109,7 +108,7 @@ export default {
                 this.Notify(this.trans('Address not found.'), 'danger');
             };
 
-            this.NMap.getMap().setMarkerByAddress(this.veID, address)
+            this.NMap.getMap().setMarkerByAddress(this.id, address)
                 .then(successClosure, errorClosure);
         }
 
@@ -129,12 +128,12 @@ export default {
 
     },
 
-    mounted()
+    beforeMount()
     {
-        this.NMap.$once('hook:mounted', this.initializeMarker);
+        this.NMap.onMount(this.initializeMarker);
     },
 
-    render(h)
+    render()
     {
         return (
             <div style="display: none;">

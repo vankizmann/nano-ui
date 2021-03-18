@@ -84,7 +84,9 @@ export function Install(App, Icons = {}, Styles = {})
     require('./paginator/index').default(App);
     require('./info/index').default(App); //!complex 16.1
 
-    // require('./map/index'); // SX only ez 17.1
+    require('./map/index').default(App);
+
+    // SX only ez 17.1
     // require('./file-list/index'); // SX only 17.1
     // require('./file/index'); // SX only 17.1
 

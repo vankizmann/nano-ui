@@ -60,6 +60,8 @@
     <script src="https://unpkg.com/vue@next"></script>
     <script src="https://vankizmann.github.io/pico-js/dist/pico-js.js"></script>
     <script src="../dist/nano-ui.js"></script>
+    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
 
 </head>
 <body>
@@ -843,9 +845,27 @@
             <n-info-column label="ID" type="string" prop="id"></n-info-column>
         </n-info>
 
+        <h2>NConfig</h2>
+
         <n-form>
             <n-config :config="demoConfig" v-model="configData"></n-config>
         </n-form>
+
+
+        <h2>NMap</h2>
+
+        <n-form>
+            <n-form-item label="Lat">
+                <n-input v-model="n_map.lat" disabled="true"></n-input>
+            </n-form-item>
+            <n-form-item label="Lng">
+                <n-input v-model="n_map.lng" disabled="true"></n-input>
+            </n-form-item>
+        </n-form>
+
+        <n-map>
+            <n-map-marker v-model:lat="n_map.lat" v-model:lng="n_map.lng" :drag="true"></n-map-marker>
+        </n-map>
 
     </div>
 </div>
@@ -1042,7 +1062,16 @@
                 size: 'md', type: 'primary', visible: true
             };
 
+            data.n_map = {
+                lat: 0, lng: 0
+            };
+
             let methods = {};
+
+            methods.searchLocation = function () {
+
+                console.log(this.n_map.localtion)
+            }
 
             methods.transDrop = function (node) {
 

@@ -63,12 +63,16 @@ export default {
         {
             Arr.add(this.elements, tab, 
                 { name: tab.name });
+
+            this.$forceUpdate();
         },
 
         removeTab(tab)
         {
             Arr.remove(this.elements, 
                 { name: tab.name });
+
+            this.$forceUpdate();
         },
 
         getTab(updateEvent = true)

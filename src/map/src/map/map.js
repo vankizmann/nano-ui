@@ -4,10 +4,6 @@ export default {
 
     name: 'NMap',
 
-    model: {
-        prop: 'visible'
-    },
-
     props: {
 
         lat: {
@@ -45,36 +41,43 @@ export default {
 
     data()
     {
-        return { veMap: null };
+        return { init: false, callbacks: [], tempMap: null };
     },
 
     mounted()
     {
-        this.veMap = new Map(this.$el, {
+        this.tempMap = new Map(this.$el, {
             lat: this.lat, lng: this.lng, zoom: this.zoom
         });
+
+        this.init = true;
+
+        Arr.each(this.callbacks, (callback) => callback())
     },
 
     methods: {
 
         getMap()
         {
-            return this.veMap;
+            return this.tempMap;
         },
+
+        onMount(callback)
+        {
+            this.init ? callback() : this.callbacks.push(callback);
+        }
 
     },
 
-    render($render)
+    render()
     {
-        this.$render = $render;
-
         let classList = [
             'n-map'
         ];
 
         return (
             <div class={classList}>
-                { this.$slots.default }
+                { this.$slots.default && this.$slots.default() }
             </div>
         );
     }

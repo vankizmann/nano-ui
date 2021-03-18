@@ -143,7 +143,7 @@ export default {
         };
 
         return (
-            <div key={this.name} class={classList} {...props}>
+            <div class={classList} {...props}>
                 { this.ctor('renderHeaderIcon')() }
                 { this.ctor('renderHeaderLabel')() }
             </div>
