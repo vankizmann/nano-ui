@@ -238,7 +238,7 @@ export default {
 
         adaptScrollBehavior()
         {
-            let $dom = Dom.make('div', { classList: ['n-scroll-test'] })
+            let $dom = Dom.make('div', { classList: ['n-scrollbar-test'] })
                 .appendTo(document.body).get(0);
 
             Dom.make('div').appendTo($dom);

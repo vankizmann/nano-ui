@@ -505,8 +505,6 @@ export default {
             style['max-width'] = this.maxWidth + 'px';
         }
 
-        console.log(style);
-
         return (
             <div class={classList} style={style}>
                 { [this.$slots.default(), this.ctor('renderHandle')()] }
