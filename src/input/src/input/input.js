@@ -104,8 +104,9 @@ export default {
 
         onIconClick(event)
         {
-            console.log(event, 'here')
-            this.$emit('icon-click', event);
+            if ( event.clientX || event.clientY ) {
+                this.$emit('icon-click', event);
+            }
         },
 
         onInput(event)
