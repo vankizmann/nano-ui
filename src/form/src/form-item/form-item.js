@@ -120,7 +120,8 @@ export default {
 
     mounted()
     {
-        // this.NForm.$on('errors', this.gotoInput);
+        this.NForm.$watch('errors', this.gotoInput,
+            { deep: true });
     },
 
     beforeUnmount()

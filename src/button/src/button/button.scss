@@ -1,296 +1,54 @@
 @import "../../../root/vars";
 
-$button-size: 14px !default;
-$button-height: 34px !default;
-$button-ratio: 0.3 !default;
-
-%n-button {
-    background: $--color-gray-10;
-    font-size: $button-size;
-    border: 1px solid $--color-gray-10;
-}
-
-.n-button__wrapper {
-    position: relative;
-    display: inline-flex;
-}
-
 .n-button {
-    flex: 1 1 auto;
-    display: flex;
+    appearance: none;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 0;
     white-space: nowrap;
     text-decoration: none;
-    line-height: $button-size * 1.2;
+    line-height: 1.2;
+    background: transparent;
+    box-shadow: none;
+    border: 1px solid transparent;
+    transition: border 0.10s, background 0.10s;
 }
 
-.n-button:not(.n-button--link) {
-    @extend %n-button;
-    padding: 0 $button-height * $button-ratio;
-    height: $button-height;
-    border-radius: $radius-medium;
-    transition: 0.15s background, 0.15s border, 0.15s color;
-}
-
-.n-button.n-button--round:not(.n-button--link) {
-    border-radius: 500px;
-    padding: 0 $button-height * 0.6;
-}
-
-.n-button.n-button--square:not(.n-button--link) {
-    width: $button-height;
-    padding: 0;
-    text-align: center;
-}
-
-.n-button:not(.n-button--link):hover,
-.n-button:not(.n-button--link):focus {
-    background: $--color-gray-15;
-    border-color: $--color-gray-15;
-}
-
-.n-disabled .n-button {
-    opacity: 0.6;
+.n-button.n-disabled {
     cursor: not-allowed;
+    opacity: 0.7;
 }
 
-.n-button.n-button--icon .n-icon.n-icon--before {
-    margin-right: $button-size * 0.45;
-}
+@each $suffix, $values in $form {
 
-.n-button.n-button--icon .n-icon.n-icon--after {
-    margin-left: $button-size * 0.45;
-}
+    $-button-font: map-get($values, 'font');
+    $-button-size: map-get($values, 'size');
+    $-button-radius: map-get($values, 'radius');
+    $-button-ratio: map-get($values, 'ratio');
 
-.n-button.n-button--icon span:first-child:last-child {
-    margin-right: 0;
-    margin-left: 0;
-}
-
-.n-button.n-button--mini:not(.n-button--link) {
-    font-size: $button-size * 0.725;
-    padding: 0 $button-height * $button-ratio * 0.725;
-    height: $button-height * 0.725;
-}
-
-.n-button.n-button--mini.n-button--round:not(.n-button--link) {
-    padding: 0 $button-height * 0.6 * 0.725;
-}
-
-.n-button.n-button--mini.n-button--square:not(.n-button--link) {
-    width: $button-height * 0.725;
-    padding: 0;
-}
-
-.n-button.n-button--small:not(.n-button--link) {
-    font-size: $button-size * 0.875;
-    padding: 0 $button-height * $button-ratio * 0.875;
-    height: $button-height * 0.875;
-}
-
-.n-button.n-button--small.n-button--round:not(.n-button--link) {
-    padding: 0 $button-height * 0.6 * 0.875;
-}
-
-.n-button.n-button--small.n-button--square:not(.n-button--link) {
-    width: $button-height * 0.875;
-    padding: 0;
-}
-
-.n-button.n-button--large:not(.n-button--link) {
-    font-size: $button-size * 1.125;
-    padding: 0 $button-height * $button-ratio * 1.125;
-    height: $button-height * 1.125;
-}
-
-.n-button.n-button--large.n-button--round:not(.n-button--link) {
-    padding: 0 $button-height * 0.6 * 1.125;
-}
-
-.n-button.n-button--large.n-button--square:not(.n-button--link) {
-    width: $button-height * 1.125;
-    padding: 0;
-}
-
-/**
- * Input
- */
-
-.n-button.n-button--input {
-    color: $--color-gray-40;
-    background: transparent;
-    border-color: transparent;
-}
-
-.n-button.n-button--input:hover,
-.n-button.n-button--input:focus {
-    color: $--color-primary-light;
-    background: transparent;
-    border-color: transparent;
-}
-
-.n-button.n-button--input:active {
-    color: $--color-primary-dark;
-    background: transparent;
-    border-color: transparent;
-}
-
-.n-disabled .n-button.n-button--input:hover,
-.n-disabled .n-button.n-button--input:focus,
-.n-disabled .n-button.n-button--input:active {
-    color: $--color-gray-40;
-}
-
-/**
- * Link
- */
-
-.n-button.n-button--link {
-    font-size: $button-size;
-    color: $color-gray-50;
-    transition: 0.15s color;
-}
-
-.n-button.n-button--link:hover,
-.n-button.n-button--link:focus {
-    color: $color-gray-60;
-}
-
-.n-button.n-button--small.n-button--link {
-    font-size: $button-size * 0.875;
-}
-
-.n-button.n-button--large.n-button--link {
-    font-size: $button-size * 1.125;
-}
-
-.n-disabled .n-button.n-button--link,
-.n-disabled .n-button.n-button--link:hover {
-    color: $--color-gray-50;
-}
-
-@each $color, $values in $colors {
-
-    $--c--base: map_get($values, 'base');
-    $--c--light: map_get($values, 'light');
-    $--c--dark: map_get($values, 'dark');
-
-    /**
-     * Button primary
-     */
-
-    %n-button-#{$color} {
-        color: $--color-white;
-        background: $--c--base;
-        border-color: $--c--base;
+    .n-button--#{$suffix} {
+        font-size: $-button-font;
     }
 
-    %n-button-#{$color}:hover {
-        background: $--c--light;
-        border-color: $--c--light;
+    .n-button--#{$suffix}:not(.n-button--link) {
+        height: $-button-size;
+        border-radius: $-button-radius;
     }
 
-    %n-button-#{$color}:focus {
-        background: $--c--dark;
-        border-color: $--c--dark;
+    .n-button--#{$suffix}.n-button--square:not(.n-button--link) {
+        width: $-button-size;
     }
 
-    %n-button-#{$color}-disabled {
-        background: $--c--base;
-        border-color: $--c--base;
+    .n-button--#{$suffix}:not(.n-button--link):not(.n-button--square) {
+        padding: 0 $-button-size * $-button-ratio;
     }
 
-    .n-button.n-button--#{$color}:not(.n-button--link) {
-        @extend %n-button-#{$color};
+    .n-button--#{$suffix} .n-icon.n-icon--before:not(:last-child) {
+        margin-right: $-button-font * $-button-ratio;
     }
 
-    .n-disabled .n-button.n-button--#{$color}:not(.n-button--link) {
-        @extend %n-button-#{$color}-disabled;
+    .n-button--#{$suffix} .n-icon.n-icon--after:not(:first-child) {
+        margin-left: $-button-font * $-button-ratio;
     }
 
-    /**
-     * Button plain
-     */
-
-    %n-button-#{$color}-plain {
-        color: $--c--base;
-        background: rgba($--c--base, 0.10);
-        border-color: rgba($--c--base, 0.25);
-    }
-
-    %n-button-#{$color}-plain:hover,
-    %n-button-#{$color}-plain:focus {
-        background: rgba($--c--base, 0.20);
-        border-color: rgba($--c--base, 0.25);
-    }
-
-    %n-button-#{$color}-plain-disabled {
-        background: rgba($--c--base, 0.10);
-        border-color: rgba($--c--base, 0.25);
-    }
-
-    .n-button.n-button--plain.n-button--#{$color}:not(.n-button--link) {
-        @extend %n-button-#{$color}-plain;
-    }
-
-    .n-disabled .n-button.n-button--plain.n-button--#{$color}:not(.n-button--link) {
-        @extend %n-button-#{$color}-plain-disabled;
-    }
-
-    /**
-     * Button link
-     */
-
-    %n-button-#{$color}-link {
-        color: $--c--base;
-    }
-
-    %n-button-#{$color}-link:hover {
-        color: $--c--light;
-    }
-
-    %n-button-#{$color}-link-disabled {
-        color: $color-gray-50;
-    }
-
-    .n-button.n-button--link.n-button--#{$color} {
-        @extend %n-button-#{$color}-link;
-    }
-
-    .n-disabled .n-button.n-button--link.n-button--#{$color}{
-        @extend %n-button-#{$color}-link-disabled;
-    }
-
-}
-
-/**
- * Secondary fix
- */
-%n-button-secondary,
-%n-button-secondary-plain {
-    color: $color-black;
-    background: $color-white;
-    border-color: $color-gray-10;
-}
-
-%n-button-secondary:hover,
-%n-button-secondary-plain:hover {
-    color: $color-secondary;
-    background: rgba($color-secondary, 0.15);
-    border-color: rgba($color-secondary, 0.25);
-}
-
-%n-button-secondary:focus,
-%n-button-secondary-plain:focus {
-    color: $color-secondary;
-    background: rgba($color-secondary, 0.20);
-    border-color: rgba($color-secondary, 0.30);
-}
-
-%n-button-secondary-disabled,
-%n-button-secondary-plain-disabled {
-    background: $color-white;
-    border-color: $color-gray-10;
 }
