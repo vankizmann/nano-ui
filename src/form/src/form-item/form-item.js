@@ -38,6 +38,14 @@ export default {
             type: [String]
         },
 
+        size: {
+            default()
+            {
+                return '';
+            },
+            type: [String]
+        },
+
         tooltip: {
             default()
             {
@@ -136,6 +144,7 @@ export default {
         }
 
         let props = {
+            size: 'sm',
             position: this.tooltipPosition,
         };
 
@@ -189,7 +198,14 @@ export default {
 
     render()
     {
-        return <div class="n-form-item">
+        let size = this.size || this.NForm.size;
+
+        let classList = [
+            'n-form-item',
+            'n-form-item--' + size,
+        ]
+
+        return <div class={classList}>
             { this.ctor('renderLabel')() }
             { this.ctor('renderInput')() }
             { this.ctor('renderError')() }

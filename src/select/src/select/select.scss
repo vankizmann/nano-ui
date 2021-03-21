@@ -1,186 +1,203 @@
 @import "../../../root/vars";
 
-$select-size: 14px !default;
-$select-height: 34px !default;
+.n-select {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 100%;
+    border: 1px solid transparent;
+}
 
-$select-item-padding: 3px 6px !default;
-$select-empty-padding: 6px 12px !default;
+.n-select.n-disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
 
-.n-select__wrapper {
-    position: relative;
-    display: inline-flex;
+.n-select__display {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
     width: 100%;
 }
 
-.n-select {
-    flex: 1 1 auto;
-    min-width: 0;
-    cursor: pointer;
+.n-select__clear,
+.n-select__angle {
+    order: 100;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: row;
     align-items: center;
-    background: $--color-white;
-    color: $--color-black;
-    border: 1px solid $--color-gray-15;
-    border-radius: $radius-small;
-    transition: 0.15s border;
+    justify-content: center;
 }
 
-.n-select:hover,
-.n-select.n-open {
-    border: 1px solid $--color-primary;
+.n-select__clear {
+    display: none;
 }
 
-.n-select.n-select--default {
-    font-size: $select-size;
-    padding: 0 $select-height * 0.3;
-    min-height: $select-height;
-}
-
-.n-select.n-select--small {
-    font-size: $select-size * 0.875;
-    padding: 0 $select-height * 0.3 * 0.875;
-    min-height: $select-height * 0.875;
-}
-
-.n-select.n-select--large {
-    font-size: $select-size * 1.125;
-    padding: 0 $select-height * 0.3 * 1.125;
-    min-height: $select-height * 1.125;
-}
-
-.n-disabled .n-select,
-.n-disabled .n-select:hover {
-    cursor: not-allowed;
-    background: $--color-gray-05;
-    border-color: $--color-gray-15;
-}
-
-.n-select__label {
-    position: relative;
-    overflow: hidden;
-    flex: 1 1 auto;
+.n-select:hover.n-clearable:not(.n-empty) .n-select__clear,
+.n-select.n-focus.n-clearable:not(.n-empty) .n-select__clear {
     display: flex;
-    flex-direction: row;
-    align-items: center;
 }
 
-.n-select.n-select--multiple .n-select__label {
-    flex-wrap: wrap;
+.n-select:hover.n-clearable:not(.n-empty) .n-select__angle,
+.n-select.n-focus.n-clearable:not(.n-empty) .n-select__angle {
+    display: none;
+}
+
+.n-select__angle {
+    transition: transform 0.25s;
+}
+
+.n-select.n-focus .n-select__angle {
+    transform: scaleY(-1);
+}
+
+.n-select__clear i,
+.n-select__angle i {
+    text-align: center;
+}
+
+.n-select__clear i {
+    border-radius: 500px;
 }
 
 .n-select__input {
-    cursor: pointer;
-    z-index: 10;
-    position: relative;
     flex: 1 1 auto;
-    width: 0;
-    border: 0;
-    background: transparent;
-    color: $--color-black;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 30px;
 }
 
-.n-select.n-select--disabled .n-select__input {
+.n-select__input input {
+    cursor: default;
+    appearance: none;
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    text-decoration: none;
+    line-height: 1.2;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.n-disabled .n-select__input input {
     cursor: not-allowed;
 }
 
-.n-select.n-select--default .n-select__input {
-    height: $select-height - 6;
-    line-height: $select-height - 6;
-}
-
-.n-select.n-select--small .n-select__input {
-    height: ($select-height * 0.875) - 6;
-    line-height: ($select-height * 0.875) - 6;
-}
-
-.n-select.n-select--large .n-select__input {
-    height: ($select-height * 1.125) - 6;
-    line-height: ($select-height * 1.125) - 6;
-}
-
 .n-select__items {
-     max-height: 210px;
- }
+    flex: 1 1 auto;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
 
 .n-select__item {
     display: inline-flex;
     flex-direction: row;
     align-items: center;
-}
-
-.n-select:not(.n-select--multiple) .n-select__item {
-    flex: 1 1 auto;
-    min-width: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.n-select.n-select--multiple .n-select__item {
-    color: $--color-white;
-    background: $--color-primary;
-    padding: $select-item-padding;
-    border-radius: $radius-small;
-}
-
-.n-select.n-select--default.n-select--multiple .n-select__item {
-    font-size: $select-size * 0.825;
-    margin: 3px 6px 3px 0;
-}
-
-.n-select.n-select--small.n-select--multiple .n-select__item {
-    font-size: $select-size * 0.825 * 0.875;
-    margin: 2px 5px 2px 0;
-}
-
-.n-select.n-select--large.n-select--multiple .n-select__item {
-    font-size: $select-size * 0.825 * 1.125;
-    margin: 4px 7px 4px 0;
-}
-
-.n-select__item i {
-    opacity: 0.8;
-    margin-left: 4px;
-}
-
-.n-select__clear {
-    flex: 0 0 auto;
-    display: inline-flex;
-    align-items: center;
     justify-content: center;
-    width: $select-height * 0.5;
-    height: $select-height * 0.5;
-    color: $--color-gray-50;
-    font-size: $select-size * 0.665;
-    background: $--color-gray-10;
-    border-radius: 500px;
-    transition: color 0.3s, background 0.3s;
-    margin: 0 8px 0 0;
 }
 
-.n-select__clear:hover {
-    color: $--color-gray-80;
-    background: $--color-gray-15;
+.n-select__item i { 
+    opacity: 0.7;
 }
 
-.n-select__angle {
-    padding-left: 6px;
-    margin-left: auto;
-    color: $--color-gray-40;
-    transform-style: preserve-3d;
-    transition: transform 0.6s;
-}
-
-.n-select.n-open .n-select__angle {
-    transform: rotateX(180deg);
-}
-
+.n-select__body,
 .n-select__empty {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    padding: $select-empty-padding;
-    text-align: center;
-    color: $--color-gray-60;
+     overflow: hidden;
+     margin: 1px 0;
+     max-height: 210px;
+}
+
+ .n-select__empty {
+     text-align: center;
+}
+
+@each $suffix, $values in $form {
+
+    $-select-font: map-get($values, 'font');
+    $-select-size: map-get($values, 'size');
+    $-select-radius: map-get($values, 'radius');
+    $-select-ratio: map-get($values, 'ratio');
+
+    .n-select--#{$suffix} {
+        min-height: $-select-size;
+        font-size: $-select-font;
+        border-radius: $-select-radius;
+    }
+
+    .n-select--#{$suffix} .n-select__display.n-multiple .n-select__input input {
+        min-height: $-select-size - 6;
+    }
+
+    $-select-padding: $-select-size * $-select-ratio * 0.5;
+
+    .n-select--#{$suffix} .n-select__display {
+        padding: 0 $-select-padding;
+    }
+
+    .n-select--#{$suffix} .n-select__clear,
+    .n-select--#{$suffix} .n-select__angle {
+        width: $-select-size;
+        margin: 0 -#{$-select-padding} 0 -#{$-select-padding};
+    }
+
+    .n-select--#{$suffix} .n-select__clear i,
+    .n-select--#{$suffix} .n-select__angle i {
+        width: $-select-size - 14;
+        height: $-select-size - 14;
+        line-height: $-select-size - 14;
+    }
+
+    .n-select--#{$suffix} .n-select__angle i {
+        font-size: $-select-font - 2;
+    }
+
+    .n-select--#{$suffix} .n-select__clear i {
+        font-size: $-select-font - 4;
+    }
+
+    .n-select--#{$suffix} .n-select__input input {
+        padding: 0 $-select-padding;
+    }
+
+    .n-select--#{$suffix} .n-select__items {
+        padding: 2px 0;
+        margin-left: -#{$-select-padding * 0.25};
+    }
+
+    .n-select--#{$suffix} .n-select__item {
+        height: $-select-size - 10;
+        margin: 2px 0 2px $-select-padding * 0.5;
+        padding: 0 $-select-padding * 0.5;
+        border-radius: $-select-radius - 1;
+    }
+
+    .n-select--#{$suffix} .n-select__item span {
+        font-size: $-select-font - 3;
+        padding: 0 $-select-padding * 0.5;
+    }
+
+    .n-select--#{$suffix} .n-select__item i {
+        font-size: $-select-font - 5;
+        padding: 0 $-select-padding * 0.5;
+    }
+
+    .n-popover--#{$suffix} .n-select__body,
+    .n-popover--#{$suffix} .n-select__empty {
+        border-radius: $-select-radius;
+    }
+
+    .n-popover--#{$suffix} .n-select__empty {
+        padding: $-select-padding * 2 $-select-padding;
+    }
+
 }

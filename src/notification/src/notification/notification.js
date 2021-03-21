@@ -89,6 +89,8 @@ export default class Notify {
 
     static alias = 'Notify';
 
+    static size = nano.Settings.notifySize;
+
     static position = nano.Settings.notifyPosition;
 
     static notifications = {};
@@ -141,7 +143,8 @@ export default class Notify {
 
         let classList = [
             'n-notification-frame',
-            'n-' + this.position
+            'n-notification-frame--' + this.size,
+            'n-notification-frame--' + this.position
         ];
 
         if ( Dom.find('.n-notification-frame').empty() === true ) {

@@ -1,9 +1,17 @@
 @import "../../../root/vars";
 
-$tabs-size: 14px;
-
 .n-tabs-item {
     flex: 1 0 auto;
+}
+
+.n-tabs__tab-icon {
+    color: $color-gray-40;
+}
+
+.n-tabs__tab-label span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 @each $suffix, $values in $form {
@@ -14,7 +22,16 @@ $tabs-size: 14px;
     $-tabs-ratio: map-get($values, 'ratio');
 
     .n-tabs--#{$suffix} .n-tabs-item {
-        margin-top: $-tabs-size;
+        margin-top: $-tabs-size * $-tabs-ratio;
+    }
+
+    .n-tabs--#{$suffix} .n-tabs__tab-icon {
+        font-size: $-tabs-font - 2;
+        margin-right: $-tabs-size * $-tabs-ratio * 0.7;
+    }
+
+    .n-tabs--#{$suffix} .n-tabs__tab-label {
+        font-size: $-tabs-font;
     }
 
 }

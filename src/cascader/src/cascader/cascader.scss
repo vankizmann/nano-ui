@@ -7,6 +7,7 @@
     align-items: stretch;
     justify-content: stretch;
     width: 100%;
+    border: 1px solid transparent;
 }
 
 .n-cascader.n-disabled {
@@ -96,14 +97,15 @@
 
 .n-cascader__body,
 .n-cascader__empty {
-    overflow: hidden;
-    margin: 1px 0;
-    max-height: 210px;
-    border: 0;
+     overflow: hidden;
+     margin: 1px 0;
+     max-height: 210px;
+     border: 0;
 }
 
 .n-cascader__empty {
-    text-align: center;
+     text-align: center;
+     color: $color-gray-60;
 }
 
 @each $suffix, $values in $form {

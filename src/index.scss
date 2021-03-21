@@ -1,6 +1,4 @@
-@import "./root/transition";
-
-@import "./chart/index";
+@import "./empty/index";
 @import "./notification/index";
 @import "./scrollbar/index";
 @import "./resizer/index";
@@ -10,6 +8,7 @@
 @import "./form/index";
 @import "./button/index";
 @import "./input/index";
+@import "./input-number/index";
 @import "./textarea/index";
 @import "./switch/index";
 @import "./checkbox/index";

@@ -1,72 +1,67 @@
 @import "../../../root/vars";
 
-$notification-size: 14px !default;
-$notification-icon-size: 15px !default;
-
-.n-notification__wrapper {
+.n-notification-frame {
     position: fixed;
     display: flex;
     flex-direction: column;
-    transition: opacity 0.15s;
 }
 
-.n-notification__wrapper.n-notification__wrapper--top-start {
+.n-notification-frame.n-notification-frame--top-start {
     top: 0;
     left: 0;
 }
 
-.n-notification__wrapper.n-notification__wrapper--top-center {
+.n-notification-frame.n-notification-frame--top-center {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
 }
 
-.n-notification__wrapper.n-notification__wrapper--top-end {
+.n-notification-frame.n-notification-frame--top-end {
     top: 0;
     right: 0;
 }
 
-.n-notification__wrapper.n-notification__wrapper--bottom-start {
+.n-notification-frame.n-notification-frame--bottom-start {
     bottom: 0;
     left: 0;
 }
 
-.n-notification__wrapper.n-notification__wrapper--bottom-center {
+.n-notification-frame.n-notification-frame--bottom-center {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
 }
 
-.n-notification__wrapper.n-notification__wrapper--bottom-end {
+.n-notification-frame.n-notification-frame--bottom-end {
     bottom: 0;
     right: 0;
 }
 
-.n-notification__wrapper.n-notification__wrapper--bottom-start,
-.n-notification__wrapper.n-notification__wrapper--bottom-center,
-.n-notification__wrapper.n-notification__wrapper--bottom-end {
+.n-notification-frame.n-notification-frame--bottom-start,
+.n-notification-frame.n-notification-frame--bottom-center,
+.n-notification-frame.n-notification-frame--bottom-end {
     flex-direction: column-reverse;
 }
 
 .n-notification {
+    cursor: default;
+    flex: 1 1 auto;
     display: flex;
     align-items: center;
-    width: calc(100% - 20px);
-    max-width: 380px;
-    padding: 15px;
-    margin: 10px;
-    background: $--color-white;
-    border-radius: $radius-medium;
-    transition: transform 0.6s;
-    border: 1px solid $--color-gray-10;
-    box-shadow: 0 1px 3px 1px rgba($color-black, 0.05);
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 280px;
+    margin: 5px;
+    transition: transform 0.15s;
 }
-.n-notification__wrapper.n-notification__wrapper--top-start .n-notification:not(.n-notification--active),
-.n-notification__wrapper.n-notification__wrapper--bottom-start .n-notification:not(.n-notification--active) {
+
+.n-notification-frame.n-notification-frame--top-start .n-notification:not(.n-active),
+.n-notification-frame.n-notification-frame--bottom-start .n-notification:not(.n-active) {
     transform: translateX(-150%);
 }
-.n-notification__wrapper.n-notification__wrapper--top-end .n-notification:not(.n-notification--active),
-.n-notification__wrapper.n-notification__wrapper--bottom-end .n-notification:not(.n-notification--active) {
+.n-notification-frame.n-notification-frame--top-end .n-notification:not(.n-active),
+.n-notification-frame.n-notification-frame--bottom-end .n-notification:not(.n-active) {
     transform: translateX(150%);
 }
 
@@ -75,34 +70,33 @@ $notification-icon-size: 15px !default;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 13px;
-    font-size: $notification-icon-size;
-}
-
-.n-notification.n-notification--primary .n-notification__icon {
-    color: $--color-primary;
-}
-
-.n-notification.n-notification--success .n-notification__icon {
-    color: $--color-success;
-}
-
-.n-notification.n-notification--warning .n-notification__icon {
-    color: $--color-warning;
-}
-
-.n-notification.n-notification--danger .n-notification__icon {
-    color: $--color-danger;
-}
-
-.n-notification.n-notification--info .n-notification__icon {
-    color: $--color-info;
 }
 
 .n-notification__text {
     overflow: hidden;
     flex: 1 1 auto;
     line-height: 1.2;
-    font-size: $notification-size;
     overflow-wrap: break-word;
+}
+
+@each $suffix, $values in $form {
+
+    $-notification-font: map-get($values, 'font');
+    $-notification-size: map-get($values, 'size');
+    $-notification-radius: map-get($values, 'radius');
+    $-notification-ratio: map-get($values, 'ratio');
+
+    $-notification-padding:  $-notification-size * $-notification-ratio;
+
+    .n-notification-frame--#{$suffix} .n-notification {
+        font-size: $-notification-font;
+        padding: $-notification-padding $-notification-padding;
+        border-radius: $-notification-radius;
+    }
+
+    .n-notification-frame--#{$suffix} .n-notification .n-notification__icon {
+        font-size: $-notification-font + 2;
+        margin-right: $-notification-padding;
+    }
+
 }

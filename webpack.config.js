@@ -35,13 +35,13 @@ let config = {
 };
 
 let style = {
-    entry: ["./nano/index.scss"],
+    entry: ["./src/index.scss"],
     module: {
         rules: [
             {
                 test: /\.scss$/,
                 include: [
-                    path.resolve('nano')
+                    path.resolve('src')
                 ],
                 use: [
                     MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'
@@ -53,6 +53,75 @@ let style = {
     plugins: [
         new MiniCssExtractPlugin({
             filename: 'nano-ui.css'
+        })
+    ]
+};
+
+let basic = {
+    entry: ["./themes/basic/index.scss"],
+    module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                include: [
+                    path.resolve('themes')
+                ],
+                use: [
+                    MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'
+                ]
+            }
+        ],
+
+    },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'basic.css'
+        })
+    ]
+};
+
+let flat = {
+    entry: ["./themes/flat/index.scss"],
+    module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                include: [
+                    path.resolve('themes')
+                ],
+                use: [
+                    MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'
+                ]
+            }
+        ],
+
+    },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'flat.css'
+        })
+    ]
+};
+
+let flatDark = {
+    entry: ["./themes/flat-dark/index.scss"],
+    module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                include: [
+                    path.resolve('themes')
+                ],
+                use: [
+                    MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'
+                ]
+            }
+        ],
+
+    },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'flat.dark.css'
         })
     ]
 };
@@ -93,8 +162,37 @@ module.exports = function (env, argv) {
 
     }, style);
 
+    let basicPackage = Object.assign({
+
+        output: {
+            filename: ".basic.ignore.js",
+            path: path.resolve(__dirname, "dist/themes"),
+        }
+
+    }, basic);
+
+    let flatPackage = Object.assign({
+
+        output: {
+            filename: ".flat.ignore.js",
+            path: path.resolve(__dirname, "dist/themes"),
+        }
+
+    }, flat);
+
+    let flatDarkPackage = Object.assign({
+
+        output: {
+            filename: ".flat-dark.ignore.js",
+            path: path.resolve(__dirname, "dist/themes"),
+        }
+
+    }, flatDark);
+
     if ( argv.mode === 'development' ) {
-        return [bundlerPackage, stylePackage];
+        return [
+            bundlerPackage, stylePackage, basicPackage, flatPackage, flatDarkPackage
+        ];
     }
 
     let loaderOptions = new webpack.LoaderOptionsPlugin({
@@ -103,6 +201,9 @@ module.exports = function (env, argv) {
 
     bundlerPackage.plugins.push(loaderOptions);
     stylePackage.plugins.push(loaderOptions);
+    basicPackage.plugins.push(loaderOptions);
+    flatPackage.plugins.push(loaderOptions);
+    flatDarkPackage.plugins.push(loaderOptions);
 
     let terserOptions = {
         mangle: true
@@ -120,6 +221,11 @@ module.exports = function (env, argv) {
 
     bundlerPackage.optimization = optimization;
     stylePackage.optimization = optimization;
+    basicPackage.optimization = optimization;
+    flatPackage.optimization = optimization;
+    flatDarkPackage.optimization = optimization;
 
-    return [bundlerPackage, stylePackage];
+    return [
+        bundlerPackage, stylePackage, basicPackage, flatPackage, flatDarkPackage
+    ];
 }

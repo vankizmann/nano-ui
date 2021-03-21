@@ -1,41 +1,56 @@
 @import "../../../root/vars";
 
-.n-resize,
-.n-resize * {
-    user-select: none !important;
-    cursor: col-resize !important;
-}
-
 .n-resizer {
-    cursor: col-resize;
-    position: absolute;
-    width: 5px;
-    height: 100%;
-    background: rgba($color-gray-50, 0.5);
-    opacity: 0;
-    transition: opacity 200ms;
+    position: relative;
 }
 
-.n-resizer.n-resizer--start {
+.n-resizer__handle {
+    z-index: 200;
+    cursor: col-resize;
+    user-select: none;
+    position: absolute;
+    width: 6px;
+    opacity: 0;
+    transition: opacity 0s 0.25s;
+}
+
+.n-resizer__handle:hover {
+    opacity: 1;
+}
+
+.n-resizer.n-move > .n-resizer__handle {
+    z-index: 99999;
+    opacity: 1;
+    transition: opacity 0s;
+}
+
+.n-resizer--left .n-resizer__handle {
     top: 0;
+    bottom: 0;
     right: 0;
 }
 
-.n-resizer.n-resizer--end {
+.n-resizer--right .n-resizer__handle {
     top: 0;
+    bottom: 0;
     left: 0;
 }
 
-.n-resizer.n-disabled {
-    display: none;
+.n-resizer__handle:before {
+    content: '\00a0';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
-.n-resizer:hover  {
-    opacity: 1;
-    transition: opacity 200ms 200ms ease;
+.n-resizer--left .n-resizer__handle:before {
+    left: 0;
+    right: 2px;
 }
 
-.n-resize > .n-resizer {
-    z-index: 99999;
-    opacity: 1;
+.n-resizer--right .n-resizer__handle:before {
+    left: 2px;
+    right: 0;
 }

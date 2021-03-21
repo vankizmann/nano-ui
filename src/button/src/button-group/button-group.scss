@@ -8,10 +8,9 @@
 .n-button-group > *:not(:first-child):not(:last-child) {
     position: relative;
     border-radius: 0;
-    margin-right: -1px;
 }
 
-.n-button-group > *:not(:last-child):first-child {
+.n-button-group > *:not(:last-child) {
     margin-right: -1px;
 }
 

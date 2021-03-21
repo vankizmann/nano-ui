@@ -6,6 +6,7 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
+    border: 1px solid transparent;
 }
 
 .n-datepicker-panel__body,
@@ -104,7 +105,7 @@
 }
 
 .n-datepicker-panel__year > .n-datepicker-panel__month,
-.n-datepicker-panel__decade > .n-datepicker-panel__year {
+.n-datepicker-panel__decade > .n-datepicker-panel__year { 
     width: 33.332%;
 }
 
@@ -159,7 +160,7 @@
     .n-datepicker-panel--#{$suffix} .n-datepicker-panel__yearview .n-datepicker-panel__body {
         padding: $-datepicker-panel-padding - 2;
     }
-
+    
     .n-datepicker-panel--#{$suffix} .n-datepicker-panel__dateview .n-datepicker-panel__panel {
         padding: $-datepicker-panel-padding * 0.5;
     }
@@ -170,9 +171,10 @@
     }
 
     .n-datepicker-panel--#{$suffix} .n-datepicker-panel__year > .n-datepicker-panel__month,
-    .n-datepicker-panel--#{$suffix} .n-datepicker-panel__decade > .n-datepicker-panel__year {
+    .n-datepicker-panel--#{$suffix} .n-datepicker-panel__decade > .n-datepicker-panel__year { 
         height: $-datepicker-panel-size;
         border-radius: $-datepicker-panel-radius;
     }
 
 }
+

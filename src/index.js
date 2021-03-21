@@ -27,6 +27,7 @@ export const Icons = {
 
 export const Settings = {
     iconPosition: 'before',
+    notifySize: 'md',
     notifyPosition: 'bottom-start'
 };
 

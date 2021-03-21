@@ -3,7 +3,7 @@
  */
 
 let svgOptions = {
-    paths: [__dirname + '/nano/root/image']
+    paths: [__dirname + '/themes/basic/root/image']
 };
 
 module.exports = {

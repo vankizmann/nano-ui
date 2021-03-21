@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="../dist/nano-ui.css">
+    <link id="theme" rel="stylesheet" href="../dist/themes/basic.css">
 
     <link rel="stylesheet" href="../docs/dist/index.css">
 
@@ -30,11 +31,6 @@
             overflow-x: hidden;
         }
 
-        .app-scrollbar {
-            width: 100vw;
-            height: 100vh;
-        }
-
         .app-container {
             max-width: 1440px;
             margin: 0 auto;
@@ -42,7 +38,7 @@
         }
 
         .app-options {
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(110, 110, 110, 0.15);
             margin-bottom: 20px;
         }
 
@@ -51,7 +47,7 @@
             font-weight: bold;
             padding-bottom: 10px;
             margin: 50px 0 15px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(110, 110, 110, 0.15);
         }
 
     </style>
@@ -64,10 +60,23 @@
     <script src="https://maps.googleapis.com/maps/api/js"></script>
 
 </head>
-<body>
+<body class="n-demo">
 
 <div id="app">
     <div class="app-container">
+
+        <h2>Theme</h2>
+
+        <div class="grid grid--row">
+            <div class="col--1-1 col--1-3@md">
+                <n-select :model-value="n_theme" @update:model-value="changeTheme">
+                    <n-select-option value="none" label="None"></n-select-option>
+                    <n-select-option value="basic" label="Basic"></n-select-option>
+                    <n-select-option value="flat" label="Flat"></n-select-option>
+                    <n-select-option value="flat.dark" label="Flat Dark"></n-select-option>
+                </n-select>
+            </div>
+        </div>
 
         <h2>NForm</h2>
 
@@ -591,7 +600,7 @@
             <div class="col--1-1 col--1-3@md">
                 <n-button>Open confirm</n-button>
                 <n-confirm v-bind="n_confirm" @abort="log('Abort')" @confirm="log('Confirm')">
-                    Confirm something
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur corporis deserunt fuga harum illum ipsa, itaque nemo optio sunt? Aperiam cum ducimus explicabo, fugiat ipsum minima molestias odio quis quod.
                 </n-confirm>
             </div>
         </div>
@@ -611,7 +620,7 @@
             </div>
         </div>
 
-        <n-loader v-bind="n_loader" style="min-height: 200px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px; padding: 20px;">
+        <n-loader v-bind="n_loader" style="min-height: 200px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px; padding: 20px;">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia voluptas fuga sit iste odit amet, quam delectus iure facilis, voluptatum officiis magnam deserunt nulla maiores accusantium corrupti! Iste, rem optio? Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint dignissimos ad beatae soluta quaerat reprehenderit, quasi maxime quisquam? Commodi, cumque sequi? Harum quam nobis suscipit consequatur soluta aperiam! Rerum tempore minima saepe, quisquam ab sunt consequatur modi repudiandae molestiae inventore!
         </n-loader>
 
@@ -699,7 +708,7 @@
             </div>
         </div>
 
-        <n-virtualscroller ref="virtualscroller" :items="virtualData" style="height: 500px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
+        <n-virtualscroller ref="virtualscroller" :items="virtualData" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
             <template v-slot:default="{ value }">
                 <div style="padding: 0 15px; line-height: 30px;">{{ value.label }}</div>
             </template>
@@ -720,13 +729,13 @@
             </div>
         </div>
 
-        <n-draglist v-model:items="cascaderData" :render-expand="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
+        <n-draglist v-model:items="cascaderData" :render-expand="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
             <template v-slot:default="{ value, item }">
                 <div style="padding: 0 15px; line-height: 34px;">{{ item.label }}</div>
             </template>
         </n-draglist>
 
-        <n-draglist v-model:items="testData" unique-prop="uid" :transform-drop="transDrop" :threshold="0" :lazyload="true" :handle="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
+        <n-draglist v-model:items="testData" unique-prop="uid" :transform-drop="transDrop" :threshold="0" :lazyload="true" :handle="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
             <template v-slot:default="{ value, item, copy, remove }">
                 <div class="grid grid--row grid--middle" style="height: 34px;">
                     <div draggable="true" style="padding: 0 10px;">
@@ -747,7 +756,7 @@
 
 
         <template v-for="index in Arr.make(n_draggable.count)">
-            <n-draglist v-model:items="virtualTree" :render-expand="true" :render-select="true" style="height: 500px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
+            <n-draglist v-model:items="virtualTree" :render-expand="true" :render-select="true" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
                 <template v-slot:default="{ value, item }">
                     <div style="padding: 0 5px; line-height: 34px;"><n-input v-model="item.label"></n-input></div>
                 </template>
@@ -757,14 +766,14 @@
         <h2>NResizer</h2>
 
         <div style="display: flex; flex-direction: row; justify-content: flex-start;">
-            <n-resizer style="width: 60%; height: 200px; flex: 0 1 auto; background: #eee;" position="right">
+            <n-resizer style="width: 60%; height: 200px; padding: 20px; flex: 0 1 auto; background: rgba(110, 110, 110, 0.5);" position="right">
                 Resizercontent
             </n-resizer>
         </div>
 
 
         <div style="display: flex; flex-direction: row; justify-content: flex-end;">
-            <n-resizer style="width: 60%; height: 200px; flex: 0 1 auto; background: #eee;" position="left">
+            <n-resizer style="width: 60%; height: 200px; padding: 20px; flex: 0 1 auto; background: rgba(110, 110, 110, 0.5);" position="left">
                 Resizercontent
             </n-resizer>
         </div>
@@ -870,7 +879,7 @@
             </n-form-item>
         </n-form>
 
-        <n-map>
+        <n-map :lat="n_map.lat" :lng="n_map.lng" :zoom="9">
             <n-map-marker v-model:lat="n_map.lat" v-model:lng="n_map.lng" :drag="true"></n-map-marker>
         </n-map>
 
@@ -997,6 +1006,11 @@
             data.treeSelect = null;
             data.treeMatrix = [data.virtualTree[3]];
 
+            data.n_theme = pi.Cookie.get('theme', 'basic', 'string');
+
+            pi.Dom.find('#theme').attr('href', '../dist/themes/' +
+                data.n_theme + '.css');
+
             data.n_button = {
                 icon: 'fa fa-ghost', size: 'md', square: false, link: false, disabled: false
             };
@@ -1070,10 +1084,18 @@
             };
 
             data.n_map = {
-                lat: 0, lng: 0
+                lat: 53.55, lng: 9.99
             };
 
             let methods = {};
+
+            methods.changeTheme = function(value) {
+
+                pi.Cookie.set('theme', this.n_theme = value);
+
+                pi.Dom.find('#theme').attr('href', '../dist/themes/' +
+                    this.n_theme + '.css');
+            }
 
             methods.searchLocation = function () {
 

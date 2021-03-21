@@ -1,9 +1,11 @@
 @import "../../../root/vars";
 
-$info-column-label-size: 14px !default;
-
 .n-info-field {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
 }
 
 .n-info-field.n-info-field--image:before {
@@ -13,18 +15,13 @@ $info-column-label-size: 14px !default;
     padding-bottom: 100%;
 }
 
-.n-info-field.n-info-field--image div {
+.n-info-field.n-info-field--image > div {
      position: absolute;
      top: 0;
      bottom: 0;
      left: 0;
      right: 0;
-     display: flex;
-     flex-direction: column;
-     align-items: stretch;
-     justify-content: stretch;
      background-size: contain;
      background-repeat: no-repeat;
      background-position: 50% 50%;
-     background-color: rgba($color-gray-50, 0.2);
 }

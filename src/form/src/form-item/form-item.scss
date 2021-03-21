@@ -1,12 +1,8 @@
 @import "../../../root/vars";
 
-$form-label-size: 14px !default;
-$form-item-spacing: 18px !default;
-
 .n-form-item {
     position: relative;
     display: flex;
-    margin-bottom: $form-item-spacing;
 }
 
 .n-form--vertical .n-form-item {
@@ -25,7 +21,6 @@ $form-item-spacing: 18px !default;
 .n-form-item__label {
     flex: 0 0 auto;
     display: flex;
-    margin-bottom: $form-item-spacing * 0.25;
 }
 
 .n-form--vertical .n-form-item__label {
@@ -36,20 +31,31 @@ $form-item-spacing: 18px !default;
     width: 180px;
 }
 
-.n-form-item__label label {
-    color: $--color-gray-60;
-    font-size: $form-label-size;
-}
-
-.n-inverse .n-form-item__label label {
-    color: $--color-gray-40;
-}
-
 .n-form-item__error {
     position: absolute;
     top: 100%;
     left: 0;
-    margin-top: 1px;
-    font-size: $form-label-size * 0.875;
-    color: $--color-danger;
+    color: $color-danger;
+}
+
+@each $suffix, $values in $form {
+
+    $-form-item-font: map-get($values, 'font');
+    $-form-item-size: map-get($values, 'size');
+    $-form-item-radius: map-get($values, 'radius');
+    $-form-item-ratio: map-get($values, 'ratio');
+
+    .n-form-item--#{$suffix} {
+        margin-bottom: $-form-item-size * $-form-item-ratio * 2.2;
+    }
+
+    .n-form-item--#{$suffix} .n-form-item__label {
+        font-size: $-form-item-font;
+        margin-bottom: $-form-item-size * $-form-item-ratio * 0.5;
+    }
+
+    .n-form-item--#{$suffix} .n-form-item__error {
+        font-size: $-form-item-font - 2;
+    }
+
 }

@@ -1,49 +1,50 @@
 @import "../../../root/vars";
 
-$textarea-size: 14px !default;
-$textarea-height: 34px !default;
-
-.n-textarea__wrapper {
+.n-textarea {
     position: relative;
-    display: inline-flex;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
     width: 100%;
 }
 
-.n-textarea {
-    flex: 1 1 auto;
-    min-width: 0;
-    padding: $textarea-height * 0.2 $textarea-height * 0.3;
-    min-height: $textarea-height;
-    background: $--color-white;
-    font-size: $textarea-size;
-    border: 1px solid $--color-gray-15;
-    border-radius: $radius-medium;
-    transition: 0.15s border;
-}
-
-.n-textarea:hover,
-.n-textarea:focus {
-    border: 1px solid $--color-primary;
-}
-
-.n-disabled .n-textarea {
+.n-textarea.n-disabled {
     cursor: not-allowed;
-    background: $--color-gray-05;
+    opacity: 0.7;
 }
 
-.n-disabled .n-textarea:hover,
-.n-disabled .n-textarea:focus {
-    border: 1px solid $--color-gray-15;
+.n-textarea textarea {
+    appearance: none;
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    line-height: 1.2;
+    background: transparent;
+    box-shadow: none;
+    border: 1px solid transparent;
 }
 
-.n-textarea.n-textarea--small {
-    font-size: $textarea-size * 0.875;
-    padding: $textarea-height * 0.2 * 0.875 $textarea-height * 0.3 * 0.875;
-    min-height: $textarea-height * 0.875;
+.n-textarea.n-disabled textarea {
+    cursor: not-allowed;
 }
 
-.n-textarea.n-textarea--large {
-    font-size: $textarea-size * 1.125;
-    padding: $textarea-height * 0.2 * 1.125 $textarea-height * 0.3 * 1.125;
-    min-height: $textarea-height * 1.125;
+@each $suffix, $values in $form {
+
+    $-textarea-font: map-get($values, 'font');
+    $-textarea-size: map-get($values, 'size');
+    $-textarea-radius: map-get($values, 'radius');
+    $-textarea-ratio: map-get($values, 'ratio');
+
+    .n-textarea--#{$suffix} {
+        font-size: $-textarea-font;
+    }
+
+    $-textarea-line: $-textarea-size - 2 - ($-textarea-font * 1.2);
+
+    .n-textarea--#{$suffix} textarea {
+        min-height: $-textarea-size;
+        padding: $-textarea-line * 0.5 $-textarea-size * $-textarea-ratio;
+        border-radius: $-textarea-radius;
+    }
+
 }

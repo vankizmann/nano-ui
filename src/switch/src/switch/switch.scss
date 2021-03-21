@@ -1,107 +1,68 @@
 @import "../../../root/vars";
 
-$switch-size: 14px !default;
-$switch-height: 20px !default;
-$switch-ratio: 0.3 !default;
-
-.n-switch__wrapper {
+.n-switch {
+    cursor: default;
     position: relative;
     display: inline-flex;
+    align-items: center;
+    justify-content: stretch;
 }
 
-.n-switch {
-    cursor: pointer;
-    position: relative;
-    display: block;
-    width: $switch-height * 2;
-    height: $switch-height;
-    border-radius: $radius-medium;
-    background: $--color-gray-15;
-    transition: background 400ms ease;
-}
-
-.n-switch__wrapper.n-disabled .n-switch,
-.n-switch__wrapper.n-disabled .n-switch__label {
+.n-switch.n-disabled {
     cursor: not-allowed;
+    opacity: 0.7;
 }
 
-.n-switch.n-switch--round {
+.n-switch__switch {
+    position: relative;
     border-radius: 500px;
+    border: 1px solid transparent;
+    transition: border 0.15s, background 0.15s;
 }
 
-.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--primary {
-    background: $--color-primary;
-}
-
-.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--success {
-    background: $--color-success;
-}
-
-.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--warning {
-    background: $--color-warning;
-}
-
-.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--danger {
-    background: $--color-danger;
-}
-
-.n-switch__wrapper:not(.n-disabled) .n-switch.n-switch--info {
-    background: $--color-info;
-}
-
-.n-switch.n-switch--small {
-    width: $switch-height * 0.875 * 2;
-    height: $switch-height * 0.875;
-}
-
-.n-switch.n-switch--large {
-    width: $switch-height * 1.125 * 2;
-    height: $switch-height * 1.125;
-}
-
-.n-switch span {
+.n-switch__switch span {
     position: absolute;
     top: 50%;
-    left: $switch-height * 0.15;
-    margin-top: $switch-height * -0.35;
-    width: $switch-height * 0.7;
-    height: $switch-height * 0.7;
-    border-radius: $radius-medium;
-    background: $--color-white;
-    transition: transform 400ms ease;
-}
-
-.n-switch.n-switch--small span {
-    left: $switch-height * 0.875 * 0.15;
-    margin-top: $switch-height * 0.875 * -0.35;
-    width: $switch-height * 0.875 * 0.7;
-    height: $switch-height * 0.875 * 0.7;
-}
-
-.n-switch.n-switch--large span {
-    left: $switch-height * 1.125 * 0.15;
-    margin-top: $switch-height * 1.125 * -0.35;
-    width: $switch-height * 1.125 * 0.7;
-    height: $switch-height * 1.125 * 0.7;
-}
-
-.n-switch.n-switch--round span {
+    left: 3px;
+    display: block;
     border-radius: 500px;
+    transform: translateY(-50%);
+    transition: left 0.15s, right 0.15s;
 }
 
-.n-switch.n-on span {
-    transform: translateX($switch-height);
-}
+@each $suffix, $values in $form {
 
-.n-switch.n-switch--small.n-on span {
-    transform: translateX($switch-height * 0.875);
-}
+    $-switch-font: map-get($values, 'font');
+    $-switch-size: map-get($values, 'size');
+    $-switch-radius: map-get($values, 'radius');
+    $-switch-ratio: map-get($values, 'ratio');
 
-.n-switch.n-switch--large.n-on span {
-    transform: translateX($switch-height * 1.125);
-}
+    .n-switch--#{$suffix} {
+        min-height: $-switch-size;
+        font-size: $-switch-font;
+    }
 
-.n-switch__label {
-    cursor: default;
-    margin-left: 8px;
+    $-switch-frame: $-switch-font * 2.3;
+
+    .n-switch--#{$suffix} .n-switch__switch {
+        width: $-switch-frame;
+        height: $-switch-size - 14;
+    }
+    $-switch-circle: $-switch-size - 20;
+    
+    .n-switch--#{$suffix} .n-switch__switch span {
+        width: $-switch-circle;
+        height: $-switch-circle;
+    }
+
+    .n-switch--#{$suffix}.n-on .n-switch__switch span {
+        left: $-switch-frame - $-switch-circle - 4;
+    }
+
+    $-switch-padding: $-switch-size * $-switch-ratio;
+
+    .n-switch--#{$suffix} .n-switch__label {
+        padding: 0 0 0 $-switch-padding * 0.5;
+    }
+
 }

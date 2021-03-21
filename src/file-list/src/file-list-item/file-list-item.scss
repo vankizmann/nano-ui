@@ -26,9 +26,9 @@
     position: relative;
     width: 100%;
     font-size: 5vw;
-    background: $--color-background;
+    background: $color-background;
     color: rgba($color-primary, 0.5);
-    border-radius: $radius-medium;
+    border-radius: $md-radius;
 }
 
 .n-file-list-item.n-file-list-item--exceed .n-file-list-item__preview {
@@ -70,7 +70,7 @@
     display: flex;
     width: 100%;
     height: 4px;
-    background: $--color-background-dark;
+    background: $color-background-dark;
 }
 
 
@@ -80,15 +80,15 @@
 
 .n-file-list-item__progress > span {
     height: 4px;
-    background: $--color-primary;
+    background: $color-primary;
 }
 
 .n-file-list-item.n-file-list-item--done .n-file-list-item__progress > span {
-    background: $--color-success;
+    background: $color-success;
 }
 
 .n-file-list-item.n-file-list-item--error .n-file-list-item__progress > span {
-    background: $--color-danger;
+    background: $color-danger;
 }
 
 .n-file-list-item__name {
@@ -105,11 +105,11 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     padding: 15px 5px 0;
-    color: $--color-black;
+    color: $color-black;
 }
 
 .n-file-list-item.n-file-list-item--exceed .n-file-list-item__name-inner {
-    color: $--color-danger;
+    color: $color-danger;
 }
 
 .n-file-list-item__meta {
@@ -130,5 +130,5 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     padding: 0 5px 15px;
-    color: $--color-gray-50;
+    color: $color-gray-50;
 }

@@ -38,7 +38,7 @@ export default {
         size: {
             default()
             {
-                return 'md';
+                return '';
             },
             type: [String]
         },
@@ -184,7 +184,7 @@ export default {
         }
 
         return (
-            <NPopover type="tooltip" position={this.tooltipPosition}>
+            <NPopover type="tooltip" size="sm" position={this.tooltipPosition}>
                 {this.tooltip}
             </NPopover>
         );
@@ -201,9 +201,11 @@ export default {
 
     render()
     {
+        let size = this.size || this.NForm.size;
+
         let classList = [
             'n-form-group', 
-            'n-form-group--' + this.size, 
+            'n-form-group--' + size,
             'n-form-group--' + this.type,
             'n-form-group--' + this.align, 
         ];

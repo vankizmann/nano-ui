@@ -1,8 +1,5 @@
 $color-white:           #ffffff !default;
-$color-black:           #1b2229 !default;
-
-$color-light:           #F4F6FA !default;
-$color-dark:            #2F3236 !default;
+$color-black:           #090b10 !default;
 
 $color-gray-05:         mix($color-black, $color-white, 0.05 * 100%) !default;
 $color-gray-10:         mix($color-black, $color-white, 0.10 * 100%) !default;
@@ -24,200 +21,110 @@ $color-gray-85:         mix($color-black, $color-white, 0.85 * 100%) !default;
 $color-gray-90:         mix($color-black, $color-white, 0.90 * 100%) !default;
 $color-gray-95:         mix($color-black, $color-white, 0.95 * 100%) !default;
 
-$color-primary:         #2877FA !default;
-$color-secondary:       #2877FA !default;
+$color-primary:         #4e7bff !default;
+$color-secondary:       #683bff !default;
 
 $color-success:         #3ed786 !default;
 $color-warning:         #ffac2f !default;
 $color-danger:          #fd2f51 !default;
 $color-info:            #37C4EF !default;
 
-$color-background:      #F0F3F7 !default;
+$color-background:      #f0f3f7 !default;
 
-$color-white-light:         lighten($color-white, 5%) !default;
-$color-white-lighter:       lighten($color-white, 10%) !default;
-
-$color-white-dark:          darken($color-white, 5%) !default;
-$color-white-darker:        darken($color-white, 10%) !default;
-
-$color-black-light:         lighten($color-black, 5%) !default;
-$color-black-lighter:       lighten($color-black, 10%) !default;
-
-$color-black-dark:          darken($color-black, 5%) !default;
-$color-black-darker:        darken($color-black, 10%) !default;
-
-$color-light-light:         lighten($color-light, 5%) !default;
-$color-light-lighter:       lighten($color-light, 10%) !default;
-
-$color-light-dark:          darken($color-light, 5%) !default;
-$color-light-darker:        darken($color-light, 10%) !default;
-
-$color-dark-light:          lighten($color-dark, 5%) !default;
-$color-dark-lighter:        lighten($color-dark, 10%) !default;
-
-$color-dark-dark:           darken($color-dark, 5%) !default;
-$color-dark-darker:         darken($color-dark, 10%) !default;
-
-$color-primary-light:       lighten($color-primary, 5%) !default;
-$color-primary-lighter:     lighten($color-primary, 10%) !default;
-
-$color-primary-dark:        darken($color-primary, 5%) !default;
-$color-primary-darker:      darken($color-primary, 10%) !default;
-
-$color-secondary-light:     lighten($color-secondary, 5%) !default;
-$color-secondary-lighter:   lighten($color-secondary, 10%) !default;
-
-$color-secondary-dark:      darken($color-secondary, 5%) !default;
-$color-secondary-darker:    darken($color-secondary, 10%) !default;
-
-$color-success-light:       lighten($color-success, 5%) !default;
-$color-success-lighter:     lighten($color-success, 10%) !default;
-
-$color-success-dark:        darken($color-success, 5%) !default;
-$color-success-darker:      darken($color-success, 10%) !default;
-
-$color-warning-light:       lighten($color-warning, 5%) !default;
-$color-warning-lighter:     lighten($color-warning, 10%) !default;
-
-$color-warning-dark:        darken($color-warning, 5%) !default;
-$color-warning-darker:      darken($color-warning, 10%) !default;
-
-$color-danger-light:        lighten($color-danger, 5%) !default;
-$color-danger-lighter:      lighten($color-danger, 10%) !default;
-
-$color-danger-dark:         darken($color-danger, 5%) !default;
-$color-danger-darker:       darken($color-danger, 10%) !default;
-
-$color-info-light:          lighten($color-info, 5%) !default;
-$color-info-lighter:        lighten($color-info, 10%) !default;
-
-$color-info-dark:           darken($color-info, 5%) !default;
-$color-info-darker:         darken($color-info, 10%) !default;
-
-$color-background-light:    lighten($color-background, 2.5%) !default;
-$color-background-lighter:  lighten($color-background, 5%) !default;
-
-$color-background-dark:     darken($color-background, 5%) !default;
-$color-background-darker:   darken($color-background, 10%) !default;
-
-$transition-short:          0.12s !default;
-$transition-medium:         0.24s !default;
-$transition-long:           0.48s !default;
-$transition-extended:       0.96s !default;
-
-$radius-small:              1px !default;
-$radius-medium:             2px !default;
-$radius-large:              4px !default;
-$radius-extended:           8px !default;
-
-$--color-black:                 $color-black !default;
-$--color-white:                 $color-white !default;
+$color-shadow:              mix($color-black, $color-primary, 80%) !default;
 
 
-$--color-dark:                  $color-dark !default;
-$--color-light:                 $color-light !default;
+$color-white-light:         $color-white !default;
+$color-white-lighter:       $color-white !default;
 
-$--color-gray-05:               $color-gray-05 !default;
-$--color-gray-10:               $color-gray-10 !default;
-$--color-gray-15:               $color-gray-15 !default;
-$--color-gray-20:               $color-gray-20 !default;
-$--color-gray-25:               $color-gray-25 !default;
-$--color-gray-30:               $color-gray-30 !default;
-$--color-gray-35:               $color-gray-35 !default;
-$--color-gray-40:               $color-gray-40 !default;
-$--color-gray-45:               $color-gray-45 !default;
-$--color-gray-50:               $color-gray-50 !default;
-$--color-gray-55:               $color-gray-55 !default;
-$--color-gray-60:               $color-gray-60 !default;
-$--color-gray-65:               $color-gray-65 !default;
-$--color-gray-70:               $color-gray-70 !default;
-$--color-gray-75:               $color-gray-75 !default;
-$--color-gray-80:               $color-gray-80 !default;
-$--color-gray-85:               $color-gray-85 !default;
-$--color-gray-90:               $color-gray-90 !default;
-$--color-gray-95:               $color-gray-95 !default;
+$color-white-dark:          mix($color-gray-50, $color-white, 5%) !default;
+$color-white-darker:        mix($color-gray-50, $color-white, 10%) !default;
 
-$--color-primary:               $color-primary !default;
-$--color-secondary:             $color-secondary !default;
+$color-black-light:         mix($color-gray-50, $color-black, 5%) !default;
+$color-black-lighter:       mix($color-gray-50, $color-black, 10%) !default;
 
-$--color-success:               $color-success !default;
-$--color-warning:               $color-warning !default;
-$--color-danger:                $color-danger !default;
-$--color-info:                  $color-info !default;
+$color-black-dark:          $color-black !default;
+$color-black-darker:        $color-black !default;
 
-$--color-background:            $color-background !default;
 
-$--color-black-light:           $color-black-light !default;
-$--color-black-lighter:         $color-black-lighter !default;
+$color-primary-light:       lighten(mix($color-white, $color-primary, 10%), 5%) !default;
+$color-primary-lighter:     lighten(mix($color-white, $color-primary, 20%), 5%) !default;
 
-$--color-black-dark:            $color-black-dark !default;
-$--color-black-darker:          $color-black-darker !default;
+$color-primary-dark:        darken(mix($color-black, $color-primary, 10%), 5%) !default;
+$color-primary-darker:      darken(mix($color-black, $color-primary, 20%), 5%) !default;
 
-$--color-white-light:           $color-white-light !default;
-$--color-white-lighter:         $color-white-lighter !default;
 
-$--color-white-dark:            $color-white-dark !default;
-$--color-white-darker:          $color-white-darker !default;
+$color-secondary-light:     lighten(mix($color-white, $color-secondary, 10%), 5%) !default;
+$color-secondary-lighter:   lighten(mix($color-white, $color-secondary, 20%), 5%) !default;
 
-$--color-dark-light:            $color-dark-light !default;
-$--color-dark-lighter:          $color-dark-lighter !default;
+$color-secondary-dark:      darken(mix($color-black, $color-secondary, 10%), 5%) !default;
+$color-secondary-darker:    darken(mix($color-black, $color-secondary, 20%), 5%) !default;
 
-$--color-dark-dark:             $color-dark-dark !default;
-$--color-dark-darker:           $color-dark-darker !default;
 
-$--color-light-light:           $color-light-light !default;
-$--color-light-lighter:         $color-light-lighter !default;
+$color-success-light:       lighten(mix($color-white, $color-success, 10%), 5%) !default;
+$color-success-lighter:     lighten(mix($color-white, $color-success, 20%), 5%) !default;
 
-$--color-white-dark:            $color-white-dark !default;
-$--color-white-darker:          $color-white-darker !default;
+$color-success-dark:        darken(mix($color-black, $color-success, 10%), 5%) !default;
+$color-success-darker:      darken(mix($color-black, $color-success, 20%), 5%) !default;
 
-$--color-primary-light:         $color-primary-light !default;
-$--color-primary-lighter:       $color-primary-lighter !default;
 
-$--color-primary-dark:          $color-primary-dark !default;
-$--color-primary-darker:        $color-primary-darker !default;
+$color-warning-light:       lighten(mix($color-white, $color-warning, 10%), 5%) !default;
+$color-warning-lighter:     lighten(mix($color-white, $color-warning, 20%), 5%) !default;
 
-$--color-secondary-light:       $color-secondary-light !default;
-$--color-secondary-lighter:     $color-secondary-lighter !default;
+$color-warning-dark:        darken(mix($color-black, $color-warning, 10%), 5%) !default;
+$color-warning-darker:      darken(mix($color-black, $color-warning, 20%), 5%) !default;
 
-$--color-secondary-dark:        $color-secondary-dark !default;
-$--color-secondary-darker:      $color-secondary-darker !default;
 
-$--color-success-light:         $color-success-light !default;
-$--color-success-lighter:       $color-success-lighter !default;
+$color-danger-light:        lighten(mix($color-white, $color-danger, 10%), 5%) !default;
+$color-danger-lighter:      lighten(mix($color-white, $color-danger, 20%), 5%) !default;
 
-$--color-success-dark:          $color-success-dark !default;
-$--color-success-darker:        $color-success-darker !default;
+$color-danger-dark:         darken(mix($color-black, $color-danger, 10%), 5%) !default;
+$color-danger-darker:       darken(mix($color-black, $color-danger, 20%), 5%) !default;
 
-$--color-warning-light:         $color-warning-light !default;
-$--color-warning-lighter:       $color-warning-lighter !default;
+$color-info-light:          lighten(mix($color-white, $color-info, 10%), 5%) !default;
+$color-info-lighter:        lighten(mix($color-white, $color-info, 20%), 5%) !default;
 
-$--color-warning-dark:          $color-warning-dark !default;
-$--color-warning-darker:        $color-warning-darker !default;
+$color-info-dark:           darken(mix($color-black, $color-info, 10%), 5%) !default;
+$color-info-darker:         darken(mix($color-black, $color-info, 20%), 5%) !default;
 
-$--color-danger-light:          $color-danger-light !default;
-$--color-danger-lighter:        $color-danger-lighter !default;
+$color-background-light:    lighten(mix($color-white, $color-background, 10%), 5%) !default;
+$color-background-lighter:  lighten(mix($color-white, $color-background, 20%), 5%) !default;
 
-$--color-danger-dark:           $color-danger-dark !default;
-$--color-danger-darker:         $color-danger-darker !default;
+$color-background-dark:     darken(mix($color-black, $color-background, 10%), 5%) !default;
+$color-background-darker:   darken(mix($color-black, $color-background, 20%), 5%) !default;
 
-$--color-info-light:            $color-info-light !default;
-$--color-info-lighter:          $color-info-lighter !default;
-
-$--color-info-dark:             $color-info-dark !default;
-$--color-info-darker:           $color-info-darker !default;
-
-$--color-background-light:      $color-background-light !default;
-$--color-background-lighter:    $color-background-lighter !default;
-
-$--color-background-dark:       $color-background-dark !default;
-$--color-background-darker:     $color-background-darker !default;
-
-$xs-radius:                 1px !default;
+$xs-radius:                 2px !default;
 $sm-radius:                 2px !default;
-$md-radius:                 4px !default;
-$lg-radius:                 8px !default;
-$xl-radius:                 16px !default;
+$md-radius:                 3px !default;
+$lg-radius:                 5px !default;
+$xl-radius:                 10px !default;
+
+$form: (
+    'xs': (
+        'size': 26px,
+        'font': 11px,
+        'radius': $xs-radius,
+        'ratio': 0.40,
+    ),
+    'sm': (
+        'size': 28px,
+        'font': 13px,
+        'radius': $sm-radius,
+        'ratio': 0.40,
+    ),
+    'md': (
+        'size': 32px,
+        'font': 14px,
+        'radius': $md-radius,
+        'ratio': 0.40,
+    ),
+    'lg': (
+        'size': 36px,
+        'font': 16px,
+        'radius': $lg-radius,
+        'ratio': 0.40,
+    ),
+) !default;
 
 $colors: (
     'primary': (

@@ -1,57 +1,79 @@
 @import "../../../root/vars";
 
-$form-legend-size: 17px !default;
-$form-group-spacing: 18px !default;
-
-.n-form-group {
-    position: relative;
-}
-
-.n-form-group:not(:last-child) {
-    margin-bottom: 25px;
-}
-
-.n-form-group__label {
+.n-form-group__legend {
+    cursor: default;
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 5px 0;
+    justify-content: stretch;
+    width: 100%;
 }
 
-.n-form-group__label .n-switch,
-.n-form-group__label .n-checkbox {
+.n-form-group__collapse {
     flex: 0 0 auto;
-    margin-right: 9px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s;
 }
 
-.n-form-group__label .n-form-group__label-text {
-    cursor: default;
+.n-form-group:not(.n-action) .n-form-group__collapse {
+    order: 900;
+}
+
+.n-form-group.n-hidden .n-form-group__collapse {
+    transform: rotate(-90deg);
+}
+
+.n-form-group__label {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.n-form-group__icon {
     flex: 0 1 auto;
-    margin-right: auto;
-    font-size: $form-legend-size;
-    color: $--color-black;
-    transition: color 0.15s;
 }
 
-.n-form-group__label .n-form-group__label-text .n-icon {
-    font-size: $form-legend-size * 0.875;
-    margin-right: 5px;
-    color: $--color-primary;
+.n-form-group__text {
+    flex: 1 1 auto;
+    font-weight: bold;
 }
 
-.n-form-group.n-form-group--checkable .n-form-group__label .n-form-group__label-text:hover {
-    //color: $--color-primary;
+.n-form-group--collapse.n-hidden .n-form-group__body {
+    display: none;
 }
 
-.n-inverse .n-form-group__label .n-form-group__label-text {
-    color: $--color-white;
-}
+@each $suffix, $values in $form {
 
-.n-form-group__actions {
-    flex: 0 0 auto;
-    margin-left: 20px;
-}
+    $-form-group-font: map-get($values, 'font');
+    $-form-group-size: map-get($values, 'size');
+    $-form-group-radius: map-get($values, 'radius');
+    $-form-group-ratio: map-get($values, 'ratio');
 
-.n-form-group__body {
-    margin-top: $form-group-spacing * 0.5;
+    .n-form-group--#{$suffix} .n-form-group__legend {
+        font-size: $-form-group-font;
+        min-height: $-form-group-size * 1.2;
+    }
+
+    .n-form-group--#{$suffix} .n-form-group__label span {
+        font-size: $-form-group-font + 1;
+    }
+
+    .n-form-group--#{$suffix} .n-form-group__collapse {
+        width: $-form-group-size;
+        height: $-form-group-size;
+    }
+
+    .n-form-group--#{$suffix} .n-form-group__icon {
+        margin-right: $-form-group-size * $-form-group-ratio * 0.7;
+    }
+
+    .n-form-group--#{$suffix} .n-form-group__body {
+        padding-top: $-form-group-size * $-form-group-ratio;
+    }
+
 }

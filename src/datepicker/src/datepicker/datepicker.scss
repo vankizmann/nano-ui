@@ -6,6 +6,7 @@
     align-items: stretch;
     justify-content: stretch;
     width: 100%;
+    border: 1px solid transparent;
 }
 
 .n-datepicker.n-disabled {
@@ -108,14 +109,13 @@
 
 .n-datepicker__body,
 .n-datepicker__empty {
-    overflow: hidden;
-    margin: 1px 0;
-    background: $color-white;
-    border: 0;
+     overflow: hidden;
+     margin: 1px 0;
+     border: 0;
 }
 
 .n-datepicker__empty {
-    text-align: center;
+     text-align: center;
 }
 
 @each $suffix, $values in $form {

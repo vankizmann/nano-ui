@@ -4,8 +4,6 @@ export default {
 
     name: 'NForm',
 
-    inheritAttrs: false,
-
     model: {
         prop: 'form'
     },
@@ -26,6 +24,14 @@ export default {
                 return {};
             },
             type: [Object]
+        },
+
+        size: {
+            default()
+            {
+                return 'md';
+            },
+            type: [String]
         },
 
         align: {
@@ -167,11 +173,11 @@ export default {
     {
         let classList = [
             'n-form',
-            'n-form--' + this.align
+            'n-form--' + this.align,
         ];
 
         return (
-            <form class={classList} onSubmit={this.onSubmit}>
+            <form method={this.method} class={classList} onSubmit={this.onSubmit}>
                 { this.$slots.default && this.$slots.default() }
             </form>
         );

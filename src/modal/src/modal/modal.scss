@@ -1,64 +1,54 @@
 @import "../../../root/vars";
 
-$modal-default-padding: 14px 22px !default;
-
-body.n-open {
-    overflow: hidden;
-}
-
 .n-modal {
-    z-index: 2000;
     position: fixed;
     top: 0;
+    bottom: 0;
     left: 0;
-    display: none;
+    right: 0;
+    display: flex;
     flex-direction: row;
     align-items: center;
-    width: 100%;
-    height: 100%;
-    max-width: 100vw;
-    max-height: 100vh;
     padding: 3%;
 }
 
-.n-modal.n-open {
-    display: flex;
+.n-modal.n-hidden {
+    display: none;
 }
 
 .n-modal__backdrop {
+    z-index: 10;
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba($color-black, 0.8);
+    transition: opacity 0.5s ease-in-out;
+}
+
+.n-modal:not(.n-ready) .n-modal__backdrop {
+    opacity: 0;
 }
 
 .n-modal__frame {
-    z-index: 100;
-    flex: 0 1 auto;
+    z-index: 20;
+    overflow: hidden;
     position: relative;
+    flex: 0 1 auto;
     display: flex;
     flex-direction: column;
-    min-width: 320px;
+    min-width: 300px;
     max-width: 100%;
     min-height: 0;
     max-height: 100%;
     margin: auto;
-    background: $--color-white;
-    border-radius: $radius-medium;
-    box-shadow: 0 1px 3px 1px rgba($color-black, 0.15);
+    transform: translateY(0);
+    transition: opacity 0.2s 0.1s ease-out, transform 0.2s 0.1s ease-out;
 }
 
-.n-modal.n-modal--preview .n-modal__frame {
-    background: $--color-black;
-    min-height: 0;
-    min-width: 0;
-    width: auto;
-}
-
-.n-inverse .n-modal__frame {
-    background: $--color-black;
+.n-modal:not(.n-ready) .n-modal__frame {
+    opacity: 0;
+    transform: translateY(20px);
 }
 
 .n-modal--center-center > .n-modal__frame {
@@ -118,17 +108,8 @@ body.n-open {
     flex: 0 0 auto;
 }
 
-.n-modal.n-modal--default .n-modal__header {
-    padding: $modal-default-padding;
-    border-bottom: 1px solid $--color-gray-10;
-}
-
-.n-modal.n-modal--closable .n-modal__header {
-    padding-right: 50px;
-}
-
 .n-modal__body {
-    overflow-y: auto;
+    overflow: hidden;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
@@ -140,38 +121,65 @@ body.n-open {
     flex: 1 1 auto;
 }
 
-.n-modal.n-modal--default .n-modal__wrap {
-    padding: $modal-default-padding;
-}
-
 .n-modal__footer {
     flex: 0 0 auto;
 }
 
-.n-modal.n-modal--default .n-modal__footer {
-    padding: $modal-default-padding;
-    border-top: 1px solid $--color-gray-10;
-}
-
 .n-modal__close {
-    cursor: pointer;
+    cursor: default;
     position: absolute;
     top: 50%;
-    right: 10px;
+    right: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
     transform: translateY(-50%);
+    opacity: 0.3;
+    transition: opacity 0.15s;
 }
 
-.n-modal__close span {
-    font-size: 18px;
-    color: $--color-gray-30;
-    transition: color 0.15s;
+.n-modal__close:hover {
+    opacity: 0.6;
 }
 
-.n-modal__close:hover span {
-    color: $--color-gray-40;
+
+@each $suffix, $values in $form {
+
+    $-modal-font: map-get($values, 'font');
+    $-modal-size: map-get($values, 'size');
+    $-modal-radius: map-get($values, 'radius');
+    $-modal-ratio: map-get($values, 'ratio');
+
+    .n-modal--#{$suffix} {
+        font-size: $-modal-font;
+    }
+
+    .n-modal--#{$suffix} .n-modal__frame {
+        border-radius: $-modal-radius + 2;
+    }
+
+    $-modal-padding: $-modal-size * $-modal-ratio;
+
+    .n-modal--#{$suffix} .n-modal__header {
+        padding: $-modal-padding * 1.5 $-modal-padding * 2;
+    }
+
+    .n-modal--#{$suffix}.n-closable .n-modal__header {
+        padding-right: $-modal-size + ($-modal-padding * 2);
+    }
+    
+    .n-modal--#{$suffix}:not(.n-raw) .n-modal__wrap {
+        padding: $-modal-padding * 1.5 $-modal-padding * 2;
+    }
+    
+    .n-modal--#{$suffix} .n-modal__footer {
+        padding: $-modal-padding * 1.5 $-modal-padding * 2;
+    }
+
+    .n-modal__close {
+        width: $-modal-size;
+        height: $-modal-size;
+        right: $-modal-padding * 0.8;
+    }
+
 }

@@ -5,6 +5,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 420px;
 }
 
 .n-confirm__icon {
@@ -46,15 +47,15 @@
 
     .n-confirm--#{$suffix} .n-confirm__icon {
         font-size: $-confirm-font + 4;
-        padding: $-confirm-padding * 1.2 $-confirm-padding;
+        padding: $-confirm-padding * 1.2 $-confirm-padding * 2;
     }
 
     .n-confirm--#{$suffix} .n-confirm__body {
-        padding: 0 $-confirm-padding;
+        padding: 0 $-confirm-padding * 2;
     }
-
+    
     .n-confirm--#{$suffix} .n-confirm__action {
-        padding: $-confirm-padding * 1.2 $-confirm-padding;
+        padding: $-confirm-padding * 1.2 $-confirm-padding * 2;
     }
 
     .n-confirm--#{$suffix} .n-confirm__action > button {
