@@ -1,0 +1,18 @@
+@import "../../../root/vars";
+
+.n-tabs__tab-icon {
+    color: $color-gray-40;
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+    .n-tabs--#{$color} .n-tabs__tab.n-active .n-tabs__tab-icon,
+    .n-tabs--#{$color} .n-tabs__tab.n-active .n-tabs__tab-label {
+        color: $-color-base;
+    }
+
+}

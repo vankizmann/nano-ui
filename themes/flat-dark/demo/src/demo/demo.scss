@@ -1,0 +1,11 @@
+@import "../../../root/vars";
+
+.n-demo {
+    color: $color-white;
+    background: $color-black;
+}
+
+.n-demo input,
+.n-demo textarea {
+    color: $color-white;
+}

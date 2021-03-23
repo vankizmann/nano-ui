@@ -1,0 +1,50 @@
+@import "../../../root/vars";
+
+.n-datepicker {
+    background: $color-gray-05;
+    //border: 1px solid $color-gray-15;
+}
+
+.n-datepicker.n-disabled {
+    background: rgba($color-gray-15, 0.3);
+}
+
+.n-datepicker__seperator {
+    color: $color-gray-60;
+}
+
+.n-datepicker__clear,
+.n-datepicker__angle {
+    color: $color-gray-60;
+}
+
+.n-datepicker__clear i {
+    background: rgba($color-gray-15, 0.6);
+}
+
+.n-datepicker__placeholder {
+    color: rgba($color-black, 0.5);
+}
+
+.n-datepicker__body,
+.n-datepicker__empty {
+     background: $color-white;
+     box-shadow: 0 1px 3px 1px rgba($color-shadow, 0.15);
+}
+
+.n-datepicker__empty {
+     color: $color-gray-60;
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+     //.n-datepicker--#{$color}:not(.n-disabled):hover,
+     .n-datepicker--#{$color}:not(.n-disabled).n-focus {
+        border-color: $-color-base;
+    }
+
+}

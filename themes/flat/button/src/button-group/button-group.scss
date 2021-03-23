@@ -1,0 +1,5 @@
+@import "../../../root/vars";
+
+.n-button-group > *:not(:last-child) {
+    margin-right: 0;
+}

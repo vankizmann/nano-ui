@@ -1,0 +1,50 @@
+@import "../../../root/vars";
+
+.n-empty-icon {
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.n-empty-icon__frame {
+    display: block;
+    width: 35%;
+    min-width: 36px;
+    margin: 0 auto;
+    opacity: 0.3;
+}
+
+.n-empty-icon.n-disabled .n-empty-icon__frame {
+    display: none;
+}
+
+.n-empty-icon__frame:before {
+    content: '\00a0';
+    display: block;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+}
+
+@each $suffix, $values in $form {
+
+    $-empty-icon-font: map-get($values, 'font');
+    $-empty-icon-size: map-get($values, 'size');
+    $-empty-icon-radius: map-get($values, 'radius');
+    $-empty-icon-ratio: map-get($values, 'ratio');
+
+    .n-empty-icon--#{$suffix} {
+        font-size: $-empty-icon-font;
+    }
+
+    .n-empty-icon--#{$suffix} .n-empty-icon__frame {
+        max-width: $-empty-icon-size * 2.5;
+        max-height: $-empty-icon-size * 2.5;
+        margin-bottom: $-empty-icon-size * 0.2;
+    }
+
+}

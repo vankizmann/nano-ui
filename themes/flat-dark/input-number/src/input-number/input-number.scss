@@ -1,0 +1,39 @@
+@import "../../../root/vars";
+
+.n-input-number {
+    background: $color-gray-90;
+    //border: 1px solid $color-gray-15;
+}
+
+.n-input-number.n-disabled input  {
+    background: rgba($color-gray-75, 0.3);
+}
+
+.n-input-number .n-button {
+    color: $color-gray-40;
+    background: rgba($color-gray-75, 0.5);
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+    /**
+     * Button primary
+     */
+
+    .n-input-number--#{$color}:not(.n-disabled):hover {
+        //border-color: $-color-base;
+    }
+
+    .n-input-number--#{$color}:not(.n-disabled).n-focus {
+        border-color: $-color-light;
+    }
+
+    .n-input-number--#{$color}:not(.n-disabled) .n-button:hover {
+        color: $-color-base;
+    }
+
+}

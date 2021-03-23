@@ -1,0 +1,15 @@
+@import "../../../root/vars";
+
+.n-table {
+    border: 1px solid $color-gray-90;
+}
+
+.n-table .n-draglist-item {
+    border-bottom: 1px solid $color-gray-90;
+}
+
+.n-table .n-table__header {
+    background: $color-gray-95;
+    border-bottom: 1px solid $color-gray-90;
+    box-shadow: 0 0 3px rgba($color-shadow, 0.10);
+}

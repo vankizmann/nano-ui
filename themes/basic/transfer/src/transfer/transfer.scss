@@ -1,0 +1,17 @@
+@import "../../../root/vars";
+
+.n-transfer__panel {
+    border: 1px solid $color-gray-15;
+}
+
+.n-transfer__header {
+    border-bottom: 1px solid $color-gray-15;
+}
+
+.n-transfer__search {
+    border-bottom: 1px solid $color-gray-15;
+}
+
+.n-transfer__item-count {
+    color: $color-gray-60;
+}

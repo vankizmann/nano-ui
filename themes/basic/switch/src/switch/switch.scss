@@ -1,0 +1,28 @@
+@import "../../../root/vars";
+
+.n-switch__switch {
+    background: $color-gray-10;
+    border: 1px solid $color-gray-15;
+}
+
+.n-switch__switch span {
+    background: $color-white;
+    box-shadow: 0 1px 2px rgba($color-shadow, 0.15);
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+    .n-switch--#{$color}:not(.n-disabled) .n-switch__switch {
+        background: $-color-base;
+        border-color: $-color-dark;
+    }
+
+    .n-switch--#{$color}:not(.n-disabled) .n-switch__label {
+        color: $-color-base;
+    }
+
+}

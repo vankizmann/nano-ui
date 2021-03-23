@@ -1,0 +1,9 @@
+@import "../../../root/vars";
+
+.n-form-item__label label {
+    color: $color-gray-60;
+}
+
+.n-form-item__error {
+    color: $color-danger;
+}
