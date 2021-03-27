@@ -1,0 +1,9 @@
+@import "../../../root/vars";
+
+.n-preview {
+    display: inline-flex;
+}
+
+.n-preview img {
+    object-fit: cover !important;
+}

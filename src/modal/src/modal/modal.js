@@ -145,7 +145,7 @@ export default {
     data()
     {
         return {
-            target: null, tempValue: this.modelValue
+            target: null, tempValue: false
         };
     },
 
@@ -160,17 +160,16 @@ export default {
         Dom.find(document.body).on('keydown',
             this.eventKeydown, this._.uid);
 
-        // if ( ! this.$listeners.close ) {
-        //     this.$on('close', this.close);
-        // }
+        let showModal = () => {
+            this.tempValue = true;
+        };
 
-        // this.target = Dom.find(this.$el).previous().get(0);
-
-        // if ( ! Any.isEmpty(this.selector) ) {
-        //     this.target = Dom.find(this.$el).parent().find(this.selector).get(0);
-        // }
+        if ( this.modelValue ) {
+            Any.delay(showModal, 100);
+        }
 
         Dom.find(document.body).append(this.$el);
+
     },
 
     beforeUnmount()

@@ -6,7 +6,7 @@ export default {
 
     props: {
 
-        value: {
+        modelValue: {
             default()
             {
                 return null;
@@ -32,7 +32,7 @@ export default {
         size: {
             default()
             {
-                return 'default';
+                return 'md';
             },
             type: [String]
         },
@@ -72,9 +72,27 @@ export default {
         buttonText: {
             default()
             {
-                return this.trans('Select file');
+                return Locale.trans('Select file');
             },
             type: [String]
+        }
+
+    },
+
+    data()
+    {
+        return {
+            tempValue: this.value
+        };
+    },
+
+    watch: {
+
+        modelValue()
+        {
+            if ( this.modelValue !== this.tempValue ) {
+                this.tempValue = this.modelValue;
+            }
         }
 
     },
@@ -88,59 +106,43 @@ export default {
 
         updateFile()
         {
-            let veValue = [...this.$refs.input.files];
+            let tempValue = [
+                ...this.$refs.input.files
+            ];
 
             if ( ! this.multiple ) {
-                veValue = veValue[0];
+                tempValue = tempValue[0];
             }
 
-            this.$emit('input', this.veValue = veValue);
+            console.log(tempValue);
+
+            this.$emit('update:modelValue', this.tempValue = tempValue);
         },
 
         clearFile()
         {
-            this.$emit('input', null);
-        }
-
-    },
-
-    data()
-    {
-        return {
-            veValue: this.value
-        };
-    },
-
-    watch: {
-
-        value()
-        {
-            if ( this.value !== this.veValue ) {
-                this.veValue = this.value;
-            }
+            this.$emit('update:modelValue', null);
         }
 
     },
 
     renderInput()
     {
-        let events = {
-            'icon-click': this.clearFile
-        };
-
         let props = {
             size: this.size,
             disabled: true,
-            iconDisabled: Any.isEmpty(this.veValue)
+            iconDisabled: Any.isEmpty(this.tempValue)
         };
 
+        props['onIconClick'] = this.clearFile;
+
         if ( ! this.multiple ) {
-            props.value = Obj.get(this.veValue, 'name');
+            props.modelValue = Obj.get(this.tempValue, 'name');
         }
 
         if ( this.multiple ) {
-            props.value = Locale.choice(':count File|:count Files',
-                this.veValue.length);
+            props.modelValue = Locale.choice(':count File|:count Files',
+                this.tempValue.length);
         }
 
         if ( this.clearable ) {
@@ -148,7 +150,7 @@ export default {
         }
 
         return (
-            <NInput props={props} on={events}>
+            <NInput {...props}>
                 { /* Input field for text */ }
             </NInput>
         );
@@ -156,40 +158,35 @@ export default {
 
     renderButton()
     {
-        let events = {
-            click: this.openContext
-        };
-
         let props = {
             size: this.size,
             disabled: this.disabled,
-            icon: this.icon
+            icon: this.icon,
+            onClick: this.openContext
         };
 
         return (
-            <NButton props={props} on={events}>
-                {this.buttonText}
-            </NButton>
+            <NButton {...props}>{this.buttonText}</NButton>
         );
     },
 
     renderHidden()
     {
-        let events = {
-            input: this.updateFile
+        let props = {
+            'onInput': this.updateFile
         };
 
         return (
             <div class="n-file__input">
-                <input ref="input" type="file" multiple={this.multiple} on={events} />
+                <input ref="input" type="file" multiple={this.multiple} {...props}></input>
             </div>
         );
     },
 
-    render(h)
+    render()
     {
         let classList = [
-            'n-file__wrapper'
+            'n-file'
         ];
 
         if ( this.disabled ) {

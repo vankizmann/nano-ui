@@ -867,6 +867,24 @@
             <n-config :config="demoConfig" v-model="configData"></n-config>
         </n-form>
 
+        <h2>NPreview</h2>
+
+        <n-file v-model="n_preview.file"></n-file>
+
+        <n-preview v-if="n_preview.file" :file="n_preview.file" style="width: 100px;"></n-preview>
+
+        <n-preview :file="'https://via.placeholder.com/1920/000/fff.jpg?text=Image' + UUID()" thumb="https://via.placeholder.com/100/000/fff.jpg?text=Image" style="width: 100px;"></n-preview>
+        <n-preview file="https://www.youtube.com/watch?v=m_Nw_BF90_4" thumb="https://via.placeholder.com/100/000/fff.jpg?text=Youtube" style="width: 100px;"></n-preview>
+        <n-preview file="https://vimeo.com/128079949" thumb="https://via.placeholder.com/100/000/fff.jpg?text=Vimeo" style="width: 100px;"></n-preview>
+        <n-preview file="https://www.w3schools.com/html/mov_bbb.webm" thumb="https://via.placeholder.com/100/000/fff.jpg?text=WEBM" style="width: 100px;"></n-preview>
+
+        <h2>NPreviewVideo</h2>
+
+        <div style="margin: 0 auto; max-width: 480px;">
+            <n-preview-video src="https://www.youtube.com/watch?v=m_Nw_BF90_4" @resolve:youtube="log"></n-preview-video>
+            <n-preview-video src="https://vimeo.com/128079949" @resolve:vimeo="log"></n-preview-video>
+            <n-preview-video src="https://www.w3schools.com/html/mov_bbb.webm"></n-preview-video>
+        </div>
 
         <h2>NMap</h2>
 
@@ -1085,6 +1103,10 @@
 
             data.n_map = {
                 lat: 53.55, lng: 9.99
+            };
+
+            data.n_preview = {
+                file: null
             };
 
             let methods = {};

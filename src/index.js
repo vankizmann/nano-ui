@@ -84,12 +84,12 @@ export function Install(App, Icons = {}, Styles = {})
     require('./table/index').default(App); // 18.1 options
     require('./paginator/index').default(App);
     require('./info/index').default(App); //!complex 16.1
-
+    require('./preview/index').default(App);
     require('./map/index').default(App);
+    require('./file/index').default(App);
 
     // SX only ez 17.1
     // require('./file-list/index'); // SX only 17.1
-    // require('./file/index'); // SX only 17.1
 
     // require('./chart/index'); // Ignore
     // require('./wysiwyg/index'); // Ignore
