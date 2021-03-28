@@ -319,7 +319,7 @@ export default {
         this.$watch('tempSelected', this.watchSelected,
             { deep: true });
 
-        Any.async(this.refreshVirtuals);
+        this.refreshVirtuals();
     },
 
     beforeUnmount()
