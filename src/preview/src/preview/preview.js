@@ -76,7 +76,7 @@ export default {
 
         tempFile()
         {
-            return this.file;
+            return this.file || this.thumb;
         },
 
         tempThumb()
