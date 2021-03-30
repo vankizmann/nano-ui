@@ -4783,9 +4783,13 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
 .n-preview {
   display: inline-flex; }
 
-.n-preview img {
+.n-preview--cover img {
   -o-object-fit: cover !important;
      object-fit: cover !important; }
+
+.n-preview--contain img {
+  -o-object-fit: contain !important;
+     object-fit: contain !important; }
 
 .n-preview-plain {
   position: relative;

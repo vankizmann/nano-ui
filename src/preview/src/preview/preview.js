@@ -152,13 +152,17 @@ export default {
 
     renderPreview()
     {
+        if ( ! this.preview ) {
+            return this.ctor('renderFull')();
+        }
+
         if ( this.thumbMime === 'image' ) {
             return (<NPreviewImage src={this.tempThumb} />);
         }
 
         let props = {
             type: this.thumbMime,
-            showSrc: this.showSrc,
+            showSrc: false,
         }
 
         return (<NPreviewPlain src={this.tempThumb} {...props} />);
@@ -166,10 +170,6 @@ export default {
 
     renderFull()
     {
-        if ( ! this.preview ) {
-            return this.ctor('renderPreview')();
-        }
-
         let isObject = Any.isObject(this.tempFile);
 
         if ( this.fileMime === 'image' ) {
@@ -180,7 +180,12 @@ export default {
             return (<NPreviewVideo src={this.tempFile} />);
         }
 
-        return (<NPreviewPlain src={this.tempFile} type={this.fileMime} />);
+        let props = {
+            type: this.thumbMime,
+            showSrc: this.showSrc,
+        }
+
+        return (<NPreviewPlain src={this.tempFile} {...props} />);
     },
 
     renderLightbox()
@@ -208,6 +213,10 @@ export default {
             'n-preview',
             'n-preview--' + this.fit
         ];
+
+        if ( this.preview ) {
+            classList.push('n-clickable');
+        }
 
         if ( this.fileMime ) {
             classList.push('n-mime-' + this.fileMime);

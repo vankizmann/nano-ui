@@ -14,9 +14,15 @@ export default {
             );
         }
 
+        let props = {
+            fit: 'contain',
+            preview: false,
+            showSrc: false,
+        }
+
         return (
             <div>
-                <NPreview file={this.input} preview={false} />
+                <NPreview file={this.input} {...props} />
             </div>
         );
     }
