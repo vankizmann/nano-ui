@@ -7,21 +7,3 @@
     align-items: stretch;
     justify-content: stretch;
 }
-
-.n-info-field.n-info-field--image:before {
-    content: '\00a0';
-    display: block;
-    height: 0;
-    padding-bottom: 100%;
-}
-
-.n-info-field.n-info-field--image > div {
-     position: absolute;
-     top: 0;
-     bottom: 0;
-     left: 0;
-     right: 0;
-     background-size: contain;
-     background-repeat: no-repeat;
-     background-position: 50% 50%;
-}
