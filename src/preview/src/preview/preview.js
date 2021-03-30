@@ -38,7 +38,23 @@ export default {
             }
         },
 
+        fit: {
+            default()
+            {
+                return 'cover';
+            },
+            type: [String]
+        },
+
         preview: {
+            default()
+            {
+                return true;
+            },
+            typre: [Boolean]
+        },
+
+        showSrc: {
             default()
             {
                 return true;
@@ -140,7 +156,12 @@ export default {
             return (<NPreviewImage src={this.tempThumb} />);
         }
 
-        return (<NPreviewPlain src={this.tempThumb} type={this.thumbMime} showSrc={false} />);
+        let props = {
+            type: this.thumbMime,
+            showSrc: this.showSrc,
+        }
+
+        return (<NPreviewPlain src={this.tempThumb} {...props} />);
     },
 
     renderFull()
@@ -185,8 +206,12 @@ export default {
     {
         let classList = [
             'n-preview',
-            'n-mime-' + this.fileMime
+            'n-preview--' + this.fit
         ];
+
+        if ( this.fileMime ) {
+            classList.push('n-mime-' + this.fileMime);
+        }
 
         let props = {};
 
