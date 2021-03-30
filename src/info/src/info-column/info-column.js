@@ -46,6 +46,14 @@ export default {
             type: [String]
         },
 
+        previewProp: {
+            default()
+            {
+                return 'preview';
+            },
+            type: [String]
+        },
+
         options: {
             default()
             {
