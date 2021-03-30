@@ -26,7 +26,7 @@ global.resolveYoutube = function(url, fallback = null) {
 
     let frame = url.match(/(\/embed\/)(.*?$)/);
 
-    if ( frame && frame.length === 2 ) {
+    if ( frame && frame.length === 3 ) {
         return frame[0].replace(/^\/embed\//, '');
     }
 

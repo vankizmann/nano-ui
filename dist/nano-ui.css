@@ -4879,7 +4879,9 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
     transform: rotate(360deg); } }
 
 .n-preview-video {
-  position: relative; }
+  position: relative;
+  width: 100%;
+  background: rgba(132, 133, 136, 0.1); }
 
 .n-modal__frame > .n-preview-video {
   position: absolute;
