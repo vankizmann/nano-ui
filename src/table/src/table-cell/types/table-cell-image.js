@@ -11,7 +11,7 @@ export default {
 
         preview()
         {
-            return Obj.get(this.value, this.column.previewProp);
+            return Obj.get(this.item, this.column.previewProp);
         }
 
     },
@@ -33,13 +33,13 @@ export default {
             'n-table-cell--' + this.column.type
         ];
 
-        if ( this.preview ) {
-            classList.push('has-preview');
+        let props = {
+            fit: 'contain',
         }
 
         return (
             <div class={classList}>
-                <NPreview file={this.preview || this.input} thumb={this.input} />
+                <NPreview file={this.preview || this.input} thumb={this.input} {...props} />
             </div>
         );
     }
