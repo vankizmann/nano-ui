@@ -2,6 +2,8 @@
 
 .n-preview-video {
     position: relative;
+    width: 100%;
+    background: rgba($color-gray-50, 0.1);
 }
 
 .n-modal__frame > .n-preview-video {
