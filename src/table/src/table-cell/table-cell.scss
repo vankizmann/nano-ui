@@ -41,17 +41,19 @@
 // Image cell
 
 .n-table-cell--image {
+    position: relative;
     padding: 5px 0;
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
 }
 
-.n-table-cell--image > div {
-    flex: 1 1 auto;
-    width: 100%;
-    background-position: center center;
-    background-size: cover;
+.n-table-cell--image > .n-preview {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
 }
 
 .n-table-cell--checkbox i {

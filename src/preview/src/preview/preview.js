@@ -160,13 +160,14 @@ export default {
             raw: this.ctor('renderFull')
         }
 
-        return (<NModal type="preview" vModel={this.lightbox} width="100%" height="100%" v-slots={slots} />);
+        return (<NModal type="preview" vModel={this.lightbox} width="80%" height="90%" v-slots={slots} />);
     },
 
     render()
     {
         let classList = [
-            'n-preview'
+            'n-preview',
+            'n-file-' + this.fileMime
         ];
 
         let props = {
