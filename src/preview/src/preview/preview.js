@@ -38,6 +38,14 @@ export default {
             }
         },
 
+        preview: {
+            default()
+            {
+                return true;
+            },
+            typre: [Boolean]
+        },
+
         map: {
             default()
             {
@@ -137,6 +145,10 @@ export default {
 
     renderFull()
     {
+        if ( ! this.preview ) {
+            return this.ctor('renderPreview')();
+        }
+
         let isObject = Any.isObject(this.tempFile);
 
         if ( this.fileMime === 'image' ) {
@@ -152,7 +164,7 @@ export default {
 
     renderLightbox()
     {
-        if ( ! this.lightbox ) {
+        if ( ! this.lightbox || ! this.preview ) {
             return null;
         }
 
@@ -160,19 +172,27 @@ export default {
             raw: this.ctor('renderFull')
         }
 
-        return (<NModal type="preview" vModel={this.lightbox} width="80%" height="90%" v-slots={slots} />);
+        let props = {
+            type: 'preview',
+            width: '80%',
+            height: '90%',
+        }
+
+        return (<NModal vModel={this.lightbox} {...props} v-slots={slots} />);
     },
 
     render()
     {
         let classList = [
             'n-preview',
-            'n-file-' + this.fileMime
+            'n-mime-' + this.fileMime
         ];
 
-        let props = {
-            onClick: this.showLightbox
-        };
+        let props = {};
+
+        if ( this.preview ) {
+            props.onClick = this.showLightbox;
+        }
 
         return (
             <div class={classList} {...props}>

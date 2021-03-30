@@ -1,5 +1,4 @@
 import InfoField from "../info-field";
-import { Any } from "@kizmann/pico-js";
 
 export default {
 
@@ -17,7 +16,7 @@ export default {
 
         return (
             <div>
-                <div style={'background-image: url(\'' + this.input + '\');'} />
+                <NPreview file={this.input} preview={false} />
             </div>
         );
     }
