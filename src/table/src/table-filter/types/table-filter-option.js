@@ -9,56 +9,57 @@ export default {
 
     methods: {
 
-        resetFilter()
+        getDefaultFilter()
         {
-            this.form.value = [];
-            this.form.operator = 'in';
+            return {
+                type:       this.column.type,
+                value:      [],
+                operator:   'in',
+                property:   this.getFilterProp(),
+            };
         }
 
     },
 
-    data()
+    renderOption(value)
     {
-        let defaults = {
-            property: this.column.filterProp, type: this.column.type, value: [], operator: 'in'
+        console.log(value);
+
+        let props = {
+            value: Obj.get(value, this.column.optionsValue)
         };
 
-        let form = this.getFilterProps(defaults);
-
-        if ( ! Any.isArray(form.value) ) {
-            form.value = Any.string(form.value).split(',');
-        }
-
-        return { form };
+        return (
+            <NCheckbox {...props}>{ Obj.get(value, this.column.optionsLabel) }</NCheckbox>
+        );
     },
 
     renderForm()
     {
-        let options = Any.isFunction(this.column.options) ?
-            this.column.options(null) : this.column.options;
+        let items = this.column.options;
 
-        options = Arr.map(Any.keys(options), (index) => {
-            return { $value: options[index], $index: index };
+        if ( Any.isFunction(items) ) {
+            items = this.column.options(this);
+        }
+
+        items = Arr.each(items, (value, index) => {
+            return { $value: value, $index: index };
         });
 
+        let options = {
+            in: this.trans('Includes value'),
+            ni: this.trans('Excludes value'),
+        };
+
         return (
-            <NForm form={this.form}>
+            <NForm>
                 <NFormItem>
-                    <NCheckboxGroup size="small" align="vertical" vModel={this.form.value}>
-                        {
-                            Arr.each(options, (option) => {
-                                return <NCheckbox size="small" value={Obj.get(option, this.column.optionsValue)}>
-                                    { Obj.get(option, this.column.optionsLabel) }
-                                </NCheckbox>;
-                            })
-                        }
+                    <NCheckboxGroup size="sm" align="vertical" vModel={this.filter.value}>
+                        { Arr.each(items, this.ctor('renderOption')) }
                     </NCheckboxGroup>
                 </NFormItem>
                 <NFormItem>
-                    <NSelect size="small" vModel={this.form.operator}>
-                        <NSelectOption value="in" label={this.trans('Includes value')} />
-                        <NSelectOption value="ni" label={this.trans('Excludes value')} />
-                    </NSelect>
+                    <NSelect size="sm" vModel={this.filter.operator} options={options} />
                 </NFormItem>
             </NForm>
         );

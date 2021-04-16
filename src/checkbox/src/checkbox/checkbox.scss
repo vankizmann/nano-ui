@@ -44,10 +44,14 @@
     }
 
     .n-checkbox--#{$suffix} .n-checkbox__checkbox {
-        font-size: $-checkbox-font - 4;
-        width: $-checkbox-size - 16;
-        height: $-checkbox-size - 16;
+        font-size: $-checkbox-font - 3;
+        width: $-checkbox-size - 14;
+        height: $-checkbox-size - 14;
         border-radius: $-checkbox-radius - 1;
+    }
+
+    .n-checkbox--#{$suffix} .n-checkbox__checkbox i {
+
     }
 
     $-checkbox-padding: $-checkbox-size * $-checkbox-ratio;
