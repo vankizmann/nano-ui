@@ -391,8 +391,17 @@ export default {
             this.$refs.virtualscroller.scrollTo(x, y);
         },
 
-        scrollIntoView(index)
+        scrollToIndex(index)
         {
+            this.$refs.virtualscroller.scrollIntoView(index);
+        },
+
+        scrollIntoView(unique)
+        {
+            let index = Arr.findIndex(this.visible, {
+                [this.uniqueProp]: unique
+            });
+
             this.$refs.virtualscroller.scrollIntoView(index);
         },
 
