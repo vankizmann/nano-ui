@@ -413,6 +413,11 @@ export default {
             this.$refs.virtualscroller.scrollTo(x, y);
         },
 
+        scrollIntoView(index)
+        {
+            this.$refs.virtualscroller.scrollIntoView(index);
+        },
+
         isDraggable(node)
         {
             let canDrag = this.allowDrag;
