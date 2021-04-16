@@ -386,6 +386,13 @@ export default {
             });
         },
 
+        findIndex(unique)
+        {
+            return Arr.findIndex(this.visible, {
+                [this.uniqueProp]: unique
+            });
+        },
+
         scrollTo(x = 0, y = 0)
         {
             this.$refs.virtualscroller.scrollTo(x, y);
@@ -393,15 +400,6 @@ export default {
 
         scrollToIndex(index)
         {
-            this.$refs.virtualscroller.scrollIntoView(index);
-        },
-
-        scrollIntoView(unique)
-        {
-            let index = Arr.findIndex(this.visible, {
-                [this.uniqueProp]: unique
-            });
-
             this.$refs.virtualscroller.scrollIntoView(index);
         },
 
