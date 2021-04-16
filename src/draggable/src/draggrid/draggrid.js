@@ -386,10 +386,21 @@ export default {
             });
         },
 
-        findIndex(unique)
+        getIndex(unique)
         {
             return Arr.findIndex(this.visible, {
                 [this.uniqueProp]: unique
+            });
+        },
+
+        getCurrentIndex()
+        {
+            if ( ! this.tempCurrent ) {
+                return -1;
+            }
+
+            return Arr.findIndex(this.visible, {
+                [this.uniqueProp]: this.tempCurrent[this.uniqueProp]
             });
         },
 
