@@ -1,4 +1,4 @@
-import { Any, Arr, Obj, Str, Dom, UUID, Num } from "@kizmann/pico-js";
+import { Any, Arr, Obj, Str, Dom, UUID, Num, Locale } from "@kizmann/pico-js";
 import { h, resolveComponent } from "vue";
 
 export default {
@@ -213,7 +213,7 @@ export default {
         undefinedText: {
             default()
             {
-                return '-';
+                return Locale.trans('-');
             },
             type: [String]
         },
@@ -221,7 +221,7 @@ export default {
         trueText: {
             default()
             {
-                return 'Yes';
+                return Locale.trans('Yes');
             },
             type: [String]
         },
@@ -229,7 +229,7 @@ export default {
         falseText: {
             default()
             {
-                return 'No';
+                return Locale.trans('No');
             },
             type: [String]
         },
@@ -237,7 +237,7 @@ export default {
         datetimeFormat: {
             default()
             {
-                return 'YYYY-MM-DD HH:mm';
+                return Locale.trans('YYYY-MM-DD HH:mm');
             },
             type: [String]
         },
