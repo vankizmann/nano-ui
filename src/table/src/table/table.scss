@@ -23,11 +23,11 @@
     justify-content: stretch;
 }
 
-.n-table > .n-scrollbar > .n-scrollbar-content.is-windows {
+.n-table > .n-scrollbar.n-windows > .n-scrollbar-content {
     right: 0 !important;
 }
 
-.n-table > .n-scrollbar > .n-scrollbar-content.is-windows .n-scrollbar > .n-scrollbar-content {
+.n-table > .n-scrollbar.n-windows > .n-scrollbar-content .n-scrollbar > .n-scrollbar-content {
     bottom: 0 !important;
 }
 
