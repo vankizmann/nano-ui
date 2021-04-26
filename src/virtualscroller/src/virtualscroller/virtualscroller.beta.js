@@ -274,8 +274,28 @@ export default {
         },
 
 
-        refreshDriver()
+        refreshDriver(queue = true)
         {
+            if ( Any.isEmpty(this.timer) ) {
+                this.timer = Date.now();
+            }
+
+            if ( Date.now() - this.timer > 20 ) {
+                queue = false;
+            }
+
+            clearTimeout(this.to);
+
+            this.to = setTimeout(() => {
+                this.refreshDriver(false);
+            }, 25);
+
+            if ( queue ) {
+                return;
+            }
+
+            clearTimeout(this.to);
+
             let grid = 1;
 
             if ( this.itemWidth ) {
@@ -341,7 +361,7 @@ export default {
         };
 
         if ( this.NDraggable ) {
-            props.key = passed.value[this.NDraggable.uniqueProp];
+            // props.key = passed.value[this.NDraggable.uniqueProp];
         }
 
         let style = {};

@@ -77,12 +77,14 @@ export default {
             }, 50);
 
             this.init = true;
-        }, 5);
+        }, 10);
     },
 
     beforeUnmount()
     {
-        clearTimeout(this.timer);
+        if ( ! this.init ) {
+            clearTimeout(this.timer);
+        }
 
         this.NDraggable.drag.unbindNode(this);
     },
@@ -151,8 +153,12 @@ export default {
 
     renderElement()
     {
+        let classList = [
+            'n-draglist-item__element'
+        ];
+
         if ( ! this.init ) {
-            return null;
+            return (<div class={classList} />);
         }
 
         let props = {
@@ -169,8 +175,8 @@ export default {
         }
 
         return (
-            <div class="n-draggrid-item__element">
-                { renderFunction(props) }
+            <div class={classList}>
+                {renderFunction(props)}
             </div>
         );
     },
