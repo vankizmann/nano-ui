@@ -252,6 +252,14 @@ export default {
             type: [Number]
         },
 
+        useKeys: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         keyEvents: {
             default()
             {
@@ -595,6 +603,7 @@ export default {
             items: this.items, 
             selected: this.tempSelected,
             overflowX: false,
+            useKeys: this.useKeys,
             // renderNode: this.ctor('renderBody')
         });
 

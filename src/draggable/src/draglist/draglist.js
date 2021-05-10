@@ -135,6 +135,14 @@ export default {
             type: [Number]
         },
 
+        useKeys: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         overflowY: {
             default()
             {
@@ -792,7 +800,7 @@ export default {
 
         let passed = [
             'threshold', 'bufferItems', 'itemHeight', 
-            'overflowX', 'overflowY',  'offsetX', 'offsetY'
+            'overflowX', 'overflowY',  'offsetX', 'offsetY', 'useKeys'
         ];
 
         let props = Obj.only(this.$props, passed, {

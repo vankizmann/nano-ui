@@ -104,6 +104,14 @@ export default {
             type: [Number]
         },
 
+        useKeys: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
     },
 
     data()
@@ -360,8 +368,8 @@ export default {
             'data-index': passed.index
         };
 
-        if ( this.NDraggable ) {
-            // props.key = passed.value[this.NDraggable.uniqueProp];
+        if ( this.NDraggable && this.useKeys ) {
+            props.key = passed.value[this.NDraggable.uniqueProp];
         }
 
         let style = {};

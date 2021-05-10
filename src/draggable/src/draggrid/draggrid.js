@@ -128,6 +128,14 @@ export default {
             type: [Number]
         },
 
+        useKeys: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         deathzone: {
             default()
             {
@@ -719,7 +727,7 @@ export default {
 
         let passed = [
             'threshold', 'deathzone', 'itemHeight', 'itemWidth',
-            'overflowX', 'overflowY',  'offsetX', 'offsetY'
+            'overflowX', 'overflowY',  'offsetX', 'offsetY', 'useKeys'
         ];
 
         let props = Obj.only(this.$props, passed, {
