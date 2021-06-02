@@ -349,7 +349,7 @@ export default {
             </NScrollbar>
         );
 
-        if ( this.$refs.body ) {
+        if ( this.$slots.body ) {
             bodyHtml = this.$slots.body({ closeModal: this.closeModal });
         }
 
