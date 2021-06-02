@@ -343,11 +343,19 @@ export default {
 
     renderBody()
     {
+        let bodyHtml = (
+            <NScrollbar ref="scrollbar" relative={true} wrapClass="n-modal__wrap">
+                { this.$slots.default && this.$slots.default({ closeModal: this.closeModal }) }
+            </NScrollbar>
+        );
+
+        if ( this.$refs.body ) {
+            bodyHtml = this.$slots.body({ closeModal: this.closeModal });
+        }
+
         return (
             <div class="n-modal__body">
-                <NScrollbar ref="scrollbar" relative={true} wrapClass="n-modal__wrap">
-                    { this.$slots.default && this.$slots.default({ closeModal: this.closeModal }) }
-                </NScrollbar>
+                { bodyHtml }
             </div>
         );
     },
