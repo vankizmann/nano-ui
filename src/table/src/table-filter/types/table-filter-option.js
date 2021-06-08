@@ -23,8 +23,6 @@ export default {
 
     renderOption(value)
     {
-        console.log(value);
-
         let props = {
             value: Obj.get(value, this.column.optionsValue)
         };

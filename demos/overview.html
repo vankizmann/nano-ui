@@ -809,10 +809,7 @@
             <n-table-column v-model="treeSelect" label="Select" type="select" :allow-uncheck="true" :fixed-width="120">
                 <template v-slot:default="{ item }"></template>
             </n-table-column>
-            <n-table-column v-model="treeMatrix" label="Matrix 2" type="matrix" :matrix="2" align="center" :fixed-width="120"></n-table-column>
-            <n-table-column v-model="treeMatrix" label="Matrix 4" type="matrix" :matrix="4" align="center" :fixed-width="120"></n-table-column>
-            <n-table-column v-model="treeMatrix" label="Matrix 8" type="matrix" :matrix="8" align="center" :fixed-width="120"></n-table-column>
-            <n-table-column v-model="treeMatrix" label="Matrix 16" type="matrix" :matrix="16" align="center" :fixed-width="120"></n-table-column>
+            <n-table-column v-model="treeMatrix" label="Matrix 2" type="matrix" :matrix="-1" align="center" :fixed-width="120"></n-table-column>
         </n-table>
 
         <!-- <n-table ref="table2" v-model:items="virtualTree" :render-expand="true" :item-height="100" style="margin-top: 30px;">

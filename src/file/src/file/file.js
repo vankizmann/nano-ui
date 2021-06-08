@@ -114,8 +114,6 @@ export default {
                 tempValue = tempValue[0];
             }
 
-            console.log(tempValue);
-
             this.$emit('update:modelValue', this.tempValue = tempValue);
         },
 

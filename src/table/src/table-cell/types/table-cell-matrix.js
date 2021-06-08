@@ -17,6 +17,10 @@ export default {
 
         toggleMatrix()
         {
+            if ( this.column.matrix === -1 ) {
+                return this.toggleSelect();
+            }
+
             let itemList = this.column.modelValue;
 
             if ( itemList === null ) {
@@ -41,6 +45,33 @@ export default {
             Arr.replace(itemList, item, {
                 [this.NTable.uniqueProp]: item[this.NTable.uniqueProp]
             });
+
+            this.column.$emit('update:modelValue', itemList);
+        },
+
+        toggleSelect()
+        {
+            let itemList = this.column.modelValue;
+
+            if ( itemList === null ) {
+                itemList = [];
+            }
+
+            let fallback = Obj.assign({}, this.item, {
+                [this.column.matrixProp]: this.column.matrix
+            });
+
+            let finder = {
+                [this.NTable.uniqueProp]: this.value[this.NTable.uniqueProp],
+            };
+
+            let item = Arr.find(itemList, finder);
+
+            if ( ! item ) {
+                Arr.add(itemList, fallback);
+            } else {
+                Arr.remove(itemList, finder);
+            }
 
             this.column.$emit('update:modelValue', itemList);
         },
