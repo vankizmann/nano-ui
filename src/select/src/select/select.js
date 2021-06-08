@@ -305,9 +305,7 @@ export default {
                 Arr.toggle(tempValue, value);
             }
 
-            if ( ! this.multiple ) {
-                this.$refs.popover.close();
-            }
+            this.$refs.popover.close();
 
             if ( this.tempValue === tempValue ) {
                 return;
