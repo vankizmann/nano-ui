@@ -798,8 +798,8 @@
 <!--                <template v-slot:default="{item}">{{ item.value }}</template>-->
             </n-table-column>
             <n-table-column label="Image" type="image" prop="image" :fixed-width="130"></n-table-column>
-            <n-table-column label="Date" type="datetime" prop="date" :sort="true" :filter="true"></n-table-column>
-            <n-table-column label="Enabled 3123 asd as" type="option" prop="enabled" :sort="true" :filter="true" :options="[{ value: true, name: 'JAAAA' }, { value: false, name: 'NEEEEEJ' }]" options-value="$value.value" options-label="$value.name"></n-table-column>
+            <n-table-column label="Date" type="datetime" prop="date" :sort="true" :width="50" :filter="true"></n-table-column>
+            <n-table-column label="Enabled 3123 asd as" type="option" prop="enabled" :sort="true" :filter="true" :options="[{ value: true, name: 'JAAAA' }, { value: false, name: 'NEEEEEJ' }]" options-value="$value.value" :width="100" options-label="$value.name"></n-table-column>
             <n-table-column label="Value" type="string" prop="value" :sort="true" :filter="true" :width="200"></n-table-column>
             <n-table-column label="ID" type="string" prop="id" :breakpoint="1300"></n-table-column>
         </n-table>

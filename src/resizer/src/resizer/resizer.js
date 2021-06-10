@@ -497,6 +497,10 @@ export default {
             style['width'] = this.width + 'px';
         }
 
+        if ( this.width ) {
+            style['flex-basis'] = this.width + 'px';
+        }
+
         if ( this.minWidth ) {
             style['min-width'] = this.minWidth + 'px';
         }
