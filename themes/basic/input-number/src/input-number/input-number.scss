@@ -13,6 +13,14 @@
     background: rgba($color-gray-15, 0.5);
 }
 
+.n-input-number__clear {
+    color: $color-gray-60;
+}
+
+.n-input-number__clear i {
+    background: rgba($color-gray-15, 0.6);
+}
+
 @each $color, $values in $colors {
 
     $-color-base: map_get($values, 'base');

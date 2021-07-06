@@ -12,14 +12,14 @@ export default {
         modelValue: {
             default()
             {
-                return 0;
+                return null;
             }
         },
 
         clearValue: {
             default()
             {
-                return 0;
+                return null;
             }
         },
 
@@ -127,15 +127,23 @@ export default {
     data()
     {
         return {
-            focus: false,
-            tempValue: Num.float(this.modelValue),
+            focus: false, tempValue: Num.float(this.modelValue),
         }
     },
 
     methods: {
 
+        clear()
+        {
+            this.$emit('update:modelValue', this.clearValue);
+        },
+
         getDisplayValue()
         {
+            if ( Any.isNull(this.modelValue) ) {
+                return null;
+            }
+
             let value = Num.format(this.tempValue,
                 this.decimals, ' ', this.precision);
 
@@ -144,6 +152,10 @@ export default {
 
         nextStep()
         {
+            if ( isNaN(this.tempValue) ) {
+                this.tempValue = 0;
+            }
+
             let value = this.tempValue + this.stepSize;
 
             if ( this.max < value ) {
@@ -179,6 +191,10 @@ export default {
 
         prevStep()
         {
+            if ( isNaN(this.tempValue) ) {
+                this.tempValue = 0;
+            }
+
             let value = this.tempValue - this.stepSize;
 
             if ( this.min > value ) {
@@ -313,6 +329,25 @@ export default {
         return h('input', props);
     },
 
+    renderClear()
+    {
+        if ( ! this.clearable || Any.isEmpty(this.tempValue) ) {
+            return null;
+        }
+
+        let props = {};
+
+        if ( ! this.disabled ) {
+            props.onMousedown = this.clear;
+        }
+
+        return (
+            <div class="n-input-number__clear" {...props}>
+                <i class={nano.Icons.times}></i>
+            </div>
+        );
+    },
+
     render()
     {
         let classList = [
@@ -337,6 +372,7 @@ export default {
             <div class={classList}>
                 { this.ctor('renderPrev')() }
                 { this.ctor('renderInput')() }
+                { this.ctor('renderClear')() }
                 { this.ctor('renderNext')() }
             </div>
         );

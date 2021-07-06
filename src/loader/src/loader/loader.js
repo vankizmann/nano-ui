@@ -56,7 +56,7 @@ export default {
         debounce: {
             default()
             {
-                return 100;
+                return 300;
             },
             type: [Number]
         }

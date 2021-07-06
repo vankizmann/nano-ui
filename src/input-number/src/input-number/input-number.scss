@@ -39,6 +39,29 @@
     cursor: default;
 }
 
+.n-input-number__clear {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-input-number__clear {
+    display: none;
+}
+
+.n-input-number__clear i {
+    display: inline-block;
+    text-align: center;
+    border-radius: 500px;
+}
+
+.n-input-number:hover.n-clearable:not(.n-empty) .n-input-number__clear {
+    display: flex;
+}
+
+
 
 @each $suffix, $values in $form {
 
@@ -65,4 +88,16 @@
         width: $-input-number-size - 2;
         height: $-input-number-size - 2;
     }
+
+    .n-input-number--#{$suffix} .n-input-number__clear {
+        margin-right: $-input-number-size * $-input-number-ratio * 0.5;
+    }
+
+    .n-input-number--#{$suffix} .n-input-number__clear i {
+        font-size: $-input-number-font - 4;
+        width: $-input-number-size - 14;
+        height: $-input-number-size - 14;
+        line-height: $-input-number-size - 14;
+    }
+
 }
