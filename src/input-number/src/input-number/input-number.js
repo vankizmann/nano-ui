@@ -356,6 +356,10 @@ export default {
             'n-input-number--' + this.size,
         ];
 
+        if ( Any.isEmpty(this.modelValue) ) {
+            classList.push('n-empty');
+        }
+
         if ( this.clearable ) {
             classList.push('n-clearable');
         }
