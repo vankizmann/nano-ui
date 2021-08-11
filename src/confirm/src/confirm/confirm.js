@@ -75,6 +75,22 @@ export default {
                 return true;
             },
             type: [Boolean]
+        },
+
+        confirmText: {
+            default()
+            {
+                return Locale.trans('Confirm');
+            },
+            type: [String]
+        },
+
+        abortText: {
+            default()
+            {
+                return Locale.trans('Abort');
+            },
+            type: [String]
         }
 
     },
@@ -153,10 +169,10 @@ export default {
         return (
             <div class={classList}>
                 <NButton size={this.size} type={this.type} link={true} onClick={this.abort}>
-                    { this.trans('Abort') }
+                    { this.abortText }
                 </NButton>
                 <NButton size={this.size} type={this.type} link={false} onClick={this.confirm}>
-                    { this.trans('Confirm') }
+                    { this.confirmText }
                 </NButton>
             </div>
         );
