@@ -319,6 +319,15 @@ export default {
         }
     },
 
+    watch: {
+
+        selected(value)
+        {
+            this.tempSelected = value;
+        },
+
+    },
+
     methods: {
 
         addColumn(column)
