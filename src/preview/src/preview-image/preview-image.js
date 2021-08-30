@@ -95,8 +95,6 @@ export default {
             classList.push('n-ready');
         }
 
-        console.log(classList);
-
         return (
             <div class={classList}>
                 <img ref="image" src={this.tempSrc || this.src} />
