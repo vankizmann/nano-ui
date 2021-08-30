@@ -301,7 +301,7 @@ export default {
             elements:         [],
             tempVisible:      this.visible,
             tempVisibleProps: [],
-            tempSelected:     [],
+            tempSelected:     this.selected,
             tempSortProp:     this.sortProp,
             tempSortDir:      this.sortDir,
             tempFilter:       this.filter,
