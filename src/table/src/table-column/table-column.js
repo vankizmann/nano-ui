@@ -113,7 +113,7 @@ export default {
         matrix: {
             default()
             {
-                return -1;
+                return - 1;
             },
             type: [Number, String]
         },
@@ -305,11 +305,11 @@ export default {
 
         sortByColumn(event)
         {
-            if ( ! Arr.has([0, 1], event.which) ) {
+            if ( !Arr.has([0, 1], event.which) ) {
                 return;
             }
-            
-            if ( ! Dom.find(event.target).closest('.n-table-column__filter') ) {
+
+            if ( !Dom.find(event.target).closest('.n-table-column__filter') ) {
                 this.NTable.sortByColumn(this);
             }
         },
@@ -329,12 +329,12 @@ export default {
 
     renderHead()
     {
-        if ( ! this.NTable.getColumnVisiblity(this) ) {
+        if ( !this.NTable.getColumnVisiblity(this) ) {
             return null;
         }
 
         let classList = [
-            'n-table-column', 
+            'n-table-column',
             'n-table-column--' + this.align,
             'n-table-column--' + this.type,
         ];
@@ -345,7 +345,7 @@ export default {
             classList.push('n-sorted', 'n-' + sortDirection);
         }
 
-        if ( this.fluid || ! this.width ) {
+        if ( this.fluid || !this.width ) {
             classList.push('n-fluid');
         }
 
@@ -353,7 +353,7 @@ export default {
             classList.push('n-fixed');
         }
 
-        if ( this.NTable.getColumnFiltered(this)  ) {
+        if ( this.NTable.getColumnFiltered(this) ) {
             classList.push('n-filtered');
         }
 
@@ -363,13 +363,17 @@ export default {
             style.width = this.fixedWidth + 'px';
         }
 
+        if ( this.width ) {
+            style.flexBasis = this.width + 'px';
+        }
+
         let props = {
             modelValue: this.tempWidth,
-            width: this.width,
-            minWidth: this.minWidth,
-            maxWidth: this.maxWidth,
-            disabled: !! this.fixedWidth,
-            group: [this.NTable.uid],
+            width:      this.width,
+            minWidth:   this.minWidth,
+            maxWidth:   this.maxWidth,
+            disabled:   !!this.fixedWidth,
+            group:      [this.NTable.uid],
         };
 
         props['onUpdate:modelValue'] = (value) => {
@@ -382,9 +386,9 @@ export default {
 
         return (
             <NResizer ref="column" class={classList} style={style} {...props}>
-                { this.ctor('renderHeadSort')() }
-                { this.ctor('renderHeadLabel')() }
-                { this.ctor('renderHeadFilter')() }
+                {this.ctor('renderHeadSort')()}
+                {this.ctor('renderHeadLabel')()}
+                {this.ctor('renderHeadFilter')()}
             </NResizer>
         );
     },
@@ -397,7 +401,7 @@ export default {
 
         let labelHtml = (
             <div class={classList}>
-                <span>{ this.label }</span>
+                <span>{this.label}</span>
             </div>
         );
 
@@ -406,7 +410,7 @@ export default {
         }
 
         let tooltipHtml = (
-            <NPopover type="tooltip">{ this.tooltip }</NPopover>
+            <NPopover type="tooltip">{this.tooltip}</NPopover>
         );
 
         return [labelHtml, tooltipHtml];
@@ -414,20 +418,20 @@ export default {
 
     renderHeadSort()
     {
-        if ( ! this.sort ) {
+        if ( !this.sort ) {
             return null;
         }
 
         return (
             <div class="n-table-column__sort">
-                <i>{ /* Sorting angles */ }</i>
+                <i>{ /* Sorting angles */}</i>
             </div>
         )
     },
 
     renderHeadFilter()
     {
-        if ( ! this.filter ) {
+        if ( !this.filter ) {
             return null;
         }
 
@@ -437,7 +441,7 @@ export default {
             </div>
         );
 
-        let component = resolveComponent('NTableFilter' + 
+        let component = resolveComponent('NTableFilter' +
             Str.ucfirst(this.type));
 
         return [
@@ -447,7 +451,7 @@ export default {
 
     renderBody(props)
     {
-        if ( ! this.NTable.getColumnVisiblity(this) ) {
+        if ( !this.NTable.getColumnVisiblity(this) ) {
             return null;
         }
 
@@ -492,7 +496,7 @@ export default {
             ...props, uid: uid, class: classList, style: style, column: this
         });
 
-        let component = resolveComponent('NTableCell' + 
+        let component = resolveComponent('NTableCell' +
             Str.ucfirst(this.type));
 
         return h(component, passed);

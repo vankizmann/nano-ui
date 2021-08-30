@@ -18,8 +18,15 @@ export default {
     data()
     {
         return {
-            init: false, load: false, tempSrc: null
+            load: false, tempSrc: null
         };
+    },
+
+    beforeMount()
+    {
+        if ( ! window.ImageCache ) {
+            window.ImageCache = [];
+        }
     },
 
     mounted()
@@ -42,14 +49,23 @@ export default {
             this.tempSrc = null;
 
             if ( Any.isObject(this.src) ) {
-                this.resolveData();
+                return this.resolveData();
             }
 
             Dom.find(this.$refs.image).loaded(() => {
-                Any.delay(() => this.load = false, 25);
+
+                /**
+                 * Add image to cache
+                 */
+                Arr.add(window.ImageCache, this.src);
+
+                /**
+                 * Mark image as loaded
+                 */
+                Any.delay(() => this.load = false, 200);
             });
 
-            this.load = this.init = true;
+            this.load = true;
         },
 
         resolveData()
@@ -71,9 +87,15 @@ export default {
             'n-preview-image'
         ];
 
+        if ( Arr.has(window.ImageCache, this.src) ) {
+            classList.push('n-cached');
+        }
+
         if ( ! this.load ) {
             classList.push('n-ready');
         }
+
+        console.log(classList);
 
         return (
             <div class={classList}>

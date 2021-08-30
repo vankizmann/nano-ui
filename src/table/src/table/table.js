@@ -282,13 +282,13 @@ export default {
 
         checked()
         {
-            return !! this.tempSelected.length &&
+            return !!this.tempSelected.length &&
                 this.tempSelected.length === this.items.length;
         },
 
         intermediate()
         {
-            return !! this.tempSelected.length && 
+            return !!this.tempSelected.length &&
                 this.tempSelected.length !== this.items.length
         }
 
@@ -297,24 +297,24 @@ export default {
     data()
     {
         return {
-            uid: UUID(),
-            elements: [],
-            tempVisible: this.visible,
+            uid:              UUID(),
+            elements:         [],
+            tempVisible:      this.visible,
             tempVisibleProps: [],
-            tempSelected: [],
-            tempSortProp: this.sortProp,
-            tempSortDir: this.sortDir,
-            tempFilter: this.filter,
-            tempFilterProps: [],
+            tempSelected:     [],
+            tempSortProp:     this.sortProp,
+            tempSortDir:      this.sortDir,
+            tempFilter:       this.filter,
+            tempFilterProps:  [],
         }
     },
 
     mounted()
     {
-        this.$watch('tempVisible', 
+        this.$watch('tempVisible',
             this.makeVisibleProps, { deep: true });
 
-        if ( ! this.tempVisible.length ) {
+        if ( !this.tempVisible.length ) {
             Arr.each(this.elements, this.detectVisible);
         }
     },
@@ -332,29 +332,29 @@ export default {
 
         addColumn(column)
         {
-            Arr.add(this.elements, column, 
+            Arr.add(this.elements, column,
                 { uid: column.uid });
         },
 
         removeColumn(column)
         {
-            Arr.remove(this.elements, 
+            Arr.remove(this.elements,
                 { uid: column.uid });
         },
 
         getColumnIndex(column)
         {
-            if ( ! Any.isString(column) ) {
+            if ( !Any.isString(column) ) {
                 column = column['prop'];
             }
 
-            return Arr.findIndex(this.tempVisibleProps, 
+            return Arr.findIndex(this.tempVisibleProps,
                 column);
         },
 
         getColumnVisiblity(column)
         {
-            if ( ! Any.isString(column) ) {
+            if ( !Any.isString(column) ) {
                 column = column.prop;
             }
 
@@ -365,7 +365,7 @@ export default {
         {
             let prop = column;
 
-            if ( ! Any.isString(prop) ) {
+            if ( !Any.isString(prop) ) {
                 prop = column.sortProp;
             }
 
@@ -384,7 +384,7 @@ export default {
         {
             let prop = column;
 
-            if ( ! Any.isString(prop) ) {
+            if ( !Any.isString(prop) ) {
                 prop = column.filterProp;
             }
 
@@ -401,7 +401,7 @@ export default {
         {
             let prop = column;
 
-            if ( ! Any.isString(prop) ) {
+            if ( !Any.isString(prop) ) {
                 prop = column.filterProp;
             }
 
@@ -431,7 +431,7 @@ export default {
         {
             let prop = column;
 
-            if ( ! Any.isString(prop) ) {
+            if ( !Any.isString(prop) ) {
                 prop = column.sortProp;
             }
 
@@ -509,41 +509,41 @@ export default {
 
     renderHandle()
     {
-        if ( ! this.renderHandle ) {
+        if ( !this.renderHandle ) {
             return null;
         }
 
         return (
             <div class="n-draglist-item__handle">
-                { /* Only used in row */ }
+                { /* Only used in row */}
             </div>
         )
     },
 
     renderExpand()
     {
-        if ( ! this.renderExpand ) {
+        if ( !this.renderExpand ) {
             return null;
         }
 
         return (
             <div class="n-draglist-item__expand">
-                { /* Only used in row */ }
+                { /* Only used in row */}
             </div>
         )
     },
 
     renderSelect()
     {
-        if ( ! this.renderSelect ) {
+        if ( !this.renderSelect ) {
             return null;
         }
 
         let props = {
-            modelValue: this.checked,
+            modelValue:   this.checked,
             intermediate: this.intermediate,
-            disabled: ! this.items.length,
-            onClick: this.selectAll
+            disabled:     !this.items.length,
+            onClick:      this.selectAll
         };
 
         return (
@@ -567,7 +567,7 @@ export default {
         let columns = Obj.each(this.elements, (column) => {
             return (
                 <NCheckbox class="n-table__checkbox" value={column.prop}>
-                    { column.label }
+                    {column.label}
                 </NCheckbox>
             );
         });
@@ -575,7 +575,7 @@ export default {
         return (
             <NPopover trigger="context" width={140}>
                 <NCheckboxGroup vModel={this.tempVisible} align="vertical">
-                    { Obj.values(columns) }
+                    {Obj.values(columns)}
                 </NCheckboxGroup>
             </NPopover>
         );
@@ -586,7 +586,7 @@ export default {
         let defaultRender = [
             this.ctor('renderHandle')(),
             this.ctor('renderExpand')(),
-            this.ctor('renderSelect')(), 
+            this.ctor('renderSelect')(),
             this.ctor('renderContext')()
         ];
 
@@ -596,7 +596,7 @@ export default {
 
         return (
             <div class="n-table__header">
-                { defaultRender } { Obj.values(columns) }
+                {defaultRender} {Obj.values(columns)}
             </div>
         );
     },
@@ -604,15 +604,15 @@ export default {
     render()
     {
         let except = [
-            'visible', 'filter', 'sortProp', 
+            'visible', 'filter', 'sortProp',
             'sortDir', 'closeFilterOnEnter'
         ];
 
         let props = Obj.except(this.$props, except, {
-            items: this.items, 
-            selected: this.tempSelected,
+            items:     this.items,
+            selected:  this.tempSelected,
             overflowX: false,
-            useKeys: this.useKeys,
+            useKeys:   this.useKeys,
             // renderNode: this.ctor('renderBody')
         });
 
@@ -639,23 +639,23 @@ export default {
         props['onUpdate:selected'] = (value) => {
             this.$emit('update:selected', this.tempSelected = value);
         }
-        
+
         let draggableHtml = (
             <div class="n-table__body">
                 <NDraglist ref="draggable" {...props} offsetX={25}>
-                    { { default: this.ctor('renderBody') } }
+                    {{ default: this.ctor('renderBody') }}
                 </NDraglist>
             </div>
         );
-    
+
         return (
             <div class="n-table">
                 <NScrollbar ref="scrollbar" class="n-table__wrap" fixture={true} overflowY={false}>
                     <div class="n-table__inner">
-                        { [this.ctor('renderHead')(), draggableHtml] }
+                        {[this.ctor('renderHead')(), draggableHtml]}
                     </div>
                 </NScrollbar>
-                { this.$slots.default && this.$slots.default()}
+                {this.$slots.default && this.$slots.default()}
             </div>
         );
     },
