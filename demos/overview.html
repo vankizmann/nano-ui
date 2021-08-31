@@ -670,6 +670,18 @@
             </n-tabs-item>
         </n-tabs>
 
+        <n-collapse v-model="n_collapse.value" v-bind="n_collapse" style="height: 900px;">
+            <n-collapse-item label="Default" icon="fa fa-ghost">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aut, dicta quidem aliquid accusantium nulla veritatis nostrum? Porro, hic eligendi?
+            </n-collapse-item>
+            <n-collapse-item name="keep" label="Keep" :keep="true">
+                <n-textarea></n-textarea>
+            </n-collapse-item>
+            <n-collapse-item name="bar" label="Headline in extra extra extra extra extra extra looooong">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, modi?
+            </n-collapse-item>
+        </n-collapse>
+
         <h2>NPaginator</h2>
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
@@ -1084,6 +1096,10 @@
 
             data.n_tabs = {
                 value: 'default', size: 'md', type: 'primary'
+            };
+
+            data.n_collapse = {
+                value: ['default'], size: 'md', type: 'primary', relative: false
             };
 
             data.n_paginator = {

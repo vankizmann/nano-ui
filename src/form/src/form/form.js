@@ -177,7 +177,7 @@ export default {
         ];
 
         return (
-            <form method={this.method} class={classList} onSubmit={this.onSubmit}>
+            <form class={classList} onSubmit={this.onSubmit}>
                 { this.$slots.default && this.$slots.default() }
             </form>
         );

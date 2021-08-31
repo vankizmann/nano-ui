@@ -1,12 +1,13 @@
+import { Arr } from "@kizmann/pico-js";
 import { h, resolveComponent } from "vue";
 
 export default {
 
-    name: 'NTabsItem',
+    name: 'NCollapseItem',
 
     inject: {
 
-        NTabs: {
+        NCollapse: {
             default: undefined
         }
 
@@ -15,7 +16,7 @@ export default {
     provide()
     {
         return {
-            NTabsItem: this
+            NCollapseItem: this
         };
     },
 
@@ -77,14 +78,23 @@ export default {
             type: [Boolean]
         }
 
-
     },
 
     methods: {
 
-        changeTab()
+        showTab()
         {
-            this.NTabs.changeTab(this.name);
+            this.NCollapse.showTab(this.name);
+        },
+
+        hideTab()
+        {
+            this.NCollapse.hideTab(this.name);
+        },
+
+        toggleTab()
+        {
+            this.NCollapse.toggleTab(this.name);
         }
 
     },
@@ -98,12 +108,12 @@ export default {
 
     beforeMount()
     {
-        this.NTabs.addTab(this);
+        this.NCollapse.addTab(this);
     },
 
     beforeUnmount()
     {
-        this.NTabs.removeTab(this);
+        this.NCollapse.removeTab(this);
     },
 
     renderHeaderIcon()
@@ -113,7 +123,7 @@ export default {
         }
 
         return (
-            <div class="n-tabs__tab-icon">
+            <div class="n-collapse__header-icon">
                 { this.$slots.icon && this.$slots.icon() || <i class={this.icon}></i> }
             </div>
         );
@@ -122,8 +132,17 @@ export default {
     renderHeaderLabel()
     {
         return (
-            <div class="n-tabs__tab-label">
+            <div class="n-collapse__header-label">
                 { this.$slots.label && this.$slots.label () || <span>{this.label}</span> }
+            </div>
+        );
+    },
+
+    renderHeaderAngle()
+    {
+        return (
+            <div class="n-collapse__header-angle">
+                {this.$slots.angle && this.$slots.angle() || <i class={nano.Icons.angleRight}></i>}
             </div>
         );
     },
@@ -131,34 +150,43 @@ export default {
     renderHeader()
     {
         let classList = [
-            'n-tabs__tab'
+            'n-collapse__header'
         ];
 
-        if ( this.NTabs.tempValue === this.name ) {
+        if ( Arr.has(this.NCollapse.tempValue, this.name) ) {
             classList.push('n-active');
         }
 
         let props = {
-            onClick: () => this.changeTab(this.name)
+            onClick: () => this.toggleTab(this.name)
+        };
+
+        props['onDragenter'] = () => {
+            this.showTab(this.name);
         };
 
         return (
             <div class={classList} {...props}>
                 { this.ctor('renderHeaderIcon')() }
                 { this.ctor('renderHeaderLabel')() }
+                { this.ctor('renderHeaderAngle')() }
             </div>
         );
     },
 
-    render()
+    renderBody()
     {
-        let renderBody = this.NTabs.tempValue === this.name;
+        let classList = [
+            'n-collapse__body'
+        ];
 
-        if ( this.NTabs.tempValue !== this.name && this.keep ) {
+        let renderBody = Arr.has(this.NCollapse.tempValue, this.name);
+
+        if ( ! Arr.has(this.NCollapse.tempValue, this.name) && this.keep ) {
             renderBody = this.init;
         }
 
-        if ( this.NTabs.tempValue !== this.name && this.preload ) {
+        if ( ! Arr.has(this.NCollapse.tempValue, this.name) && this.preload ) {
             renderBody = true;
         }
 
@@ -168,28 +196,27 @@ export default {
 
         this.init = true;
 
-        let classList = [
-            'n-tabs-item'
-        ];
-
         let style = {};
 
-        if ( this.NTabs.tempValue !== this.name ) {
+        if ( ! Arr.has(this.NCollapse.tempValue, this.name) ) {
             style.display = 'none';
-        }
-
-        if ( this.$slots.raw ) {
-            return this.$slots.raw({ style });
         }
 
         let element = 'div';
 
-        if ( ! this.relative && ! this.NTabs.relative ) {
+        if ( ! this.relative && ! this.NCollapse.relative ) {
             element = resolveComponent('NScrollbar');
         }
 
-        return h(element, { class: classList, style }, () => [
+        return h(element, { class: classList, style, }, () => [
             this.$slots.default && this.$slots.default()
         ]);
+    },
+
+    render()
+    {
+        return [
+            this.ctor('renderHeader')(), this.ctor('renderBody')()
+        ];
     }
 }

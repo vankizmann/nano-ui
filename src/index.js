@@ -81,6 +81,7 @@ export function Install(App, Icons = {}, Styles = {})
     require('./transfer/index').default(App);
     require('./form/index').default(App); // check
     require('./tabs/index').default(App);
+    require('./collapse/index').default(App);
     require('./table/index').default(App); // 18.1 options
     require('./paginator/index').default(App);
     require('./info/index').default(App); //!complex 16.1

@@ -249,8 +249,7 @@ export default {
                 resolved = resolveComponent(component);
             }
 
-            return h(resolved, setup,
-                this.ctor('renderLayer')(slots));
+            return h(resolved, setup, this.ctor('renderLayer')(slots));
         });
     },
 
