@@ -162,6 +162,8 @@ export default {
             renderBody = true;
         }
 
+        console.log(renderBody, this.$slots.default && this.$slots.default());
+
         if ( ! renderBody ) {
             return null;
         }
@@ -188,8 +190,6 @@ export default {
             element = resolveComponent('NScrollbar');
         }
 
-        return h(element, { class: classList, style }, () => [
-            this.$slots.default && this.$slots.default()
-        ]);
+        return h(element, { class: classList, style }, this.$slots);
     }
 }
