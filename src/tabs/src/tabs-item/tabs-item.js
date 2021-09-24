@@ -188,6 +188,6 @@ export default {
             element = resolveComponent('NScrollbar');
         }
 
-        return h(element, { class: classList, style }, this.$slots.default());
+        return h(element, { class: classList, style }, this.$slots);
     }
 }

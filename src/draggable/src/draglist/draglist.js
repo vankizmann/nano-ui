@@ -436,11 +436,19 @@ export default {
 
         scrollTo(x = 0, y = 0)
         {
+            if ( ! this.$refs.virtualscroller ) {
+                return Any.delay(() => this.scrollTo(x, y));
+            }
+
             this.$refs.virtualscroller.scrollTo(x, y);
         },
 
         scrollToIndex(index)
         {
+            if ( ! this.$refs.virtualscroller ) {
+                return Any.delay(() => this.scrollToIndex(index));
+            }
+
             this.$refs.virtualscroller.scrollIntoView(index);
         },
 
