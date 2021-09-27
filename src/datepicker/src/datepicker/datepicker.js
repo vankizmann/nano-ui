@@ -1,4 +1,4 @@
-import { Arr, Obj, Str, Now, Any, UUID } from "@kizmann/pico-js";
+import { Obj, Now, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -81,7 +81,7 @@ export default {
         placeholder: {
             default()
             {
-                return 'Select date';
+                return Locale.trans('Select date');
             },
             type: [String]
         },
@@ -89,7 +89,7 @@ export default {
         placeholderArrive: {
             default()
             {
-                return 'Start date';
+                return Locale.trans('Start date');
             },
             type: [String]
         },
@@ -97,7 +97,7 @@ export default {
         placeholderDepart: {
             default()
             {
-                return 'End date';
+                return Locale.trans('End date');
             },
             type: [String]
         },
@@ -160,7 +160,7 @@ export default {
         format: {
             default()
             {
-                return 'YYYY-MM-DD HH:mm:ss';
+                return Locale.trans('YYYY-MM-DD HH:mm:ss');
             },
             type: [String]
         },
@@ -168,7 +168,7 @@ export default {
         displayFormat: {
             default()
             {
-                return 'YYYY-MM-DD';
+                return Locale.trans('YYYY-MM-DD');
             },
             type: [String]
         },
@@ -177,7 +177,13 @@ export default {
             default()
             {
                 return [
-                    'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su',
+                    Locale.trans('Mo'),
+                    Locale.trans('Tu'),
+                    Locale.trans('We'),
+                    Locale.trans('Th'),
+                    Locale.trans('Fr'),
+                    Locale.trans('Sa'),
+                    Locale.trans('Su'),
                 ];
             },
             type: [Array]
@@ -187,8 +193,18 @@ export default {
             default()
             {
                 return [
-                    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+                    Locale.trans('Jan'),
+                    Locale.trans('Feb'),
+                    Locale.trans('Mar'),
+                    Locale.trans('Apr'),
+                    Locale.trans('May'),
+                    Locale.trans('Jun'),
+                    Locale.trans('Jul'),
+                    Locale.trans('Aug'),
+                    Locale.trans('Sep'),
+                    Locale.trans('Oct'),
+                    Locale.trans('Nov'),
+                    Locale.trans('Dec'),
                 ];
             },
             type: [Array]
@@ -424,7 +440,7 @@ export default {
         let arriveProps = {
             value: '',
             disabled: this.disabled,
-            placeholder: this.trans(this.placeholderArrive),
+            placeholder: this.placeholderArrive,
             onInput: this.onArriveInput,
         };
 
@@ -436,7 +452,7 @@ export default {
         let departProps = {
             value: '',
             disabled: this.disabled,
-            placeholder: this.trans(this.placeholderDepart),
+            placeholder: this.placeholderDepart,
             onInput: this.onDepartInput,
         };
 
@@ -469,7 +485,7 @@ export default {
         let props = {
             value: '',
             disabled: this.disabled,
-            placeholder: this.trans(this.placeholder),
+            placeholder: this.placeholder,
             onInput: this.onValueInput,
         };
 
