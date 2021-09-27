@@ -210,8 +210,12 @@ export default {
 
     renderSetup(setup, alias)
     {
+        if ( Any.isFunction(setup) ) {
+            return this.solveInput(setup);
+        }
+
         if ( ! Any.isPlain(setup) ) {
-            return setup;
+            return () => setup;
         }
 
         if ( ! this.propExists(setup['vIf']) ) {
