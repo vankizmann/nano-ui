@@ -139,7 +139,7 @@ export default {
 
         solveInput(cb, fallback)
         {
-            return cb.call(this, this.tempValue, fallback);
+            return cb.call(this.scope, this.tempValue, fallback);
         },
 
         solveContext(cb)
