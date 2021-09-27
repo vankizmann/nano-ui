@@ -870,10 +870,10 @@
             <n-info-column label="ID" type="string" prop="id"></n-info-column>
         </n-info>
 
-        <h2>NConfig</h2>
+        <h2>NConfigNext</h2>
 
         <n-form>
-            <n-config :config="demoConfig" v-model="configData"></n-config>
+            <n-config-next :config="demoConfigNext" v-model="configData"></n-config-next>
         </n-form>
 
         <h2>NPreview</h2>
@@ -899,10 +899,10 @@
 
         <n-form>
             <n-form-item label="Lat">
-                <n-input v-model="n_map.lat" disabled="true"></n-input>
+                <n-input v-model="n_map.lat" :disabled="true"></n-input>
             </n-form-item>
             <n-form-item label="Lng">
-                <n-input v-model="n_map.lng" disabled="true"></n-input>
+                <n-input v-model="n_map.lng" :disabled="true"></n-input>
             </n-form-item>
         </n-form>
 
@@ -942,6 +942,42 @@
                 default:    'Default', 
                 preview:    'Preview',
             };
+
+            pi.Obj.set(data, 'demoConfigNext.NFormGroup:root', {
+                vShow: [
+                    '$model.test'
+                ],
+                props: {
+                    label: '$model.label',
+                    icon: 'fa fa-directions'
+                }
+            });
+
+            pi.Obj.set(data, 'demoConfigNext.NFormGroup:root.content.NFormItem:url', {
+                props: {
+                    label: pi.Locale.trans('URL')
+                },
+                content: {
+                    'NInput': {
+                        binds: {
+                            modelValue: '$model.option.url'
+                        }
+                    }
+                }
+            });
+
+            pi.Obj.set(data, 'demoConfigNext.NFormGroup:root.content.NFormItem:menu', {
+                props: {
+                    label: pi.Locale.trans('Menu')
+                },
+                content: {
+                    'NInput': {
+                        binds: {
+                            modelValue: '$model.option.redirect'
+                        }
+                    }
+                }
+            });
 
             data.demoConfig = {
                 'NFormGroup:00': {
@@ -993,7 +1029,7 @@
                 },
             };
 
-            data.configData = {};
+            data.configData = { label: 'asdasda' };
 
             data.testData = [];
 
@@ -1164,6 +1200,12 @@
                     }, {});
 
                     return data;
+                },
+                mounted: function () {
+                    let self = this;
+                    pi.Any.delay(function () {
+                        self.configData.test = 'haha';
+                    }, 2000);
                 },
                 methods: methods
             };
