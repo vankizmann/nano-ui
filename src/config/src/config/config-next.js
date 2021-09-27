@@ -210,6 +210,10 @@ export default {
 
     renderSetup(setup, alias)
     {
+        if ( ! Any.isPlain(setup) ) {
+            return setup;
+        }
+
         if ( ! this.propExists(setup['vIf']) ) {
             return null;
         }
