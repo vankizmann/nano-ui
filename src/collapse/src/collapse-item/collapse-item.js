@@ -149,6 +149,10 @@ export default {
 
     renderHeader()
     {
+        if ( !this.label ) {
+            return null;
+        }
+
         let classList = [
             'n-collapse__header'
         ];
@@ -200,17 +204,23 @@ export default {
             'n-collapse__body'
         ];
 
-        let renderBody = Arr.has(this.NCollapse.tempValue, this.name);
+        let tempValue = Arr.clone(this.NCollapse.tempValue);
 
-        if ( !Arr.has(this.NCollapse.tempValue, this.name) && this.keep ) {
+        if ( !this.label ) {
+            tempValue.push(this.name);
+        }
+
+        let renderBody = Arr.has(tempValue, this.name);
+
+        if ( !Arr.has(tempValue, this.name) && this.keep ) {
             renderBody = this.init;
         }
 
-        if ( !Arr.has(this.NCollapse.tempValue, this.name) && this.preload ) {
+        if ( !Arr.has(tempValue, this.name) && this.preload ) {
             renderBody = true;
         }
 
-        if ( !renderBody ) {
+        if ( !renderBody && this.label ) {
             return null;
         }
 
@@ -218,7 +228,7 @@ export default {
 
         let style = {};
 
-        if ( !Arr.has(this.NCollapse.tempValue, this.name) ) {
+        if ( !Arr.has(tempValue, this.name) ) {
             style.display = 'none';
         }
 
