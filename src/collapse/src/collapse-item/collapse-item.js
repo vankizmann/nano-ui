@@ -1,4 +1,4 @@
-import { Arr } from "@kizmann/pico-js";
+import { Arr, Any, Dom } from "@kizmann/pico-js";
 import { h, resolveComponent } from "vue";
 
 export default {
@@ -102,7 +102,7 @@ export default {
     data()
     {
         return {
-            _key: null, init: false
+            _key: null, init: false, dragger: 0
         }
     },
 
@@ -118,13 +118,13 @@ export default {
 
     renderHeaderIcon()
     {
-        if ( ! this.$slots.icon && ! this.icon ) {
+        if ( !this.$slots.icon && !this.icon ) {
             return null;
         }
 
         return (
             <div class="n-collapse__header-icon">
-                { this.$slots.icon && this.$slots.icon() || <i class={this.icon}></i> }
+                {this.$slots.icon && this.$slots.icon() || <i class={this.icon}></i>}
             </div>
         );
     },
@@ -133,7 +133,7 @@ export default {
     {
         return (
             <div class="n-collapse__header-label">
-                { this.$slots.label && this.$slots.label () || <span>{this.label}</span> }
+                {this.$slots.label && this.$slots.label() || <span>{this.label}</span>}
             </div>
         );
     },
@@ -161,15 +161,35 @@ export default {
             onClick: () => this.toggleTab(this.name)
         };
 
-        props['onDragenter'] = () => {
-            this.showTab(this.name);
+        props['onDragenter'] = (event) => {
+
+            this.dragger++;
+
+            if ( this.dragger !== 1 ) {
+                return;
+            }
+
+            this.showDelay = setTimeout(() => {
+                this.showTab(this.name);
+            }, 350);
+        };
+
+        props['onDragleave'] = (event) => {
+
+            this.dragger--;
+
+            if ( this.dragger !== 0 ) {
+                return;
+            }
+
+            clearTimeout(this.showDelay);
         };
 
         return (
-            <div class={classList} {...props}>
-                { this.ctor('renderHeaderIcon')() }
-                { this.ctor('renderHeaderLabel')() }
-                { this.ctor('renderHeaderAngle')() }
+            <div ref="header" class={classList} {...props}>
+                {this.ctor('renderHeaderIcon')()}
+                {this.ctor('renderHeaderLabel')()}
+                {this.ctor('renderHeaderAngle')()}
             </div>
         );
     },
@@ -182,15 +202,15 @@ export default {
 
         let renderBody = Arr.has(this.NCollapse.tempValue, this.name);
 
-        if ( ! Arr.has(this.NCollapse.tempValue, this.name) && this.keep ) {
+        if ( !Arr.has(this.NCollapse.tempValue, this.name) && this.keep ) {
             renderBody = this.init;
         }
 
-        if ( ! Arr.has(this.NCollapse.tempValue, this.name) && this.preload ) {
+        if ( !Arr.has(this.NCollapse.tempValue, this.name) && this.preload ) {
             renderBody = true;
         }
 
-        if ( ! renderBody ) {
+        if ( !renderBody ) {
             return null;
         }
 
@@ -198,13 +218,13 @@ export default {
 
         let style = {};
 
-        if ( ! Arr.has(this.NCollapse.tempValue, this.name) ) {
+        if ( !Arr.has(this.NCollapse.tempValue, this.name) ) {
             style.display = 'none';
         }
 
         let element = 'div';
 
-        if ( ! this.relative && ! this.NCollapse.relative ) {
+        if ( !this.relative && !this.NCollapse.relative ) {
             element = resolveComponent('NScrollbar');
         }
 

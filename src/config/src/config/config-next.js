@@ -105,7 +105,7 @@ export default {
             };
 
             if ( exists ) {
-                return Obj.has(sources, value);
+                return Obj.get(sources, value, undefined) === undefined;
             }
 
             return !! Obj.get(sources, value);
@@ -186,7 +186,7 @@ export default {
                 $scope: this.scope, $model: this.tempValue, $global: window
             };
 
-            if ( ! Obj.has(sources, prop) ) {
+            if ( Obj.get(sources, prop, undefined) === undefined ) {
                 Obj.set(sources, prop, fallback);
             }
 

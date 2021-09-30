@@ -4,9 +4,12 @@
     border: 1px solid $color-gray-15;
 }
 
-.n-collapse__header:not(:first-child),
-.n-collapse__body {
+.n-collapse__header:not(:first-child) {
     border-top: 1px solid $color-gray-15;
+}
+
+.n-collapse__header.n-active {
+    border-bottom: 1px solid $color-gray-15;
 }
 
 @each $color, $values in $colors {

@@ -65,9 +65,9 @@ class NDragIndicator {
             strategy = strategy === 'after' ? 'inner' : strategy;
         }
 
-        Arr.has(['before', 'after'], strategy) ? 
+        Arr.has(['before', 'after'], strategy) ?
             this.show(el, strategy) : this.hide();
-    
+
 
         return strategy;
     }
@@ -123,6 +123,10 @@ class NDraghandler {
     {
         this.DragIndicator = new NDragIndicator(frame || this.rootNode.$el);
 
+        if ( global.DragCache ) {
+            this.bindDragstart.call(this, ...global.DragCache);
+        }
+
         Dom.find(this.rootNode.$el).on('dragenter', (event) => {
             this.onDragenterRoot(event);
         });
@@ -147,25 +151,25 @@ class NDraghandler {
             this.onDragdropRoot(event);
         });
 
-        Event.bind('NDrag:start', this.bindDragstart.bind(this), 
+        Event.bind('NDrag:start', this.bindDragstart.bind(this),
             this.rootNode.uid);
 
-        Event.bind('NDrag:end', this.bindDragend.bind(this), 
+        Event.bind('NDrag:end', this.bindDragend.bind(this),
             this.rootNode.uid);
 
-        Event.bind('NDrag:drop', this.bindDragdrop.bind(this), 
+        Event.bind('NDrag:drop', this.bindDragdrop.bind(this),
             this.rootNode.uid);
     }
 
     unbindRoot()
     {
         let events = [
-            'dragstart', 
-            'dragenter', 
-            'dragover', 
-            'dragleave', 
-            'dragend', 
-            'drop', 
+            'dragstart',
+            'dragenter',
+            'dragover',
+            'dragleave',
+            'dragend',
+            'drop',
             'dragdrop',
         ];
 
@@ -293,7 +297,7 @@ class NDraghandler {
 
         this.rootNode.tempSelected = [];
 
-        this.rootNode.$emit('update:selected', 
+        this.rootNode.$emit('update:selected',
             this.rootNode.tempSelected);
 
         if ( ! this.rootNode.removeNode ) {
@@ -313,7 +317,7 @@ class NDraghandler {
     onDragstartNode(event, node)
     {
         if ( ! this.rootNode.isSelected(node) ) {
-            this.rootNode.$emit('update:selected', 
+            this.rootNode.$emit('update:selected',
                 this.rootNode.tempSelected = [node.uid]);
         }
 
@@ -327,8 +331,12 @@ class NDraghandler {
             return { value, item: Obj.get(this.rootNode, value.route) };
         });
 
-        Event.fire('NDrag:start', this.rootNode.group, 
+        Event.fire('NDrag:start', this.rootNode.group,
             this.dropNodes = cache);
+
+        global.DragCache = [
+            this.rootNode.group, this.dropNodes
+        ];
 
         this.dragcount[node.uid] = 0;
     }
@@ -376,7 +384,7 @@ class NDraghandler {
             return !! allowDrop(node, targetNode, this.strategy);
         });
 
-        let isInSelf = Arr.has(node.value.cascade, 
+        let isInSelf = Arr.has(node.value.cascade,
             this.rootNode.tempSelected);
 
         rainbow.push(! isInSelf);
@@ -422,6 +430,8 @@ class NDraghandler {
         this.DragIndicator.hide();
 
         Event.fire('NDrag:end');
+
+        global.DragCache = null;
     }
 
     onDragdropNode(event, node)
@@ -429,7 +439,7 @@ class NDraghandler {
         if ( ! this.cacheNodes.length ) {
             return;
         }
-        
+
         Dom.find(node.$el).removeClass('n-dragover n-nodrop');
 
         this.DragIndicator.hide();
@@ -503,12 +513,12 @@ class NDraghandler {
         let $el = Dom.find(node.$el);
 
         $el.off([
-            'dragenter', 
-            'dragover', 
-            'dragleave', 
-            'dragend', 
+            'dragenter',
+            'dragover',
+            'dragleave',
+            'dragend',
             'drop',
-            'dragdrop', 
+            'dragdrop',
         ]);
 
         $el.removeClass('n-dragover n-nodrop');
@@ -560,13 +570,13 @@ class NDraghandler {
 
         this.dropNodes = this.rootNode.tempSelected = [];
 
-        this.rootNode.$emit('move', sources, 
+        this.rootNode.$emit('move', sources,
             Obj.get(target, 'uid'), strategy);
 
-        this.rootNode.$emit('moveraw', this.cacheNodes, 
+        this.rootNode.$emit('moveraw', this.cacheNodes,
             target, strategy);
 
-        this.rootNode.$emit('update:selected', 
+        this.rootNode.$emit('update:selected',
             this.rootNode.tempSelected);
 
         this.rootNode.$emit('update:items', clone.items);
@@ -591,7 +601,7 @@ class NDraghandler {
                 return node;
             }
 
-            return this.removeNodes(node, 
+            return this.removeNodes(node,
                 this.rootNode.childProp);
         });
 
@@ -617,10 +627,10 @@ class NDraghandler {
             return clone;
         }
 
-        let targetRoute = [target.value.route, 
+        let targetRoute = [target.value.route,
             this.rootNode.childProp].join('.');
 
-        let children = Obj.get(clone, 
+        let children = Obj.get(clone,
             targetRoute, []);
 
         Arr.each(this.cacheNodes, (node) => {
@@ -714,18 +724,18 @@ class NDraghandler {
     }
 
     reduce(items, ...props) {
-        return Arr.reduce(items, (merge, item, index) => 
+        return Arr.reduce(items, (merge, item, index) =>
             this.reduceItem(merge, item, Num.int(index), ...props), []);
     }
 
     reduceItem(merge, item, index, depth = 0, route = 'items', cascades = [])
     {
         // Get a unique id
-        let unique = Obj.get(item, 
+        let unique = Obj.get(item,
             this.rootNode.uniqueProp, UUID());
 
         // Add unique to cascader
-        let tempCascade = Arr.merge(cascades, 
+        let tempCascade = Arr.merge(cascades,
             [unique]);
 
         let virtual = {
@@ -745,14 +755,14 @@ class NDraghandler {
             return Arr.merge(merge, [virtual]);
         }
 
-        let childRoute = [route, index, 
+        let childRoute = [route, index,
             this.rootNode.childProp].join('.');
 
         let props = [
             depth + 1, childRoute, tempCascade
         ]
 
-        return Arr.merge(merge, [virtual], 
+        return Arr.merge(merge, [virtual],
             this.reduce(children, ...props));
     }
 

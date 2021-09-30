@@ -50,9 +50,7 @@ export default {
     data()
     {
         return {
-            init: false,
-            elements: [],
-            tempValue: this.modelValue
+            init: false, elements: [], tempValue: this.modelValue
         };
     },
 
