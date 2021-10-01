@@ -149,7 +149,7 @@ export default {
 
     renderHeader()
     {
-        if ( !this.label ) {
+        if ( !this.label && !this.$slots.label ) {
             return null;
         }
 
@@ -206,7 +206,7 @@ export default {
 
         let tempValue = Arr.clone(this.NCollapse.tempValue);
 
-        if ( !this.label ) {
+        if ( !this.label && !this.$slots.label ) {
             tempValue.push(this.name);
         }
 
