@@ -6,7 +6,7 @@ export default {
 
     props: {
 
-        value: {
+        modelValue: {
             default()
             {
                 return null;
@@ -144,7 +144,7 @@ export default {
     {
         return {
             focus: false,
-            tempValue: Now.make(this.value),
+            tempValue: Now.make(this.modelValue),
         }
     },
 

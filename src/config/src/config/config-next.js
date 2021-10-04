@@ -236,7 +236,7 @@ export default {
 
         Obj.each(setup['binds'], (value, key) => {
 
-            if ( Any.isString(key) ) {
+            if ( Any.isString(value) ) {
                 value = { value: value };
             }
 
