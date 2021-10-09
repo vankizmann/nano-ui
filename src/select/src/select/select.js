@@ -172,9 +172,17 @@ export default {
 
     watch: {
 
-        modelValue()
+        modelValue(value)
         {
-            this.tempValue = this.modelValue;
+            if ( ! this.multiple && Any.isArray(value) ) {
+                value = null;
+            }
+
+            if ( this.multiple && ! Any.isArray(value) ) {
+                value = [];
+            }
+
+            this.tempValue = value;
         },
 
         search()
