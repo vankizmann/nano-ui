@@ -315,14 +315,21 @@ export default {
 
             this.$refs.popover.close();
 
-            let denyUpdate = this.tempValue === tempValue &&
-                ! Any.isEmpty(this.modelValue);
+            let denyUpdate = this.tempValue === tempValue;
+
+            if ( this.multiple && ! Any.isArray(this.modelValue) ) {
+                denyUpdate = false;
+            }
+
+            if ( ! this.multiple && Any.isArray(this.modelValue) ) {
+                denyUpdate = false;
+            }
 
             if ( denyUpdate ) {
                 return;
             }
 
-            this.$emit('update:modelValue', 
+            this.$emit('update:modelValue',
                 this.tempValue = tempValue);
         },
 
