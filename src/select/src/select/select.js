@@ -434,7 +434,7 @@ export default {
 
     },
 
-    created()
+    beforeMount()
     {
         if ( this.multiple && ! Any.isArray(this.tempValue) ) {
             this.tempValue = [];
@@ -443,12 +443,10 @@ export default {
         if ( this.multiple && ! Any.isArray(this.clearValue) ) {
             this.tempClear = [];
         }
-    },
 
-    beforeMount()
-    {
         this.searchOptions();
     },
+
 
     renderLabelClear()
     {
