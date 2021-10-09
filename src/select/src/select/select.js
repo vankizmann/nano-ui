@@ -530,6 +530,10 @@ export default {
 
     renderLabelItems()
     {
+        if ( ! Any.isArray(this.tempValue) ) {
+            return null;
+        }
+
         if ( this.collapse ) {
             return this.ctor('renderLabelCollapse')();
         }
