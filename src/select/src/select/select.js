@@ -307,7 +307,10 @@ export default {
 
             this.$refs.popover.close();
 
-            if ( this.tempValue === tempValue ) {
+            let denyUpdate = this.tempValue === tempValue &&
+                ! Any.isEmpty(this.modelValue);
+
+            if ( denyUpdate ) {
                 return;
             }
 
