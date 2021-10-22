@@ -570,11 +570,25 @@ class NDraghandler {
 
         this.dropNodes = this.rootNode.tempSelected = [];
 
-        this.rootNode.$emit('move', sources,
+        let eventName = 'move';
+
+        if ( Arr.has(global.keyMods, 18) ) {
+            eventName = 'moveAlt';
+        }
+
+        if ( Arr.has(global.keyMods, 17) ) {
+            eventName = 'moveCtrl';
+        }
+
+        if ( Arr.has(global.keyMods, 91) ) {
+            eventName = 'moveMeta';
+        }
+
+        this.rootNode.$emit(eventName, sources,
             Obj.get(target, 'uid'), strategy);
 
-        this.rootNode.$emit('moveraw', this.cacheNodes,
-            target, strategy);
+        this.rootNode.$emit(eventName + 'Raw',
+            this.cacheNodes, target, strategy);
 
         this.rootNode.$emit('update:selected',
             this.rootNode.tempSelected);
