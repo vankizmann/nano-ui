@@ -103,11 +103,21 @@ export const Nano = {
 global.keyMods = [];
 
 Dom.find(document).on('keydown', (event) => {
+    console.log('down')
     Arr.add(global.keyMods, event.which);
 });
 
 Dom.find(document).on('keyup', (event) => {
+    console.log('up')
     Arr.remove(global.keyMods, event.which);
+});
+
+Dom.find(document).on('dragstart', (event) => {
+    Arr.add(global.keyMods, event.which);
+});
+
+Dom.find(document).on('dragend', (event) => {
+    global.keyMods = [];
 });
 
 if ( typeof global.nano === 'undefined' ) {

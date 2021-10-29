@@ -1,5 +1,7 @@
 import { Arr, Obj, Num, Any, Dom, Event, Locale, UUID } from "@kizmann/pico-js";
 
+global.dragMods = [];
+
 class NDragCounter {
 
     $el = null;
@@ -15,6 +17,9 @@ class NDragCounter {
 
     get(event, count)
     {
+        // Update dragover color/type
+        this.update();
+
         this.$el.html(
             `<span>${Locale.choice(':count Item|:count Items', count)}</span>`
         );
@@ -28,6 +33,29 @@ class NDragCounter {
 
         // Set finally the drop image
         event.dataTransfer.setDragImage(this.$el.get(0), 0, 0);
+    }
+
+    update()
+    {
+        global.dragMods = global.keyMods;
+
+        let classList = [
+            'n-draggable__counter'
+        ];
+
+        if ( Arr.has(global.dragMods, 18) ) {
+            classList.push('n-modify--alt');
+        }
+
+        if ( Arr.has(global.dragMods, 17) ) {
+            classList.push('n-modify--ctrl');
+        }
+
+        if ( Arr.has(global.dragMods, 91) ) {
+            classList.push('n-modify--meta');
+        }
+
+        this.$el.attr('class', classList.join(' '));
     }
 
 }
@@ -572,15 +600,15 @@ class NDraghandler {
 
         let eventName = 'move';
 
-        if ( Arr.has(global.keyMods, 18) ) {
+        if ( Arr.has(global.dragMods, 18) ) {
             eventName = 'moveAlt';
         }
 
-        if ( Arr.has(global.keyMods, 17) ) {
+        if ( Arr.has(global.dragMods, 17) ) {
             eventName = 'moveCtrl';
         }
 
-        if ( Arr.has(global.keyMods, 91) ) {
+        if ( Arr.has(global.dragMods, 91) ) {
             eventName = 'moveMeta';
         }
 

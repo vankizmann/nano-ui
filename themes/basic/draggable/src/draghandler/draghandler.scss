@@ -8,3 +8,8 @@
     color: $color-white;
     background: $color-primary;
 }
+
+.n-draggable__counter[class*="n-modify--"] {
+    color: $color-white;
+    background: $color-warning;
+}
