@@ -28,6 +28,7 @@ This package is dependent of [@kizmann/pico-js](https://github.com/vankizmann/pi
 ```html
 <script src="//unpkg.com/@kizmann/nano-ui@latest/dist/nano-ui.js"></script>
 <link rel="stylesheet" href="//unpkg.com/@kizmann/nano-ui@latest/dist/nano-ui.css">
+<link rel="stylesheet" href="//unpkg.com/@kizmann/nano-ui@latest/dist/themes/light.css">
 ```
 
 ```js

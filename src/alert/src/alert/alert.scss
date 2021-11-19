@@ -1,0 +1,82 @@
+@import "../../../root/vars";
+
+.n-alert-frame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.n-alert-backdrop {
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.3s;
+}
+
+.n-alert-frame:not(.n-active) .n-alert-backdrop {
+    opacity: 0;
+}
+
+.n-alert {
+    z-index: 100;
+    cursor: default;
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 340px;
+    transition: transform 0.3s, opacity 0.15s;
+}
+
+.n-alert-frame:not(.n-active) .n-alert {
+    opacity: 0;
+    transform: translateY(40%);
+}
+
+.n-alert__icon {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.n-alert__text {
+    overflow: hidden;
+    flex: 1 1 auto;
+    line-height: 1.2;
+    overflow-wrap: break-word;
+}
+
+@each $suffix, $values in $form {
+
+    $-alert-font: map-get($values, 'font');
+    $-alert-size: map-get($values, 'size');
+    $-alert-radius: map-get($values, 'radius');
+    $-alert-ratio: map-get($values, 'ratio');
+
+    $-alert-padding:  $-alert-size * $-alert-ratio;
+
+    .n-alert-frame--#{$suffix} .n-alert {
+        font-size: $-alert-font;
+        padding: $-alert-padding $-alert-padding;
+        border-radius: $-alert-radius;
+    }
+
+    .n-alert-frame--#{$suffix} .n-alert .n-alert__icon {
+        font-size: $-alert-font + 2;
+        margin-right: $-alert-padding;
+    }
+
+}

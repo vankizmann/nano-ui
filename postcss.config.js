@@ -3,7 +3,7 @@
  */
 
 let svgOptions = {
-    paths: [__dirname + '/themes/basic/root/image']
+    paths: [__dirname + '/themes/light/root/image']
 };
 
 module.exports = {

@@ -55,6 +55,7 @@ export function Install(App, Icons = {}, Styles = {})
     global.nano.Icons = Obj.assign(Icons, global.nano.Icons);
     global.nano.Settings = Obj.assign(Settings, global.nano.Settings);
 
+    require('./alert/index').default(App);
     require('./notification/index').default(App);
     require('./empty/index').default(App);
     require('./config/index').default(App); //!complex 17.1
@@ -103,12 +104,10 @@ export const Nano = {
 global.keyMods = [];
 
 Dom.find(document).on('keydown', (event) => {
-    console.log('down')
     Arr.add(global.keyMods, event.which);
 });
 
 Dom.find(document).on('keyup', (event) => {
-    console.log('up')
     Arr.remove(global.keyMods, event.which);
 });
 

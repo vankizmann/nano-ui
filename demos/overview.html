@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="../dist/nano-ui.css">
-    <link id="theme" rel="stylesheet" href="../dist/themes/basic.css">
+    <link id="theme" rel="stylesheet" href="../dist/themes/light.css">
 
     <link rel="stylesheet" href="../docs/dist/index.css">
 
@@ -71,9 +71,8 @@
             <div class="col--1-1 col--1-3@md">
                 <n-select :model-value="n_theme" @update:model-value="changeTheme">
                     <n-select-option value="none" label="None"></n-select-option>
-                    <n-select-option value="basic" label="Basic"></n-select-option>
-                    <n-select-option value="flat" label="Flat"></n-select-option>
-                    <n-select-option value="flat.dark" label="Flat Dark"></n-select-option>
+                    <n-select-option value="light" label="Light"></n-select-option>
+                    <n-select-option value="dark" label="Dark"></n-select-option>
                 </n-select>
             </div>
         </div>
@@ -1071,7 +1070,7 @@
 
             data.foobar = 'huhu';
 
-            data.n_theme = pi.Cookie.get('theme', 'basic', 'string');
+            data.n_theme = pi.Cookie.get('theme', 'light', 'string');
 
             pi.Dom.find('#theme').attr('href', '../dist/themes/' +
                 data.n_theme + '.css');

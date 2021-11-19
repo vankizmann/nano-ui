@@ -57,8 +57,8 @@ let style = {
     ]
 };
 
-let basic = {
-    entry: ["./themes/basic/index.scss"],
+let light = {
+    entry: ["./themes/light/index.scss"],
     module: {
         rules: [
             {
@@ -75,13 +75,13 @@ let basic = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'basic.css'
+            filename: 'light.css'
         })
     ]
 };
 
-let flat = {
-    entry: ["./themes/flat/index.scss"],
+let dark = {
+    entry: ["./themes/dark/index.scss"],
     module: {
         rules: [
             {
@@ -98,30 +98,7 @@ let flat = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'flat.css'
-        })
-    ]
-};
-
-let flatDark = {
-    entry: ["./themes/flat-dark/index.scss"],
-    module: {
-        rules: [
-            {
-                test: /\.scss$/,
-                include: [
-                    path.resolve('themes')
-                ],
-                use: [
-                    MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'
-                ]
-            }
-        ],
-
-    },
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: 'flat.dark.css'
+            filename: 'dark.css'
         })
     ]
 };
@@ -162,36 +139,27 @@ module.exports = function (env, argv) {
 
     }, style);
 
-    let basicPackage = Object.assign({
+    let lightPackage = Object.assign({
 
         output: {
-            filename: ".basic.ignore.js",
+            filename: ".light.ignore.js",
             path: path.resolve(__dirname, "dist/themes"),
         }
 
-    }, basic);
+    }, light);
 
-    let flatPackage = Object.assign({
+    let darkPackage = Object.assign({
 
         output: {
-            filename: ".flat.ignore.js",
+            filename: ".dark.ignore.js",
             path: path.resolve(__dirname, "dist/themes"),
         }
 
-    }, flat);
-
-    let flatDarkPackage = Object.assign({
-
-        output: {
-            filename: ".flat-dark.ignore.js",
-            path: path.resolve(__dirname, "dist/themes"),
-        }
-
-    }, flatDark);
+    }, dark);
 
     if ( argv.mode === 'development' ) {
         return [
-            bundlerPackage, stylePackage, basicPackage, flatPackage, flatDarkPackage
+            bundlerPackage, stylePackage, lightPackage, //darkPackage
         ];
     }
 
@@ -201,9 +169,8 @@ module.exports = function (env, argv) {
 
     bundlerPackage.plugins.push(loaderOptions);
     stylePackage.plugins.push(loaderOptions);
-    basicPackage.plugins.push(loaderOptions);
-    flatPackage.plugins.push(loaderOptions);
-    flatDarkPackage.plugins.push(loaderOptions);
+    lightPackage.plugins.push(loaderOptions);
+    darkPackage.plugins.push(loaderOptions);
 
     let terserOptions = {
         mangle: true
@@ -221,11 +188,10 @@ module.exports = function (env, argv) {
 
     bundlerPackage.optimization = optimization;
     stylePackage.optimization = optimization;
-    basicPackage.optimization = optimization;
-    flatPackage.optimization = optimization;
-    flatDarkPackage.optimization = optimization;
+    lightPackage.optimization = optimization;
+    darkPackage.optimization = optimization;
 
     return [
-        bundlerPackage, stylePackage, basicPackage, flatPackage, flatDarkPackage
+        bundlerPackage, stylePackage, lightPackage, //darkPackage
     ];
 }
