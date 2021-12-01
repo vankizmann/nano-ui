@@ -150,11 +150,6 @@ export default {
 
     },
 
-    renderFaker()
-    {
-        return (<div class="n-preview-faker"></div>);
-    },
-
     renderPreview()
     {
         if ( ! this.preview ) {
@@ -235,7 +230,7 @@ export default {
 
         return (
             <div class={classList} {...props}>
-                { [this.ctor('renderFaker')(), this.ctor('renderPreview')(), this.ctor('renderLightbox')()] }
+                { [this.ctor('renderPreview')(), this.ctor('renderLightbox')()] }
             </div>
         );
     }
