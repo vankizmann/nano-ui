@@ -17,7 +17,7 @@
         "@babel/plugin-proposal-export-default-from": "^7.2.0",
         "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
         "@babel/preset-env": "^7.4.4",
-        "@kizmann/pico-js": "^0.3.8",
+        "@kizmann/pico-js": "^0.3.17",
         "@vue/babel-plugin-jsx": "^1.0.0",
         "@vue/babel-preset-jsx": "^1.2.4",
         "autoprefixer": "^9.6.1",
