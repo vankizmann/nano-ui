@@ -252,7 +252,7 @@ export default {
             let value = event.target.value;
 
             let format = this.format.replace(':count',
-                `([0-9\,\.\\s]+)`);
+                `([0-9\\,\\.\\-\\s]+)`);
 
             let regex = new RegExp(`^${format}$`);
 
@@ -266,6 +266,14 @@ export default {
                 .replace(/\s/, '');
 
             value = Num.float(value).toFixed(this.precision);
+
+            if ( value < this.min ) {
+                value = this.min;
+            }
+
+            if ( value > this.max ) {
+                value = this.max;
+            }
 
             this.$emit('update:modelValue',
                 this.tempValue = Num.float(value));
