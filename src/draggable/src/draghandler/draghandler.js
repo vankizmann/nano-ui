@@ -2,7 +2,8 @@ import { Arr, Obj, Num, Any, Dom, Event, Locale, UUID } from "@kizmann/pico-js";
 
 global.dragMods = [];
 
-class NDragCounter {
+class NDragCounter
+{
 
     $el = null;
 
@@ -62,7 +63,8 @@ class NDragCounter {
 
 global.DragCounter = new NDragCounter;
 
-class NDragIndicator {
+class NDragIndicator
+{
 
     $el = null;
 
@@ -127,7 +129,8 @@ class NDragIndicator {
 
 }
 
-class NDraghandler {
+class NDraghandler
+{
 
     uid = null;
 
@@ -218,7 +221,7 @@ class NDraghandler {
         let isNode = Dom.find(event.target)
             .closest('.n-draglist-item');
 
-        if ( isNode || ! this.cacheNodes.length ) {
+        if ( isNode || !this.cacheNodes.length ) {
             return;
         }
 
@@ -230,12 +233,12 @@ class NDraghandler {
 
         let allowDrop = this.rootNode.allowDrop;
 
-        if ( ! Any.isFunction(allowDrop) ) {
+        if ( !Any.isFunction(allowDrop) ) {
             allowDrop = () => this.rootNode.allowDrop;
         }
 
         let rainbow = Arr.each(this.cacheNodes, (node) => {
-            return !! allowDrop(node, null, this.strategy);
+            return !!allowDrop(node, null, this.strategy);
         });
 
         this.strategy = 'root';
@@ -269,7 +272,7 @@ class NDraghandler {
 
     onDragendRoot(event)
     {
-        if ( ! this.cacheNodes.length ) {
+        if ( !this.cacheNodes.length ) {
             return;
         }
 
@@ -285,7 +288,7 @@ class NDraghandler {
 
     onDragdropRoot(event)
     {
-        if ( ! this.cacheNodes.length ) {
+        if ( !this.cacheNodes.length ) {
             return;
         }
 
@@ -319,7 +322,7 @@ class NDraghandler {
 
     bindDragdrop(...args)
     {
-        if ( ! this.dropNodes.length ) {
+        if ( !this.dropNodes.length ) {
             return;
         }
 
@@ -328,7 +331,7 @@ class NDraghandler {
         this.rootNode.$emit('update:selected',
             this.rootNode.tempSelected);
 
-        if ( ! this.rootNode.removeNode ) {
+        if ( !this.rootNode.removeNode ) {
             return;
         }
 
@@ -344,7 +347,7 @@ class NDraghandler {
 
     onDragstartNode(event, node)
     {
-        if ( ! this.rootNode.isSelected(node) ) {
+        if ( !this.rootNode.isSelected(node) ) {
             this.rootNode.$emit('update:selected',
                 this.rootNode.tempSelected = [node.uid]);
         }
@@ -373,16 +376,16 @@ class NDraghandler {
     {
         event.preventDefault();
 
-        if ( ! this.dragcount[node.uid] ) {
+        if ( !this.dragcount[node.uid] ) {
             this.dragcount[node.uid] = 0;
         }
 
-        this.dragcount[node.uid]++;
+        this.dragcount[node.uid] ++;
     }
 
     onDragoverNode(event, node)
     {
-        if ( ! this.cacheNodes.length ) {
+        if ( !this.cacheNodes.length ) {
             return;
         }
 
@@ -404,18 +407,18 @@ class NDraghandler {
 
         let allowDrop = this.rootNode.allowDrop;
 
-        if ( ! Any.isFunction(allowDrop) ) {
+        if ( !Any.isFunction(allowDrop) ) {
             allowDrop = () => this.rootNode.allowDrop;
         }
 
         let rainbow = Arr.each(this.cacheNodes, (node) => {
-            return !! allowDrop(node, targetNode, this.strategy);
+            return !!allowDrop(node, targetNode, this.strategy);
         });
 
         let isInSelf = Arr.has(node.value.cascade,
             this.rootNode.tempSelected);
 
-        rainbow.push(! isInSelf);
+        rainbow.push(!isInSelf);
 
         if ( Arr.has(rainbow, false) ) {
             this.strategy = 'nodrop';
@@ -440,7 +443,7 @@ class NDraghandler {
 
     onDragleaveNode(event, node)
     {
-        this.dragcount[node.uid]--;
+        this.dragcount[node.uid] --;
 
         if ( this.dragcount[node.uid] !== 0 ) {
             return;
@@ -464,7 +467,7 @@ class NDraghandler {
 
     onDragdropNode(event, node)
     {
-        if ( ! this.cacheNodes.length ) {
+        if ( !this.cacheNodes.length ) {
             return;
         }
 
@@ -566,7 +569,7 @@ class NDraghandler {
             this.unlinkNodes(clone);
         }
 
-        if ( ! this.dropNodes.length ) {
+        if ( !this.dropNodes.length ) {
             Arr.each(this.cacheNodes, (value, key) => {
                 this.cacheNodes[key]['item'] = this.rootNode.transformDrop(value.item);
             });
@@ -634,12 +637,12 @@ class NDraghandler {
     removeNodes(clone, prop = 'items')
     {
         clone[prop] = Arr.filter(clone[prop], (node) => {
-            return !! node;
+            return !!node;
         });
 
         Arr.map(clone[prop], (node) => {
 
-            if ( ! node[this.rootNode.childProp] ) {
+            if ( !node[this.rootNode.childProp] ) {
                 return node;
             }
 
@@ -669,8 +672,10 @@ class NDraghandler {
             return clone;
         }
 
-        let targetRoute = [target.value.route,
-            this.rootNode.childProp].join('.');
+        let targetRoute = [
+            target.value.route,
+            this.rootNode.childProp
+        ].join('.');
 
         let children = Obj.get(clone,
             targetRoute, []);
@@ -765,7 +770,8 @@ class NDraghandler {
         this.rootNode.$emit('update:items', clone.items);
     }
 
-    reduce(items, ...props) {
+    reduce(items, ...props)
+    {
         return Arr.reduce(items, (merge, item, index) =>
             this.reduceItem(merge, item, Num.int(index), ...props), []);
     }
@@ -797,8 +803,10 @@ class NDraghandler {
             return Arr.merge(merge, [virtual]);
         }
 
-        let childRoute = [route, index,
-            this.rootNode.childProp].join('.');
+        let childRoute = [
+            route, index,
+            this.rootNode.childProp
+        ].join('.');
 
         let props = [
             depth + 1, childRoute, tempCascade

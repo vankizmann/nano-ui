@@ -150,6 +150,29 @@ export default {
 
     },
 
+    computed: {
+
+        empty()
+        {
+            return Any.isEmpty(this.tempValue);
+        },
+
+        custom()
+        {
+            let result = Arr.filter(this.elements, (element) => {
+
+                if ( Any.isArray(this.tempValue) ) {
+                    return Arr.has(this.tempValue, element.value);
+                }
+
+                return element.value === this.tempValue;
+            });
+
+            return result.length === 0;
+        }
+
+    },
+
     data()
     {
         return {
@@ -617,6 +640,10 @@ export default {
             onInput: this.onInputInput,
             onKeydown: this.onKeydownInput
         };
+
+        if ( ! this.search && this.custom ) {
+            props.value = this.tempValue;
+        }
 
         if ( ! this.focus ) {
             props.value = modelLabel;
