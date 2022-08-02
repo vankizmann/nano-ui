@@ -40,7 +40,7 @@ export default {
     data()
     {
         return {
-            filter: Obj.clone(this.tempFilter), visible: false
+            filter: this.getFilterClone(), visible: false
         };
     },
 
@@ -68,6 +68,17 @@ export default {
     },
 
     methods: {
+
+        getFilterClone()
+        {
+            let tempFilter = this.NTable.getColumnFilter(this.column);
+
+            if ( Any.isEmpty(tempFilter) ) {
+                return null;
+            }
+
+            return Obj.clone(tempFilter);
+        },
 
         getFilterProp()
         {
