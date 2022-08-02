@@ -22,6 +22,14 @@ export default {
             type: [Array]
         },
 
+        draggable: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         visible: {
             default()
             {
@@ -297,15 +305,15 @@ export default {
     data()
     {
         return {
-            uid:              UUID(),
-            elements:         [],
-            tempVisible:      this.visible,
+            uid: UUID(),
+            elements: [],
+            tempVisible: this.visible,
             tempVisibleProps: [],
-            tempSelected:     this.selected,
-            tempSortProp:     this.sortProp,
-            tempSortDir:      this.sortDir,
-            tempFilter:       this.filter,
-            tempFilterProps:  [],
+            tempSelected: this.selected,
+            tempSortProp: this.sortProp,
+            tempSortDir: this.sortDir,
+            tempFilter: this.filter,
+            tempFilterProps: [],
         }
     },
 
@@ -540,10 +548,10 @@ export default {
         }
 
         let props = {
-            modelValue:   this.checked,
+            modelValue: this.checked,
             intermediate: this.intermediate,
-            disabled:     !this.items.length,
-            onClick:      this.selectAll
+            disabled: !this.items.length,
+            onClick: this.selectAll
         };
 
         return (
@@ -609,10 +617,10 @@ export default {
         ];
 
         let props = Obj.except(this.$props, except, {
-            items:     this.items,
-            selected:  this.tempSelected,
+            items: this.items,
+            selected: this.tempSelected,
             overflowX: false,
-            useKeys:   this.useKeys,
+            useKeys: this.useKeys,
             // renderNode: this.ctor('renderBody')
         });
 

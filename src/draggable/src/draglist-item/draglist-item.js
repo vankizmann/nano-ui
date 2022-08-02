@@ -72,12 +72,14 @@ export default {
     {
         this.timer = setTimeout(() => {
 
-            this.timer = setTimeout(() => {
-                this.NDraggable.drag.bindNode(this);
-            }, 50);
+            if ( this.NDraggable.draggable ) {
+                this.timer = setTimeout(() => {
+                    this.NDraggable.drag.bindNode(this);
+                }, 50);
+            }
 
             this.init = true;
-        }, 10);
+        }, 1);
     },
 
     beforeUnmount()
@@ -231,7 +233,7 @@ export default {
 
         let props = {};
 
-        if ( this.isDraggable() ) {
+        if ( this.NDraggable.draggable && this.isDraggable() ) {
             props.draggable = true;
         }
 
@@ -317,7 +319,7 @@ export default {
             onDblclick: this.onDblclick,
         };
 
-        if ( ! this.NDraggable.handle && this.isDraggable() ) {
+        if ( this.NDraggable.draggable && ! this.NDraggable.handle && this.isDraggable() ) {
             props.draggable = true;
         }
 

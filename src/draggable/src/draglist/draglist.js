@@ -27,6 +27,14 @@ export default {
             }
         },
 
+        draggable: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         size: {
             default()
             {

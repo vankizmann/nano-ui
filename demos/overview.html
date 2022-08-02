@@ -821,7 +821,7 @@
             <n-table-column label="ID" type="string" prop="id" :breakpoint="1300"></n-table-column>
         </n-table>
 
-        <n-table v-model:items="virtualTree" :render-expand="true" :item-height="36" style="margin-top: 30px; min-height: 500px;">
+        <n-table v-model:items="virtualTree" :draggable="false" :render-expand="true" :item-height="36" style="margin-top: 30px; min-height: 500px;">
             <n-table-column label="Label" type="string" prop="label"></n-table-column>
             <n-table-column v-model="treeSelect" label="Select" type="select" :allow-uncheck="true" :fixed-width="120">
                 <template v-slot:default="{ item }"></template>
