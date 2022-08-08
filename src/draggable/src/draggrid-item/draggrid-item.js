@@ -79,7 +79,7 @@ export default {
             }
 
             this.init = true;
-        }, 1);
+        }, 40);
     },
 
     beforeUnmount()
