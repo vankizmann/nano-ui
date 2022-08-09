@@ -80,7 +80,7 @@ export default {
         framerate: {
             default()
             {
-                return 30;
+                return 24;
             },
             type: [Number]
         },
@@ -310,7 +310,7 @@ export default {
             //     Dom.find(this.$el).addClass('has-native-hbar');
             // }
 
-            let hasVtrack = outerHeight && outerHeight < innerHeight - 1;
+            let hasVtrack = outerHeight && outerHeight < innerHeight;
 
             if ( hasVtrack ) {
                 Dom.find(this.$el).addClass('has-vtrack');
@@ -388,7 +388,7 @@ export default {
             //     Dom.find(this.$el).addClass('has-native-vbar');
             // }
 
-            let hasHtrack = outerWidth && outerWidth < innerWidth - 1;
+            let hasHtrack = outerWidth && outerWidth < innerWidth;
 
             if ( hasHtrack ) {
                 Dom.find(this.$el).addClass('has-htrack');
@@ -446,15 +446,25 @@ export default {
 
         adaptHeight()
         {
-            let height = Dom.find(this.$refs.content)
-                .child().height();
+            if ( ! this.cacheChildEl ) {
+                this.cacheChildEl = Dom.find(this.$refs.content).child();
+            }
 
-            let window = Dom.find(this.$el)
+            let height = this.cacheChildEl
+                .height();
+
+            if ( ! this.cacheWindwoEl ) {
+                this.cacheWindwoEl = Dom.find(this.$el);
+            }
+
+            let window = this.cacheWindwoEl
                 .innerHeight();
 
-            if ( height === this.passedHeight ) {
+            if ( height === this.passedHeight && window === this.windowCache ) {
                 return;
             }
+
+            this.windowCache = window;
 
             if ( this.overflowY ) {
                 this.adaptScrollHeight();

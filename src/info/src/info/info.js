@@ -64,7 +64,7 @@ export default {
             uid: UUID(),
             elements: [],
             options: [],
-            tempValue: this.item, 
+            tempValue: this.item,
         };
     },
 
@@ -89,11 +89,16 @@ export default {
         this.unbindSyncEvent();
     },
 
+    updated()
+    {
+        Any.delay(() => this.$refs.scrollbar.adaptHeight(), 500);
+    },
+
     methods: {
 
         bindSyncEvent()
         {
-            if ( ! this.syncEvent ) {
+            if ( !this.syncEvent ) {
                 return;
             }
 
@@ -109,7 +114,7 @@ export default {
                 }
             };
 
-            Event.bind(this.options[0], syncFunction, 
+            Event.bind(this.options[0], syncFunction,
                 this.uid);
         },
 
@@ -120,19 +125,19 @@ export default {
 
         setValue(value)
         {
-            this.$emit('update:modelValue', 
+            this.$emit('update:modelValue',
                 this.tempValue = value);
         },
 
         addColumn(column)
         {
-            Arr.add(this.elements, 
+            Arr.add(this.elements,
                 column, { uid: column.uid });
         },
 
         removeColumn(column)
         {
-            Arr.remove(this.elements, 
+            Arr.remove(this.elements,
                 { uid: column.uid });
         },
 
@@ -148,8 +153,8 @@ export default {
     renderEmpty()
     {
         return (
-            <NEmptyIcon disabled={! this.showEmptyIcon} class="n-info__empty">
-                 { this.$slots.empty && this.$slots.empty() || this.trans('No entry') }
+            <NEmptyIcon disabled={!this.showEmptyIcon} class="n-info__empty">
+                {this.$slots.empty && this.$slots.empty() || this.trans('No entry')}
             </NEmptyIcon>
         );
     },
@@ -163,16 +168,16 @@ export default {
         let elements = Obj.each(this.elements, (column) => {
             return (
                 <div class="n-info__column">
-                    { column.ctor('renderLabel')({ item: this.tempValue }) }
-                    { column.ctor('renderBody')({ item: this.tempValue }) }
+                    {column.ctor('renderLabel')({ item: this.tempValue })}
+                    {column.ctor('renderBody')({ item: this.tempValue })}
                 </div>
             );
         });
 
         return (
-                <div class="n-info__body">
-                    { Any.vals(elements)}
-                </div>
+            <div class="n-info__body">
+                {Any.vals(elements)}
+            </div>
         );
     },
 
@@ -184,12 +189,15 @@ export default {
             'n-info--' + this.size,
         ];
 
+        let infoHtml = (
+            <NScrollbar ref="scrollbar" relative={this.relative}>
+                {this.ctor('renderBody')()}
+            </NScrollbar>
+        );
+
         return (
             <div class={classList}>
-                <NScrollbar relative={this.relative}>
-                    { this.ctor('renderBody')() }
-                </NScrollbar>
-                { this.$slots.default() }
+                {[infoHtml, this.$slots.default()]}
             </div>
         );
     }
