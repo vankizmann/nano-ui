@@ -203,7 +203,8 @@ export default {
 
     render()
     {
-        let size = this.size || this.NForm.size;
+        let size = this.size || Obj.get(this.NForm, 'size', 'md');
+
 
         let classList = [
             'n-form-item',
