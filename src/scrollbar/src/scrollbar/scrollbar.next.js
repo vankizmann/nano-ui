@@ -310,7 +310,7 @@ export default {
             //     Dom.find(this.$el).addClass('has-native-hbar');
             // }
 
-            let hasVtrack = outerHeight && outerHeight < innerHeight + 1;
+            let hasVtrack = outerHeight && outerHeight < innerHeight - 1;
 
             if ( hasVtrack ) {
                 Dom.find(this.$el).addClass('has-vtrack');
@@ -388,7 +388,7 @@ export default {
             //     Dom.find(this.$el).addClass('has-native-vbar');
             // }
 
-            let hasHtrack = outerWidth && outerWidth < innerWidth + 1;
+            let hasHtrack = outerWidth && outerWidth < innerWidth - 1;
 
             if ( hasHtrack ) {
                 Dom.find(this.$el).addClass('has-htrack');
