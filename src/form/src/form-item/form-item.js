@@ -78,13 +78,13 @@ export default {
         {
             let $input = Dom.find(this.$el).find('input');
 
-            if ( ! $input.empty() ) {
+            if ( !$input.empty() ) {
                 return $input.get(0).focus();
             }
 
             $input = Dom.find(this.$refs.input).childs();
 
-            if ( ! $input.empty() ) {
+            if ( !$input.empty() ) {
                 return $input.get(0).click();
             }
 
@@ -99,7 +99,7 @@ export default {
                 return;
             }
 
-            if ( ! this.NTabs || ! this.NTabsItem ) {
+            if ( !this.NTabs || !this.NTabsItem ) {
                 return;
             }
 
@@ -123,23 +123,28 @@ export default {
 
     beforeMount()
     {
-        this.NForm.addItem(this);
+        if ( this.NForm ) {
+            this.NForm.addItem(this);
+        }
     },
 
     mounted()
     {
-        this.NForm.$watch('errors', this.gotoInput,
-            { deep: true });
+        if ( this.NForm ) {
+            this.NForm.$watch('errors', this.gotoInput, { deep: true });
+        }
     },
 
     beforeUnmount()
     {
-        this.NForm.removeItem(this);
+        if ( this.NForm ) {
+            this.NForm.removeItem(this);
+        }
     },
 
     renderTooltip()
     {
-        if ( ! this.tooltip && ! this.$slots.tooltip ) {
+        if ( !this.tooltip && !this.$slots.tooltip ) {
             return null;
         }
 
@@ -150,21 +155,21 @@ export default {
 
         return (
             <NPopover type="tooltip" {...props}>
-                { this.$slots.tooltip && this.$slots.tooltip() || this.tooltip }
+                {this.$slots.tooltip && this.$slots.tooltip() || this.tooltip}
             </NPopover>
         );
     },
 
     renderLabel()
     {
-        if ( ! this.label && ! this.$slots.label ) {
+        if ( !this.label && !this.$slots.label ) {
             return null;
         }
 
         let labelHtml = (
             <div class="n-form-item__label">
                 <label onClick={this.focusInput}>
-                    { this.$slots.label && this.$slots.label() || this.label }
+                    {this.$slots.label && this.$slots.label() || this.label}
                 </label>
             </div>
         );
@@ -176,13 +181,13 @@ export default {
 
     renderError()
     {
-        if ( ! Obj.has(this.NForm.errors, this.prop) ) {
+        if ( !this.NForm || !Obj.has(this.NForm.errors, this.prop) ) {
             return null;
         }
 
         return (
             <div class="n-form-item__error">
-                { Obj.get(this.NForm.errors, this.prop) }
+                {Obj.get(this.NForm.errors, this.prop)}
             </div>
         );
     },
@@ -191,7 +196,7 @@ export default {
     {
         return (
             <div ref="input" class="n-form-item__input">
-                { this.$slots.default && this.$slots.default() }
+                {this.$slots.default && this.$slots.default()}
             </div>
         );
     },
@@ -206,9 +211,9 @@ export default {
         ]
 
         return <div class={classList}>
-            { this.ctor('renderLabel')() }
-            { this.ctor('renderInput')() }
-            { this.ctor('renderError')() }
+            {this.ctor('renderLabel')()}
+            {this.ctor('renderInput')()}
+            {this.ctor('renderError')()}
         </div>;
     }
 }
