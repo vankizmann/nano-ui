@@ -246,7 +246,7 @@ export default {
         let events = {};
 
         Obj.each(setup['events'], (value, key) => {
-            events[this.toEventKey(key)] = value;
+            events[this.toEventKey(key)] = this.solveContext(value);
         });
 
         let props = {};
