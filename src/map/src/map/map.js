@@ -1,4 +1,4 @@
-import { Arr, Map } from "@kizmann/pico-js";
+import { Arr, Map, Any } from "@kizmann/pico-js";
 
 export default {
 
@@ -48,12 +48,12 @@ export default {
 
         lat()
         {
-            this.tempMap.focusMarkers();
+            Any.delay(() => this.tempMap.focusMarkers(), 100);
         },
 
         lng()
         {
-            this.tempMap.focusMarkers();
+            Any.delay(() => this.tempMap.focusMarkers(), 100);
         }
 
     },
