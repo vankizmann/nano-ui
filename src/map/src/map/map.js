@@ -44,6 +44,20 @@ export default {
         return { init: false, callbacks: [], tempMap: null };
     },
 
+    watch: {
+
+        lat()
+        {
+            this.tempMap.focusMarkers();
+        },
+
+        lng()
+        {
+            this.tempMap.focusMarkers();
+        }
+
+    },
+
     mounted()
     {
         this.tempMap = new Map(this.$el, {
