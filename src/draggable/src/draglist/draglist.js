@@ -368,6 +368,13 @@ export default {
             this.filterVirtuals();
         },
 
+        expanded(value)
+        {
+            this.tempExpanded = value;
+
+            this.filterVirtuals();
+        },
+
         selected(value)
         {
             this.tempSelected = value;

@@ -73,6 +73,7 @@ export function Install(App, Icons = {}, Styles = {})
     require('./select/index').default(App);
     require('./checkbox/index').default(App);
     require('./radio/index').default(App);
+    require('./slider/index').default(App);
     require('./switch/index').default(App);
     require('./confirm/index').default(App);
     require('./cascader/index').default(App);

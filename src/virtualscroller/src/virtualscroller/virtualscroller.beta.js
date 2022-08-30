@@ -99,7 +99,7 @@ export default {
         framerate: {
             default()
             {
-                return 30;
+                return 90;
             },
             type: [Number]
         },
@@ -155,7 +155,7 @@ export default {
         bindAdaptScroll()
         {
             this.refreshScroll = setInterval(this.onScrollupdate,
-                500 / this.framerate);
+                1000 / this.framerate);
         },
 
         unbindAdaptScroll()

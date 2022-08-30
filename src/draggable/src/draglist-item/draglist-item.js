@@ -75,18 +75,16 @@ export default {
             if ( this.NDraggable.draggable ) {
                 this.timer = setTimeout(() => {
                     this.NDraggable.drag.bindNode(this);
-                }, 50);
+                }, 10);
             }
 
             this.init = true;
-        }, 40);
+        }, 5);
     },
 
     beforeUnmount()
     {
-        if ( ! this.init ) {
-            clearTimeout(this.timer);
-        }
+        clearTimeout(this.timer);
 
         this.NDraggable.drag.unbindNode(this);
     },
