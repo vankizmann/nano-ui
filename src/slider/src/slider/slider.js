@@ -320,7 +320,7 @@ export default {
 
         return (
             <div class="n-slider__handle" {...handleProps}>
-                <span>{ Obj.get(this.labels, value, value) }</span>
+                <span>{ Obj.get(this.labels, index, value) }</span>
             </div>
         );
     },
