@@ -186,7 +186,7 @@ export default {
 
         getValPos(value)
         {
-            return Num.fixed(this.width / this.minmax * value, 2) + 'px';
+            return Num.fixed(this.width / this.minmax * (value - this.fixmin), 2) + 'px';
         },
 
         getValStyle(value)
@@ -196,7 +196,7 @@ export default {
 
         getBarPos()
         {
-            return Num.fixed(this.width / this.minmax * this.tempValue[0], 2) + 'px';
+            return Num.fixed(this.width / this.minmax * (this.tempValue[0] - this.fixmin), 2) + 'px';
         },
 
         getBarWidth()
@@ -220,7 +220,7 @@ export default {
                 Arr.first(this.steps);
 
             let diff = Arr.each(this.steps, (step) => {
-                return Math.abs((range / 100 * width) - step);
+                return Math.abs((range / 100 * width) - step + this.fixmin);
             });
 
             let index = Arr.findIndex(diff, Math.min(...diff));
