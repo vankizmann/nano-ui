@@ -318,9 +318,11 @@ export default {
             this.onMousedown(event, this.index = index);
         };
 
+        let key = Arr.findIndex(this.steps, value);
+
         return (
             <div class="n-slider__handle" {...handleProps}>
-                <span>{ Obj.get(this.labels, index, value) }</span>
+                <span>{ Obj.get(this.labels, key, value) }</span>
             </div>
         );
     },
