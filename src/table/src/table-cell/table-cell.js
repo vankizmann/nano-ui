@@ -54,18 +54,18 @@ export default {
 
     data()
     {
-        return { init: true };
+        return { init: false };
     },
 
-    // mounted()
-    // {
-    //     this.timer = setTimeout(() => this.init = true, 5);
-    // },
-    //
-    // beforeUnmount()
-    // {
-    //     clearTimeout(this.timer);
-    // },
+    mounted()
+    {
+        this.timer = setTimeout(() => this.init = true, 20);
+    },
+
+    beforeUnmount()
+    {
+        clearTimeout(this.timer);
+    },
 
     methods: {
 

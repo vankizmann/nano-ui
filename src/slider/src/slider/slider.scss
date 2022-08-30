@@ -3,7 +3,6 @@
 .n-slider {
     position: relative;
     width: 100%;
-    height: 32px;
 }
 
 .n-slider__bar {
@@ -63,3 +62,32 @@
     opacity: 1;
 }
 
+@each $suffix, $values in $form {
+
+    $-slider-font: map-get($values, 'font');
+    $-slider-size: map-get($values, 'size');
+    $-slider-radius: map-get($values, 'radius');
+    $-slider-ratio: map-get($values, 'ratio');
+
+    .n-slider--#{$suffix} {
+        height: 32px;
+    }
+
+    .n-slider--#{$suffix} .n-slider__bar {
+        margin-top: -#{$-slider-size * 0.1};
+        height: $-slider-size * 0.2;
+    }
+
+    .n-slider--#{$suffix} .n-slider__handle {
+        width: $-slider-size * 0.6;
+        height: $-slider-size * 0.6;
+        margin: -#{$-slider-size * 0.3} 0 0 -#{$-slider-size * 0.3};
+    }
+
+    .n-slider--#{$suffix} .n-slider__handle span {
+        padding: $-slider-size * 0.15 $-slider-size * 0.3;
+        border-radius: $-slider-radius;
+        font-size: $-slider-font - 2;
+    }
+
+}

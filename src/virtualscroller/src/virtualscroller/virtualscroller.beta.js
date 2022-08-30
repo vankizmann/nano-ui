@@ -99,7 +99,7 @@ export default {
         framerate: {
             default()
             {
-                return 90;
+                return 65;
             },
             type: [Number]
         },

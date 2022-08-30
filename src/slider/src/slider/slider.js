@@ -9,7 +9,7 @@ export default {
         modelValue: {
             default()
             {
-                return 10;
+                return null;
             }
         },
 
@@ -24,8 +24,16 @@ export default {
         steps: {
             default()
             {
-                return 5;
+                return 1;
             }
+        },
+
+        labels: {
+            default()
+            {
+                return [];
+            },
+            type: [Array]
         },
 
         min: {
@@ -73,24 +81,30 @@ export default {
     data()
     {
         return {
-            width: null, tempValue: this.modelValue
+            index: 0, width: null, tempValue: [null, null]
         };
     },
 
     computed: {
 
-        pseudo()
+        selector()
         {
-            if ( Any.isArray(this.tempValue) ) {
-                return this.tempValue;
-            }
+            return `[data-index="${this.index}"]`;
+        },
 
-            return [this.min, this.tempValue];
+        fixmin()
+        {
+            return Any.isArray(this.steps) ? Arr.first(this.steps) : this.min;
+        },
+
+        fixmax()
+        {
+            return Any.isArray(this.steps) ? Arr.last(this.steps) : this.max;
         },
 
         minmax()
         {
-            return this.max - this.min;
+            return this.fixmax - this.fixmin;
         },
 
         touch() {
@@ -118,9 +132,7 @@ export default {
 
         modelValue()
         {
-            if ( this.modelValue !== this.tempValue ) {
-                this.tempValue = this.modelValue;
-            }
+            this.getPseudoValue();
         }
 
     },
@@ -131,6 +143,7 @@ export default {
             Any.debounce(this.onResize, 500), this._.uid);
 
         this.onResize();
+        this.getPseudoValue();
     },
 
     unmounted()
@@ -146,6 +159,31 @@ export default {
             this.width = Dom.find(this.$el).width();
         },
 
+        getPseudoValue()
+        {
+            let value = this.modelValue;
+
+            if ( Any.isNull(value) ) {
+                value = this.fixmax;
+            }
+            if ( ! Any.isArray(value) ) {
+                value = [this.fixmin, value];
+            }
+
+            return this.tempValue = value;
+        },
+
+        setModelValue()
+        {
+            let value = this.tempValue;
+
+            if ( ! this.range ) {
+                value = this.tempValue[1];
+            }
+
+            this.$emit('update:modelValue', value);
+        },
+
         getValPos(value)
         {
             return Num.fixed(this.width / this.minmax * value, 2) + 'px';
@@ -158,18 +196,36 @@ export default {
 
         getBarPos()
         {
-            return Num.fixed(this.width / this.minmax * this.pseudo[0], 2) + 'px';
+            return Num.fixed(this.width / this.minmax * this.tempValue[0], 2) + 'px';
         },
 
         getBarWidth()
         {
-            return Num.fixed(this.width / this.minmax * this.pseudo[1], 2) + 'px';
+            return Num.fixed(this.width / this.minmax * (this.tempValue[1] - this.tempValue[0]), 2) + 'px';
         },
 
         getBarStyle()
         {
             return 'max-width: ' + this.getBarWidth() + '; ' +
                 'transform: translateX(' + this.getBarPos() + ');';
+        },
+
+        getClosestValue(width)
+        {
+            if ( Any.isNumber(this.steps) ) {
+                return Num.round(width / this.steps) * this.steps;
+            }
+
+            let range = Arr.last(this.steps) -
+                Arr.first(this.steps);
+
+            let diff = Arr.each(this.steps, (step) => {
+                return Math.abs((range / 100 * width) - step);
+            });
+
+            let index = Arr.findIndex(diff, Math.min(...diff));
+
+            return this.steps[index];
         },
 
         getTouchEvent(event)
@@ -190,7 +246,7 @@ export default {
             event.preventDefault();
             event.stopPropagation();
 
-            Dom.find(this.$el).find('[data-index="' + this.index + '"]').addClass('n-move');
+            Dom.find(this.$el).find(this.selector).addClass('n-move');
             Dom.find(document.body).addClass('n-move');
 
             Dom.find(document).on(this.mouseup,
@@ -209,19 +265,29 @@ export default {
 
             let relativeWidth = (this.clientX - offsetX) / this.width * 100;
 
-            this.closestValue = Num.round(relativeWidth / this.steps) * this.steps;
+            let closestValue = this.getClosestValue(relativeWidth);
 
-            if ( this.closestValue < this.min ) {
-                this.closestValue = this.min;
+            if ( closestValue < this.fixmin ) {
+                closestValue = this.fixmin;
             }
 
-            if ( this.closestValue > this.max ) {
-                this.closestValue = this.max;
+            if ( closestValue > this.fixmax ) {
+                closestValue = this.fixmax;
             }
 
-            this.tempValue = this.closestValue;
+            let stepMin = this.tempValue[0] + this.steps;
 
-            console.log(this.index, this.tempValue[this.index]);
+            if ( this.index === 1 && closestValue < stepMin ) {
+                closestValue = stepMin;
+            }
+
+            let stepMax = this.tempValue[1] - this.steps;
+
+            if ( this.index === 0 && closestValue > stepMax ) {
+                closestValue = stepMax;
+            }
+
+            this.tempValue[this.index] = closestValue;
         },
 
         onMouseup(event)
@@ -232,9 +298,10 @@ export default {
             Dom.find(document).off(this.mouseup, null, this._.uid);
             Dom.find(document).off(this.mousemove, null, this._.uid);
 
-
-            Dom.find(this.$el).find('[data-index="' + this.index + '"]').removeClass('n-move');
+            Dom.find(this.$el).find(this.selector).removeClass('n-move');
             Dom.find(document.body).removeClass('n-move');
+
+            this.setModelValue();
         },
 
     },
@@ -253,17 +320,17 @@ export default {
 
         return (
             <div class="n-slider__handle" {...handleProps}>
-                <span>{ value }</span>
+                <span>{ Obj.get(this.labels, value, value) }</span>
             </div>
         );
     },
 
     renderHandles()
     {
-        let values = this.tempValue;
+        let values = Arr.clone(this.tempValue);
 
-        if ( ! Any.isArray(values) ) {
-            values = [values];
+        if ( ! this.range ) {
+            delete values[0];
         }
 
         return Arr.each(values, (value, index) => {
