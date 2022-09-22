@@ -169,7 +169,6 @@ export default {
         }
 
         Dom.find(document.body).append(this.$el);
-
     },
 
     beforeUnmount()
@@ -220,7 +219,7 @@ export default {
 
         stopRefreshTimeout()
         {
-            clearInterval(this.refresh);
+            clearTimeout(this.refresh);
 
             Dom.find(this.$el).removeClass('n-ready');
         },
@@ -233,12 +232,21 @@ export default {
 
             window.zIndex += 1;
 
-            Dom.find(this.$el).attr('data-modal', 
+            Dom.find(this.$el).attr('data-modal',
                 window.zIndex);
 
-            Dom.find(this.$el).css({ 
+            Dom.find(this.$el).css({
                 'z-index': window.zIndex
             });
+
+            this.queueRefreshTimeout();
+        },
+
+        queueRefreshTimeout()
+        {
+            if ( ! this.tempValue ) {
+                return this.stopRefreshTimeout();
+            }
 
             this.refresh = setTimeout(() => {
                 Dom.find(this.$el).addClass('n-ready');
@@ -280,7 +288,7 @@ export default {
                 return;
             }
 
-            let extractIndex = (modal) => { 
+            let extractIndex = (modal) => {
                 return Dom.find(modal).attr('data-modal');
             };
 
@@ -403,6 +411,10 @@ export default {
             'n-modal--' + this.position
         ];
 
+        if ( this.tempValue ) {
+            this.queueRefreshTimeout();
+        }
+
         if ( this.renderClose ) {
             classList.push('n-closable');
         }
@@ -419,7 +431,7 @@ export default {
 
         return (
             <div class={classList}>
-                { [innerHtml, this.ctor('renderBackdrop')()] } 
+                { [innerHtml, this.ctor('renderBackdrop')()] }
             </div>
         );
     }

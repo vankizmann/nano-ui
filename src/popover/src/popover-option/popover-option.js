@@ -115,6 +115,8 @@ export default {
             if ( this.NPopover && this.clickClose ) {
                 this.NPopover.close();
             }
+
+            this.$emit('fakeclick', event);
         }
 
     },
