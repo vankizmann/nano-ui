@@ -137,6 +137,10 @@ export default {
             let file = Obj.get(this.tempThumb, 'name',
                 this.tempThumb);
 
+            if ( Any.isEmpty(file) ) {
+                return fallback;
+            }
+
             let extension = file.replace(/^.*?\.([^.?]+)(\?.*?)?$/,
                 '$1');
 
