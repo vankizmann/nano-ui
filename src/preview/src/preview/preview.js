@@ -110,6 +110,10 @@ export default {
             let file = Obj.get(this.tempFile, 'name',
                 this.tempFile);
 
+            if ( Any.isEmpty(file) ) {
+                return fallback;
+            }
+
             let extension = file.replace(/^.*?\.([^.?]+)(\?.*?)?$/,
                 '$1');
 
