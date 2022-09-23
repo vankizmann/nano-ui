@@ -1,4 +1,4 @@
-import { Obj, Locale } from "@kizmann/pico-js";
+import { Any, Obj, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -38,7 +38,13 @@ export default {
 
         tempExt()
         {
-            return this.tempSrc.replace(/^.*?\.([^.?]+)(\?.*?)?$/, '$1');
+            let regex = /^.*?\.([^.?]+)(\?.*?)?$/;
+
+            if ( Any.isEmpty(this.tempSrc) ) {
+                return null;
+            }
+
+            return this.tempSrc.replace(regex, '$1');
         }
 
     },
@@ -61,9 +67,7 @@ export default {
 
         return (
             <div class={classList}>
-                <ul>
-                    { slots }
-                </ul>
+                <ul>{ slots }</ul>
             </div>
         );
     }
