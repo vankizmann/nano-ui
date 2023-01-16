@@ -139,6 +139,38 @@
             </n-popover-option>
         </n-popover>
 
+        <h2>NRating</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_rating.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_rating.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-rating :model-value="3.5" v-bind="n_rating" type="primary" />
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-rating :model-value="3" v-bind="n_rating" type="secondary" />
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-rating :model-value="3.5" v-bind="n_rating" type="success" />
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-rating :model-value="0" v-bind="n_rating" type="warning" />
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-rating :model-value="1" v-bind="n_rating" type="danger" />
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-rating :model-value="3.5" v-bind="n_rating" type="info" />
+            </div>
+        </div>
+
         <h2>NButton</h2>
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
@@ -1106,6 +1138,10 @@
 
             pi.Dom.find('#theme').attr('href', '../dist/themes/' +
                 data.n_theme + '.css');
+
+            data.n_rating = {
+                size: 'md', choice: 'No stars|:value star|:value stars', disabled: false
+            };
 
             data.n_button = {
                 icon: 'fa fa-ghost', size: 'md', square: false, link: false, disabled: false

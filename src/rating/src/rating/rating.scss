@@ -1,0 +1,98 @@
+@import "../../../root/vars";
+
+.n-rating {
+    overflow: hidden;
+    max-width: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.n-rating__stars {
+    flex: 0 0 auto;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.n-rating__stars span {
+    flex: 0 0 auto;
+    position: relative;
+    display: block;
+}
+
+.n-rating__stars span:before,
+.n-rating__stars span:after {
+    content: '\00a0';
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+}
+
+.n-rating__stars span:before {
+    z-index: 2;
+    left: 0;
+    background-position: left center;
+}
+
+.n-rating__stars span:after {
+    z-index: 1;
+    right: 0;
+    background-position: right center;
+}
+
+.n-rating__stars span.is-null:before {
+    width: 0;
+}
+
+.n-rating__stars span.is-half:before {
+    width: 50%;
+}
+
+.n-rating__stars span.is-full:before {
+    width: 100%;
+}
+
+.n-rating__value {
+    overflow: hidden;
+    flex: 1 1 auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+@each $suffix, $values in $form {
+
+    $-rating-font: map-get($values, 'font');
+    $-rating-size: map-get($values, 'size');
+    $-rating-radius: map-get($values, 'radius');
+    $-rating-ratio: map-get($values, 'ratio');
+
+    $-rating-star: $-rating-size * $-rating-ratio * 1.2;
+
+    .n-rating--#{$suffix} {
+        font-size: $-rating-font;
+    }
+
+    .n-rating--#{$suffix} .n-rating__stars span {
+        width: $-rating-star;
+        height: $-rating-star;
+    }
+
+    .n-rating--#{$suffix} .n-rating__stars span:not(:last-child) {
+        margin-right: $-rating-star / 4;
+    }
+
+    .n-rating--#{$suffix} .n-rating__stars span:before,
+    .n-rating--#{$suffix} .n-rating__stars span:after {
+        background-size: $-rating-star $-rating-star;
+    }
+
+    .n-rating--#{$suffix} .n-rating__value {
+        margin-left: $-rating-star;
+    }
+
+}

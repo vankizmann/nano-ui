@@ -90,6 +90,7 @@ export function Install(App, Icons = {}, Styles = {})
     require('./preview/index').default(App);
     require('./map/index').default(App);
     require('./file/index').default(App);
+    require('./rating/index').default(App);
 
     // SX only ez 17.1
     // require('./file-list/index'); // SX only 17.1
