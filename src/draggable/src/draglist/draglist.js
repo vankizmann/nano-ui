@@ -316,11 +316,13 @@ export default {
     {
         return {
             uid: UUID(),
+            modifier: [],
             virtuals: [], 
             visible: [], 
             childNodes: {}, 
             highlight: [],
-            firstSelected: null, 
+            firstSelected: null,
+            lastSelected: null,
             tempCurrent: this.current, 
             tempExpanded: this.expanded, 
             tempSelected: this.selected
@@ -330,6 +332,12 @@ export default {
     beforeMount()
     {
         this.drag = new NDraghandler(this);
+
+        Dom.find(window).on('keydown',
+            this.watchModifierDown, this._uid);
+
+        Dom.find(window).on('keyup',
+            this.watchModifierUp, this._uid);
     },
 
     mounted()
@@ -350,6 +358,7 @@ export default {
         this.drag.unbindRoot();
 
         Dom.find(document).off('keydown', null, this.uid);
+        Dom.find(document).off('keyup', null, this.uid);
     },
 
     watch: {
@@ -388,6 +397,16 @@ export default {
     },
 
     methods: {
+
+        watchModifierDown(e)
+        {
+            Arr.add(this.modifier, e.which);
+        },
+
+        watchModifierUp(e)
+        {
+            Arr.remove(this.modifier, e.which);
+        },
 
         watchSelected()
         {
@@ -709,13 +728,45 @@ export default {
                 this.tempSelected;
         },
 
+        toggleSingleNode(node)
+        {
+            Arr.toggle(this.tempSelected, this.lastSelected =
+                node.value[this.uniqueProp]);
+        },
+
+        toggleRangeNode(node)
+        {
+            let indexies = [0, -1], reversed = false;
+
+            if ( ! Any.isEmpty(this.lastSelected) ) {
+                indexies[1] = this.getIndex(this.lastSelected);
+            }
+
+            indexies[0] = this.getIndex(node.value[this.uniqueProp]);
+
+            if ( indexies[1] > indexies[0] ) {
+                reversed = true;
+            }
+
+            if ( ! reversed ) {
+                indexies = [indexies[1]+1, indexies[0]+1];
+            }
+
+            Arr.each(this.items.slice(indexies[0], indexies[1]), (item, index) => {
+                Arr.toggle(this.tempSelected, item[this.uniqueProp]);
+            });
+
+            this.lastSelected = node.value[this.uniqueProp];
+        },
+
         selectItem(node)
         {
             if ( this.isDisabled(node) ) {
                 return;
             }
 
-            Arr.toggle(this.tempSelected, node.value[this.uniqueProp]);
+            ! Arr.has(this.modifier, 16) || this.renderExpand ?
+                this.toggleSingleNode(node) : this.toggleRangeNode(node);
 
             this.$emit('update:selected', this.tempSelected);
         },
@@ -733,6 +784,8 @@ export default {
             if ( indexies.length === this.tempSelected.length ) {
                 return this.$emit('update:selected', this.tempSelected = []);
             }
+
+            this.lastSelected = null;
 
             this.$emit('update:selected', this.tempSelected = indexies);
         },
