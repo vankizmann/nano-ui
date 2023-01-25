@@ -1,4 +1,5 @@
 import { UUID, Num, Arr, Obj, Any, Dom, Locale } from "@kizmann/pico-js";
+import { h } from "vue";
 
 export default {
 
@@ -11,6 +12,14 @@ export default {
     },
 
     props: {
+
+        dom: {
+            default()
+            {
+                return 'div';
+            },
+            type: [String]
+        },
 
         form: {
             default()
@@ -70,15 +79,32 @@ export default {
 
     },
 
+    computed: {
+
+        classList()
+        {
+            if ( ! this.$attrs.class ) {
+                return [];
+            }
+
+            return Any.isArray(this.$attrs) ? this.$attrs.class :
+                [this.$attrs.class];
+        }
+
+    },
+
     methods: {
 
         onSubmit(event)
         {
             if ( this.prevent ) {
+                event.preventDefault();
                 event.stopPropagation();
             }
 
-            this.$emit('submit', event);
+            if ( Dom.find(event.target).is('input') ) {
+                this.$emit('submit', event);
+            }
 
             return this.prevent;
         },
@@ -136,15 +162,17 @@ export default {
             'n-form--' + this.align,
         ];
 
-        let attrs = Obj.except(this.$attrs, [
-            'onChange', 'onSubmit'
+        let attrs = Obj.except(this.$attrs, ['class', 'onChange', 'onSubmit'], {
+            class: this.cmer(classList)
+        });
+
+        attrs['onSubmit'] = (e) => {
+            return false;
+        }
+
+        return h(this.dom, { ...attrs }, [
+            this.$slots.default && this.$slots.default()
         ]);
-
-
-        return (
-            <form class={classList} onSubmit={this.onSubmit} {...attrs}>
-                { this.$slots.default && this.$slots.default() }
-            </form>
-        );
     }
+
 }

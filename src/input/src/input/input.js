@@ -135,7 +135,7 @@ export default {
                 return;
             }
 
-            this.NForm.onSubmit();
+            this.NForm.onSubmit(event);
         },
 
         onFocus(event)
