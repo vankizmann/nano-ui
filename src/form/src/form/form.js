@@ -66,7 +66,7 @@ export default {
             {
                 return ['modified', 'dragid'];
             },
-            type: [Boolean]
+            type: [Array]
         },
 
         forceChange: {
