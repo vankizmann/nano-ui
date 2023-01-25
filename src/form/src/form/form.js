@@ -4,6 +4,8 @@ export default {
 
     name: 'NForm',
 
+    inheritAttrs: false,
+
     model: {
         prop: 'form'
     },
@@ -73,7 +75,6 @@ export default {
         onSubmit(event)
         {
             if ( this.prevent ) {
-                event.preventDefault();
                 event.stopPropagation();
             }
 
@@ -96,27 +97,10 @@ export default {
             });
         },
 
-        setForm(form)
+        emitChange(form)
         {
-            let veForm = Obj.clone(form);
-
-            if ( Any.md5(veForm) !== Any.md5(this.veForm) || this.forceChange ) {
-                this.$emit('change');
-            }
-
-            this.veForm = veForm;
+            this.$emit('change');
         },
-
-        setErrors(errors)
-        {
-            let veErrors = Obj.clone(errors);
-
-            if ( Any.md5(veErrors) !== Any.md5(this.veErrors) || this.forceErrors ) {
-                this.$emit('errors');
-            }
-
-            this.veErrors = veErrors;
-        }
 
     },
 
@@ -137,36 +121,12 @@ export default {
 
     mounted()
     {
-        // this.$watch('form', () => this.setForm(this.form),
-        //     { deep: true });
-
-        // this.$watch('errors', () => this.setErrors(this.errors),
-        //     { deep: true });
-
-        // let ident = {
-        //     _uid: this.uid
-        // };
-
-        // if ( this.propagation ) {
-        //     return;
-        // }
-
-        // Dom.find(this.$el).on('submit',
-        //     this.onSubmit, this._.uid);
+        Any.delay(this.ctor('ready'), 1000);
     },
 
-    beforeUnmount()
+    ready()
     {
-        // let ident = {
-        //     _uid: this.uid
-        // };
-
-        // if ( this.propagation ) {
-        //     return;
-        // }
-
-        // Dom.find(this.$el).off('submit',
-        //     null, this._.uid);
+        this.$watch('form', this.emitChange, { deep: true });
     },
 
     render()
@@ -176,8 +136,13 @@ export default {
             'n-form--' + this.align,
         ];
 
+        let attrs = Obj.except(this.$attrs, [
+            'onChange', 'onSubmit'
+        ]);
+
+
         return (
-            <form class={classList} onSubmit={this.onSubmit}>
+            <form class={classList} onSubmit={this.onSubmit} {...attrs}>
                 { this.$slots.default && this.$slots.default() }
             </form>
         );

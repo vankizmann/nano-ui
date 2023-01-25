@@ -419,6 +419,13 @@ export default {
             });
         },
 
+        updateNode(node)
+        {
+            Obj.set(this, node.value.route, node.item);
+
+            this.$emit('update:items', this.items);
+        },
+
         findVirtual(unique)
         {
             let value = Arr.find(this.virtuals, (item) => {

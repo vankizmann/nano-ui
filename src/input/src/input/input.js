@@ -5,6 +5,14 @@ export default {
 
     name: 'NInput',
 
+    inject: {
+
+        NForm: {
+            default: undefined
+        }
+
+    },
+
     inheritAttrs: false,
 
     props: {
@@ -111,8 +119,23 @@ export default {
 
         onInput(event)
         {
-            this.$emit('update:modelValue', 
+            this.$emit('update:modelValue',
                 this.tempValue = event.target.value);
+        },
+
+        onKeydown(event)
+        {
+            if ( event.which !== 13 ) {
+                return;
+            }
+
+            event.preventDefault();
+
+            if ( ! this.NForm ) {
+                return;
+            }
+
+            this.NForm.onSubmit();
         },
 
         onFocus(event)
@@ -129,22 +152,22 @@ export default {
 
     renderIcon()
     {
-        if ( ! this.icon ) {
+        if ( !this.icon ) {
             return null;
         }
 
-        let disabled = this.disabled || 
+        let disabled = this.disabled ||
             this.iconDisabled;
 
         let props = {
-            type:       'input',
-            icon:       this.icon,
-            size:       this.size,
-            square:     true,
-            disabled:   disabled,
+            type: 'input',
+            icon: this.icon,
+            size: this.size,
+            square: true,
+            disabled: disabled,
         };
 
-        if ( ! disabled ) {
+        if ( !disabled ) {
             props.onClick = this.onIconClick;
         }
 
@@ -158,13 +181,14 @@ export default {
         ]);
 
         Obj.assign(props, {
-            value:          this.tempValue,
-            type:           this.nativeType,
-            disabled:       this.disabled,
-            placeholder:    this.placeholder,
-            onInput:        this.onInput,
-            onFocus:        this.onFocus,
-            onBlur:         this.onBlur,
+            value: this.tempValue,
+            type: this.nativeType,
+            disabled: this.disabled,
+            placeholder: this.placeholder,
+            onInput: this.onInput,
+            onFocus: this.onFocus,
+            onBlur: this.onBlur,
+            onKeydown: this.onKeydown
         });
 
         return h('input', props);
