@@ -152,7 +152,7 @@ export default {
 
     ready()
     {
-        this.$watch('form', this.emitChange, { deep: true });
+        this.$watch('form', Any.debounce(this.emitChange, 300), { deep: true });
     },
 
     render()
