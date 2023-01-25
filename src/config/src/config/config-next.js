@@ -186,7 +186,7 @@ export default {
                 $scope: this.scope, $model: this.tempValue, $global: window
             };
 
-            if ( Obj.get(sources, prop, undefined) === undefined ) {
+            if ( Obj.get(sources, prop, -1337) === -1337 ) {
                 Obj.set(sources, prop, fallback);
             }
 
@@ -266,7 +266,7 @@ export default {
             };
 
             props[this.toPropKey(key)] = this.getInput(value.value,
-                props.fallback);
+                value.fallback);
         });
 
         let element = alias.replace(/:.*?$/, '');
