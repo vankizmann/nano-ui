@@ -186,7 +186,7 @@ export default {
                 $scope: this.scope, $model: this.tempValue, $global: window
             };
 
-            if ( Obj.get(sources, prop, -1337) === -1337 ) {
+            if ( ! Any.isNull(fallback) && Obj.get(sources, prop, -1337) === -1337 ) {
                 Obj.set(sources, prop, fallback);
             }
 

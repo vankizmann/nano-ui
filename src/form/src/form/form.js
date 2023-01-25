@@ -61,6 +61,14 @@ export default {
             type: [Boolean]
         },
 
+        ignore: {
+            default()
+            {
+                return ['modified', 'dragid'];
+            },
+            type: [Boolean]
+        },
+
         forceChange: {
             default()
             {
@@ -93,6 +101,33 @@ export default {
 
     },
 
+    data()
+    {
+        return {
+            uid: UUID(), elements: [], blocked: true,
+        };
+    },
+
+    provide()
+    {
+        return {
+            NForm: this
+        };
+    },
+
+    mounted()
+    {
+        Any.delay(this.ctor('ready'), 500);
+    },
+
+    ready()
+    {
+        this.$watch('form', this.emitChange,
+            { deep: true });
+
+        this.resetChange();
+    },
+
     methods: {
 
         onSubmit(event)
@@ -123,36 +158,42 @@ export default {
             });
         },
 
-        emitChange(form)
+        resetChange(timeout = 500)
         {
+            clearTimeout(this.timeout);
+
+            this.timeout = setTimeout(() => {
+                this.blocked = false;
+            }, timeout);
+
+            this.blocked = true;
+
+            let value = Obj.except(this.form,
+                this.ignore);
+
+            this.prevState = JSON.stringify(value);
+        },
+
+        emitChange()
+        {
+            if ( this.blocked ) {
+                return;
+            }
+
+            let value = Obj.except(this.form,
+                this.ignore);
+
+            let nextState = JSON.stringify(value);
+
+            if ( this.prevState == nextState ) {
+                return;
+            }
+
+            this.prevState = nextState;
+
             this.$emit('change');
         },
 
-    },
-
-    data()
-    {
-        return {
-            uid: UUID(),
-            elements: []
-        };
-    },
-
-    provide()
-    {
-        return {
-            NForm: this
-        };
-    },
-
-    mounted()
-    {
-        Any.delay(this.ctor('ready'), 1000);
-    },
-
-    ready()
-    {
-        this.$watch('form', this.emitChange, { deep: true });
     },
 
     render()
