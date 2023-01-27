@@ -51,7 +51,7 @@ export default {
         iconDisabled: {
             default()
             {
-                return false;
+                return null;
             },
             type: [Boolean]
         },
@@ -156,8 +156,11 @@ export default {
             return null;
         }
 
-        let disabled = this.disabled ||
-            this.iconDisabled;
+        let disabled = this.disabled;
+
+        if ( this.iconDisabled !== null ) {
+            disabled = this.iconDisabled;
+        }
 
         let props = {
             type: 'input',

@@ -6,15 +6,20 @@
     width: 100%;
 }
 
-.n-file__wrapper > .n-input {
+.n-file > .n-input {
     flex: 1 1 auto;
 }
 
-.n-file__wrapper > .n-button {
-    flex: 0 0 auto;
-    margin-left: 5px;
+.n-file .n-input input {
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-.n-file__input {
+.n-file > .n-button {
+    flex: 0 0 auto;
+    margin-left: 7px;
+}
+
+.n-file .n-file__input {
     display: none;
 }

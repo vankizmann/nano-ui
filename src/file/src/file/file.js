@@ -82,7 +82,7 @@ export default {
     data()
     {
         return {
-            tempValue: this.value
+            tempValue: this.modelValue
         };
     },
 
@@ -129,7 +129,7 @@ export default {
         let props = {
             size: this.size,
             disabled: true,
-            iconDisabled: Any.isEmpty(this.tempValue)
+            iconDisabled: false,
         };
 
         props['onIconClick'] = this.clearFile;
@@ -143,7 +143,7 @@ export default {
                 this.tempValue.length);
         }
 
-        if ( this.clearable ) {
+        if ( this.clearable && !Any.isEmpty(this.tempValue) ) {
             props.icon = this.clearableIcon;
         }
 

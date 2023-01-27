@@ -173,7 +173,17 @@ export default {
                 $scope: this.scope, $model: this.tempValue, $global: window
             };
 
-            return Obj.get(sources, value);
+            let result = Obj.get(sources, value.replace(/^!+/, ''));
+
+            if ( value.match(/^!!\$/) ) {
+                result = Any.isEmpty(result);
+            }
+
+            if ( value.match(/^!\$/) ) {
+                result = Any.isEmpty(result);
+            }
+
+            return result;
         },
 
         getInput(prop, fallback)
