@@ -93,6 +93,13 @@ export default {
             if ( this.modelValue !== this.tempValue ) {
                 this.tempValue = this.modelValue;
             }
+        },
+
+        tempValue()
+        {
+            if ( Any.isEmpty(this.tempValue) ) {
+                this.$refs.input.value = null;
+            }
         }
 
     },
