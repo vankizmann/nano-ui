@@ -167,7 +167,7 @@ export default {
 
         props['onDragenter'] = (event) => {
 
-            this.dragger++;
+            this.dragger ++;
 
             if ( this.dragger !== 1 ) {
                 return;
@@ -180,13 +180,17 @@ export default {
 
         props['onDragleave'] = (event) => {
 
-            this.dragger--;
+            this.dragger --;
 
             if ( this.dragger !== 0 ) {
                 return;
             }
 
             clearTimeout(this.showDelay);
+        };
+
+        props.style = {
+            order: this.sort + 1,
         };
 
         return (
@@ -226,7 +230,9 @@ export default {
 
         this.init = true;
 
-        let style = {};
+        let style = {
+            order: this.sort + 2
+        };
 
         if ( !Arr.has(tempValue, this.name) ) {
             style.display = 'none';

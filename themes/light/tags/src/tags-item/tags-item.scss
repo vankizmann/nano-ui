@@ -1,0 +1,12 @@
+@import "../../../root/vars";
+
+@each $-tags-index, $-tags-color in $colors-tags {
+
+    .n-tags-item--color-#{$-tags-index} {
+        background: rgba($-tags-color, 0.15);
+    }
+    .n-tags-item--color-#{$-tags-index} i {
+        color: rgba($-tags-color, 0.75);
+    }
+
+}

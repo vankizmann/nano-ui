@@ -91,7 +91,11 @@ export default {
 
     updated()
     {
-        Any.delay(() => this.$refs.scrollbar.adaptHeight(), 500);
+        Any.delay(() => {
+            if ( this.$refs.scrollbar ) {
+                this.$refs.scrollbar.adaptHeight();
+            }
+        }, 500);
     },
 
     methods: {

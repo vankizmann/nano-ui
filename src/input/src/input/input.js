@@ -125,6 +125,8 @@ export default {
 
         onKeydown(event)
         {
+            this.$emit('keydown', event);
+
             if ( event.which !== 13 ) {
                 return;
             }

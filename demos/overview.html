@@ -77,6 +77,34 @@
             </div>
         </div>
 
+        <h2>NTagsItem</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_tags.size" :options="sizes"></n-select>
+            </div>
+        </div>
+
+        <div class="grid grid--row">
+            <div class="col--1-1">
+                <n-tags v-bind="n_tags">
+                    <n-tags-item color="0" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna sjkdnajks dnjkandjknas jkdnajkdjaksn djkans jkdnj</n-tags-item>
+                    <n-tags-item color="1" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="2" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="3">Foo</n-tags-item>
+                    <n-tags-item color="4" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="5" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="6" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="7" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="8">Foo</n-tags-item>
+                    <n-tags-item color="9" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="10" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="11" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="12" icon="fa fa-ghost">Foo</n-tags-item>
+                </n-tags>
+            </div>
+        </div>
+
         <h2>NForm</h2>
 
         <n-form :errors="{ foo: 'ERROR' }">
@@ -1138,6 +1166,10 @@
 
             pi.Dom.find('#theme').attr('href', '../dist/themes/' +
                 data.n_theme + '.css');
+
+            data.n_tags = {
+                size: 'md',
+            };
 
             data.n_rating = {
                 size: 'md', choice: 'No stars|:value star|:value stars', disabled: false
