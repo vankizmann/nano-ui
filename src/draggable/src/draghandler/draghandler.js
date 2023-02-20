@@ -559,7 +559,50 @@ class NDraghandler
         delete this.childNodes[node.uid];
     }
 
-    moveNodes(target, strategy)
+    moveNodes(target, strategy) {
+
+        if ( this.rootNode.items !== undefined ) {
+            return this.moveNodesMany(target, strategy);
+        }
+
+        if ( this.rootNode.item !== undefined ) {
+            return this.moveNodesOne(target, strategy);
+        }
+
+        return null;
+    }
+
+    moveNodesOne(target, strategy)
+    {
+        let clone = {
+            items: [Obj.clone(this.rootNode.item)]
+        };
+
+        if ( this.rootNode.insertNode  ) {
+            clone = this.moveNodesRoot(clone, target);
+        }
+
+        if ( this.rootNode.removeNode ) {
+            clone = this.removeNodes(clone);
+        }
+
+        let sources = Arr.each(this.cacheNodes, (node) => {
+            return node.item[this.rootNode.uniqueProp];
+        });
+
+        let source = Arr.first(this.cacheNodes);
+
+        this.rootNode.$emit('move', Obj.get(source, 'value.id'),
+            Obj.get(target, 'uid'), strategy);
+
+        this.rootNode.$emit('moveRaw',
+            source, target, strategy);
+
+        this.rootNode.$emit('update:item',
+            Obj.get(source, 'item'));
+    }
+
+    moveNodesMany(target, strategy)
     {
         let clone = {
             items: Obj.clone(this.rootNode.items)

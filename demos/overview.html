@@ -866,6 +866,14 @@
             </n-draglist>
         </template>
 
+        <h2>NDropzone</h2>
+
+        <n-dropzone v-model:item="virtualItem" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+            <template v-slot:default="item">
+                <div style="padding: 0 5px; line-height: 34px;">{{item.label}}</div>
+            </template>
+        </n-dropzone>
+
         <h2>NResizer</h2>
 
         <div style="display: flex; flex-direction: row; justify-content: flex-start;">
@@ -1156,6 +1164,9 @@
             data.virtualTree = pi.Arr.each(itemGenerator(100), function (item) {
                 return pi.Obj.assign(item, { children: itemGenerator(10) });
             });
+
+
+            data.virtualItem = null;
 
             data.treeSelect = null;
             data.treeMatrix = [data.virtualTree[3]];

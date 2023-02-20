@@ -334,10 +334,10 @@ export default {
         this.drag = new NDraghandler(this);
 
         Dom.find(window).on('keydown',
-            this.watchModifierDown, this._uid);
+            this.watchModifierDown, this._.uid);
 
         Dom.find(window).on('keyup',
-            this.watchModifierUp, this._uid);
+            this.watchModifierUp, this._.uid);
     },
 
     mounted()

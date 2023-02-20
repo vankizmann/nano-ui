@@ -190,8 +190,10 @@ export default {
 
         onScrollTo(x = 0, y = 0)
         {
-            this.$refs.content.scrollTop = y;
-            this.$refs.content.scrollLeft = x;
+            if ( this.$refs.content ) {
+                this.$refs.content.scrollTop = y;
+                this.$refs.content.scrollLeft = x;
+            }
         },
 
         scrollIntoView(selector, delay = 0)
@@ -596,7 +598,7 @@ export default {
 
         onUpdate()
         {
-            if ( ! this.fixture ) {
+            if ( ! this.fixture || ! this.$refs.content ) {
                 return;
             }
 
