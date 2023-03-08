@@ -581,7 +581,7 @@ export default {
         });
 
         return (
-            <NPopover trigger="context" width={140}>
+            <NPopover trigger="context" width={220}>
                 <NCheckboxGroup vModel={this.tempVisible} align="vertical">
                     {Obj.values(columns)}
                 </NCheckboxGroup>

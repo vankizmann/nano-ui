@@ -276,7 +276,9 @@ export default {
             props.onMousemove = Any.framerate(this.onHover(tempCascade), 30);
         }
 
-        props['on' + Str.ucfirst(this.mousedown)] = this.onSelect(tempCascade);
+        if ( ! disabled ) {
+            props['on' + Str.ucfirst(this.mousedown)] = this.onSelect(tempCascade);
+        }
 
         let children = Obj.get(item, this.childProp);
 

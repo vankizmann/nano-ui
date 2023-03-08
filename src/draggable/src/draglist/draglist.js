@@ -518,7 +518,17 @@ export default {
 
             Arr.recursive(this.items, this.childProp, (node, cascade) => {
 
-                if ( Obj.get(node, key || this.uniqueProp) !== value ) {
+                let val = node;
+
+                if ( !Any.isEmpty(key) ) {
+                    val = Obj.get(val, key);
+                }
+
+                if ( ! Any.isFunction(value) ) {
+                    value = (val) => val === value;
+                }
+
+                if ( ! value(val) ) {
                     return;
                 }
 
