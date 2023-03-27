@@ -1,0 +1,188 @@
+@import "../../../root/vars";
+
+.n-datetimepicker {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 100%;
+    border: 1px solid transparent;
+}
+
+.n-datetimepicker.n-disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.n-datetimepicker__display {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 100%;
+}
+
+.n-datetimepicker__seperator {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-datetimepicker__input {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 50%;
+}
+
+.n-datetimepicker__input input {
+    cursor: default;
+    appearance: none;
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    text-decoration: none;
+    line-height: 1.2;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.n-disabled .n-datetimepicker__input input {
+    cursor: not-allowed;
+}
+
+.n-datetimepicker__clear,
+.n-datetimepicker__angle {
+    order: 100;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-datetimepicker__clear {
+    display: none;
+}
+
+.n-datetimepicker:hover.n-clearable:not(.n-empty) .n-datetimepicker__clear,
+.n-datetimepicker.n-focus.n-clearable:not(.n-empty) .n-datetimepicker__clear {
+    display: flex;
+}
+
+.n-datetimepicker:hover.n-clearable:not(.n-empty) .n-datetimepicker__angle,
+.n-datetimepicker.n-focus.n-clearable:not(.n-empty) .n-datetimepicker__angle {
+    display: none;
+}
+
+.n-datetimepicker__angle {
+    transition: transform 0.25s;
+}
+
+.n-datetimepicker.n-focus .n-datetimepicker__angle {
+    transform: scaleY(-1);
+}
+
+.n-datetimepicker__clear i,
+.n-datetimepicker__angle i {
+    text-align: center;
+}
+
+.n-datetimepicker__clear i {
+    border-radius: 500px;
+}
+
+.n-datetimepicker__placeholder {
+    flex: 1 1 auto;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.n-datetimepicker__body,
+.n-datetimepicker__empty {
+     overflow: hidden;
+     margin: 1px 0;
+     border: 0;
+}
+
+.n-datetimepicker__body {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+.n-datetimepicker__date-panel.n-datepicker-panel {
+    border: none;
+}
+
+.n-datetimepicker__time-panel.n-timepicker-panel {
+    border: none;
+    border-left: 1px solid $color-gray-10;
+    background: rgba($color-gray-05, 0.5);
+}
+
+.n-datetimepicker__empty {
+     text-align: center;
+}
+
+@each $suffix, $values in $form {
+
+    $-datepicker-font: map-get($values, 'font');
+    $-datepicker-size: map-get($values, 'size');
+    $-datepicker-radius: map-get($values, 'radius');
+    $-datepicker-ratio: map-get($values, 'ratio');
+
+    .n-datetimepicker--#{$suffix} {
+        min-height: $-datepicker-size;
+        font-size: $-datepicker-font;
+        border-radius: $-datepicker-radius;
+    }
+
+    $-datepicker-padding: $-datepicker-size * $-datepicker-ratio * 0.5;
+
+    .n-datetimepicker--#{$suffix} .n-datetimepicker__display,
+    .n-datetimepicker--#{$suffix} .n-datetimepicker__seperator,
+    .n-datetimepicker--#{$suffix} .n-datetimepicker__input input {
+        padding: 0 $-datepicker-padding;
+    }
+
+    .n-datetimepicker--#{$suffix} .n-datetimepicker__clear,
+    .n-datetimepicker--#{$suffix} .n-datetimepicker__angle {
+        width: $-datepicker-size;
+        margin: 0 -#{$-datepicker-padding} 0 -#{$-datepicker-padding};
+    }
+    .n-datetimepicker--#{$suffix} .n-datetimepicker__clear i,
+    .n-datetimepicker--#{$suffix} .n-datetimepicker__angle i {
+        width: $-datepicker-size - 14;
+        height: $-datepicker-size - 14;
+        line-height: $-datepicker-size - 14;
+    }
+
+    .n-datetimepicker--#{$suffix} .n-datetimepicker__angle i {
+        font-size: $-datepicker-font - 2;
+    }
+
+    .n-datetimepicker--#{$suffix} .n-datetimepicker__clear i {
+        font-size: $-datepicker-font - 4;
+    }
+
+    .n-popover--#{$suffix} .n-datetimepicker__body,
+    .n-popover--#{$suffix} .n-datetimepicker__empty {
+        border-radius: $-datepicker-radius;
+    }
+
+    .n-popover--#{$suffix} .n-datetimepicker__empty {
+        padding: $-datepicker-padding;
+    }
+
+}

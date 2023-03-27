@@ -10,13 +10,19 @@
 }
 
 .n-timepicker-panel__body {
+    flex: 1 0 auto;
     display: flex;
     flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
 }
 
-.n-timepicker-panel-display,
+.n-timepicker-panel__panel {
+flex: 1 0 auto;
+    min-height: 0;
+}
+
+.n-timepicker-panel__display,
 .n-timepicker-panel__item {
     display: flex;
     flex-direction: row;
@@ -42,7 +48,11 @@
 
     .n-timepicker-panel--#{$suffix} .n-timepicker-panel__panel {
         width: $-timepicker-panel-size * 2;
-        height: $-timepicker-panel-size * 5;
+        min-height: $-timepicker-panel-size * 5;
+    }
+
+    .n-timepicker-panel--#{$suffix} .n-timepicker-panel__display {
+        height: $-timepicker-panel-size - 4;
     }
 
     $-timepicker-panel-padding: $-timepicker-panel-size * $-timepicker-panel-ratio;

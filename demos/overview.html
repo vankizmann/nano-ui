@@ -612,6 +612,29 @@
             </div>
         </div>
 
+        <h2>NDatetimepicker</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_datetimepicker.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_datetimepicker.type" :options="types"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_datetimepicker.clearable">Clearable</n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_datetimepicker.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-datetimepicker v-bind="n_datetimepicker" ></n-datetimepicker>
+            </div>
+        </div>
+
         <h2>NTransfer</h2>
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
@@ -1231,6 +1254,10 @@
             };
 
             data.n_timepicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_datetimepicker = {
                 size: 'md', type: 'primary', clearable: true, disabled: false
             };
 

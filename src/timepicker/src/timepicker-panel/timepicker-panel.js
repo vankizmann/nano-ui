@@ -143,7 +143,7 @@ export default {
     {
         return (
             <div class="n-timepicker-panel__toolbar">
-                <div class="n-timepicker-panel-display">
+                <div class="n-timepicker-panel__display">
                     <span class="n-timepicker-panel__time">
                         { this.tempValue.format(this.displayFormat) || this.placeholder }
                     </span>

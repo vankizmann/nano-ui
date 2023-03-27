@@ -79,7 +79,7 @@ export function Install(App, Icons = {}, Styles = {})
     require('./cascader/index').default(App);
     require('./datepicker/index').default(App);
     require('./timepicker/index').default(App);
-    // require('./datetimepicker/index'); 18.1
+    require('./datetimepicker/index').default(App);
     require('./transfer/index').default(App);
     require('./form/index').default(App); // check
     require('./tabs/index').default(App);
@@ -92,9 +92,6 @@ export function Install(App, Icons = {}, Styles = {})
     require('./map/index').default(App);
     require('./file/index').default(App);
     require('./rating/index').default(App);
-
-    // SX only ez 17.1
-    // require('./file-list/index'); // SX only 17.1
 
     // require('./chart/index'); // Ignore
     // require('./wysiwyg/index'); // Ignore
