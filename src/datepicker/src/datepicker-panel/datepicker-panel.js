@@ -94,14 +94,6 @@ export default {
             type: [Number]
         },
 
-        position: {
-            default()
-            {
-                return 'bottom-start';
-            },
-            type: [String]
-        },
-
         disabled: {
             default()
             {
@@ -215,6 +207,12 @@ export default {
         {
             if ( Any.isString(now) ) {
                 now = Now.make(now);
+            }
+
+            if ( Any.isEmpty(this.modelValue) ) {
+                now.resetTime();
+            } else {
+                now.applyTime(this.tempValue);
             }
 
             // Copy now to cache

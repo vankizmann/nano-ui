@@ -100,7 +100,7 @@ export default {
         format: {
             default()
             {
-                return Locale.trans('YYYY-MM-DD HH:mm:ss');
+                return 'YYYY-MM-DD HH:mm:ss';
             },
             type: [String]
         },
@@ -317,8 +317,11 @@ export default {
 
     renderDatePanel()
     {
-        
-        let props = Obj.except(this.$props, ['modelValue'], {
+        let props = Obj.only(this.$props, [
+            'minDate', 'maxDate', 'size', 'type', 'format', 'monthPanels', 'disabled', 'weekdays', 'months'
+        ]);
+
+        props = Obj.assign(props, {
             modelValue: this.tempValue.format(this.format) || null,
         });
 
@@ -331,8 +334,11 @@ export default {
 
     renderTimePanel()
     {
+        let props = Obj.only(this.$props, [
+            'size', 'type', 'format', 'disabled', 'hoursInterval', 'minutesInterval', 'secondsInterval'
+        ]);
 
-        let props = Obj.except(this.$props, ['modelValue'], {
+        props = Obj.assign(props, {
             modelValue: this.tempValue.format(this.format) || null,
         });
 
