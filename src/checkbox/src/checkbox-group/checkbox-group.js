@@ -79,7 +79,7 @@ export default {
 
     watch: {
 
-        value()
+        modelValue()
         {
             if ( this.tempValue = this.modelValue ) {
                 this.tempValue = this.modelValue;

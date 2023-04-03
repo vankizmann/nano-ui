@@ -132,6 +132,10 @@ export default {
             return;
         }
 
+        this.$watch('NCheckboxGroup.tempValue', () => {
+            this.tempChecked = this.NCheckboxGroup.isChecked(this.value);
+        });
+
         this.NCheckboxGroup.addCheckbox(this);
     },
 
