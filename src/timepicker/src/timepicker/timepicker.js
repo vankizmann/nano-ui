@@ -1,4 +1,4 @@
-import { Arr, Obj, Now, Any } from "@kizmann/pico-js";
+import { Arr, Obj, Now, Any, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -79,7 +79,7 @@ export default {
         displayFormat: {
             default()
             {
-                return 'HH:mm:ss';
+                return Locale.trans('HH:mm:ss');
             },
             type: [String]
         },

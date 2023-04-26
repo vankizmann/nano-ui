@@ -160,7 +160,7 @@ export default {
         format: {
             default()
             {
-                return Locale.trans('YYYY-MM-DD HH:mm:ss');
+                return 'YYYY-MM-DD HH:mm:ss';
             },
             type: [String]
         },
