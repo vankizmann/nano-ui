@@ -80,6 +80,7 @@ export function Install(App, Icons = {}, Styles = {})
     require('./datepicker/index').default(App);
     require('./timepicker/index').default(App);
     require('./datetimepicker/index').default(App);
+    require('./durationpicker/index').default(App);
     require('./transfer/index').default(App);
     require('./form/index').default(App); // check
     require('./tabs/index').default(App);

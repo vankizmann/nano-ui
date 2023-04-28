@@ -635,6 +635,32 @@
             </div>
         </div>
 
+        <h2>NDurationpicker</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_durationpicker.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_durationpicker.type" :options="types"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_durationpicker.clearable">Clearable</n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_durationpicker.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-durationpicker v-bind="n_durationpicker" ></n-durationpicker>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-durationpicker v-model="n_durationpicker.modelValue" v-bind="n_durationpicker" ></n-durationpicker>
+            </div>
+        </div>
+
         <h2>NTransfer</h2>
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
@@ -1259,6 +1285,10 @@
 
             data.n_datetimepicker = {
                 size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_durationpicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false, modelValue: 124521
             };
 
             data.n_transfer = {

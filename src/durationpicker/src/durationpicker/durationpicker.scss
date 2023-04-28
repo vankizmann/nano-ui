@@ -1,0 +1,162 @@
+@import "../../../root/vars";
+
+.n-durationpicker {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 100%;
+    border: 1px solid transparent;
+}
+
+.n-durationpicker.n-disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.n-durationpicker__display {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 100%;
+}
+
+.n-durationpicker__input {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 50%;
+}
+
+.n-durationpicker__input input {
+    cursor: default;
+    appearance: none;
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    text-decoration: none;
+    line-height: 1.2;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.n-disabled .n-durationpicker__input input {
+    cursor: not-allowed;
+}
+
+.n-durationpicker__clear,
+.n-durationpicker__angle {
+    order: 100;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-durationpicker__clear {
+    display: none;
+}
+
+.n-durationpicker:hover.n-clearable:not(.n-empty) .n-durationpicker__clear,
+.n-durationpicker.n-focus.n-clearable:not(.n-empty) .n-durationpicker__clear {
+    display: flex;
+}
+
+.n-durationpicker:hover.n-clearable:not(.n-empty) .n-durationpicker__angle,
+.n-durationpicker.n-focus.n-clearable:not(.n-empty) .n-durationpicker__angle {
+    display: none;
+}
+
+.n-durationpicker__angle {
+    transition: transform 0.25s;
+}
+
+.n-durationpicker.n-focus .n-durationpicker__angle {
+    transform: scaleY(-1);
+}
+
+.n-durationpicker__clear i,
+.n-durationpicker__angle i {
+    text-align: center;
+}
+
+.n-durationpicker__clear i {
+    border-radius: 500px;
+}
+
+.n-durationpicker__placeholder {
+    flex: 1 1 auto;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.n-durationpicker__body,
+.n-durationpicker__empty {
+    overflow: hidden;
+    margin: 1px 0;
+    max-height: 210px;
+}
+
+.n-durationpicker__empty {
+     text-align: center;
+}
+
+@each $suffix, $values in $form {
+
+    $-duration-font: map-get($values, 'font');
+    $-duration-size: map-get($values, 'size');
+    $-duration-radius: map-get($values, 'radius');
+    $-duration-ratio: map-get($values, 'ratio');
+
+    .n-durationpicker--#{$suffix} {
+        min-height: $-duration-size;
+        font-size: $-duration-font;
+        border-radius: $-duration-radius;
+    }
+
+    $-duration-padding: $-duration-size * $-duration-ratio * 0.5;
+
+    .n-durationpicker--#{$suffix} .n-durationpicker__display,
+    .n-durationpicker--#{$suffix} .n-durationpicker__input input {
+        padding: 0 $-duration-padding;
+    }
+
+    .n-durationpicker--#{$suffix} .n-durationpicker__clear,
+    .n-durationpicker--#{$suffix} .n-durationpicker__angle {
+        width: $-duration-size;
+        margin: 0 -#{$-duration-padding} 0 -#{$-duration-padding};
+    }
+    .n-durationpicker--#{$suffix} .n-durationpicker__clear i,
+    .n-durationpicker--#{$suffix} .n-durationpicker__angle i {
+        width: $-duration-size - 14;
+        height: $-duration-size - 14;
+        line-height: $-duration-size - 14;
+    }
+
+    .n-durationpicker--#{$suffix} .n-durationpicker__angle i {
+        font-size: $-duration-font - 2;
+    }
+
+    .n-durationpicker--#{$suffix} .n-durationpicker__clear i {
+        font-size: $-duration-font - 4;
+    }
+
+    .n-popover--#{$suffix} .n-durationpicker__body,
+    .n-popover--#{$suffix} .n-durationpicker__empty {
+        border-radius: $-duration-radius;
+    }
+
+    .n-popover--#{$suffix} .n-durationpicker__empty {
+        padding: $-duration-padding;
+    }
+
+}
