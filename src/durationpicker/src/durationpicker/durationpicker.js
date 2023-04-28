@@ -88,6 +88,14 @@ export default {
             type: [String]
         },
 
+        negativeText: {
+            default()
+            {
+                return Locale.trans('Negative duration');
+            },
+            type: [String]
+        },
+
         boundary: {
             default()
             {
@@ -122,7 +130,7 @@ export default {
         days: {
             default()
             {
-                return ':count Day|:count Days';
+                return Locale.trans(':count Day|:count Days');
             },
             type: [String]
         },
@@ -130,7 +138,7 @@ export default {
         hours: {
             default()
             {
-                return ':count Hour|:count Hours';
+                return Locale.trans(':count Hour|:count Hours');
             },
             type: [String]
         },
@@ -138,7 +146,7 @@ export default {
         minutes: {
             default()
             {
-                return ':count Minute|:count Minutes';
+                return Locale.trans(':count Minute|:count Minutes');
             },
             type: [String]
         },
@@ -146,7 +154,7 @@ export default {
         seconds: {
             default()
             {
-                return ':count Second|:count Seconds';
+                return Locale.trans(':count Second|:count Seconds');
             },
             type: [String]
         }
@@ -174,10 +182,22 @@ export default {
 
     methods: {
 
+        findPattern(text, pattern)
+        {
+            pattern = pattern.replaceAll(':count', '([0-9\.\,]+)')
+                .replaceAll(' ', '\\s*');
+
+            return text.match(new RegExp(pattern, 'i'));
+        },
+
         humanizeValue(value)
         {
             if ( Any.isEmpty(value) ) {
                 return '';
+            }
+
+            if ( value < 0 ) {
+                return this.negativeText;
             }
 
             let seconds = value;
@@ -224,29 +244,25 @@ export default {
 
             let value = 0;
 
-            let days = new RegExp(this.days.replaceAll(':count', '([0-9\.\,]+)'), 'i'),
-                dmatch = text.match(days);
+            let dmatch = this.findPattern(text, this.days);
 
             if ( dmatch && dmatch.length === 3 ) {
                 value += Any.float(dmatch[1].replace(',', '.')) * 24 * 60 * 60;
             }
 
-            let hours = new RegExp(this.hours.replaceAll(':count', '([0-9\.\,]+)'), 'i'),
-                hmatch = text.match(hours);
+            let hmatch = this.findPattern(text, this.hours);
 
             if ( hmatch && hmatch.length === 3 ) {
                 value += Any.float(hmatch[1].replace(',', '.')) * 60 * 60;
             }
 
-            let minutes = new RegExp(this.minutes.replaceAll(':count', '([0-9\.\,]+)'), 'i'),
-                mmatch = text.match(minutes);
+            let mmatch = this.findPattern(text, this.minutes);
 
             if ( mmatch && mmatch.length === 3 ) {
                 value += Any.float(mmatch[1].replace(',', '.')) * 60;
             }
 
-            let seconds = new RegExp(this.seconds.replaceAll(':count', '([0-9\.\,]+)'), 'i'),
-                smatch = text.match(seconds);
+            let smatch = this.findPattern(text, this.seconds);
 
             if ( smatch && smatch.length === 3 ) {
                 value += Any.float(smatch[1].replace(',', '.'));
