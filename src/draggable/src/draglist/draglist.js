@@ -798,7 +798,11 @@ export default {
                     canSelect = () => this.allowSelect;
                 }
 
-                return canSelect({ item }) && ! item.depth;
+                let row = {
+                    value: item, item: Obj.get(this, item.route)
+                };
+
+                return ! item.depth && canSelect(row);
             });
 
             let indexies = Arr.each(result, (item) => {
