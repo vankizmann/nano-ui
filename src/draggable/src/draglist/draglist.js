@@ -790,11 +790,18 @@ export default {
 
         selectAll()
         {
-            let visible = Arr.filter(this.visible, (item) => {
-                return ! item.depth;
+            let result = Arr.filter(this.visible, (item) => {
+
+                let canSelect = this.allowSelect;
+
+                if ( ! Any.isFunction(canSelect) ) {
+                    canSelect = () => this.allowSelect;
+                }
+
+                return canSelect({ item }) && ! item.depth;
             });
 
-            let indexies = Arr.each(visible, (item) => {
+            let indexies = Arr.each(result, (item) => {
                 return item[this.uniqueProp];
             });
 
