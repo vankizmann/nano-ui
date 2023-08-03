@@ -91,7 +91,15 @@ export default {
                 return Locale.trans('Abort');
             },
             type: [String]
-        }
+        },
+
+        buttonSize: {
+            default()
+            {
+                return 'md';
+            },
+            type: [String]
+        },
 
     },
 
@@ -168,10 +176,10 @@ export default {
 
         return (
             <div class={classList}>
-                <NButton size={this.size} type={this.type} link={true} onClick={this.abort}>
+                <NButton size={this.buttonSize} type={this.type} link={true} onClick={this.abort}>
                     { this.abortText }
                 </NButton>
-                <NButton size={this.size} type={this.type} link={false} onClick={this.confirm}>
+                <NButton size={this.buttonSize} type={this.type} link={false} onClick={this.confirm}>
                     { this.confirmText }
                 </NButton>
             </div>
