@@ -97,7 +97,7 @@ export default {
     computed: {
 
         touch() {
-            return !! ('ontouchstart' in window || 
+            return !! ('ontouchstart' in window ||
                 navigator.msMaxTouchPoints);
         },
 
@@ -145,10 +145,10 @@ export default {
         Event.bind('NResizer:moved',
             this.onUpdate, this._.uid);
 
-        Dom.find(window).on('resize', 
+        Dom.find(window).on('resize',
             this.onResize, passive);
-    
-        Dom.find(this.$refs.content).on('scroll', 
+
+        Dom.find(this.$refs.content).on('scroll',
             this.onScroll, passive);
     },
 
@@ -168,16 +168,16 @@ export default {
             passive: true, uid: this._.uid
         };
 
-        Event.unbind('NScrollbar:resize', 
+        Event.unbind('NScrollbar:resize',
             this._.uid);
 
-        Event.unbind('NResizer:moved', 
+        Event.unbind('NResizer:moved',
             this._.uid);
 
-        Dom.find(window).off('resize', 
+        Dom.find(window).off('resize',
             null, passive);
 
-        Dom.find(this.$el).off('scroll', 
+        Dom.find(this.$el).off('scroll',
             null, passive);
     },
 
@@ -253,7 +253,7 @@ export default {
 
         adaptScrollHeight()
         {
-            if ( this.native ) {
+            if ( this.native && this.allowNative ) {
                 return;
             }
 
@@ -264,7 +264,11 @@ export default {
             //     this.$refs.content.offsetWidth;
 
             let outerHeight = this.$refs.content.
-                clientHeight|| 0;
+                clientHeight || 0;
+
+            if ( this.native && ! this.allowNative ) {
+                outerHeight -= 16;
+            }
 
             // if ( offsetHeight === 0 && this.overflowX ) {
             //     outerHeight -= 15;
@@ -273,11 +277,15 @@ export default {
             let innerHeight = this.$refs.content
                 .scrollHeight || 0;
 
+            if ( this.native && ! this.allowNative ) {
+                innerHeight -= 16;
+            }
+
             // if ( offsetHeight === 0 && this.overflowX ) {
             //     innerHeight -= 15;
             // }
 
-            let isSameOld = outerHeight === this.outerHeight && 
+            let isSameOld = outerHeight === this.outerHeight &&
                 innerHeight === this.innerHeight;
 
             if ( isSameOld ) {
@@ -287,15 +295,15 @@ export default {
             this.outerHeight = outerHeight;
             this.innerHeight = innerHeight;
 
-            let height = (outerHeight / innerHeight) 
+            let height = (outerHeight / innerHeight)
                 * outerHeight;
 
             let barHeight = Math.max(height, 50);
 
-            let maxHeight = Math.ceil((outerHeight / innerHeight) * 
+            let maxHeight = Math.ceil((outerHeight / innerHeight) *
                 (innerHeight - outerHeight));
-        
-            this.heightRatio = (maxHeight - (barHeight - height) 
+
+            this.heightRatio = (maxHeight - (barHeight - height)
                 - this.offsetY) / maxHeight;
 
             Dom.find(this.$refs.vbar).css({
@@ -331,7 +339,7 @@ export default {
 
         adaptScrollWidth()
         {
-            if ( this.native ) {
+            if ( this.native && this.allowNative ) {
                 return;
             }
 
@@ -343,7 +351,11 @@ export default {
 
             let outerWidth = this.$refs.content.
                 clientWidth || 0;
-                
+
+            if ( this.native && ! this.allowNative ) {
+                outerWidth -= 16;
+            }
+
             // if ( offsetWidth === 0 && this.overflowY ) {
             //     outerWidth -= 15;
             // }
@@ -351,11 +363,15 @@ export default {
             let innerWidth = this.$refs.content
                 .scrollWidth || 0;
 
+            if ( this.native && ! this.allowNative ) {
+                innerWidth -= 16;
+            }
+
             // if ( offsetWidth === 0 && this.overflowY ) {
             //     innerWidth -= 15;
             // }
 
-            let isSameOld = outerWidth === this.outerWidth && 
+            let isSameOld = outerWidth === this.outerWidth &&
                 innerWidth === this.innerWidth;
 
             if ( isSameOld ) {
@@ -365,15 +381,15 @@ export default {
             this.outerWidth = outerWidth;
             this.innerWidth = innerWidth;
 
-            let width = (outerWidth / innerWidth) 
+            let width = (outerWidth / innerWidth)
                 * outerWidth;
 
             let barWidth = Math.max(width, 50);
 
-            let maxWidth = Math.ceil((outerWidth / innerWidth) * 
+            let maxWidth = Math.ceil((outerWidth / innerWidth) *
                 (innerWidth - outerWidth));
-        
-            this.widthRatio = (maxWidth - (barWidth - width) 
+
+            this.widthRatio = (maxWidth - (barWidth - width)
                 - this.offsetX) / maxWidth;
 
             Dom.find(this.$refs.hbar).css({
@@ -381,7 +397,7 @@ export default {
             });
 
             // let hasNativeBar = offsetHeight && this.overflowX;
-    
+
             // if ( hasNativeBar ) {
             //     Dom.find(this.$el).addClass('has-native-hbar');
             // }
@@ -409,7 +425,7 @@ export default {
 
         adaptScrollPosition(scroll = {})
         {
-            if ( this.native ) {
+            if ( this.native && this.allowNative ) {
                 return;
             }
 
@@ -421,7 +437,7 @@ export default {
                 scroll.left = this.$refs.content.scrollLeft;
             }
 
-            let vbarTop= Math.ceil((this.outerHeight / this.innerHeight) * 
+            let vbarTop= Math.ceil((this.outerHeight / this.innerHeight) *
                 scroll.top * this.heightRatio) || 0;
 
             if ( ! this.vbarTop || vbarTop !== this.vbarTop ) {
@@ -433,7 +449,7 @@ export default {
                 this.vbarTop = vbarTop;
             }
 
-            let hbarLeft =  Math.ceil((this.outerWidth / this.innerWidth) * 
+            let hbarLeft =  Math.ceil((this.outerWidth / this.innerWidth) *
                 scroll.left * this.widthRatio) || 0;
 
             if ( ! this.hbarLeft || hbarLeft !== this.hbarLeft ) {
@@ -441,7 +457,7 @@ export default {
                 Dom.find(this.$refs.hbar).css({
                     transform: `translateX(${hbarLeft}px) translateZ(0)`
                 });
-                
+
                 this.hbarLeft = hbarLeft;
             }
         },
@@ -489,7 +505,7 @@ export default {
 
         bindAdaptHeight()
         {
-            this.refreshHeight = setInterval(this.adaptHeight, 
+            this.refreshHeight = setInterval(this.adaptHeight,
                 1000 / this.framerate);
         },
 
@@ -539,7 +555,7 @@ export default {
 
         bindAdaptWidth()
         {
-            this.refreshWidth = setInterval(this.adaptWidth, 
+            this.refreshWidth = setInterval(this.adaptWidth,
                 1000 / this.framerate);
         },
 
@@ -558,7 +574,7 @@ export default {
             let scrollUpdate = () => {
                 this.$emit('scrollupdate', scroll.top, scroll.left);
             }
-            
+
             this.$nextTick(scrollUpdate);
             this.adaptScrollPosition(scroll);
         },
@@ -592,7 +608,7 @@ export default {
 
             this.resizeTimer = setTimeout(
                 this.onUpdate, 500);
-            
+
             Dom.find(this.$el).fire('resized');
         },
 
@@ -641,10 +657,10 @@ export default {
 
             event.stopPropagation();
 
-            Dom.find(document).on(this.mousemove, 
+            Dom.find(document).on(this.mousemove,
                 this.onVbarMousemove, this._.uid);
 
-            Dom.find(document).on(this.mouseup, 
+            Dom.find(document).on(this.mouseup,
                 this.onVbarMouseup, this._.uid);
 
             this.scrollTop = this.$refs.content
@@ -659,24 +675,24 @@ export default {
             let clientY = this.getTouchEvent(event)
                 .clientY;
 
-            let top = (this.outerHeight / this.innerHeight) * 
+            let top = (this.outerHeight / this.innerHeight) *
                 this.scrollTop * this.heightRatio;
 
             let offset = (clientY - this.clientY) + top;
 
-            let height = (this.outerHeight - 
-                    this.barHeight - this.offsetY);
+            let height = (this.outerHeight -
+                this.barHeight - this.offsetY);
 
-            this.$refs.content.scrollTop = offset / height * 
+            this.$refs.content.scrollTop = offset / height *
                 (this.innerHeight - this.outerHeight);
         },
 
         onVbarMouseup(event)
         {
-            Dom.find(document).off(this.mousemove, 
+            Dom.find(document).off(this.mousemove,
                 null, this._.uid);
 
-            Dom.find(document).off(this.mouseup, 
+            Dom.find(document).off(this.mouseup,
                 null, this._.uid);
         },
 
@@ -685,13 +701,13 @@ export default {
             if ( ! Arr.has([0, 1], event.which) ) {
                 return;
             }
-            
+
             event.stopPropagation();
 
-            Dom.find(document).on(this.mousemove, 
+            Dom.find(document).on(this.mousemove,
                 this.onHbarMousemove, this._.uid);
 
-            Dom.find(document).on(this.mouseup, 
+            Dom.find(document).on(this.mouseup,
                 this.onHbarMouseup, this._.uid);
 
             this.scrollLeft = this.$refs.content
@@ -702,24 +718,24 @@ export default {
 
         onHbarMousemove(event)
         {
-            let top = (this.outerWidth / this.innerWidth) * 
+            let top = (this.outerWidth / this.innerWidth) *
                 this.scrollLeft * this.widthRatio;
 
             let offset = (event.clientX - this.clientX) + top;
 
-            let width = (this.outerWidth - 
-                    this.barWidth - this.offsetX);
+            let width = (this.outerWidth -
+                this.barWidth - this.offsetX);
 
-            this.$refs.content.scrollLeft = offset / width * 
+            this.$refs.content.scrollLeft = offset / width *
                 (this.innerWidth - this.outerWidth);
         },
 
         onHbarMouseup(event)
         {
-            Dom.find(document).off(this.mousemove, 
+            Dom.find(document).off(this.mousemove,
                 null, this._.uid);
 
-            Dom.find(document).off(this.mouseup, 
+            Dom.find(document).off(this.mouseup,
                 null, this._.uid);
         }
 
@@ -733,6 +749,10 @@ export default {
 
         if ( this.native ) {
             classList.push('n-scrollbar--native');
+        }
+
+        if ( ! this.allowNative ) {
+            classList.push('n-scrollbar--forced');
         }
 
         if ( this.touch ) {

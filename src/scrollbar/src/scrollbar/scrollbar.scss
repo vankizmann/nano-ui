@@ -38,6 +38,13 @@
     bottom: -17px;
 }
 
+.n-scrollbar.n-scrollbar--forced.n-scrollbar--native > .n-scrollbar-content {
+    padding-right: 16px;
+    padding-bottom: 16px;
+    right: -16px;
+    bottom: -16px;
+}
+
 .n-scrollbar:not(.n-overflow-x) > .n-scrollbar-content {
     bottom: 0;
     overflow-x: hidden;
@@ -66,15 +73,16 @@
     width: 10px;
 }
 
+
 .n-scrollbar-h {
     left: 0;
     bottom: 0;
     height: 10px;
 }
 
-.n-scrollbar--native > .n-scrollbar-v,
+.n-scrollbar--native:not(.n-scrollbar--forced) > .n-scrollbar-v,
 .n-scrollbar:not(.has-vtrack) > .n-scrollbar-v,
-.n-scrollbar--native > .n-scrollbar-h,
+.n-scrollbar--native:not(.n-scrollbar--forced) > .n-scrollbar-h,
 .n-scrollbar:not(.has-htrack) > .n-scrollbar-h {
     display: none;
 }
