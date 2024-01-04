@@ -87,9 +87,9 @@ export default {
             'n-preview-image'
         ];
 
-        if ( Arr.has(window.ImageCache, this.src) ) {
-            classList.push('n-cached');
-        }
+        // if ( Arr.has(window.ImageCache, this.src) ) {
+        //     classList.push('n-cached');
+        // }
 
         if ( ! this.load ) {
             classList.push('n-ready');

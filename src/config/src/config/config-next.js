@@ -279,27 +279,33 @@ export default {
                 value.fallback);
         });
 
-        let element = alias.replace(/:.*?$/, '');
+        let component = alias.replace(/:.*?$/, '');
 
-        let component = null;
-
-        try {
-            component = resolveComponent(element);
-        } catch (e) {
-            component = element;
+        if ( !Arr.has(['div', 'p'], component) ) {
+            component = resolveComponent(component);
         }
 
         if ( Any.isEmpty(component) ) {
             return null;
         }
 
-        if ( ! this.propExists(setup['vShow']) ) {
+        if ( !this.propExists(setup['vShow']) ) {
             props.style = "display: none;";
         }
 
-        return h(component, props, () => {
-            return Arr.each(setup.content, (value, key) => this.ctor('renderSetup')(value, key));
+        let render = () => Arr.each(setup.content, (value, key) => {
+            return this.ctor('renderSetup')(value, key)
         });
+
+        if ( Any.isFunction(setup.content) ) {
+            render = setup.content.apply(this.scope);
+        }
+
+        if ( Any.isString(setup.content) ) {
+            render = setup.content;
+        }
+
+        return h(component, props, render);
     },
 
     render()
