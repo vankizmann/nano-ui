@@ -418,7 +418,7 @@ export default {
         let style = {};
 
         if ( this.threshold && this.threshold <= this.items.length ) {
-            style.top = topOffset + this.offsetY + 'px';
+            style.top = topOffset + 'px';
         }
 
         let counter = passed.index * this.state.start;
@@ -492,7 +492,7 @@ export default {
             this.itemHeight;
 
         if ( this.threshold && this.items.length ) {
-            style.height = Math.ceil(totalHeight) + 'px';
+            style.height = Math.ceil(totalHeight + this.offsetY) + 'px';
         }
 
         return (
