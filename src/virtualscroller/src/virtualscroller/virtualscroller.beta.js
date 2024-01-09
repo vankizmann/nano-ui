@@ -213,7 +213,7 @@ export default {
                 return this.scrollTo(0, targetTop);
             }
 
-            targetTop = targetTop - this.height + 
+            targetTop = targetTop - this.height +
                 this.itemHeight;
 
             this.scrollTo(0, targetTop);
@@ -324,7 +324,7 @@ export default {
             let startItem = Math.round(this.scrollTop /
                 this.itemHeight);
 
-            let endItem = Math.round((this.scrollTop + 
+            let endItem = Math.round((this.scrollTop +
                 this.height) / this.itemHeight);
 
             let start = (startItem - bufferItems);
@@ -355,7 +355,7 @@ export default {
         passed.index = (passed.index +
             this.state.start);
 
-        let topOffset = Math.round(this.itemHeight * 
+        let topOffset = Math.round(this.itemHeight *
             passed.index);
 
         let renderFunction = this.$slots.default;
@@ -388,7 +388,7 @@ export default {
         if ( this.state.grid !== 1 ) {
             style.width = this.itemWidth + 'px';
         }
-        
+
         return (
             <div class="n-virtualscroller__item" style={style} {...props}>
                 { renderFunction(passed) }
@@ -418,13 +418,13 @@ export default {
         let style = {};
 
         if ( this.threshold && this.threshold <= this.items.length ) {
-            style.top = topOffset + 'px';
+            style.top = topOffset + this.offsetY + 'px';
         }
 
         let counter = passed.index * this.state.start;
 
         return (
-            <div class="n-virtualscroller__row" style={style}>
+            <div data-row={passed.index} class="n-virtualscroller__row" style={style}>
                 {
                     Arr.each(passed.chunk, (value, index) => {
                         return this.ctor('renderItem')({
@@ -444,7 +444,7 @@ export default {
         let items = Arr.slice(chunks, this.state.start,
             this.state.end);
 
-        if ( ! this.threshold || this.threshold > chunks.length ) {
+        if ( ! this.threshold || this.threshold > this.items.length ) {
             items = chunks;
         }
 
@@ -484,9 +484,11 @@ export default {
             onSizechange: this.onSizechange,
         };
 
-        let style = {};
+        let style = {
+            'overflow-y': 'hidden'
+        };
 
-        let totalHeight = this.items.length / this.state.grid *
+        let totalHeight = Math.ceil(this.items.length / this.state.grid) *
             this.itemHeight;
 
         if ( this.threshold && this.items.length ) {

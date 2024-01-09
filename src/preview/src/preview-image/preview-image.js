@@ -27,6 +27,11 @@ export default {
         if ( ! window.ImageCache ) {
             window.ImageCache = [];
         }
+
+
+        if ( ! Arr.has(window.ImageCache, this.src) ) {
+            this.tempSrc = this.src;
+        }
     },
 
     mounted()
@@ -46,6 +51,10 @@ export default {
 
         resolveLoad()
         {
+            if ( ! Arr.has(window.ImageCache, this.src) ) {
+                return;
+            }
+
             this.tempSrc = null;
 
             if ( Any.isObject(this.src) ) {
@@ -65,7 +74,7 @@ export default {
                 Any.delay(() => this.load = false, 200);
             });
 
-            this.load = true;
+            this.laod = true;
         },
 
         resolveData()
@@ -87,9 +96,9 @@ export default {
             'n-preview-image'
         ];
 
-        // if ( Arr.has(window.ImageCache, this.src) ) {
-        //     classList.push('n-cached');
-        // }
+        if ( Arr.has(window.ImageCache, this.src) ) {
+            classList.push('n-cached');
+        }
 
         if ( ! this.load ) {
             classList.push('n-ready');
