@@ -828,12 +828,12 @@
             <div class="col--auto">
                 <n-select style="width: 100px;" v-model="n_paginator.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col--auto">`
                 <n-select style="width: 210px;" v-model="n_paginator.type" :options="types"></n-select>
             </div>
         </div>
 
-        <n-paginator :total="241" v-bind="n_paginator"></n-paginator>
+        <n-paginator :total="200000" v-bind="n_paginator"></n-paginator>
 
         <h2>NVirtualscroller</h2>
 

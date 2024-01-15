@@ -216,6 +216,10 @@ export default {
 
     renderGoto()
     {
+        if ( this.pageOptions.length > 500 ) {
+            return null;
+        }
+
         let props = {
             modelValue:     this.tempPage,
             size:           this.size,
