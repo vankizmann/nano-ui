@@ -124,18 +124,40 @@ export default {
 
     data()
     {
-        return {
-            tempValue: Now.make(this.modelValue),
+        let modelValue = Now.make(this.modelValue);
+
+        if ( Any.isEmpty(this.modelValue) ) {
+            modelValue = modelValue.resetTime();
         }
+
+        return {
+            tempValue: modelValue,
+        }
+    },
+
+    mounted()
+    {
+        this.scrollTo();
     },
 
     methods: {
 
         eventSelect(now)
         {
-            this.$emit('update:modelValue', 
+            this.$emit('update:modelValue',
                 (this.tempValue = now.clone()).format(this.format));
         },
+
+        scrollTo()
+        {
+            let scrollbars = Obj.only(this.$refs, [
+                'hour', 'minute', 'second'
+            ]);
+
+            Arr.each(scrollbars, (ref, key) => {
+                ref.scrollIntoView(`[data-index="${this.tempValue[key]()}"]`);
+            });
+        }
 
     },
 
@@ -145,7 +167,7 @@ export default {
             <div class="n-timepicker-panel__toolbar">
                 <div class="n-timepicker-panel__display">
                     <span class="n-timepicker-panel__time">
-                        { this.tempValue.format(this.displayFormat) || this.placeholder }
+                        {this.tempValue.format(this.displayFormat) || this.placeholder}
                     </span>
                 </div>
             </div>
@@ -167,21 +189,21 @@ export default {
         };
 
         return (
-            <div class={classList} {...props}>
-                <span>{ now.format('HH') }</span>
+            <div class={classList} {...props} data-index={now.hour()}>
+                <span>{now.format('HH')}</span>
             </div>
         );
     },
 
     renderHourPanel()
     {
-        if ( ! this.displayFormat.match('HH') ) {
+        if ( !this.displayFormat.match('HH') ) {
             return null;
         }
 
         return (
-            <NScrollbar class="n-timepicker-panel__panel" wrapClass="n-timepicker-panel__wrap">
-                { Arr.each(this.hoursGrid, this.ctor('renderHourItem')) }
+            <NScrollbar ref="hour" class="n-timepicker-panel__panel" wrapClass="n-timepicker-panel__wrap">
+                {Arr.each(this.hoursGrid, this.ctor('renderHourItem'))}
             </NScrollbar>
         );
     },
@@ -201,21 +223,21 @@ export default {
         };
 
         return (
-            <div class={classList} {...props}>
-                <span>{ now.format('mm') }</span>
+            <div class={classList} {...props} data-index={now.minute()}>
+                <span>{now.format('mm')}</span>
             </div>
         );
     },
 
     renderMinutePanel()
     {
-        if ( ! this.displayFormat.match('mm') ) {
+        if ( !this.displayFormat.match('mm') ) {
             return null;
         }
 
         return (
-            <NScrollbar class="n-timepicker-panel__panel" wrapClass="n-timepicker-panel__wrap">
-                { Arr.each(this.minutesGrid, this.ctor('renderMinuteItem')) }
+            <NScrollbar ref="minute" class="n-timepicker-panel__panel" wrapClass="n-timepicker-panel__wrap">
+                {Arr.each(this.minutesGrid, this.ctor('renderMinuteItem'))}
             </NScrollbar>
         );
     },
@@ -235,23 +257,21 @@ export default {
         };
 
         return (
-            <div class={classList} {...props}>
-                <span>{ now.format('ss') }</span>
+            <div class={classList} {...props} data-index={now.second()}>
+                <span>{now.format('ss')}</span>
             </div>
         );
     },
 
     renderSecondPanel()
     {
-        if ( ! this.displayFormat.match('ss') ) {
+        if ( !this.displayFormat.match('ss') ) {
             return null;
         }
 
         return (
-            <NScrollbar class="n-timepicker-panel__panel">
-                <div class="n-timepicker-panel__wrap">
-                    { Arr.each(this.secondsGrid, this.ctor('renderSecondItem')) }
-                </div>
+            <NScrollbar ref="second" class="n-timepicker-panel__panel" wrapClass="n-timepicker-panel__wrap">
+                {Arr.each(this.secondsGrid, this.ctor('renderSecondItem'))}
             </NScrollbar>
         );
     },
@@ -264,7 +284,7 @@ export default {
             'n-timepicker-panel--' + this.type,
         ];
 
-        if ( this.disabled ){
+        if ( this.disabled ) {
             classList.push('n-disabled');
         }
 
@@ -274,9 +294,9 @@ export default {
                     {this.ctor('renderToolbar')()}
                 </div>
                 <div class="n-timepicker-panel__body">
-                    { this.ctor('renderHourPanel')() }
-                    { this.ctor('renderMinutePanel')() }
-                    { this.ctor('renderSecondPanel')() }
+                    {this.ctor('renderHourPanel')()}
+                    {this.ctor('renderMinutePanel')()}
+                    {this.ctor('renderSecondPanel')()}
                 </div>
             </div>
         );
