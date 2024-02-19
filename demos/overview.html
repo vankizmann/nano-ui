@@ -313,23 +313,24 @@
 
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--1-1 col--1-3@md">
-                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" format=":count USD" type="primary"></n-input-number>
+                <n-input-number v-model="n_number.test" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" format=":count USD" type="primary"  :precision="2" :clearable="true"></n-input-number>
+<!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" format=":count USD" type="primary"></n-input-number>-->
             </div>
-            <div class="col--1-1 col--1-3@md">
-                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" format=":count €" :precision="2" :step-size="0.1" type="secondary"></n-input-number>
-            </div>
-            <div class="col--1-1 col--1-3@md">
-                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="success" :clearable="true"></n-input-number>
-            </div>
-            <div class="col--1-1 col--1-3@md">
-                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="warning"></n-input-number>
-            </div>
-            <div class="col--1-1 col--1-3@md">
-                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="danger"></n-input-number>
-            </div>
-            <div class="col--1-1 col--1-3@md">
-                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="info"></n-input-number>
-            </div>
+<!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
+<!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" format=":count €" :precision="2" :step-size="0.1" type="secondary"></n-input-number>-->
+<!--            </div>-->
+<!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
+<!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="success" :clearable="true"></n-input-number>-->
+<!--            </div>-->
+<!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
+<!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="warning"></n-input-number>-->
+<!--            </div>-->
+<!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
+<!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="danger"></n-input-number>-->
+<!--            </div>-->
+<!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
+<!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="info"></n-input-number>-->
+<!--            </div>-->
         </div>
 
         <h2>NTextarea</h2>
@@ -1248,7 +1249,7 @@
             };
 
             data.n_number = {
-                value: 3, size: 'md', placeholder: '', disabled: false, minValue: 0, maxValue: 10
+                test: '', value: 3, size: 'md', placeholder: '', disabled: false, minValue: 0, maxValue: 10
             };
 
             data.n_select = {

@@ -90,10 +90,11 @@ export default {
     data()
     {
         return {
-            tempPage: this.page, 
-            tempLimit: this.limit,
-        }
+            tempPage: this.page, tempLimit: this.limit,
+        };
     },
+
+
 
     methods: {
 
@@ -142,11 +143,11 @@ export default {
 
         onLimitInput(value)
         {
-            this.$emit('update:limit', this.tempLimit = value);
-
-            if ( this.pages < this.tempPage ) {
+            if ( this.tempLimit !== value ) {
                 this.$emit('update:page', this.tempPage = 1);
             }
+
+            this.$emit('update:limit', this.tempLimit = value);
 
             this.updatePaginate();
         },

@@ -118,7 +118,7 @@ export default {
         modelValue(value)
         {
             if ( value !== this.tempValue ) {
-                this.tempValue = Num.float(value);
+                this.tempValue = this.getValue(value);
             }
         }
 
@@ -127,7 +127,7 @@ export default {
     data()
     {
         return {
-            focus: false, tempValue: Num.float(this.modelValue),
+            focus: false, tempValue: this.getValue(),
         }
     },
 
@@ -135,12 +135,26 @@ export default {
 
         clear()
         {
-            this.$emit('update:modelValue', this.clearValue);
+            this.$emit('update:modelValue', this.tempValue = this.clearValue);
+        },
+
+        getValue(value = null)
+        {
+            if ( Any.isNull(value) ) {
+                value = this.modelValue;
+            }
+
+            if ( Any.isEmpty(value) ) {
+                return this.min;
+            }
+
+            return Num.float(value);
         },
 
         getDisplayValue()
         {
-            if ( Any.isNull(this.modelValue) ) {
+
+            if ( Any.isEmpty(this.modelValue) ) {
                 return null;
             }
 
@@ -251,6 +265,10 @@ export default {
         {
             let value = event.target.value;
 
+            if ( value.match(/^[0-9]+((.|,)[0-9]+)?$/) ) {
+                value = this.format.replace(':count', value);
+            }
+
             let format = this.format.replace(':count',
                 `([0-9\\,\\.\\-\\s]+)`);
 
@@ -258,7 +276,7 @@ export default {
 
             let match = value.match(regex);
 
-            if ( ! match ) {
+            if ( !match ) {
                 return event.target.value = this.getDisplayValue();
             }
 
@@ -289,12 +307,12 @@ export default {
             this.tempValue <= this.min;
 
         let props = {
-            type:       'input-number',
-            size:       this.size,
-            icon:       'fa fa-minus',
-            square:     true,
-            disabled:   disabled,
-            onMousedown:    this.onPrevDown,
+            type: 'input-number',
+            size: this.size,
+            icon: 'fa fa-minus',
+            square: true,
+            disabled: disabled,
+            onMousedown: this.onPrevDown,
         };
 
         return (<NButton {...props} />);
@@ -306,12 +324,12 @@ export default {
             this.tempValue >= this.max;
 
         let props = {
-            type:       'input-number',
-            size:       this.size,
-            icon:       'fa fa-plus',
-            square:     true,
-            disabled:   disabled,
-            onMousedown:    this.onNextDown,
+            type: 'input-number',
+            size: this.size,
+            icon: 'fa fa-plus',
+            square: true,
+            disabled: disabled,
+            onMousedown: this.onNextDown,
         };
 
         return (<NButton {...props} />);
@@ -323,29 +341,26 @@ export default {
             ['class', 'style']);
 
         Obj.assign(props, {
-            disabled:       this.disabled,
-            placeholder:    this.placeholder,
-            onKeydown:      this.onKeydown,
-            onFocus:         this.onFocus,
-            onBlur:         this.onBlur,
+            value: this.getDisplayValue(),
+            disabled: this.disabled,
+            placeholder: this.placeholder,
+            onKeydown: this.onKeydown,
+            onFocus: this.onFocus,
+            onBlur: this.onBlur,
         });
-
-        if ( this.modelValue !== null ) {
-            props.value = this.getDisplayValue();
-        }
 
         return h('input', props);
     },
 
     renderClear()
     {
-        if ( ! this.clearable || Any.isEmpty(this.tempValue) ) {
+        if ( !this.clearable || Any.isEmpty(this.tempValue) ) {
             return null;
         }
 
         let props = {};
 
-        if ( ! this.disabled ) {
+        if ( !this.disabled ) {
             props.onMousedown = this.clear;
         }
 
@@ -382,10 +397,10 @@ export default {
 
         return (
             <div class={classList}>
-                { this.ctor('renderPrev')() }
-                { this.ctor('renderInput')() }
-                { this.ctor('renderClear')() }
-                { this.ctor('renderNext')() }
+                {this.ctor('renderPrev')()}
+                {this.ctor('renderInput')()}
+                {this.ctor('renderClear')()}
+                {this.ctor('renderNext')()}
             </div>
         );
     }
