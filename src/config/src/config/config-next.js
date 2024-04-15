@@ -294,18 +294,18 @@ export default {
         }
 
         let render = () => Arr.each(setup.content, (value, key) => {
-            return this.ctor('renderSetup')(value, key)
+            return this.ctor('renderSetup')(value, key);
         });
 
         if ( Any.isFunction(setup.content) ) {
-            render = setup.content.apply(this.scope);
+            render = () => setup.content.apply(this.scope);
         }
 
         if ( Any.isString(setup.content) ) {
-            render = setup.content;
+            render = () => setup.content;
         }
 
-        return h(component, props, render);
+        return h(component, props, { default: render });
     },
 
     render()
