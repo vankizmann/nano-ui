@@ -4,6 +4,14 @@ export default {
 
     name: 'NSelect',
 
+    inject: {
+
+        NFormItem: {
+            default: undefined
+        }
+
+    },
+
     props: {
 
         modelValue: {
@@ -151,6 +159,11 @@ export default {
     },
 
     computed: {
+
+        deepDisabled() {
+            return this.NFormItem ? this.NFormItem.disabled(this.disabled) :
+                this.disabled;
+        },
 
         empty()
         {
@@ -494,7 +507,7 @@ export default {
 
         let props = {};
 
-        if ( ! this.disabled ) {
+        if ( ! this.deepDisabled ) {
             props.onMousedown = this.clear;
         }
 
@@ -524,7 +537,7 @@ export default {
             class: nano.Icons.times,
         };
 
-        if ( ! this.disabled ) {
+        if ( ! this.deepDisabled ) {
             props.onMousedown = (event) => this.toggleOption(value, event);
         }
 
@@ -589,7 +602,7 @@ export default {
         let props = {
             value: this.search,
             placeholder: this.placeholder,
-            disabled: this.disabled,
+            disabled: this.deepDisabled,
             onFocus: this.onFocusInput,
             onInput: this.onInputInput,
             onKeydown: this.onKeydownInput
@@ -635,7 +648,7 @@ export default {
         let props = {
             value: this.search,
             placeholder: this.placeholder,
-            disabled: this.disabled,
+            disabled: this.deepDisabled,
             onFocus: this.onFocusInput,
             onInput: this.onInputInput,
             onKeydown: this.onKeydownInput
@@ -721,7 +734,7 @@ export default {
             listen: true,
             size: this.size,
             scrollClose: true,
-            disabled: this.disabled,
+            disabled: this.deepDisabled,
             onClose: this.resetInput
         };
 
@@ -774,7 +787,7 @@ export default {
             classList.push('n-focus');
         }
 
-        if ( this.disabled ) {
+        if ( this.deepDisabled ) {
             classList.push('n-disabled');
         }
 

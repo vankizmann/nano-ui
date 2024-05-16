@@ -4,6 +4,14 @@ export default {
 
     name: 'NSwitch',
 
+    inject: {
+
+        NFormItem: {
+            default: undefined
+        }
+
+    },
+
     props: {
 
         modelValue: {
@@ -58,6 +66,15 @@ export default {
 
     },
 
+    computed: {
+
+        deepDisabled() {
+            return this.NFormItem ? this.NFormItem.disabled(this.disabled) :
+                this.disabled;
+        }
+
+    },
+
     data()
     {
         return {
@@ -99,7 +116,7 @@ export default {
 
         let props = {};
 
-        if ( ! this.disabled ) {
+        if ( ! this.deepDisabled ) {
             props.onMousedown = this.eventClick;
         }
 
@@ -122,7 +139,7 @@ export default {
 
         let props = {};
 
-        if ( ! this.disabled ) {
+        if ( ! this.deepDisabled ) {
             props.onMousedown = this.eventClick;
         }
 
@@ -156,7 +173,7 @@ export default {
             classList.push('n-off');
         }
 
-        if ( this.disabled ) {
+        if ( this.deepDisabled ) {
             classList.push('n-disabled');
         }
 

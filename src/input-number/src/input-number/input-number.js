@@ -7,6 +7,15 @@ export default {
 
     inheritAttrs: false,
 
+    inject: {
+
+        NFormItem: {
+            default: undefined
+        }
+        
+    },
+
+
     props: {
 
         modelValue: {

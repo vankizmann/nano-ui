@@ -135,7 +135,15 @@
                 </n-form-item>
 
                 <n-form-item label="Bar" prop="bar" :conditional="n_form.conditional" v-model="n_form.modelValue">
-                    <n-input></n-input>
+                    <n-input-number></n-input-number>
+                </n-form-item>
+
+                <n-form-item label="Bar" prop="bar" :conditional="n_form.conditional" v-model="n_form.modelValue">
+                    <n-select></n-select>
+                </n-form-item>
+
+                <n-form-item label="Bar" prop="bar" :conditional="n_form.conditional" v-model="n_form.modelValue">
+                    <n-switch>test</n-switch>
                 </n-form-item>
 
             </n-form-group>

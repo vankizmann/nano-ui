@@ -60,7 +60,7 @@
 
     .n-form-item--#{$suffix} .n-form-item__condition {
         font-size: $-form-item-font - 2;
-        padding: $-form-item-size * $-form-item-ratio * 0.25 $-form-item-size * $-form-item-ratio * 0.75;
+        padding: $-form-item-size * $-form-item-ratio * 0.15 $-form-item-size * $-form-item-ratio * 0.75;
     }
 
     .n-form-item--#{$suffix} .n-form-item__label {
