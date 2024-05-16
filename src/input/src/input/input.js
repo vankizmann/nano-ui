@@ -9,6 +9,10 @@ export default {
 
         NForm: {
             default: undefined
+        },
+
+        NFormItem: {
+            default: undefined
         }
 
     },
@@ -90,6 +94,15 @@ export default {
 
     },
 
+    computed: {
+
+        deepDisabled() {
+            return this.NFormItem ? this.NFormItem.disabled(this.disabled) :
+                this.disabled;
+        }
+
+    },
+
     data()
     {
         return {
@@ -158,7 +171,7 @@ export default {
             return null;
         }
 
-        let disabled = this.disabled;
+        let disabled = this.deepDisabled;
 
         if ( this.iconDisabled !== null ) {
             disabled = this.iconDisabled;
@@ -188,7 +201,7 @@ export default {
         Obj.assign(props, {
             value: this.tempValue,
             type: this.nativeType,
-            disabled: this.disabled,
+            disabled: this.deepDisabled,
             placeholder: this.placeholder,
             onInput: this.onInput,
             onFocus: this.onFocus,
@@ -212,7 +225,7 @@ export default {
             classList.push('n-input--icon-' + this.iconPosition);
         }
 
-        if ( this.disabled ) {
+        if ( this.deepDisabled ) {
             classList.push('n-disabled');
         }
 

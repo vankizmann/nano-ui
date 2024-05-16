@@ -23,6 +23,15 @@
     display: flex;
 }
 
+.n-form-item__condition {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: inline-block;
+    border-radius: 500px;
+}
+
 .n-form--vertical .n-form-item__label {
     width: 100%;
 }
@@ -47,6 +56,11 @@
 
     .n-form-item--#{$suffix} {
         margin-bottom: $-form-item-size * $-form-item-ratio * 2.2;
+    }
+
+    .n-form-item--#{$suffix} .n-form-item__condition {
+        font-size: $-form-item-font - 2;
+        padding: $-form-item-size * $-form-item-ratio * 0.25 $-form-item-size * $-form-item-ratio * 0.75;
     }
 
     .n-form-item--#{$suffix} .n-form-item__label {

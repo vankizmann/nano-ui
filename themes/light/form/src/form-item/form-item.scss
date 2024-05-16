@@ -1,5 +1,25 @@
 @import "../../../root/vars";
 
+.n-form-item__condition span {
+    color: $color-gray-50;
+}
+
+.n-form-item.is-disabled .n-form-item__condition {
+    background: rgba($color-primary, 0.1);
+}
+
+.n-form-item.is-disabled .n-form-item__condition span {
+    color: rgba($color-primary, 0.75);
+}
+
+.n-form-item.is-disabled .n-form-item__condition:hover {
+    background: rgba($color-primary, 0.15);
+}
+
+.n-form-item.is-disabled .n-form-item__condition:hover span {
+    color: rgba($color-primary, 0.85);
+}
+
 .n-form-item__label label {
     color: $color-gray-60;
 }

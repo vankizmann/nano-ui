@@ -1,4 +1,4 @@
-import { Arr, Obj, Any, Dom, UUID } from "@kizmann/pico-js";
+import { Arr, Obj, Any, Dom, UUID, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -20,7 +20,20 @@ export default {
 
     },
 
+    provide()
+    {
+        return { NFormItem: this };
+    },
+
     props: {
+
+        modelValue: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
 
         prop: {
             default()
@@ -70,9 +83,48 @@ export default {
             type: [Boolean]
         },
 
+        conditional: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
+        conditionOn: {
+            default()
+            {
+                return Locale.trans('Enable field');
+            },
+            type: [String]
+        },
+
+        conditionOff: {
+            default()
+            {
+                return Locale.trans('Disable field');
+            },
+            type: [String]
+        }
+
     },
 
     methods: {
+
+        enabled(component = false)
+        {
+            return (! this.conditional || this.modelValue) && ! component;
+        },
+
+        disabled(component)
+        {
+            return (this.conditional && ! this.modelValue) || component;
+        },
+
+        toggleCondition()
+        {
+            this.$emit('update:modelValue', !this.modelValue);
+        },
 
         focusInput()
         {
@@ -160,6 +212,19 @@ export default {
         );
     },
 
+    renderCondition()
+    {
+        if ( ! this.conditional ) {
+            return null;
+        }
+
+        return (
+            <div class="n-form-item__condition" onClick={this.toggleCondition}>
+                <span>{ this.modelValue ? this.conditionOff : this.conditionOn }</span>
+            </div>
+        );
+    },
+
     renderLabel()
     {
         if ( !this.label && !this.$slots.label ) {
@@ -209,9 +274,14 @@ export default {
         let classList = [
             'n-form-item',
             'n-form-item--' + size,
-        ]
+        ];
+
+        if ( this.disabled() ) {
+            classList.push('is-disabled');
+        }
 
         return <div class={classList}>
+            {this.ctor('renderCondition')()}
             {this.ctor('renderLabel')()}
             {this.ctor('renderInput')()}
             {this.ctor('renderError')()}

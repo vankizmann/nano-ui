@@ -1,0 +1,6 @@
+{
+    "hostname": "nano-ui.local",
+    "webroot": "",
+    "engine": "apache",
+    "version": "php-8.2.8"
+}

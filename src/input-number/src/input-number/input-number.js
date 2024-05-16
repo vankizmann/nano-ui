@@ -113,6 +113,15 @@ export default {
 
     },
 
+    computed: {
+
+        deepDisabled() {
+            return this.NFormItem ? this.NFormItem.disabled(this.disabled) :
+                this.disabled;
+        }
+
+    },
+
     watch: {
 
         modelValue(value)
@@ -303,7 +312,7 @@ export default {
 
     renderPrev()
     {
-        let disabled = this.disabled ||
+        let disabled = this.deepDisabled ||
             this.tempValue <= this.min;
 
         let props = {
@@ -320,7 +329,7 @@ export default {
 
     renderNext()
     {
-        let disabled = this.disabled ||
+        let disabled = this.deepDisabled ||
             this.tempValue >= this.max;
 
         let props = {
@@ -342,7 +351,7 @@ export default {
 
         Obj.assign(props, {
             value: this.getDisplayValue(),
-            disabled: this.disabled,
+            disabled: this.deepDisabled,
             placeholder: this.placeholder,
             onKeydown: this.onKeydown,
             onFocus: this.onFocus,
@@ -360,7 +369,7 @@ export default {
 
         let props = {};
 
-        if ( !this.disabled ) {
+        if ( !this.deepDisabled ) {
             props.onMousedown = this.clear;
         }
 
@@ -391,7 +400,7 @@ export default {
             classList.push('n-focus');
         }
 
-        if ( this.disabled ) {
+        if ( this.deepDisabled ) {
             classList.push('n-disabled');
         }
 
