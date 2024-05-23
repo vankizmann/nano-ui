@@ -15,6 +15,14 @@ export default {
             type: [Object]
         },
 
+        extraValue: {
+            default()
+            {
+                return {};
+            },
+            type: [Object]
+        },
+
         config: {
             default()
             {
@@ -36,7 +44,7 @@ export default {
     data()
     {
         return {
-            tempValue: this.modelValue
+            tempValue: this.modelValue, sempValue: this.extraValue
         };
     },
 
@@ -45,6 +53,12 @@ export default {
         modelValue: function (value) {
             if ( value !== this.tempValue ) {
                 this.tempValue = value;
+            }
+        },
+
+        extraValue: function (value) {
+            if ( value !== this.sempValue ) {
+                this.sempValue = value;
             }
         }
 
@@ -101,7 +115,7 @@ export default {
             }
 
             let sources = {
-                $scope: this.scope, $model: this.tempValue, $global: window
+                $scope: this.scope, $model: this.tempValue, $extra: this.sempValue, $global: window
             };
 
             if ( exists ) {
@@ -170,7 +184,7 @@ export default {
             }
 
             let sources = {
-                $scope: this.scope, $model: this.tempValue, $global: window
+                $scope: this.scope, $model: this.tempValue, $extra: this.sempValue, $global: window
             };
 
             let result = Obj.get(sources, value.replace(/^!+/, ''));
@@ -193,7 +207,7 @@ export default {
             }
 
             let sources = {
-                $scope: this.scope, $model: this.tempValue, $global: window
+                $scope: this.scope, $model: this.tempValue, $extra: this.sempValue, $global: window
             };
 
             if ( ! Any.isNull(fallback) && Obj.get(sources, prop, -1337) === -1337 ) {
@@ -210,7 +224,7 @@ export default {
             }
 
             let sources = {
-                $scope: this.scope, $model: this.tempValue, $global: window
+                $scope: this.scope, $model: this.tempValue, $extra: this.sempValue, $global: window
             };
 
             Obj.set(sources, prop, value);
