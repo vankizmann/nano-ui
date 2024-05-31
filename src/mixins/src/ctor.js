@@ -6,12 +6,6 @@ export default {
     {
         let ctor = Obj.get(this.$options, key.split('.'), -1);
 
-
-
-        //console.log(this.$options, ctor);
-
-        // console.log(ctor);
-
         // if ( ctor === -1 ) {
         //     ctor = Obj.get(this.$vnode.componentOptions.Ctor,
         //         Arr.merge(['options'], key.split('.')), -1);

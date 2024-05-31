@@ -4,6 +4,14 @@ export default {
 
     name: 'NDatetimepicker',
 
+    inject: {
+
+        NFormItem: {
+            default: undefined
+        }
+
+    },
+
     props: {
 
         modelValue: {
@@ -152,6 +160,14 @@ export default {
 
     },
 
+    computed: {
+
+        deepDisabled() {
+            return this.NFormItem ? this.NFormItem.disabled(this.disabled) :
+                this.disabled;
+        }
+
+    },
 
     watch: {
 
@@ -246,7 +262,7 @@ export default {
 
         let props = {};
 
-        if ( ! this.disabled ) {
+        if ( ! this.deepDisabled ) {
             props.onMousedown = this.clearDatetimepicker;
         }
 
@@ -270,7 +286,7 @@ export default {
     {
         let props = {
             value: '',
-            disabled: this.disabled,
+            disabled: this.deepDisabled,
             placeholder: this.placeholder,
             onInput: this.onValueInput,
         };
@@ -357,7 +373,7 @@ export default {
             size: this.size,
             position: this.position,
             scrollClose: true,
-            disabled: this.disabled
+            disabled: this.deepDisabled
         };
 
         let slots = {
@@ -391,7 +407,7 @@ export default {
             classList.push('n-focus');
         }
 
-        if ( this.disabled ) {
+        if ( this.deepDisabled ) {
             classList.push('n-disabled');
         }
 

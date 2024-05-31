@@ -18,7 +18,7 @@ export default {
         extraValue: {
             default()
             {
-                return {};
+                return null;
             },
             type: [Object]
         },
@@ -44,7 +44,7 @@ export default {
     data()
     {
         return {
-            tempValue: this.modelValue, sempValue: this.extraValue
+            tempValue: this.modelValue, sempValue: this.extraValue || this.modelValue
         };
     },
 
