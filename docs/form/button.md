@@ -1,39 +1,73 @@
 # Button
+
+
+```js [demo]
+    pi.Obj.assign(window.VueData, {
+        button: {
+            size: 'md', icon: null, square: false, link: false, disabled: false,
+        },
+        sizes: {
+            'sm': 'Small', 'md': 'Medium', 'lg': 'Large'
+        },
+        icons: {
+            'fa fa-ghost': 'Ghost', 'fa fa-plus': 'Plus', 'fa fa-minus': 'Minus'
+        }
+    });
+```
+
 Button with diffrent styles.
 
-```vue
-<n-button @click="somevar = false">Button text</n-button>
+```html [demo]
+
+<div>
+    <div>
+        FOOOBAR
+    </div>
+</div>
 ```
 
 ### Basic buttons
 
-```html
-/*vue*/
+```html [demo]
 
-<template>
-    <div class="grid grid--col grid--20-20">
-        <div class="col--1-1">
-            <n-button type="primary">Primary</n-button>
-            <n-button type="secondary">Secondary</n-button>
-            <n-button type="success">Success</n-button>
-            <n-button type="warning">Warning</n-button>
-            <n-button type="danger">Danger</n-button>
-            <n-button type="info">Info</n-button>
-        </div>
-        <div class="col--1-1">
-            <n-button type="primary" :disabled="true">Primary</n-button>
-            <n-button type="secondary" :disabled="true">Secondary</n-button>
-            <n-button type="success" :disabled="true">Success</n-button>
-            <n-button type="warning" :disabled="true">Warning</n-button>
-            <n-button type="danger" :disabled="true">Danger</n-button>
-            <n-button type="info" :disabled="true">Info</n-button>
-        </div>
-</template>
+<div class="app-options grid grid--row grid--wrap grid--30-30">
+    <div class="col--auto">
+        <n-select style="width: 100px;" v-model="button.size" :options="sizes" />
+    </div>
+    <div class="col--auto">
+        <n-select style="width: 200px;" v-model="button.icon" placeholder="Icon" :clearable="true" :options="icons" />
+    </div>
+    <div class="col--auto">
+        <n-checkbox v-model="button.square">Square</n-checkbox>
+    </div>
+    <div class="col--auto">
+        <n-checkbox v-model="button.link">Link</n-checkbox>
+    </div>
+    <div class="col--auto">
+        <n-checkbox v-model="button.disabled">Disabled</n-checkbox>
+    </div>
+</div>
 
-<script>
-    export default {} 
-</script>
-
+<div class="grid grid--row grid--wrap grid--10-10">
+    <div class="col--1-1 col--1-3@md">
+        <n-button v-bind="button" type="primary">Button</n-button>
+    </div>
+    <div class="col--1-1 col--1-3@md">
+        <n-button v-bind="button" type="secondary">Button</n-button>
+    </div>
+    <div class="col--1-1 col--1-3@md">
+        <n-button v-bind="button" type="success">Button</n-button>
+    </div>
+    <div class="col--1-1 col--1-3@md">
+        <n-button v-bind="button" type="warning">Button</n-button>
+    </div>
+    <div class="col--1-1 col--1-3@md">
+        <n-button v-bind="button" type="danger">Button</n-button>
+    </div>
+    <div class="col--1-1 col--1-3@md">
+        <n-button v-bind="button" type="info">Button</n-button>
+    </div>
+</div>
 ```
 
 ### Plain buttons
@@ -63,7 +97,7 @@ Button with diffrent styles.
 </template>
 
 <script>
-    export default {} 
+    export default {}
 </script>
 
 ```
@@ -94,7 +128,7 @@ Button with diffrent styles.
 </template>
 
 <script>
-    export default {} 
+    export default {}
 </script>
 
 ```
@@ -117,7 +151,7 @@ Button with diffrent styles.
 </template>
 
 <script>
-    export default {} 
+    export default {}
 </script>
 
 ```
@@ -147,7 +181,7 @@ Button with diffrent styles.
 </template>
 
 <script>
-    export default {} 
+    export default {}
 </script>
 
 ```
@@ -170,7 +204,7 @@ Button with diffrent styles.
 </template>
 
 <script>
-    export default {} 
+    export default {}
 </script>
 
 ```
@@ -192,7 +226,7 @@ Button with diffrent styles.
 </template>
 
 <script>
-    export default {} 
+    export default {}
 </script>
 
 ```
@@ -214,11 +248,10 @@ Button with diffrent styles.
 </template>
 
 <script>
-    export default {} 
+    export default {}
 </script>
 
 ```
-
 
 ### Button native type
 
@@ -234,12 +267,13 @@ Button with diffrent styles.
 </template>
 
 <script>
-    export default {} 
+    export default {}
 </script>
 
 ```
 
 ### Properties
+
 **type**  
 default: 'primary'  
 types: String  
@@ -291,9 +325,10 @@ types: String
 _Native button type (a, button, div etc.)_
 
 ### Events
+
 ```javascript
     /* Allows all types which are supported by native type */
-    NButton.$on('click', (event) => {
-        console.log(event);
-    });
+NButton.$on('click', (event) => {
+    console.log(event);
+});
 ```

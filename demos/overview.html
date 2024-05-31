@@ -223,20 +223,7 @@
                 <n-select style="width: 100px;" v-model="n_button.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
-                <n-select style="width: 200px;" v-model="n_button.icon" placeholder="Icon" :clearable="true" :options="demoIcons">
-                    <n-select-option :disabled="true" value="foo1" label="foo1"></n-select-option>
-                    <n-select-option value="bar1" label="bar1"></n-select-option>
-                    <n-select-option value="foo2" label="foo2"></n-select-option>
-                    <n-select-option value="bar2" label="bar2"></n-select-option>
-                    <n-select-option value="foo3" label="foo3"></n-select-option>
-                    <n-select-option value="bar3" label="bar3"></n-select-option>
-                    <n-select-option value="foo4" label="foo4"></n-select-option>
-                    <n-select-option value="bar4" label="bar4"></n-select-option>
-                    <n-select-option value="foo5" label="foo5"></n-select-option>
-                    <n-select-option value="bar5" label="bar5"></n-select-option>
-                    <n-select-option value="foo6" label="foo6"></n-select-option>
-                    <n-select-option value="bar6" label="bar6"></n-select-option>
-                </n-select>
+                <n-select style="width: 200px;" v-model="n_button.icon" placeholder="Icon" :clearable="true" :options="demoIcons" />
             </div>
             <div class="col--auto">
                 <n-checkbox v-model="n_button.square">Square</n-checkbox>

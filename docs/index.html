@@ -1,40 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>nano.ui</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Description">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
-  <link rel="stylesheet" href="//unpkg.com/backpack.css@2.0.0/lib/backpack.css">
-  <link rel="stylesheet" href="./dist/index.css">
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
-  <link rel="stylesheet" href="../dist/nano-ui.css">
+    <meta charset="UTF-8">
+    <title>nano.ui</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="Description">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+    <link rel="stylesheet" href="//unpkg.com/backpack.css@2.0.0/lib/backpack.css">
     <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+    <link rel="stylesheet" href="//unpkg.com/@fortawesome/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="//unpkg.com/@kizmann/nano-ui/dist/nano-ui.css">
+    <link rel="stylesheet" href="//unpkg.com/@kizmann/nano-ui/dist/themes/light.css">
+    <link rel="stylesheet" href="./dist/index.css">
 </head>
 <body>
-  <div id="app"></div>
-  <script src="//unpkg.com/babel-standalone@6/babel.js"></script>
-  <script src="//unpkg.com/@kizmann/pico-js"></script>
-  <script src="../dist/nano-ui.js"></script>
+<div id="app">
+    <div class="fueeueu"></div>
+</div>
 
-  <script>
+<script src="//unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="//unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script src="//raw.githubusercontent.com/cgxqd/docsify-demo-box-vue/master/dist/docsify-demo-box-vue.js"></script>
+<script src="//unpkg.com/@kizmann/pico-js/dist/pico-js.js"></script>
+<script src="../dist/nano-ui.js"></script>
+<!--<script src="//unpkg.com/@kizmann/nano-ui/dist/nano-ui.js"></script>-->
 
-    window.$docsify = function(vm) {
-      return {
-          name: 'nano.ui',
-          repo: 'https://github.com/vankizmann/nano-ui',
-          logo: 'https://github.com/vankizmann/nano-ui/raw/master/nano.svg?raw=true',
-          basePath: window.location.href.match(/github/) ? '/nano-ui/docs/' : '/docs/',
-          relativePath: false,
-          themeColor: '#2877FA',
-          autoHeader: true,
-          loadSidebar: true,
-      };
+<script>
+
+    let DemoPlugin = function (hook, vm) {
+
+        // Global vue data
+        window.VueData = {};
+
+        // Remote vue app
+        window.VueRemote = null;
+
+        hook.beforeEach(function (markdown) {
+
+            pi.Dom.find('#temp-script').each(function (el) {
+                el.remove();
+            });
+
+            if ( ! pi.Any.isEmpty(window.VueData) ) {
+                window.VueData = {};
+            }
+
+            if ( ! pi.Any.isEmpty(window.VueRemote) ) {
+                window.VueRemote.unmount();
+            }
+
+            let pattern = /```js\s\[demo]([^`]*)```/gm;
+
+            let globaljs = pi.Arr.each(markdown.match(pattern) || [], (text) => {
+                return text.replace(pattern, "$1");
+            });
+
+            pi.Dom.make('script', { id: "temp-script", innerHTML: globaljs.join("\n")})
+                .appendTo(document.body)
+
+            markdown = markdown.replace(/```html\s\[demo]([^`]*)```/gm,
+                '<div class="demo-wrapper">$1</div>');
+
+            return markdown;
+        });
+
+        hook.afterEach(function (html) {
+            return '<div id="vue-remote">' + html + '</div>';
+        });
+
+        hook.doneEach(function () {
+
+            let options = {
+                data: function () {
+                    console.log(window.VueData);
+                    return window.VueData;
+                }
+            };
+
+            // Create vue instance
+            window.VueRemote = window.Vue
+                .createApp(options);
+
+            window.VueRemote
+                .use(window.nano.Install);
+
+            window.VueRemote.mount('#main');
+        });
+
+        console.log('DemoPlugin done!');
+    }
+
+    window.$docsify = function (vm) {
+
+        console.log(vm);
+
+        let options = {
+            name: 'nano.ui', logo: '../nano.svg', themeColor: '#2877FA', loadSidebar: true,
+        };
+
+        options.plugins = [
+            DemoPlugin
+        ];
+
+        if ( pi.Any.isEmpty(options) ) {
+            options.repo = 'https://github.com/vankizmann/nano-ui'
+        }
+
+
+        // {
+        //      name: 'nano.ui',
+        //      repo: 'https://github.com/vankizmann/nano-ui',
+        //      logo: 'https://github.com/vankizmann/nano-ui/raw/master/nano.svg?raw=true',
+        //      themeColor: '#2877FA',
+        //      autoHeader: true,
+        //      loadSidebar: true,
+        //      plugins: [
+        //          DemoPlugin
+        //      ]
+        //  }
+        return options;
     };
-  </script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+
+    console.log(window.$docsify);
+
+</script>
+<script src="//unpkg.com/docsify@4/lib/docsify.min.js"></script>
+<script src="//unpkg.com/docsify@4/lib/plugins/search.min.js"></script>
 </body>
 </html>

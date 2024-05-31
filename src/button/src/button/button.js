@@ -135,7 +135,7 @@ export default {
         }
 
         if ( this.$slots.default && ! this.square ) {
-            innerHtml.push(<span>{ this.$slots.default() }</span>);
+            innerHtml.push(<span>{ this.$slots.default && this.$slots.default() }</span>);
         }
 
         if ( this.iconPosition === 'after' ) {

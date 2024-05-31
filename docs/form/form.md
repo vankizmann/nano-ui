@@ -1,6 +1,20 @@
 # Form
 Form you know.
 
+```js [demo]
+    pi.Obj.assign(window.VueData, {
+        form: {
+            size: 'md', icon: null, square: false, link: false, disabled: false,
+        },
+        sizes: {
+            'sm': 'Small', 'md': 'Medium', 'lg': 'Large'
+        },
+        icons: {
+            'fa fa-ghost': 'Ghost', 'fa fa-plus': 'Plus', 'fa fa-minus': 'Minus'
+        }
+    });
+```
+
 ```html
 /*vue*/
 <template>

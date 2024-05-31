@@ -101,7 +101,7 @@ export default {
 
         return (
             <div class={classList}>
-                { this.$slots.default() }
+                { this.$slots.default && this.$slots.default() }
             </div>
         );
     }
