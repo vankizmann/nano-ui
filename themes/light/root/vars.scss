@@ -21,15 +21,15 @@ $color-gray-85:         mix($color-black, $color-white, 0.85 * 100%) !default;
 $color-gray-90:         mix($color-black, $color-white, 0.90 * 100%) !default;
 $color-gray-95:         mix($color-black, $color-white, 0.95 * 100%) !default;
 
-$color-primary:         #4e7bff !default;
-$color-secondary:       #683bff !default;
+$color-secondary:       #ca62f0 !default;
+$color-primary:         #6875ee !default;
 
-$color-success:         #3ed786 !default;
-$color-warning:         #ffac2f !default;
-$color-danger:          #fd2f51 !default;
-$color-info:            #37C4EF !default;
+$color-success:         #06C493 !default;
+$color-warning:         #FFBF3F !default;
+$color-danger:          #F9536E !default;
+$color-info:            #4BD6F9 !default;
 
-$color-background:      #f0f3f7 !default;
+$color-background:      #FAFAFB !default;
 
 $color-shadow:              mix($color-black, $color-primary, 80%) !default;
 
@@ -95,8 +95,8 @@ $color-background-darker:   darken(mix($color-black, $color-background, 20%), 5%
 
 $xs-radius:                 2px !default;
 $sm-radius:                 2px !default;
-$md-radius:                 3px !default;
-$lg-radius:                 5px !default;
+$md-radius:                 4px !default;
+$lg-radius:                 6px !default;
 $xl-radius:                 10px !default;
 
 $form: (
@@ -114,7 +114,7 @@ $form: (
         ),
         'md': (
                 'size': 32px,
-                'font': 14px,
+                'font': 15px,
                 'radius': $md-radius,
                 'ratio': 0.40,
         ),

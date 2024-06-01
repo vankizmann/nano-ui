@@ -14,7 +14,6 @@ body:not(.ready)
 
 div#app
   font-size: 30px
-  font-weight: lighter
   margin: 40vh auto
   text-align: center
 
@@ -48,8 +47,6 @@ html, body
   height: 100%
 
 body
-  -moz-osx-font-smoothing: grayscale
-  -webkit-font-smoothing: antialiased
   color: $color-black
   font-family: $font-family
   font-size: 15px
@@ -295,7 +292,7 @@ main.hidden
 
 body.sticky
   .sidebar, .sidebar-toggle
-    position: fixed
+    //position: fixed
 
 /* main content */
 .content
@@ -310,7 +307,7 @@ body.sticky
 /* markdown content found on pages */
 .markdown-section
   margin: 0 auto
-  max-width: 80%
+  max-width: 960px
   padding: 30px 15px 40px 15px
   position: relative
 
@@ -410,7 +407,7 @@ body.close
 
 @media screen and (max-width: 768px)
   .github-corner, .sidebar-toggle, .sidebar
-    position: fixed
+    //position: fixed
 
   .app-nav
     margin-top: 16px

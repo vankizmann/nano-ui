@@ -80,14 +80,14 @@ let light = {
     ]
 };
 
-let dark = {
-    entry: ["./themes/dark/index.scss"],
+let docs = {
+    entry: ["./docs/src/scss/index.scss"],
     module: {
         rules: [
             {
                 test: /\.scss$/,
                 include: [
-                    path.resolve('themes')
+                    path.resolve('./docs/src')
                 ],
                 use: [
                     MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'
@@ -98,7 +98,7 @@ let dark = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'dark.css'
+            filename: './dist/docs.css'
         })
     ]
 };
@@ -142,24 +142,24 @@ module.exports = function (env, argv) {
     let lightPackage = Object.assign({
 
         output: {
-            filename: ".light.ignore.js",
+            filename: ".ignore.js",
             path: path.resolve(__dirname, "dist/themes"),
         }
 
     }, light);
 
-    let darkPackage = Object.assign({
+    let docsPackage = Object.assign({
 
         output: {
-            filename: ".dark.ignore.js",
-            path: path.resolve(__dirname, "dist/themes"),
+            filename: "./dist/.ignore.js",
+            path: path.resolve(__dirname, "docs"),
         }
 
-    }, dark);
+    }, docs);
 
     if ( argv.mode === 'development' ) {
         return [
-            bundlerPackage, stylePackage, lightPackage, //darkPackage
+            bundlerPackage, stylePackage, lightPackage, docsPackage
         ];
     }
 

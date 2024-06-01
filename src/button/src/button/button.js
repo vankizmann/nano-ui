@@ -62,14 +62,6 @@ export default {
             type: [String]
         },
 
-        buttonType: {
-            default()
-            {
-                return 'button';
-            },
-            type: [String]
-        },
-
         nativeType: {
             default()
             {

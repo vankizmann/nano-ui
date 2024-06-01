@@ -1,10 +1,52 @@
 # Table
 Draggable table with diffrent styles.
 
-```vue
-<n-table :items="items">
-    <n-table-column type="string" prop="value"></n-table-column>
-</n-table>
+```js [demo]
+var generate = function (count, loop) {
+    return pi.Arr.each(pi.Arr.make(count), (index) => {
+
+        var item = {
+            id: 'item-' + pi.UUID(), label: 'Item ' + index, image: 'https://picsum.photos/260/160.jpg?' + pi.UUID(), date: new Date,
+        }
+        
+        if ( loop > 1 ) {
+            item.children = generate(10, loop-1)
+        }
+        
+        return item;
+    });
+};
+
+pi.Obj.assign(window.VueData, {
+    tableBinds: {
+        draggable: true,
+    },
+    tableReact: {
+        items: generate(200, 3)
+    }
+});
+```
+
+## Example
+
+```html [demo]
+<n-form>
+    <div class="demo-options">
+        <div class="grid grid--row grid--wrap grid--20-20">
+            <n-form-item label="Draggable" class="col--auto">
+                <n-switch v-model="tableBinds.draggable">Activate drag and drop</n-switch>
+            </n-form-item>
+        </div>
+    </div>
+    <div class="demo-display">
+        <n-table style="height: 500px;" :items="tableReact.items" :render-expand="true" :item-height="80" :use-keys="true" :threshold="51" v-bind="tableBinds" @update:items="(items) => tableReact.items = items">
+            <n-table-column label="Label" type="string" prop="label" :fluid="true" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="Image" type="image" prop="image" :fixed-width="90"></n-table-column>
+            <n-table-column label="Date" type="datetime" prop="date" :filter="true"></n-table-column>
+            <n-table-column label="ID" type="string" prop="id" :sort="true"></n-table-column>
+        </n-table>
+    </div>
+</n-form>
 ```
 
 ### Table
@@ -35,18 +77,15 @@ Draggable table with diffrent styles.
                     this.total = 0;
                 }
                 
-                return pi.Arr.each(pi.Arr.make(count), () => {
-                        
-                    this.total++;
-   
+                return pi.Arr.each(pi.Arr.make(count), (index) => {
                     return {
-                        label: 'Item ' + this.total,
-                        id: 'value-a-' + this.total,
-                        image: 'https://picsum.photos/100/100?' + this.total,
+                        label: 'Item ' + index,
+                        id: 'value-a-' + index,
+                        image: 'https://picsum.photos/100/100?' + index,
                         date: new Date,
                         children: this.generator(count, depth - 1)
                     };
-                })
+                });
             }
             
         },

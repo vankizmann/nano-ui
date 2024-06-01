@@ -1,7 +1,7 @@
 @import "../../../root/vars";
 
 .n-table {
-    border: 1px solid $color-gray-15;
+    box-shadow: inset 0 0 1px 1px $color-gray-15;
 }
 
 .n-table .n-draglist-item {
