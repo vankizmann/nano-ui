@@ -2,27 +2,9 @@
 Draggable table with diffrent styles.
 
 ```js [demo]
-var generate = function (count, loop) {
-    return pi.Arr.each(pi.Arr.make(count), (index) => {
-
-        var item = {
-            id: 'item-' + pi.UUID(), label: 'Item ' + index, image: 'https://picsum.photos/260/160.jpg?' + pi.UUID(), date: new Date,
-        }
-        
-        if ( loop > 1 ) {
-            item.children = generate(10, loop-1)
-        }
-        
-        return item;
-    });
-};
-
 pi.Obj.assign(window.VueData, {
     tableBinds: {
         draggable: true,
-    },
-    tableReact: {
-        items: generate(200, 3)
     }
 });
 ```
@@ -39,7 +21,7 @@ pi.Obj.assign(window.VueData, {
         </div>
     </div>
     <div class="demo-display">
-        <n-table style="height: 500px;" :items="tableReact.items" :render-expand="true" :item-height="80" :use-keys="true" :threshold="51" v-bind="tableBinds" @update:items="(items) => tableReact.items = items">
+        <n-table style="height: 600px;" :items="itemsMini" :render-expand="true" :item-height="80" :use-keys="true" v-bind="tableBinds" @update:items="(items) => itemsMini = items">
             <n-table-column label="Label" type="string" prop="label" :fluid="true" :sort="true" :filter="true"></n-table-column>
             <n-table-column label="Image" type="image" prop="image" :fixed-width="90"></n-table-column>
             <n-table-column label="Date" type="datetime" prop="date" :filter="true"></n-table-column>

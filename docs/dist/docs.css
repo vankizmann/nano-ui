@@ -7071,6 +7071,9 @@ pre::after {
 * {
   outline: none !important; }
 
+div {
+  box-sizing: border-box; }
+
 html, body {
   font-family: 'Roboto', sans-serif;
   font-size: 15px;

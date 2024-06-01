@@ -47,10 +47,29 @@
 
 <script>
 
+    var GenerateItems = function (count, loop) {
+        return pi.Arr.each(pi.Arr.make(count), (index) => {
+
+            var item = {
+                id: 'item-' + pi.UUID(), label: 'Item ' + index, image: 'https://picsum.photos/260/160.jpg?' + pi.UUID(), date: new Date,
+            }
+
+            if ( loop > 1 ) {
+                item.children = GenerateItems(10, loop-1)
+            }
+
+            return item;
+        });
+    };
+
     let DemoPlugin = function (hook, vm) {
 
         // Global vue data
-        window.VueData = window.DefaultVueData = {};
+        window.VueData = window.DefaultVueData = {
+            itemsMini: GenerateItems(50, 1),
+            itemsMidi: GenerateItems(500, 1),
+            itemsMaxi: GenerateItems(1000, 2),
+        };
 
         window.DefaultVueData.types = {
             'primary': 'Primary',
