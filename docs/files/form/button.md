@@ -2,7 +2,7 @@
 
 The `<n-button>` component is a versatile and customizable button component, providing various styling options and functionalities. Below is a detailed description of its props, methods, and usage.
 
-## Example
+## Demo
 
 ```js [demo]
 pi.Obj.assign(window.VueData, {
@@ -19,22 +19,22 @@ pi.Obj.assign(window.VueData, {
 <n-form>
     <div class="demo-options">
         <div class="grid grid--row grid--wrap grid--20-20">
-            <n-form-item label="Size" class="col--auto">
+            <n-form-item class="col--1-1 col--6-12@sm col--3-12@md" label="Size">
                 <n-select v-model="buttonBinds.size" :options="sizes" />
             </n-form-item>
-            <n-form-item label="Icon" class="col--auto">
+            <n-form-item class="col--1-1 col--6-12@sm col--3-12@md" label="Icon">
                 <n-select v-model="buttonBinds.icon" placeholder="Icon" :clearable="true" :options="icons" />
             </n-form-item>
-            <n-form-item label="Position" class="col--auto">
+            <n-form-item class="col--1-1 col--6-12@sm col--3-12@md" label="Position">
                 <n-select v-model="buttonBinds.iconPosition" :options="positions" />
             </n-form-item>
-            <n-form-item label="Disabled" class="col--auto">
+            <n-form-item class="col--1-1 col--6-12@sm col--3-12@md" label="Disabled">
                 <n-switch v-model="buttonBinds.disabled">Activate disable state</n-switch>
             </n-form-item>
         </div>
     </div>
     <div class="demo-display">
-        <div class="grid grid--row grid--wrap grid--40-40 grid--center">
+        <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
             <div class="col--auto">
                 <n-button v-bind="buttonBinds" type="primary">Primary</n-button>
             </div>
@@ -54,7 +54,7 @@ pi.Obj.assign(window.VueData, {
                 <n-button v-bind="buttonBinds" type="info">Info</n-button>
             </div>
         </div>
-        <div class="grid grid--row grid--wrap grid--40-40 grid--center">
+        <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
             <div class="col--auto">
                 <n-button v-bind="buttonBinds" :link="true" type="primary">Primary</n-button>
             </div>
@@ -74,7 +74,7 @@ pi.Obj.assign(window.VueData, {
                 <n-button v-bind="buttonBinds" :link="true" type="info">Info</n-button>
             </div>
         </div>
-        <div class="grid grid--row grid--wrap grid--40-40 grid--center">
+        <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
             <div class="col--auto">
                 <n-button v-bind="buttonBinds" :square="true" icon="fa fa-search" type="primary">Primary</n-button>
             </div>
@@ -97,6 +97,8 @@ pi.Obj.assign(window.VueData, {
     </div>
 </n-form>
 ```
+
+## Example
 
 ```vue
 <template>

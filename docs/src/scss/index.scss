@@ -26,7 +26,7 @@ html, body {
 }
 
 body {
-    background: $color-white;
+    background: #fff linear-gradient(110deg, rgba($color-info, 0.05) 0%, rgba($color-primary, 0.05) 100%);
 }
 
 h1 {
@@ -111,7 +111,7 @@ table {
     background: $color-white;
     border-radius: $lg-radius;
     border-collapse: collapse;
-    box-shadow: 0 1px 10px rgba($color-shadow, 0.1), inset 0 0 1px 1px $color-gray-10;
+    box-shadow: 0 1px 14px rgba($color-shadow, 0.075);
 }
 
 table th,
@@ -163,27 +163,20 @@ table tbody tr td:nth-child(1) code {
     background: mix($color-background, $color-success, 95%);
 }
 
-table tbody tr td:nth-child(2) code {
-    color: mix($color-gray-90, $color-info, 10%);
-    background: mix($color-background, $color-info, 95%);
-}
-
-table tbody tr td:nth-child(3) code {
-    color: mix($color-gray-90, $color-danger, 10%);
-    background: mix($color-background, $color-danger, 95%);
-}
-
 table tbody tr:not(:last-child) td {
     border-bottom: 1px solid $color-gray-05;
 }
 
 header {
+    overflow: hidden;
+    position: relative;
     width: 100%;
-    border-bottom: 1px solid $color-gray-05;
-    background: $color-background;
+    border-bottom: 1px solid rgba($color-black, 0.07);
 }
 
 header .wrapper {
+    z-index: 100;
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -191,10 +184,10 @@ header .wrapper {
     height: 140px;
     max-width: 1490px;
     margin: 0 auto;
+    padding: 0 40px;
 }
 
 header .logo {
-    width: 320px;
     text-align: center;
     margin-right: auto;
 }
@@ -217,23 +210,31 @@ header .social:not(:last-child) {
 header .social a {
     display: inline-flex;
     align-items: center;
-    padding: 12px 16px;
+    padding: 10px 14px;
     font-size: 13px;
-    border-radius: $md-radius;
-    color: $color-gray-60;
+    border-radius: 500px;
+    color: $color-gray-70;
+    //background: rgba($color-gray-50, 0.1);
 }
 
-header .social.gray a {
-    color: $color-gray-80;
-    background: rgba($color-gray-50, 0.1);
+header .social.black a {
+    color: rgba($color-white, 0.9);
+    background: $color-black;
+}
+
+header .social.blue a {
+    color: rgba($color-white, 0.9);
+    background: $color-primary;
 }
 
 header .social a i {
-    opacity: 0.7;
+    opacity: 0.8;
     margin-right: 12px;
 }
 
 main {
+    z-index: 200;
+    position: relative;
     overflow-x: hidden;
     display: flex;
     flex-direction: row;
@@ -243,12 +244,16 @@ main {
 
 .sidebar {
     flex: 0 0 auto;
-    display: flex;
+    display: none;
     flex-direction: column;
     width: 320px;
     padding: 10px 35px 10px 35px;
     margin-right: 50px;
-    border-right: 1px solid $color-gray-10;
+    border-right: 1px solid rgba($color-black, 0.07);
+
+    @include media('lg') {
+        display: flex;
+    }
 }
 
 .content {
@@ -284,7 +289,7 @@ main {
 
 .search .input-wrap {
     border-radius: 500px;
-    background: $color-gray-05;
+    background: rgba($color-black, 0.05);
 }
 
 .search .input-wrap input {
@@ -382,6 +387,11 @@ main {
     white-space: pre-wrap;
 }
 
+.markdown-section code[data-type] {
+    color: mix($color-gray-90, $color-gray-40, 10%);
+    background: mix($color-background, $color-gray-40, 95%);
+}
+
 .markdown-section table {
     margin-bottom: 30px;
 }
@@ -389,23 +399,27 @@ main {
 .demo-wrapper {
     overflow: hidden;
     position: relative;
+    margin-bottom: 30px;
+    border-radius: $lg-radius;
+    background: $color-white;
+    box-shadow: 0 1px 14px rgba($color-shadow, 0.075);
 }
 
 .markdown-section .demo-options {
-    padding: 20px 30px 6px;
-    border-radius: $lg-radius;
-    box-shadow: 0 1px 10px rgba($color-shadow, 0.1), inset 0 0 1px 1px $color-gray-10;
-    margin-bottom: 30px;
+    padding: 20px 40px 24px;
+    border-bottom: 1px solid $color-gray-10;
+}
+
+.markdown-section .demo-options .n-form-item {
+    margin-bottom: 4px;
 }
 
 .markdown-section .demo-options .n-select {
-    width: 220px;
+    //width: 220px;
 }
 
 .markdown-section .demo-display {
-    padding: 50px 0;
-    margin-bottom: 30px;
-    background: $color-white;
+    padding: 40px;
 }
 
 .markdown-section .demo-display > .grid:not(:last-child) {

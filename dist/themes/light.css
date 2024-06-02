@@ -143,8 +143,7 @@
   background: rgba(104, 117, 238, 0.075); }
 
 .n-draglist--primary .n-draglist-item.n-highlight {
-  -webkit-animation: NDraglistItemprimary 1s linear infinite;
-          animation: NDraglistItemprimary 1s linear infinite; }
+  animation: NDraglistItemprimary 1s linear infinite; }
 
 .n-draglist--primary .n-draglist-item.n-selected .n-draglist-item__checkbox {
   color: #ffffff;
@@ -156,14 +155,6 @@
 
 .n-draglist--primary .n-draglist-item.n-selected .n-draglist-item__checkbox:hover {
   background: #8e98f3; }
-
-@-webkit-keyframes NDraglistItemprimary {
-  0% {
-    background: rgba(104, 117, 238, 0); }
-  50% {
-    background: rgba(104, 117, 238, 0.15); }
-  100% {
-    background: rgba(104, 117, 238, 0); } }
 
 @keyframes NDraglistItemprimary {
   0% {
@@ -180,8 +171,7 @@
   background: rgba(202, 98, 240, 0.075); }
 
 .n-draglist--secondary .n-draglist-item.n-highlight {
-  -webkit-animation: NDraglistItemsecondary 1s linear infinite;
-          animation: NDraglistItemsecondary 1s linear infinite; }
+  animation: NDraglistItemsecondary 1s linear infinite; }
 
 .n-draglist--secondary .n-draglist-item.n-selected .n-draglist-item__checkbox {
   color: #ffffff;
@@ -193,14 +183,6 @@
 
 .n-draglist--secondary .n-draglist-item.n-selected .n-draglist-item__checkbox:hover {
   background: #d789f4; }
-
-@-webkit-keyframes NDraglistItemsecondary {
-  0% {
-    background: rgba(202, 98, 240, 0); }
-  50% {
-    background: rgba(202, 98, 240, 0.15); }
-  100% {
-    background: rgba(202, 98, 240, 0); } }
 
 @keyframes NDraglistItemsecondary {
   0% {
@@ -217,8 +199,7 @@
   background: rgba(75, 214, 249, 0.075); }
 
 .n-draglist--info .n-draglist-item.n-highlight {
-  -webkit-animation: NDraglistIteminfo 1s linear infinite;
-          animation: NDraglistIteminfo 1s linear infinite; }
+  animation: NDraglistIteminfo 1s linear infinite; }
 
 .n-draglist--info .n-draglist-item.n-selected .n-draglist-item__checkbox {
   color: #ffffff;
@@ -230,14 +211,6 @@
 
 .n-draglist--info .n-draglist-item.n-selected .n-draglist-item__checkbox:hover {
   background: #76e0fb; }
-
-@-webkit-keyframes NDraglistIteminfo {
-  0% {
-    background: rgba(75, 214, 249, 0); }
-  50% {
-    background: rgba(75, 214, 249, 0.15); }
-  100% {
-    background: rgba(75, 214, 249, 0); } }
 
 @keyframes NDraglistIteminfo {
   0% {
@@ -254,8 +227,7 @@
   background: rgba(6, 196, 147, 0.075); }
 
 .n-draglist--success .n-draglist-item.n-highlight {
-  -webkit-animation: NDraglistItemsuccess 1s linear infinite;
-          animation: NDraglistItemsuccess 1s linear infinite; }
+  animation: NDraglistItemsuccess 1s linear infinite; }
 
 .n-draglist--success .n-draglist-item.n-selected .n-draglist-item__checkbox {
   color: #ffffff;
@@ -267,14 +239,6 @@
 
 .n-draglist--success .n-draglist-item.n-selected .n-draglist-item__checkbox:hover {
   background: #25deae; }
-
-@-webkit-keyframes NDraglistItemsuccess {
-  0% {
-    background: rgba(6, 196, 147, 0); }
-  50% {
-    background: rgba(6, 196, 147, 0.15); }
-  100% {
-    background: rgba(6, 196, 147, 0); } }
 
 @keyframes NDraglistItemsuccess {
   0% {
@@ -291,8 +255,7 @@
   background: rgba(255, 191, 63, 0.075); }
 
 .n-draglist--warning .n-draglist-item.n-highlight {
-  -webkit-animation: NDraglistItemwarning 1s linear infinite;
-          animation: NDraglistItemwarning 1s linear infinite; }
+  animation: NDraglistItemwarning 1s linear infinite; }
 
 .n-draglist--warning .n-draglist-item.n-selected .n-draglist-item__checkbox {
   color: #ffffff;
@@ -304,14 +267,6 @@
 
 .n-draglist--warning .n-draglist-item.n-selected .n-draglist-item__checkbox:hover {
   background: #ffce6c; }
-
-@-webkit-keyframes NDraglistItemwarning {
-  0% {
-    background: rgba(255, 191, 63, 0); }
-  50% {
-    background: rgba(255, 191, 63, 0.15); }
-  100% {
-    background: rgba(255, 191, 63, 0); } }
 
 @keyframes NDraglistItemwarning {
   0% {
@@ -328,8 +283,7 @@
   background: rgba(249, 83, 110, 0.075); }
 
 .n-draglist--danger .n-draglist-item.n-highlight {
-  -webkit-animation: NDraglistItemdanger 1s linear infinite;
-          animation: NDraglistItemdanger 1s linear infinite; }
+  animation: NDraglistItemdanger 1s linear infinite; }
 
 .n-draglist--danger .n-draglist-item.n-selected .n-draglist-item__checkbox {
   color: #ffffff;
@@ -341,14 +295,6 @@
 
 .n-draglist--danger .n-draglist-item.n-selected .n-draglist-item__checkbox:hover {
   background: #fb7d92; }
-
-@-webkit-keyframes NDraglistItemdanger {
-  0% {
-    background: rgba(249, 83, 110, 0); }
-  50% {
-    background: rgba(249, 83, 110, 0.15); }
-  100% {
-    background: rgba(249, 83, 110, 0); } }
 
 @keyframes NDraglistItemdanger {
   0% {
@@ -399,8 +345,7 @@
   background: rgba(104, 117, 238, 0.075); }
 
 .n-draggrid--primary .n-draggrid-item.n-highlight {
-  -webkit-animation: NDraggridItemprimary 1s linear infinite;
-          animation: NDraggridItemprimary 1s linear infinite; }
+  animation: NDraggridItemprimary 1s linear infinite; }
 
 .n-draggrid--primary .n-draggrid-item.n-selected .n-draggrid-item__checkbox {
   color: #ffffff;
@@ -410,14 +355,6 @@
 .n-draggrid--primary .n-draggrid-item.n-selected .n-draggrid-item__checkbox:hover {
   background: #8e98f3;
   border-color: #8e98f3; }
-
-@-webkit-keyframes NDraggridItemprimary {
-  0% {
-    background: rgba(104, 117, 238, 0); }
-  50% {
-    background: rgba(104, 117, 238, 0.15); }
-  100% {
-    background: rgba(104, 117, 238, 0); } }
 
 @keyframes NDraggridItemprimary {
   0% {
@@ -434,8 +371,7 @@
   background: rgba(202, 98, 240, 0.075); }
 
 .n-draggrid--secondary .n-draggrid-item.n-highlight {
-  -webkit-animation: NDraggridItemsecondary 1s linear infinite;
-          animation: NDraggridItemsecondary 1s linear infinite; }
+  animation: NDraggridItemsecondary 1s linear infinite; }
 
 .n-draggrid--secondary .n-draggrid-item.n-selected .n-draggrid-item__checkbox {
   color: #ffffff;
@@ -445,14 +381,6 @@
 .n-draggrid--secondary .n-draggrid-item.n-selected .n-draggrid-item__checkbox:hover {
   background: #d789f4;
   border-color: #d789f4; }
-
-@-webkit-keyframes NDraggridItemsecondary {
-  0% {
-    background: rgba(202, 98, 240, 0); }
-  50% {
-    background: rgba(202, 98, 240, 0.15); }
-  100% {
-    background: rgba(202, 98, 240, 0); } }
 
 @keyframes NDraggridItemsecondary {
   0% {
@@ -469,8 +397,7 @@
   background: rgba(75, 214, 249, 0.075); }
 
 .n-draggrid--info .n-draggrid-item.n-highlight {
-  -webkit-animation: NDraggridIteminfo 1s linear infinite;
-          animation: NDraggridIteminfo 1s linear infinite; }
+  animation: NDraggridIteminfo 1s linear infinite; }
 
 .n-draggrid--info .n-draggrid-item.n-selected .n-draggrid-item__checkbox {
   color: #ffffff;
@@ -480,14 +407,6 @@
 .n-draggrid--info .n-draggrid-item.n-selected .n-draggrid-item__checkbox:hover {
   background: #76e0fb;
   border-color: #76e0fb; }
-
-@-webkit-keyframes NDraggridIteminfo {
-  0% {
-    background: rgba(75, 214, 249, 0); }
-  50% {
-    background: rgba(75, 214, 249, 0.15); }
-  100% {
-    background: rgba(75, 214, 249, 0); } }
 
 @keyframes NDraggridIteminfo {
   0% {
@@ -504,8 +423,7 @@
   background: rgba(6, 196, 147, 0.075); }
 
 .n-draggrid--success .n-draggrid-item.n-highlight {
-  -webkit-animation: NDraggridItemsuccess 1s linear infinite;
-          animation: NDraggridItemsuccess 1s linear infinite; }
+  animation: NDraggridItemsuccess 1s linear infinite; }
 
 .n-draggrid--success .n-draggrid-item.n-selected .n-draggrid-item__checkbox {
   color: #ffffff;
@@ -515,14 +433,6 @@
 .n-draggrid--success .n-draggrid-item.n-selected .n-draggrid-item__checkbox:hover {
   background: #25deae;
   border-color: #25deae; }
-
-@-webkit-keyframes NDraggridItemsuccess {
-  0% {
-    background: rgba(6, 196, 147, 0); }
-  50% {
-    background: rgba(6, 196, 147, 0.15); }
-  100% {
-    background: rgba(6, 196, 147, 0); } }
 
 @keyframes NDraggridItemsuccess {
   0% {
@@ -539,8 +449,7 @@
   background: rgba(255, 191, 63, 0.075); }
 
 .n-draggrid--warning .n-draggrid-item.n-highlight {
-  -webkit-animation: NDraggridItemwarning 1s linear infinite;
-          animation: NDraggridItemwarning 1s linear infinite; }
+  animation: NDraggridItemwarning 1s linear infinite; }
 
 .n-draggrid--warning .n-draggrid-item.n-selected .n-draggrid-item__checkbox {
   color: #ffffff;
@@ -550,14 +459,6 @@
 .n-draggrid--warning .n-draggrid-item.n-selected .n-draggrid-item__checkbox:hover {
   background: #ffce6c;
   border-color: #ffce6c; }
-
-@-webkit-keyframes NDraggridItemwarning {
-  0% {
-    background: rgba(255, 191, 63, 0); }
-  50% {
-    background: rgba(255, 191, 63, 0.15); }
-  100% {
-    background: rgba(255, 191, 63, 0); } }
 
 @keyframes NDraggridItemwarning {
   0% {
@@ -574,8 +475,7 @@
   background: rgba(249, 83, 110, 0.075); }
 
 .n-draggrid--danger .n-draggrid-item.n-highlight {
-  -webkit-animation: NDraggridItemdanger 1s linear infinite;
-          animation: NDraggridItemdanger 1s linear infinite; }
+  animation: NDraggridItemdanger 1s linear infinite; }
 
 .n-draggrid--danger .n-draggrid-item.n-selected .n-draggrid-item__checkbox {
   color: #ffffff;
@@ -585,14 +485,6 @@
 .n-draggrid--danger .n-draggrid-item.n-selected .n-draggrid-item__checkbox:hover {
   background: #fb7d92;
   border-color: #fb7d92; }
-
-@-webkit-keyframes NDraggridItemdanger {
-  0% {
-    background: rgba(249, 83, 110, 0); }
-  50% {
-    background: rgba(249, 83, 110, 0.15); }
-  100% {
-    background: rgba(249, 83, 110, 0); } }
 
 @keyframes NDraggridItemdanger {
   0% {

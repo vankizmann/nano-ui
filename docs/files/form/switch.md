@@ -3,7 +3,7 @@
 The `<n-switch>` component is a customizable switch component with various options to control its appearance and behavior. Below is a detailed description of its props, methods, and usage.
 
 
-## Example
+## Demo
 
 ```js [demo]
 pi.Obj.assign(window.VueData, {
@@ -11,7 +11,7 @@ pi.Obj.assign(window.VueData, {
         size: 'md', disabled: false,
     },
     switchReact: {
-        modelValue: 'foo'
+        model: 'foo'
     }
 });
 ```
@@ -20,16 +20,16 @@ pi.Obj.assign(window.VueData, {
 <n-form>
     <div class="demo-options">
         <div class="grid grid--row grid--wrap grid--20-20">
-            <n-form-item label="Size" class="col--auto">
+            <n-form-item class="col--1-1 col--6-12@sm col--3-12@lg" label="Size">
                 <n-select v-model="switchBinds.size" :options="sizes" />
             </n-form-item>
-            <n-form-item label="Disabled" class="col--auto">
+            <n-form-item class="col--1-1 col--6-12@sm col--3-12@lg" label="Disabled">
                 <n-switch v-model="switchBinds.disabled">Activate disable state</n-switch>
             </n-form-item>
         </div>
     </div>
     <div class="demo-display">
-        <div class="grid grid--row grid--wrap grid--40-40 grid--center">
+        <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
             <div class="col--auto">
                 <n-switch :model-value="true" v-bind="switchBinds" on-type="primary">Primary</n-switch>
             </div>
@@ -49,14 +49,11 @@ pi.Obj.assign(window.VueData, {
                 <n-switch v-bind="switchBinds" on-type="info">Info</n-switch>
             </div>
         </div>
-        <div class="grid grid--row grid--wrap grid--40-40 grid--center grid--middle">
+        <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
             <div class="col--auto">
-                <n-switch v-bind="switchBinds" off-type="danger" on-type="success">Danger / Success</n-switch>
+                <n-switch v-model="switchReact.model" v-bind="switchBinds" on-value="foo" off-value="bar">Switch between to strings</n-switch>
             </div>
-            <div class="col--auto">
-                <n-switch v-model="switchReact.modelValue" v-bind="switchBinds" on-value="foo" off-value="bar">Switch between to strings</n-switch>
-            </div>
-            <div class="col--auto">
+            <div class="col--flex-1-1">
                 <code style="white-space: initial">{{ switchReact }}</code>
             </div>
         </div>
@@ -64,16 +61,18 @@ pi.Obj.assign(window.VueData, {
 </n-form>
 ```
 
+## Example
+
 ```vue
 <template>
-  <n-switch v-model="toggleState" on-value="yes" off-value="no" @click="window.alert('Switch toggled!')">
+  <n-switch v-model="modelValue" on-value="yes" off-value="no" @click="window.alert('Switch toggled!')">
     Toggle Switch
   </n-switch>
 </template>
 <script>
   export default {
       data() {
-          return { toggleState: 'yes' };
+          return { modelValue: 'yes' };
       }
   }
 </script>

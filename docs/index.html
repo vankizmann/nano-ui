@@ -19,18 +19,18 @@
 <header>
     <div class="wrapper">
         <div class="logo">
-            <a href="https://github.com/vankizmann/nano-ui" target="_blank">
+            <a href="./#/README">
                 <img src="../nano.svg" alt="nano-ui">
             </a>
         </div>
         <div class="social">
             <a href="https://www.paypal.com/paypalme/vankizmann" target="_blank">
-                <i class="fab fa-paypal"></i> Tip for project
+                <i class="fab fa-paypal"></i> Donate
             </a>
         </div>
-        <div class="social gray">
+        <div class="social blue">
             <a href="https://github.com/vankizmann/nano-ui" target="_blank">
-                <i class="fab fa-github"></i> View on Github
+                <i class="fab fa-github"></i> Github
             </a>
         </div>
     </div>
@@ -87,7 +87,6 @@
             'lg': 'Large'
         };
 
-
         window.DefaultVueData.icons = {
             'fa fa-search': 'Search',
             'fa fa-star': 'Star',
@@ -128,6 +127,10 @@
         });
 
         hook.afterEach(function (html) {
+
+            html = html.replace(/<code>(String|Boolean|Array|Object)<\/code>/gm,
+                '<code data-type="$1">$1</code>');
+
             return '<div id="vue-remote">' + html + '</div>';
         });
 

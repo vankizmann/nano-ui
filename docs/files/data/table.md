@@ -9,7 +9,7 @@ pi.Obj.assign(window.VueData, {
 });
 ```
 
-## Example
+## Demo
 
 ```html [demo]
 <n-form>
@@ -21,15 +21,21 @@ pi.Obj.assign(window.VueData, {
         </div>
     </div>
     <div class="demo-display">
-        <n-table style="height: 600px;" :items="itemsMini" :render-expand="true" :item-height="80" :use-keys="true" v-bind="tableBinds" @update:items="(items) => itemsMini = items">
-            <n-table-column label="Label" type="string" prop="label" :fluid="true" :sort="true" :filter="true"></n-table-column>
+        <n-table style="height: 600px;" v-model:items="itemsMini" :render-expand="true" :item-height="80" :use-keys="true" :threshold="101" v-bind="tableBinds">
             <n-table-column label="Image" type="image" prop="image" :fixed-width="90"></n-table-column>
+            <n-table-column label="ID" type="string" prop="id" :filter="true">
+                <template v-slot="{ item }">
+                    {{ item.id.replace(/^([^\-]+\-[^\-]+)(.*?)$/i, '$1') + '-wow~' }}
+                </template>
+            </n-table-column>
+            <n-table-column label="Label" type="string" prop="label" :fluid="true" :sort="true" :filter="true"></n-table-column>
             <n-table-column label="Date" type="datetime" prop="date" :filter="true"></n-table-column>
-            <n-table-column label="ID" type="string" prop="id" :sort="true"></n-table-column>
         </n-table>
     </div>
 </n-form>
 ```
+
+## Example
 
 ### Table
 
@@ -38,10 +44,9 @@ pi.Obj.assign(window.VueData, {
 
 <template>
     <n-table :items="items" :render-expand="true" :item-height="100">
-        <n-table-column label="Label" type="string" prop="label" :fluid="true" :sort="true" :filter="true"></n-table-column>
+        <n-table-column label="Label" type="string" prop="label" :fluid="true" :sort="true"></n-table-column>
         <n-table-column label="Image" type="image" prop="image" :fixed-width="90"></n-table-column>
         <n-table-column label="Date" type="datetime" prop="date" :filter="true"></n-table-column>
-        <n-table-column label="ID" type="string" prop="id" :sort="true"></n-table-column>
     </n-table>
 </template>
 
