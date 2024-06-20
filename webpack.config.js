@@ -170,7 +170,7 @@ module.exports = function (env, argv) {
     bundlerPackage.plugins.push(loaderOptions);
     stylePackage.plugins.push(loaderOptions);
     lightPackage.plugins.push(loaderOptions);
-    darkPackage.plugins.push(loaderOptions);
+    docsPackage.plugins.push(loaderOptions);
 
     let terserOptions = {
         mangle: true
@@ -189,9 +189,9 @@ module.exports = function (env, argv) {
     bundlerPackage.optimization = optimization;
     stylePackage.optimization = optimization;
     lightPackage.optimization = optimization;
-    darkPackage.optimization = optimization;
+    docsPackage.optimization = optimization;
 
     return [
-        bundlerPackage, stylePackage, lightPackage, //darkPackage
+        bundlerPackage, stylePackage, lightPackage, docsPackage
     ];
 }
