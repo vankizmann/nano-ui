@@ -1,5 +1,21 @@
 @import "../../../root/vars";
 
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+    .n-tags-item--color-#{$color} {
+        color: mix($-color-dark, $color-black, 70%);
+        background: rgba($-color-base, 0.25);
+    }
+    .n-tags-item--color-#{$color} i {
+        color: rgba($-color-base, 0.75);
+    }
+
+}
+
 @each $-tags-index, $-tags-color in $colors-tags {
 
     .n-tags-item--color-#{$-tags-index} {

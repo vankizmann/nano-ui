@@ -7083,6 +7083,24 @@ html, body {
 body {
   background: #fff linear-gradient(110deg, rgba(75, 214, 249, 0.05) 0%, rgba(104, 117, 238, 0.05) 100%); }
 
+body:before {
+  z-index: 9000;
+  content: '\00a0';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff linear-gradient(110deg, #4BD6F9 0%, #6875ee 100%);
+  transition: opacity 0.2s 0.4s, transform 0.4s 0.2s; }
+
+body.ready:before {
+  opacity: 0;
+  transform: translateY(-100vh); }
+
+body.ready header {
+  opacity: 1; }
+
 h1 {
   font-size: 32px; }
 

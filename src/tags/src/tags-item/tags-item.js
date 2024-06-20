@@ -30,6 +30,14 @@ export default {
             type: [String]
         },
 
+        type: {
+            default()
+            {
+                return -1;
+            },
+            type: [String, Number]
+        },
+
         color: {
             default()
             {
@@ -91,8 +99,16 @@ export default {
         let classList = [
             'n-tags-item',
             'n-tags-item--' + size,
-            'n-tags-item--color-' + this.color,
+            ,
         ];
+
+        if ( this.type === -1 ) {
+            classList.push('n-tags-item--color-' + this.color);
+        }
+
+        if ( this.type !== -1 ) {
+            classList.push('n-tags-item--color-' + this.type);
+        }
 
         return (
             <div class={classList}>
