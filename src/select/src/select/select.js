@@ -836,8 +836,16 @@ export default {
 
     renderPopover()
     {
+        let classList = [
+            'n-popover--select'
+        ];
+
+        if ( this.lazy ) {
+            classList.push('n-virtual');
+        }
+
         let props = {
-            class: 'n-popover--select',
+            class: classList,
             trigger: 'click',
             width: - 1,
             listen: true,

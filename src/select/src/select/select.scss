@@ -118,11 +118,15 @@
 }
 
 .n-select__body.n-virtual {
-    min-height: 310px;
+    min-height: 210px;
 }
 
  .n-select__empty {
      text-align: center;
+}
+
+.n-popover--select.n-virtual {
+    overflow: hidden;
 }
 
 @each $suffix, $values in $form {
