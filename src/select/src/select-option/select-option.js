@@ -78,12 +78,16 @@ export default {
 
     mounted()
     {
-        this.NSelect.addOption(this);
+        if ( ! this.NSelect.lazy ) {
+            this.NSelect.addOption(this);
+        }
     },
 
     beforeUnmount()
     {
-        this.NSelect.removeOption(this);
+        if ( ! this.NSelect.lazy ) {
+            this.NSelect.removeOption(this);
+        }
     },
 
     methods: {

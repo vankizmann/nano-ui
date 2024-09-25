@@ -192,7 +192,12 @@ export default {
             this.$refs.scrollbar.scrollIntoView(selector);
         },
 
-        scrollToIndex(index)
+        scrollToIndex(index, delay = 0)
+        {
+            Any.delay(() => this.onScrollToIndex(index), delay);
+        },
+
+        onScrollToIndex(index)
         {
             if ( ! this.$refs.scrollbar ) {
                 return;
@@ -219,7 +224,12 @@ export default {
             this.scrollTo(0, targetTop);
         },
 
-        scrollTo(x = 0, y = 0)
+        scrollTo(x = 0, y = 0, delay = 0)
+        {
+            Any.delay(() => this.onScrollTo(x, y), delay);
+        },
+
+        onScrollTo(x = 0, y = 0)
         {
             if ( ! this.$refs.scrollbar ) {
                 return;

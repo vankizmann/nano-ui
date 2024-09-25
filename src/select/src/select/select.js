@@ -1,4 +1,4 @@
-import { Str, Arr, Obj, Any, Locale, Dom } from "@kizmann/pico-js";
+import { Str, Arr, Obj, Any, Locale, Dom, Num } from "@kizmann/pico-js";
 
 export default {
 
@@ -34,6 +34,14 @@ export default {
                 return 'primary';
             },
             type: [String]
+        },
+
+        lazy: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
         },
 
         size: {
@@ -160,7 +168,8 @@ export default {
 
     computed: {
 
-        deepDisabled() {
+        deepDisabled()
+        {
             return this.NFormItem ? this.NFormItem.disabled(this.disabled) :
                 this.disabled;
         },
@@ -193,10 +202,28 @@ export default {
             tempClear: this.clearValue,
             focus: false,
             search: '',
-            index: -1,
+            index: - 1,
             elements: [],
             searched: []
         };
+    },
+
+
+    beforeMount()
+    {
+        if ( this.lazy ) {
+            this.generateOptions();
+        }
+
+        if ( this.multiple && !Any.isArray(this.tempValue) ) {
+            this.tempValue = [];
+        }
+
+        if ( this.multiple && !Any.isArray(this.clearValue) ) {
+            this.tempClear = [];
+        }
+
+        this.searchOptions();
     },
 
     provide()
@@ -210,11 +237,11 @@ export default {
 
         modelValue(value)
         {
-            if ( ! this.multiple && Any.isArray(value) ) {
+            if ( !this.multiple && Any.isArray(value) ) {
                 value = null;
             }
 
-            if ( this.multiple && ! Any.isArray(value) ) {
+            if ( this.multiple && !Any.isArray(value) ) {
                 value = [];
             }
 
@@ -244,25 +271,44 @@ export default {
 
             this.focusInput();
 
-            this.$emit('update:modelValue', 
+            this.$emit('update:modelValue',
                 this.tempValue = Arr.clone(this.tempClear));
+        },
+
+        generateOptions()
+        {
+            this.elements = Arr.each(this.options, (value, index) => {
+
+                let data = {
+                    $value: value, $index: index
+                };
+
+                let option = {
+                    label: Obj.get(data, this.optionsLabel),
+                    value: Obj.get(data, this.optionsValue)
+                };
+
+                return Obj.assign(option, {
+                    tempLabel: option.label, tempValue: option.value
+                });
+            });
         },
 
         addOption(option)
         {
-            Arr.add(this.elements, option, 
+            Arr.add(this.elements, option,
                 { tempValue: option.tempValue });
         },
 
         removeOption(option)
         {
-            Arr.remove(this.elements, 
+            Arr.remove(this.elements,
                 { tempValue: option.tempValue });
         },
 
         resetInput()
         {
-            this.index = -1;
+            this.index = - 1;
             this.search = '';
         },
 
@@ -277,10 +323,10 @@ export default {
 
         onFocusInput()
         {
-            if ( ! this.focus ) {
+            if ( !this.focus ) {
                 this.$refs.popover.open();
             }
-            
+
             clearInterval(this.refresh);
         },
 
@@ -291,7 +337,7 @@ export default {
 
         onKeydownInput(event)
         {
-            if ( ! this.focus ) {
+            if ( !this.focus ) {
                 return this.onFocusInput();
             }
 
@@ -310,7 +356,7 @@ export default {
 
         searchOptions()
         {
-            this.index = -1;
+            this.index = - 1;
 
             if ( Any.isEmpty(this.search) ) {
                 return this.searched = this.elements;
@@ -331,6 +377,10 @@ export default {
                 return;
             }
 
+            if ( event && event.which !== 1 ) {
+                return;
+            }
+
             if ( event ) {
                 event.preventDefault();
             }
@@ -341,7 +391,7 @@ export default {
                 this.focusInput();
             }
 
-            if ( ! this.multiple ) {
+            if ( !this.multiple ) {
                 tempValue = value;
             }
 
@@ -353,11 +403,11 @@ export default {
 
             let denyUpdate = this.tempValue === tempValue;
 
-            if ( this.multiple && ! Any.isArray(this.modelValue) ) {
+            if ( this.multiple && !Any.isArray(this.modelValue) ) {
                 denyUpdate = false;
             }
 
-            if ( ! this.multiple && Any.isArray(this.modelValue) ) {
+            if ( !this.multiple && Any.isArray(this.modelValue) ) {
                 denyUpdate = false;
             }
 
@@ -371,14 +421,14 @@ export default {
 
         getOptionLabel(value)
         {
-            let option = Arr.find(this.elements, 
+            let option = Arr.find(this.elements,
                 { tempValue: value });
 
-            if ( ! option && this.allowCreate ) {
+            if ( !option && this.allowCreate ) {
                 return value;
             }
 
-            if ( ! option && ! this.allowCreate ) {
+            if ( !option && !this.allowCreate ) {
                 return this.trans(this.undefinedText);
             }
 
@@ -416,15 +466,15 @@ export default {
             if ( this.allowCreate && this.search ) {
                 return this.createOption();
             }
-            
-            let selected = Arr.get(this.searched, 
+
+            let selected = Arr.get(this.searched,
                 this.index);
 
             if ( this.searched.length === 1 ) {
                 selected = Arr.first(this.searched);
             }
 
-            if ( ! selected || selected.disabled ) {
+            if ( !selected || selected.disabled ) {
                 return;
             }
 
@@ -440,24 +490,29 @@ export default {
 
         scrollToCurrent()
         {
-            if ( ! this.focus ) {
+            if ( !this.focus ) {
                 return;
             }
 
-            let selected = Arr.get(this.searched, 
+            let selected = Arr.get(this.searched,
                 this.index);
 
-            if ( ! selected || ! this.$refs.scrollbar ) {
+            if ( !selected ) {
                 return;
             }
 
-            this.$refs.scrollbar.scrollIntoView(
-                `[data-option="${selected._.uid}"]`);
+            if ( this.$refs.scrollbar ) {
+                this.$refs.scrollbar.scrollIntoView(`[data-option="${selected._.uid}"]`);
+            }
+
+            if ( this.$refs.virtualbar ) {
+                this.$refs.virtualbar.scrollToIndex(this.index);
+            }
         },
 
         scrollToClosest()
         {
-            if ( ! this.focus ) {
+            if ( !this.focus ) {
                 return;
             }
 
@@ -467,47 +522,40 @@ export default {
                 value = Arr.first(this.tempValue);
             }
 
-            if ( ! value ) {
+            if ( !value ) {
                 return;
             }
 
-            let target = Arr.find(this.elements, { 
+            let index = Arr.findIndex(this.elements, {
                 tempValue: value
-             });
+            });
 
-            if ( ! target ) {
+            if ( !index ) {
                 return;
             }
 
-            this.$refs.scrollbar.scrollIntoView(
-                `[data-option="${target._.uid}"]`, 150);
+            if ( this.$refs.virtualbar ) {
+                this.$refs.virtualbar.scrollToIndex(index, 250);
+            }
+
+            let select = `[data-option="${Obj.get(this.elements[index], '_.uid', 0)}"]`;
+
+            if ( this.$refs.scrollbar ) {
+                this.$refs.scrollbar.scrollIntoView(select, 250);
+            }
         }
 
     },
-
-    beforeMount()
-    {
-        if ( this.multiple && ! Any.isArray(this.tempValue) ) {
-            this.tempValue = [];
-        }
-
-        if ( this.multiple && ! Any.isArray(this.clearValue) ) {
-            this.tempClear = [];
-        }
-
-        this.searchOptions();
-    },
-
 
     renderLabelClear()
     {
-        if ( ! this.clearable || Any.isEmpty(this.tempValue) ) {
+        if ( !this.clearable || Any.isEmpty(this.tempValue) ) {
             return null;
         }
 
         let props = {};
 
-        if ( ! this.deepDisabled ) {
+        if ( !this.deepDisabled ) {
             props.onMousedown = this.clear;
         }
 
@@ -537,17 +585,17 @@ export default {
             class: nano.Icons.times,
         };
 
-        if ( ! this.deepDisabled ) {
+        if ( !this.deepDisabled ) {
             props.onMousedown = (event) => this.toggleOption(value, event);
         }
 
         let labelHtml = (
-            <span>{ this.getOptionLabel(value) }</span>
+            <span>{this.getOptionLabel(value)}</span>
         );
 
         return (
             <div class={classList}>
-                { [labelHtml, <i {...props}></i>] }
+                {[labelHtml, <i {...props}></i>]}
             </div>
         );
     },
@@ -556,7 +604,7 @@ export default {
     {
         let first = Arr.first(this.tempValue);
 
-        if ( ! first ) {
+        if ( !first ) {
             return null;
         }
 
@@ -570,7 +618,7 @@ export default {
 
         let collapseHtml = (
             <div class="n-select__item">
-                <span>{ this.choice(this.collapseText, count) }</span>
+                <span>{this.choice(this.collapseText, count)}</span>
             </div>
         );
 
@@ -581,7 +629,7 @@ export default {
 
     renderLabelItems()
     {
-        if ( ! Any.isArray(this.tempValue) ) {
+        if ( !Any.isArray(this.tempValue) ) {
             return null;
         }
 
@@ -597,7 +645,7 @@ export default {
     renderMultiple()
     {
         let isEmptyValue = Any.isEmpty(this.tempValue) &&
-            ! Any.isNumber(this.tempValue);
+            !Any.isNumber(this.tempValue);
 
         let props = {
             value: this.search,
@@ -608,11 +656,11 @@ export default {
             onKeydown: this.onKeydownInput
         };
 
-        if ( ! this.focus ) {
+        if ( !this.focus ) {
             props.value = null;
         }
 
-        if ( ! isEmptyValue ) {
+        if ( !isEmptyValue ) {
             props.placeholder = null;
         }
 
@@ -623,12 +671,12 @@ export default {
         );
 
         return [
-            this.ctor('renderLabelClear')(), 
+            this.ctor('renderLabelClear')(),
             (
                 <div class="n-select__items">
-                    { [this.ctor('renderLabelItems')(), inputHtml] }
+                    {[this.ctor('renderLabelItems')(), inputHtml]}
                 </div>
-            ), 
+            ),
             this.ctor('renderLabelAngle')()
         ];
     },
@@ -636,11 +684,11 @@ export default {
     renderSingle()
     {
         let isEmptyValue = Any.isEmpty(this.tempValue) &&
-            ! Any.isNumber(this.tempValue);
+            !Any.isNumber(this.tempValue);
 
         let modelLabel = this.getOptionLabel(
             this.tempValue);
-        
+
         if ( isEmptyValue ) {
             modelLabel = null;
         }
@@ -654,25 +702,25 @@ export default {
             onKeydown: this.onKeydownInput
         };
 
-        if ( ! this.search && this.custom ) {
+        if ( !this.search && this.custom ) {
             props.value = this.tempValue;
         }
 
-        if ( ! this.focus ) {
+        if ( !this.focus ) {
             props.value = modelLabel;
         }
 
-        if ( ! isEmptyValue ) {
+        if ( !isEmptyValue ) {
             props.placeholder = modelLabel;
         }
 
         return [
-            this.ctor('renderLabelClear')(), 
+            this.ctor('renderLabelClear')(),
             (
                 <div class="n-select__input">
                     <input ref="input" {...props} />
                 </div>
-            ), 
+            ),
             this.ctor('renderLabelAngle')()
         ];
     },
@@ -694,7 +742,7 @@ export default {
         }
 
         return (
-            <div class={classList}>{ displayHtml() }</div>
+            <div class={classList}>{displayHtml()}</div>
         );
     },
 
@@ -702,12 +750,16 @@ export default {
     {
         let emptyHtml = (
             <div class="n-select__empty">
-                <NEmptyIcon>{ this.trans(this.emptyText) }</NEmptyIcon>
+                <NEmptyIcon>{this.trans(this.emptyText)}</NEmptyIcon>
             </div>
         );
-        
-        if ( ! this.searched.length ) {
+
+        if ( !this.searched.length ) {
             return emptyHtml;
+        }
+
+        if ( this.lazy ) {
+            return this.ctor('renderLazyItems')();
         }
 
         let options = Obj.each(this.searched, (option, index) => {
@@ -720,8 +772,65 @@ export default {
 
         return (
             <NScrollbar ref="scrollbar" class="n-select__body" {...props}>
-                { Obj.values(options) }
+                {Obj.values(options)}
             </NScrollbar>
+        );
+    },
+
+    renderLazyOption(value, index)
+    {
+        let classList = [];
+
+        let isMultipleActive = this.multiple &&
+            Arr.has(this.tempValue, value.value);
+
+        if ( isMultipleActive ) {
+            classList.push('n-active');
+        }
+
+        let isSingleActive = ! this.multiple &&
+            this.tempValue === value.value;
+
+        if ( isSingleActive ) {
+            classList.push('n-active');
+        }
+
+        if ( this.index === Num.int(index) ) {
+            classList.push('n-focus');
+        }
+
+        let props = {
+            'type': this.type,
+            'clickClose': ! this.multiple,
+        };
+
+        props['onMousedown'] = (e) => {
+            this.toggleOption(value.value, e);
+        };
+
+        if ( isSingleActive || isMultipleActive ) {
+            props.icon = nano.Icons.checked;
+        }
+
+        return (
+            <NPopoverOption class={classList} {...props}>
+                {value.label}
+            </NPopoverOption>
+        );
+    },
+
+    renderLazyItems()
+    {
+        let props = {
+            items: this.searched
+        };
+
+        props.renderNode = ({ value, index }) => {
+            return this.ctor('renderLazyOption')(value, index);
+        };
+
+        return (
+            <NVirtualscroller ref="virtualbar" class="n-select__body n-virtual" {...props} />
         );
     },
 
@@ -730,7 +839,7 @@ export default {
         let props = {
             class: 'n-popover--select',
             trigger: 'click',
-            width: -1,
+            width: - 1,
             listen: true,
             size: this.size,
             scrollClose: true,
@@ -740,13 +849,17 @@ export default {
 
         return (
             <NPopover ref="popover" vModel={this.focus} {...props}>
-                { { raw: this.ctor('renderItems') } }
+                {{ raw: this.ctor('renderItems') }}
             </NPopover>
         );
     },
 
     renderOptions()
     {
+        if ( this.lazy ) {
+            return null;
+        }
+
         if ( Any.isEmpty(this.options) ) {
             return this.$slots.default && this.$slots.default();
         }
@@ -773,7 +886,7 @@ export default {
         ];
 
         let isEmptyValue = Any.isEmpty(this.tempValue) &&
-            ! Any.isNumber(this.tempValue);
+            !Any.isNumber(this.tempValue);
 
         if ( isEmptyValue ) {
             classList.push('n-empty');
@@ -793,9 +906,9 @@ export default {
 
         return (
             <div class={classList} onClick={this.focusInput}>
-                { this.ctor('renderDisplay')() }
-                { this.ctor('renderPopover')() }
-                { this.ctor('renderOptions')() }
+                {this.ctor('renderDisplay')()}
+                {this.ctor('renderPopover')()}
+                {this.ctor('renderOptions')()}
             </div>
         );
     }

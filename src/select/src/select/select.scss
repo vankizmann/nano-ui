@@ -117,6 +117,10 @@
      max-height: 210px;
 }
 
+.n-select__body.n-virtual {
+    min-height: 310px;
+}
+
  .n-select__empty {
      text-align: center;
 }

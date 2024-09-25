@@ -277,8 +277,18 @@ export default {
             let innerHeight = this.$refs.content
                 .scrollHeight || 0;
 
+            let virtualHeight = 0;
+
+            Dom.find(this.$refs.content).childs().each((el) => {
+                virtualHeight += Dom.find(el).height() || 0;
+            });
+
             if ( this.native && ! this.allowNative ) {
                 innerHeight -= 16;
+            }
+
+            if ( virtualHeight > innerHeight ) {
+                innerHeight = virtualHeight;
             }
 
             // if ( offsetHeight === 0 && this.overflowX ) {
@@ -363,8 +373,18 @@ export default {
             let innerWidth = this.$refs.content
                 .scrollWidth || 0;
 
+            let virtualWidth = 0;
+
+            Dom.find(this.$refs.content).childs().each((el) => {
+                virtualWidth += Dom.find(el).width() || 0;
+            });
+
             if ( this.native && ! this.allowNative ) {
                 innerWidth -= 16;
+            }
+
+            if ( virtualWidth > innerWidth ) {
+                innerWidth = virtualWidth;
             }
 
             // if ( offsetWidth === 0 && this.overflowY ) {
@@ -437,7 +457,7 @@ export default {
                 scroll.left = this.$refs.content.scrollLeft;
             }
 
-            let vbarTop= Math.ceil((this.outerHeight / this.innerHeight) *
+            let vbarTop = Math.ceil((this.outerHeight / this.innerHeight) *
                 scroll.top * this.heightRatio) || 0;
 
             if ( ! this.vbarTop || vbarTop !== this.vbarTop ) {
