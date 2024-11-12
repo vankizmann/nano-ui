@@ -68,7 +68,6 @@
     line-height: 1.2;
 }
 
-
 .n-popover-option .n-image {
     flex: 0 0 auto;
     margin-top: -2px;
@@ -139,6 +138,7 @@
 
     .n-popover--#{$suffix} .n-popover__body .n-popover-group,
     .n-popover--#{$suffix} .n-popover__body .n-popover-option {
+        width: calc(100% + #{$-popover-padding * 2.4});
         margin: 0 -#{$-popover-padding * 1.2};
     }
 
@@ -153,8 +153,8 @@
     }
 
     .n-popover-option--#{$suffix} .n-image {
-        width: $-popover-font + 6;
-        height: $-popover-font + 6;
+        width: $-popover-font + 10;
+        height: $-popover-font + 10;
     }
 
     .n-popover-option--#{$suffix} .n-icon {
