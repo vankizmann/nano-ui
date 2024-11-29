@@ -1,0 +1,247 @@
+.n-builder {
+    overflow: hidden;
+    border: 1px solid rgba($color-black, 0.1);
+    background: $color-white;
+    border-radius: $md-radius;
+}
+
+.n-builder, .n-builder__element {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.n-builder__tools:after,
+.n-builder__element:not(:last-child):after {
+    z-index: 110;
+    content: '\00a0';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    display: block;
+    width: 100%;
+    height: 0;
+    border-bottom: 1px solid rgba($color-black, 0.05);
+}
+
+.n-builder__frame {
+    background: $color-gray-05;
+}
+
+.n-builder__element > .n-builder__frame {
+    background: mix($color-gray-05, map-get($colors-tags, '0'), 90%);
+}
+
+.n-builder__element > .n-builder__frame .n-builder__element {
+    border-left: 2px solid map-get($colors-tags, '0');
+    border-right: 2px solid map-get($colors-tags, '0');
+}
+
+.n-builder__element .n-builder__element > .n-builder__frame {
+    background: mix($color-gray-05, map-get($colors-tags, '1'), 90%);
+}
+
+.n-builder__element .n-builder__element > .n-builder__frame .n-builder__element {
+    border-left: 2px solid map-get($colors-tags, '1');
+    border-right: 2px solid map-get($colors-tags, '1');
+}
+
+.n-builder__element .n-builder__element .n-builder__element > .n-builder__frame {
+    background: mix($color-gray-05, map-get($colors-tags, '2'), 90%);
+}
+
+.n-builder__element .n-builder__element .n-builder__element > .n-builder__frame .n-builder__element {
+    border-left: 2px solid map-get($colors-tags, '2');
+    border-right: 2px solid map-get($colors-tags, '2');
+}
+
+.n-builder__element .n-builder__element .n-builder__element .n-builder__element > .n-builder__frame {
+    background: mix($color-gray-05, map-get($colors-tags, '3'), 90%);
+}
+
+.n-builder__element .n-builder__element .n-builder__element .n-builder__element > .n-builder__frame .n-builder__element {
+    border-left: 2px solid map-get($colors-tags, '3');
+    border-right: 2px solid map-get($colors-tags, '3');
+}
+
+div:not(.n-builder__body) > .n-builder__frame {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+    border-radius: $md-radius;
+    box-shadow: 0 0 8px rgba($color-shadow, 0.15), inset 0 0 1px 1px rgba($color-shadow, 0.1);
+}
+
+
+.n-builder__head {
+    padding: 20px;
+    border-top: 1px solid rgba($color-black, 0.1);
+}
+
+.n-builder__tools {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    background: $color-white;
+    padding: 0 12px;
+}
+
+.n-builder__tools > div:not(:first-child) {
+    margin-left: 12px;
+}
+
+.n-builder__add {
+    margin-left: auto;
+}
+
+.n-builder__remove {
+    margin-left: 20px;
+}
+
+.n-builder__props {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 14px 27px 14px 17px;
+    background: $color-white;
+}
+
+.n-builder__props:not(:last-child) {
+    //border-bottom: 1px solid rgba($color-black, 0.1);
+}
+
+.n-builder__props > div {
+    flex: 1 1 auto;
+    margin-left: 10px;
+}
+
+.n-builder__props .n-builder__element-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.n-builder__props .n-builder__element-type,
+.n-builder__props .n-builder__element-alias {
+    width: calc(50% - 10px);
+}
+
+.n-builder__props .n-builder__element-prop {
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+.n-builder__props .n-builder__element-list,
+.n-builder__props .n-builder__element-prop {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+.n-builder__props .n-form-item__label {
+    font-size: 12px;
+}
+.n-builder__collapse,
+.n-builder__add,
+.n-builder__remove {
+    flex: 0 0 auto !important;
+    padding: 12px 0;
+}
+
+.n-builder__collapse > a,
+.n-builder__add > a,
+.n-builder__remove > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    text-decoration: none;
+    color: $color-gray-40;
+    border-radius: $md-radius;
+    background: $color-gray-05;
+}
+
+.n-builder__collapse > a:hover,
+.n-builder__add > a:hover,
+.n-builder__remove > a:hover {
+    background: $color-gray-10;
+}
+
+.n-builder__element.is-open .n-builder__collapse i {
+    //transform: rotate(45deg);
+}
+
+.n-builder__name {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 16px;
+    color: $color-primary;
+}
+
+.n-builder__name span {
+    margin-left: 5px;
+    font-size: 14px;
+    color: $color-gray-40;
+}
+
+.n-builder__output {
+    padding: 20px;
+    color: mix($color-primary, $color-white, 50%);
+    background: $color-black;
+    border-radius: $md-radius;
+}
+
+.n-builder_prop {
+    display: flex;
+    flex-direction: row;
+}
+
+.n-builder_prop {
+    margin-bottom: 10px;
+}
+
+.n-builder_prop > div {
+    flex: 1 1 auto;
+}
+
+.n-builder_prop > div:not(:last-child) {
+    margin-right: 10px;
+}
+
+.n-builder_prop-text {
+    flex: 0 0 auto;
+    width: 100%;
+    font-size: 13px;
+    color: $color-gray-50;
+    font-style: italic;
+}
+
+.n-builder_prop-value .n-input input,
+.n-builder_prop-fallback .n-input input {
+    font-family: 'Fire Code', monospace;
+}
+
+.n-builder_prop-key,
+.n-builder_prop-value,
+.n-builder_prop-fallback {
+    width: 33.332%;
+}
+
+.n-builder_prop-type {
+    flex: 0 0 auto !important;
+    width: 120px;
+}
+
+.n-builder_prop-func {
+    flex: 0 0 auto !important;
+    width: 100px;
+}
+
+.n-builder_prop-button {
+    flex: 0 0 auto !important;
+}
+

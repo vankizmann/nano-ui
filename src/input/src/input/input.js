@@ -156,11 +156,13 @@ export default {
         onFocus(event)
         {
             this.focus = true;
+            this.$emit('focus', event);
         },
 
         onBlur(event)
         {
             this.focus = false;
+            this.$emit('blur', event);
         }
 
     },

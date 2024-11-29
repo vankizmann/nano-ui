@@ -158,3 +158,26 @@ $colors: (
         'dark': $color-danger-dark
     ),
 ) !default;
+
+$colors-tags: (
+        '0': mix($color-secondary, $color-secondary, 65%),
+        '1': mix($color-primary, $color-secondary, 65%),
+        '2': mix($color-danger, $color-secondary, 65%),
+        '3': mix($color-success, $color-secondary, 65%),
+        '4': mix($color-warning, $color-secondary, 65%),
+        '5': mix($color-primary, $color-success, 65%),
+        '6': mix($color-secondary, $color-success, 65%),
+        '7': mix($color-danger, $color-success, 65%),
+        '8': mix($color-success, $color-success, 65%),
+        '9': mix($color-warning, $color-success, 65%),
+        '10': mix($color-primary, $color-danger, 65%),
+        '11': mix($color-secondary, $color-danger, 65%),
+        '12': mix($color-danger, $color-danger, 65%),
+        '13': mix($color-success, $color-danger, 65%),
+        '14': mix($color-warning, $color-danger, 65%),
+        '15': mix($color-primary, $color-warning, 65%),
+        '16': mix($color-secondary, $color-warning, 65%),
+        '17': mix($color-danger, $color-warning, 65%),
+        '18': mix($color-success, $color-warning, 65%),
+        '19': mix($color-warning, $color-warning, 65%),
+) !default;
