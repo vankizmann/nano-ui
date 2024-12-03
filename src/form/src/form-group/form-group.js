@@ -201,7 +201,11 @@ export default {
 
     render()
     {
-        let size = this.size || this.NForm.size;
+        let size = this.size ;
+
+        if ( this.NForm ) {
+            size = size || this.NForm.size;
+        }
 
         let classList = [
             'n-form-group', 

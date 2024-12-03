@@ -7,7 +7,5 @@ global.NanoBuilderIndexies['span'] = {
 };
 
 global.NanoBuilderIndexies['span']['props'] = {
-    classList: {
-        type: 'String'
-    },
+    //
 };

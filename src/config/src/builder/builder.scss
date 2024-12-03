@@ -75,8 +75,15 @@ div:not(.n-builder__body) > .n-builder__frame {
 
 
 .n-builder__head {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     padding: 20px;
     border-top: 1px solid rgba($color-black, 0.1);
+}
+
+.n-builder__head > div:not(:first-child) {
+    margin-left: 20px;
 }
 
 .n-builder__tools {

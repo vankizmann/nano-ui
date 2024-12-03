@@ -64,7 +64,7 @@
 
 <div id="app">
     <div class="app-container">
-        <n-builder :model-value="demoConfigNext"></n-builder>
+        <n-builder :model-value="demoConfigNext" :model="demoModel" :scope="demoScope"></n-builder>
     </div>
 </div>
 
@@ -76,6 +76,20 @@
         pi.Dom.ready(function () {
 
             let data = {};
+
+            data.demoModel = {
+                test: true,
+                label: 'foobar',
+                option: {
+                    url: 'http://', redirect: 'AHA'
+                }
+            };
+
+            data.demoScope = {
+                testme: () => {
+                    console.log('abc');
+                }
+            }
 
             data.sizes = {
                 xs: 'XS',

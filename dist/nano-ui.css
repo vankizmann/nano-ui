@@ -6165,8 +6165,14 @@ div:not(.n-builder__body) > .n-builder__frame {
   box-shadow: 0 0 8px rgba(28, 32, 60, 0.15), inset 0 0 1px 1px rgba(28, 32, 60, 0.1); }
 
 .n-builder__head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   padding: 20px;
   border-top: 1px solid rgba(9, 11, 16, 0.1); }
+
+.n-builder__head > div:not(:first-child) {
+  margin-left: 20px; }
 
 .n-builder__tools {
   position: relative;

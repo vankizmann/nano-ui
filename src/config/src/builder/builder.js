@@ -10,6 +10,7 @@ global.NanoBuilderPropType = {
 
 global.NanoBuilderPropCode = {
     'string': Locale.trans('String'),
+    'number': Locale.trans('Number'),
     'boolean': Locale.trans('Boolean'),
     'object': Locale.trans('Object'),
     'function': Locale.trans('Function'),
@@ -17,7 +18,7 @@ global.NanoBuilderPropCode = {
 
 global.NanoBuilderProps = {
     classList: {
-        for: ['root', 'attrs'], type: 'String'
+        for: ['root', 'attrs', 'props'], type: 'String'
     },
     vIf: {
         for: ['root'], type: 'String'
@@ -36,14 +37,42 @@ global.NanoBuilderIndexies = {
 };
 
 // DOM elements
-require('./prototypes/d-div');
-require('./prototypes/d-span');
+require('./prototypes/html/nano');
+require('./prototypes/html/div');
+require('./prototypes/html/span');
 
 // Nano elements
-require('./prototypes/n-form');
-require('./prototypes/n-form-item');
-require('./prototypes/n-input');
-require('./prototypes/n-switch');
+require('./prototypes/button/n-button');
+require('./prototypes/button/n-button-group');
+require('./prototypes/cascader/n-cascader');
+require('./prototypes/checkbox/n-checkbox');
+require('./prototypes/checkbox/n-checkbox-group');
+require('./prototypes/confirm/n-confirm');
+require('./prototypes/datepicker/n-datepicker');
+require('./prototypes/datetimepicker/n-datetimepicker');
+require('./prototypes/durationpicker/n-durationpicker');
+require('./prototypes/empty/n-empty');
+require('./prototypes/form/n-form');
+require('./prototypes/form/n-form-group');
+require('./prototypes/form/n-form-item');
+require('./prototypes/input/n-input');
+require('./prototypes/input-number/n-input-number');
+require('./prototypes/loader/n-loader');
+require('./prototypes/modal/n-modal');
+require('./prototypes/radio/n-radio');
+require('./prototypes/radio/n-radio-group');
+require('./prototypes/rating/n-rating');
+require('./prototypes/select/n-select');
+require('./prototypes/slider/n-slider');
+require('./prototypes/switch/n-switch');
+require('./prototypes/table/n-table');
+require('./prototypes/table/n-table-column');
+require('./prototypes/tabs/n-tabs');
+require('./prototypes/tabs/n-tabs-item');
+require('./prototypes/tags/n-tags');
+require('./prototypes/tags/n-tags-item');
+require('./prototypes/timepicker/n-timepicker');
+require('./prototypes/transfer/n-transfer');
 
 export default {
 
@@ -59,12 +88,44 @@ export default {
             type: [Object]
         },
 
+        scope: {
+            default()
+            {
+                return {};
+            },
+            type: [Object]
+        },
+
+        model: {
+            default()
+            {
+                return {};
+            },
+            type: [Object]
+        },
+
+        renderDemo: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
+        renderExport: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
     },
 
     data()
     {
         return {
-            init: false, collapse: [], safevar: this.normalizeModel(this.modelValue)
+            init: false, demo: false, collapse: [], safevar: this.normalizeModel(this.modelValue)
         };
     },
 
@@ -86,6 +147,11 @@ export default {
             return JSON.stringify(Obj.clone(value), null, 4).replace(/"!FUNC:(.*?):FUNC!"/g, (matches) => {
                 return matches.replace(/^"!FUNC:/, '').replace(/:FUNC!"$/, '').replace(/\\"/, '"').replace(/\\n/g, "\n");
             });
+        },
+
+        exportExecutable(value)
+        {
+            return new Function(`return ${this.exportJson(value)};`)();
         },
 
         normalizeModel(model)
@@ -172,7 +238,8 @@ export default {
             }
 
             if ( prop.code === 'number' ) {
-                realvalue = Any.integer(prop.value);
+                realvalue = Any.number(prop.value, 0);
+                console.log('num', prop.value, realvalue)
             }
 
             if ( prop.code === 'object' ) {
@@ -229,7 +296,7 @@ export default {
             }
 
             let reset = [
-                'binds', 'attrs', 'props', 'on',
+                'vIf', 'vShow', 'classList', 'binds', 'attrs', 'props', 'on',
             ];
 
             Obj.each(reset, (prop) => {
@@ -524,7 +591,7 @@ export default {
         };
 
         let tooltipHtml = (
-            <div className="n-builder_prop-text">
+            <div class="n-builder_prop-text">
                 <p>{Obj.get(props, `${value.key}.desc`, '')}</p>
             </div>
         );
@@ -638,6 +705,85 @@ export default {
         );
     },
 
+    renderBody()
+    {
+        return (
+            <div class="n-builder__body">
+                {this.ctor('renderBuilder')(this.safevar, 'safevar')}
+            </div>
+        );
+    },
+
+    renderHead()
+    {
+        let addProps = {
+            type: 'primary'
+        };
+
+        addProps['onClick'] = () => {
+            this.addElement('safevar');
+        };
+
+        let addHtml = (
+            <div class="n-builder__head-add">
+                <NButton {...addProps}>{this.trans('Add root element')}</NButton>
+            </div>
+        );
+
+        let demoProps = {
+            type: 'primary'
+        };
+
+        demoProps['onClick'] = () => {
+            this.demo = true;
+        };
+
+        let demoHtml = (
+            <div class="n-builder__head-demo">
+                <NButton {...demoProps}>{this.trans('Render demo')}</NButton>
+            </div>
+        );
+
+        return (
+            <div class="n-builder__head">
+                {[addHtml, demoHtml]}
+            </div>
+        );
+    },
+
+    renderOutput()
+    {
+        return (
+            <div class="n-builder__output">
+                <pre>{this.exportJson(this.safevar)}</pre>
+            </div>
+        );
+    },
+
+    renderDemo()
+    {
+        if ( ! this.renderDemo || ! this.demo ) {
+            return null;
+        }
+
+        let modalProps = {
+            width: '100%',
+            height: '100%'
+        };
+
+        let configProps = {
+            modelValue: this.model, scope: this.scope, config: this.exportExecutable(this.safevar)
+        };
+
+        return (
+            <NModal vModel={this.demo} {...modalProps}>
+                <NForm>
+                    <NConfigNext {...configProps} />
+                </NForm>
+            </NModal>
+        );
+    },
+
     render()
     {
         let classList = [
@@ -646,15 +792,9 @@ export default {
 
         return (
             <div class={classList}>
-                <div class="n-builder__body">
-                    {this.ctor('renderBuilder')(this.safevar, 'safevar')}
-                </div>
-                <div class="n-builder__head">
-                    <NButton onClick={() => this.addElement('safevar')}>Add root element</NButton>
-                </div>
-                <div class="n-builder__output">
-                    <pre>{this.exportJson(this.safevar)}</pre>
-                </div>
+                {[
+                    this.ctor('renderBody')(), this.ctor('renderHead')(), this.ctor('renderOutput')(), this.ctor('renderDemo')(),
+                ]}
             </div>
         );
     }
