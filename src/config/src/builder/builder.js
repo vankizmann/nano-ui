@@ -561,22 +561,22 @@ export default {
 
 
         return (
-            <div className="n-builder__tools" {...rootProps}>
-                <div className="n-builder__collapse">
-                    <a {...collapseProps}><i className="fa fa-bars"></i></a>
+            <div class="n-builder__tools" {...rootProps}>
+                <div class="n-builder__collapse">
+                    <a {...collapseProps}><i class="fa fa-bars"></i></a>
                 </div>
-                <div className="n-builder__name">
+                <div class="n-builder__name">
                     {key.replace(/^.*?([^\.:]+):([^\.:]+)$/, '$1')}<span>{key.replace(/^.*?([^\.:]+):([^\.:]+)$/, '$2')}</span>
                 </div>
-                <div className="n-builder__move">
-                    <a {...moveupProps}><i className="fa fa-angle-up"></i></a>
-                    <a {...movedownProps}><i className="fa fa-angle-down"></i></a>
+                <div class="n-builder__move">
+                    <a {...moveupProps}><i class="fa fa-angle-up"></i></a>
+                    <a {...movedownProps}><i class="fa fa-angle-down"></i></a>
                 </div>
-                <div className="n-builder__add">
-                    <a {...addProps}><i className="fa fa-plus"></i></a>
+                <div class="n-builder__add">
+                    <a {...addProps}><i class="fa fa-plus"></i></a>
                 </div>
-                <div className="n-builder__remove">
-                    <a {...removeProps}><i className="fa fa-trash"></i></a>
+                <div class="n-builder__remove">
+                    <a {...removeProps}><i class="fa fa-trash"></i></a>
                 </div>
             </div>
         );
@@ -823,6 +823,12 @@ export default {
             return null;
         }
 
+        let renderFunction = this.$slots.default;
+
+        if ( Any.isEmpty(renderFunction) ) {
+            renderFunction = ({ render }) => render();
+        }
+
         let modalProps = {
             width: '100%',
             height: '100%'
@@ -832,11 +838,13 @@ export default {
             modelValue: this.model, scope: this.scope, config: this.exportExecutable(this.safevar)
         };
 
+        let renderContent = () => {
+            return ( <NConfigNext {...configProps} />);
+        };
+
         return (
             <NModal vModel={this.demo} {...modalProps}>
-                <NForm>
-                    <NConfigNext {...configProps} />
-                </NForm>
+                {renderFunction({ render: renderContent })}
             </NModal>
         );
     },
@@ -852,7 +860,6 @@ export default {
                 {[
                     this.ctor('renderBody')(), this.ctor('renderHead')(), this.ctor('renderOutput')(), this.ctor('renderDemo')(),
                 ]}
-                <NReferencePicker model={this.model} scope={this.scope}></NReferencePicker>
             </div>
         );
     }
