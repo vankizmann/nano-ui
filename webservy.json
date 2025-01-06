@@ -1,6 +1,8 @@
 {
     "hostname": "nano-ui.local",
     "webroot": "",
-    "engine": "apache",
+    "engine": "httpd",
+    "type": "default",
+    "proxy": "",
     "version": "php-8.2.8"
 }
