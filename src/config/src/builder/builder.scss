@@ -150,6 +150,7 @@ div:not(.n-builder__body) > .n-builder__frame {
 }
 .n-builder__collapse,
 .n-builder__add,
+.n-builder__move,
 .n-builder__remove {
     flex: 0 0 auto !important;
     padding: 12px 0;
@@ -169,9 +170,26 @@ div:not(.n-builder__body) > .n-builder__frame {
     background: $color-gray-05;
 }
 
+.n-builder__move > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 18px;
+    text-decoration: none;
+    color: $color-gray-40;
+    border-radius: $md-radius;
+    background: $color-gray-05;
+}
+
+.n-builder__move > a:not(:last-child) {
+    margin-bottom: 2px;
+}
+
 .n-builder__collapse > a:hover,
 .n-builder__add > a:hover,
-.n-builder__remove > a:hover {
+.n-builder__remove > a:hover,
+.n-builder__move > a:hover {
     background: $color-gray-10;
 }
 

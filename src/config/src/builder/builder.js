@@ -1,4 +1,4 @@
-import { Arr, Dom, Any, Locale, Obj, UUID } from "@kizmann/pico-js";
+import { Arr, Dom, Any, Locale, Obj, UUID, Num } from "@kizmann/pico-js";
 
 global.NanoBuilderPropType = {
     'root': Locale.trans('Root'),
@@ -296,7 +296,7 @@ export default {
             }
 
             let reset = [
-                'vIf', 'vShow', 'classList', 'binds', 'attrs', 'props', 'on',
+                'vIf', 'vShow', 'classList', 'vLocale', 'binds', 'attrs', 'props', 'on',
             ];
 
             Obj.each(reset, (prop) => {
@@ -451,7 +451,61 @@ export default {
         removeElement(key)
         {
             Obj.unset(this, key);
-        }
+        },
+
+        moveupElement(key)
+        {
+            let [el, childs] = [
+                Obj.get(this, key), Obj.get(this, key.replace(/\.[^.]+$/, ''))
+            ];
+
+            let close = Number.MIN_VALUE;
+
+            Arr.each(childs, (sub) => {
+                if ( sub.order < el.order ) close = Math.max(close, sub.order);
+            });
+
+            if ( close === Number.MIN_VALUE ) {
+                return;
+            }
+
+            let replacement = Arr.find(childs, {
+                order: close
+            });
+
+            Obj.assign(replacement, {
+                order: el.order
+            });
+
+            Obj.assign(el, { order: close });
+        },
+
+        movedownElement(key)
+        {
+            let [el, childs] = [
+                Obj.get(this, key), Obj.get(this, key.replace(/\.[^.]+$/, ''))
+            ];
+
+            let close = Number.MAX_VALUE;
+
+            Arr.each(childs, (sub) => {
+                if ( sub.order > el.order ) close = Math.min(close, sub.order);
+            });
+
+            if ( close === Number.MAX_VALUE ) {
+                return;
+            }
+
+            let replacement = Arr.find(childs, {
+                order: close
+            });
+
+            Obj.assign(replacement, {
+                order: el.order
+            });
+
+            Obj.assign(el, { order: close });
+        },
 
     },
 
@@ -489,19 +543,40 @@ export default {
             this.removeElement(key);
         };
 
+        let moveupProps = {
+            href: 'javascript:void(0)',
+        };
+
+        moveupProps['onClick'] = () => {
+            this.moveupElement(key);
+        };
+
+        let movedownProps = {
+            href: 'javascript:void(0)',
+        };
+
+        movedownProps['onClick'] = () => {
+            this.movedownElement(key);
+        };
+
+
         return (
-            <div class="n-builder__tools" {...rootProps}>
-                <div class="n-builder__collapse">
-                    <a {...collapseProps}><i class="fa fa-bars"></i></a>
+            <div className="n-builder__tools" {...rootProps}>
+                <div className="n-builder__collapse">
+                    <a {...collapseProps}><i className="fa fa-bars"></i></a>
                 </div>
-                <div class="n-builder__name">
+                <div className="n-builder__name">
                     {key.replace(/^.*?([^\.:]+):([^\.:]+)$/, '$1')}<span>{key.replace(/^.*?([^\.:]+):([^\.:]+)$/, '$2')}</span>
                 </div>
-                <div class="n-builder__add">
-                    <a {...addProps}><i class="fa fa-plus"></i></a>
+                <div className="n-builder__move">
+                    <a {...moveupProps}><i className="fa fa-angle-up"></i></a>
+                    <a {...movedownProps}><i className="fa fa-angle-down"></i></a>
                 </div>
-                <div class="n-builder__remove">
-                    <a {...removeProps}><i class="fa fa-trash"></i></a>
+                <div className="n-builder__add">
+                    <a {...addProps}><i className="fa fa-plus"></i></a>
+                </div>
+                <div className="n-builder__remove">
+                    <a {...removeProps}><i className="fa fa-trash"></i></a>
                 </div>
             </div>
         );
@@ -552,41 +627,22 @@ export default {
         let values = Obj.get(props, `${value.key}.options`, []);
 
         let valueInputProps = {
-            size: 'sm', icon: 'fa fa-expand', iconDisabled: ! Arr.has(['string'], value.code)
+            size: 'sm', model: this.model, scope: this.scope
         };
 
-        valueInputProps['onBlur'] = () => {
+        valueInputProps['onUpdate:modelValue'] = () => {
             this.$nextTick(() => this.applyProps(key));
         };
 
         let valueHtml = (
-            <NInput vModel={value.value} {...valueInputProps} />
+            <NReferencePicker vModel={value.value} {...valueInputProps} />
         );
-
-        let valueSelectProps = {
-            size: 'sm', allowCreate: true, options: values
-        };
-
-        if ( Any.isArray(values) ) {
-            valueSelectProps.optionsLabel = '$value';
-            valueSelectProps.optionsValue = '$value';
-        }
-
-        valueSelectProps['onUpdate:modelValue'] = () => {
-            this.$nextTick(() => this.applyProps(key));
-        };
-
-        if ( ! Any.isEmpty(values) && value.type === 'props' ) {
-            valueHtml = (
-                <NSelect {...valueSelectProps} vModel={value.value} />
-            );
-        }
 
         let fallbackProps = {
             size: 'sm', minRows: 1, autoRows: true
         };
 
-        fallbackProps['onBlur'] = () => {
+        fallbackProps['onUpdate:modelValue'] = () => {
             this.$nextTick(() => this.applyProps(key));
         };
 
@@ -617,7 +673,7 @@ export default {
                     <NButton size="sm" type="danger" onClick={() => this.removeProp(key, sub)}>Remove</NButton>
                 </div>
             </div>
-        )
+        );
     },
 
     renderProps(el, value, key)
@@ -698,6 +754,7 @@ export default {
         if ( Any.isEmpty(el) ) {
             return null;
         }
+
         return (
             <div class="n-builder__frame">
                 {Arr.each(Obj.sort(Obj.clone(el), 'order'), (v) => this.ctor('renderElement')(Obj.get(this.$data, key, {}), Obj.get(this.$data, [key, v._key], {}), `${key}.${v._key}`))}
@@ -795,6 +852,7 @@ export default {
                 {[
                     this.ctor('renderBody')(), this.ctor('renderHead')(), this.ctor('renderOutput')(), this.ctor('renderDemo')(),
                 ]}
+                <NReferencePicker model={this.model} scope={this.scope}></NReferencePicker>
             </div>
         );
     }

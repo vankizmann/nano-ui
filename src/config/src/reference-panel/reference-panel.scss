@@ -1,0 +1,194 @@
+.n-reference-panel {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.n-reference-panel:not(.in-modal) {
+    border: 1px solid $color-gray-10;
+}
+
+.n-reference-panel.in-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.n-reference-panel:after {
+    content: '\00a0';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 6px;
+    height: 100%;
+    background: $color-gray-05;
+    border-left: 1px solid $color-gray-10;
+    border-right: 1px solid $color-gray-10;
+    transform: translateX(-50%);
+}
+
+.n-reference-panel__model,
+.n-reference-panel__scope {
+    position: relative;
+    flex: 0 0 auto;
+    width: 50%;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 8px;
+}
+
+.n-reference-panel__model:before,
+.n-reference-panel__scope:before {
+    position: absolute;
+    top: 10px;
+    display: inline-block;
+    font-size: 13px;
+    font-family: monospace;
+    color: rgba($color-black, 0.4);
+}
+
+.n-reference-panel__model {
+    padding-right: 11px;
+}
+
+.n-reference-panel__model:before {
+    content: '$model';
+    right: 13px;
+}
+
+.n-reference-panel__scope {
+    padding-left: 11px;
+}
+
+.n-reference-panel__scope:before {
+    content: '$scope';
+    right: 10px;
+}
+
+.n-reference-panel__item {
+    cursor: default;
+    user-select: none;
+    flex: 0 0 auto;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 8px;
+    font-family: monospace;
+    border-radius: 3px;
+}
+
+.n-reference-panel__item.is-selected {
+    background: rgba($color-black, 0.1);
+}
+
+.n-reference-panel__item--function.is-selected {
+    background: rgba($color-success, 0.1);
+}
+
+.n-reference-panel__item--string.is-selected,
+.n-reference-panel__item--boolean.is-selected,
+.n-reference-panel__item--number.is-selected {
+    background: rgba($color-warning, 0.1);
+}
+
+.n-reference-panel__item--object.is-selected {
+    background: rgba($color-info, 0.1);
+}
+
+.n-reference-panel__item--array.is-selected {
+    background: rgba($color-danger, 0.1);
+}
+
+.n-reference-panel__expand,
+.n-reference-panel__pick {
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    line-height: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+.n-reference-panel__expand {
+    margin-right: 5px;
+}
+
+.n-reference-panel__item.is-expanded  .n-reference-panel__expand {
+    transform: rotate(90deg);
+}
+
+.n-reference-panel__item:not(.has-childs) .n-reference-panel__expand {
+    cursor: not-allowed;
+}
+
+.n-reference-panel__pick {
+    margin-left: 5px;
+}
+
+.n-reference-panel__expand i,
+.n-reference-panel__pick i {
+    font-size: 12px;
+    color: rgba($color-black, 0.4);
+}
+
+.n-reference-panel__item:not(.has-childs) .n-reference-panel__expand i {
+    opacity: 0.3;
+}
+
+.n-reference-panel__name {
+    margin-right: 5px;
+    font-size: 13px;
+}
+
+.n-reference-panel__type {
+    display: inline-block;
+    padding: 2px 6px 1px;
+    background: $color-gray-10;
+    border-radius: 3px;
+    font-size: 11px;
+    font-family: monospace;
+}
+
+.n-reference-panel__item--function .n-reference-panel__type {
+    color: rgba(darken($color-success, 20%), 0.7);
+    background: rgba($color-success, 0.2);
+}
+
+.n-reference-panel__item--string .n-reference-panel__type,
+.n-reference-panel__item--boolean .n-reference-panel__type,
+.n-reference-panel__item--number .n-reference-panel__type {
+    color: rgba(darken($color-warning, 20%), 0.7);
+    background: rgba($color-warning, 0.2);
+}
+
+.n-reference-panel__item--array .n-reference-panel__type {
+    color: rgba(darken($color-danger, 20%), 0.7);
+    background: rgba($color-danger, 0.2);
+}
+
+.n-reference-panel__item--object .n-reference-panel__type {
+    color: rgba(darken($color-info, 30%), 0.7);
+    background: rgba($color-info, 0.2);
+}
+
+.n-reference-panel__childs {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 19px;
+}
+
+.n-reference-panel__childs:before {
+    content: '\00a0';
+    position: absolute;
+    top: 3px;
+    left: 15px;
+    display: block;
+    width: 1px;
+    height: calc(100% - 6px);
+    background: $color-gray-05;
+}
