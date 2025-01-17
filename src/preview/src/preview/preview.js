@@ -46,6 +46,14 @@ export default {
             type: [String]
         },
 
+        mime: {
+            default()
+            {
+                return null;
+            },
+            typre: [String]
+        },
+
         preview: {
             default()
             {
@@ -129,11 +137,19 @@ export default {
                 fallback = 'video';
             }
 
+            if ( Any.isString(this.mime) ) {
+                fallback = this.mime;
+            }
+
             return fallback;
         },
 
         getThumbMime(fallback = null)
         {
+            if ( Any.isString(this.mime) ) {
+                return this.mime;
+            }
+
             let file = Obj.get(this.tempThumb, 'name',
                 this.tempThumb);
 
@@ -236,8 +252,10 @@ export default {
             props.onClick = this.showLightbox;
         }
 
+        let key = btoa(this.tempThumb);
+
         return (
-            <div class={classList} {...props}>
+            <div key={key} class={classList} {...props}>
                 { [this.ctor('renderPreview')(), this.ctor('renderLightbox')()] }
             </div>
         );

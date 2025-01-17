@@ -131,7 +131,7 @@ div:not(.n-builder__body) > .n-builder__frame {
 
 .n-builder__props .n-builder__element-type,
 .n-builder__props .n-builder__element-alias {
-    width: calc(50% - 10px);
+    width: calc(40% - 10px);
 }
 
 .n-builder__props .n-builder__element-prop {
@@ -143,6 +143,10 @@ div:not(.n-builder__body) > .n-builder__frame {
 .n-builder__props .n-builder__element-prop {
     flex: 0 0 auto;
     width: 100%;
+}
+
+.n-builder__element-plain {
+    width: calc(20% - 10px);
 }
 
 .n-builder__props .n-form-item__label {
@@ -235,6 +239,10 @@ div:not(.n-builder__body) > .n-builder__frame {
 
 .n-builder_prop > div:not(:last-child) {
     margin-right: 10px;
+}
+
+.n-builder_prop-i18n {
+    flex: 0 0 auto;
 }
 
 .n-builder_prop-text {

@@ -1,0 +1,21 @@
+@import "../../../root/vars";
+
+.n-load:before {
+    border: 2px solid $color-primary;
+}
+
+.n-load:after {
+    background: rgba($color-background, 0.7);
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+    .n-loader--#{$color}.n-load:before {
+        border-color: $-color-base;
+    }
+
+}

@@ -10,12 +10,22 @@
     margin: 0 auto;
 }
 
+.n-empty-icon.n-inline {
+    flex-direction: row;
+    width: auto;
+}
+
 .n-empty-icon__frame {
     display: block;
     width: 35%;
     min-width: 36px;
     margin: 0 auto;
     opacity: 0.3;
+}
+
+.n-empty-icon.n-inline .n-empty-icon__frame {
+    width: 36px;
+    margin: 0 10px 0 0;
 }
 
 .n-empty-icon.n-disabled .n-empty-icon__frame {

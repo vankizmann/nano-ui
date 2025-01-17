@@ -26,6 +26,14 @@ export default {
                 return false;
             },
             type: [Boolean]
+        },
+
+        inline: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
         }
 
     },
@@ -40,6 +48,10 @@ export default {
 
         if ( this.disabled ) {
             classList.push('n-disabled');
+        }
+
+        if ( this.inline ) {
+            classList.push('n-inline');
         }
 
         return (

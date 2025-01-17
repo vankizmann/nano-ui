@@ -1,0 +1,67 @@
+@import "../../../root/vars";
+
+.n-datetimepicker {
+    background: $color-form;
+    border: 1px solid $color-gray-15;
+}
+
+.n-datetimepicker.n-disabled {
+    background: rgba($color-gray-15, 0.3);
+}
+
+.n-datetimepicker__seperator {
+    color: $color-gray-60;
+}
+
+.n-datetimepicker__clear,
+.n-datetimepicker__angle {
+    color: $color-gray-60;
+}
+
+.n-datetimepicker__clear i {
+    background: rgba($color-gray-15, 0.6);
+}
+
+.n-datetimepicker__placeholder {
+    color: rgba($color-black, 0.5);
+}
+
+.n-datetimepicker__body,
+.n-datetimepicker__empty {
+     background: $color-form;
+     box-shadow: 0 1px 3px 1px rgba($color-shadow, 0.15);
+}
+
+.n-datetimepicker__empty {
+     color: $color-gray-60;
+}
+
+.n-datetimepicker__body {
+    border: 1px solid $color-gray-15;
+}
+
+.n-datetimepicker__time-panel.n-timepicker-panel {
+    background: $color-gray-10;
+}
+
+.n-datetimepicker__time-panel.n-timepicker-panel .n-timepicker-panel__header {
+    border-bottom: 1px solid $color-gray-15;
+}
+
+.n-datetimepicker__time-panel.n-timepicker-panel .n-timepicker-panel__panel:not(:last-child) {
+    border-right: 1px solid $color-gray-15;
+}
+
+
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+     .n-datetimepicker--#{$color}:not(.n-disabled):hover,
+     .n-datetimepicker--#{$color}:not(.n-disabled).n-focus {
+        border-color: $-color-base;
+    }
+
+}

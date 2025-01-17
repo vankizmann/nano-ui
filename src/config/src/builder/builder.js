@@ -173,16 +173,32 @@ export default {
                 ...Obj.except(child, ['content']), content: {}, builder: this.buildProps(child),
             });
 
-            Obj.each(child.content || {}, (value, key) => {
+            if ( Any.isArray(child.content) ) {
+                child.content = Arr.first(child.content);
+            }
 
-                if ( ! key.match(':') ) {
-                    key += ':' + UUID();
-                }
+            if ( ! Any.isPlain(child.content) && ! Any.isString(child.content) ) {
+                child.content = {};
+            }
 
-                result['content'][key] = Obj.assign(this.normalizeChild(value), {
-                    order: (Any.vals(result['content']).length + 1) * 100
+            result.builder["null"] = {
+                type: typeof child.content
+            }
+
+            if (Any.isPlain(child.content)) {
+                Obj.each(child.content || {}, (value, key) => {
+
+                    if ( ! key.match(':') ) {
+                        key += ':' + UUID();
+                    }
+
+                    result['content'][key] = Obj.assign(this.normalizeChild(value), {
+                        order: (Any.vals(result['content']).length + 1) * 100
+                    });
                 });
-            });
+            } else {
+                result.content = child.content;
+            }
 
             return result;
         },
@@ -239,7 +255,6 @@ export default {
 
             if ( prop.code === 'number' ) {
                 realvalue = Any.number(prop.value, 0);
-                console.log('num', prop.value, realvalue)
             }
 
             if ( prop.code === 'object' ) {
@@ -287,6 +302,23 @@ export default {
             this.collapse = Arr.each(this.collapse, (k) => {
                 return k.replace(key, newKey);
             });
+        },
+
+        changeType(key, type)
+        {
+            let value = Obj.get(this, key, {});
+
+            let original = Obj.get(value, 'builder.null.type');
+
+            if ( type === 'object' ) {
+                value.content = {};
+            }
+
+            if ( type === 'string' ) {
+                value.content = '';
+            }
+
+            Obj.set(value, 'builder.null.type', typeof value.content);
         },
 
         applyProps(key = null, value = {})
@@ -584,6 +616,10 @@ export default {
 
     renderProp(el, sub, key)
     {
+        if ( sub === "null" ) {
+            return null;
+        }
+
         let group = key.replace(/^.*?([^\.]+):([^\.]+)$/, '$1')
         let value = Obj.get(this.$data, `${key}.builder.${sub}`, {});
 
@@ -592,20 +628,17 @@ export default {
         props = Obj.assign({}, global.NanoBuilderProps, props);
 
         Obj.each(props, (prop, index) => {
-            console.log(prop.for, index, value.type)
             if ( ! Any.isEmpty(prop.for) && ! Arr.has(prop.for, value.type) ) {
                 props = Obj.unset(props, index);
             }
         });
-
-        console.log(props);
 
         let typeProps = {
             size: 'sm', options: global.NanoBuilderPropType
         };
 
         typeProps['onUpdate:modelValue'] = () => {
-            this.applyProps(key);
+            this.$nextTick(() => this.applyProps(key));
         };
 
         let keyProps = {
@@ -694,8 +727,20 @@ export default {
             modelValue: key.replace(/^.*?([^\.]+):([^\.]+)$/, '$2'),
         };
 
-        aliasProps['onBlur'] = (e) => {
-            this.changeAlias(key, e.target.value);
+        aliasProps['onUpdate:modelValue'] = (value) => {
+            this.changeAlias(key, value);
+        };
+
+        let plainProps = {
+            modelValue: Obj.get(value, 'builder.null.type'),
+            options: {
+                'object': this.trans('Object'),
+                'string': this.trans('String'),
+            }
+        };
+
+        plainProps['onUpdate:modelValue'] = (value) => {
+            this.changeType(key, value);
         };
 
         let addProps = {
@@ -720,6 +765,9 @@ export default {
                 <NFormItem class="n-builder__element-alias" label={this.trans('Alias')}>
                     <NInput {...aliasProps} />
                 </NFormItem>
+                <NFormItem class="n-builder__element-plain" label={this.trans('Content')}>
+                    <NSelect {...plainProps}>{this.trans('Enable plain')}</NSelect>
+                </NFormItem>
                 <div class="n-builder__element-prop">
                     <NButton {...addProps}>Add property</NButton>
                 </div>
@@ -740,11 +788,21 @@ export default {
             classList.push('is-open');
         }
 
+        let builderHtml = () => {
+            return this.ctor('renderBuilder')(value.content || {}, `${key}.content`);
+        };
+
+        if ( value.builder["null"]["type"] === 'string' ) {
+            builderHtml = () => {
+                return (<div><NInput vModel={value.content} /></div>);
+            };
+        }
+
         return (
             <div class={classList}>
                 {this.ctor('renderTools')(el, value, key)}
                 {this.ctor('renderProps')(el, value, key)}
-                {this.ctor('renderBuilder')(value.content || {}, `${key}.content`)}
+                {builderHtml()}
             </div>
         );
     },
@@ -755,9 +813,20 @@ export default {
             return null;
         }
 
+        let items = Arr.each(Obj.sort(Obj.clone(el), 'order'), (v) => {
+
+            let args = [
+                Obj.get(this.$data, key, {}),
+                Obj.get(this.$data, [key, v._key], {}),
+                `${key}.${v._key}`
+            ];
+
+            return this.ctor('renderElement')(...args);
+        });
+
         return (
             <div class="n-builder__frame">
-                {Arr.each(Obj.sort(Obj.clone(el), 'order'), (v) => this.ctor('renderElement')(Obj.get(this.$data, key, {}), Obj.get(this.$data, [key, v._key], {}), `${key}.${v._key}`))}
+                {items}
             </div>
         );
     },

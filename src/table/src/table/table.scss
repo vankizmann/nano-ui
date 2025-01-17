@@ -9,6 +9,10 @@
     border-radius: $md-radius + 2;
 }
 
+.n-table .n-table__header {
+    border-radius: $md-radius + 2 $md-radius + 2 0 0;
+}
+
 .n-table .n-table__wrap,
 .n-table .n-table__inner,
 .n-table > .n-scrollbar,

@@ -123,12 +123,12 @@
 
 .n-datetimepicker__date-panel.n-datepicker-panel {
     border: none;
+    border-radius: 0;
 }
 
 .n-datetimepicker__time-panel.n-timepicker-panel {
     border: none;
-    border-left: 1px solid $color-gray-10;
-    background: rgba($color-gray-05, 0.5);
+    border-radius: 0;
 }
 
 .n-datetimepicker__empty {

@@ -7,7 +7,6 @@
     align-items: center;
     justify-content: flex-start;
     max-width: 160px;
-    border-radius: $sm-radius;
     background: $color-gray-10;
 }
 
@@ -33,6 +32,7 @@
     $-tags-item-ratio: map-get($values, 'ratio');
 
     .n-tags-item--#{$suffix} {
+        border-radius: $-tags-item-radius;
         padding: 0 $-tags-item-size * 0.3 0 $-tags-item-size * 0.3;
     }
 

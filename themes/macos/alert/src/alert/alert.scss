@@ -1,0 +1,26 @@
+@import "../../../root/vars";
+
+.n-alert-backdrop {
+    background: rgba($color-black, 0.8);
+}
+
+.n-alert {
+    background: $color-black;
+    box-shadow: 0 1px 5px 1px rgba($color-shadow, 0.20);
+}
+
+.n-alert__text {
+    color: $color-gray-40;
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+    .n-alert-frame--#{$color} .n-alert__icon {
+        color: $-color-base;
+    }
+
+}

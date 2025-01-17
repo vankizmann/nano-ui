@@ -1,0 +1,21 @@
+@import "../../../root/vars";
+
+.n-slider__bar {
+    background: $color-gray-10;
+}
+
+.n-slider__range {
+    background: $color-primary;
+}
+
+.n-slider__handle {
+    background: $color-white;
+    border: 6px solid $color-primary;
+    box-shadow: 0 0 4px rgba($color-shadow, 0.15);
+}
+
+.n-slider__handle span {
+    color: $color-white;
+    background: rgba($color-black, 0.8);
+}
+

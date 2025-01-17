@@ -1,0 +1,50 @@
+@import "../../../root/vars";
+
+.n-table-cell.n-changed:before {
+    content: '\00a0';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    display: block;
+    width: 0;
+    height: 0;
+    border: 3px solid transparent;
+    border-bottom-color: $color-danger;
+    transform: rotate(-45deg);
+}
+
+.n-table-cell--image > div {
+    background-color: $color-gray-05;
+}
+
+.n-table-cell--checkbox i {
+    background: $color-form;
+    border: 1px solid $color-gray-15;
+}
+
+.n-table-cell--checkbox.n-disabled i {
+    background:rgba($color-gray-15, 0.3);
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+    .n-draglist--#{$color} .n-table-cell--checkbox.n-checked:not(.n-disabled) i,
+    .n-draglist--#{$color} .n-table-cell--checkbox.n-checked:not(.n-uncheck) i {
+        color: $color-white;
+        background: $-color-base;
+        border-color: $-color-base;
+    }
+
+    .n-draglist--#{$color} .n-table-cell--checkbox:not(.n-disabled):hover i {
+        border-color: $-color-light;
+    }
+
+    .n-draglist--#{$color} .n-table-cell--checkbox.n-checked:not(.n-disabled):hover i {
+        background: $-color-light;
+    }
+
+}

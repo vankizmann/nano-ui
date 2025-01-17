@@ -3,6 +3,13 @@ const webpack = require("webpack");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+let themes = {
+    './src/index.scss': './nano-ui.css',
+    './docs/src/scss/index.scss': '../docs/dist/docs.css',
+    './themes/macos/index-dark.scss': './themes/dark.css',
+    './themes/macos/index-light.scss': './themes/light.css',
+}
+
 let config = {
     entry: ["./src/index.js"],
     module: {
@@ -34,14 +41,14 @@ let config = {
     plugins: []
 };
 
-let style = {
-    entry: ["./src/index.scss"],
+let themeFn = (entry, target) => ({
+    entry: [entry],
     module: {
         rules: [
             {
                 test: /\.scss$/,
                 include: [
-                    path.resolve('src')
+                    path.resolve(entry.replace(/\/[^\/]+\.scss$/, ''))
                 ],
                 use: [
                     MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'
@@ -52,56 +59,14 @@ let style = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'nano-ui.css'
+            filename: target
         })
-    ]
-};
-
-let light = {
-    entry: ["./themes/light/index.scss"],
-    module: {
-        rules: [
-            {
-                test: /\.scss$/,
-                include: [
-                    path.resolve('themes')
-                ],
-                use: [
-                    MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'
-                ]
-            }
-        ],
-
-    },
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: 'light.css'
-        })
-    ]
-};
-
-let docs = {
-    entry: ["./docs/src/scss/index.scss"],
-    module: {
-        rules: [
-            {
-                test: /\.scss$/,
-                include: [
-                    path.resolve('./docs/src')
-                ],
-                use: [
-                    MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'
-                ]
-            }
-        ],
-
-    },
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: './dist/docs.css'
-        })
-    ]
-};
+    ],
+    output: {
+        filename: ".ignore.js",
+        path: path.resolve(__dirname, "dist"),
+    }
+});
 
 module.exports = function (env, argv) {
 
@@ -130,36 +95,15 @@ module.exports = function (env, argv) {
 
     }, config);
 
-    let stylePackage = Object.assign({
+    let themeList = [];
 
-        output: {
-            filename: ".ignore.js",
-            path: path.resolve(__dirname, "dist"),
-        }
-
-    }, style);
-
-    let lightPackage = Object.assign({
-
-        output: {
-            filename: ".ignore.js",
-            path: path.resolve(__dirname, "dist/themes"),
-        }
-
-    }, light);
-
-    let docsPackage = Object.assign({
-
-        output: {
-            filename: "./dist/.ignore.js",
-            path: path.resolve(__dirname, "docs"),
-        }
-
-    }, docs);
+    Object.keys(themes).forEach((key, index) => {
+        themeList[index] = themeFn(key, themes[key]);
+    });
 
     if ( argv.mode === 'development' ) {
         return [
-            bundlerPackage, stylePackage, lightPackage, docsPackage
+            bundlerPackage, ...themeList
         ];
     }
 
@@ -168,13 +112,14 @@ module.exports = function (env, argv) {
     });
 
     bundlerPackage.plugins.push(loaderOptions);
-    stylePackage.plugins.push(loaderOptions);
-    lightPackage.plugins.push(loaderOptions);
-    docsPackage.plugins.push(loaderOptions);
+
+    themeList.forEach((cfg) => {
+        cfg.plugins.push(loaderOptions);
+    });
 
     let terserOptions = {
         mangle: true
-    }
+    };
 
     let terser = new TerserPlugin({
         terserOptions, extractComments: false,
@@ -187,11 +132,12 @@ module.exports = function (env, argv) {
     optimization.minimizer.push(terser);
 
     bundlerPackage.optimization = optimization;
-    stylePackage.optimization = optimization;
-    lightPackage.optimization = optimization;
-    docsPackage.optimization = optimization;
+
+    themeList.forEach((cfg) => {
+        cfg.optimization = optimization;
+    });
 
     return [
-        bundlerPackage, stylePackage, lightPackage, docsPackage
+        bundlerPackage, ...themeList
     ];
 }

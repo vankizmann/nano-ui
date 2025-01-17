@@ -69,9 +69,13 @@
 </div>
 
 <script>
+
     (function (nano) {
 
         'use strict';
+
+        pi.Locale.set('URL', "URL2");
+        pi.Locale.set('URX', "URX2");
 
         pi.Dom.ready(function () {
 
@@ -123,11 +127,8 @@
             });
 
             pi.Obj.set(data, 'demoConfigNext.NFormGroup:root.content.NFormItem:url', {
-                localized: [
-                    'props.label'
-                ],
                 props: {
-                    label: pi.Locale.trans('URL'),
+                    label: '\\@URX',
                     test: function() {
                         console.log(123);
                     }
@@ -146,10 +147,16 @@
                     label: pi.Locale.trans('Menu')
                 },
                 content: {
-                    'NInput': {
+                    'NSwitch': {
                         binds: {
                             modelValue: '$model.option.redirect'
-                        }
+                        },
+                        props: {
+                            "foo": "@bar"
+                        },
+                        content: [
+                            "@123"
+                        ]
                     }
                 }
             });
@@ -189,10 +196,13 @@
                                                 label: pi.Locale.trans('Menu')
                                             },
                                             content: {
-                                                'NInput:00': {
+                                                'Nswitch:00': {
                                                     model: {
                                                         path: 'option.redirect'
-                                                    }
+                                                    },
+                                                    content: [
+                                                        pi.Locale.trans("foobar")
+                                                    ]
                                                 }
                                             }
                                         }

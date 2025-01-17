@@ -66,6 +66,20 @@ export default {
 
     methods: {
 
+        getString(value)
+        {
+            let final = value.replace(/^@/, '')
+                .replace(/^\\@/, '@');
+
+
+
+            if ( value.match(/^@/) ) {
+                return this.trans(final);
+            }
+
+            return final;
+        },
+
         propAwait(value)
         {
             if ( Any.isEmpty(value) ) {
@@ -180,7 +194,7 @@ export default {
             }
 
             if ( ! value.match(/(\$scope|\$model|\$global)/) ) {
-                return value;
+                return this.getString(value);
             }
 
             let sources = {
@@ -316,7 +330,7 @@ export default {
         }
 
         if ( Any.isString(setup.content) ) {
-            render = () => setup.content;
+            render = () => this.getString(setup.content);
         }
 
         return h(component, props, { default: render });

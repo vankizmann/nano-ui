@@ -1,0 +1,30 @@
+@import "../../../root/vars";
+
+.n-textarea textarea {
+    background: $color-form;
+    border: 1px solid $color-gray-15;
+}
+
+.n-textarea.n-disabled textarea  {
+    background: rgba($color-gray-15, 0.3);
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map_get($values, 'base');
+    $-color-light: map_get($values, 'light');
+    $-color-dark: map_get($values, 'dark');
+
+    /**
+     * Button primary
+     */
+
+    .n-textarea--#{$color}:not(.n-disabled):hover textarea {
+        border-color: $-color-base;
+    }
+
+    .n-textarea--#{$color}:not(.n-disabled) textarea:focus{
+        border-color: $-color-light;
+    }
+
+}

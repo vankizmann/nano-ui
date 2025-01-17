@@ -32,6 +32,7 @@ export default {
         if ( ! Arr.has(window.ImageCache, this.src) ) {
             this.tempSrc = this.src;
         }
+
     },
 
     mounted()
@@ -51,7 +52,7 @@ export default {
 
         resolveLoad()
         {
-            if ( ! Arr.has(window.ImageCache, this.src) ) {
+            if ( Arr.has(window.ImageCache, this.src) ) {
                 return;
             }
 

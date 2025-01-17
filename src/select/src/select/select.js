@@ -750,7 +750,7 @@ export default {
     {
         let emptyHtml = (
             <div class="n-select__empty">
-                <NEmptyIcon>{this.trans(this.emptyText)}</NEmptyIcon>
+                <NEmptyIcon inline={true}>{this.trans(this.emptyText)}</NEmptyIcon>
             </div>
         );
 
