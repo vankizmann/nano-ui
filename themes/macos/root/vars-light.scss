@@ -24,7 +24,8 @@ $color-gray-85:         mix($color-foreground, $color-background, 0.85 * 100%) !
 $color-gray-90:         mix($color-foreground, $color-background, 0.90 * 100%) !default;
 $color-gray-95:         mix($color-foreground, $color-background, 0.95 * 100%) !default;
 
-$color-form:            $color-white !default;
+$color-form:            $color-gray-05 !default;
+$color-input:           $color-white !default;
 
 $color-secondary:       #ca62f0 !default;
 $color-primary:         #2F89FE !default;
@@ -167,8 +168,8 @@ $popover: (
                 'color': $color-foreground,
                 'border': $color-gray-15,
                 'header': $color-form,
-                'body': $color-form,
-                'footer': $color-form,
+                'body': $color-input,
+                'footer': $color-input,
         ),
         'negative': (
                 'color': $color-background,

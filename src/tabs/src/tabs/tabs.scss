@@ -7,6 +7,10 @@
     justify-content: stretch;
 }
 
+.n-tabs.n-float {
+    position: relative;
+}
+
 .n-tabs__header {
     position: relative;
     overflow-y: hidden;
@@ -18,7 +22,15 @@
     justify-content: flex-start;
 }
 
-.n-tabs__header:after {
+.n-tabs.n-float .n-tabs__header {
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.n-tabs:not(.n-float) .n-tabs__header:after {
     z-index: 10;
     content: '\00a0';
     position: absolute;
@@ -41,6 +53,10 @@
     transform-origin: 0 50%;
 }
 
+.n-tabs.n-float .n-tabs__indicator {
+    display: none;
+}
+
 .n-tabs__tab {
     cursor: default;
     display: flex;
@@ -59,6 +75,11 @@
     justify-content: stretch;
 }
 
+.n-tabs.n-float .n-tabs__body:not(.n-scrollbar),
+.n-tabs.n-float .n-tabs__body.n-scrollbar .n-scrollbar__wrap {
+    padding-top: 40px;
+}
+
 @each $suffix, $values in $form {
 
     $-tabs-font: map-get($values, 'font');
@@ -66,8 +87,19 @@
     $-tabs-radius: map-get($values, 'radius');
     $-tabs-ratio: map-get($values, 'ratio');
 
+    $-tabs-spacer: $-tabs-size * $-tabs-ratio;
+
     .n-tabs--#{$suffix} .n-tabs__tab {
-        padding: $-tabs-size * $-tabs-ratio;
+        padding: $-tabs-spacer;
+    }
+
+    .n-tabs--#{$suffix}.n-float .n-tabs__tab {
+        border-radius: $-tabs-radius;
+        padding: $-tabs-spacer * 0.6 $-tabs-spacer;
+    }
+
+    .n-tabs.n-float .n-tabs__tab:not(:last-child) {
+        margin-right: $-tabs-spacer * 0.6;
     }
 
 }

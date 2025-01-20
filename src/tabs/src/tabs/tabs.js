@@ -43,6 +43,14 @@ export default {
                 return 'primary';
             },
             type: [String]
+        },
+
+        float: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
         }
 
     },
@@ -196,6 +204,10 @@ export default {
             'n-tabs--' + this.size, 
             'n-tabs--' + this.type
         ];
+
+        if ( this.float ) {
+            classList.push('n-float');
+        }
 
         return (
             <div class={classList}>

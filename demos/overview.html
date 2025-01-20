@@ -804,6 +804,9 @@
             <div class="col--auto">
                 <n-select style="width: 210px;" v-model="n_tabs.type" :options="types"></n-select>
             </div>
+            <div class="col--auto">
+                <n-switch v-model="n_tabs.float">Float</n-switch>
+            </div>
         </div>
 
         <n-tabs v-model="n_tabs.value" v-bind="n_tabs">
@@ -1316,7 +1319,7 @@
             };
 
             data.n_tabs = {
-                value: 'default', size: 'md', type: 'primary'
+                value: 'default', size: 'md', type: 'primary', float: true
             };
 
             data.n_collapse = {

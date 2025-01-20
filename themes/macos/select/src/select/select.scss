@@ -1,7 +1,7 @@
 @import "../../../root/vars";
 
 .n-select {
-    background: $color-form;
+    background: $color-input;
     border: 1px solid $color-gray-15;
 }
 
@@ -21,7 +21,7 @@
 .n-select__body,
 .n-select__empty {
     border: 1px solid $color-gray-15;
-    background: $color-form;
+    background: $color-input;
     box-shadow: 0 1px 3px 1px rgba($color-shadow, 0.15);
 }
 

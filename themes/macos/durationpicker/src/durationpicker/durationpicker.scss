@@ -1,7 +1,7 @@
 @import "../../../root/vars";
 
 .n-durationpicker {
-    background: $color-form;
+    background: $color-input;
     border: 1px solid $color-gray-15;
 }
 
@@ -28,7 +28,7 @@
 
 .n-durationpicker__body,
 .n-durationpicker__empty {
-     background: $color-form;
+     background: $color-input;
      border: 1px solid $color-gray-15;
      box-shadow: 0 1px 3px 1px rgba($color-shadow, 0.15);
 }

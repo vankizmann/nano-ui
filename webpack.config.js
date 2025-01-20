@@ -8,7 +8,7 @@ let themes = {
     './docs/src/scss/index.scss': '../docs/dist/docs.css',
     './themes/macos/index-dark.scss': './themes/dark.css',
     './themes/macos/index-light.scss': './themes/light.css',
-}
+};
 
 let config = {
     entry: ["./src/index.js"],
