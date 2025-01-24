@@ -1,6 +1,6 @@
 @import "../../../root/vars";
 
-.n-tabs:not(.n-float) .n-tabs__header:after {
+.n-tabs:not(.n-float) > .n-tabs__header:after {
     border-bottom: 1px solid $color-gray-15;
 }
 

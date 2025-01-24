@@ -63,7 +63,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: stretch;
-    transition: color 0.15s;
+    transition: color 0.15s, background 0.15s;
 }
 
 .n-tabs__body {
@@ -73,11 +73,6 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
-}
-
-.n-tabs.n-float .n-tabs__body:not(.n-scrollbar),
-.n-tabs.n-float .n-tabs__body.n-scrollbar .n-scrollbar__wrap {
-    padding-top: 40px;
 }
 
 @each $suffix, $values in $form {
@@ -95,11 +90,19 @@
 
     .n-tabs--#{$suffix}.n-float .n-tabs__tab {
         border-radius: $-tabs-radius;
-        padding: $-tabs-spacer * 0.6 $-tabs-spacer;
+        height: $-tabs-font * 2.4;
+        line-height: $-tabs-font * 2.4;
+        padding: 0 $-tabs-spacer;
+        margin: $-tabs-font * 0.6;
     }
 
-    .n-tabs.n-float .n-tabs__tab:not(:last-child) {
-        margin-right: $-tabs-spacer * 0.6;
+    .n-tabs.n-float .n-tabs__tab:not(:first-child) {
+        margin-left: 0;
+    }
+
+    .n-tabs.n-float .n-tabs-item:not(.n-scrollbar),
+    .n-tabs.n-float .n-tabs-item.n-scrollbar .n-scrollbar__wrap {
+        margin-top: $-tabs-font * 2.8;
     }
 
 }
