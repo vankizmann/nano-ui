@@ -93,6 +93,7 @@ export function Install(App, Icons = {}, Styles = {})
     require('./map/index').default(App);
     require('./file/index').default(App);
     require('./rating/index').default(App);
+    require('./drawer/index').default(App);
 
     // require('./chart/index'); // Ignore
     // require('./wysiwyg/index'); // Ignore

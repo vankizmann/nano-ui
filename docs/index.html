@@ -6,37 +6,64 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="description" content="Description">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="nano.ui" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="//unpkg.com/backpack.css@2.0.0/lib/backpack.css">
     <link rel="stylesheet" href="//unpkg.com/@fortawesome/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="../dist/nano-ui.css">
-    <link rel="stylesheet" href="../dist/themes/light.css">
-    <link rel="stylesheet" href="./dist/docs.css">
+    <link rel="stylesheet" data-theme-href="../dist/themes/{theme}.css">
+    <link rel="stylesheet" data-theme-href="./dist/{theme}.css">
 </head>
 <body>
-<header>
+<header style="visibility: hidden;">
     <div class="wrapper">
         <div class="logo">
             <a href="./#/README">
-                <img src="../nano.svg" alt="nano-ui">
+                <img data-theme-src="/assets/nano-ui-{theme}.svg" alt="nano.ui">
             </a>
         </div>
-        <div class="social">
+        <div class="logo logo-alt">
+            <a href="https://pico-js.vanki.de" target="_blank">
+                <img data-theme-src="/assets/pico-js-{theme}.svg" alt="pico.js">
+            </a>
+        </div>
+        <div class="spacer">
+            <!-- SPACER -->
+        </div>
+        <div class="theme">
+            <a href="javascript:void(0)" data-theme-light>Light</a>
+        </div>
+        <div class="theme">
+            <a href="javascript:void(0)" data-theme-dark>Dark</a>
+        </div>
+        <div class="social black">
             <a href="https://www.paypal.com/paypalme/vankizmann" target="_blank">
-                <i class="fab fa-paypal"></i> Donate
+                <i class="fab fa-paypal"></i> <span>Support</span>
             </a>
         </div>
         <div class="social blue">
             <a href="https://github.com/vankizmann/nano-ui" target="_blank">
-                <i class="fab fa-github"></i> Github
+                <i class="fab fa-github"></i> <span>Github</span>
             </a>
         </div>
     </div>
 </header>
-<div id="app">
+<div id="app" style="visibility: hidden;">
     <!-- Docs -->
+</div>
+<div class="loader">
+    <span>
+        <img data-theme-src="/assets/nano-ui-dark.svg" src="" alt="nano.ui">
+    </span>
 </div>
 
 <script src="//unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -46,6 +73,46 @@
 <script src="../dist/nano-ui.js"></script>
 
 <script>
+    if ( pi.Dom.find(window).width() < 1280 ) {
+        pi.Dom.find(document.body).addClass('close');
+    }
+
+    const theme = pi.Cookie.get('theme', 'dark');
+
+    pi.Dom.find('[data-theme-' + theme + ']').addClass('active');
+
+    pi.Dom.find('[data-theme-light]').on('click', function () {
+        pi.Cookie.set('theme', 'light'); window.location.reload();
+    });
+
+    pi.Dom.find('[data-theme-dark]').on('click', function () {
+        pi.Cookie.set('theme', 'dark'); window.location.reload();
+    });
+
+    pi.Dom.find('[data-theme-src]').each(function (el) {
+        el.src = pi.Dom.find(el).attr('data-theme-src').replace('{theme}', theme);
+    });
+
+    pi.Dom.find('[data-theme-href]').each(function (el) {
+        el.href = pi.Dom.find(el).attr('data-theme-href').replace('{theme}', theme);
+    });
+
+    pi.Dom.find(document.body).live('click', '.matching-post', function () {
+        pi.Dom.find('input[type="search"]').value('').fire('input');
+    });
+
+    pi.Dom.find(document.body).live('click', '.sidebar-nav a', function () {
+        if ( pi.Dom.find(window).width() < 768 ) {
+            pi.Dom.find(document.body).addClass('close');
+        }
+    });
+
+    pi.Dom.find(document.body).on('keydown', function (e) {
+        if ( e.keyCode === 27 ) {
+            pi.Dom.find('input[type="search"]').value('').fire('input');
+        }
+    });
+
 
     var GenerateItems = function (count, loop) {
         return pi.Arr.each(pi.Arr.make(count), (index) => {
@@ -128,7 +195,7 @@
 
         hook.afterEach(function (html) {
 
-            html = html.replace(/<code>(String|Boolean|Array|Object)<\/code>/gm,
+            html = html.replace(/<code>(Mixed|Any|String|Boolean|Array|Object)<\/code>/gm,
                 '<code data-type="$1">$1</code>');
 
             return '<div id="vue-remote">' + html + '</div>';
@@ -156,11 +223,17 @@
     }
 
     let options = {
-        name: 'nano.ui', loadSidebar: true, search: 'auto',  depth: 2, subMaxLevel: 2, topMargin: 90
+        name: 'nano.ui', loadSidebar: true, search: 'auto',  depth: 1, subMaxLevel: 1, topMargin: 90
     };
 
+    let PagetitlePlugin = function(hook, vm) {
+        hook.doneEach(function() {
+            document.title += ' | nano.ui';
+        });
+    }
+
     options.plugins = [
-        DemoPlugin
+        DemoPlugin, PagetitlePlugin
     ];
 
     if ( pi.Any.isEmpty(options) ) {
@@ -169,8 +242,8 @@
 
     window.$docsify = options;
 </script>
-<script src="//unpkg.com/docsify@4.12.1/lib/docsify.min.js"></script>
-<script src="//unpkg.com/docsify@4.12.1/lib/plugins/search.min.js"></script>
-<script src="//unpkg.com/docsify@4.12.1/lib/plugins/emoji.min.js"></script>
+<script src="//unpkg.com/docsify@4.13.1/lib/docsify.min.js"></script>
+<script src="//unpkg.com/docsify@4.13.1/lib/plugins/search.min.js"></script>
+<script src="//unpkg.com/docsify@4.13.1/lib/plugins/emoji.min.js"></script>
 </body>
 </html>

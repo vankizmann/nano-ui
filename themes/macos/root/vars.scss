@@ -196,6 +196,16 @@ $modal: (
         )
 ) !default;
 
+$drawer: (
+        'default': (
+                'color': $color-foreground,
+                'border': $color-gray-10,
+                'header': mix($color-background, $color-form, 50%),
+                'body': $color-background,
+                'footer': $color-background,
+        )
+) !default;
+
 $colors-tags: (
         '0': mix($color-secondary, $color-secondary, 65%),
         '1': mix($color-primary, $color-secondary, 65%),

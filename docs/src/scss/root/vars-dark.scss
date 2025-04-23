@@ -1,0 +1,13 @@
+$color-white:           #ffffff;
+$color-black:           #111111;
+
+$color-foreground-abs:       #ffffff;
+$color-background-abs:       #000000;
+
+$color-foreground:      $color-white;
+$color-background:      $color-black;
+
+$color-form:            mix($color-white, $color-black, 5%);
+$color-input:           mix($color-white, $color-black, 5%);
+
+@import "vars";

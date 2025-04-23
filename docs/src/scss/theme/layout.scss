@@ -1,0 +1,166 @@
+@import "../root/vars";
+
+main {
+    z-index: 200;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    max-width: 1560px;
+    margin: 0 auto;
+    padding: 0;
+
+    @include media('sm') {
+        padding: 30px 40px 10px;
+    }
+}
+
+main .sidebar {
+    z-index: 200;
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    width: calc(100% - 20px);
+    background: $color-input;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    transition: max-width 0.15s ease;
+    border-radius: $lg-radius;
+    box-shadow: 0 4px 24px rgba($color-shadow, 0.1);
+
+    @include media('sm') {
+        position: relative;
+        width: 220px;
+        max-width: 220px;
+        padding: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    @include media('md') {
+        position: relative;
+        width: 260px;
+        max-width: 260px;
+        padding: 0;
+        background: transparent;
+    }
+
+    @include media('lg') {
+        width: 320px;
+        max-width: 320px;
+    }
+}
+
+body.close main .sidebar {
+    max-width: 0;
+}
+
+main .sidebar-nav {
+    width: 340px;
+    padding: 20px;
+
+    @include media('sm') {
+        padding: 0;
+    }
+}
+
+body.close main .sidebar-nav {
+    display: none !important;
+}
+
+main .sidebar-toggle {
+    z-index: 800000;
+    position: absolute;
+    top: -74px;
+    left: 20px;
+    width: 52px;
+    height: 52px;
+    border-radius: 500px;
+    background: transparent;
+
+    @include media('sm') {
+        top: -75px;
+        left: 40px;
+    }
+}
+
+main .sidebar-toggle .sidebar-toggle-button:before,
+main .sidebar-toggle .sidebar-toggle-button:after {
+    position: absolute;
+    left: calc(50% - 10px);
+    top: calc(50% - 10px);
+    display: flex;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    align-items: center;
+    justify-content: center;
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
+main .sidebar-toggle .sidebar-toggle-button:before {
+    content: '\f0c9';
+    font-size: 22px;
+    margin-left: -3px;
+    color: $color-foreground;
+}
+
+main .sidebar-toggle .sidebar-toggle-button:after {
+    content: '\f104';
+    font-size: 13px;
+    color: $color-gray-50;
+    margin-left: 14px;
+    transition: transform 0.15s ease;
+}
+
+body.close main .sidebar-toggle .sidebar-toggle-button:after {
+    transform: rotate(180deg);
+}
+
+.content {
+    overflow: hidden;
+    flex: 0 1 auto;
+    width: 100%;
+    padding: 0;
+    transition: max-width 0.15s ease;
+}
+
+.content > article {
+    position: relative;
+    padding: 30px;
+}
+
+.content > article:before {
+    z-index: -10;
+    content: '\00a0';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(180deg, rgba($color-secondary, 0.3) 0%, rgba($color-secondary, 0.05) 100%);
+
+    @include media('sm') {
+        border-radius: $lg-radius;
+    }
+}
+
+.app-name {
+    display: none;
+    order: 100;
+    width: 100%;
+    padding: 5px 0 20px;
+    text-align: center;
+}
+
+.app-name > a {
+    display: inline-block;
+    max-width: 120px;
+}
+
+.app-name > a > img {
+    width: 100%;
+}
+

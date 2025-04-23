@@ -22,7 +22,7 @@ $color-gray-90:         mix($color-black, $color-white, 0.90 * 100%) !default;
 $color-gray-95:         mix($color-black, $color-white, 0.95 * 100%) !default;
 
 $color-secondary:       #ca62f0 !default;
-$color-primary:         #6875ee !default;
+$color-primary:         #2F89FE !default;
 
 $color-success:         #06C493 !default;
 $color-warning:         #FFBF3F !default;
@@ -94,10 +94,10 @@ $color-background-dark:     darken(mix($color-black, $color-background, 10%), 5%
 $color-background-darker:   darken(mix($color-black, $color-background, 20%), 5%) !default;
 
 $xs-radius:                 2px !default;
-$sm-radius:                 2px !default;
-$md-radius:                 4px !default;
-$lg-radius:                 6px !default;
-$xl-radius:                 10px !default;
+$sm-radius:                 4px !default;
+$md-radius:                 6px !default;
+$lg-radius:                 8px !default;
+$xl-radius:                 12px !default;
 
 $form: (
     'xs': (

@@ -1,5 +1,5 @@
 # Button
-
+ 
 The `<n-button>` component is a versatile and customizable button component, providing various styling options and functionalities. Below is a detailed description of its props, methods, and usage.
 
 ## Demo
@@ -35,6 +35,9 @@ pi.Obj.assign(window.VueData, {
     </div>
     <div class="demo-display">
         <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
+            <div class="col--1-1">
+                <h3>Default</h3>
+            </div>
             <div class="col--auto">
                 <n-button v-bind="buttonBinds" type="primary">Primary</n-button>
             </div>
@@ -55,6 +58,9 @@ pi.Obj.assign(window.VueData, {
             </div>
         </div>
         <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
+            <div class="col--1-1">
+                <h3>Link</h3>
+            </div>
             <div class="col--auto">
                 <n-button v-bind="buttonBinds" :link="true" type="primary">Primary</n-button>
             </div>
@@ -75,6 +81,9 @@ pi.Obj.assign(window.VueData, {
             </div>
         </div>
         <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
+            <div class="col--1-1">
+                <h3>Square</h3>
+            </div>
             <div class="col--auto">
                 <n-button v-bind="buttonBinds" :square="true" icon="fa fa-search" type="primary">Primary</n-button>
             </div>

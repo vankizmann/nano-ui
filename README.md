@@ -1,4 +1,4 @@
-<p align="center"><img width="170" src="https://github.com/vankizmann/nano-ui/blob/master/nano.svg?raw=true" alt="nano-ui"></p>
+<p align="center"><img width="170" src="https://github.com/vankizmann/nano-ui/blob/master/assets/nano-ui-dark.svg?raw=true" alt="nano-ui"></p>
 
 <p align="center">
   <a href="https://www.npmjs.org/package/@kizmann/nano-ui">
