@@ -133,6 +133,10 @@ header .theme:not(:last-child) {
     margin-right: 15px;
 }
 
+header .theme.last {
+    margin-right: 30px;
+}
+
 header .theme a {
     color: $color-gray-50;
 }

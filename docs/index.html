@@ -42,7 +42,7 @@
         <div class="theme">
             <a href="javascript:void(0)" data-theme-light>Light</a>
         </div>
-        <div class="theme">
+        <div class="theme last">
             <a href="javascript:void(0)" data-theme-dark>Dark</a>
         </div>
         <div class="social black">
@@ -73,10 +73,6 @@
 <script src="../dist/nano-ui.js"></script>
 
 <script>
-    if ( pi.Dom.find(window).width() < 1280 ) {
-        pi.Dom.find(document.body).addClass('close');
-    }
-
     const theme = pi.Cookie.get('theme', 'dark');
 
     pi.Dom.find('[data-theme-' + theme + ']').addClass('active');
@@ -99,12 +95,6 @@
 
     pi.Dom.find(document.body).live('click', '.matching-post', function () {
         pi.Dom.find('input[type="search"]').value('').fire('input');
-    });
-
-    pi.Dom.find(document.body).live('click', '.sidebar-nav a', function () {
-        if ( pi.Dom.find(window).width() < 768 ) {
-            pi.Dom.find(document.body).addClass('close');
-        }
     });
 
     pi.Dom.find(document.body).on('keydown', function (e) {

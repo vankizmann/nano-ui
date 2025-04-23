@@ -53,20 +53,30 @@ main .sidebar {
 }
 
 body.close main .sidebar {
-    max-width: 0;
+
+    @include media('sm') {
+        max-width: 0;
+    }
 }
 
 main .sidebar-nav {
     width: 340px;
     padding: 20px;
+    display: none;
 
     @include media('sm') {
+        display: block;
         padding: 0;
     }
 }
 
+
 body.close main .sidebar-nav {
-    display: none !important;
+    display: block;
+
+    @include media('sm') {
+        display: none;
+    }
 }
 
 main .sidebar-toggle {
@@ -113,10 +123,19 @@ main .sidebar-toggle .sidebar-toggle-button:after {
     color: $color-gray-50;
     margin-left: 14px;
     transition: transform 0.15s ease;
+    transform: rotate(180deg);
+
+    @include media('sm') {
+        transform: rotate(0deg);
+    }
 }
 
 body.close main .sidebar-toggle .sidebar-toggle-button:after {
-    transform: rotate(180deg);
+    transform: rotate(0deg);
+
+    @include media('sm') {
+        transform: rotate(180deg);
+    }
 }
 
 .content {
