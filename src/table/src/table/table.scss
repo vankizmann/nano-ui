@@ -9,6 +9,21 @@
     border-radius: $md-radius + 2;
 }
 
+.n-table:before {
+    content: '\00a0';
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    z-index: 50;
+    pointer-events: none;
+    border-radius: $md-radius + 2;
+    border: 1px solid transparent;
+}
+
 .n-table .n-table__header {
     border-radius: $md-radius + 2 $md-radius + 2 0 0;
 }

@@ -30,6 +30,9 @@ pi.Obj.assign(window.VueData, {
     </div>
     <div class="demo-display">
         <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
+            <div class="col--1-1">
+                <h3>Default</h3>
+            </div>
             <div class="col--auto">
                 <n-switch :model-value="true" v-bind="switchBinds" on-type="primary">Primary</n-switch>
             </div>
@@ -50,6 +53,9 @@ pi.Obj.assign(window.VueData, {
             </div>
         </div>
         <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
+            <div class="col--1-1">
+                <h3>With custom values</h3>
+            </div>
             <div class="col--auto">
                 <n-switch v-model="switchReact.model" v-bind="switchBinds" on-value="foo" off-value="bar">Switch between to strings</n-switch>
             </div>

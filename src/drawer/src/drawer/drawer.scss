@@ -1,0 +1,135 @@
+@import "../../../root/vars";
+
+.n-drawer {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.n-drawer.n-hidden {
+    display: none;
+}
+
+.n-drawer__backdrop {
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.n-drawer:not(.n-ready) .n-drawer__backdrop {
+    opacity: 0;
+}
+
+.n-drawer__frame {
+    z-index: 20;
+    overflow: hidden;
+    position: relative;
+    flex: 0 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+    max-width: 100%;
+    min-height: 0;
+    max-height: 100%;
+    margin: auto;
+    transform: translateX(0);
+    transition: opacity 0.2s 0.1s ease-out, transform 0.2s 0.1s ease-out;
+}
+
+.n-drawer:not(.n-ready) .n-drawer__frame {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.n-drawer--right > .n-drawer__frame {
+    margin: 0 0 0 auto;
+}
+
+.n-drawer--left > .n-drawer__frame {
+    margin: 0 auto 0 0;
+}
+
+.n-drawer__header {
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.n-drawer__body {
+    overflow: hidden;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.n-drawer .n-drawer__wrap {
+    flex: 1 1 auto;
+}
+
+.n-drawer__footer {
+    flex: 0 0 auto;
+}
+
+.n-drawer__close {
+    cursor: default;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-50%);
+    opacity: 0.3;
+    transition: opacity 0.15s;
+}
+
+.n-drawer__close:hover {
+    opacity: 0.6;
+}
+
+@each $suffix, $values in $form {
+
+    $-drawer-font: map-get($values, 'font');
+    $-drawer-size: map-get($values, 'size');
+    $-drawer-radius: map-get($values, 'radius');
+    $-drawer-ratio: map-get($values, 'ratio');
+
+    .n-drawer--#{$suffix} {
+        font-size: $-drawer-font;
+    }
+
+    $-drawer-padding: $-drawer-size * $-drawer-ratio;
+
+    .n-drawer--#{$suffix} .n-drawer__header {
+        padding: $-drawer-padding * 1.5 $-drawer-padding * 2;
+    }
+
+    .n-drawer--#{$suffix}.n-closable .n-drawer__header {
+        padding-right: $-drawer-size + ($-drawer-padding * 2);
+    }
+    
+    .n-drawer--#{$suffix}:not(.n-raw) .n-drawer__wrap {
+        padding: $-drawer-padding * 1.5 $-drawer-padding * 2;
+    }
+    
+    .n-drawer--#{$suffix} .n-drawer__footer {
+        padding: $-drawer-padding * 1.5 $-drawer-padding * 2;
+    }
+
+    .n-drawer__close {
+        width: $-drawer-size;
+        height: $-drawer-size;
+        right: $-drawer-padding * 0.8;
+    }
+
+}

@@ -28,7 +28,7 @@ $color-form:            $color-gray-05 !default;
 $color-input:           $color-white !default;
 $color-input-off:       rgba($color-gray-10, 0.5) !default;
 
-$color-secondary:       #ca62f0 !default;
+$color-secondary:       #d31f9d !default;
 $color-primary:         #2F89FE !default;
 
 $color-success:         #06C493 !default;
@@ -195,6 +195,16 @@ $modal: (
                 'header': $color-black,
                 'body': $color-black,
                 'footer': $color-black,
+        )
+) !default;
+
+$drawer: (
+        'default': (
+                'color': $color-foreground,
+                'border': $color-gray-10,
+                'header': mix($color-background, $color-form, 50%),
+                'body': $color-background,
+                'footer': $color-background,
         )
 ) !default;
 

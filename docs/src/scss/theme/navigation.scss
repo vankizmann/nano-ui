@@ -1,0 +1,57 @@
+@import "../root/vars";
+
+.sidebar-nav {
+    order: 300;
+}
+
+.sidebar-nav p {
+    padding: 4px 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: $color-gray-30;
+    text-transform: uppercase;
+}
+
+.sidebar-nav ul ul {
+    padding: 4px 0;
+}
+
+.sidebar-nav > ul > li:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+.sidebar-nav a {
+    transition: color 0.2s, background 0.2s;
+}
+
+.sidebar-nav a, .sidebar-nav a:active, .sidebar-nav a:visited {
+    display: inline-block;
+    font-size: 15px;
+    color: $color-gray-80;
+    padding: 4px 8px;
+    border-radius: $md-radius;
+}
+
+.sidebar-nav ul ul ul > li > a:before {
+    content: '-';
+    color: $color-gray-20;
+    margin-right: 8px;
+}
+
+.sidebar-nav a:hover {
+    color: $color-gray-75;
+}
+
+.sidebar-nav li.active > a,
+.sidebar-nav li > a:has(+ .app-sub-sidebar),
+.sidebar-nav li > a:active:has(+ .app-sub-sidebar),
+.sidebar-nav li > a:visited:has(+ .app-sub-sidebar) {
+    color: mix($color-foreground, $color-secondary, 30%);
+    background: rgba($color-secondary, 0.1);
+}
+
+.sidebar-nav ul ul ul li.active > a,
+.sidebar-nav ul ul ul li.active > a:active,
+.sidebar-nav ul ul ul li.active > a:visited {
+    color: $color-gray-90;
+}

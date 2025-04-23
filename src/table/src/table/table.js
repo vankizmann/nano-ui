@@ -564,7 +564,7 @@ export default {
     renderBody(props)
     {
         let columns = Obj.each(this.elements, (column) => {
-            return column.ctor('renderBody')(props);
+            return column.disabled ? null : column.ctor('renderBody')(props);
         });
 
         return Obj.values(columns);
@@ -573,6 +573,11 @@ export default {
     renderContext()
     {
         let columns = Obj.each(this.elements, (column) => {
+
+            if ( column.disabled ) {
+                return null;
+            }
+
             return (
                 <NCheckbox class="n-table__checkbox" value={column.prop}>
                     {column.label}
@@ -599,7 +604,7 @@ export default {
         ];
 
         let columns = Obj.each(this.elements, (column) => {
-            return column.ctor('renderHead')();
+            return column.disabled ? null : column.ctor('renderHead')();
         });
 
         return (

@@ -96,11 +96,11 @@ export default {
 
         isDisabled()
         {
-            if ( ! Any.isFunction(this.column.disabled) ) {
-                return this.column.disabled;
+            if ( ! Any.isFunction(this.column.matrixDisabled) ) {
+                return this.column.matrixDisabled;
             }
 
-            return this.column.disabled(this);
+            return this.column.matrixDisabled(this);
         }
 
     },

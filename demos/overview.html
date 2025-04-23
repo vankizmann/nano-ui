@@ -317,24 +317,24 @@
 
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--1-1 col--1-3@md">
-                <n-input-number v-model="n_number.test" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" format=":count USD" type="primary"  :precision="2" :clearable="true"></n-input-number>
-<!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" format=":count USD" type="primary"></n-input-number>-->
+                <n-input-number v-model="n_number.test" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" format=":count USD" type="primary" :precision="2" :clearable="true"></n-input-number>
+                <!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" format=":count USD" type="primary"></n-input-number>-->
             </div>
-<!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
-<!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" format=":count €" :precision="2" :step-size="0.1" type="secondary"></n-input-number>-->
-<!--            </div>-->
-<!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
-<!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="success" :clearable="true"></n-input-number>-->
-<!--            </div>-->
-<!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
-<!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="warning"></n-input-number>-->
-<!--            </div>-->
-<!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
-<!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="danger"></n-input-number>-->
-<!--            </div>-->
-<!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
-<!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="info"></n-input-number>-->
-<!--            </div>-->
+            <!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
+            <!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" format=":count €" :precision="2" :step-size="0.1" type="secondary"></n-input-number>-->
+            <!--            </div>-->
+            <!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
+            <!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="success" :clearable="true"></n-input-number>-->
+            <!--            </div>-->
+            <!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
+            <!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="warning"></n-input-number>-->
+            <!--            </div>-->
+            <!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
+            <!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="danger"></n-input-number>-->
+            <!--            </div>-->
+            <!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
+            <!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="info"></n-input-number>-->
+            <!--            </div>-->
         </div>
 
         <h2>NTextarea</h2>
@@ -446,7 +446,7 @@
             <div class="col--1-1">
                 <n-button-group>
                     <n-input v-model="n_input.value" v-bind="n_input" type="primary"></n-input>
-                    <n-datepicker v-bind="n_datepicker" ></n-datepicker>
+                    <n-datepicker v-bind="n_datepicker"></n-datepicker>
                     <n-select v-bind="n_select" :multiple="true" type="primary" :options="icons"></n-select>
                     <n-button v-bind="n_button" type="primary">Button</n-button>
                 </n-button-group>
@@ -587,7 +587,7 @@
                 <n-datepicker-panel v-bind="n_datepicker" min-date="now" :month-panels="2" :range="true"></n-datepicker-panel>
             </div>
             <div class="col--1-1 col--1-3@md">
-                <n-datepicker v-bind="n_datepicker" ></n-datepicker>
+                <n-datepicker v-bind="n_datepicker"></n-datepicker>
             </div>
             <div class="col--1-1 col--1-3@md">
                 <n-datepicker v-bind="n_datepicker" :range="true" :month-panels="2"></n-datepicker>
@@ -616,7 +616,7 @@
                 <n-timepicker-panel v-bind="n_timepicker"></n-timepicker-panel>
             </div>
             <div class="col--1-1 col--1-3@md">
-                <n-timepicker v-bind="n_timepicker" ></n-timepicker>
+                <n-timepicker v-bind="n_timepicker"></n-timepicker>
             </div>
         </div>
 
@@ -639,7 +639,7 @@
 
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--1-1 col--1-3@md">
-                <n-datetimepicker v-bind="n_datetimepicker" ></n-datetimepicker>
+                <n-datetimepicker v-bind="n_datetimepicker"></n-datetimepicker>
             </div>
         </div>
 
@@ -662,10 +662,10 @@
 
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--1-1 col--1-3@md">
-                <n-durationpicker v-bind="n_durationpicker" ></n-durationpicker>
+                <n-durationpicker v-bind="n_durationpicker"></n-durationpicker>
             </div>
             <div class="col--1-1 col--1-3@md">
-                <n-durationpicker v-model="n_durationpicker.modelValue" v-bind="n_durationpicker" ></n-durationpicker>
+                <n-durationpicker v-model="n_durationpicker.modelValue" v-bind="n_durationpicker"></n-durationpicker>
             </div>
         </div>
 
@@ -727,6 +727,47 @@
                         Im the footer
                     </template>
                 </n-modal>
+            </div>
+        </div>
+
+        <h2>NDrawer</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_drawer.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_drawer.position" :options="drawers"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_drawer.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-button>Open drawer</n-button>
+                <n-drawer v-bind="n_drawer">
+                    <template v-slot:header>
+                        Im the header
+                    </template>
+                    <div style="height: 2100px;">
+                        <n-form>
+                            <n-form-item label="Test">
+                                <n-input placeholder="Fill me"></n-input>
+                            </n-form-item>
+                            <n-form-item label="Test">
+                                <n-input placeholder="Fill me"></n-input>
+                            </n-form-item>
+                            <n-form-item label="Test">
+                                <n-input placeholder="Fill me"></n-input>
+                            </n-form-item>
+                        </n-form>
+                    </div>
+                    <template v-slot:footer>
+                        Im the footer
+                    </template>
+                </n-drawer>
             </div>
         </div>
 
@@ -921,7 +962,9 @@
         <template v-for="index in Arr.make(n_draggable.count)">
             <n-draglist v-model:items="virtualTree" :render-expand="true" :render-select="true" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
                 <template v-slot:default="{ value, item }">
-                    <div style="padding: 0 5px; line-height: 34px;"><n-input v-model="item.label"></n-input></div>
+                    <div style="padding: 0 5px; line-height: 34px;">
+                        <n-input v-model="item.label"></n-input>
+                    </div>
                 </template>
             </n-draglist>
         </template>
@@ -930,7 +973,7 @@
 
         <n-dropzone v-model:item="virtualItem" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
             <template v-slot:default="item">
-                <div style="padding: 0 5px; line-height: 34px;">{{item.label}}</div>
+                <div style="padding: 0 5px; line-height: 34px;">{{ item.label }}</div>
             </template>
         </n-dropzone>
 
@@ -966,10 +1009,10 @@
 
         <n-table ref="table" v-model:items="virtualTree" :handle="true" :render-handle="true" :render-expand="true" :item-height="100" style="margin-top: 30px; min-height: 500px;">
             <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true">
-<!--                <template v-slot:default="{item}">{{ item.value }}</template>-->
+                <!--                <template v-slot:default="{item}">{{ item.value }}</template>-->
             </n-table-column>
             <n-table-column label="Image" type="image" prop="image" :fixed-width="130"></n-table-column>
-            <n-table-column label="Date" type="datetime" prop="date" :sort="true" :width="50" :filter="true"></n-table-column>
+            <n-table-column label="Date" type="datetime" prop="date" :disabled="true" :sort="true" :width="50" :filter="true"></n-table-column>
             <n-table-column label="Enabled 3123 asd as" type="option" prop="enabled" :sort="true" :filter="true" :options="[{ value: true, name: 'JAAAA' }, { value: false, name: 'NEEEEEJ' }]" options-value="$value.value" :width="10" options-label="$value.name"></n-table-column>
             <n-table-column label="Value" type="string" prop="value" :sort="true" :filter="true" :width="20"></n-table-column>
             <n-table-column label="ID" type="string" prop="id" :breakpoint="1300"></n-table-column>
@@ -1082,24 +1125,29 @@
             let data = {};
 
             data.sizes = {
-                xs: 'XS', 
-                sm: 'SM', 
-                md: 'MD', 
+                xs: 'XS',
+                sm: 'SM',
+                md: 'MD',
                 lg: 'LG'
             };
 
             data.types = {
-                primary:    'Primary', 
-                secondary:  'Secondary', 
-                success:    'Success', 
-                warning:    'Warning', 
-                danger:     'Danger', 
-                info:       'Info'
+                primary: 'Primary',
+                secondary: 'Secondary',
+                success: 'Success',
+                warning: 'Warning',
+                danger: 'Danger',
+                info: 'Info'
             };
 
             data.modals = {
-                default:    'Default', 
-                preview:    'Preview',
+                default: 'Default',
+                preview: 'Preview',
+            };
+
+            data.drawers = {
+                left: 'Left',
+                right: 'Right',
             };
 
             pi.Obj.set(data, 'demoConfigNext.NFormGroup:root', {
@@ -1198,13 +1246,13 @@
                     let id = pi.UUID();
 
                     return {
-                        id:     id, 
-                        value:  id,
+                        id: id,
+                        value: id,
                         matrix: 10,
-                        label:  `Item ${index++}`, 
-                        image:  'https://picsum.photos/300/300.jpg?' + id,
+                        label: `Item ${index ++}`,
+                        image: 'https://picsum.photos/300/300.jpg?' + id,
                         date: pi.Now.make('now').format('YYYY-MM-DD HH:mm:ss', true),
-                        enabled: !! Math.floor(Math.random() * 2)
+                        enabled: !!Math.floor(Math.random() * 2)
                     };
                 });
             };
@@ -1212,7 +1260,7 @@
 
             data.cascaderData = pi.Arr.each(itemGenerator(5), function (item) {
 
-                let children  = pi.Arr.each(itemGenerator(5), function (item) {
+                let children = pi.Arr.each(itemGenerator(5), function (item) {
                     return pi.Obj.assign(item, { children: itemGenerator(5) });
                 });
 
@@ -1314,6 +1362,10 @@
                 size: 'md', type: 'default', disabled: false
             };
 
+            data.n_drawer = {
+                size: 'md', position: 'right', disabled: false
+            };
+
             data.n_confirm = {
                 size: 'md', type: 'primary', disabled: false
             };
@@ -1348,7 +1400,7 @@
 
             let methods = {};
 
-            methods.changeTheme = function(value) {
+            methods.changeTheme = function (value) {
 
                 pi.Cookie.set('theme', this.n_theme = value);
 

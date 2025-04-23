@@ -94,6 +94,14 @@ export default {
             type: [Boolean, Function]
         },
 
+        matrixDisabled: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean, Function]
+        },
+
         breakpoint: {
             default()
             {

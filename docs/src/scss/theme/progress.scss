@@ -1,0 +1,9 @@
+@import "../root/vars";
+
+.progress {
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: $color-secondary;
+    height: 4px;
+}
