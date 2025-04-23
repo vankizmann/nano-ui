@@ -5,8 +5,8 @@
     border: 1px solid $color-gray-15;
 }
 
-.n-input-number.n-disabled input  {
-    background: rgba($color-gray-15, 0.3);
+.n-input-number.n-disabled  {
+    background: $color-input-off;
 }
 
 .n-input-number .n-button {

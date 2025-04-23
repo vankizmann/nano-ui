@@ -6,7 +6,7 @@
 }
 
 .n-datetimepicker.n-disabled {
-    background: rgba($color-gray-15, 0.3);
+    background: $color-input-off;
 }
 
 .n-datetimepicker__seperator {
@@ -37,19 +37,19 @@
 }
 
 .n-datetimepicker__body {
-    border: 1px solid $color-gray-15;
+    border: 1px solid $color-gray-10;
 }
 
 .n-datetimepicker__time-panel.n-timepicker-panel {
-    background: $color-gray-10;
+    background: mix($color-form, $color-background, 50%);
 }
 
-.n-datetimepicker__time-panel.n-timepicker-panel .n-timepicker-panel__header {
-    border-bottom: 1px solid $color-gray-15;
-}
-
-.n-datetimepicker__time-panel.n-timepicker-panel .n-timepicker-panel__panel:not(:last-child) {
-    border-right: 1px solid $color-gray-15;
+//.n-datetimepicker__time-panel.n-timepicker-panel .n-timepicker-panel__header {
+//    border-bottom: 1px solid $color-gray-15;
+//}
+//
+.n-datetimepicker__body .n-datetimepicker__date-panel {
+    border-right: 1px solid $color-gray-10;
 }
 
 

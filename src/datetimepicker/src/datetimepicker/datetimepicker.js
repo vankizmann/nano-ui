@@ -309,10 +309,6 @@ export default {
             'n-datetimepicker__display'
         ];
 
-        if ( this.range ) {
-            classList.push('n-range');
-        }
-
         return (
             <div class={classList}>
                 { this.ctor('renderLabelClear')() }

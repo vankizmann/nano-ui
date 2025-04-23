@@ -104,7 +104,7 @@ export default {
     data()
     {
         return {
-            uid: UUID(), elements: [], blocked: true,
+            uid: UUID(), elements: [], groups: {}, blocked: true,
         };
     },
 
@@ -129,6 +129,16 @@ export default {
     },
 
     methods: {
+
+        registerGroup(group)
+        {
+            this.groups[group.key] = group;
+        },
+
+        unregisterGroup(group)
+        {
+            delete this.groups[group.key];
+        },
 
         onSubmit(event)
         {

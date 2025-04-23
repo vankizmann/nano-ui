@@ -7,7 +7,7 @@
 }
 
 .n-checkbox.n-disabled .n-checkbox__checkbox  {
-    background: rgba($color-gray-15, 0.3);
+    background: $color-input-off;
 }
 
 @each $color, $values in $colors {

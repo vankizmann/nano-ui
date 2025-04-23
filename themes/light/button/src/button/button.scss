@@ -1,5 +1,9 @@
 @import "../../../root/vars";
 
+.n-button.n-disabled {
+    opacity: 0.7;
+}
+
 @each $color, $values in $colors {
 
     $-color-base: map_get($values, 'base');

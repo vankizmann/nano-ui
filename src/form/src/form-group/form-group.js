@@ -1,3 +1,5 @@
+import { UUID } from "@kizmann/pico-js";
+
 export default {
 
     name: 'NFormGroup',
@@ -20,6 +22,14 @@ export default {
             type: [Boolean]
         },
 
+        key: {
+            default()
+            {
+                return UUID();
+            },
+            type: [String]
+        },
+
         label: {
             default()
             {
@@ -39,6 +49,14 @@ export default {
             default()
             {
                 return '';
+            },
+            type: [String]
+        },
+
+        kind: {
+            default()
+            {
+                return 'classic';
             },
             type: [String]
         },
@@ -83,6 +101,20 @@ export default {
             type: [String]
         }
 
+    },
+
+    mounted()
+    {
+        if ( this.NForm ) {
+            this.NForm.registerGroup(this);
+        }
+    },
+
+    unmounted()
+    {
+        if ( this.NForm ) {
+            this.NForm.unregisterGroup(this);
+        }
     },
 
     data()
@@ -227,7 +259,7 @@ export default {
         }
 
         return (
-            <fieldset class={classList}>
+            <fieldset id={this.key} class={classList} data-group-key={this.key}>
                 { this.ctor('renderLabel')() }
                 { this.ctor('renderTooltip')() }
                 { this.ctor('renderBody')() }

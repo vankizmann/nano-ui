@@ -23,7 +23,7 @@
 }
 
 .n-table-cell--checkbox.n-disabled i {
-    background:rgba($color-gray-15, 0.3);
+    background: $color-input-off;
 }
 
 @each $color, $values in $colors {

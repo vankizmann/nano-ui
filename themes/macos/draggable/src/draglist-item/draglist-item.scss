@@ -22,7 +22,7 @@
 }
 
 .n-draglist-item.n-disabled .n-draglist-item__checkbox {
-    background:rgba($color-gray-15, 0.3);
+    background: $color-input-off;
 }
 
 @each $color, $values in $colors {
@@ -49,7 +49,7 @@
         border-color: $-color-base;
     }
 
-    .n-draglist--#{$color} .n-draglist-item .n-draglist-item__checkbox:hover {
+    .n-draglist--#{$color} .n-draglist-item:not(.n-disabled) .n-draglist-item__checkbox:hover {
         border-color: $-color-light;
     }
 

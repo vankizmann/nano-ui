@@ -25,6 +25,8 @@ $color-gray-90:         mix($color-foreground, $color-background, 0.90 * 100%) !
 $color-gray-95:         mix($color-foreground, $color-background, 0.95 * 100%) !default;
 
 $color-form:            $color-gray-05 !default;
+$color-input:           $color-white !default;
+$color-input-off:       rgba($color-gray-10, 0.5) !default;
 
 $color-secondary:       #ca62f0 !default;
 $color-primary:         #2F89FE !default;

@@ -1,0 +1,28 @@
+@import "../../../root/vars";
+
+.n-frame {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.n-frame-item {
+    position: relative;
+}
+
+.n-frame-item.is-resize {
+    flex: 0 0 auto;
+}
+
+.n-frame-item:not(.is-resize) {
+    flex: 1 1 auto;
+}
+
+.n-frame-item.is-scrollbar > .n-scrollbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
