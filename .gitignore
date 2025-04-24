@@ -5,3 +5,4 @@ bun.lockb
 yarn-error.log
 /.idea
 /node_modules
+/docs/index.html
