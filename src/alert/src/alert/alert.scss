@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-alert-frame {
     z-index: 999999999;
@@ -62,10 +63,10 @@
 
 @each $suffix, $values in $form {
 
-    $-alert-font: map-get($values, 'font');
-    $-alert-size: map-get($values, 'size');
-    $-alert-radius: map-get($values, 'radius');
-    $-alert-ratio: map-get($values, 'ratio');
+    $-alert-font: map.get($values, 'font');
+    $-alert-size: map.get($values, 'size');
+    $-alert-radius: map.get($values, 'radius');
+    $-alert-ratio: map.get($values, 'ratio');
 
     $-alert-padding:  $-alert-size * $-alert-ratio;
 

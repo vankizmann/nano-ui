@@ -1,4 +1,4 @@
-@import "../../../root/vars";
+@use "../../../root/vars" as *;
 
 .n-slider__bar {
     background: $color-gray-10;

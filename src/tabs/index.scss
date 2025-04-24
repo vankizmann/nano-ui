@@ -1,2 +1,2 @@
-@import "./src/tabs/tabs";
-@import "./src/tabs-item/tabs-item";
+@use "./src/tabs/tabs" as *;
+@use "./src/tabs-item/tabs-item" as *;

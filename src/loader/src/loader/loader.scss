@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-loader {
     position: relative;
@@ -51,10 +52,10 @@
 
 @each $suffix, $values in $form {
 
-    $-loader-font: map-get($values, 'font');
-    $-loader-size: map-get($values, 'size');
-    $-loader-radius: map-get($values, 'radius');
-    $-loader-ratio: map-get($values, 'ratio');
+    $-loader-font: map.get($values, 'font');
+    $-loader-size: map.get($values, 'size');
+    $-loader-radius: map.get($values, 'radius');
+    $-loader-ratio: map.get($values, 'ratio');
 
     $-loader-calc: round(($-loader-size / 1px) * ($-loader-font / 2px) * 0.085);
 

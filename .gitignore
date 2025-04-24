@@ -4,4 +4,5 @@ yarn.lock
 bun.lockb
 yarn-error.log
 /.idea
+/dist
 /node_modules

@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-tags-item {
     overflow: hidden;
@@ -26,10 +27,10 @@
 
 @each $suffix, $values in $form {
 
-    $-tags-item-font: map-get($values, 'font');
-    $-tags-item-size: map-get($values, 'size');
-    $-tags-item-radius: map-get($values, 'radius');
-    $-tags-item-ratio: map-get($values, 'ratio');
+    $-tags-item-font: map.get($values, 'font');
+    $-tags-item-size: map.get($values, 'size');
+    $-tags-item-radius: map.get($values, 'radius');
+    $-tags-item-ratio: map.get($values, 'ratio');
 
     .n-tags-item--#{$suffix} {
         border-radius: $-tags-item-radius;

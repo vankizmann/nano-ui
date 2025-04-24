@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-info {
     position: relative;
@@ -22,10 +23,10 @@
 
 @each $suffix, $values in $form {
 
-    $-info-font: map-get($values, 'font');
-    $-info-size: map-get($values, 'size');
-    $-info-radius: map-get($values, 'radius');
-    $-info-ratio: map-get($values, 'ratio');
+    $-info-font: map.get($values, 'font');
+    $-info-size: map.get($values, 'size');
+    $-info-radius: map.get($values, 'radius');
+    $-info-ratio: map.get($values, 'ratio');
 
     .n-info--#{$suffix} {
         font-size: $-info-font;

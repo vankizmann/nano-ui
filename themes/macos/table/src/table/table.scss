@@ -1,4 +1,4 @@
-@import "../../../root/vars";
+@use "../../../root/vars" as *;
 
 .n-table:before {
     border: 1px solid $color-gray-15;

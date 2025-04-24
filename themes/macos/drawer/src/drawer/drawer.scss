@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-drawer__backdrop {
     background: rgba(#000, 0.6);
@@ -10,11 +11,11 @@
 
 @each $suffix, $values in $drawer {
 
-    $-drawer-color: map-get($values, 'color');
-    $-drawer-border: map-get($values, 'border');
-    $-drawer-header: map-get($values, 'header');
-    $-drawer-body: map-get($values, 'body');
-    $-drawer-footer: map-get($values, 'footer');
+    $-drawer-color: map.get($values, 'color');
+    $-drawer-border: map.get($values, 'border');
+    $-drawer-header: map.get($values, 'header');
+    $-drawer-body: map.get($values, 'body');
+    $-drawer-footer: map.get($values, 'footer');
 
     .n-drawer--#{$suffix} .n-drawer__frame {
         color: $-drawer-color;

@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-draggrid-item {
     cursor: default;
@@ -60,10 +61,10 @@
 
 @each $suffix, $values in $form {
 
-    $-draggrid-font: map-get($values, 'font');
-    $-draggrid-size: map-get($values, 'size');
-    $-draggrid-radius: map-get($values, 'radius');
-    $-draggrid-ratio: map-get($values, 'ratio');
+    $-draggrid-font: map.get($values, 'font');
+    $-draggrid-size: map.get($values, 'size');
+    $-draggrid-radius: map.get($values, 'radius');
+    $-draggrid-ratio: map.get($values, 'ratio');
 
     .n-draggrid--#{$suffix} {
         font-size: $-draggrid-font;

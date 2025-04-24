@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-slider {
     position: relative;
@@ -59,10 +60,10 @@
 
 @each $suffix, $values in $form {
 
-    $-slider-font: map-get($values, 'font');
-    $-slider-size: map-get($values, 'size');
-    $-slider-radius: map-get($values, 'radius');
-    $-slider-ratio: map-get($values, 'ratio');
+    $-slider-font: map.get($values, 'font');
+    $-slider-size: map.get($values, 'size');
+    $-slider-radius: map.get($values, 'radius');
+    $-slider-ratio: map.get($values, 'ratio');
 
     .n-slider--#{$suffix} {
         height: 32px;

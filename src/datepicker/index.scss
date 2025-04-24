@@ -1,2 +1,2 @@
-@import "./src/datepicker-panel/datepicker-panel";
-@import "./src/datepicker/datepicker";
+@use "./src/datepicker-panel/datepicker-panel" as *;
+@use "./src/datepicker/datepicker" as *;

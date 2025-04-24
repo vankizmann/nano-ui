@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-cascader-panel {
     overflow: hidden;
@@ -19,10 +20,10 @@
 
 @each $suffix, $values in $form {
 
-    $-cascader-panel-font: map-get($values, 'font');
-    $-cascader-panel-size: map-get($values, 'size');
-    $-cascader-panel-radius: map-get($values, 'radius');
-    $-cascader-panel-ratio: map-get($values, 'ratio');
+    $-cascader-panel-font: map.get($values, 'font');
+    $-cascader-panel-size: map.get($values, 'size');
+    $-cascader-panel-radius: map.get($values, 'radius');
+    $-cascader-panel-ratio: map.get($values, 'ratio');
 
     .n-cascader-panel--#{$suffix} {
         border-radius: $-cascader-panel-radius;

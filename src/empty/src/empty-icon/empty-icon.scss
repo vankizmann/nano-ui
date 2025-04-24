@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-empty-icon {
     pointer-events: none;
@@ -42,10 +43,10 @@
 
 @each $suffix, $values in $form {
 
-    $-empty-icon-font: map-get($values, 'font');
-    $-empty-icon-size: map-get($values, 'size');
-    $-empty-icon-radius: map-get($values, 'radius');
-    $-empty-icon-ratio: map-get($values, 'ratio');
+    $-empty-icon-font: map.get($values, 'font');
+    $-empty-icon-size: map.get($values, 'size');
+    $-empty-icon-radius: map.get($values, 'radius');
+    $-empty-icon-ratio: map.get($values, 'ratio');
 
     .n-empty-icon--#{$suffix} {
         font-size: $-empty-icon-font;

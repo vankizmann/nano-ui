@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-drawer {
     position: fixed;
@@ -99,10 +100,10 @@
 
 @each $suffix, $values in $form {
 
-    $-drawer-font: map-get($values, 'font');
-    $-drawer-size: map-get($values, 'size');
-    $-drawer-radius: map-get($values, 'radius');
-    $-drawer-ratio: map-get($values, 'ratio');
+    $-drawer-font: map.get($values, 'font');
+    $-drawer-size: map.get($values, 'size');
+    $-drawer-radius: map.get($values, 'radius');
+    $-drawer-ratio: map.get($values, 'ratio');
 
     .n-drawer--#{$suffix} {
         font-size: $-drawer-font;

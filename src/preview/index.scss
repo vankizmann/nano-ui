@@ -1,4 +1,4 @@
-@import "./src/preview/preview";
-@import "./src/preview-plain/preview-plain";
-@import "./src/preview-image/preview-image";
-@import "./src/preview-video/preview-video";
+@use "./src/preview/preview" as *;
+@use "./src/preview-plain/preview-plain" as *;
+@use "./src/preview-image/preview-image" as *;
+@use "./src/preview-video/preview-video" as *;

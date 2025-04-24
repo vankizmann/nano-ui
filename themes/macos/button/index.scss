@@ -1,2 +1,2 @@
-@import "./src/button/button";
-@import "./src/button-group/button-group";
+@use "./src/button/button" as *;
+@use "./src/button-group/button-group" as *;

@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-button-group {
     display: flex;
@@ -25,10 +26,10 @@
 
 @each $suffix, $values in $form {
 
-    $-button-group-font: map-get($values, 'font');
-    $-button-group-size: map-get($values, 'size');
-    $-button-group-radius: map-get($values, 'radius');
-    $-button-group-ratio: map-get($values, 'ratio');
+    $-button-group-font: map.get($values, 'font');
+    $-button-group-size: map.get($values, 'size');
+    $-button-group-radius: map.get($values, 'radius');
+    $-button-group-ratio: map.get($values, 'ratio');
 
     .n-button-group--#{$suffix} > *:not(:first-child):last-child {
         border-radius: 0 $-button-group-radius $-button-group-radius 0;

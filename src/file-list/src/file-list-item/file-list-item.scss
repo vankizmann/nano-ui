@@ -1,4 +1,4 @@
-@import "../../../root/vars";
+@use "../../../root/vars" as *;
 
 .n-file-list-item {
     flex: 1 1 auto;

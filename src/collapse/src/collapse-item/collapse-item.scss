@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-collapse__header-icon {
     flex: 0 0 auto;
@@ -27,10 +28,10 @@
 
 @each $suffix, $values in $form {
 
-    $-collapse-font: map-get($values, 'font');
-    $-collapse-size: map-get($values, 'size');
-    $-collapse-radius: map-get($values, 'radius');
-    $-collapse-ratio: map-get($values, 'ratio');
+    $-collapse-font: map.get($values, 'font');
+    $-collapse-size: map.get($values, 'size');
+    $-collapse-radius: map.get($values, 'radius');
+    $-collapse-ratio: map.get($values, 'ratio');
 
     .n-collapse--#{$suffix} .n-collapse-item {
         margin-top: $-collapse-size * $-collapse-ratio;

@@ -1,2 +1,2 @@
-@import "./src/file-list/file-list";
-@import "./src/file-list-item/file-list-item";
+@use "./src/file-list/file-list" as *;
+@use "./src/file-list-item/file-list-item" as *;

@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-datetimepicker {
     display: flex;
@@ -137,10 +138,10 @@
 
 @each $suffix, $values in $form {
 
-    $-datepicker-font: map-get($values, 'font');
-    $-datepicker-size: map-get($values, 'size');
-    $-datepicker-radius: map-get($values, 'radius');
-    $-datepicker-ratio: map-get($values, 'ratio');
+    $-datepicker-font: map.get($values, 'font');
+    $-datepicker-size: map.get($values, 'size');
+    $-datepicker-radius: map.get($values, 'radius');
+    $-datepicker-ratio: map.get($values, 'ratio');
 
     .n-datetimepicker--#{$suffix} {
         min-height: $-datepicker-size;

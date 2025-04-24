@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-notification-frame {
     position: fixed;
@@ -81,10 +82,10 @@
 
 @each $suffix, $values in $form {
 
-    $-notification-font: map-get($values, 'font');
-    $-notification-size: map-get($values, 'size');
-    $-notification-radius: map-get($values, 'radius');
-    $-notification-ratio: map-get($values, 'ratio');
+    $-notification-font: map.get($values, 'font');
+    $-notification-size: map.get($values, 'size');
+    $-notification-radius: map.get($values, 'radius');
+    $-notification-ratio: map.get($values, 'ratio');
 
     $-notification-padding:  $-notification-size * $-notification-ratio;
 

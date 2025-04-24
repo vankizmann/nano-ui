@@ -1,5 +1,5 @@
-@import "./src/form/form";
-@import "./src/form-group/form-group";
-@import "./src/form-item/form-item";
-@import "./src/form-menu/form-menu";
-@import "./src/form-frame/form-frame";
+@use "./src/form/form" as *;
+@use "./src/form-group/form-group" as *;
+@use "./src/form-item/form-item" as *;
+@use "./src/form-menu/form-menu" as *;
+@use "./src/form-frame/form-frame" as *;

@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-textarea {
     position: relative;
@@ -30,10 +31,10 @@
 
 @each $suffix, $values in $form {
 
-    $-textarea-font: map-get($values, 'font');
-    $-textarea-size: map-get($values, 'size');
-    $-textarea-radius: map-get($values, 'radius');
-    $-textarea-ratio: map-get($values, 'ratio');
+    $-textarea-font: map.get($values, 'font');
+    $-textarea-size: map.get($values, 'size');
+    $-textarea-radius: map.get($values, 'radius');
+    $-textarea-ratio: map.get($values, 'ratio');
 
     .n-textarea--#{$suffix} {
         font-size: $-textarea-font;

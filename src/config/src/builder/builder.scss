@@ -1,3 +1,6 @@
+@use 'sass:map';
+@use "sass:color";
+
 .n-builder {
     overflow: hidden;
     border: 1px solid rgba($color-black, 0.1);
@@ -29,39 +32,39 @@
 }
 
 .n-builder__element > .n-builder__frame {
-    background: mix($color-gray-05, map-get($colors-tags, '0'), 90%);
+    background: color.mix($color-gray-05, map.get($colors-tags, '0'), 90%);
 }
 
 .n-builder__element > .n-builder__frame .n-builder__element {
-    border-left: 2px solid map-get($colors-tags, '0');
-    border-right: 2px solid map-get($colors-tags, '0');
+    border-left: 2px solid map.get($colors-tags, '0');
+    border-right: 2px solid map.get($colors-tags, '0');
 }
 
 .n-builder__element .n-builder__element > .n-builder__frame {
-    background: mix($color-gray-05, map-get($colors-tags, '1'), 90%);
+    background: color.mix($color-gray-05, map.get($colors-tags, '1'), 90%);
 }
 
 .n-builder__element .n-builder__element > .n-builder__frame .n-builder__element {
-    border-left: 2px solid map-get($colors-tags, '1');
-    border-right: 2px solid map-get($colors-tags, '1');
+    border-left: 2px solid map.get($colors-tags, '1');
+    border-right: 2px solid map.get($colors-tags, '1');
 }
 
 .n-builder__element .n-builder__element .n-builder__element > .n-builder__frame {
-    background: mix($color-gray-05, map-get($colors-tags, '2'), 90%);
+    background: color.mix($color-gray-05, map.get($colors-tags, '2'), 90%);
 }
 
 .n-builder__element .n-builder__element .n-builder__element > .n-builder__frame .n-builder__element {
-    border-left: 2px solid map-get($colors-tags, '2');
-    border-right: 2px solid map-get($colors-tags, '2');
+    border-left: 2px solid map.get($colors-tags, '2');
+    border-right: 2px solid map.get($colors-tags, '2');
 }
 
 .n-builder__element .n-builder__element .n-builder__element .n-builder__element > .n-builder__frame {
-    background: mix($color-gray-05, map-get($colors-tags, '3'), 90%);
+    background: color.mix($color-gray-05, map.get($colors-tags, '3'), 90%);
 }
 
 .n-builder__element .n-builder__element .n-builder__element .n-builder__element > .n-builder__frame .n-builder__element {
-    border-left: 2px solid map-get($colors-tags, '3');
-    border-right: 2px solid map-get($colors-tags, '3');
+    border-left: 2px solid map.get($colors-tags, '3');
+    border-right: 2px solid map.get($colors-tags, '3');
 }
 
 div:not(.n-builder__body) > .n-builder__frame {
@@ -219,7 +222,7 @@ div:not(.n-builder__body) > .n-builder__frame {
 
 .n-builder__output {
     padding: 20px;
-    color: mix($color-primary, $color-white, 50%);
+    color: color.mix($color-primary, $color-white, 50%);
     background: $color-black;
     border-radius: $md-radius;
 }

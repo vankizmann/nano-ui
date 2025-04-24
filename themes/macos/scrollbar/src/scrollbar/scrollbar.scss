@@ -1,4 +1,4 @@
-@import "../../../root/vars";
+@use "../../../root/vars" as *;
 
 .n-scrollbar-v:before,
 .n-scrollbar-h:before {

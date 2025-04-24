@@ -1,4 +1,5 @@
-@import "../root/vars";
+@use "sass:color";
+@use "../root/vars";
 
 ::selection {
     background: rgba($color-secondary, 0.15);
@@ -21,7 +22,7 @@ html, body {
 }
 
 body {
-    background: mix($color-background-abs, $color-form, 50%);
+    background: color.mix($color-background-abs, $color-form, 50%);
 }
 
 body.ready header {
@@ -104,17 +105,17 @@ hr {
 
 code {
     font-family: "JetBrains Mono", monospace;
-    color: mix($color-foreground, $color-secondary, 40%);
+    color: color.mix($color-foreground, $color-secondary, 40%);
     background: rgba($color-secondary, 0.2);
 }
 
 a, a:active, a:visited {
-    color: mix($color-foreground, $color-secondary, 40%);
+    color: color.mix($color-foreground, $color-secondary, 40%);
     text-decoration: none;
 }
 
 a:hover {
-    color: mix($color-foreground, $color-secondary, 60%);
+    color: color.mix($color-foreground, $color-secondary, 60%);
 }
 
 .hidden {

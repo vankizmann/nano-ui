@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-input-number {
     position: relative;
@@ -65,10 +66,10 @@
 
 @each $suffix, $values in $form {
 
-    $-input-number-font: map-get($values, 'font');
-    $-input-number-size: map-get($values, 'size');
-    $-input-number-radius: map-get($values, 'radius');
-    $-input-number-ratio: map-get($values, 'ratio');
+    $-input-number-font: map.get($values, 'font');
+    $-input-number-size: map.get($values, 'size');
+    $-input-number-radius: map.get($values, 'radius');
+    $-input-number-ratio: map.get($values, 'ratio');
 
     .n-input-number--#{$suffix} {
         font-size: $-input-number-font;

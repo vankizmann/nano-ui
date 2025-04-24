@@ -1,4 +1,6 @@
-@import "../../../root/vars";
+@use "sass:map";
+@use "sass:color";
+@use "../../../root/vars" as *;
 
 .n-datetimepicker {
     background: $color-input;
@@ -41,7 +43,7 @@
 }
 
 .n-datetimepicker__time-panel.n-timepicker-panel {
-    background: mix($color-form, $color-background, 50%);
+    background: color.mix($color-form, $color-background, 50%);
 }
 
 //.n-datetimepicker__time-panel.n-timepicker-panel .n-timepicker-panel__header {
@@ -55,9 +57,9 @@
 
 @each $color, $values in $colors {
 
-    $-color-base: map_get($values, 'base');
-    $-color-light: map_get($values, 'light');
-    $-color-dark: map_get($values, 'dark');
+    $-color-base: map.get($values, 'base');
+    $-color-light: map.get($values, 'light');
+    $-color-dark: map.get($values, 'dark');
 
      .n-datetimepicker--#{$color}:not(.n-disabled):hover,
      .n-datetimepicker--#{$color}:not(.n-disabled).n-focus {

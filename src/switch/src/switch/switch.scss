@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-switch {
     cursor: default;
@@ -33,10 +34,10 @@
 
 @each $suffix, $values in $form {
 
-    $-switch-font: map-get($values, 'font');
-    $-switch-size: map-get($values, 'size');
-    $-switch-radius: map-get($values, 'radius');
-    $-switch-ratio: map-get($values, 'ratio');
+    $-switch-font: map.get($values, 'font');
+    $-switch-size: map.get($values, 'size');
+    $-switch-radius: map.get($values, 'radius');
+    $-switch-ratio: map.get($values, 'ratio');
 
     .n-switch--#{$suffix} {
         min-height: $-switch-size;

@@ -1,2 +1,2 @@
-@import "./src/cascader-panel/cascader-panel";
-@import "./src/cascader/cascader";
+@use "./src/cascader-panel/cascader-panel" as *;
+@use "./src/cascader/cascader" as *;

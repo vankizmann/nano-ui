@@ -1,4 +1,5 @@
-@import "../root/vars";
+@use "sass:color";
+@use "../root/vars";
 
 table {
     width: 100%;
@@ -54,7 +55,7 @@ table tbody tr td code {
 }
 
 table tbody tr td:nth-child(1) code {
-    color: mix($color-primary, $color-foreground, 50%);
+    color: color.mix($color-primary, $color-foreground, 50%);
 }
 
 table tbody tr:not(:last-child) td {

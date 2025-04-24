@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-rating {
     overflow: hidden;
@@ -66,10 +67,10 @@
 
 @each $suffix, $values in $form {
 
-    $-rating-font: map-get($values, 'font');
-    $-rating-size: map-get($values, 'size');
-    $-rating-radius: map-get($values, 'radius');
-    $-rating-ratio: map-get($values, 'ratio');
+    $-rating-font: map.get($values, 'font');
+    $-rating-size: map.get($values, 'size');
+    $-rating-radius: map.get($values, 'radius');
+    $-rating-ratio: map.get($values, 'ratio');
 
     $-rating-star: $-rating-size * $-rating-ratio * 1.2;
 

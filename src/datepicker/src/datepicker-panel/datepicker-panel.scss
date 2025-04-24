@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-datepicker-panel {
     cursor: default;
@@ -121,10 +122,10 @@
 
 @each $suffix, $values in $form {
 
-    $-datepicker-panel-font: map-get($values, 'font');
-    $-datepicker-panel-size: map-get($values, 'size');
-    $-datepicker-panel-radius: map-get($values, 'radius');
-    $-datepicker-panel-ratio: map-get($values, 'ratio');
+    $-datepicker-panel-font: map.get($values, 'font');
+    $-datepicker-panel-size: map.get($values, 'size');
+    $-datepicker-panel-radius: map.get($values, 'radius');
+    $-datepicker-panel-ratio: map.get($values, 'ratio');
 
     .n-datepicker-panel--#{$suffix} {
         font-size: $-datepicker-panel-font;

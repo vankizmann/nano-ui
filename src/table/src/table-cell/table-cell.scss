@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-table-cell {
     position: relative;
@@ -75,10 +76,10 @@
 
 @each $suffix, $values in $form {
 
-    $-table-font: map-get($values, 'font');
-    $-table-size: map-get($values, 'size');
-    $-table-radius: map-get($values, 'radius');
-    $-table-ratio: map-get($values, 'ratio');
+    $-table-font: map.get($values, 'font');
+    $-table-size: map.get($values, 'size');
+    $-table-radius: map.get($values, 'radius');
+    $-table-ratio: map.get($values, 'ratio');
 
     .n-draglist--#{$suffix} .n-table-cell--checkbox i {
         width: $-table-size - 16;

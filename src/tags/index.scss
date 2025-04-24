@@ -1,2 +1,2 @@
-@import "./src/tags/tags";
-@import "./src/tags-item/tags-item";
+@use "./src/tags/tags" as *;
+@use "./src/tags-item/tags-item" as *;

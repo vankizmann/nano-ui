@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use "sass:map";
+@use "../../../root/vars" as *;
 
 .n-alert-backdrop {
     background: rgba(#000, 0.8);
@@ -15,9 +16,9 @@
 
 @each $color, $values in $colors {
 
-    $-color-base: map_get($values, 'base');
-    $-color-light: map_get($values, 'light');
-    $-color-dark: map_get($values, 'dark');
+    $-color-base: map.get($values, 'base');
+    $-color-light: map.get($values, 'light');
+    $-color-dark: map.get($values, 'dark');
 
     .n-alert-frame--#{$color} .n-alert__icon {
         color: $-color-base;

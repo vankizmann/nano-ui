@@ -1,4 +1,5 @@
-@import "../root/vars";
+@use "sass:color";
+@use "../root/vars";
 
 .sidebar-nav {
     order: 300;
@@ -46,7 +47,7 @@
 .sidebar-nav li > a:has(+ .app-sub-sidebar),
 .sidebar-nav li > a:active:has(+ .app-sub-sidebar),
 .sidebar-nav li > a:visited:has(+ .app-sub-sidebar) {
-    color: mix($color-foreground, $color-secondary, 30%);
+    color: color.mix($color-foreground, $color-secondary, 30%);
     background: rgba($color-secondary, 0.1);
 }
 

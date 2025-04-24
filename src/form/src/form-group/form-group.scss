@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-form-group__legend {
     cursor: default;
@@ -49,10 +50,10 @@
 
 @each $suffix, $values in $form {
 
-    $-form-group-font: map-get($values, 'font');
-    $-form-group-size: map-get($values, 'size');
-    $-form-group-radius: map-get($values, 'radius');
-    $-form-group-ratio: map-get($values, 'ratio');
+    $-form-group-font: map.get($values, 'font');
+    $-form-group-size: map.get($values, 'size');
+    $-form-group-radius: map.get($values, 'radius');
+    $-form-group-ratio: map.get($values, 'ratio');
 
     .n-form-group--#{$suffix} .n-form-group__legend {
         font-size: $-form-group-font;

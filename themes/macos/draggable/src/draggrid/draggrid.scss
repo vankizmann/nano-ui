@@ -1,10 +1,11 @@
-@import "../../../root/vars";
+@use "sass:map";
+@use "../../../root/vars" as *;
 
 @each $color, $values in $colors {
 
-    $-color-base: map_get($values, 'base');
-    $-color-light: map_get($values, 'light');
-    $-color-dark: map_get($values, 'dark');
+    $-color-base: map.get($values, 'base');
+    $-color-light: map.get($values, 'light');
+    $-color-dark: map.get($values, 'dark');
 
     .n-draggrid--#{$color}.n-empty.n-dragover {
         background: rgba($-color-base, 0.075);

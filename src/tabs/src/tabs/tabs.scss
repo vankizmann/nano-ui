@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-tabs {
     display: flex;
@@ -77,10 +78,10 @@
 
 @each $suffix, $values in $form {
 
-    $-tabs-font: map-get($values, 'font');
-    $-tabs-size: map-get($values, 'size');
-    $-tabs-radius: map-get($values, 'radius');
-    $-tabs-ratio: map-get($values, 'ratio');
+    $-tabs-font: map.get($values, 'font');
+    $-tabs-size: map.get($values, 'size');
+    $-tabs-radius: map.get($values, 'radius');
+    $-tabs-ratio: map.get($values, 'ratio');
 
     $-tabs-spacer: $-tabs-size * $-tabs-ratio;
 

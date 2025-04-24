@@ -1,3 +1,3 @@
-@import "./src/form/form";
-@import "./src/form-group/form-group";
-@import "./src/form-item/form-item";
+@use "./src/form/form" as *;
+@use "./src/form-group/form-group" as *;
+@use "./src/form-item/form-item" as *;

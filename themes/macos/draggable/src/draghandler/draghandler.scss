@@ -1,4 +1,4 @@
-@import "../../../root/vars";
+@use "../../../root/vars" as *;
 
 .n-draggable__indicator {
     border-bottom: 1px solid $color-primary;

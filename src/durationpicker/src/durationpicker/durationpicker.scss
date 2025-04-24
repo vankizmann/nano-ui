@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-durationpicker {
     display: flex;
@@ -112,10 +113,10 @@
 
 @each $suffix, $values in $form {
 
-    $-duration-font: map-get($values, 'font');
-    $-duration-size: map-get($values, 'size');
-    $-duration-radius: map-get($values, 'radius');
-    $-duration-ratio: map-get($values, 'ratio');
+    $-duration-font: map.get($values, 'font');
+    $-duration-size: map.get($values, 'size');
+    $-duration-radius: map.get($values, 'radius');
+    $-duration-ratio: map.get($values, 'ratio');
 
     .n-durationpicker--#{$suffix} {
         min-height: $-duration-size;

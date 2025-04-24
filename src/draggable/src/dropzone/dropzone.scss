@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-dropzone__empty {
     margin: auto;
@@ -6,10 +7,10 @@
 
 @each $suffix, $values in $form {
 
-    $-dropzone-font: map-get($values, 'font');
-    $-dropzone-size: map-get($values, 'size');
-    $-dropzone-radius: map-get($values, 'radius');
-    $-dropzone-ratio: map-get($values, 'ratio');
+    $-dropzone-font: map.get($values, 'font');
+    $-dropzone-size: map.get($values, 'size');
+    $-dropzone-radius: map.get($values, 'radius');
+    $-dropzone-ratio: map.get($values, 'ratio');
 
     .n-dropzone--#{$suffix} {
         font-size: $-dropzone-font;

@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-paginator {
     display: flex;
@@ -36,10 +37,10 @@
 
 @each $suffix, $values in $form {
 
-    $-paginator-font: map-get($values, 'font');
-    $-paginator-size: map-get($values, 'size');
-    $-paginator-radius: map-get($values, 'radius');
-    $-paginator-ratio: map-get($values, 'ratio');
+    $-paginator-font: map.get($values, 'font');
+    $-paginator-size: map.get($values, 'size');
+    $-paginator-radius: map.get($values, 'radius');
+    $-paginator-ratio: map.get($values, 'ratio');
 
     .n-paginator--#{$suffix} .n-paginator__count {
         font-size: $-paginator-font;

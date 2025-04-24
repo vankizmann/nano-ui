@@ -1,4 +1,4 @@
-@import "../../../root/vars";
+@use "../../../root/vars" as *;
 
 .n-resizer__handle:before {
     background: rgba($color-primary, 0.9);

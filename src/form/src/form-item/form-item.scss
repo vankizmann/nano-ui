@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-form-item {
     position: relative;
@@ -49,10 +50,10 @@
 
 @each $suffix, $values in $form {
 
-    $-form-item-font: map-get($values, 'font');
-    $-form-item-size: map-get($values, 'size');
-    $-form-item-radius: map-get($values, 'radius');
-    $-form-item-ratio: map-get($values, 'ratio');
+    $-form-item-font: map.get($values, 'font');
+    $-form-item-size: map.get($values, 'size');
+    $-form-item-radius: map.get($values, 'radius');
+    $-form-item-ratio: map.get($values, 'ratio');
 
     .n-form-item--#{$suffix} {
         margin-bottom: $-form-item-size * $-form-item-ratio * 2.2;

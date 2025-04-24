@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-timepicker {
     display: flex;
@@ -120,10 +121,10 @@
 
 @each $suffix, $values in $form {
 
-    $-timepicker-font: map-get($values, 'font');
-    $-timepicker-size: map-get($values, 'size');
-    $-timepicker-radius: map-get($values, 'radius');
-    $-timepicker-ratio: map-get($values, 'ratio');
+    $-timepicker-font: map.get($values, 'font');
+    $-timepicker-size: map.get($values, 'size');
+    $-timepicker-radius: map.get($values, 'radius');
+    $-timepicker-ratio: map.get($values, 'ratio');
 
     .n-timepicker--#{$suffix} {
         min-height: $-timepicker-size;

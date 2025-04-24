@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-radio-group {
     display: flex;
@@ -22,10 +23,10 @@
 
 @each $suffix, $values in $form {
 
-    $-radio-group-font: map-get($values, 'font');
-    $-radio-group-size: map-get($values, 'size');
-    $-radio-group-radius: map-get($values, 'radius');
-    $-radio-group-ratio: map-get($values, 'ratio');
+    $-radio-group-font: map.get($values, 'font');
+    $-radio-group-size: map.get($values, 'size');
+    $-radio-group-radius: map.get($values, 'radius');
+    $-radio-group-ratio: map.get($values, 'ratio');
 
     .n-radio-group--#{$suffix}.n-radio-group--horizontal .n-radio {
         $min-height: 0;

@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-transfer {
     display: flex;
@@ -85,10 +86,10 @@
 
 @each $suffix, $values in $form {
 
-    $-transfer-font: map-get($values, 'font');
-    $-transfer-size: map-get($values, 'size');
-    $-transfer-radius: map-get($values, 'radius');
-    $-transfer-ratio: map-get($values, 'ratio');
+    $-transfer-font: map.get($values, 'font');
+    $-transfer-size: map.get($values, 'size');
+    $-transfer-radius: map.get($values, 'radius');
+    $-transfer-ratio: map.get($values, 'ratio');
 
     .n-transfer--#{$suffix} {
         font-size: $-transfer-font;

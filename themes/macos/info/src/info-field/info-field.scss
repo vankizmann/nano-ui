@@ -1,4 +1,4 @@
-@import "../../../root/vars";
+@use "../../../root/vars" as *;
 
 .n-info-field.n-info-field--image > div {
      background-color: rgba($color-gray-50, 0.2);

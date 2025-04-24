@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-timepicker-panel {
     cursor: default;
@@ -36,10 +37,10 @@ flex: 1 0 auto;
 
 @each $suffix, $values in $form {
 
-    $-timepicker-panel-font: map-get($values, 'font');
-    $-timepicker-panel-size: map-get($values, 'size');
-    $-timepicker-panel-radius: map-get($values, 'radius');
-    $-timepicker-panel-ratio: map-get($values, 'ratio');
+    $-timepicker-panel-font: map.get($values, 'font');
+    $-timepicker-panel-size: map.get($values, 'size');
+    $-timepicker-panel-radius: map.get($values, 'radius');
+    $-timepicker-panel-ratio: map.get($values, 'ratio');
 
     .n-timepicker-panel--#{$suffix} {
         font-size: $-timepicker-panel-font;

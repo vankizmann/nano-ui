@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-cascader {
     cursor: default;
@@ -110,10 +111,10 @@
 
 @each $suffix, $values in $form {
 
-    $-cascader-font: map-get($values, 'font');
-    $-cascader-size: map-get($values, 'size');
-    $-cascader-radius: map-get($values, 'radius');
-    $-cascader-ratio: map-get($values, 'ratio');
+    $-cascader-font: map.get($values, 'font');
+    $-cascader-size: map.get($values, 'size');
+    $-cascader-radius: map.get($values, 'radius');
+    $-cascader-ratio: map.get($values, 'ratio');
 
     .n-cascader--#{$suffix} {
         min-height: $-cascader-size;

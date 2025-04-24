@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-select {
     display: flex;
@@ -131,10 +132,10 @@
 
 @each $suffix, $values in $form {
 
-    $-select-font: map-get($values, 'font');
-    $-select-size: map-get($values, 'size');
-    $-select-radius: map-get($values, 'radius');
-    $-select-ratio: map-get($values, 'ratio');
+    $-select-font: map.get($values, 'font');
+    $-select-size: map.get($values, 'size');
+    $-select-radius: map.get($values, 'radius');
+    $-select-ratio: map.get($values, 'ratio');
 
     .n-select--#{$suffix} {
         min-height: $-select-size;

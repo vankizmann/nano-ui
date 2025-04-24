@@ -1,4 +1,5 @@
-@import "../root/vars";
+@use "sass:color";
+@use "../root/vars";
 
 .markdown-section pre {
     border-radius: $lg-radius;
@@ -41,15 +42,15 @@
 }
 
 .token.property {
-    color: mix($color-foreground, $color-warning, 15%);
+    color: color.mix($color-foreground, $color-warning, 15%);
 }
 
 .token.tag {
-    color: mix($color-foreground, $color-primary, 15%);
+    color: color.mix($color-foreground, $color-primary, 15%);
 }
 
 .token.string {
-    color: mix($color-foreground, $color-info, 15%);
+    color: color.mix($color-foreground, $color-info, 15%);
 }
 
 .token.selector {
@@ -57,7 +58,7 @@
 }
 
 .token.attr-name {
-    color: mix($color-foreground, $color-success, 15%);
+    color: color.mix($color-foreground, $color-success, 15%);
 }
 
 .token.entity, .token.url, .language-css .token.string, .style .token.string {
@@ -65,19 +66,19 @@
 }
 
 .token.attr-value, .token.control, .token.directive, .token.unit {
-    color: mix($color-foreground, $color-danger, 15%);
+    color: color.mix($color-foreground, $color-danger, 15%);
 }
 
 .token.keyword, .token.function {
-    color: mix($color-foreground, $color-warning, 15%);
+    color: color.mix($color-foreground, $color-warning, 15%);
 }
 
 .token.statement, .token.regex, .token.atrule {
-    color: mix($color-foreground, $color-info, 15%);
+    color: color.mix($color-foreground, $color-info, 15%);
 }
 
 .token.placeholder, .token.variable {
-    color: mix($color-foreground, $color-info, 15%);
+    color: color.mix($color-foreground, $color-info, 15%);
 }
 
 .token.deleted {

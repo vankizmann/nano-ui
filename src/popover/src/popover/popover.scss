@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-popover {
     position: absolute;
@@ -100,10 +101,10 @@
 
 @each $suffix, $values in $form {
 
-    $-popover-font: map-get($values, 'font');
-    $-popover-size: map-get($values, 'size');
-    $-popover-radius: map-get($values, 'radius');
-    $-popover-ratio: map-get($values, 'ratio');
+    $-popover-font: map.get($values, 'font');
+    $-popover-size: map.get($values, 'size');
+    $-popover-radius: map.get($values, 'radius');
+    $-popover-ratio: map.get($values, 'ratio');
 
     .n-popover--#{$suffix} {
         font-size: $-popover-font;

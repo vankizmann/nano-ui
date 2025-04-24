@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-modal {
     position: fixed;
@@ -145,10 +146,10 @@
 
 @each $suffix, $values in $form {
 
-    $-modal-font: map-get($values, 'font');
-    $-modal-size: map-get($values, 'size');
-    $-modal-radius: map-get($values, 'radius');
-    $-modal-ratio: map-get($values, 'ratio');
+    $-modal-font: map.get($values, 'font');
+    $-modal-size: map.get($values, 'size');
+    $-modal-radius: map.get($values, 'radius');
+    $-modal-ratio: map.get($values, 'ratio');
 
     .n-modal--#{$suffix} {
         font-size: $-modal-font;

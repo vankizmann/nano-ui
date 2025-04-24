@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-checkbox {
     cursor: default;
@@ -33,10 +34,10 @@
 
 @each $suffix, $values in $form {
 
-    $-checkbox-font: map-get($values, 'font');
-    $-checkbox-size: map-get($values, 'size');
-    $-checkbox-radius: map-get($values, 'radius');
-    $-checkbox-ratio: map-get($values, 'ratio');
+    $-checkbox-font: map.get($values, 'font');
+    $-checkbox-size: map.get($values, 'size');
+    $-checkbox-radius: map.get($values, 'radius');
+    $-checkbox-ratio: map.get($values, 'ratio');
 
     .n-checkbox--#{$suffix} {
         min-height: $-checkbox-size;

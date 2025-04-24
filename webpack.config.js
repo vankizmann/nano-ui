@@ -128,7 +128,7 @@ module.exports = function (env, argv) {
 
     let libJsBundle = Object.assign({
 
-        output:{
+        output: {
             filename: "nano-ui.js",
             path: path.resolve(__dirname, "dist"),
             library: 'Nano',
@@ -139,16 +139,25 @@ module.exports = function (env, argv) {
 
     let docJsBundle = Object.assign({
 
-        output:{
+        output: {
             filename: "dist/docs.js",
             path: path.resolve(__dirname, "docs"),
         },
 
         plugins: [
+            new webpack.ProvidePlugin({
+                global: 'global'
+            }),
             new HtmlWebpackPlugin(Object.assign({
                 template: path.resolve('./docs/index.template.html'),
             }, docConfig))
-        ]
+        ],
+
+        resolve: {
+            fallback: {
+                "global": require.resolve("global")
+            }
+        }
 
     }, docJs);
 

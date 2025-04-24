@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-button {
     appearance: none;
@@ -20,10 +21,10 @@
 
 @each $suffix, $values in $form {
 
-    $-button-font: map-get($values, 'font');
-    $-button-size: map-get($values, 'size');
-    $-button-radius: map-get($values, 'radius');
-    $-button-ratio: map-get($values, 'ratio');
+    $-button-font: map.get($values, 'font');
+    $-button-size: map.get($values, 'size');
+    $-button-radius: map.get($values, 'radius');
+    $-button-ratio: map.get($values, 'ratio');
 
     .n-button--#{$suffix} {
         font-size: $-button-font;

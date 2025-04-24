@@ -1,4 +1,5 @@
-@import "../../../root/vars";
+@use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-confirm {
     overflow: hidden;
@@ -33,10 +34,10 @@
 
 @each $suffix, $values in $form {
 
-    $-confirm-font: map-get($values, 'font');
-    $-confirm-size: map-get($values, 'size');
-    $-confirm-radius: map-get($values, 'radius');
-    $-confirm-ratio: map-get($values, 'ratio');
+    $-confirm-font: map.get($values, 'font');
+    $-confirm-size: map.get($values, 'size');
+    $-confirm-radius: map.get($values, 'radius');
+    $-confirm-ratio: map.get($values, 'ratio');
 
     .n-confirm--#{$suffix} {
         font-size: $-confirm-font;

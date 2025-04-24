@@ -1,4 +1,5 @@
-@import "../root/vars";
+@use "sass:color";
+@use "../root/vars";
 
 .markdown-section h1,
 .markdown-section h2,
@@ -18,7 +19,7 @@
 }
 
 .markdown-section table code[data-type] {
-    color: mix($color-gray-90, $color-gray-40, 10%);
+    color: color.mix($color-gray-90, $color-gray-40, 10%);
 }
 
 .markdown-section table {
