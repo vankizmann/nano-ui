@@ -3,6 +3,7 @@
 yarn.lock
 bun.lockb
 yarn-error.log
-dist
 /.idea
 /node_modules
+/dist
+/docs/dist
