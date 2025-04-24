@@ -1,12 +1,18 @@
 {
     "name": "@kizmann/nano-ui",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "private": false,
     "author": "Eduard Kizmann <kizmann@protonmail.ch>",
     "repository": "https://github.com/vankizmann/nano-ui",
     "main": "src/index.js",
     "unpkg": "dist/nano-ui.js",
+    "files": [
+        "dist/",
+        "src/",
+        "themes/",
+        "package.json"
+    ],
     "scripts": {
         "build": "webpack --mode=production",
         "watch": "webpack --watch --mode=development"
