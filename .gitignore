@@ -5,5 +5,3 @@ bun.lockb
 yarn-error.log
 /.idea
 /node_modules
-/dist
-/docs/dist
