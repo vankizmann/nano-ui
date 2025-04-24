@@ -1,4 +1,4 @@
-name: Publish repo to gh-pages and tag it
+name: compile-deploy-publish
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  tag-version:
+  compile-deploy-publish:
     runs-on: ubuntu-latest
 
     steps:
