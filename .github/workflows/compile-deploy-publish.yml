@@ -57,8 +57,9 @@ jobs:
           git tag v$PACKAGE_VERSION
           git push origin v$PACKAGE_VERSION
 
+      - name: Set up .npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
       - name: Create and push tag
         if: steps.check_tag.outputs.exists == 'false'
         run: yarn publish --new-version $(node -p "require('./package.json').version") --non-interactive
-        env:
-          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
