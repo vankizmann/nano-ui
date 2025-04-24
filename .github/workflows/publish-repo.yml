@@ -1,0 +1,55 @@
+name: Publish repo to gh-pages and tag it
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tag-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build package
+        run: npm run prod
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get current version
+        id: get_version
+        run: |
+          version=$(node -p "require('./package.json').version")
+          echo "PACKAGE_VERSION=$version" >> $GITHUB_ENV
+
+      - name: Check if tag already exists
+        id: check_tag
+        run: |
+          if git rev-parse "v$PACKAGE_VERSION" >/dev/null 2>&1; then
+            echo "Tag v$PACKAGE_VERSION already exists."
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "Tag v$PACKAGE_VERSION does not exist yet."
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create and push tag
+        if: steps.check_tag.outputs.exists == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag v$PACKAGE_VERSION
+          git push origin v$PACKAGE_VERSION
