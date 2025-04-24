@@ -77,14 +77,16 @@ export const VueDemoPlugin = function (hook, vm) {
 
         let options = {
             data: function () {
-                return window.VueData;
+                return Obj.clone(window.VueData);
             }
         };
 
         // Create vue instance
         window.VueRemote = window.Vue.createApp(options);
 
-        window.VueRemote.use(NanoInstall);
+        window.VueRemote.use((app) => {
+            NanoInstall(app)
+        });
 
         window.VueRemote.mount('#main');
     });

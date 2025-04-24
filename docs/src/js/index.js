@@ -1,5 +1,5 @@
 
-import * as Vue from "vue/dist/vue.esm-browser";
+import * as Vue from "vue/dist/vue.esm-bundler";
 window.Vue = Vue;
 
 // docsify.js
