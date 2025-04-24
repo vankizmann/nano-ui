@@ -7,3 +7,4 @@ yarn-error.log
 /node_modules
 /dist
 /docs/dist
+/docs/index.html
