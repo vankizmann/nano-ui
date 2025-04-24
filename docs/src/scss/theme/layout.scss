@@ -159,7 +159,7 @@ body.close main .sidebar-toggle .sidebar-toggle-button:after {
     left: 0;
     width: 100%;
     height: 400px;
-    background: linear-gradient(180deg, rgba($color-secondary, 0.3) 0%, rgba($color-secondary, 0.05) 100%);
+    background: linear-gradient(180deg, rgba($color-secondary, 0.3) 0%, rgba($color-secondary, 0) 100%);
 
     @include media('sm') {
         border-radius: $lg-radius;

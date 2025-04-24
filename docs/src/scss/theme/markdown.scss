@@ -17,7 +17,7 @@
     white-space: pre-wrap;
 }
 
-.markdown-section code[data-type] {
+.markdown-section table code[data-type] {
     color: mix($color-gray-90, $color-gray-40, 10%);
 }
 

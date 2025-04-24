@@ -313,6 +313,7 @@
   z-index: 100;
   -webkit-user-select: none;
      -moz-user-select: none;
+      -ms-user-select: none;
           user-select: none; }
 
 .n-scrollbar-v {
@@ -360,6 +361,7 @@
   cursor: col-resize;
   -webkit-user-select: none;
      -moz-user-select: none;
+      -ms-user-select: none;
           user-select: none;
   position: absolute;
   width: 6px;
@@ -818,7 +820,8 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
   border-radius: 500px;
   border: 2px solid transparent;
   border-bottom-color: transparent !important;
-  animation: NLoading 1s linear infinite; }
+  -webkit-animation: NLoading 1s linear infinite;
+          animation: NLoading 1s linear infinite; }
 
 .n-load .n-load:before {
   display: none !important; }
@@ -835,6 +838,12 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
 
 .n-load .n-load:after {
   display: none !important; }
+
+@-webkit-keyframes NLoading {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
 
 @keyframes NLoading {
   from {
@@ -1552,6 +1561,7 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
   bottom: 0; }
 
 .n-slider__handle {
+  cursor: -webkit-grab;
   cursor: grab;
   z-index: 2;
   position: absolute;
@@ -6027,7 +6037,8 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
   border-radius: 500px;
   border: 2px solid rgba(132, 133, 136, 0.2);
   border-top-color: transparent;
-  animation: NImage 1s linear infinite; }
+  -webkit-animation: NImage 1s linear infinite;
+          animation: NImage 1s linear infinite; }
 
 .n-preview-image.n-ready:after {
   opacity: 0;
@@ -6047,6 +6058,12 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
 
 .n-preview-image:not(.n-ready):not(.n-cached) img {
   opacity: 0; }
+
+@-webkit-keyframes NImage {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
 
 @keyframes NImage {
   from {
@@ -6495,6 +6512,7 @@ div:not(.n-builder__body) > .n-builder__frame {
   cursor: default;
   -webkit-user-select: none;
      -moz-user-select: none;
+      -ms-user-select: none;
           user-select: none;
   flex: 0 0 auto;
   display: inline-flex;
