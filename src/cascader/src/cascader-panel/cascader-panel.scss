@@ -1,0 +1,33 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-cascader-panel {
+    overflow: hidden;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    border: 1px solid transparent;
+}
+
+.n-cascader-panel__items {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+@each $suffix, $values in $form {
+
+    $-cascader-panel-font: map.get($values, 'font');
+    $-cascader-panel-size: map.get($values, 'size');
+    $-cascader-panel-radius: map.get($values, 'radius');
+    $-cascader-panel-ratio: map.get($values, 'ratio');
+
+    .n-cascader-panel--#{$suffix} {
+        border-radius: $-cascader-panel-radius;
+        font-size: $-cascader-panel-font;
+    }
+
+}

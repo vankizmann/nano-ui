@@ -1,0 +1,74 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-confirm {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 420px;
+}
+
+.n-confirm__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.n-confirm__body {
+    width: 100%;
+    text-align: center;
+}
+
+.n-confirm__actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.n-confirm__actions.n-reverse {
+    flex-direction: row-reverse;
+}
+
+@each $suffix, $values in $form {
+
+    $-confirm-font: map.get($values, 'font');
+    $-confirm-size: map.get($values, 'size');
+    $-confirm-radius: map.get($values, 'radius');
+    $-confirm-ratio: map.get($values, 'ratio');
+
+    .n-confirm--#{$suffix} {
+        font-size: $-confirm-font;
+        border-radius: $-confirm-radius + 2;
+    }
+
+    $-confirm-padding: $-confirm-size * $-confirm-ratio;
+
+    .n-confirm--#{$suffix} .n-confirm__icon {
+        font-size: $-confirm-font + 4;
+        padding: $-confirm-padding * 1.2 $-confirm-padding * 2;
+    }
+
+    .n-confirm--#{$suffix} .n-confirm__body {
+        padding: 0 $-confirm-padding * 2;
+    }
+    
+    .n-confirm--#{$suffix} .n-confirm__action {
+        padding: $-confirm-padding * 1.2 $-confirm-padding * 2;
+    }
+
+    .n-confirm--#{$suffix} .n-confirm__action > button {
+        margin: 0 $-confirm-padding;
+    }
+
+    .n-confirm--#{$suffix} .n-confirm__action > button:first-child {
+        margin-left: 0;
+    }
+
+    .n-confirm--#{$suffix} .n-confirm__action > button:last-child {
+        margin-right: 0;
+    }
+
+}

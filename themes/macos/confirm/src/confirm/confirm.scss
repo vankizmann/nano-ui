@@ -1,0 +1,14 @@
+@use "sass:map";
+@import "../../../root/vars";
+
+@each $color, $values in $colors {
+
+    $-color-base: map.get($values, 'base');
+    $-color-light: map.get($values, 'light');
+    $-color-dark: map.get($values, 'dark');
+
+    .n-confirm--#{$color} .n-confirm__icon {
+        color: $-color-base;
+    }
+
+}

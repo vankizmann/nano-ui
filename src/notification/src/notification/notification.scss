@@ -1,0 +1,103 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-notification-frame {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+}
+
+.n-notification-frame.n-notification-frame--top-start {
+    top: 0;
+    left: 0;
+}
+
+.n-notification-frame.n-notification-frame--top-center {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.n-notification-frame.n-notification-frame--top-end {
+    top: 0;
+    right: 0;
+}
+
+.n-notification-frame.n-notification-frame--bottom-start {
+    bottom: 0;
+    left: 0;
+}
+
+.n-notification-frame.n-notification-frame--bottom-center {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.n-notification-frame.n-notification-frame--bottom-end {
+    bottom: 0;
+    right: 0;
+}
+
+.n-notification-frame.n-notification-frame--bottom-start,
+.n-notification-frame.n-notification-frame--bottom-center,
+.n-notification-frame.n-notification-frame--bottom-end {
+    flex-direction: column-reverse;
+}
+
+.n-notification {
+    cursor: default;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 280px;
+    margin: 5px;
+    transition: transform 0.15s;
+}
+
+.n-notification-frame.n-notification-frame--top-start .n-notification:not(.n-active),
+.n-notification-frame.n-notification-frame--bottom-start .n-notification:not(.n-active) {
+    transform: translateX(-150%);
+}
+.n-notification-frame.n-notification-frame--top-end .n-notification:not(.n-active),
+.n-notification-frame.n-notification-frame--bottom-end .n-notification:not(.n-active) {
+    transform: translateX(150%);
+}
+
+.n-notification__icon {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.n-notification__text {
+    overflow: hidden;
+    flex: 1 1 auto;
+    line-height: 1.2;
+    overflow-wrap: break-word;
+}
+
+@each $suffix, $values in $form {
+
+    $-notification-font: map.get($values, 'font');
+    $-notification-size: map.get($values, 'size');
+    $-notification-radius: map.get($values, 'radius');
+    $-notification-ratio: map.get($values, 'ratio');
+
+    $-notification-padding:  $-notification-size * $-notification-ratio;
+
+    .n-notification-frame--#{$suffix} .n-notification {
+        font-size: $-notification-font;
+        padding: $-notification-padding $-notification-padding;
+        border-radius: $-notification-radius;
+    }
+
+    .n-notification-frame--#{$suffix} .n-notification .n-notification__icon {
+        font-size: $-notification-font + 2;
+        margin-right: $-notification-padding;
+    }
+
+}

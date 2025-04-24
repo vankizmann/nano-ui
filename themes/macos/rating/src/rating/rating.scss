@@ -1,0 +1,19 @@
+@use "sass:map";
+@import "../../../root/vars";
+
+.n-rating__stars span:before,
+.n-rating__stars span:after {
+    background-image: svg-load('star-default.svg', fill=$color-gray-10);
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map.get($values, 'base');
+    $-color-light: map.get($values, 'light');
+    $-color-dark: map.get($values, 'dark');
+
+    .n-rating--#{$color} .n-rating__stars span:before {
+        background-image: svg-load('star-default.svg', fill=$-color-base);
+    }
+
+}

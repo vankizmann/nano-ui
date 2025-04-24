@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../dist/nano-ui.css">
+    <link id="theme" rel="stylesheet" href="../dist/themes/light.css">
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.5/vue.global.prod.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://unpkg.com/vue@3.4.6"></script>
+    <!-- <script src="../node_modules/pico-js/dist/pico-js.js"></script> -->
+    <script src="https://vankizmann.github.io/pico-js/dist/pico-js.js"></script>
+    <script src="../dist/nano-ui.js"></script>
+
+    <link rel="stylesheet" href="../docs/dist/index.css">
+
+    <style>
+
+        body {
+            font-family: 'Helvetica', 'Roboto', 'Arial', sans-serif;
+            font-size: 14px;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        #app {
+            overflow-x: hidden;
+        }
+
+        .app-scrollbar {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .app-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 20px 30px 40px 30px;
+        }
+
+        .app-options {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: bold;
+            padding-bottom: 10px;
+            margin: 50px 0 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div id="app">
+    <div class="app-container">
+        
+        <h2>NVirtualscroller</h2>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--auto">
+                <n-button type="primary" @click="virtualTree = virtualData">
+                    Swap items
+                </n-button>
+            </div>
+            <div class="col--auto">
+                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(0)">
+                    Scroll to first item
+                </n-button>
+            </div>
+            <div class="col--auto">
+                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(2000)">
+                    Scroll to item 2000
+                </n-button>
+            </div>
+            <div class="col--auto">
+                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(7100)">
+                    Scroll to item 7100
+                </n-button>
+            </div>
+            <div class="col--auto">
+                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(-1)">
+                    Scroll to last item
+                </n-button>
+            </div>
+        </div>
+
+        <n-virtualscroller ref="virtualscroller" :items="virtualData" style="height: 500px; margin-top: 30px; box-shadow: 0 0 2px 2px #dddedf; border-radius: 4px;">
+            <template v-slot:default="{ value }">
+                <div style="padding: 0 15px; line-height: 30px;">{{ value.label }}</div>
+            </template>
+        </n-virtualscroller>
+
+        <n-draglist v-model:items="virtualTree" unique-prop="uid" :render-select="true" :render-expand="true" style="height: 300px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
+            <template v-slot:default="{ value, item }">
+                <div style="padding: 0 15px; line-height: 34px;">{{ item.label }}</div>
+            </template>
+        </n-draglist>
+
+        <n-table ref="table" v-model:items="virtualTree" unique-prop="uid" :render-expand="true" :item-height="36" style="margin-top: 30px; min-height: 500px;">
+            <n-table-column label="Label" type="string" prop="label"></n-table-column>
+            <n-table-column v-model="treeSelect" label="Matrix 1" type="select" :matrix="1" :width="120">
+                <template v-slot:default>Text wohoo</template>
+            </n-table-column>
+            <n-table-column v-model="treeMatrix" label="Matrix 2" type="matrix" :matrix="2" align="center" :fixed-width="120"></n-table-column>
+            <n-table-column v-model="treeMatrix" label="Matrix 4" type="matrix" :matrix="4" align="center" :fixed-width="120"></n-table-column>
+            <n-table-column v-model="treeMatrix" label="Matrix 8" type="matrix" :matrix="8" align="center" :fixed-width="120"></n-table-column>
+            <n-table-column v-model="treeMatrix" label="Matrix 16" type="matrix" :matrix="16" align="center" :fixed-width="120"></n-table-column>
+        </n-table>
+
+    </div>
+</div>
+
+<script>
+    (function (nano) {
+
+        'use strict';
+
+        pi.Dom.ready(function () {
+
+            let data = {};
+
+            data.sizes = {
+                xs: 'XS',
+                sm: 'SM',
+                md: 'MD',
+                lg: 'LG'
+            };
+
+            data.types = {
+                primary:    'Primary',
+                secondary:  'Secondary',
+                success:    'Success',
+                warning:    'Warning',
+                danger:     'Danger',
+                info:       'Info'
+            };
+
+            data.modals = {
+                default:    'Default',
+                preview:    'Preview',
+            };
+
+            data.demoConfig = {
+                'div': {
+                    class: [
+                        'foobar'
+                    ],
+                    content: {
+                        'NInput:page_id': {
+                            model: {
+                                path: 'page_id'
+                            }
+                        },
+                        'NInput:page_id2': {
+                            model: {
+                                path: 'page_id'
+                            }
+                        }
+                    }
+                }
+            };
+
+            data.configData = {};
+
+            data.testData = [];
+
+            let itemGenerator = function (count = 100, index = 0) {
+                return pi.Arr.each(pi.Arr.make(count), function (value) {
+
+                    let id = pi.UUID();
+
+                    return {
+                        uid:    id,
+                        value:  id,
+                        matrix: 10,
+                        label:  `Item ${index++}`,
+                        image:  'https://picsum.photos/400/400?' + id,
+                        date: pi.Now.make().format('YYYY-MM-DD HH:mm:ss', true),
+                        enabled: !! Math.floor(Math.random() * 2)
+                    };
+                });
+            };
+
+
+            data.cascaderData = pi.Arr.each(itemGenerator(5), function (item) {
+
+                let children  = pi.Arr.each(itemGenerator(5), function (item) {
+                    return pi.Obj.assign(item, { children: itemGenerator(5) });
+                });
+
+                return pi.Obj.assign(item, { children: children });
+            });
+
+            data.virtualData = itemGenerator(10000);
+
+            data.virtualTree = pi.Arr.each(itemGenerator(1000), function (item) {
+                return pi.Obj.assign(item, { children: itemGenerator(20) });
+            });
+
+            data.treeSelect = null;
+            data.treeMatrix = [data.virtualTree[3]];
+
+            data.n_button = {
+                icon: 'fa fa-ghost', size: 'md', square: false, link: false, disabled: false
+            };
+
+            data.n_textarea = {
+                size: 'md', placeholder: 'Placeholder', autoRows: false, disabled: false
+            };
+
+            data.n_input = {
+                value: 'Demo', icon: 'fa fa-ghost', size: 'md', placeholder: 'Placeholder', disabled: false
+            };
+
+            data.n_number = {
+                value: 3, size: 'md', placeholder: '', disabled: false
+            };
+
+            data.n_select = {
+                size: 'md', allowCreate: false, clearable: true, disabled: false
+            };
+
+            data.n_cascader = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_checkbox = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_radio = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_switch = {
+                size: 'md', disabled: false
+            };
+
+            data.n_datepicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_timepicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_transfer = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_modal = {
+                size: 'md', type: 'default', disabled: false
+            };
+
+            data.n_confirm = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_tabs = {
+                value: 'default', size: 'md', type: 'primary'
+            };
+
+            data.n_paginator = {
+                size: 'md', type: 'primary'
+            };
+
+            data.n_draggable = {
+                count: 0
+            };
+
+            data.n_loader = {
+                size: 'md', type: 'primary', visible: true
+            };
+
+            let methods = {};
+
+            methods.log = function (val) {
+                console.log(val || 'Log fired');
+            };
+
+            methods.notify = function (type) {
+                this.Notify('Lorem ipsum dolore', type);
+            };
+
+            var config = {
+                data: function () {
+
+                    this.icons = pi.Obj.assign(nano.Icons, {
+                        ghost: 'fa fa-ghost'
+                    });
+
+                    data.demoIcons = pi.Arr.reduce(pi.Obj.values(nano.Icons), function (merge, icon) {
+                        return pi.Obj.assign(merge, { [icon]: icon });
+                    }, {});
+
+                    return data;
+                },
+                methods: methods
+            };
+
+            window.App = Vue.createApp(config);
+
+            window.App.config.devtools = true;
+
+            window.App.use(function (App) {
+                nano.Install(App);
+            });
+
+            window.App.mount('#app');
+            window.DEBUG_NDLIST = true;
+        });
+
+    })(window.nano);
+</script>
+</body>
+</html>

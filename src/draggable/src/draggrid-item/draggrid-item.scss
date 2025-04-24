@@ -1,0 +1,92 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-draggrid-item {
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 100%;
+}
+
+.n-draggrid-item.n-nodrop > * > * {
+    pointer-events: none;
+}
+
+.n-draggrid-item.n-nodrop {
+    background: rgba($color-danger, 0.1);
+}
+
+.n-draggrid-item__element {
+    position: relative;
+    flex: 1 1 auto;
+}
+
+.n-draggrid-item__handle {
+    cursor: move;
+}
+
+.n-draggrid-item__handle,
+.n-draggrid-item__select {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+}
+
+.n-draggrid-item__ellipsis,
+.n-draggrid-item__checkbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.n-draggrid-item__checkbox {
+    border: 1px solid transparent;
+}
+
+.n-draggrid-item.n-disabled .n-draggrid-item__checkbox {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.n-draggrid-item:not(.n-selected) .n-draggrid-item__checkbox i {
+    display: none;
+}
+
+@each $suffix, $values in $form {
+
+    $-draggrid-font: map.get($values, 'font');
+    $-draggrid-size: map.get($values, 'size');
+    $-draggrid-radius: map.get($values, 'radius');
+    $-draggrid-ratio: map.get($values, 'ratio');
+
+    .n-draggrid--#{$suffix} {
+        font-size: $-draggrid-font;
+    }
+
+    .n-draggrid--#{$suffix} .n-draggrid__empty {
+        padding: $-draggrid-size $-draggrid-size * 0.5;
+    }
+
+    .n-draggrid--#{$suffix} .n-draggrid-item__ellipsis,
+    .n-draggrid--#{$suffix} .n-draggrid-item__checkbox {
+        width: $-draggrid-size - 16;
+        height: $-draggrid-size - 16;
+        border-radius: $-draggrid-radius - 1;
+    }
+
+    .n-draggrid--#{$suffix} .n-draggrid-item__ellipsis {
+        font-size: $-draggrid-font - 2;
+    }
+
+    .n-draggrid--#{$suffix} .n-draggrid-item__checkbox {
+        font-size: $-draggrid-font - 4;
+    }
+
+}

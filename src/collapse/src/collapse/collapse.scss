@@ -1,0 +1,52 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-collapse {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.n-collapse__header {
+    cursor: default;
+    position: relative;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+}
+
+.n-collapse__body {
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+@each $suffix, $values in $form {
+
+    $-collapse-font: map.get($values, 'font');
+    $-collapse-size: map.get($values, 'size');
+    $-collapse-radius: map.get($values, 'radius');
+    $-collapse-ratio: map.get($values, 'ratio');
+
+    .n-collapse--#{$suffix} {
+        border-radius: $-collapse-radius;
+    }
+
+    $-collapse-padding: $-collapse-size * $-collapse-ratio;
+
+    .n-collapse--#{$suffix} .n-collapse__header {
+        padding: $-collapse-padding * 0.8 $-collapse-padding * 1.2;
+    }
+
+    .n-collapse--#{$suffix} .n-collapse__body > .n-scrollbar-content {
+        padding: $-collapse-padding * 1.2;
+    }
+
+}

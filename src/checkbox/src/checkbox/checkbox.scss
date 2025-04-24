@@ -1,0 +1,64 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-checkbox {
+    cursor: default;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: stretch;
+}
+
+.n-checkbox.n-disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.n-checkbox__checkbox {
+    flex: 0 0 auto;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+}
+
+.n-checkbox__checkbox i {
+    opacity: 0;
+}
+
+.n-checkbox.n-checked .n-checkbox__checkbox i,
+.n-checkbox.n-intermediate .n-checkbox__checkbox i {
+    opacity: 1;
+}
+
+@each $suffix, $values in $form {
+
+    $-checkbox-font: map.get($values, 'font');
+    $-checkbox-size: map.get($values, 'size');
+    $-checkbox-radius: map.get($values, 'radius');
+    $-checkbox-ratio: map.get($values, 'ratio');
+
+    .n-checkbox--#{$suffix} {
+        min-height: $-checkbox-size;
+        font-size: $-checkbox-font;
+    }
+
+    .n-checkbox--#{$suffix} .n-checkbox__checkbox {
+        font-size: $-checkbox-font - 3;
+        width: $-checkbox-size - 14;
+        height: $-checkbox-size - 14;
+        border-radius: $-checkbox-radius - 1;
+    }
+
+    .n-checkbox--#{$suffix} .n-checkbox__checkbox i {
+
+    }
+
+    $-checkbox-padding: $-checkbox-size * $-checkbox-ratio;
+
+    .n-checkbox--#{$suffix} .n-checkbox__label {
+        padding: 0 0 0 $-checkbox-padding * 0.5;
+    }
+
+}

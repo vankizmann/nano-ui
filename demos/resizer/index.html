@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI Resizer</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../../dist/nano-ui.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+    <script src="https://vankizmann.github.io/@kizmann/pico-js/dist/@kizmann/pico-js.js"></script>
+    <script src="../../dist/nano-ui.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+
+    <div style="border: 2px solid #000; display: inline-block; overflow: hidden;">
+        <div style="position: relative; width: 600px; height: 30vw; max-width: 100%; overflow: auto;">
+            <n-resizer :width="600" :min-width="300" :max-width="800">
+                <div style="width: 600px;">
+                    <div style="margin-left: auto; height: 400px; width: 400px; background: lightcoral;">
+                        <!-- SPACER -->
+                    </div>
+                    <div style="margin-left: auto; height: 200px; width: 200px; background: lightblue;">
+                        <!-- SPACER -->
+                    </div>
+                    <div style="margin-left: auto; height: 300px; width: 300px; background: lightseagreen;">
+                        <!-- SPACER -->
+                    </div>
+                    <div style="margin-left: auto; height: 400px; width: 400px; background: lightcoral;">
+                        <!-- SPACER -->
+                    </div>
+                    <div style="margin-left: auto; height: 200px; width: 200px; background: lightblue;">
+                        <!-- SPACER -->
+                    </div>
+                    <div style="margin-left: auto; height: 300px; width: 300px; background: lightseagreen;">
+                        <!-- SPACER -->
+                    </div>
+                    <div style="margin-left: auto; height: 400px; width: 400px; background: lightcoral;">
+                        <!-- SPACER -->
+                    </div>
+                    <div style="margin-left: auto; height: 200px; width: 200px; background: lightblue;">
+                        <!-- SPACER -->
+                    </div>
+                    <div style="margin-left: auto; height: 300px; width: 300px; background: lightseagreen;">
+                        <!-- SPACER -->
+                    </div>
+                </div>
+            </n-resizer>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    (function (Nano) {
+
+        'use strict';
+
+        pi.Dom.ready(function () {
+
+            Vue.config.devtools = true;
+
+            var config = {
+                data: function () {
+
+                    let total = 0;
+
+                    let childGenerator = function (count) {
+
+                        if ( count === undefined ) {
+                            count = 300;
+                        }
+
+                        let children = Array(count).fill(null);
+
+                        pi.Arr.map(children, function (item) {
+
+                            total ++;
+
+                            item = {
+                                label: 'Item ' + total, id: 'id-' + total
+                            };
+
+                            return item;
+                        });
+
+                        return children;
+                    };
+
+                    return { items: childGenerator(80), items2: [] };
+                }
+            };
+
+            window.App = new Vue(config).$mount('#app');
+        });
+    })(window.Nano);
+</script>
+</body>
+</html>

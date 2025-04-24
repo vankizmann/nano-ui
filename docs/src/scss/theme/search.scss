@@ -1,0 +1,119 @@
+@import "../root/vars";
+@import "../mixins/media";
+
+.search {
+    z-index: 10900;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    display: none;
+    transform: translateX(-50%);
+    order: 200;
+    border: none !important;
+    padding: 5px !important;
+
+    @include media('sm') {
+        display: block;
+    }
+}
+
+.search .input-wrap {
+    position: relative;
+    border-radius: 500px;
+    background: $color-input;
+    border: 1px solid $color-gray-10;
+    box-shadow: 0 0 20px rgba(mix($color-background-abs, $color-form, 50%), 0.7);
+}
+
+.search .input-wrap:before {
+    content: '\f002';
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    font-family: "Font Awesome 6 Free";
+    font-size: 16px;
+    font-weight: 900;
+    transform: translateY(-50%);
+}
+
+.search .clear-button {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.search .clear-button:before {
+    content: '\f00d';
+    font-family: "Font Awesome 6 Free";
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.search .clear-button svg {
+    display: none;
+}
+
+.search .input-wrap input {
+    color: $color-foreground;
+    height: 52px;
+    line-height: 52px;
+    padding: 0 42px 0 42px;
+}
+
+.search .input-wrap input,
+.search .input-wrap input:focus {
+    appearance: none;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.search .input-wrap input:not(:focus) + .results-panel.show {
+    display: none;
+}
+
+.search .results-panel {
+    z-index: 9999999;
+    overflow: auto;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 200%;
+    max-width: calc(100vw - 40px);
+    max-height: calc(100vh - 260px);
+    padding: 20px;
+    border-radius: $lg-radius;
+    background: $color-input;
+    border: 1px solid rgba($color-foreground, 0.1);
+    box-shadow: 0 1px 24px rgba($color-shadow, 0.15);
+    transform: translateX(-50%);
+}
+
+.search .matching-post:not(:last-child) {
+    border-bottom: 1px solid $color-gray-10;
+    margin-bottom: 8px;
+    padding-bottom: 3px;
+}
+
+.search .matching-post:last-child {
+    border-bottom: none;
+}
+
+.search .matching-post > *:not(a) {
+    display: none;
+}
+
+.search .matching-post h2 {
+    color: $color-foreground;
+    font-size: 16px;
+    margin: 0 0 5px 0 !important;
+}
+
+.search .matching-post > p,
+.search .matching-post > a > p {
+    color: $color-gray-30;
+    font-size: 12px;
+    margin-bottom: 5px;
+    //display: none !important;
+}

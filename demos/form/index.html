@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI Form</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../../dist/nano-ui.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <script src="https://vankizmann.github.io/@kizmann/pico-js/dist/@kizmann/pico-js.js"></script>
+    <script src="../../dist/nano-ui.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <n-form :form="form" :errors="errors" :class="{ 'n-inverse': inverse }">
+
+        <n-form-item label="Inverse">
+            <n-checkbox v-model="inverse">Inverse</n-checkbox>
+        </n-form-item>
+
+        <n-form-group icon="fa fa-key" legend="With legend" :checkable="true">
+
+            <n-form-item label="Default">
+                <n-input v-model="form.name" />
+            </n-form-item>
+
+        </n-form-group>
+
+        <n-form-group align="horizontal" legend="With legend" tooltip="Im a legend tooltip">
+
+            <n-form-item label="Default">
+                <n-input v-model="form.name" />
+            </n-form-item>
+
+        </n-form-group>
+
+        <n-form-item label="With tooltip" tooltip="Im a label tooltip">
+            <n-input v-model="form.name" />
+        </n-form-item>
+
+        <n-form-item prop="name" label="Error">
+            <n-textarea v-model="form.name" :auto-rows="true" />
+        </n-form-item>
+
+    </n-form>
+</div>
+
+<script>
+    pi.Dom.ready(() => {
+
+        Vue.config.devtools = true;
+
+        var config = {
+
+            data: function() {
+
+                var form = {
+                    name: '',
+                    password: ''
+                };
+
+                var errors = {
+                    name: 'My custom error'
+                };
+
+                return {
+                    form: form, errors: errors, inverse: false
+                };
+            }
+        };
+
+        window.App = new Vue(config).$mount('#app');
+    })
+</script>
+</body>
+</html>

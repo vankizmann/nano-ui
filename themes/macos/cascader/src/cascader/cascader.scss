@@ -1,0 +1,47 @@
+@use "sass:map";
+@import "../../../root/vars";
+
+.n-cascader {
+    background: $color-input;
+    border: 1px solid $color-gray-15;
+}
+
+.n-cascader.n-disabled {
+    background: $color-input-off;
+}
+
+.n-cascader__clear,
+.n-cascader__angle {
+    color: $color-gray-60;
+}
+
+.n-cascader__clear i {
+    background: rgba($color-gray-15, 0.6);
+}
+
+.n-cascader__placeholder {
+    color: rgba($color-foreground, 0.5);
+}
+
+.n-cascader__body,
+.n-cascader__empty {
+     background: $color-input;
+     box-shadow: 0 1px 3px 1px rgba($color-shadow, 0.15);
+}
+
+.n-cascader__empty {
+     color: $color-gray-60;
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map.get($values, 'base');
+    $-color-light: map.get($values, 'light');
+    $-color-dark: map.get($values, 'dark');
+
+     .n-cascader--#{$color}:not(.n-disabled):hover,
+     .n-cascader--#{$color}:not(.n-disabled).n-focus {
+        border-color: $-color-base;
+    }
+
+}

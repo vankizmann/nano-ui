@@ -1,0 +1,56 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-tags-item {
+    overflow: hidden;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    max-width: 160px;
+    background: $color-gray-10;
+}
+
+.n-tags-item i {
+    flex: 0 0 auto;
+    color: $color-gray-40;
+    text-align: center;
+}
+
+.n-tags-item span {
+    overflow: hidden;
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex: 1 1 auto;
+}
+
+@each $suffix, $values in $form {
+
+    $-tags-item-font: map.get($values, 'font');
+    $-tags-item-size: map.get($values, 'size');
+    $-tags-item-radius: map.get($values, 'radius');
+    $-tags-item-ratio: map.get($values, 'ratio');
+
+    .n-tags-item--#{$suffix} {
+        border-radius: $-tags-item-radius;
+        padding: 0 $-tags-item-size * 0.3 0 $-tags-item-size * 0.3;
+    }
+
+    .n-tags-item--#{$suffix} i,
+    .n-tags-item--#{$suffix} span {
+        height:  $-tags-item-size * 0.8;
+        line-height:  $-tags-item-size * 0.8;
+    }
+
+    .n-tags-item--#{$suffix} i {
+        height:  $-tags-item-size * 0.8;
+        margin-right: $-tags-item-size * 0.2;
+        font-size: $-tags-item-font - 2;
+    }
+
+    .n-tags-item--#{$suffix} span {
+        font-size: $-tags-item-font - 1;
+        margin-left: 2px;
+    }
+}

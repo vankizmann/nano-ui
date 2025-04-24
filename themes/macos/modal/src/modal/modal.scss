@@ -1,0 +1,35 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-modal__backdrop {
+    background: rgba(#000, 0.6);
+}
+
+.n-modal__frame {
+    box-shadow: 0 1px 5px 1px rgba($color-shadow, 0.20);
+}
+
+@each $suffix, $values in $modal {
+
+    $-modal-color: map.get($values, 'color');
+    $-modal-border: map.get($values, 'border');
+    $-modal-header: map.get($values, 'header');
+    $-modal-body: map.get($values, 'body');
+    $-modal-footer: map.get($values, 'footer');
+
+    .n-modal--#{$suffix} .n-modal__frame {
+        color: $-modal-color;
+        background: $-modal-body;
+    }
+
+    .n-modal--#{$suffix} .n-modal__header {
+        border-bottom: 1px solid $-modal-border;
+        background: $-modal-header;
+    }
+
+    .n-modal--#{$suffix} .n-modal__footer {
+        border-top: 1px solid $-modal-border;
+        background: $-modal-footer;
+    }
+
+}

@@ -1,0 +1,91 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-table-cell {
+    position: relative;
+    flex: 0 1 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+    padding: 0 10px;
+    margin-left: -1px;
+}
+
+.n-table-cell.n-fluid {
+    flex: 1 1 auto;
+}
+
+.n-table-cell.n-fixed {
+    flex: 0 0 auto;
+}
+
+.n-table-cell--left {
+    justify-content: flex-start;
+}
+
+.n-table-cell--center {
+    justify-content: center;
+}
+
+.n-table-cell--right {
+    justify-content: flex-end;
+}
+
+.n-table-cell > a,
+.n-table-cell > span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+// Image cell
+
+.n-table-cell--image {
+    position: relative;
+    padding: 5px 0;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.n-table-cell--image > .n-preview {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+}
+
+.n-table-cell--checkbox i {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: transparent;
+    border: 1px solid transparent;
+}
+
+.n-table-cell--checkbox.n-disabled {
+    cursor: not-allowed;
+}
+
+.n-table-cell--checkbox.n-disabled i {
+    opacity: 0.7;
+}
+
+@each $suffix, $values in $form {
+
+    $-table-font: map.get($values, 'font');
+    $-table-size: map.get($values, 'size');
+    $-table-radius: map.get($values, 'radius');
+    $-table-ratio: map.get($values, 'ratio');
+
+    .n-draglist--#{$suffix} .n-table-cell--checkbox i {
+        width: $-table-size - 16;
+        height: $-table-size - 16;
+        border-radius: $-table-radius - 1;
+        font-size: $-table-font - 4;
+    }
+
+}

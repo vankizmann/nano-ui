@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../dist/nano-ui.css">
+    <link id="theme" rel="stylesheet" href="../dist/themes/light.css">
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.5/vue.global.prod.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://unpkg.com/vue@3.4.6"></script>
+    <!-- <script src="../node_modules/pico-js/dist/pico-js.js"></script> -->
+    <script src="https://vankizmann.github.io/pico-js/dist/pico-js.js"></script>
+    <script src="../dist/nano-ui.js"></script>
+
+    <link rel="stylesheet" href="./style.css">
+
+    <style>
+
+        body {
+            font-family: 'Helvetica', 'Roboto', 'Arial', sans-serif;
+            font-size: 14px;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        #app {
+            overflow-x: hidden;
+        }
+
+        .app-scrollbar {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .app-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 20px 30px 40px 30px;
+        }
+
+        .app-options {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: bold;
+            padding-bottom: 10px;
+            margin: 50px 0 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div id="app">
+    <div class="app-container">
+
+        <h2>NSelect</h2>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--auto">
+                <n-select type="secondary" :multiple="true" :options="virtualData" :lazy="true"></n-select>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    (function (nano) {
+
+        'use strict';
+
+        pi.Dom.ready(function () {
+
+            let data = {};
+
+            data.sizes = {
+                xs: 'XS',
+                sm: 'SM',
+                md: 'MD',
+                lg: 'LG'
+            };
+
+            data.types = {
+                primary: 'Primary',
+                secondary: 'Secondary',
+                success: 'Success',
+                warning: 'Warning',
+                danger: 'Danger',
+                info: 'Info'
+            };
+
+            data.modals = {
+                default: 'Default',
+                preview: 'Preview',
+            };
+
+            let itemGenerator = function (count = 100, index = 0) {
+
+                let list = {};
+
+                pi.Arr.each(pi.Arr.make(count), function () {
+                    return list[pi.UUID()] = `Item ${index ++}`;
+                });
+
+                return list;
+            };
+
+            data.virtualData = itemGenerator(1000);
+
+            let methods = {};
+
+            methods.log = function (val) {
+                console.log(val || 'Log fired');
+            };
+
+            methods.notify = function (type) {
+                this.Notify('Lorem ipsum dolore', type);
+            };
+
+            var config = {
+                data: function () {
+
+                    this.icons = pi.Obj.assign(nano.Icons, {
+                        ghost: 'fa fa-ghost'
+                    });
+
+                    data.demoIcons = pi.Arr.reduce(pi.Obj.values(nano.Icons), function (merge, icon) {
+                        return pi.Obj.assign(merge, { [icon]: icon });
+                    }, {});
+
+                    return data;
+                },
+                methods: methods
+            };
+
+            window.App = Vue.createApp(config);
+
+            window.App.config.devtools = true;
+
+            window.App.use(function (App) {
+                nano.Install(App);
+            });
+
+            window.App.mount('#app');
+            window.DEBUG_NDLIST = true;
+        });
+
+    })(window.nano);
+</script>
+</body>
+</html>

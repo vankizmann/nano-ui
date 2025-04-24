@@ -1,0 +1,1468 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../dist/nano-ui.css">
+    <link id="theme" rel="stylesheet" href="../dist/themes/light.css">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+
+        div {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
+            font-size: 14px;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        #app {
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 20px 30px 40px 30px;
+        }
+
+        .app-options {
+            border-bottom: 1px solid rgba(110, 110, 110, 0.15);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: bold;
+            padding-bottom: 10px;
+            margin: 50px 0 15px;
+            border-bottom: 1px solid rgba(110, 110, 110, 0.15);
+        }
+
+    </style>
+
+    <script src="https://unpkg.com/moment"></script>
+    <script src="https://unpkg.com/vue@3.4.6"></script>
+    <script src="https://vankizmann.github.io/pico-js/dist/pico-js.js"></script>
+    <script src="../dist/nano-ui.js"></script>
+    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+
+</head>
+<body class="n-demo">
+
+<div id="app" class="nano-theme-preview">
+    <div class="app-container">
+
+        <h2>Theme</h2>
+
+        <div class="grid grid--row">
+            <div class="col--1-1 col--1-3@md">
+                <n-select :model-value="n_theme" @update:model-value="changeTheme">
+                    <n-select-option value="none" label="None"></n-select-option>
+                    <n-select-option value="light" label="Light"></n-select-option>
+                    <n-select-option value="dark" label="Dark"></n-select-option>
+                </n-select>
+            </div>
+        </div>
+
+        <h2>NTagsItem</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_tags.size" :options="sizes"></n-select>
+            </div>
+        </div>
+
+        <div class="grid grid--row">
+            <div class="col--1-1">
+                <n-tags v-bind="n_tags">
+                    <n-tags-item color="0" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna sjkdnajks dnjkandjknas jkdnajkdjaksn djkans jkdnj</n-tags-item>
+                    <n-tags-item color="1" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="2" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="3">Foo</n-tags-item>
+                    <n-tags-item color="4" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="5" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="6" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="7" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="8">Foo</n-tags-item>
+                    <n-tags-item color="9" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="10" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="11" icon="fa fa-ghost">Foo</n-tags-item>
+                    <n-tags-item color="12" icon="fa fa-ghost">Foo</n-tags-item>
+                </n-tags>
+            </div>
+        </div>
+
+        <h2>NForm</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-switch v-model="n_form.conditional">Conditional</n-switch>
+            </div>
+            <div class="col--auto">
+                <n-switch v-model="n_form.modelValue">Enabled</n-switch>
+            </div>
+        </div>
+
+        <n-form :errors="{ foo: 'ERROR' }">
+            <n-form-group label="FormGroup" :model-value="false" :collapse="true" icon="fa fa-ghost">
+
+                <n-form-item label="Foo" prop="foo" tooltip="lorem ipsum dolore">
+                    <n-input></n-input>
+                </n-form-item>
+
+                <n-form-item label="Bar" prop="bar">
+                    <n-input></n-input>
+                </n-form-item>
+
+            </n-form-group>
+            <n-form-group label="FormGroup2">
+
+                <n-form-item label="Foo" prop="foo" tooltip="lorem ipsum dolore" :conditional="n_form.conditional" v-model="n_form.modelValue">
+                    <n-input></n-input>
+                </n-form-item>
+
+                <n-form-item label="Bar" prop="bar" :conditional="n_form.conditional" v-model="n_form.modelValue">
+                    <n-input-number></n-input-number>
+                </n-form-item>
+
+                <n-form-item label="Bar" prop="bar" :conditional="n_form.conditional" v-model="n_form.modelValue">
+                    <n-select></n-select>
+                </n-form-item>
+
+                <n-form-item label="Bar" prop="bar" :conditional="n_form.conditional" v-model="n_form.modelValue">
+                    <n-switch>test</n-switch>
+                </n-form-item>
+
+            </n-form-group>
+        </n-form>
+
+        <h2>NPopover</h2>
+
+        <n-button icon="fa fa-paragraph">
+            Paragraph
+        </n-button>
+        <n-popover trigger="click" :width="200" position="bottom-start">
+            <n-popover-option image="https://picsum.photos/30/30" icon="fa fa-paragraph">
+                Demotext
+            </n-popover-option>
+            <n-popover-option image="https://picsum.photos/30/30" icon="fa fa-paragraph">
+                Paragraph<br><i style="font-style: initial; color: #555;">Demotext</i>
+            </n-popover-option>
+            <n-popover-option image="https://picsum.photos/30/30" icon="fa fa-paragraph">
+                Paragraph<br><i style="font-style: initial; color: #555;">Demotext</i>
+            </n-popover-option>
+            <n-popover-group>
+                Group 02
+            </n-popover-group>
+            <n-popover-option icon="fa fa-heading">
+                Headline H3
+            </n-popover-option>
+            <n-popover-option icon="fa fa-heading">
+                Headline H4
+            </n-popover-option>
+            <n-popover-group>
+                Group 01
+            </n-popover-group>
+            <n-popover-option icon="fa fa-heading">
+                Headline H5
+            </n-popover-option>
+            <n-popover-option icon="fa fa-heading">
+                Headline H6
+            </n-popover-option>
+        </n-popover>
+
+        <h2>NRating</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_rating.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_rating.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-rating :model-value="3.5" v-bind="n_rating" type="primary" />
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-rating :model-value="3" v-bind="n_rating" type="secondary" />
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-rating :model-value="3.5" v-bind="n_rating" type="success" />
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-rating :model-value="0" v-bind="n_rating" type="warning" />
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-rating :model-value="1" v-bind="n_rating" type="danger" />
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-rating :model-value="3.5" v-bind="n_rating" type="info" />
+            </div>
+        </div>
+
+        <h2>NButton</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_button.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 200px;" v-model="n_button.icon" placeholder="Icon" :clearable="true" :options="demoIcons" />
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_button.square">Square</n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_button.link">Link</n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_button.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-button v-bind="n_button" type="primary">Button</n-button>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-button v-bind="n_button" type="secondary">Button</n-button>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-button v-bind="n_button" type="success">Button</n-button>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-button v-bind="n_button" type="warning">Button</n-button>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-button v-bind="n_button" type="danger">Button</n-button>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-button v-bind="n_button" type="info">Button</n-button>
+            </div>
+        </div>
+
+        <h2>NInput</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_input.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 200px;" v-model="n_input.icon" :clearable="true" placeholder="Icon" :options="demoIcons"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-input v-model="n_input.placeholder"></n-input>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_input.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-input v-model="n_input.value" v-bind="n_input" type="primary"></n-input>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-input v-model="n_input.value" v-bind="n_input" type="secondary"></n-input>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-input v-model="n_input.value" v-bind="n_input" type="success"></n-input>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-input v-model="n_input.value" v-bind="n_input" type="warning"></n-input>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-input v-model="n_input.value" v-bind="n_input" type="danger"></n-input>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-input v-model="n_input.value" v-bind="n_input" type="info"></n-input>
+            </div>
+        </div>
+
+        <h2>NInputNumber</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_number.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-input v-model="n_number.placeholder"></n-input>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_number.disabled">Disabled</n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-input-number v-model="n_number.minValue" :min="-100" :max="100" placeholder="Min. Value"></n-input-number>
+            </div>
+            <div class="col--auto">
+                <n-input-number v-model="n_number.maxValue" :min="-100" :max="100" placeholder="Max. Value"></n-input-number>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-input-number v-model="n_number.test" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" format=":count USD" type="primary" :precision="2" :clearable="true"></n-input-number>
+                <!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" format=":count USD" type="primary"></n-input-number>-->
+            </div>
+            <!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
+            <!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" format=":count €" :precision="2" :step-size="0.1" type="secondary"></n-input-number>-->
+            <!--            </div>-->
+            <!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
+            <!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="success" :clearable="true"></n-input-number>-->
+            <!--            </div>-->
+            <!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
+            <!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="warning"></n-input-number>-->
+            <!--            </div>-->
+            <!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
+            <!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="danger"></n-input-number>-->
+            <!--            </div>-->
+            <!--            <div class="col&#45;&#45;1-1 col&#45;&#45;1-3@md">-->
+            <!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" type="info"></n-input-number>-->
+            <!--            </div>-->
+        </div>
+
+        <h2>NTextarea</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_textarea.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_textarea.autoRows">Auto rows</n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_textarea.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-textarea class="test" v-bind="n_textarea" type="primary"></n-textarea>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-textarea v-bind="n_textarea" type="secondary"></n-textarea>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-textarea v-bind="n_textarea" type="success"></n-textarea>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-textarea v-bind="n_textarea" type="warning"></n-textarea>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-textarea v-bind="n_textarea" type="danger"></n-textarea>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-textarea v-bind="n_textarea" type="info"></n-textarea>
+            </div>
+        </div>
+
+        <h2>NSelect</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_select.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_select.clearable">Clearable</n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_select.allowCreate">Allow create</n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_select.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-select v-bind="n_select" type="secondary" :options="icons" :lazy="true"></n-select>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-select v-bind="n_select" v-model="foobar" :multiple="true" type="primary" :options="icons"></n-select>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-select v-bind="n_select" type="secondary" :options="icons"></n-select>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-select v-bind="n_select" :multiple="true" type="success" :options="icons"></n-select>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-select v-bind="n_select" type="warning" :options="icons"></n-select>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-select v-bind="n_select" :multiple="true" type="danger" :options="icons"></n-select>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-select v-bind="n_select" type="info" :options="icons"></n-select>
+            </div>
+        </div>
+
+        <h2>NCascader</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_cascader.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_cascader.type" :options="types"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_cascader.clearable">Clearable</n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_cascader.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1">
+                <n-cascader-panel v-bind="n_cascader" trigger="click" :options="cascaderData"></n-cascader-panel>
+            </div>
+            <div class="col--1-1 col--1-8@md col--right">
+                <n-cascader v-bind="n_cascader" :options="cascaderData"></n-cascader>
+            </div>
+        </div>
+
+
+        <h2>NButtonGroup</h2>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1">
+                <n-button-group>
+                    <n-input v-model="n_input.value" v-bind="n_input" type="primary"></n-input>
+                    <n-datepicker v-bind="n_datepicker"></n-datepicker>
+                    <n-select v-bind="n_select" :multiple="true" type="primary" :options="icons"></n-select>
+                    <n-button v-bind="n_button" type="primary">Button</n-button>
+                </n-button-group>
+            </div>
+        </div>
+
+        <h2>NCheckbox</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_checkbox.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_checkbox.type" :options="types"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_checkbox.disabled">Disabled</n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_checkbox.allowUncheck">Allow uncheck while disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1">
+                <n-checkbox-group v-bind="n_checkbox">
+                    <n-checkbox :global="true" v-bind="n_checkbox">Check all</n-checkbox>
+                    <n-checkbox value="test1" v-bind="n_checkbox">Foobar 1</n-checkbox>
+                    <n-checkbox value="test2" v-bind="n_checkbox">Foobar 2</n-checkbox>
+                    <n-checkbox value="test3" v-bind="n_checkbox">Foobar 3</n-checkbox>
+                    <n-checkbox value="test4" v-bind="n_checkbox">Foobar 4</n-checkbox>
+                </n-checkbox-group>
+            </div>
+        </div>
+
+        <h2>NRadio</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_radio.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_radio.type" :options="types"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_radio.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1">
+                <n-radio-group v-bind="n_radio">
+                    <n-radio value="test1" v-bind="n_radio">Foobar 1</n-radio>
+                    <n-radio value="test2" v-bind="n_radio">Foobar 2</n-radio>
+                    <n-radio value="test3" v-bind="n_radio">Foobar 3</n-radio>
+                    <n-radio value="test4" v-bind="n_radio">Foobar 4</n-radio>
+                </n-radio-group>
+            </div>
+        </div>
+
+        <h2>NSlider</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_slider.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_slider.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1">
+                <n-slider v-bind="n_slider" on-type="primary" v-model="n_slider.temp_value">Slider</n-slider>
+            </div>
+            <div class="col--1-1">
+                {{ n_slider.temp_value }}
+            </div>
+            <div class="col--1-1">
+                <n-slider v-bind="n_slider" on-type="primary" :range="true">Slider</n-slider>
+            </div>
+            <div class="col--1-1">
+                <n-slider v-bind="n_slider" on-type="primary" :steps="[100,200,300]" :labels="['Small', 'Medium', 'Big']">Slider</n-slider>
+            </div>
+        </div>
+
+        <h2>NSwitch</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_switch.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_switch.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-switch v-bind="n_switch" on-type="primary">Switch</n-switch>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-switch v-bind="n_switch" on-type="secondary">Switch</n-switch>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-switch v-bind="n_switch" on-type="success">Switch</n-switch>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-switch v-bind="n_switch" on-type="warning">Switch</n-switch>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-switch v-bind="n_switch" on-type="danger">Switch</n-switch>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-switch v-bind="n_switch" on-type="info">Switch</n-switch>
+            </div>
+        </div>
+
+        <h2>NDatepicker</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_datepicker.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_datepicker.type" :options="types"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_datepicker.clearable">Clearable</n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_datepicker.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1">
+                <n-datepicker-panel v-bind="n_datepicker" min-date="now" :month-panels="2" :range="true"></n-datepicker-panel>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-datepicker v-bind="n_datepicker"></n-datepicker>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-datepicker v-bind="n_datepicker" :range="true" :month-panels="2"></n-datepicker>
+            </div>
+        </div>
+
+        <h2>NTimepicker</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_timepicker.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_timepicker.type" :options="types"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_timepicker.clearable">Clearable</n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_timepicker.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1">
+                <n-timepicker-panel v-bind="n_timepicker"></n-timepicker-panel>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-timepicker v-bind="n_timepicker"></n-timepicker>
+            </div>
+        </div>
+
+        <h2>NDatetimepicker</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_datetimepicker.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_datetimepicker.type" :options="types"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_datetimepicker.clearable">Clearable</n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_datetimepicker.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-datetimepicker v-bind="n_datetimepicker"></n-datetimepicker>
+            </div>
+        </div>
+
+        <h2>NDurationpicker</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_durationpicker.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_durationpicker.type" :options="types"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_durationpicker.clearable">Clearable</n-checkbox>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_durationpicker.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-durationpicker v-bind="n_durationpicker"></n-durationpicker>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-durationpicker v-model="n_durationpicker.modelValue" v-bind="n_durationpicker"></n-durationpicker>
+            </div>
+        </div>
+
+        <h2>NTransfer</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_transfer.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_transfer.type" :options="types"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_cascader.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1">
+                <n-transfer v-bind="n_transfer" trigger="hover" :options="cascaderData"></n-transfer>
+            </div>
+        </div>
+
+        <h2>NModal</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_modal.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_modal.type" :options="modals"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_modal.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-button>Open modal</n-button>
+                <n-modal v-bind="n_modal">
+                    <template v-slot:header>
+                        Im the header
+                    </template>
+                    <div style="height: 2100px;">
+                        <n-form>
+                            <n-form-item label="Test">
+                                <n-input placeholder="Fill me"></n-input>
+                            </n-form-item>
+                            <n-form-item label="Test">
+                                <n-input placeholder="Fill me"></n-input>
+                            </n-form-item>
+                            <n-form-item label="Test">
+                                <n-input placeholder="Fill me"></n-input>
+                            </n-form-item>
+                        </n-form>
+                    </div>
+                    <template v-slot:footer>
+                        Im the footer
+                    </template>
+                </n-modal>
+            </div>
+        </div>
+
+        <h2>NDrawer</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_drawer.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_drawer.position" :options="drawers"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_drawer.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-button>Open drawer</n-button>
+                <n-drawer v-bind="n_drawer">
+                    <template v-slot:header>
+                        Im the header
+                    </template>
+                    <div style="height: 2100px;">
+                        <n-form>
+                            <n-form-item label="Test">
+                                <n-input placeholder="Fill me"></n-input>
+                            </n-form-item>
+                            <n-form-item label="Test">
+                                <n-input placeholder="Fill me"></n-input>
+                            </n-form-item>
+                            <n-form-item label="Test">
+                                <n-input placeholder="Fill me"></n-input>
+                            </n-form-item>
+                        </n-form>
+                    </div>
+                    <template v-slot:footer>
+                        Im the footer
+                    </template>
+                </n-drawer>
+            </div>
+        </div>
+
+        <h2>NConfirm</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_confirm.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_confirm.type" :options="types"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_confirm.disabled">Disabled</n-checkbox>
+            </div>
+        </div>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-button>Open confirm</n-button>
+                <n-confirm v-bind="n_confirm" @abort="log('Abort')" @confirm="log('Confirm')">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur corporis deserunt fuga harum illum ipsa, itaque nemo optio sunt? Aperiam cum ducimus explicabo, fugiat ipsum minima molestias odio quis quod.
+                </n-confirm>
+            </div>
+        </div>
+
+
+        <h2>NLoader</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_loader.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_loader.type" :options="types"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="n_loader.visible">Visible</n-checkbox>
+            </div>
+        </div>
+
+        <n-loader v-bind="n_loader" style="min-height: 200px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px; padding: 20px;">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia voluptas fuga sit iste odit amet, quam delectus iure facilis, voluptatum officiis magnam deserunt nulla maiores accusantium corrupti! Iste, rem optio? Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint dignissimos ad beatae soluta quaerat reprehenderit, quasi maxime quisquam? Commodi, cumque sequi? Harum quam nobis suscipit consequatur soluta aperiam! Rerum tempore minima saepe, quisquam ab sunt consequatur modi repudiandae molestiae inventore!
+        </n-loader>
+
+        <h2>Notify</h2>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-button type="primary" @click="notify('primary')">Notify</n-button>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-button type="secondary" @click="notify('secondary')">Notify</n-button>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-button type="success" @click="notify('success')">Notify</n-button>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-button type="warning" @click="notify('warning')">Notify</n-button>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-button type="danger" @click="notify('danger')">Notify</n-button>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-button type="info" @click="notify('info')">Notify</n-button>
+            </div>
+        </div>
+
+        <h2>NTabs</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_tabs.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_tabs.type" :options="types"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-switch v-model="n_tabs.float">Float</n-switch>
+            </div>
+        </div>
+
+        <n-tabs v-model="n_tabs.value" v-bind="n_tabs">
+            <n-tabs-item label="Default" icon="fa fa-ghost">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aut, dicta quidem aliquid accusantium nulla veritatis nostrum? Porro, hic eligendi?
+            </n-tabs-item>
+            <n-tabs-item name="keep" label="Keep" :keep="true">
+                <n-textarea></n-textarea>
+            </n-tabs-item>
+            <n-tabs-item name="bar" label="Headline in extra extra extra extra extra extra looooong">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, modi?
+            </n-tabs-item>
+        </n-tabs>
+
+        <n-collapse v-model="n_collapse.value" v-bind="n_collapse" style="height: 900px;">
+            <n-collapse-item name="tioo" icon="fa fa-ghost">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aut, dicta quidem aliquid accusantium nulla veritatis nostrum? Porro, hic eligendi?
+            </n-collapse-item>
+            <n-collapse-item name="keep" label="Keep" :keep="true">
+                <n-textarea></n-textarea>
+            </n-collapse-item>
+            <n-collapse-item name="bar" label="Headline in extra extra extra extra extra extra looooong">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, modi?
+            </n-collapse-item>
+        </n-collapse>
+
+        <h2>NPaginator</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_paginator.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">`
+                <n-select style="width: 210px;" v-model="n_paginator.type" :options="types"></n-select>
+            </div>
+        </div>
+
+        <n-paginator :total="200000" v-bind="n_paginator"></n-paginator>
+
+        <h2>NVirtualscroller</h2>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--auto">
+                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(0)">
+                    Scroll to first item
+                </n-button>
+            </div>
+            <div class="col--auto">
+                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(2000)">
+                    Scroll to item 2000
+                </n-button>
+            </div>
+            <div class="col--auto">
+                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(7100)">
+                    Scroll to item 7100
+                </n-button>
+            </div>
+            <div class="col--auto">
+                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(-1)">
+                    Scroll to last item
+                </n-button>
+            </div>
+        </div>
+
+        <n-virtualscroller ref="virtualscroller" :items="virtualData" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+            <template v-slot:default="{ value }">
+                <div style="padding: 0 15px; line-height: 30px;">{{ value.label }}</div>
+            </template>
+        </n-virtualscroller>
+
+        <h2>NDraglist</h2>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--auto">
+                <n-button type="primary" @click="n_draggable.count++">
+                    Add draggable list with 1000 items
+                </n-button>
+            </div>
+            <div class="col--auto">
+                <n-button type="danger" @click="n_draggable.count ? n_draggable.count-- : 0">
+                    Remove draggable list with 1000 items
+                </n-button>
+            </div>
+        </div>
+
+        <n-draglist v-model:items="cascaderData" :render-expand="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+            <template v-slot:default="{ value, item }">
+                <div style="padding: 0 15px; line-height: 34px;">{{ item.label }}</div>
+            </template>
+        </n-draglist>
+
+        <n-draglist v-model:items="testData" unique-prop="uid" :transform-drop="transDrop" :threshold="0" :lazyload="true" :handle="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+            <template v-slot:default="{ value, item, copy, remove }">
+                <div class="grid grid--row grid--middle" style="height: 34px;">
+                    <div draggable="true" style="padding: 0 10px;">
+                        <i class="fa fa-ellipsis-v"></i>
+                    </div>
+                    <div class="col--flex-1-1">
+                        {{ item.label }}
+                    </div>
+                    <div class="col--flex-0-0" style="margin-right: 10px;">
+                        <n-button size="xs" type="info" @click="copy">Copy</n-button>
+                    </div>
+                    <div class="col--flex-0-0" style="margin-right: 10px;">
+                        <n-button size="xs" type="danger" @click="remove">Remove</n-button>
+                    </div>
+                </div>
+            </template>
+        </n-draglist>
+
+
+        <template v-for="index in Arr.make(n_draggable.count)">
+            <n-draglist v-model:items="virtualTree" :render-expand="true" :render-select="true" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+                <template v-slot:default="{ value, item }">
+                    <div style="padding: 0 5px; line-height: 34px;">
+                        <n-input v-model="item.label"></n-input>
+                    </div>
+                </template>
+            </n-draglist>
+        </template>
+
+        <h2>NDropzone</h2>
+
+        <n-dropzone v-model:item="virtualItem" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+            <template v-slot:default="item">
+                <div style="padding: 0 5px; line-height: 34px;">{{ item.label }}</div>
+            </template>
+        </n-dropzone>
+
+        <h2>NResizer</h2>
+
+        <div style="display: flex; flex-direction: row; justify-content: flex-start;">
+            <n-resizer style="width: 60%; height: 200px; padding: 20px; flex: 0 1 auto; background: rgba(110, 110, 110, 0.5);" position="right">
+                Resizercontent
+            </n-resizer>
+        </div>
+
+
+        <div style="display: flex; flex-direction: row; justify-content: flex-end;">
+            <n-resizer style="width: 60%; height: 200px; padding: 20px; flex: 0 1 auto; background: rgba(110, 110, 110, 0.5);" position="left">
+                Resizercontent
+            </n-resizer>
+        </div>
+
+        <h2>NTable</h2>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--auto">
+                <n-button type="primary" @click="$refs.table.resetFilter()">
+                    Reset filter
+                </n-button>
+            </div>
+            <div class="col--auto">
+                <n-button type="primary" @click="$refs.table.highlightNode(virtualTree[2]['children'][3]['id'])">
+                    Highlight node
+                </n-button>
+            </div>
+        </div>
+
+        <n-table ref="table" v-model:items="virtualTree" :handle="true" :render-handle="true" :render-expand="true" :item-height="100" style="margin-top: 30px; min-height: 500px;">
+            <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true">
+                <!--                <template v-slot:default="{item}">{{ item.value }}</template>-->
+            </n-table-column>
+            <n-table-column label="Image" type="image" prop="image" :fixed-width="130"></n-table-column>
+            <n-table-column label="Date" type="datetime" prop="date" :disabled="true" :sort="true" :width="50" :filter="true"></n-table-column>
+            <n-table-column label="Enabled 3123 asd as" type="option" prop="enabled" :sort="true" :filter="true" :options="[{ value: true, name: 'JAAAA' }, { value: false, name: 'NEEEEEJ' }]" options-value="$value.value" :width="10" options-label="$value.name"></n-table-column>
+            <n-table-column label="Value" type="string" prop="value" :sort="true" :filter="true" :width="20"></n-table-column>
+            <n-table-column label="ID" type="string" prop="id" :breakpoint="1300"></n-table-column>
+        </n-table>
+
+        <n-table v-model:items="virtualTree" :draggable="false" :render-expand="true" :item-height="36" style="margin-top: 30px; min-height: 500px;">
+            <n-table-column label="Label" type="string" prop="label"></n-table-column>
+            <n-table-column v-model="treeSelect" label="Select" type="select" :allow-uncheck="true" :fixed-width="120">
+                <template v-slot:default="{ item }"></template>
+            </n-table-column>
+            <n-table-column v-model="treeMatrix" label="Matrix 2" type="matrix" :matrix="-1" align="center" :fixed-width="120"></n-table-column>
+        </n-table>
+
+        <!-- <n-table ref="table2" v-model:items="virtualTree" :render-expand="true" :item-height="100" style="margin-top: 30px;">
+            <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="Matrix" type="matrix" prop="image" :fixed-width="100"></n-table-column>
+            <n-table-column label="Date" type="datetime" prop="date" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="Enabled" type="boolean" prop="enabled" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="Value" type="string" prop="value" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="ID" type="string" prop="id" :fixed-width="300" :breakpoint="1300"></n-table-column>
+        </n-table> -->
+
+        <!-- <n-table ref="table3" v-model:items="virtualTree" :render-expand="true" :item-height="100" style="margin-top: 30px;">
+            <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="Image" type="image" prop="image" :fixed-width="130"></n-table-column>
+            <n-table-column label="Date" type="datetime" prop="date" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="Enabled" type="boolean" prop="enabled" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="Value" type="string" prop="value" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="ID" type="string" prop="id" :fixed-width="300" :breakpoint="1300"></n-table-column>
+        </n-table> -->
+
+        <!-- <n-table ref="table4" v-model:items="virtualTree" :render-expand="true" :item-height="100" style="margin-top: 30px;">
+            <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="Image" type="image" prop="image" :fixed-width="130"></n-table-column>
+            <n-table-column label="Date" type="datetime" prop="date" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="Enabled" type="boolean" prop="enabled" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="Value" type="string" prop="value" :sort="true" :filter="true"></n-table-column>
+            <n-table-column label="ID" type="string" prop="id" :fixed-width="300" :breakpoint="1300"></n-table-column>
+        </n-table> -->
+
+        <h2>NInfo</h2>
+
+        <n-info ref="info" :sync-event="() => $refs.table.syncCurrent()" style="margin-top: 30px; width: 300px; height: 500px;">
+            <n-info-column label="Label" type="string" prop="label"></n-info-column>
+            <n-info-column label="Image" type="image" prop="image"></n-info-column>
+            <n-info-column label="Date" type="datetime" prop="date"></n-info-column>
+            <n-info-column label="Enabled" type="boolean" prop="enabled"></n-info-column>
+            <n-info-column label="Value" type="string" prop="value"></n-info-column>
+            <n-info-column label="ID" type="string" prop="id"></n-info-column>
+        </n-info>
+
+        <n-info ref="info" :sync-event="() => $refs.table.syncCurrent()" :relative="true" style="margin-top: 30px; width: 300px;">
+            <n-info-column label="Label" type="string" prop="label"></n-info-column>
+            <n-info-column label="Image" type="image" prop="image"></n-info-column>
+            <n-info-column label="Date" type="datetime" prop="date"></n-info-column>
+            <n-info-column label="Enabled" type="boolean" prop="enabled"></n-info-column>
+            <n-info-column label="ID" type="string" prop="id"></n-info-column>
+        </n-info>
+
+        <h2>NConfigNext</h2>
+
+        <n-form>
+            <n-config-next :config="demoConfigNext" v-model="configData"></n-config-next>
+        </n-form>
+
+        <h2>NPreview</h2>
+
+        <n-file v-model="n_preview.file"></n-file>
+
+        <n-preview v-if="n_preview.file" :file="n_preview.file" style="width: 100px;"></n-preview>
+
+        <n-preview file="https://picsum.photos/1920/1920.jpg" thumb="https://picsum.photos/300/300.jpg" style="width: 100px;"></n-preview>
+        <n-preview file="https://www.youtube.com/watch?v=m_Nw_BF90_4" thumb="https://via.placeholder.com/100/000/fff.jpg?text=Youtube" style="width: 100px;"></n-preview>
+        <n-preview file="https://vimeo.com/128079949" thumb="https://via.placeholder.com/100/000/fff.jpg?text=Vimeo" style="width: 100px;"></n-preview>
+        <n-preview file="https://www.w3schools.com/html/mov_bbb.webm" thumb="https://via.placeholder.com/100/000/fff.jpg?text=WEBM" style="width: 100px;"></n-preview>
+
+        <h2>NPreviewVideo</h2>
+
+        <div style="margin: 0 auto; max-width: 480px;">
+            <n-preview-video src="https://www.youtube.com/embed/nFhMY2itmlc" @resolve:youtube="log"></n-preview-video>
+            <n-preview-video src="https://vimeo.com/128079949" @resolve:vimeo="log"></n-preview-video>
+            <n-preview-video src="https://www.w3schools.com/html/mov_bbb.webm"></n-preview-video>
+        </div>
+
+        <h2>NMap</h2>
+
+        <n-form>
+            <n-form-item label="Lat">
+                <n-input v-model="n_map.lat" :disabled="true"></n-input>
+            </n-form-item>
+            <n-form-item label="Lng">
+                <n-input v-model="n_map.lng" :disabled="true"></n-input>
+            </n-form-item>
+        </n-form>
+
+        <n-map :lat="n_map.lat" :lng="n_map.lng" :zoom="9">
+            <n-map-marker v-model:lat="n_map.lat" v-model:lng="n_map.lng" :drag="true"></n-map-marker>
+        </n-map>
+
+    </div>
+</div>
+
+<script>
+    (function (nano) {
+
+        'use strict';
+
+        pi.Dom.ready(function () {
+
+            let data = {};
+
+            data.sizes = {
+                xs: 'XS',
+                sm: 'SM',
+                md: 'MD',
+                lg: 'LG'
+            };
+
+            data.types = {
+                primary: 'Primary',
+                secondary: 'Secondary',
+                success: 'Success',
+                warning: 'Warning',
+                danger: 'Danger',
+                info: 'Info'
+            };
+
+            data.modals = {
+                default: 'Default',
+                preview: 'Preview',
+            };
+
+            data.drawers = {
+                left: 'Left',
+                right: 'Right',
+            };
+
+            pi.Obj.set(data, 'demoConfigNext.NFormGroup:root', {
+                vShow: [
+                    '$model.test'
+                ],
+                props: {
+                    label: '$model.label',
+                    icon: 'fa fa-directions'
+                }
+            });
+
+            pi.Obj.set(data, 'demoConfigNext.NFormGroup:root.content.NFormItem:url', {
+                props: {
+                    label: pi.Locale.trans('URL')
+                },
+                content: {
+                    'NInput': {
+                        binds: {
+                            modelValue: '$model.option.url'
+                        }
+                    }
+                }
+            });
+
+            pi.Obj.set(data, 'demoConfigNext.NFormGroup:root.content.NFormItem:menu', {
+                props: {
+                    label: pi.Locale.trans('Menu')
+                },
+                content: {
+                    'NInput': {
+                        binds: {
+                            modelValue: '$model.option.redirect'
+                        }
+                    }
+                }
+            });
+
+            data.demoConfig = {
+                'NFormGroup:00': {
+                    $props: {
+                        label: pi.Locale.trans('Redirect'),
+                        icon: 'fa fa-directions'
+                    },
+                    content: {
+                        'div:00': {
+                            class: 'grid grid--row grid--wrap grid--30',
+                            content: {
+                                'div:00': {
+                                    class: 'col--1-1 col--1-2@sm',
+                                    content: {
+                                        'NFormItem:00': {
+                                            $props: {
+                                                label: pi.Locale.trans('URL')
+                                            },
+                                            content: {
+                                                'NInput:00': {
+                                                    model: {
+                                                        path: 'option.url'
+                                                    }
+                                                }
+                                            }
+                                        },
+                                    }
+                                },
+                                'div:10': {
+                                    class: 'col--1-1 col--1-2@sm',
+                                    content: {
+                                        'NFormItem:00': {
+                                            $props: {
+                                                label: pi.Locale.trans('Menu')
+                                            },
+                                            content: {
+                                                'NInput:00': {
+                                                    model: {
+                                                        path: 'option.redirect'
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+            };
+
+            data.configData = { label: 'asdasda' };
+
+            data.testData = [];
+
+            let itemGenerator = function (count = 100, index = 0) {
+                return pi.Arr.each(pi.Arr.make(count), function (value) {
+
+                    let id = pi.UUID();
+
+                    return {
+                        id: id,
+                        value: id,
+                        matrix: 10,
+                        label: `Item ${index ++}`,
+                        image: 'https://picsum.photos/300/300.jpg?' + id,
+                        date: pi.Now.make('now').format('YYYY-MM-DD HH:mm:ss', true),
+                        enabled: !!Math.floor(Math.random() * 2)
+                    };
+                });
+            };
+
+
+            data.cascaderData = pi.Arr.each(itemGenerator(5), function (item) {
+
+                let children = pi.Arr.each(itemGenerator(5), function (item) {
+                    return pi.Obj.assign(item, { children: itemGenerator(5) });
+                });
+
+                return pi.Obj.assign(item, { children: children });
+            });
+
+            data.virtualData = itemGenerator(10000);
+
+            data.virtualTree = pi.Arr.each(itemGenerator(100), function (item) {
+                return pi.Obj.assign(item, { children: itemGenerator(10) });
+            });
+
+
+            data.virtualItem = null;
+
+            data.treeSelect = null;
+            data.treeMatrix = [data.virtualTree[3]];
+
+            data.foobar = 'huhu';
+
+            data.n_theme = pi.Cookie.get('theme', 'light', 'string');
+
+            pi.Dom.find('#theme').attr('href', '../dist/themes/' +
+                data.n_theme + '.css');
+
+            data.n_form = {
+                size: 'md', conditional: true, modelValue: false
+            };
+
+            data.n_tags = {
+                size: 'md',
+            };
+
+            data.n_rating = {
+                size: 'md', choice: 'No stars|:value star|:value stars', disabled: false
+            };
+
+            data.n_button = {
+                icon: 'fa fa-ghost', size: 'md', square: false, link: false, disabled: false
+            };
+
+            data.n_textarea = {
+                size: 'md', placeholder: 'Placeholder', autoRows: false, disabled: false
+            };
+
+            data.n_input = {
+                value: 'Demo', icon: 'fa fa-ghost', size: 'md', placeholder: 'Placeholder', disabled: false
+            };
+
+            data.n_number = {
+                test: '', value: 3, size: 'md', placeholder: '', disabled: false, minValue: 0, maxValue: 10
+            };
+
+            data.n_select = {
+                size: 'md', allowCreate: false, clearable: true, disabled: false
+            };
+
+            data.n_cascader = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_checkbox = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_radio = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_slider = {
+                size: 'md', disabled: false, temp_value: 30,
+            };
+
+            data.n_switch = {
+                size: 'md', disabled: false
+            };
+
+            data.n_datepicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_timepicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_datetimepicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_durationpicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false, modelValue: 124521
+            };
+
+            data.n_transfer = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_modal = {
+                size: 'md', type: 'default', disabled: false
+            };
+
+            data.n_drawer = {
+                size: 'md', position: 'right', disabled: false
+            };
+
+            data.n_confirm = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_tabs = {
+                value: 'default', size: 'md', type: 'primary', float: true
+            };
+
+            data.n_collapse = {
+                value: ['default'], size: 'md', type: 'primary', relative: false
+            };
+
+            data.n_paginator = {
+                size: 'md', type: 'primary'
+            };
+
+            data.n_draggable = {
+                count: 0
+            };
+
+            data.n_loader = {
+                size: 'md', type: 'primary', visible: true
+            };
+
+            data.n_map = {
+                lat: 53.55, lng: 9.99
+            };
+
+            data.n_preview = {
+                file: null
+            };
+
+            let methods = {};
+
+            methods.changeTheme = function (value) {
+
+                pi.Cookie.set('theme', this.n_theme = value);
+
+                pi.Dom.find('#theme').attr('href', '../dist/themes/' +
+                    this.n_theme + '.css');
+            }
+
+            methods.searchLocation = function () {
+
+                console.log(this.n_map.localtion)
+            }
+
+            methods.transDrop = function (node) {
+
+                node.uid = pi.UUID();
+
+                return node;
+            }
+
+            methods.log = function (val) {
+                console.log(val || 'Log fired');
+            };
+
+            methods.notify = function (type) {
+                this.Notify('Lorem ipsum dolore', type);
+            };
+
+            var config = {
+                data: function () {
+
+                    this.icons = pi.Obj.assign(nano.Icons, {
+                        ghost: 'fa fa-ghost'
+                    });
+
+                    data.demoIcons = pi.Arr.reduce(pi.Obj.values(nano.Icons), function (merge, icon) {
+                        return pi.Obj.assign(merge, { [icon]: icon });
+                    }, {});
+
+                    return data;
+                },
+                mounted: function () {
+                    let self = this;
+                    pi.Any.delay(function () {
+                        self.configData.test = 'haha';
+                    }, 2000);
+                },
+                methods: methods
+            };
+
+            window.App = Vue.createApp(config);
+
+            window.App.config.devtools = true;
+
+            window.App.use(function (App) {
+                nano.Install(App);
+            });
+
+            window.App.mount('#app');
+        });
+
+    })(window.nano);
+</script>
+
+</body>
+</html>

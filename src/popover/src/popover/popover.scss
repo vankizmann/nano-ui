@@ -1,0 +1,176 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-popover {
+    position: absolute;
+    display: inline-flex;
+    flex-direction: column;
+    transition: opacity 0.1s ease-out;
+}
+
+.n-popover:not(.n-ready) {
+    opacity: 0;
+}
+
+.n-popover > div:first-child:last-child {
+    flex: 1 1 auto;
+}
+
+.n-popover.n-hidden {
+    display: none;
+}
+
+.n-popover__frame {
+    overflow: hidden;
+}
+
+.n-popover__header {
+    flex: 0 0 auto;
+}
+
+.n-popover__body {
+    flex: 1 1 auto;
+}
+
+.n-popover__footer {
+    flex: 0 0 auto;
+}
+
+.n-popover-group,
+.n-popover-option {
+    cursor: default;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+    text-decoration: none
+}
+
+.n-popover-group {
+    font-weight: bold;
+}
+
+.n-popover-option {
+    width: 100%;
+}
+
+.n-popover-option.n-disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.n-popover-group span,
+.n-popover-option span {
+    order: 2;
+    flex: 1 1 auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+}
+
+.n-popover-option .n-image {
+    flex: 0 0 auto;
+    margin-top: -2px;
+    margin-bottom: -2px;
+    text-align: center;
+    border-radius: 500px;
+    object-fit: cover;
+}
+
+.n-popover-option .n-image--before {
+    order: 0;
+}
+
+.n-popover-option .n-image--after {
+    order: 4;
+}
+
+.n-popover-option .n-icon {
+    flex: 0 0 auto;
+    text-align: center;
+}
+
+.n-popover-option .n-icon--before {
+    order: 1;
+}
+
+.n-popover-option .n-icon--after {
+    order: 3;
+}
+
+@each $suffix, $values in $form {
+
+    $-popover-font: map.get($values, 'font');
+    $-popover-size: map.get($values, 'size');
+    $-popover-radius: map.get($values, 'radius');
+    $-popover-ratio: map.get($values, 'ratio');
+
+    .n-popover--#{$suffix} {
+        font-size: $-popover-font;
+    }
+
+    .n-popover--#{$suffix} .n-popover__frame {
+        border-radius: $-popover-radius;
+    }
+
+    $-popover-padding: $-popover-size * $-popover-ratio;
+
+    .n-popover--#{$suffix} .n-popover__header {
+        padding: $-popover-padding $-popover-padding * 1.2;
+    }
+    
+    .n-popover--#{$suffix} .n-popover__body {
+        padding: $-popover-padding $-popover-padding * 1.2;
+    }
+    
+    .n-popover--#{$suffix} .n-popover__footer {
+        padding: $-popover-padding $-popover-padding * 1.2;
+    }
+
+    .n-popover-group.n-popover-group--#{$suffix} {
+        font-size: $-popover-font - 2;
+        padding: $-popover-padding * 0.8 $-popover-padding * 1.2 $-popover-padding * 0.4;
+    }
+
+    .n-popover-option.n-popover-option--#{$suffix} {
+        padding: $-popover-padding * 0.6 $-popover-padding * 1.2;
+    }
+
+    .n-popover--#{$suffix} .n-popover__body .n-popover-group,
+    .n-popover--#{$suffix} .n-popover__body .n-popover-option {
+        width: calc(100% + #{$-popover-padding * 2.4});
+        margin: 0 -#{$-popover-padding * 1.2};
+    }
+
+    .n-popover--#{$suffix} .n-popover__body .n-popover-group:first-child,
+    .n-popover--#{$suffix} .n-popover__body .n-popover-option:first-child {
+        margin-top: -#{$-popover-padding};
+    }
+
+    .n-popover--#{$suffix}  .n-popover__body .n-popover-group:last-child,
+    .n-popover--#{$suffix}  .n-popover__body .n-popover-option:last-child {
+        margin-bottom: -#{$-popover-padding};
+    }
+
+    .n-popover-option--#{$suffix} .n-image {
+        width: $-popover-font + 10;
+        height: $-popover-font + 10;
+    }
+
+    .n-popover-option--#{$suffix} .n-icon {
+        width: $-popover-font;
+        font-size: $-popover-font - 4;
+    }
+
+    .n-popover-option--#{$suffix} .n-image--before,
+    .n-popover-option--#{$suffix} .n-icon--before {
+        margin-right: $-popover-padding;
+    }
+
+    .n-popover-option--#{$suffix} .n-image--after,
+    .n-popover-option--#{$suffix} .n-icon--after {
+        margin-left: $-popover-padding;
+    }
+
+}

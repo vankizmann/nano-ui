@@ -1,0 +1,39 @@
+@use "sass:map";
+@import "../../../root/vars";
+
+.n-input {
+    background: $color-input;
+    border: 1px solid $color-gray-15;
+}
+
+.n-input.n-disabled  {
+    background: $color-input-off;
+}
+
+.n-input .n-button--input {
+    color: $color-gray-60;
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map.get($values, 'base');
+    $-color-light: map.get($values, 'light');
+    $-color-dark: map.get($values, 'dark');
+
+    /**
+     * Button primary
+     */
+
+    .n-input--#{$color}:not(.n-disabled):hover {
+        border-color: $-color-base;
+    }
+
+    .n-input--#{$color}:not(.n-disabled).n-focus {
+        border-color: $-color-light;
+    }
+
+    .n-input--#{$color}:not(.n-disabled) .n-button--input:not(.n-disabled):hover {
+        color: $-color-base;
+    }
+
+}

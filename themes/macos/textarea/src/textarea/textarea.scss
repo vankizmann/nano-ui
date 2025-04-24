@@ -1,0 +1,31 @@
+@use "sass:map";
+@import "../../../root/vars";
+
+.n-textarea textarea {
+    background: $color-input;
+    border: 1px solid $color-gray-15;
+}
+
+.n-textarea.n-disabled textarea  {
+    background: $color-input-off;
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map.get($values, 'base');
+    $-color-light: map.get($values, 'light');
+    $-color-dark: map.get($values, 'dark');
+
+    /**
+     * Button primary
+     */
+
+    .n-textarea--#{$color}:not(.n-disabled):hover textarea {
+        border-color: $-color-base;
+    }
+
+    .n-textarea--#{$color}:not(.n-disabled) textarea:focus{
+        border-color: $-color-light;
+    }
+
+}

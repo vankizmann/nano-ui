@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI Cascader</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../../dist/nano-ui.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+    <script src="https://vankizmann.github.io/@kizmann/pico-js/dist/@kizmann/pico-js.js"></script>
+    <script src="../../dist/nano-ui.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <n-form :form="form" :class="{ 'n-inverse': inverse }">
+
+        <n-form-item label="Inverse">
+            <n-checkbox v-model="inverse">Inverse</n-checkbox>
+        </n-form-item>
+
+        <n-form-item label="Click">
+            <n-cascader v-model="form.value" :items="items" trigger="click"></n-cascader>
+        </n-form-item>
+
+        <n-form-item label="Hover">
+            <n-cascader v-model="form.value" :items="items" trigger="hover"></n-cascader>
+        </n-form-item>
+
+        <n-form-item label="Clearable">
+            <n-cascader v-model="form.value" :items="items" :clearable="true"></n-cascader>
+        </n-form-item>
+
+        <n-form-item label="Disabled">
+            <n-cascader v-model="form.value" :items="items" :disabled="true"></n-cascader>
+        </n-form-item>
+
+        <n-form-item label="Object">
+            <pre>{{ form }}</pre>
+        </n-form-item>
+
+        <div style="height: 600px; overflow-y: scroll; background: #efefef; position: relative;">
+            <div style="padding: 800px 0 80px;">
+                <n-form-item label="Default">
+                    <n-cascader v-model="form.value" :items="items"></n-cascader>
+                </n-form-item>
+            </div>
+        </div>
+
+    </n-form>
+</div>
+
+<script>
+    pi.Dom.ready(function () {
+
+        Vue.config.devtools = true;
+
+        var config = {
+            data: function () {
+
+                let total = 0;
+
+                let childGenerator = function(count, depth, current) {
+
+                    if ( count === undefined ) {
+                        count = 10;
+                    }
+
+                    if ( depth === undefined ) {
+                        depth = 5;
+                    }
+
+                    if ( current === undefined ) {
+                        current = 1;
+                    }
+
+                    let children = Array(
+                        Math.floor(Math.random() * (count + 1))
+                    ).fill(null);
+
+                    pi.Arr.map(children, function(item) {
+
+                        total++;
+
+                        item = {
+                            label: 'Item ' + (Math.floor(Math.random() * 2) === 1 ? 'long text is here given' : '') + total,
+                            value: 'value-' + total,
+                            disabled: !! Math.floor(Math.random() * 2),
+                            children: []
+                        };
+
+                        if ( current < depth ) {
+                            item.children = childGenerator(count, depth, current + 1);
+                        }
+
+                        return item;
+                    });
+
+                    return children;
+                };
+
+                var form = {
+                    value: []
+                };
+
+                var self = this;
+
+                pi.Any.delay(function () {
+                    self.items = childGenerator();
+                }, 2000);
+
+                return { form: form, inverse: false, items: [] };
+            }
+        };
+
+        window.App = new Vue(config).$mount('#app');
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+@import "../../../root/vars";
+
+.n-preview-video {
+    position: relative;
+    width: 100%;
+    background: rgba($color-gray-50, 0.1);
+}
+
+.n-modal__frame > .n-preview-video {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+.n-preview-video:before {
+    content: '\00a0';
+    display: block;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.6%;
+}
+
+.n-preview-video video,
+.n-preview-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+}

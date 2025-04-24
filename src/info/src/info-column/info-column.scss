@@ -1,0 +1,19 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-info-column {
+    color: $color-gray-60;
+}
+
+@each $suffix, $values in $form {
+
+    $-info-font: map.get($values, 'font');
+    $-info-size: map.get($values, 'size');
+    $-info-radius: map.get($values, 'radius');
+    $-info-ratio: map.get($values, 'ratio');
+
+    .n-info--#{$suffix} .n-info-column {
+        font-size: $-info-font - 2;
+    }
+
+}

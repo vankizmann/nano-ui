@@ -1,0 +1,23 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-draggrid__empty {
+    margin: auto;
+}
+
+@each $suffix, $values in $form {
+
+    $-draggrid-font: map.get($values, 'font');
+    $-draggrid-size: map.get($values, 'size');
+    $-draggrid-radius: map.get($values, 'radius');
+    $-draggrid-ratio: map.get($values, 'ratio');
+
+    .n-draggrid--#{$suffix} {
+        font-size: $-draggrid-font;
+    }
+
+    .n-draggrid--#{$suffix} .n-draggrid__empty {
+        padding: $-draggrid-size $-draggrid-size * 0.5;
+    }
+
+}

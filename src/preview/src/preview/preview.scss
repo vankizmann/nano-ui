@@ -1,0 +1,14 @@
+@import "../../../root/vars";
+
+.n-preview {
+    position: relative;
+    display: inline-flex;
+}
+
+.n-preview--cover img {
+    object-fit: cover !important;
+}
+
+.n-preview--contain img {
+    object-fit: contain !important;
+}

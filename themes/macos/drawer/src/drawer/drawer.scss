@@ -1,0 +1,35 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-drawer__backdrop {
+    background: rgba(#000, 0.6);
+}
+
+.n-drawer__frame {
+    box-shadow: 0 1px 5px 1px rgba($color-shadow, 0.20);
+}
+
+@each $suffix, $values in $drawer {
+
+    $-drawer-color: map.get($values, 'color');
+    $-drawer-border: map.get($values, 'border');
+    $-drawer-header: map.get($values, 'header');
+    $-drawer-body: map.get($values, 'body');
+    $-drawer-footer: map.get($values, 'footer');
+
+    .n-drawer--#{$suffix} .n-drawer__frame {
+        color: $-drawer-color;
+        background: $-drawer-body;
+    }
+
+    .n-drawer--#{$suffix} .n-drawer__header {
+        border-bottom: 1px solid $-drawer-border;
+        background: $-drawer-header;
+    }
+
+    .n-drawer--#{$suffix} .n-drawer__footer {
+        border-top: 1px solid $-drawer-border;
+        background: $-drawer-footer;
+    }
+
+}

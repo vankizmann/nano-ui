@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI Button</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../../dist/nano-ui.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <script src="https://vankizmann.github.io/@kizmann/pico-js/dist/@kizmann/pico-js.js"></script>
+    <script src="../../dist/nano-ui.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <n-form :form="form" :class="{ 'n-inverse': inverse }">
+
+        <n-form-item label="Inverse">
+            <n-checkbox v-model="inverse">Inverse</n-checkbox>
+        </n-form-item>
+
+        <n-form-item label="Regular">
+            <n-button type="primary">Primary</n-button>
+            <n-button type="secondary">Secondary</n-button>
+            <n-button type="success">Success</n-button>
+            <n-button type="warning">Warning</n-button>
+            <n-button type="danger">Danger</n-button>
+            <n-button type="info">Info</n-button>
+            <n-button type="link">Link</n-button>
+        </n-form-item>
+
+        <n-form-item label="Disabled">
+            <n-button type="primary" :disabled="true">Primary</n-button>
+            <n-button type="secondary" :disabled="true">Secondary</n-button>
+            <n-button type="success" :disabled="true">Success</n-button>
+            <n-button type="warning" :disabled="true">Warning</n-button>
+            <n-button type="danger" :disabled="true">Danger</n-button>
+            <n-button type="info" :disabled="true">Info</n-button>
+            <n-button type="link" :disabled="true">Link</n-button>
+        </n-form-item>
+
+        <n-form-item label="Outline default">
+            <n-button type="primary" :outline="true">Primary</n-button>
+            <n-button type="secondary" :outline="true">Secondary</n-button>
+            <n-button type="success" :outline="true">Success</n-button>
+            <n-button type="warning" :outline="true">Warning</n-button>
+            <n-button type="danger" :outline="true">Danger</n-button>
+            <n-button type="info" :outline="true">Info</n-button>
+        </n-form-item>
+
+        <n-form-item label="Outline disabled">
+            <n-button type="primary" :outline="true" :disabled="true">Primary</n-button>
+            <n-button type="secondary" :outline="true" :disabled="true">Secondary</n-button>
+            <n-button type="success" :outline="true" :disabled="true">Success</n-button>
+            <n-button type="warning" :outline="true" :disabled="true">Warning</n-button>
+            <n-button type="danger" :outline="true" :disabled="true">Danger</n-button>
+            <n-button type="info" :outline="true" :disabled="true">Info</n-button>
+        </n-form-item>
+
+        <n-form-item label="Icon">
+            <n-button type="success" icon="fa fa-check-circle" icon-position="after">Success</n-button>
+            <n-button type="warning" icon="fa fa-exclamation-circle">Warning</n-button>
+            <n-button type="danger" icon="fa fa-times-circle">Danger</n-button>
+            <n-button type="info" icon="fa fa-info-circle">Info</n-button>
+        </n-form-item>
+
+        <n-form-item label="Square">
+            <n-button type="success" icon="fa fa-check-circle" :square="true"></n-button>
+            <n-button type="warning" icon="fa fa-exclamation-circle" :square="true"></n-button>
+            <n-button type="danger" icon="fa fa-times-circle" :square="true"></n-button>
+            <n-button type="info" icon="fa fa-info-circle" :square="true"></n-button>
+        </n-form-item>
+
+        <n-form-item label="Group">
+            <n-button-group>
+                <n-button type="primary" icon="fa fa-angle-left">
+                    Previous
+                </n-button>
+                <n-button type="primary" icon="fa fa-angle-right" icon-position="after">
+                    Next
+                </n-button>
+            </n-button-group>
+        </n-form-item>
+
+        <n-form-item label="Group square">
+            <n-button-group>
+                <n-button type="primary" icon="fa fa-check-circle" :square="true"></n-button>
+                <n-button type="primary" icon="fa fa-times-circle" :square="true"></n-button>
+            </n-button-group>
+        </n-form-item>
+
+        <n-form-item label="Sizes">
+            <n-button type="primary" size="small">Small</n-button>
+            <n-button type="primary" size="default">Regular</n-button>
+            <n-button type="primary" size="large">Large</n-button>
+        </n-form-item>
+
+    </n-form>
+</div>
+
+<script>
+    pi.Dom.ready(() => {
+
+        Vue.config.devtools = true;
+
+        var config = {
+            data: function() {
+
+                var form = {
+                    //
+                };
+
+                return {
+                    form: form, inverse: false
+                };
+            }
+        };
+
+        window.App = new Vue(config).$mount('#app');
+    })
+</script>
+</body>
+</html>

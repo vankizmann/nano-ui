@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../dist/nano-ui.css">
+    <link id="theme" rel="stylesheet" href="../dist/themes/light.css">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+
+        div {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
+            font-size: 14px;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        #app {
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 20px 30px 40px 30px;
+        }
+
+        .app-options {
+            border-bottom: 1px solid rgba(110, 110, 110, 0.15);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: bold;
+            padding-bottom: 10px;
+            margin: 50px 0 15px;
+            border-bottom: 1px solid rgba(110, 110, 110, 0.15);
+        }
+
+    </style>
+
+    <script src="https://unpkg.com/moment"></script>
+    <script src="https://unpkg.com/vue@3.4.6"></script>
+    <script src="https://vankizmann.github.io/pico-js/dist/pico-js.js"></script>
+    <script src="../dist/nano-ui.js"></script>
+    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+
+</head>
+<body class="n-demo">
+
+<div id="app">
+    <div class="app-container">
+        <n-builder :model-value="demoConfigNext" :model="demoModel" :scope="demoScope"></n-builder>
+    </div>
+</div>
+
+<script>
+
+    (function (nano) {
+
+        'use strict';
+
+        pi.Locale.set('URL', "URL2");
+        pi.Locale.set('URX', "URX2");
+
+        pi.Dom.ready(function () {
+
+            let data = {};
+
+            data.demoModel = {
+                test: true,
+                label: 'foobar',
+                option: {
+                    url: 'http://', redirect: 'AHA'
+                }
+            };
+
+            data.demoScope = {
+                testme: () => {
+                    console.log('abc');
+                }
+            }
+
+            data.sizes = {
+                xs: 'XS',
+                sm: 'SM',
+                md: 'MD',
+                lg: 'LG'
+            };
+
+            data.types = {
+                primary:    'Primary',
+                secondary:  'Secondary',
+                success:    'Success',
+                warning:    'Warning',
+                danger:     'Danger',
+                info:       'Info'
+            };
+
+            data.modals = {
+                default:    'Default',
+                preview:    'Preview',
+            };
+
+            pi.Obj.set(data, 'demoConfigNext.NFormGroup:root', {
+                vShow: [
+                    '$model.test'
+                ],
+                props: {
+                    label: '$model.label',
+                    icon: 'fa fa-directions'
+                }
+            });
+
+            pi.Obj.set(data, 'demoConfigNext.NFormGroup:root.content.NFormItem:url', {
+                props: {
+                    label: '\\@URX',
+                    test: function() {
+                        console.log(123);
+                    }
+                },
+                content: {
+                    'NInput': {
+                        binds: {
+                            modelValue: '$model.option.url'
+                        }
+                    }
+                }
+            });
+
+            pi.Obj.set(data, 'demoConfigNext.NFormGroup:root.content.NFormItem:menu', {
+                props: {
+                    label: pi.Locale.trans('Menu')
+                },
+                content: {
+                    'NSwitch': {
+                        binds: {
+                            modelValue: '$model.option.redirect'
+                        },
+                        props: {
+                            "foo": "@bar"
+                        },
+                        content: [
+                            "@123"
+                        ]
+                    }
+                }
+            });
+
+            data.demoConfig = {
+                'NFormGroup:00': {
+                    $props: {
+                        label: pi.Locale.trans('Redirect'),
+                        icon: 'fa fa-directions'
+                    },
+                    content: {
+                        'div:00': {
+                            class: 'grid grid--row grid--wrap grid--30',
+                            content: {
+                                'div:00': {
+                                    class: 'col--1-1 col--1-2@sm',
+                                    content: {
+                                        'NFormItem:00': {
+                                            $props: {
+                                                label: pi.Locale.trans('URL')
+                                            },
+                                            content: {
+                                                'NInput:00': {
+                                                    model: {
+                                                        path: 'option.url'
+                                                    }
+                                                }
+                                            }
+                                        },
+                                    }
+                                },
+                                'div:10': {
+                                    class: 'col--1-1 col--1-2@sm',
+                                    content: {
+                                        'NFormItem:00': {
+                                            $props: {
+                                                label: pi.Locale.trans('Menu')
+                                            },
+                                            content: {
+                                                'Nswitch:00': {
+                                                    model: {
+                                                        path: 'option.redirect'
+                                                    },
+                                                    content: [
+                                                        pi.Locale.trans("foobar")
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+            };
+
+            data.configData = { label: 'asdasda' };
+
+            data.testData = [];
+
+            let itemGenerator = function (count = 100, index = 0) {
+                return pi.Arr.each(pi.Arr.make(count), function (value) {
+
+                    let id = pi.UUID();
+
+                    return {
+                        id:     id,
+                        value:  id,
+                        matrix: 10,
+                        label:  `Item ${index++}`,
+                        image:  'https://picsum.photos/300/300.jpg?' + id,
+                        date: pi.Now.make('now').format('YYYY-MM-DD HH:mm:ss', true),
+                        enabled: !! Math.floor(Math.random() * 2)
+                    };
+                });
+            };
+
+
+            data.cascaderData = pi.Arr.each(itemGenerator(5), function (item) {
+
+                let children  = pi.Arr.each(itemGenerator(5), function (item) {
+                    return pi.Obj.assign(item, { children: itemGenerator(5) });
+                });
+
+                return pi.Obj.assign(item, { children: children });
+            });
+
+            data.virtualData = itemGenerator(10000);
+
+            data.virtualTree = pi.Arr.each(itemGenerator(100), function (item) {
+                return pi.Obj.assign(item, { children: itemGenerator(10) });
+            });
+
+
+            data.virtualItem = null;
+
+            data.treeSelect = null;
+            data.treeMatrix = [data.virtualTree[3]];
+
+            data.foobar = 'huhu';
+
+            data.n_theme = pi.Cookie.get('theme', 'light', 'string');
+
+            pi.Dom.find('#theme').attr('href', '../dist/themes/' +
+                data.n_theme + '.css');
+
+            data.n_form = {
+                size: 'md', conditional: true, modelValue: false
+            };
+
+            data.n_tags = {
+                size: 'md',
+            };
+
+            data.n_rating = {
+                size: 'md', choice: 'No stars|:value star|:value stars', disabled: false
+            };
+
+            data.n_button = {
+                icon: 'fa fa-ghost', size: 'md', square: false, link: false, disabled: false
+            };
+
+            data.n_textarea = {
+                size: 'md', placeholder: 'Placeholder', autoRows: false, disabled: false
+            };
+
+            data.n_input = {
+                value: 'Demo', icon: 'fa fa-ghost', size: 'md', placeholder: 'Placeholder', disabled: false
+            };
+
+            data.n_number = {
+                test: '', value: 3, size: 'md', placeholder: '', disabled: false, minValue: 0, maxValue: 10
+            };
+
+            data.n_select = {
+                size: 'md', allowCreate: false, clearable: true, disabled: false
+            };
+
+            data.n_cascader = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_checkbox = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_radio = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_slider = {
+                size: 'md', disabled: false, temp_value: 30,
+            };
+
+            data.n_switch = {
+                size: 'md', disabled: false
+            };
+
+            data.n_datepicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_timepicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_datetimepicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_durationpicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false, modelValue: 124521
+            };
+
+            data.n_transfer = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_modal = {
+                size: 'md', type: 'default', disabled: false
+            };
+
+            data.n_confirm = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_tabs = {
+                value: 'default', size: 'md', type: 'primary'
+            };
+
+            data.n_collapse = {
+                value: ['default'], size: 'md', type: 'primary', relative: false
+            };
+
+            data.n_paginator = {
+                size: 'md', type: 'primary'
+            };
+
+            data.n_draggable = {
+                count: 0
+            };
+
+            data.n_loader = {
+                size: 'md', type: 'primary', visible: true
+            };
+
+            data.n_map = {
+                lat: 53.55, lng: 9.99
+            };
+
+            data.n_preview = {
+                file: null
+            };
+
+            let methods = {};
+
+            var config = {
+                data: function () {
+
+                    this.icons = pi.Obj.assign(nano.Icons, {
+                        ghost: 'fa fa-ghost'
+                    });
+
+                    data.demoIcons = pi.Arr.reduce(pi.Obj.values(nano.Icons), function (merge, icon) {
+                        return pi.Obj.assign(merge, { [icon]: icon });
+                    }, {});
+
+                    return data;
+                },
+                mounted: function () {
+                    let self = this;
+                },
+                methods: methods
+            };
+
+            window.App = Vue.createApp(config);
+
+            window.App.config.devtools = true;
+
+            window.App.use(function (App) {
+                nano.Install(App);
+            });
+
+            window.App.mount('#app');
+        });
+
+    })(window.nano);
+</script>
+
+</body>
+</html>

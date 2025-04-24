@@ -1,0 +1,28 @@
+@use "sass:map";
+@import "../../../root/vars";
+
+.n-timepicker-panel {
+    background: $color-input;
+    border: 1px solid $color-gray-10;
+}
+
+.n-timepicker-panel__header {
+    border-bottom: 1px solid $color-gray-10;
+}
+
+.n-timepicker-panel__panel:not(:last-child) {
+    border-right: 1px solid $color-gray-10;
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map.get($values, 'base');
+    $-color-light: map.get($values, 'light');
+    $-color-dark: map.get($values, 'dark');
+
+    .n-timepicker-panel--#{$color} .n-timepicker-panel__item.n-selected {
+        color: $color-white;
+        background: $-color-base;
+    }
+
+}

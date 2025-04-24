@@ -1,0 +1,14 @@
+@import "../../../root/vars";
+
+.n-cascader-panel {
+    background: $color-input;
+    border: 1px solid $color-gray-15;
+}
+
+.n-cascader-panel .n-popover-option:not(.n-active) i {
+    color: $color-gray-40;
+}
+
+.n-cascader-panel__items:not(:last-child) {
+    border-right: 1px solid $color-gray-15;
+}

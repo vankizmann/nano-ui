@@ -1,0 +1,63 @@
+@keyframes docs-loader {
+    0%, 100% {
+        transform: translateX(-60px);
+    }
+    50% {
+        transform: translateX(60px);
+    }
+}
+
+body .loader {
+    z-index: 9999999;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background: #000;
+    border-radius: 6px;
+    transform: translate(-50%, -50%);
+}
+
+body .loader span {
+    display: inline-flex;
+    padding: 40px;
+}
+
+body .loader span svg {
+    display: block;
+    width: 100px;
+    height: auto;
+}
+
+body .loader span:before {
+    z-index: 10;
+    content: '\00a0';
+    position: absolute;
+    top: calc(50% + 70px);
+    left: calc(50% - 85px);
+    width: 170px;
+    height: 5px;
+    border-radius: 500px;
+    background: rgba(125, 125, 125, 0.2);
+}
+
+body .loader span:after {
+    z-index: 20;
+    content: '\00a0';
+    position: absolute;
+    top: calc(50% + 70px);
+    left: calc(50% - 25px);
+    width: 50px;
+    height: 5px;
+    border-radius: 500px;
+    background: rgba(125, 125, 125, 0.5);
+    animation: docs-loader 1.6s infinite ease;
+}
+
+body.ready .loader {
+    display: none;
+}
+
+body:not(.ready) header,
+body:not(.ready) main {
+    visibility: hidden !important;
+}

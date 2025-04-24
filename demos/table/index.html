@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI Table</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.1/dist/ResizeObserver.min.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../../dist/nano-ui.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+    <script src="https://vankizmann.github.io/@kizmann/pico-js/dist/@kizmann/pico-js.js"></script>
+    <script src="../../dist/nano-ui.js"></script>
+
+</head>
+<body>
+
+    <div id="app">
+
+        <div style="padding: 0 20px; margin-bottom: 20px;">
+            <n-button @click="kill = true">Kill all instances</n-button>
+        </div>
+
+        <div v-if="kill === false" class="adapt-height" style="overflow: hidden; padding: 20px;">
+            <div>
+                <n-table v-model="items" :item-height="100" :viewport-height="600" :render-expand="true" :render-select="true" :close-filter-on-enter="true" :sort-on-label="true">
+                    <n-table-column prop="label" type="string" label="Label" :fluid="true" :sort="true" :width="100"></n-table-column>
+                    <n-table-column prop="image" type="image" label="Image" :sort="true" :fixed-width="90" preview-prop="image"></n-table-column>
+                    <n-table-column prop="date" type="datetime" label="Date" :filter="true" :width="250"></n-table-column>
+                    <n-table-column prop="id" align="center" type="string" :sort="true" :filter="true" label="ID" :default-width="250"></n-table-column>
+                </n-table>
+            </div>
+        </div>
+
+        <div v-if="kill === true" class="adapt-height" style="overflow: hidden; padding: 20px;">
+            <n-table v-model="target" :viewport-height="true" style="height: 50vh;">
+                <n-table-column prop="label" type="string" label="Label"></n-table-column>
+                <n-table-column prop="id" align="center" type="string" label="ID"></n-table-column>
+                <n-table-column prop="id1" align="center" type="string" label="ID"></n-table-column>
+                <n-table-column prop="id2" align="center" type="string" label="ID"></n-table-column>
+                <n-table-column prop="id3" align="center" type="string" label="ID"></n-table-column>
+                <n-table-column prop="id4" align="center" type="string" label="ID"></n-table-column>
+                <n-table-column prop="id5" align="center" type="string" label="ID"></n-table-column>
+            </n-table>
+        </div>
+
+    </div>
+
+    <script>
+        (function (Nano) {
+
+            'use strict';
+
+            pi.Dom.ready(function () {
+
+                Vue.config.devtools = true;
+
+                var config = {
+                    data: function () {
+
+                        let total = 0;
+
+                        let childGenerator = function (count, depth, current) {
+
+                            if ( count === undefined ) {
+                                count = 3;
+                            }
+
+                            if ( depth === undefined ) {
+                                depth = 2;
+                            }
+
+                            if ( current === undefined ) {
+                                current = 1;
+                            }
+
+                            let children = Array(count).fill(null);
+
+                            pi.Arr.map(children, function (item) {
+
+                                total++;
+
+                                item = {
+                                    label: 'Item ' + total,
+                                    id: 'value-' + total,
+                                    image: 'https://picsum.photos/100/100?' + total,
+                                    preview: 'https://www.youtube.com/embed/xbuzqU6Cggg',
+                                    date: new Date,
+                                    children: []
+                                };
+
+                                if ( current < depth ) {
+                                    item.children = childGenerator(count > 3 ? 3 : count, depth, current + 1);
+                                }
+
+                                return item;
+                            });
+
+                            return children;
+                        };
+
+                        let self = this;
+
+                        // setTimeout(function () {
+                        //     self.items = childGenerator(5, 7);
+                        // }, 100);
+
+                        setTimeout(function () {
+                            self.target = childGenerator(200, 1);
+                        }, 2000);
+
+                        return { items: childGenerator(500, 2), target: [], kill: false };
+                    }
+                };
+
+                window.App = new Vue(config).$mount('#app');
+            });
+        })(window.Nano);
+    </script>
+</body>
+</html>

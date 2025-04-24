@@ -1,0 +1,39 @@
+@use "sass:map";
+@import "../../../root/vars";
+
+.n-tabs:not(.n-float) > .n-tabs__header:after {
+    border-bottom: 1px solid $color-gray-15;
+}
+
+.n-tabs__indicator {
+    background: $color-black;
+}
+
+.n-float .n-tabs__tab {
+    background: $color-form;
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map.get($values, 'base');
+    $-color-light: map.get($values, 'light');
+    $-color-dark: map.get($values, 'dark');
+
+    .n-tabs--#{$color} .n-tabs__indicator {
+        background: $-color-base;
+    }
+
+    .n-tabs--#{$color}.n-float .n-tabs__tab.n-active {
+        color: $color-white;
+        background: $-color-base;
+    }
+
+    .n-tabs--#{$color}.n-float .n-tabs__tab.n-active .n-tabs__tab-icon {
+        color: $color-white;
+    }
+
+    .n-tabs--#{$color}.n-float .n-tabs__tab.n-active .n-tabs__tab-label {
+        color: $color-white;
+    }
+
+}

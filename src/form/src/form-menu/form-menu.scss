@@ -1,0 +1,9 @@
+@import "../../../root/vars";
+
+.n-form-menu [data-menu-key] a {
+    color: red;
+}
+
+.n-form-menu [data-menu-key].is-visible a {
+    color: green;
+}

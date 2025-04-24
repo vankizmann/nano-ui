@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI Transfer</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../../dist/nano-ui.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+    <script src="https://vankizmann.github.io/@kizmann/pico-js/dist/@kizmann/pico-js.js"></script>
+    <script src="../../dist/nano-ui.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <n-form :form="form" :class="{ 'n-inverse': inverse }">
+
+        <n-form-item label="Inverse">
+            <n-checkbox v-model="inverse">Inverse</n-checkbox>
+        </n-form-item>
+
+        <n-form-item label="Click">
+            <n-transfer v-model="form.value" :items="items" trigger="click"></n-transfer>
+        </n-form-item>
+
+        <n-form-item label="Object">
+            <pre>{{ form }}</pre>
+        </n-form-item>
+
+    </n-form>
+</div>
+
+<script>
+    (function (Nano) {
+
+        'use strict';
+
+        pi.Dom.ready(() => {
+
+            Vue.config.devtools = true;
+
+            var config = {
+                data: function() {
+
+                    let total = 0;
+
+                    let childGenerator = function(count = 200) {
+
+                        let children = Array(count).fill(null);
+
+                        pi.Arr.map(children, function(item) {
+
+                            total++;
+
+                            item = {
+                                label: 'Foobar ' + total, id: 'id-' + total
+                            };
+
+                            return item;
+                        });
+
+                        return children;
+                    };
+
+                    var items = childGenerator();
+
+                    var form = {
+                        value: items.slice(0, 5)
+                    };
+
+                    return { form: form, inverse: false, items: items };
+                }
+            };
+
+            window.App = new Vue(config).$mount('#app');
+
+        });
+
+    })(window.Nano);
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+@import "../root/vars";
+@import "../mixins/media";
+
+header {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+
+    @include media('sm') {
+        border-bottom: 1px solid $color-gray-10;
+    }
+}
+
+header .wrapper {
+    z-index: 100;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    max-width: 1560px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    @include media('sm') {
+        padding: 0 40px;
+    }
+}
+
+header .logo:first-child {
+    margin-left: 60px;
+}
+
+header .logo {
+    text-align: center;
+    margin-right: 15px;
+    padding-top: 5px;
+}
+
+header .logo.logo-alt {
+    display: none;
+
+    @include media('md') {
+        display: inline-block;
+    }
+}
+
+header .logo a {
+    display: inline-block;
+    max-width: 130px;
+}
+
+header .logo.logo-alt a {
+    opacity: 0.5;
+    transition: opacity 0.15s ease;
+}
+
+header .logo.logo-alt a:hover {
+    opacity: 1;
+}
+
+header .logo img {
+    display: block;
+    width: 100%;
+    max-height: 100%;
+    height: 50px;
+}
+
+header .logo.logo-alt img {
+    height: 30px;
+}
+
+.spacer {
+    flex: 1 1 auto;
+    max-width: 0;
+    margin: 0 auto;
+}
+
+header .social:not(:last-child) {
+    margin-right: 15px;
+}
+
+header .social.black {
+    display: none;
+    @include media('sm') {
+        display: block;
+    }
+}
+
+header .social a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    height: 37px;
+    width: 37px;
+    font-size: 15px;
+    border-radius: 500px;
+    color: $color-gray-70;
+
+    @include media('lg') {
+        padding: 0 18px;
+        width: auto;
+    }
+    //background: rgba($color-gray-50, 0.1);
+}
+
+header .social.black a {
+    color: rgba($color-foreground, 0.9);
+    background: $color-gray-10;
+}
+
+header .social.blue a {
+    color: $color-foreground;
+    background: rgba($color-secondary, 0.5);
+}
+
+header .social a span {
+    display: none;
+
+    @include media('lg') {
+        display: inline;
+    }
+}
+
+header .social a i {
+    @include media('lg') {
+        margin-right: 12px;
+    }
+}
+
+header .theme:not(:last-child) {
+    margin-right: 15px;
+}
+
+header .theme.last {
+    margin-right: 30px;
+}
+
+header .theme a {
+    color: $color-gray-50;
+}
+
+header .theme a.active {
+    color: $color-foreground;
+}

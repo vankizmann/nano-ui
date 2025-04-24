@@ -1,0 +1,50 @@
+
+* {
+    outline: none;
+}
+
+html, body {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 15px;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    font-variant-numeric: normal;
+    font-feature-settings: normal;
+}
+
+body {
+    font-size: 14px;
+    min-height: 100vh;
+}
+
+#app {
+    max-width: 1024px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+div {
+    box-sizing: border-box;
+}
+
+pre {
+    font-family: 'Fira Code', monospace;
+}
+
+.n-inverse {
+    color: #fff;
+}
+
+.n-inverse pre {
+    color: #fff;
+}
+
+#app > .n-form {
+    border-radius: 4px;
+    padding: 30px;
+}
+
+.n-inverse {
+    background: #1b2229;
+}

@@ -1,0 +1,70 @@
+@import "../../../root/vars";
+
+.n-preview-image {
+    position: relative;
+    width: 100%;
+    background: rgba($color-gray-50, 0.1);
+}
+
+.n-modal__frame > .n-preview-image {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+.n-preview-image:before {
+    content: '\00a0';
+    display: block;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+    max-height: 100%;
+}
+
+.n-preview-image:after {
+    content: '\00a0';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border-radius: 500px;
+    border: 2px solid rgba($color-gray-50, 0.2);
+    border-top-color: transparent;
+    animation: NImage 1s linear infinite;
+}
+
+.n-preview-image.n-ready:after {
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.n-preview-image img {
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.n-preview-image:not(.n-ready):not(.n-cached) img {
+    opacity: 0;
+}
+
+@keyframes NImage {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

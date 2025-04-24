@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI Tabs</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../../dist/nano-ui.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+    <script src="https://vankizmann.github.io/@kizmann/pico-js/dist/@kizmann/pico-js.js"></script>
+    <script src="../../dist/nano-ui.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <n-form :form="form" :class="{ 'n-inverse': inverse }">
+
+        <n-form-item label="Inverse">
+            <n-checkbox v-model="inverse">Inverse</n-checkbox>
+        </n-form-item>
+
+        <n-form-item label="List">
+            <n-tabs>
+                <n-tabs-item label="Hallo" name="default" icon="fa fa-ghost">
+                    Hallo
+                </n-tabs-item>
+                <n-tabs-item label="Keep" name="keep" :keep="true" icon="fa fa-cat">
+                    Keep
+                </n-tabs-item>
+                <n-tabs-item label="Test" name="test" :preload="true">
+                    Test
+                </n-tabs-item>
+            </n-tabs>
+        </n-form-item>
+
+    </n-form>
+</div>
+
+<script>
+    (function (Nano) {
+
+        'use strict';
+
+        pi.Dom.ready(function () {
+
+            Vue.config.devtools = true;
+
+            var config = {
+                data: function() {
+
+                    let total = 0;
+
+                    let childGenerator = function(count, depth, current) {
+
+                        if ( count === undefined ) {
+                            count = 3;
+                        }
+
+                        if ( depth === undefined ) {
+                            depth = 2;
+                        }
+
+                        if ( current === undefined ) {
+                            current = 1;
+                        }
+
+                        let children = Array(count).fill(null);
+
+                        pi.Arr.map(children, function (item) {
+
+                            total++;
+
+                            item = {
+                                label: 'Item ' + total,
+                                id: 'value-' + total,
+                                children: []
+                            };
+
+                            if ( current < depth ) {
+                                item.children = childGenerator(10, depth, current + 1);
+                            }
+
+                            return item;
+                        });
+
+                        return children;
+                    };
+
+                    var form = {
+                        value: childGenerator(9000, 1)
+                    };
+
+                    return { form: form, inverse: false };
+                }
+            };
+
+            window.App = new Vue(config).$mount('#app');
+
+        });
+
+    })(window.Nano);
+</script>
+</body>
+</html>

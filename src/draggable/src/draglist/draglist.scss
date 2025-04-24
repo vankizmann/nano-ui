@@ -1,0 +1,23 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-draglist__empty {
+    margin: auto;
+}
+
+@each $suffix, $values in $form {
+
+    $-draglist-font: map.get($values, 'font');
+    $-draglist-size: map.get($values, 'size');
+    $-draglist-radius: map.get($values, 'radius');
+    $-draglist-ratio: map.get($values, 'ratio');
+
+    .n-draglist--#{$suffix} {
+        font-size: $-draglist-font;
+    }
+
+    .n-draglist--#{$suffix} .n-draglist__empty {
+        padding: $-draglist-size $-draglist-size * 0.5;
+    }
+
+}

@@ -1,0 +1,79 @@
+@use "sass:color";
+@import "../root/vars";
+
+.markdown-section h1,
+.markdown-section h2,
+.markdown-section h3,
+.markdown-section h4,
+.markdown-section h5,
+.markdown-section h6,
+.markdown-section p {
+    margin-bottom: 34px;
+}
+
+.markdown-section code {
+    border-radius: $md-radius;
+    margin: 0 2px;
+    padding: 2px 5px;
+    white-space: pre-wrap;
+}
+
+.markdown-section table code[data-type] {
+    color: color.mix($color-gray-90, $color-gray-40, 10%);
+}
+
+.markdown-section table {
+    margin-bottom: 30px;
+}
+
+.demo-wrapper {
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 30px;
+    border-radius: $lg-radius;
+    background: $color-input;
+    box-shadow: 0 1px 24px rgba($color-shadow, 0.1);
+}
+
+.markdown-section .demo-options {
+    position: relative;
+    padding: 30px 40px 34px;
+    border-bottom: 1px solid $color-gray-10;
+}
+
+.markdown-section .demo-options2:after {
+    content: '\00a0';
+    position: absolute;
+    left: 40px;
+    bottom: 0;
+    width: calc(100% - 80px);
+    height: 1px;
+    background: $color-gray-10;
+}
+
+.markdown-section .demo-options .n-form-item {
+    margin-bottom: 4px;
+}
+
+.markdown-section .demo-options .n-select {
+    //width: 220px;
+}
+
+.markdown-section .demo-display {
+    padding: 40px;
+}
+
+.markdown-section .demo-display h3 {
+    position: relative;
+    font-size: 12px;
+    padding: 10px 14px;
+    color: $color-gray-50;
+    margin-bottom: -5px;
+    text-transform: uppercase;
+    border-radius: $md-radius;
+    background: rgba($color-gray-50, 0.1);
+}
+
+.markdown-section .demo-display > .grid:not(:last-child) {
+    margin-bottom: 20px;
+}

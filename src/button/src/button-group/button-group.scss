@@ -1,0 +1,42 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-button-group {
+    display: flex;
+    flex-direction: row;
+}
+
+.n-button-group > *:not(:first-child):not(:last-child) {
+    position: relative;
+    border-radius: 0;
+}
+
+.n-button-group > *:not(:last-child) {
+    margin-right: -1px;
+}
+
+.n-button-group > .n-button {
+    z-index: 5;
+}
+
+.n-button-group > *:hover,
+.n-button-group > *.n-focus {
+    z-index: 10;
+}
+
+@each $suffix, $values in $form {
+
+    $-button-group-font: map.get($values, 'font');
+    $-button-group-size: map.get($values, 'size');
+    $-button-group-radius: map.get($values, 'radius');
+    $-button-group-ratio: map.get($values, 'ratio');
+
+    .n-button-group--#{$suffix} > *:not(:first-child):last-child {
+        border-radius: 0 $-button-group-radius $-button-group-radius 0;
+    }
+
+    .n-button-group--#{$suffix} > *:not(:last-child):first-child {
+        border-radius: $-button-group-radius 0 0 $-button-group-radius;
+    }
+
+}

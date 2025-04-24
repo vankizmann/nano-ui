@@ -1,0 +1,109 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-tabs {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.n-tabs.n-float {
+    position: relative;
+}
+
+.n-tabs__header {
+    position: relative;
+    overflow-y: hidden;
+    overflow-x: auto;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.n-tabs.n-float .n-tabs__header {
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.n-tabs:not(.n-float) .n-tabs__header:after {
+    z-index: 10;
+    content: '\00a0';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    height: 0;
+    border-bottom: 1px solid transparent;
+}
+
+.n-tabs__indicator {
+    z-index: 20;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 2px;
+    transition: transform 0.3s ease-in-out;
+    transform-origin: 0 50%;
+}
+
+.n-tabs.n-float .n-tabs__indicator {
+    display: none;
+}
+
+.n-tabs__tab {
+    cursor: default;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+    transition: color 0.15s, background 0.15s;
+}
+
+.n-tabs__body {
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+@each $suffix, $values in $form {
+
+    $-tabs-font: map.get($values, 'font');
+    $-tabs-size: map.get($values, 'size');
+    $-tabs-radius: map.get($values, 'radius');
+    $-tabs-ratio: map.get($values, 'ratio');
+
+    $-tabs-spacer: $-tabs-size * $-tabs-ratio;
+
+    .n-tabs--#{$suffix} .n-tabs__tab {
+        padding: $-tabs-spacer;
+    }
+
+    .n-tabs--#{$suffix}.n-float .n-tabs__tab {
+        border-radius: $-tabs-radius;
+        height: $-tabs-font * 2.4;
+        line-height: $-tabs-font * 2.4;
+        padding: 0 $-tabs-spacer;
+        margin: $-tabs-font * 0.6;
+    }
+
+    .n-tabs.n-float .n-tabs__tab:not(:first-child) {
+        margin-left: 0;
+    }
+
+    .n-tabs.n-float .n-tabs-item:not(.n-scrollbar),
+    .n-tabs.n-float .n-tabs-item.n-scrollbar .n-scrollbar__wrap {
+        margin-top: $-tabs-font * 2.8;
+    }
+
+}

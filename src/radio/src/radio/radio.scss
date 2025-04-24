@@ -1,0 +1,68 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-radio {
+    cursor: default;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: stretch;
+}
+
+.n-radio.n-disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.n-radio__radio {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 500px;
+    border: 1px solid transparent;
+    transition: border 0.15s, background 0.15s;
+}
+
+.n-radio__radio span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    border-radius: 500px;
+    transform: translate(-50%, -50%);
+}
+
+.n-radio.n-checked .n-radio__radio span {
+    opacity: 1;
+}
+
+@each $suffix, $values in $form {
+
+    $-radio-font: map.get($values, 'font');
+    $-radio-size: map.get($values, 'size');
+    $-radio-radius: map.get($values, 'radius');
+    $-radio-ratio: map.get($values, 'ratio');
+
+    .n-radio--#{$suffix} {
+        min-height: $-radio-size;
+        font-size: $-radio-font;
+    }
+
+    .n-radio--#{$suffix} .n-radio__radio {
+        width: $-radio-size - 16;
+        height: $-radio-size - 16;
+    }
+
+    .n-radio--#{$suffix} .n-radio__radio span {
+        width: $-radio-size - 26;
+        height: $-radio-size - 26;
+    }
+
+    $-radio-padding: $-radio-size * $-radio-ratio;
+
+    .n-radio--#{$suffix} .n-radio__label {
+        padding: 0 0 0 $-radio-padding * 0.5;
+    }
+
+}

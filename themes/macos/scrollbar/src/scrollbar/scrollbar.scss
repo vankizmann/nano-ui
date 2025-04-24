@@ -1,0 +1,6 @@
+@import "../../../root/vars";
+
+.n-scrollbar-v:before,
+.n-scrollbar-h:before {
+    background: rgba($color-black, 0.3);
+}

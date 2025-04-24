@@ -1,0 +1,61 @@
+@import "./base";
+@import "./media";
+
+$--space-gutter: (
+    10px, 15px, 20px, 30px, 40px, 60px
+) !default;
+
+@mixin margin($gutter, $suffix: '') {
+
+    .margin-#{strip($gutter)}#{$suffix} {
+        margin: $gutter;
+    }
+
+    .margin-#{strip($gutter)}--top#{$suffix} {
+        margin-top: $gutter;
+    }
+
+    .margin-#{strip($gutter)}--bottom#{$suffix} {
+        margin-bottom: $gutter;
+    }
+
+    .margin-#{strip($gutter)}--left#{$suffix} {
+        margin-left: $gutter;
+    }
+
+    .margin-#{strip($gutter)}--right#{$suffix} {
+        margin-right: $gutter;
+    }
+
+}
+
+@mixin padding($gutter, $suffix: '') {
+
+    .padding-#{strip($gutter)}#{$suffix} {
+        padding: $gutter;
+    }
+
+    .padding-#{strip($gutter)}--top#{$suffix} {
+        padding-top: $gutter;
+    }
+
+    .padding-#{strip($gutter)}--bottom#{$suffix} {
+        padding-bottom: $gutter;
+    }
+
+    .padding-#{strip($gutter)}--left#{$suffix} {
+        padding-left: $gutter;
+    }
+
+    .padding-#{strip($gutter)}--right#{$suffix} {
+        padding-right: $gutter;
+    }
+
+}
+
+@include media() {
+    @each $gutter in reverse($--space-gutter) {
+        @include margin($gutter, $suffix);
+        @include padding($gutter, $suffix);
+    }
+}

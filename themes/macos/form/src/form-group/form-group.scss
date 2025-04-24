@@ -1,0 +1,18 @@
+@use "sass:map";
+@import "../../../root/vars";
+
+.n-form-group__collapse {
+    color: $color-gray-40;
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map.get($values, 'base');
+    $-color-light: map.get($values, 'light');
+    $-color-dark: map.get($values, 'dark');
+
+    .n-form-group--#{$color} .n-form-group__label i {
+        color: $-color-base;
+    }
+
+}

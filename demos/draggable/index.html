@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI Draggable</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../../dist/nano-ui.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+    <script src="https://vankizmann.github.io/@kizmann/pico-js/dist/@kizmann/pico-js.js"></script>
+    <script src="../../dist/nano-ui.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <n-form :form="form" :class="{ 'n-inverse': inverse }">
+
+        <n-form-item label="Inverse">
+            <n-checkbox v-model="inverse">Inverse</n-checkbox>
+        </n-form-item>
+
+        <n-form-item label="List">
+            <div style="display: block; border: 2px solid #000;">
+                <div>
+                    <n-draglist ref="drag" style="height: 500px; overflow: hidden;" :items="form.value" :viewport-height="true" :render-expand="true" :render-select="true" :expanded="['value-1']" :threshold="800">
+                        <div slot-scope="props" style="line-height: 32px;">
+                            {{ props.value.label }}
+                        </div>
+                    </n-draglist>
+                </div>
+            </div>
+
+            <div style="display: block; border: 2px solid #000;">
+                <div>
+                    <n-draggrid style="height: 500px; overflow: hidden;" :items="form.value" :viewport-height="true" :render-expand="true" :render-select="true" :threshold="800">
+                        <div slot-scope="props" style="line-height: 32px;">
+                            {{ props.value.label }}
+                        </div>
+                    </n-draggrid>
+                </div>
+            </div>
+
+        <n-form-item v-if="false" label="Tree">
+            <n-draglist-tree :items="form.value" unique-prop="id" :cascade.sync="form.cascade">
+                <div slot-scope="props">{{ props.value.label }}</div>
+            </n-draglist-tree>
+        </n-form-item>
+
+    </n-form>
+</div>
+
+<script>
+    (function (Nano) {
+
+        'use strict';
+
+        pi.Dom.ready(function () {
+
+            Vue.config.devtools = true;
+
+            var config = {
+                data: function() {
+
+                    let total = 0;
+
+                    let childGenerator = function(count, depth, current) {
+
+                        if ( count === undefined ) {
+                            count = 3;
+                        }
+
+                        if ( depth === undefined ) {
+                            depth = 2;
+                        }
+
+                        if ( current === undefined ) {
+                            current = 1;
+                        }
+
+                        let children = Array(count).fill(null);
+
+                        pi.Arr.map(children, function (item) {
+
+                            total++;
+
+                            item = {
+                                label: 'Item ' + total,
+                                id: 'value-' + total,
+                                children: []
+                            };
+
+                            if ( current < depth ) {
+                                item.children = childGenerator(30, depth, current + 1);
+                            }
+
+                            return item;
+                        });
+
+                        return children;
+                    };
+
+                    var form = {
+                        value: []//childGenerator(2, 2)
+                    };
+
+                    return { form: form, inverse: false };
+                },
+
+                mounted: function() {
+                    console.log(this.$refs.drag.getParentById('value-20'));
+                }
+            };
+
+            window.App = new Vue(config).$mount('#app');
+
+        });
+
+    })(window.Nano);
+</script>
+</body>
+</html>

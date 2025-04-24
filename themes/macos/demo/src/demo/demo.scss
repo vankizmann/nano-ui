@@ -1,0 +1,22 @@
+@import "../../../root/vars";
+
+.n-demo {
+    color: $color-foreground;
+    background: $color-background;
+}
+
+input, textarea {
+    outline: none !important;
+}
+
+[class*="n-"] input,
+[class*="n-"] textarea {
+    outline: none;
+    color: $color-foreground;
+}
+
+[class*="n-"] input::placeholder,
+[class*="n-"] textarea::placeholder {
+    color: $color-foreground;
+    opacity: 0.3;
+}

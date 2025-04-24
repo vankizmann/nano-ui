@@ -1,0 +1,133 @@
+@use 'sass:map';
+@import "../../../root/vars";
+
+.n-transfer {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.n-transfer__panel {
+    overflow: hidden;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    min-height: 360px;
+    //border: 1px solid transparent;
+}
+
+.n-transfer__controls {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-transfer__header {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.n-transfer__title {
+    flex: 1 1 auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.n-transfer__select {
+    flex:  0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+}
+
+.n-transfer__search {
+    flex: 0 0 auto;
+}
+
+.n-transfer__search .n-input {
+    border: 0;
+    border-radius: 0;
+    background: transparent !important;
+}
+
+.n-transfer__search .n-input input {
+    min-height: 36px;
+}
+
+.n-transfer__body {
+    flex: 1 1 auto;
+}
+
+.n-transfer__body .n-draglist-item__element {
+    overflow: hidden;
+    line-height: 34px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.n-transfer__item-count:before {
+    content: '(';
+}
+
+.n-transfer__item-count:after {
+    content: ')';
+}
+
+@each $suffix, $values in $form {
+
+    $-transfer-font: map.get($values, 'font');
+    $-transfer-size: map.get($values, 'size');
+    $-transfer-radius: map.get($values, 'radius');
+    $-transfer-ratio: map.get($values, 'ratio');
+
+    .n-transfer--#{$suffix} {
+        font-size: $-transfer-font;
+    }
+
+    .n-transfer--#{$suffix} .n-transfer__panel {
+        border-radius: $-transfer-radius + 2;
+    }
+
+    $-transfer-padding:  $-transfer-size * $-transfer-ratio;
+
+    .n-transfer--#{$suffix} .n-transfer__header {
+        font-size: $-transfer-font + 2;
+        padding: $-transfer-padding * 0.5;
+    }
+
+    .n-transfer--#{$suffix} .n-transfer__title {
+        padding: 0 $-transfer-padding * 0.5;
+    }
+
+    .n-transfer--#{$suffix} .n-transfer__item-count {
+        margin-left: $-transfer-padding * 0.5;
+    }
+
+    .n-transfer--#{$suffix} .n-transfer__controls {
+        padding: 0 $-transfer-padding;
+    }
+
+    .n-transfer--#{$suffix} .n-transfer__controls > button:not(:last-child) {
+        margin-bottom: $-transfer-padding * 0.5;
+    }
+
+    .n-transfer--#{$suffix} .n-draglist-item {
+        padding: 0 $-transfer-padding * 0.5;
+    }
+
+    .n-transfer--#{$suffix} .n-transfer__body .n-draglist-item__element {
+        padding: 0 $-transfer-padding * 0.5;
+    }
+
+}

@@ -1,0 +1,52 @@
+{
+    "name": "@kizmann/nano-ui",
+    "version": "1.0.1",
+    "license": "MIT",
+    "private": false,
+    "author": "Eduard Kizmann <kizmann@protonmail.ch>",
+    "repository": "https://github.com/vankizmann/nano-ui",
+    "main": "src/index.js",
+    "unpkg": "dist/nano-ui.js",
+    "files": [
+        "dist/",
+        "src/",
+        "themes/",
+        "package.json"
+    ],
+    "scripts": {
+        "build": "webpack --mode production",
+        "watch": "webpack --watch --mode development"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.4.5",
+        "@babel/plugin-proposal-class-properties": "^7.4.4",
+        "@babel/plugin-proposal-export-default-from": "^7.2.0",
+        "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
+        "@babel/preset-env": "^7.4.4",
+        "@vue/babel-plugin-jsx": "^1.0.0",
+        "@vue/babel-preset-jsx": "^1.2.4",
+        "autoprefixer": "^9.6.1",
+        "babel-loader": "^8.0.6",
+        "copy-webpack-plugin": "^4.0.0",
+        "cross-env": "^5.1",
+        "css-loader": "^3.2.0",
+        "global": "^4.4.0",
+        "html-webpack-plugin": "^5.0.0",
+        "mini-css-extract-plugin": "^2.0.0",
+        "postcss": "^8.4.31",
+        "postcss-inline-svg": "^5.0.0",
+        "postcss-loader": "^5.0.0",
+        "sass": "^1.87.0",
+        "sass-loader": "^12.0.0",
+        "terser-webpack-plugin": "^4.2.3",
+        "vue": "^3.0.0",
+        "webpack": "^5.0.0",
+        "webpack-cli": "^4.0.0",
+        "webpack-dev-server": "^4.0.0"
+    },
+    "dependencies": {
+        "@kizmann/pico-js": "^0.5.5",
+        "docsify": "^4.13.1",
+        "moment": "^2.30.1"
+    }
+}
