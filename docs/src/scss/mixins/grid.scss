@@ -1,6 +1,6 @@
 @use "sass:math";
-@use "./base" as *;
-@use "./media" as *;
+@import "./base";
+@import "./media";
 
 $--grid-steps: (
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12

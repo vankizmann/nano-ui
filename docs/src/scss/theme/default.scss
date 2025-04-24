@@ -1,5 +1,5 @@
 @use "sass:color";
-@use "../root/vars" as *;
+@import "../root/vars";
 
 ::selection {
     background: rgba($color-secondary, 0.15);

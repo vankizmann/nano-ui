@@ -1,5 +1,5 @@
 @use "sass:map";
-@use "../../../root/vars" as *;
+@import "../../../root/vars";
 
 .n-draggrid-item.n-current {
     background: rgba($color-gray-35, 0.1);

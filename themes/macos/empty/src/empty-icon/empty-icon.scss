@@ -1,4 +1,4 @@
-@use "../../../root/vars" as *;
+@import "../../../root/vars";
 
 .n-empty-icon--default .n-empty-icon__frame {
     background-image: svg-load('empty-default.svg', fill=$color-foreground);

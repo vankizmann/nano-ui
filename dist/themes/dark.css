@@ -24,7 +24,7 @@
 }
 
 .n-alert__text {
-  color: rgb(159.8, 159.8, 159.8);
+  color: rgb(112.2, 112.2, 112.2);
 }
 
 .n-alert-frame--primary .n-alert__icon {
@@ -158,7 +158,7 @@
 }
 
 .n-draglist-item.n-current {
-  background: rgba(171.7, 171.7, 171.7, 0.1);
+  background: rgba(100.3, 100.3, 100.3, 0.1);
 }
 
 .n-draglist-item.n-nodrop {
@@ -166,20 +166,20 @@
 }
 
 .n-draglist-item .n-draglist-item__ellipsis {
-  color: rgb(183.6, 183.6, 183.6);
+  color: rgb(88.4, 88.4, 88.4);
 }
 
 .n-draglist-item .n-draglist-item__expand {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-draglist-item__checkbox {
-  background: #111111;
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-draglist-item.n-disabled .n-draglist-item__checkbox {
-  background: rgb(243.1, 243.1, 243.1);
+  background: #111111;
 }
 
 .n-draglist--primary.n-empty.n-dragover {
@@ -507,7 +507,7 @@
 }
 
 .n-draggrid-item.n-current {
-  background: rgba(171.7, 171.7, 171.7, 0.1);
+  background: rgba(100.3, 100.3, 100.3, 0.1);
 }
 
 .n-draggrid-item.n-nodrop {
@@ -515,16 +515,16 @@
 }
 
 .n-draggrid-item .n-draggrid-item__ellipsis {
-  color: rgb(183.6, 183.6, 183.6);
+  color: rgb(88.4, 88.4, 88.4);
 }
 
 .n-draggrid-item__checkbox {
   background: #ffffff;
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-draggrid-item.n-disabled .n-draggrid-item__checkbox {
-  background: rgba(219.3, 219.3, 219.3, 0.3);
+  background: rgba(52.7, 52.7, 52.7, 0.3);
 }
 
 .n-draggrid--primary.n-empty.n-dragover {
@@ -1028,7 +1028,7 @@
 }
 
 .n-form-group__collapse {
-  color: rgb(159.8, 159.8, 159.8);
+  color: rgb(112.2, 112.2, 112.2);
 }
 
 .n-form-group--primary .n-form-group__label i {
@@ -1076,7 +1076,7 @@
 }
 
 .n-form-item__label label {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-form-item__error {
@@ -1304,16 +1304,16 @@
 }
 
 .n-input {
-  background: #111111;
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-input.n-disabled {
-  background: rgb(243.1, 243.1, 243.1);
+  background: #111111;
 }
 
 .n-input .n-button--input {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 /**
@@ -1407,25 +1407,25 @@
 }
 
 .n-input-number {
-  background: #111111;
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-input-number.n-disabled {
-  background: rgb(243.1, 243.1, 243.1);
+  background: #111111;
 }
 
 .n-input-number .n-button {
-  color: rgb(112.2, 112.2, 112.2);
-  background: rgba(219.3, 219.3, 219.3, 0.5);
+  color: rgb(159.8, 159.8, 159.8);
+  background: rgba(52.7, 52.7, 52.7, 0.5);
 }
 
 .n-input-number__clear {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-input-number__clear i {
-  background: rgba(219.3, 219.3, 219.3, 0.6);
+  background: rgba(52.7, 52.7, 52.7, 0.6);
 }
 
 /**
@@ -1519,12 +1519,12 @@
 }
 
 .n-textarea textarea {
-  background: #111111;
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-textarea.n-disabled textarea {
-  background: rgb(243.1, 243.1, 243.1);
+  background: #111111;
 }
 
 /**
@@ -1594,8 +1594,8 @@
 }
 
 .n-switch__switch {
-  background: rgb(231.2, 231.2, 231.2);
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(40.8, 40.8, 40.8);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-switch__switch span {
@@ -1659,12 +1659,12 @@
 
 .n-checkbox__checkbox {
   color: #ffffff;
-  background: #111111;
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-checkbox.n-disabled .n-checkbox__checkbox {
-  background: rgb(243.1, 243.1, 243.1);
+  background: #111111;
 }
 
 /**
@@ -1813,12 +1813,12 @@
 
 .n-radio__radio {
   color: #111111;
-  background: #111111;
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-radio.n-disabled .n-radio__radio {
-  background: rgb(243.1, 243.1, 243.1);
+  background: #111111;
 }
 
 .n-radio__radio span {
@@ -1958,32 +1958,32 @@
 }
 
 .n-select {
-  background: #111111;
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-select.n-disabled {
-  background: rgb(243.1, 243.1, 243.1);
+  background: #111111;
 }
 
 .n-select__clear,
 .n-select__angle {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-select__clear i {
-  background: rgba(219.3, 219.3, 219.3, 0.6);
+  background: rgba(52.7, 52.7, 52.7, 0.6);
 }
 
 .n-select__body,
 .n-select__empty {
-  border: 1px solid rgb(219.3, 219.3, 219.3);
-  background: #111111;
+  border: 1px solid rgb(52.7, 52.7, 52.7);
+  background: rgb(28.9, 28.9, 28.9);
   box-shadow: 0 1px 3px 1px rgba(23, 41, 64.4, 0.15);
 }
 
 .n-select__empty {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-select--primary:not(.n-disabled):hover,
@@ -2047,34 +2047,34 @@
 }
 
 .n-cascader-panel {
-  background: #111111;
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-cascader-panel .n-popover-option:not(.n-active) i {
-  color: rgb(159.8, 159.8, 159.8);
+  color: rgb(112.2, 112.2, 112.2);
 }
 
 .n-cascader-panel__items:not(:last-child) {
-  border-right: 1px solid rgb(219.3, 219.3, 219.3);
+  border-right: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-cascader {
-  background: #111111;
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-cascader.n-disabled {
-  background: rgb(243.1, 243.1, 243.1);
+  background: #111111;
 }
 
 .n-cascader__clear,
 .n-cascader__angle {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-cascader__clear i {
-  background: rgba(219.3, 219.3, 219.3, 0.6);
+  background: rgba(52.7, 52.7, 52.7, 0.6);
 }
 
 .n-cascader__placeholder {
@@ -2083,12 +2083,12 @@
 
 .n-cascader__body,
 .n-cascader__empty {
-  background: #111111;
+  background: rgb(28.9, 28.9, 28.9);
   box-shadow: 0 1px 3px 1px rgba(23, 41, 64.4, 0.15);
 }
 
 .n-cascader__empty {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-cascader--primary:not(.n-disabled):hover,
@@ -2122,31 +2122,31 @@
 }
 
 .n-datepicker-panel {
-  background: #111111;
-  border: 1px solid rgb(231.2, 231.2, 231.2);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(40.8, 40.8, 40.8);
 }
 
 .n-datepicker-panel__header {
-  border-bottom: 1px solid rgb(231.2, 231.2, 231.2);
+  border-bottom: 1px solid rgb(40.8, 40.8, 40.8);
 }
 
 .n-datepicker-panel__footer {
-  border-top: 1px solid rgb(231.2, 231.2, 231.2);
+  border-top: 1px solid rgb(40.8, 40.8, 40.8);
 }
 
 .n-datepicker-panel__display .n-datepicker-panel__month:hover,
 .n-datepicker-panel__display .n-datepicker-panel__year:hover {
-  background: rgba(219.3, 219.3, 219.3, 0.6);
+  background: rgba(52.7, 52.7, 52.7, 0.6);
 }
 
 .n-datepicker-panel__dateview .n-datepicker-panel__day.n-arrive:not(.n-selected),
 .n-datepicker-panel__dateview .n-datepicker-panel__day.n-depart:not(.n-selected),
 .n-datepicker-panel__dateview .n-datepicker-panel__day.n-between:not(.n-selected) {
-  background: rgba(219.3, 219.3, 219.3, 0.6);
+  background: rgba(52.7, 52.7, 52.7, 0.6);
 }
 
 .n-datepicker-panel__body .n-datepicker-panel__day:not(.n-current) {
-  color: rgb(159.8, 159.8, 159.8);
+  color: rgb(112.2, 112.2, 112.2);
 }
 
 .n-datepicker-panel--primary .n-datepicker-panel__body .n-datepicker-panel__day.n-selected,
@@ -2192,25 +2192,25 @@
 }
 
 .n-datepicker {
-  background: #111111;
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-datepicker.n-disabled {
-  background: rgb(243.1, 243.1, 243.1);
+  background: #111111;
 }
 
 .n-datepicker__seperator {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-datepicker__clear,
 .n-datepicker__angle {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-datepicker__clear i {
-  background: rgba(219.3, 219.3, 219.3, 0.6);
+  background: rgba(52.7, 52.7, 52.7, 0.6);
 }
 
 .n-datepicker__placeholder {
@@ -2219,12 +2219,12 @@
 
 .n-datepicker__body,
 .n-datepicker__empty {
-  background: #111111;
+  background: rgb(28.9, 28.9, 28.9);
   box-shadow: 0 1px 3px 1px rgba(23, 41, 64.4, 0.15);
 }
 
 .n-datepicker__empty {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-datepicker--primary:not(.n-disabled):hover,
@@ -2258,16 +2258,16 @@
 }
 
 .n-timepicker-panel {
-  background: #111111;
-  border: 1px solid rgb(231.2, 231.2, 231.2);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(40.8, 40.8, 40.8);
 }
 
 .n-timepicker-panel__header {
-  border-bottom: 1px solid rgb(231.2, 231.2, 231.2);
+  border-bottom: 1px solid rgb(40.8, 40.8, 40.8);
 }
 
 .n-timepicker-panel__panel:not(:last-child) {
-  border-right: 1px solid rgb(231.2, 231.2, 231.2);
+  border-right: 1px solid rgb(40.8, 40.8, 40.8);
 }
 
 .n-timepicker-panel--primary .n-timepicker-panel__item.n-selected {
@@ -2301,25 +2301,25 @@
 }
 
 .n-timepicker {
-  background: #111111;
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-timepicker.n-disabled {
-  background: rgb(243.1, 243.1, 243.1);
+  background: #111111;
 }
 
 .n-timepicker__seperator {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-timepicker__clear,
 .n-timepicker__angle {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-timepicker__clear i {
-  background: rgba(219.3, 219.3, 219.3, 0.6);
+  background: rgba(52.7, 52.7, 52.7, 0.6);
 }
 
 .n-timepicker__placeholder {
@@ -2328,12 +2328,12 @@
 
 .n-timepicker__body,
 .n-timepicker__empty {
-  background: #111111;
+  background: rgb(28.9, 28.9, 28.9);
   box-shadow: 0 1px 3px 1px rgba(23, 41, 64.4, 0.15);
 }
 
 .n-timepicker__empty {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-timepicker--primary:not(.n-disabled):hover,
@@ -2367,25 +2367,25 @@
 }
 
 .n-datetimepicker {
-  background: #111111;
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-datetimepicker.n-disabled {
-  background: rgb(243.1, 243.1, 243.1);
+  background: #111111;
 }
 
 .n-datetimepicker__seperator {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-datetimepicker__clear,
 .n-datetimepicker__angle {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-datetimepicker__clear i {
-  background: rgba(219.3, 219.3, 219.3, 0.6);
+  background: rgba(52.7, 52.7, 52.7, 0.6);
 }
 
 .n-datetimepicker__placeholder {
@@ -2394,24 +2394,24 @@
 
 .n-datetimepicker__body,
 .n-datetimepicker__empty {
-  background: rgb(243.1, 243.1, 243.1);
+  background: rgb(28.9, 28.9, 28.9);
   box-shadow: 0 1px 3px 1px rgba(23, 41, 64.4, 0.15);
 }
 
 .n-datetimepicker__empty {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-datetimepicker__body {
-  border: 1px solid rgb(231.2, 231.2, 231.2);
+  border: 1px solid rgb(40.8, 40.8, 40.8);
 }
 
 .n-datetimepicker__time-panel.n-timepicker-panel {
-  background: rgb(130.05, 130.05, 130.05);
+  background: rgb(22.95, 22.95, 22.95);
 }
 
 .n-datetimepicker__body .n-datetimepicker__date-panel {
-  border-right: 1px solid rgb(231.2, 231.2, 231.2);
+  border-right: 1px solid rgb(40.8, 40.8, 40.8);
 }
 
 .n-datetimepicker--primary:not(.n-disabled):hover,
@@ -2445,25 +2445,25 @@
 }
 
 .n-durationpicker {
-  background: #111111;
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-durationpicker.n-disabled {
-  background: rgb(243.1, 243.1, 243.1);
+  background: #111111;
 }
 
 .n-durationpicker__seperator {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-durationpicker__clear,
 .n-durationpicker__angle {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-durationpicker__clear i {
-  background: rgba(219.3, 219.3, 219.3, 0.6);
+  background: rgba(52.7, 52.7, 52.7, 0.6);
 }
 
 .n-durationpicker__placeholder {
@@ -2472,13 +2472,13 @@
 
 .n-durationpicker__body,
 .n-durationpicker__empty {
-  background: #111111;
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
   box-shadow: 0 1px 3px 1px rgba(23, 41, 64.4, 0.15);
 }
 
 .n-durationpicker__empty {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-durationpicker--primary:not(.n-disabled):hover,
@@ -2512,20 +2512,20 @@
 }
 
 .n-transfer__panel {
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-transfer__header {
-  border-bottom: 1px solid rgb(219.3, 219.3, 219.3);
+  border-bottom: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-transfer__search {
-  background: #111111;
-  border-bottom: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(28.9, 28.9, 28.9);
+  border-bottom: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-transfer__item-count {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-popover__frame {
@@ -2537,7 +2537,7 @@
 }
 
 .n-popover-group {
-  color: rgb(159.8, 159.8, 159.8);
+  color: rgb(112.2, 112.2, 112.2);
 }
 
 .n-popover-option:not(.n-disabled).n-hover,
@@ -2551,27 +2551,27 @@
 }
 
 .n-popover-option .n-image {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-popover-option .n-icon {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-popover--default .n-popover__frame {
   color: #ffffff;
-  background: rgb(243.1, 243.1, 243.1);
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-popover--default .n-popover__header {
-  border-bottom: 1px solid rgb(219.3, 219.3, 219.3);
-  background: rgb(243.1, 243.1, 243.1);
+  border-bottom: 1px solid rgb(52.7, 52.7, 52.7);
+  background: rgb(28.9, 28.9, 28.9);
 }
 
 .n-popover--default .n-popover__footer {
-  border-top: 1px solid rgb(219.3, 219.3, 219.3);
-  background: rgb(243.1, 243.1, 243.1);
+  border-top: 1px solid rgb(52.7, 52.7, 52.7);
+  background: rgb(28.9, 28.9, 28.9);
 }
 
 .n-popover--default .n-popover-option {
@@ -2581,16 +2581,16 @@
 .n-popover--negative .n-popover__frame {
   color: #111111;
   background: #ffffff;
-  border: 1px solid rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(243.1, 243.1, 243.1);
 }
 
 .n-popover--negative .n-popover__header {
-  border-bottom: 1px solid rgb(28.9, 28.9, 28.9);
+  border-bottom: 1px solid rgb(243.1, 243.1, 243.1);
   background: #ffffff;
 }
 
 .n-popover--negative .n-popover__footer {
-  border-top: 1px solid rgb(28.9, 28.9, 28.9);
+  border-top: 1px solid rgb(243.1, 243.1, 243.1);
   background: #ffffff;
 }
 
@@ -2651,12 +2651,12 @@
 }
 
 .n-modal--default .n-modal__header {
-  border-bottom: 1px solid rgb(231.2, 231.2, 231.2);
-  background: rgb(130.05, 130.05, 130.05);
+  border-bottom: 1px solid rgb(40.8, 40.8, 40.8);
+  background: rgb(22.95, 22.95, 22.95);
 }
 
 .n-modal--default .n-modal__footer {
-  border-top: 1px solid rgb(231.2, 231.2, 231.2);
+  border-top: 1px solid rgb(40.8, 40.8, 40.8);
   background: #111111;
 }
 
@@ -2666,12 +2666,12 @@
 }
 
 .n-modal--preview .n-modal__header {
-  border-bottom: 1px solid rgb(28.9, 28.9, 28.9);
+  border-bottom: 1px solid rgb(243.1, 243.1, 243.1);
   background: #111111;
 }
 
 .n-modal--preview .n-modal__footer {
-  border-top: 1px solid rgb(28.9, 28.9, 28.9);
+  border-top: 1px solid rgb(243.1, 243.1, 243.1);
   background: #111111;
 }
 
@@ -2700,22 +2700,22 @@
 }
 
 .n-table:before {
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-table .n-draglist-item {
-  border-bottom: 1px solid rgb(231.2, 231.2, 231.2);
+  border-bottom: 1px solid rgb(40.8, 40.8, 40.8);
 }
 
 .n-table .n-table__header {
-  border: 1px solid rgb(219.3, 219.3, 219.3);
-  background: rgb(243.1, 243.1, 243.1);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
+  background: rgb(28.9, 28.9, 28.9);
   box-shadow: 0 0 3px rgba(23, 41, 64.4, 0.1);
 }
 
 .n-table__header .n-table-column {
-  border-left: 1px solid rgb(231.2, 231.2, 231.2);
-  border-right: 1px solid rgb(231.2, 231.2, 231.2);
+  border-left: 1px solid rgb(40.8, 40.8, 40.8);
+  border-right: 1px solid rgb(40.8, 40.8, 40.8);
 }
 
 .n-table-column.n-filtered .n-table-column__label {
@@ -2739,8 +2739,8 @@
 }
 
 .n-table .n-table-column .n-table-column__filter > i {
-  color: rgb(112.2, 112.2, 112.2);
-  background: rgb(231.2, 231.2, 231.2);
+  color: rgb(159.8, 159.8, 159.8);
+  background: rgb(40.8, 40.8, 40.8);
 }
 
 .n-table-cell.n-changed:before {
@@ -2757,16 +2757,16 @@
 }
 
 .n-table-cell--image > div {
-  background-color: rgb(243.1, 243.1, 243.1);
+  background-color: rgb(28.9, 28.9, 28.9);
 }
 
 .n-table-cell--checkbox i {
-  background: #111111;
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  background: rgb(28.9, 28.9, 28.9);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-table-cell--checkbox.n-disabled i {
-  background: rgb(243.1, 243.1, 243.1);
+  background: #111111;
 }
 
 .n-draglist--primary .n-table-cell--checkbox.n-checked:not(.n-disabled) i,
@@ -2860,11 +2860,11 @@
 }
 
 .n-paginator {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-tabs:not(.n-float) > .n-tabs__header:after {
-  border-bottom: 1px solid rgb(219.3, 219.3, 219.3);
+  border-bottom: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-tabs__indicator {
@@ -2872,7 +2872,7 @@
 }
 
 .n-float .n-tabs__tab {
-  background: rgb(243.1, 243.1, 243.1);
+  background: rgb(28.9, 28.9, 28.9);
 }
 
 .n-tabs--primary .n-tabs__indicator {
@@ -2978,7 +2978,7 @@
 }
 
 .n-tabs__tab-icon {
-  color: rgb(159.8, 159.8, 159.8);
+  color: rgb(112.2, 112.2, 112.2);
 }
 
 .n-tabs--primary .n-tabs__tab.n-active .n-tabs__tab-icon,
@@ -3226,19 +3226,19 @@
 }
 
 .n-collapse {
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-collapse__header:not(:first-child) {
-  border-top: 1px solid rgb(219.3, 219.3, 219.3);
+  border-top: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-collapse__header.n-active {
-  border-bottom: 1px solid rgb(219.3, 219.3, 219.3);
+  border-bottom: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-collapse__header-icon {
-  color: rgb(159.8, 159.8, 159.8);
+  color: rgb(112.2, 112.2, 112.2);
 }
 
 .n-collapse--primary .n-collapse__header .n-collapse__header-icon {
@@ -3290,11 +3290,11 @@
 }
 
 .n-info {
-  border: 1px solid rgb(219.3, 219.3, 219.3);
+  border: 1px solid rgb(52.7, 52.7, 52.7);
 }
 
 .n-info-column {
-  color: rgb(112.2, 112.2, 112.2);
+  color: rgb(159.8, 159.8, 159.8);
 }
 
 .n-info-field.n-info-field--image > div {
@@ -3303,7 +3303,7 @@
 
 .n-rating__stars span:before,
 .n-rating__stars span:after {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3C?xml version='1.0' encoding='utf-8'?%3E %3C!-- Generator: Adobe Illustrator 26.5.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E %3Csvg version='1.1' id='Ebene_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 30 30' style='enable-background:new 0 0 30 30;' xml:space='preserve' fill='rgb(231.2, 231.2, 231.2)'%3E %3Cg%3E %3Cpath d='M15.891,0.561l4.097,8.408l9.16,1.348c0.815,0.12,1.14,1.135,0.551,1.717l-6.629,6.545l1.565,9.242 c0.139,0.822-0.713,1.449-1.442,1.061L15,24.519l-8.193,4.363c-0.729,0.388-1.581-0.239-1.442-1.061l1.565-9.242l-6.629-6.545 c-0.59-0.582-0.264-1.597,0.551-1.717l9.16-1.348l4.097-8.408C14.473-0.187,15.527-0.187,15.891,0.561z'/%3E %3C/g%3E %3C/svg%3E");
+  background-image: url("data:image/svg+xml;charset=utf-8,%3C?xml version='1.0' encoding='utf-8'?%3E %3C!-- Generator: Adobe Illustrator 26.5.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E %3Csvg version='1.1' id='Ebene_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 30 30' style='enable-background:new 0 0 30 30;' xml:space='preserve' fill='rgb(40.8, 40.8, 40.8)'%3E %3Cg%3E %3Cpath d='M15.891,0.561l4.097,8.408l9.16,1.348c0.815,0.12,1.14,1.135,0.551,1.717l-6.629,6.545l1.565,9.242 c0.139,0.822-0.713,1.449-1.442,1.061L15,24.519l-8.193,4.363c-0.729,0.388-1.581-0.239-1.442-1.061l1.565-9.242l-6.629-6.545 c-0.59-0.582-0.264-1.597,0.551-1.717l9.16-1.348l4.097-8.408C14.473-0.187,15.527-0.187,15.891,0.561z'/%3E %3C/g%3E %3C/svg%3E");
 }
 
 .n-rating--primary .n-rating__stars span:before {
@@ -3331,7 +3331,7 @@
 }
 
 .n-slider__bar {
-  background: rgb(231.2, 231.2, 231.2);
+  background: rgb(40.8, 40.8, 40.8);
 }
 
 .n-slider__range {
@@ -3363,12 +3363,12 @@
 }
 
 .n-drawer--default .n-drawer__header {
-  border-bottom: 1px solid rgb(231.2, 231.2, 231.2);
-  background: rgb(130.05, 130.05, 130.05);
+  border-bottom: 1px solid rgb(40.8, 40.8, 40.8);
+  background: rgb(22.95, 22.95, 22.95);
 }
 
 .n-drawer--default .n-drawer__footer {
-  border-top: 1px solid rgb(231.2, 231.2, 231.2);
+  border-top: 1px solid rgb(40.8, 40.8, 40.8);
   background: #111111;
 }
 

@@ -9,25 +9,25 @@ $color-background-abs:       #000000 !default;
 $color-foreground:      $color-white !default;
 $color-background:      $color-black !default;
 
-$color-gray-05:         color.mix($color-black, $color-white, 0.05 * 100%) !default;
-$color-gray-10:         color.mix($color-black, $color-white, 0.10 * 100%) !default;
-$color-gray-15:         color.mix($color-black, $color-white, 0.15 * 100%) !default;
-$color-gray-20:         color.mix($color-black, $color-white, 0.20 * 100%) !default;
-$color-gray-25:         color.mix($color-black, $color-white, 0.25 * 100%) !default;
-$color-gray-30:         color.mix($color-black, $color-white, 0.30 * 100%) !default;
-$color-gray-35:         color.mix($color-black, $color-white, 0.35 * 100%) !default;
-$color-gray-40:         color.mix($color-black, $color-white, 0.40 * 100%) !default;
-$color-gray-45:         color.mix($color-black, $color-white, 0.45 * 100%) !default;
-$color-gray-50:         color.mix($color-black, $color-white, 0.50 * 100%) !default;
-$color-gray-55:         color.mix($color-black, $color-white, 0.55 * 100%) !default;
-$color-gray-60:         color.mix($color-black, $color-white, 0.60 * 100%) !default;
-$color-gray-65:         color.mix($color-black, $color-white, 0.65 * 100%) !default;
-$color-gray-70:         color.mix($color-black, $color-white, 0.70 * 100%) !default;
-$color-gray-75:         color.mix($color-black, $color-white, 0.75 * 100%) !default;
-$color-gray-80:         color.mix($color-black, $color-white, 0.80 * 100%) !default;
-$color-gray-85:         color.mix($color-black, $color-white, 0.85 * 100%) !default;
-$color-gray-90:         color.mix($color-black, $color-white, 0.90 * 100%) !default;
-$color-gray-95:         color.mix($color-black, $color-white, 0.95 * 100%) !default;
+$color-gray-05:         color.mix($color-foreground, $color-background, 0.05 * 100%) !default;
+$color-gray-10:         color.mix($color-foreground, $color-background, 0.10 * 100%) !default;
+$color-gray-15:         color.mix($color-foreground, $color-background, 0.15 * 100%) !default;
+$color-gray-20:         color.mix($color-foreground, $color-background, 0.20 * 100%) !default;
+$color-gray-25:         color.mix($color-foreground, $color-background, 0.25 * 100%) !default;
+$color-gray-30:         color.mix($color-foreground, $color-background, 0.30 * 100%) !default;
+$color-gray-35:         color.mix($color-foreground, $color-background, 0.35 * 100%) !default;
+$color-gray-40:         color.mix($color-foreground, $color-background, 0.40 * 100%) !default;
+$color-gray-45:         color.mix($color-foreground, $color-background, 0.45 * 100%) !default;
+$color-gray-50:         color.mix($color-foreground, $color-background, 0.50 * 100%) !default;
+$color-gray-55:         color.mix($color-foreground, $color-background, 0.55 * 100%) !default;
+$color-gray-60:         color.mix($color-foreground, $color-background, 0.60 * 100%) !default;
+$color-gray-65:         color.mix($color-foreground, $color-background, 0.65 * 100%) !default;
+$color-gray-70:         color.mix($color-foreground, $color-background, 0.70 * 100%) !default;
+$color-gray-75:         color.mix($color-foreground, $color-background, 0.75 * 100%) !default;
+$color-gray-80:         color.mix($color-foreground, $color-background, 0.80 * 100%) !default;
+$color-gray-85:         color.mix($color-foreground, $color-background, 0.85 * 100%) !default;
+$color-gray-90:         color.mix($color-foreground, $color-background, 0.90 * 100%) !default;
+$color-gray-95:         color.mix($color-foreground, $color-background, 0.95 * 100%) !default;
 
 $color-form:            $color-gray-05 !default;
 $color-input:           $color-background !default;
@@ -41,9 +41,7 @@ $color-warning:         #FFBF3F !default;
 $color-danger:          #F9536E !default;
 $color-info:            #4BD6F9 !default;
 
-$color-background:      #FAFAFB !default;
-
-$color-shadow:              color.mix($color-black, $color-primary, 80%) !default;
+$color-shadow:              #000000 !default;
 
 
 $color-white-light:         $color-white !default;

@@ -1,5 +1,5 @@
 @use "sass:color";
-@use "../root/vars" as *;
+@import "../root/vars";
 
 .markdown-section h1,
 .markdown-section h2,

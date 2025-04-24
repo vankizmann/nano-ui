@@ -3146,7 +3146,7 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
 
 .n-cascader__empty {
   text-align: center;
-  color: rgb(107.4, 108.6, 111.6);
+  color: rgb(156.6, 157.4, 159.4);
 }
 
 .n-cascader--xs {
@@ -6696,7 +6696,7 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
 }
 
 .n-tabs__tab-icon {
-  color: rgb(156.6, 157.4, 159.4);
+  color: rgb(107.4, 108.6, 111.6);
 }
 
 .n-tabs__tab-label span {
@@ -6768,12 +6768,12 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
   align-items: center;
   justify-content: flex-start;
   max-width: 160px;
-  background: rgb(230.4, 230.6, 231.1);
+  background: rgb(33.6, 35.4, 39.9);
 }
 
 .n-tags-item i {
   flex: 0 0 auto;
-  color: rgb(156.6, 157.4, 159.4);
+  color: rgb(107.4, 108.6, 111.6);
   text-align: center;
 }
 
@@ -6950,7 +6950,7 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
 
 .n-collapse__header-icon {
   flex: 0 0 auto;
-  color: rgb(156.6, 157.4, 159.4);
+  color: rgb(107.4, 108.6, 111.6);
 }
 
 .n-collapse__header-label {
@@ -6965,7 +6965,7 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
 
 .n-collapse__header-angle {
   flex: 0 0 auto;
-  color: rgb(156.6, 157.4, 159.4);
+  color: rgb(107.4, 108.6, 111.6);
   transition: transform 0.3s;
 }
 
@@ -7134,7 +7134,7 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
 }
 
 .n-info-column {
-  color: rgb(107.4, 108.6, 111.6);
+  color: rgb(156.6, 157.4, 159.4);
 }
 
 .n-info--xs .n-info-column {
@@ -7221,7 +7221,7 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
   align-items: center;
   width: 25px;
   height: 25px;
-  color: rgb(168.9, 169.6, 171.35);
+  color: rgb(95.1, 96.4, 99.65);
   background: rgba(255, 255, 255, 0.5);
 }
 
@@ -7231,7 +7231,7 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
   position: relative;
   width: 100%;
   font-size: 5vw;
-  background: #FAFAFB;
+  background: #090b10;
   color: rgba(47, 137, 254, 0.5);
   border-radius: 6px;
 }
@@ -7274,7 +7274,7 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
   display: flex;
   width: 100%;
   height: 4px;
-  background: rgb(212.7895759717, 213.0796819788, 215.1104240283);
+  background: hsl(222.8571428571, 28%, -0.0980392157%);
 }
 
 .n-file-list-item.n-file-list-item--exceed .n-file-list-item__progress {
@@ -7695,11 +7695,11 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
 }
 
 .n-builder__frame {
-  background: rgb(242.7, 242.8, 243.05);
+  background: rgb(21.3, 23.2, 27.95);
 }
 
 .n-builder__element > .n-builder__frame {
-  background: rgb(239.53, 221.62, 234.445);
+  background: rgb(40.27, 23.98, 40.855);
 }
 
 .n-builder__element > .n-builder__frame .n-builder__element {
@@ -7708,7 +7708,7 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
 }
 
 .n-builder__element .n-builder__element > .n-builder__frame {
-  background: rgb(228.87, 228.51, 240.75);
+  background: rgb(29.61, 30.87, 47.16);
 }
 
 .n-builder__element .n-builder__element > .n-builder__frame .n-builder__element {
@@ -7717,7 +7717,7 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
 }
 
 .n-builder__element .n-builder__element .n-builder__element > .n-builder__frame {
-  background: rgb(242, 225, 231.39);
+  background: rgb(42.74, 27.36, 37.8);
 }
 
 .n-builder__element .n-builder__element .n-builder__element > .n-builder__frame .n-builder__element {
@@ -7726,7 +7726,7 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
 }
 
 .n-builder__element .n-builder__element .n-builder__element .n-builder__element > .n-builder__frame {
-  background: rgb(226.205, 232.345, 233.795);
+  background: rgb(26.945, 34.705, 40.205);
 }
 
 .n-builder__element .n-builder__element .n-builder__element .n-builder__element > .n-builder__frame .n-builder__element {
@@ -7835,9 +7835,9 @@ div:not(.n-builder__body) > .n-builder__frame {
   width: 40px;
   height: 40px;
   text-decoration: none;
-  color: rgb(156.6, 157.4, 159.4);
+  color: rgb(107.4, 108.6, 111.6);
   border-radius: 6px;
-  background: rgb(242.7, 242.8, 243.05);
+  background: rgb(21.3, 23.2, 27.95);
 }
 
 .n-builder__move > a {
@@ -7847,9 +7847,9 @@ div:not(.n-builder__body) > .n-builder__frame {
   width: 40px;
   height: 18px;
   text-decoration: none;
-  color: rgb(156.6, 157.4, 159.4);
+  color: rgb(107.4, 108.6, 111.6);
   border-radius: 6px;
-  background: rgb(242.7, 242.8, 243.05);
+  background: rgb(21.3, 23.2, 27.95);
 }
 
 .n-builder__move > a:not(:last-child) {
@@ -7860,7 +7860,7 @@ div:not(.n-builder__body) > .n-builder__frame {
 .n-builder__add > a:hover,
 .n-builder__remove > a:hover,
 .n-builder__move > a:hover {
-  background: rgb(230.4, 230.6, 231.1);
+  background: rgb(33.6, 35.4, 39.9);
 }
 
 .n-builder__name {
@@ -7876,7 +7876,7 @@ div:not(.n-builder__body) > .n-builder__frame {
 .n-builder__name span {
   margin-left: 5px;
   font-size: 14px;
-  color: rgb(156.6, 157.4, 159.4);
+  color: rgb(107.4, 108.6, 111.6);
 }
 
 .n-builder__output {
@@ -7947,7 +7947,7 @@ div:not(.n-builder__body) > .n-builder__frame {
 }
 
 .n-reference-panel:not(.in-modal) {
-  border: 1px solid rgb(230.4, 230.6, 231.1);
+  border: 1px solid rgb(33.6, 35.4, 39.9);
 }
 
 .n-reference-panel.in-modal {
@@ -7965,9 +7965,9 @@ div:not(.n-builder__body) > .n-builder__frame {
   left: 50%;
   width: 6px;
   height: 100%;
-  background: rgb(242.7, 242.8, 243.05);
-  border-left: 1px solid rgb(230.4, 230.6, 231.1);
-  border-right: 1px solid rgb(230.4, 230.6, 231.1);
+  background: rgb(21.3, 23.2, 27.95);
+  border-left: 1px solid rgb(33.6, 35.4, 39.9);
+  border-right: 1px solid rgb(33.6, 35.4, 39.9);
   transform: translateX(-50%);
 }
 
@@ -8091,7 +8091,7 @@ div:not(.n-builder__body) > .n-builder__frame {
 .n-reference-panel__type {
   display: inline-block;
   padding: 2px 6px 1px;
-  background: rgb(230.4, 230.6, 231.1);
+  background: rgb(33.6, 35.4, 39.9);
   border-radius: 3px;
   font-size: 11px;
   font-family: monospace;
@@ -8135,7 +8135,7 @@ div:not(.n-builder__body) > .n-builder__frame {
   display: block;
   width: 1px;
   height: calc(100% - 6px);
-  background: rgb(242.7, 242.8, 243.05);
+  background: rgb(21.3, 23.2, 27.95);
 }
 
 .n-reference-picker .n-input input {

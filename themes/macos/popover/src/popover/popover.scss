@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use "../../../root/vars" as *;
+@import "../../../root/vars";
 
 .n-popover__frame {
     box-shadow: 0 1px 3px 1px rgba($color-shadow, 0.15);

@@ -12,4 +12,4 @@ $color-background:      $color-white;
 $color-form:            color.mix($color-black, $color-white, 5%);
 $color-input:           $color-white;
 
-@use "vars";
+@import "./vars";

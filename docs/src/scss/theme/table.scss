@@ -1,5 +1,5 @@
 @use "sass:color";
-@use "../root/vars" as *;
+@import "../root/vars";
 
 table {
     width: 100%;

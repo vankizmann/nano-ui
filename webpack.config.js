@@ -84,6 +84,9 @@ let themeFn = (entry, target) => ({
 
     },
     plugins: [
+        new webpack.DefinePlugin({
+            'process.env.SASS_DISABLE_DEPRECATION_WARNINGS': JSON.stringify('true')
+        }),
         new MiniCssExtractPlugin({
             filename: target
         })

@@ -1,6 +1,6 @@
 @use "sass:map";
 @use "sass:color";
-@use "../../../root/vars" as *;
+@import "../../../root/vars";
 
 @each $color, $values in $colors {
 

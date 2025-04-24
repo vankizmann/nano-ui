@@ -1,2 +1,2 @@
-@use "./src/select/select" as *;
-@use "./src/select-option/select-option" as *;
+@import "./src/select/select";
+@import "./src/select-option/select-option";

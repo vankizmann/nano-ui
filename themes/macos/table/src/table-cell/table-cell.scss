@@ -1,5 +1,5 @@
 @use "sass:map";
-@use "../../../root/vars" as *;
+@import "../../../root/vars";
 
 .n-table-cell.n-changed:before {
     content: '\00a0';

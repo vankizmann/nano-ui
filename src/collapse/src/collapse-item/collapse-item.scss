@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use "../../../root/vars" as *;
+@import "../../../root/vars";
 
 .n-collapse__header-icon {
     flex: 0 0 auto;

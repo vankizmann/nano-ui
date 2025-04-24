@@ -1,21 +1,3 @@
-@use "./root/vars-dark" as *;
+@import "./root/vars-dark";
 
-@use "./mixins/base" as *;
-@use "./mixins/media" as *;
-@use "./mixins/grid" as *;
-@use "./mixins/space" as *;
-
-@use "./theme/default" as *;
-@use "./theme/layout" as *;
-@use "./theme/loader" as *;
-@use "./theme/header" as *;
-@use "./theme/search" as *;
-@use "./theme/navigation" as *;
-@use "./theme/markdown" as *;
-@use "./theme/syntax" as *;
-@use "./theme/table" as *;
-@use "./theme/progress" as *;
-
-
-
-
+@import "./index";

@@ -1,5 +1,5 @@
 @use "sass:map";
-@use "../../../root/vars" as *;
+@import "../../../root/vars";
 
 .n-rating__stars span:before,
 .n-rating__stars span:after {

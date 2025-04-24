@@ -1,3 +1,3 @@
-@use "./src/info/info" as *;
-@use "./src/info-column/info-column" as *;
-@use "./src/info-field/info-field" as *;
+@import "./src/info/info";
+@import "./src/info-column/info-column";
+@import "./src/info-field/info-field";
