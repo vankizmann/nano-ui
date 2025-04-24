@@ -96,6 +96,8 @@ let themeFn = (entry, target) => ({
 
 module.exports = function (env, argv) {
 
+    docJs.mode = argv.mode;
+
     let docConfig = {
         inject: false, base: 'https://nano-ui.local', logoSvg: '', loaderCss: ''
     }
@@ -108,7 +110,7 @@ module.exports = function (env, argv) {
         docConfig.loaderCss = fs.readFileSync('./docs/src/scss/theme/loader.scss', 'utf8');
     }
 
-    if ( argv.mode === 'production' ) {
+    if ( argv.mode !== 'development' ) {
         docConfig.base = 'https://vankizmann.github.io/nano-ui';
     }
 
