@@ -63,6 +63,7 @@ jobs:
         run: |
           sed -i '/^\/dist$/d' .gitignore
           sed -i '/^\/docs\/dist$/d' .gitignore
+          sed -i '/^\/docs\/dist\/index\.html$/d' .gitignore
     
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
