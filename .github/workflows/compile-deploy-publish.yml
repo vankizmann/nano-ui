@@ -59,6 +59,11 @@ jobs:
         if: steps.check_tag.outputs.exists == 'false'
         run: yarn publish --new-version $(node -p "require('./package.json').version") --non-interactive
 
+      - name: Remove /dist and /docs/dist from .gitignore
+        run: |
+          sed -i '/^\/dist$/d' .gitignore
+          sed -i '/^\/docs\/dist$/d' .gitignore
+    
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
