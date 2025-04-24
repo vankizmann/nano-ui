@@ -22,7 +22,7 @@ body .loader span {
     padding: 40px;
 }
 
-body .loader span img {
+body .loader span svg {
     display: block;
     width: 100px;
     height: auto;
@@ -57,6 +57,7 @@ body.ready .loader {
     display: none;
 }
 
-body.ready header {
-    visibility: visible !important;
+body:not(.ready) header,
+body:not(.ready) main {
+    visibility: hidden !important;
 }

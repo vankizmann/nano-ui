@@ -7,33 +7,100 @@
     <meta name="description" content="Description">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-    <link rel="icon" type="image/png" href="../favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="../favicon/favicon.svg" />
-    <link rel="shortcut icon" href="../favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" href="https://nano-ui.local/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="https://nano-ui.local/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="https://nano-ui.local/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://nano-ui.local/favicon/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="nano.ui" />
-    <link rel="manifest" href="../favicon/site.webmanifest" />
+    <link rel="manifest" href="https://nano-ui.local/favicon/site.webmanifest" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="//unpkg.com/backpack.css@2.0.0/lib/backpack.css">
     <link rel="stylesheet" href="//unpkg.com/@fortawesome/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="../dist/nano-ui.css">
-    <link rel="stylesheet" data-theme-href="../dist/themes/{theme}.css">
-    <link rel="stylesheet" data-theme-href="./dist/{theme}.css">
+    <link rel="stylesheet" href="https://nano-ui.local/dist/nano-ui.css">
+    <link rel="stylesheet" data-theme-href="https://nano-ui.local/dist/themes/{theme}.css">
+    <link rel="stylesheet" data-theme-href="https://nano-ui.local/docs/dist/{theme}.css">
+
+    <style>
+        @keyframes docs-loader {
+    0%, 100% {
+        transform: translateX(-60px);
+    }
+    50% {
+        transform: translateX(60px);
+    }
+}
+
+body .loader {
+    z-index: 9999999;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background: #000;
+    border-radius: 6px;
+    transform: translate(-50%, -50%);
+}
+
+body .loader span {
+    display: inline-flex;
+    padding: 40px;
+}
+
+body .loader span svg {
+    display: block;
+    width: 100px;
+    height: auto;
+}
+
+body .loader span:before {
+    z-index: 10;
+    content: '\00a0';
+    position: absolute;
+    top: calc(50% + 70px);
+    left: calc(50% - 85px);
+    width: 170px;
+    height: 5px;
+    border-radius: 500px;
+    background: rgba(125, 125, 125, 0.2);
+}
+
+body .loader span:after {
+    z-index: 20;
+    content: '\00a0';
+    position: absolute;
+    top: calc(50% + 70px);
+    left: calc(50% - 25px);
+    width: 50px;
+    height: 5px;
+    border-radius: 500px;
+    background: rgba(125, 125, 125, 0.5);
+    animation: docs-loader 1.6s infinite ease;
+}
+
+body.ready .loader {
+    display: none;
+}
+
+body:not(.ready) header,
+body:not(.ready) main {
+    visibility: hidden !important;
+}
+    </style>
 </head>
 <body>
-<header style="visibility: hidden;">
+<header>
     <div class="wrapper">
         <div class="logo">
-            <a href="./#/README">
-                <img data-theme-src="../assets/nano-ui-{theme}.svg" alt="nano.ui">
+            <a href="https://nano-ui.local/docs/#/README">
+                <img data-theme-src="https://nano-ui.local/assets/nano-ui-{theme}.svg" alt="nano.ui">
             </a>
         </div>
         <div class="logo logo-alt">
             <a href="https://pico-js.vanki.de" target="_blank">
-                <img data-theme-src="../assets/pico-js-{theme}.svg" alt="pico.js">
+                <img data-theme-src="https://nano-ui.local/assets/pico-js-{theme}.svg" alt="pico.js">
             </a>
         </div>
         <div class="spacer">
@@ -57,183 +124,33 @@
         </div>
     </div>
 </header>
-<div id="app" style="visibility: hidden;">
+<div id="app">
     <!-- Docs -->
 </div>
 <div class="loader">
     <span>
-        <img src="../assets/nano-ui-dark.svg" alt="nano.ui">
+        <?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 140">
+  <defs>
+    <style>
+      .b {
+        fill: #ffffff;
+      }
+
+      .c {
+        fill: #d31f9d;
+      }
+    </style>
+  </defs>
+  <path class="b" d="M296.5034,107.1878c-19.0781,0-34.5996-15.8745-34.5996-35.3877s15.5215-35.387,34.5996-35.387,34.5989,15.8745,34.5989,35.387-15.5208,35.3877-34.5989,35.3877ZM296.5034,50.6632c-11.2207,0-20.3496,9.4819-20.3496,21.137s9.1289,21.1377,20.3496,21.1377,20.3489-9.4827,20.3489-21.1377-9.1282-21.137-20.3489-21.137Z"/>
+  <path class="b" d="M62.8857,36.4278c-9.9966,0-17.8507,3.4847-23.4836,8.8643l-2.7956-4.3571h-7.669v28.2469c-.0254.5649-.0399,1.1302-.0399,1.6953v34.7805h15v-34.7805c0-14.3555,10.229-19.4495,18.988-19.4495,10.5366,0,16.5798,7.0891,16.5798,19.4495v34.7805h15v-34.7805c0-20.6052-12.6907-34.4495-31.5798-34.4495Z"/>
+  <path class="b" d="M173.2802,40.9351h-7.669l-3.3257,5.1835c-6.2037-6.0084-14.5682-9.7054-23.7662-9.7054-19.0781,0-34.5989,15.8745-34.5989,35.387s15.5208,35.3877,34.5989,35.3877c8.9164,0,17.0548-3.4688,23.1961-9.1544l3.8958,6.0721h7.669v-63.1704ZM138.5193,92.9378c-11.2207,0-20.3489-9.4827-20.3489-21.1377s9.1282-21.137,20.3489-21.137,20.3496,9.4819,20.3496,21.137-9.1289,21.1377-20.3496,21.1377Z"/>
+  <path class="b" d="M221.4214,36.4278c-10.0105,0-17.8723,3.4943-23.5068,8.8863l-2.8096-4.3791h-7.669v29.783c-.0002.0531-.0034.1061-.0034.1592v33.2805h15v-33.2805c0-14.3555,10.229-19.4495,18.9888-19.4495,10.5359,0,16.5791,7.0891,16.5791,19.4495v33.2805h15v-33.2805c0-20.6052-12.6907-34.4495-31.5791-34.4495Z"/>
+  <rect class="c" x="276.3458" y="117.7933" width="40.8201" height="12"/>
+</svg>
     </span>
 </div>
 
-<script src="//unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="//unpkg.com/babel-standalone@6/babel.min.js"></script>
-<script src="//unpkg.com/moment@2.30.1/min/moment.min.js"></script>
-<script src="//unpkg.com/@kizmann/pico-js/dist/pico-js.js"></script>
-<script src="../dist/nano-ui.js"></script>
-
-<script>
-    const theme = pi.Cookie.get('theme', 'dark');
-
-    pi.Dom.find('[data-theme-' + theme + ']').addClass('active');
-
-    pi.Dom.find('[data-theme-light]').on('click', function () {
-        pi.Cookie.set('theme', 'light'); window.location.reload();
-    });
-
-    pi.Dom.find('[data-theme-dark]').on('click', function () {
-        pi.Cookie.set('theme', 'dark'); window.location.reload();
-    });
-
-    pi.Dom.find('[data-theme-src]').each(function (el) {
-        el.src = pi.Dom.find(el).attr('data-theme-src').replace('{theme}', theme);
-    });
-
-    pi.Dom.find('[data-theme-href]').each(function (el) {
-        el.href = pi.Dom.find(el).attr('data-theme-href').replace('{theme}', theme);
-    });
-
-    pi.Dom.find(document.body).live('click', '.matching-post', function () {
-        pi.Dom.find('input[type="search"]').value('').fire('input');
-    });
-
-    pi.Dom.find(document.body).on('keydown', function (e) {
-        if ( e.keyCode === 27 ) {
-            pi.Dom.find('input[type="search"]').value('').fire('input');
-        }
-    });
-
-
-    var GenerateItems = function (count, loop) {
-        return pi.Arr.each(pi.Arr.make(count), (index) => {
-
-            var item = {
-                id: 'item-' + pi.UUID(), label: 'Item ' + index, image: 'https://picsum.photos/260/160.jpg?' + pi.UUID(), date: new Date,
-            }
-
-            if ( loop > 1 ) {
-                item.children = GenerateItems(10, loop-1)
-            }
-
-            return item;
-        });
-    };
-
-    let DemoPlugin = function (hook, vm) {
-
-        // Global vue data
-        window.VueData = window.DefaultVueData = {
-            itemsMini: GenerateItems(50, 1),
-            itemsMidi: GenerateItems(500, 1),
-            itemsMaxi: GenerateItems(1000, 2),
-        };
-
-        window.DefaultVueData.types = {
-            'primary': 'Primary',
-            'secondary': 'Secondary',
-            'success': 'Success',
-            'warning': 'Warning',
-            'danger': 'Danger',
-            'info': 'Info',
-        };
-
-        window.DefaultVueData.sizes = {
-            'xs': 'Mini',
-            'sm': 'Small',
-            'md': 'Medium',
-            'lg': 'Large'
-        };
-
-        window.DefaultVueData.icons = {
-            'fa fa-search': 'Search',
-            'fa fa-star': 'Star',
-            'fa fa-check': 'Check',
-            'fa fa-trash': 'Trash'
-        },
-
-        // Remote vue app
-        window.VueRemote = null;
-
-        hook.beforeEach(function (markdown) {
-
-            pi.Dom.find('#temp-script').each(function (el) {
-                el.remove();
-            });
-
-            if ( ! pi.Any.isEmpty(window.VueData) ) {
-                window.VueData = pi.Obj.assign({}, window.DefaultVueData);
-            }
-
-            if ( ! pi.Any.isEmpty(window.VueRemote) ) {
-                window.VueRemote.unmount();
-            }
-
-            let pattern = /```js\s\[demo]([^`]*)```/gm;
-
-            let globaljs = pi.Arr.each(markdown.match(pattern) || [], (text) => {
-                return text.replace(pattern, "$1");
-            });
-
-            pi.Dom.make('script', { id: "temp-script", innerHTML: globaljs.join("\n")})
-                .appendTo(document.body)
-
-            markdown = markdown.replace(/```html\s\[demo]([^`]*)```/gm,
-                '<div class="demo-wrapper">$1</div>');
-
-            return markdown.replace(/```[a-z]+\s\[demo][^`]*```/gm, '');
-        });
-
-        hook.afterEach(function (html) {
-
-            html = html.replace(/<code>(Mixed|Any|String|Boolean|Array|Object)<\/code>/gm,
-                '<code data-type="$1">$1</code>');
-
-            return '<div id="vue-remote">' + html + '</div>';
-        });
-
-        hook.doneEach(function () {
-
-            let options = {
-                data: function () {
-                    return window.VueData;
-                }
-            };
-
-            // Create vue instance
-            window.VueRemote = window.Vue
-                .createApp(options);
-
-            window.VueRemote
-                .use(window.nano.Install);
-
-            window.VueRemote.mount('#main');
-        });
-
-        console.log('DemoPlugin done!');
-    }
-
-    let options = {
-        name: 'nano.ui', loadSidebar: true, search: 'auto',  depth: 1, subMaxLevel: 1, topMargin: 90
-    };
-
-    let PagetitlePlugin = function(hook, vm) {
-        hook.doneEach(function() {
-            document.title += ' | nano.ui';
-        });
-    }
-
-    options.plugins = [
-        DemoPlugin, PagetitlePlugin
-    ];
-
-    if ( pi.Any.isEmpty(options) ) {
-        options.repo = 'https://github.com/vankizmann/nano-ui'
-    }
-
-    window.$docsify = options;
-</script>
-<script src="//unpkg.com/docsify@4.13.1/lib/docsify.min.js"></script>
-<script src="//unpkg.com/docsify@4.13.1/lib/plugins/search.min.js"></script>
-<script src="//unpkg.com/docsify@4.13.1/lib/plugins/emoji.min.js"></script>
+<script src="https://nano-ui.local/docs/dist/docs.js" defer></script>
 </body>
 </html>

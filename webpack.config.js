@@ -1,5 +1,7 @@
+const fs = require('fs');
 const path = require("path");
 const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -11,7 +13,7 @@ let themes = {
     './themes/macos/index-light.scss': './themes/light.css',
 };
 
-let config = {
+let libJs = {
     entry: ["./src/index.js"],
     module: {
         rules: [
@@ -39,6 +41,30 @@ let config = {
         }
     },
     plugins: []
+};
+
+let docJs = {
+    entry: ["./docs/src/js/index.js"],
+    module: {
+        rules: [
+            {
+                test: /.js$/,
+                include: [
+                    path.resolve('src'),
+                    path.resolve('node_modules/@kizmann/pico-js'),
+                ],
+                loader: 'babel-loader',
+                options: {
+                    configFile: path.resolve('babel.config.js')
+                },
+            }
+        ],
+    },
+    externals: {
+        // '@kizmann/pico-js': {
+        //     root: 'pi', commonjs2: '@kizmann/pico-js', commonjs: '@kizmann/pico-js', amd: '@kizmann/pico-js'
+        // }
+    }
 };
 
 let themeFn = (entry, target) => ({
@@ -70,21 +96,37 @@ let themeFn = (entry, target) => ({
 
 module.exports = function (env, argv) {
 
-    config.mode = argv.mode;
+    let docConfig = {
+        inject: false, base: 'https://nano-ui.local', logoSvg: '', loaderCss: ''
+    }
 
-    if ( argv.mode === 'development' ) {
-        config.devtool = 'eval-source-map';
+    if ( fs.existsSync('./assets/nano-ui-dark.svg') ) {
+        docConfig.logoSvg = fs.readFileSync('./assets/nano-ui-dark.svg', 'utf8');
+    }
+
+    if ( fs.existsSync('./docs/src/scss/theme/loader.scss') ) {
+        docConfig.loaderCss = fs.readFileSync('./docs/src/scss/theme/loader.scss', 'utf8');
     }
 
     if ( argv.mode === 'production' ) {
-        config.devtool = 'source-map';
+        docConfig.base = 'https://vankizmann.github.io/nano-ui';
+    }
+
+    libJs.mode = argv.mode;
+
+    if ( argv.mode === 'development' ) {
+        libJs.devtool = 'eval-source-map';
+    }
+
+    if ( argv.mode === 'production' ) {
+        libJs.devtool = 'source-map';
     }
 
     /**
      * @const __dirname
      */
 
-    let bundlerPackage = Object.assign({
+    let libJsBundle = Object.assign({
 
         output:{
             filename: "nano-ui.js",
@@ -93,7 +135,22 @@ module.exports = function (env, argv) {
             libraryTarget: "umd",
         }
 
-    }, config);
+    }, libJs);
+
+    let docJsBundle = Object.assign({
+
+        output:{
+            filename: "dist/docs.js",
+            path: path.resolve(__dirname, "docs"),
+        },
+
+        plugins: [
+            new HtmlWebpackPlugin(Object.assign({
+                template: path.resolve('./docs/index.template.html'),
+            }, docConfig))
+        ]
+
+    }, docJs);
 
     let themeList = [];
 
@@ -103,7 +160,7 @@ module.exports = function (env, argv) {
 
     if ( argv.mode === 'development' ) {
         return [
-            bundlerPackage, ...themeList
+            libJsBundle, docJsBundle, ...themeList
         ];
     }
 
@@ -111,7 +168,8 @@ module.exports = function (env, argv) {
         minimize: true
     });
 
-    bundlerPackage.plugins.push(loaderOptions);
+    libJsBundle.plugins.push(loaderOptions);
+    docJsBundle.plugins.push(loaderOptions);
 
     themeList.forEach((cfg) => {
         cfg.plugins.push(loaderOptions);
@@ -131,13 +189,14 @@ module.exports = function (env, argv) {
 
     optimization.minimizer.push(terser);
 
-    bundlerPackage.optimization = optimization;
+    libJsBundle.optimization = optimization;
+    docJsBundle.optimization = optimization;
 
     themeList.forEach((cfg) => {
         cfg.optimization = optimization;
     });
 
     return [
-        bundlerPackage, ...themeList
+        libJsBundle, docJsBundle, ...themeList
     ];
 }
