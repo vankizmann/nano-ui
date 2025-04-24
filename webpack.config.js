@@ -96,7 +96,9 @@ let themeFn = (entry, target) => ({
 
 module.exports = function (env, argv) {
 
-    docJs.mode = argv.mode;
+    libJs.mode = docJs.mode = argv.mode || 'development';
+
+    console.log('Mode:', libJs.mode, argv.mode);
 
     let docConfig = {
         inject: false, base: 'https://nano-ui.local', logoSvg: '', loaderCss: ''
@@ -113,8 +115,6 @@ module.exports = function (env, argv) {
     if ( argv.mode !== 'development' ) {
         docConfig.base = 'https://vankizmann.github.io/nano-ui';
     }
-
-    libJs.mode = argv.mode;
 
     if ( argv.mode === 'development' ) {
         libJs.devtool = 'eval-source-map';
