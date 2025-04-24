@@ -1,4 +1,5 @@
 @use 'sass:map';
+@use "../../../root/vars" as *;
 
 .n-info-column {
     color: $color-gray-60;

@@ -1,3 +1,6 @@
+/*!***************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
+  \***************************************************************************************************************************************************/
 @charset "UTF-8";
 .n-empty-icon {
   pointer-events: none;
@@ -7696,39 +7699,39 @@ div:not(.n-virtualscroller__row) > .n-virtualscroller__item {
 }
 
 .n-builder__element > .n-builder__frame {
-  background: rgb(238.63, 228.32, 242.745);
+  background: rgb(239.53, 221.62, 234.445);
 }
 
 .n-builder__element > .n-builder__frame .n-builder__element {
-  border-left: 2px solid #ca62f0;
-  border-right: 2px solid #ca62f0;
+  border-left: 2px solid #d31f9d;
+  border-right: 2px solid #d31f9d;
 }
 
 .n-builder__element .n-builder__element > .n-builder__frame {
-  background: rgb(228.555, 230.855, 243.655);
+  background: rgb(228.87, 228.51, 240.75);
 }
 
 .n-builder__element .n-builder__element > .n-builder__frame .n-builder__element {
-  border-left: 2px solid rgb(101.25, 123.35, 249.1);
-  border-right: 2px solid rgb(101.25, 123.35, 249.1);
+  border-left: 2px solid rgb(104.4, 99.9, 220.05);
+  border-right: 2px solid rgb(104.4, 99.9, 220.05);
 }
 
 .n-builder__element .n-builder__element .n-builder__element > .n-builder__frame {
-  background: rgb(241.685, 227.345, 234.295);
+  background: rgb(242, 225, 231.39);
 }
 
 .n-builder__element .n-builder__element .n-builder__element > .n-builder__frame .n-builder__element {
-  border-left: 2px solid rgb(232.55, 88.25, 155.5);
-  border-right: 2px solid rgb(232.55, 88.25, 155.5);
+  border-left: 2px solid rgb(235.7, 64.8, 126.45);
+  border-right: 2px solid rgb(235.7, 64.8, 126.45);
 }
 
 .n-builder__element .n-builder__element .n-builder__element .n-builder__element > .n-builder__frame {
-  background: rgb(225.89, 234.69, 236.7);
+  background: rgb(226.205, 232.345, 233.795);
 }
 
 .n-builder__element .n-builder__element .n-builder__element .n-builder__element > .n-builder__frame .n-builder__element {
-  border-left: 2px solid rgb(74.6, 161.7, 179.55);
-  border-right: 2px solid rgb(74.6, 161.7, 179.55);
+  border-left: 2px solid rgb(77.75, 138.25, 150.5);
+  border-right: 2px solid rgb(77.75, 138.25, 150.5);
 }
 
 div:not(.n-builder__body) > .n-builder__frame {

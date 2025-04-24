@@ -1,3 +1,6 @@
+/*!*******************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./docs/src/scss/index-light.scss ***!
+  \*******************************************************************************************************************************************************************/
 @charset "UTF-8";
 .grid {
   display: flex;
@@ -9608,14 +9611,14 @@ div {
 
 html, body {
   font-family: "Inter", sans-serif;
-  color: #111111;
+  color: #ffffff;
   font-size: 15px;
   font-variant-numeric: normal;
   font-feature-settings: normal;
 }
 
 body {
-  background: rgb(249.05, 249.05, 249.05);
+  background: rgb(121.55, 121.55, 121.55);
 }
 
 body.ready header {
@@ -9657,7 +9660,7 @@ h2 a, h2 a:active, h2 a:visited {
 }
 
 h1 a:hover, h2 a:hover {
-  color: #111111;
+  color: #ffffff;
 }
 
 h1 a, h2 a, h3 a {
@@ -9672,7 +9675,7 @@ h3 a:hover:after {
   margin-left: 15px;
   font-family: "Font Awesome 6 Free";
   font-weight: 900;
-  color: rgba(17, 17, 17, 0.4);
+  color: rgba(255, 255, 255, 0.4);
 }
 
 h1 a:after {
@@ -9688,7 +9691,7 @@ h3 a:after {
 }
 
 p {
-  color: #111111;
+  color: #ffffff;
 }
 
 hr {
@@ -9698,17 +9701,17 @@ hr {
 
 code {
   font-family: "JetBrains Mono", monospace;
-  color: rgb(133.4, 25.4, 101);
+  color: rgb(228.6, 120.6, 196.2);
   background: rgba(211, 31, 157, 0.2);
 }
 
 a, a:active, a:visited {
-  color: rgb(133.4, 25.4, 101);
+  color: rgb(228.6, 120.6, 196.2);
   text-decoration: none;
 }
 
 a:hover {
-  color: rgb(94.6, 22.6, 73);
+  color: rgb(237.4, 165.4, 215.8);
 }
 
 .hidden {
@@ -9737,13 +9740,13 @@ main .sidebar {
   top: 5px;
   left: 10px;
   width: calc(100% - 20px);
-  background: #ffffff;
+  background: #111111;
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   transition: max-width 0.15s ease;
   border-radius: 8px;
-  box-shadow: 0 4px 24px rgba(17, 17, 17, 0.1);
+  box-shadow: 0 4px 24px rgba(23, 41, 64.4, 0.1);
 }
 @media screen and (min-width: 768px) {
   main .sidebar {
@@ -9834,7 +9837,7 @@ main .sidebar-toggle .sidebar-toggle-button:before {
   content: "\f0c9";
   font-size: 22px;
   margin-left: -3px;
-  color: #111111;
+  color: #ffffff;
 }
 
 main .sidebar-toggle .sidebar-toggle-button:after {
@@ -10090,12 +10093,12 @@ header .social a {
 }
 
 header .social.black a {
-  color: rgba(17, 17, 17, 0.9);
+  color: rgba(255, 255, 255, 0.9);
   background: rgb(231.2, 231.2, 231.2);
 }
 
 header .social.blue a {
-  color: #111111;
+  color: #ffffff;
   background: rgba(211, 31, 157, 0.5);
 }
 
@@ -10127,7 +10130,7 @@ header .theme a {
 }
 
 header .theme a.active {
-  color: #111111;
+  color: #ffffff;
 }
 
 .search {
@@ -10150,9 +10153,9 @@ header .theme a.active {
 .search .input-wrap {
   position: relative;
   border-radius: 500px;
-  background: #ffffff;
+  background: #111111;
   border: 1px solid rgb(231.2, 231.2, 231.2);
-  box-shadow: 0 0 20px rgba(249.05, 249.05, 249.05, 0.7);
+  box-shadow: 0 0 20px rgba(121.55, 121.55, 121.55, 0.7);
 }
 
 .search .input-wrap:before {
@@ -10185,7 +10188,7 @@ header .theme a.active {
 }
 
 .search .input-wrap input {
-  color: #111111;
+  color: #ffffff;
   height: 52px;
   line-height: 52px;
   padding: 0 42px 0 42px;
@@ -10216,9 +10219,9 @@ header .theme a.active {
   max-height: calc(100vh - 260px);
   padding: 20px;
   border-radius: 8px;
-  background: #ffffff;
-  border: 1px solid rgba(17, 17, 17, 0.1);
-  box-shadow: 0 1px 24px rgba(17, 17, 17, 0.15);
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 1px 24px rgba(23, 41, 64.4, 0.15);
   transform: translateX(-50%);
 }
 
@@ -10237,7 +10240,7 @@ header .theme a.active {
 }
 
 .search .matching-post h2 {
-  color: #111111;
+  color: #ffffff;
   font-size: 16px;
   margin: 0 0 5px 0 !important;
 }
@@ -10295,7 +10298,7 @@ header .theme a.active {
 .sidebar-nav li > a:has(+ .app-sub-sidebar),
 .sidebar-nav li > a:active:has(+ .app-sub-sidebar),
 .sidebar-nav li > a:visited:has(+ .app-sub-sidebar) {
-  color: rgb(152.8, 26.8, 115);
+  color: rgb(224.2, 98.2, 186.4);
   background: rgba(211, 31, 157, 0.1);
 }
 
@@ -10335,8 +10338,8 @@ header .theme a.active {
   position: relative;
   margin-bottom: 30px;
   border-radius: 8px;
-  background: #ffffff;
-  box-shadow: 0 1px 24px rgba(17, 17, 17, 0.1);
+  background: #111111;
+  box-shadow: 0 1px 24px rgba(23, 41, 64.4, 0.1);
 }
 
 .markdown-section .demo-options {
@@ -10386,8 +10389,8 @@ header .theme a.active {
   position: relative;
   word-wrap: normal;
   margin-bottom: 30px;
-  background: #ffffff;
-  box-shadow: 0 1px 24px rgba(17, 17, 17, 0.1);
+  background: #111111;
+  box-shadow: 0 1px 24px rgba(23, 41, 64.4, 0.1);
 }
 
 .markdown-section pre > code {
@@ -10419,15 +10422,15 @@ header .theme a.active {
 }
 
 .token.property {
-  color: rgb(219.3, 164.9, 56.1);
+  color: rgb(255, 200.6, 91.8);
 }
 
 .token.tag {
-  color: rgb(42.5, 119, 218.45);
+  color: rgb(78.2, 154.7, 254.15);
 }
 
 .token.string {
-  color: rgb(66.3, 184.45, 214.2);
+  color: rgb(102, 220.15, 249.9);
 }
 
 .token.selector {
@@ -10435,7 +10438,7 @@ header .theme a.active {
 }
 
 .token.attr-name {
-  color: rgb(7.65, 169.15, 127.5);
+  color: rgb(43.35, 204.85, 163.2);
 }
 
 .token.entity, .token.url, .language-css .token.string, .style .token.string {
@@ -10443,19 +10446,19 @@ header .theme a.active {
 }
 
 .token.attr-value, .token.control, .token.directive, .token.unit {
-  color: rgb(214.2, 73.1, 96.05);
+  color: rgb(249.9, 108.8, 131.75);
 }
 
 .token.keyword, .token.function {
-  color: rgb(219.3, 164.9, 56.1);
+  color: rgb(255, 200.6, 91.8);
 }
 
 .token.statement, .token.regex, .token.atrule {
-  color: rgb(66.3, 184.45, 214.2);
+  color: rgb(102, 220.15, 249.9);
 }
 
 .token.placeholder, .token.variable {
-  color: rgb(66.3, 184.45, 214.2);
+  color: rgb(102, 220.15, 249.9);
 }
 
 .token.deleted {
@@ -10485,7 +10488,7 @@ header .theme a.active {
 
 .markdown-section pre > code {
   background-color: transparent;
-  color: #111111;
+  color: #ffffff;
   display: block;
   line-height: inherit;
   margin: 0 2px;
@@ -10523,9 +10526,9 @@ table {
   max-width: 100%;
   border-radius: 8px;
   border-collapse: collapse;
-  background: #ffffff;
+  background: #111111;
   overflow-x: auto;
-  box-shadow: 0 1px 24px rgba(17, 17, 17, 0.1);
+  box-shadow: 0 1px 24px rgba(23, 41, 64.4, 0.1);
 }
 
 table th,
@@ -10563,7 +10566,7 @@ table thead tr th:not(:last-child) {
 
 table tbody tr td {
   padding: 14px 24px;
-  color: #111111;
+  color: #ffffff;
   font-size: 14px;
 }
 
@@ -10572,7 +10575,7 @@ table tbody tr td code {
 }
 
 table tbody tr td:nth-child(1) code {
-  color: rgb(32, 77, 135.5);
+  color: rgb(151, 196, 254.5);
 }
 
 table tbody tr:not(:last-child) td {

@@ -1,4 +1,5 @@
-@use "../root/vars";
+@use "../root/vars" as *;
+@use "../mixins/media" as *;
 
 header {
     overflow: hidden;

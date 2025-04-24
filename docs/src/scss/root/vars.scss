@@ -29,6 +29,10 @@ $color-gray-85:         color.mix($color-black, $color-white, 0.85 * 100%) !defa
 $color-gray-90:         color.mix($color-black, $color-white, 0.90 * 100%) !default;
 $color-gray-95:         color.mix($color-black, $color-white, 0.95 * 100%) !default;
 
+$color-form:            $color-gray-05 !default;
+$color-input:           $color-background !default;
+$color-input-off:       $color-gray-05 !default;
+
 $color-secondary:       #d31f9d !default;
 $color-primary:         #2F89FE !default;
 
