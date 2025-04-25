@@ -1,4 +1,4 @@
-import { Dom, Cookie } from "@kizmann/pico-js";
+import { Any, Dom, Cookie } from "@kizmann/pico-js";
 
 const theme = Cookie.get('theme', 'dark');
 
@@ -29,3 +29,36 @@ Dom.find(document.body).on('keydown', (e) => {
         Dom.find('input[type="search"]').value('').fire('input');
     }
 });
+
+Dom.find(window).on('scroll', () => {
+    if ( ! Dom.find('.sidebar-nav').inviewY(0.1) ) {
+        Dom.find(document.body).addClass('sticky-sub-nav');
+    } else {
+        Dom.find(document.body).removeClass('sticky-sub-nav');
+    }
+});
+
+Dom.find(window).on('resize', () => {
+
+    let left = Dom.find('.sidebar-nav')
+        .offsetLeft();
+
+    if ( Any.isEmpty(left) ) {
+        return;
+    }
+
+    let width = Dom.find('.sidebar-nav')
+        .width();
+
+    if ( Any.isEmpty(width) ) {
+        return;
+    }
+
+    Dom.find('.app-sub-sidebar').css({
+        left: left + 'px', width: width + 'px'
+    });
+});
+
+Dom.complete(() => {
+    Dom.find(window).fire('resize').fire('scroll');
+}, 500);
