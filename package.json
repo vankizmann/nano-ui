@@ -30,7 +30,6 @@
         "copy-webpack-plugin": "^4.0.0",
         "cross-env": "^5.1",
         "css-loader": "^3.2.0",
-        "global": "^4.4.0",
         "html-webpack-plugin": "^5.0.0",
         "mini-css-extract-plugin": "^2.0.0",
         "postcss": "^8.4.31",
@@ -47,6 +46,7 @@
     "dependencies": {
         "@kizmann/pico-js": "^0.5.5",
         "docsify": "^4.13.1",
-        "moment": "^2.30.1"
+        "moment": "^2.30.1",
+        "global": "^4.4.0"
     }
 }
