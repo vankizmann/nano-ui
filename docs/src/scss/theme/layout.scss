@@ -32,6 +32,7 @@ main .sidebar {
 
     @include media('sm') {
         position: relative;
+        left: 0;
         width: 220px;
         max-width: 220px;
         padding: 0;
@@ -61,13 +62,22 @@ body.close main .sidebar {
 }
 
 main .sidebar-nav {
-    width: 340px;
+    width: 100%;
     padding: 20px;
     display: none;
 
     @include media('sm') {
         display: block;
         padding: 0;
+        width: 220px;
+    }
+
+    @include media('md') {
+        width: 260px;
+    }
+
+    @include media('lg') {
+        width: 320px;
     }
 }
 
@@ -150,6 +160,14 @@ body.close main .sidebar-toggle .sidebar-toggle-button:after {
 .content > article {
     position: relative;
     padding: 30px;
+
+    @include media('md') {
+        padding: 30px 40px;
+    }
+
+    @include media('lg') {
+        padding: 30px 60px;
+    }
 }
 
 .content > article:before {

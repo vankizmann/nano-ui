@@ -9,7 +9,7 @@
     position: relative;
     word-wrap: normal;
     margin-bottom: 30px;
-    background: $color-input;
+    background: color.mix($color-black, $color-white, 95%);
     box-shadow: 0 1px 24px rgba($color-shadow, 0.1);
 }
 
@@ -42,15 +42,15 @@
 }
 
 .token.property {
-    color: color.mix($color-foreground, $color-warning, 15%);
+    color: color.mix($color-white, $color-warning, 15%);
 }
 
 .token.tag {
-    color: color.mix($color-foreground, $color-primary, 15%);
+    color: color.mix($color-white, $color-primary, 15%);
 }
 
 .token.string {
-    color: color.mix($color-foreground, $color-info, 15%);
+    color: color.mix($color-white, $color-info, 15%);
 }
 
 .token.selector {
@@ -58,7 +58,7 @@
 }
 
 .token.attr-name {
-    color: color.mix($color-foreground, $color-success, 15%);
+    color: color.mix($color-white, $color-success, 15%);
 }
 
 .token.entity, .token.url, .language-css .token.string, .style .token.string {
@@ -66,19 +66,19 @@
 }
 
 .token.attr-value, .token.control, .token.directive, .token.unit {
-    color: color.mix($color-foreground, $color-danger, 15%);
+    color: color.mix($color-white, $color-danger, 15%);
 }
 
 .token.keyword, .token.function {
-    color: color.mix($color-foreground, $color-warning, 15%);
+    color: color.mix($color-white, $color-warning, 15%);
 }
 
 .token.statement, .token.regex, .token.atrule {
-    color: color.mix($color-foreground, $color-info, 15%);
+    color: color.mix($color-white, $color-info, 15%);
 }
 
 .token.placeholder, .token.variable {
-    color: color.mix($color-foreground, $color-info, 15%);
+    color: color.mix($color-white, $color-info, 15%);
 }
 
 .token.deleted {
@@ -108,7 +108,7 @@
 
 .markdown-section pre > code {
     background-color: transparent;
-    color: $color-foreground;
+    color: $color-white;
     display: block;
     line-height: inherit;
     margin: 0 2px;

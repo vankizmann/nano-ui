@@ -114,8 +114,6 @@ module.exports = function (env, argv) {
         docConfig.base = 'https://vankizmann.github.io/nano-ui';
     }
 
-    console.log('Mode:', libJs.mode, docConfig);
-
     if ( argv.mode === 'development' ) {
         libJs.devtool = 'eval-source-map';
     }

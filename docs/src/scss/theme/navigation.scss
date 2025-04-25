@@ -22,11 +22,17 @@
 }
 
 .sidebar-nav a {
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
     transition: color 0.2s, background 0.2s;
 }
 
-.sidebar-nav a, .sidebar-nav a:active, .sidebar-nav a:visited {
-    display: inline-block;
+.sidebar-nav a,
+.sidebar-nav a:active,
+.sidebar-nav a:visited {
     font-size: 15px;
     color: $color-gray-80;
     padding: 4px 8px;
@@ -44,6 +50,14 @@
 }
 
 .sidebar-nav li.active > a,
+.sidebar-nav li.active > a:active,
+.sidebar-nav li.active > a:visited {
+    color: color.mix($color-foreground, $color-secondary, 30%) !important;
+}
+
+.sidebar-nav > ul > li > ul > li.active > a,
+.sidebar-nav > ul > li > ul > li.active > a:active,
+.sidebar-nav > ul > li > ul > li.active > a:visited,
 .sidebar-nav li > a:has(+ .app-sub-sidebar),
 .sidebar-nav li > a:active:has(+ .app-sub-sidebar),
 .sidebar-nav li > a:visited:has(+ .app-sub-sidebar) {
@@ -51,8 +65,32 @@
     background: rgba($color-secondary, 0.1);
 }
 
-.sidebar-nav ul ul ul li.active > a,
-.sidebar-nav ul ul ul li.active > a:active,
-.sidebar-nav ul ul ul li.active > a:visited {
-    color: $color-gray-90;
+.app-sub-sidebar {
+    display: none;
+}
+
+.app-sub-sidebar li a,
+.app-sub-sidebar li a:active,
+.app-sub-sidebar li a:visited {
+    padding: 0 8px;
+    font-size: 14px;
+    color: $color-gray-50;
+}
+
+body.sticky-sub-nav .app-sub-sidebar {
+    position: fixed;
+    overflow-y: auto;
+    top: 30px;
+    display: block;
+    max-height: calc(100vh - 60px);
+    padding: 20px;
+    border-radius: $lg-radius;
+    background: $color-input;
+    box-shadow: 0 1px 24px rgba($color-shadow, 0.1);
+}
+
+body.sticky-sub-nav .app-sub-sidebar li > a,
+body.sticky-sub-nav .app-sub-sidebar li > a:active,
+body.sticky-sub-nav .app-sub-sidebar li > a:visited {
+    font-size: 15px;
 }
