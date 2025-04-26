@@ -1,179 +1,140 @@
 # Checkbox
-Checkbox with diffrent styles.
 
-```vue
-<n-checbox v-model="checked">Your label</n-checbox>
+The `<n-checkbox>` component is a customizable checkbox component with various options to control its appearance and behavior. It can be used individually or as part of a `<n-checkbox-group>` for selecting multiple values.
+
+<hr>
+
+## Example
+
+```js [demo]
+pi.Obj.assign(window.VueData, {
+    checkboxBinds: {
+        size: 'md', 
+        disabled: false, 
+        type: 'primary', 
+        intermediate: false,
+        allowUncheck: false
+    },
+    checkboxValues: {
+        single: false,
+        group: ['option1']
+    }
+});
 ```
 
-### Checkbox
-
-```html
-/*vue*/
-
-<template>
-    <div class="grid grid--col grid--20-20">
-        <div class="col--1-1">
-            <n-checkbox v-model="checked">Check me</n-checkbox>
-        </div>
-        <div class="col--1-1">
-            <n-checkbox v-model="checked" :disabled="true">Can't check me</n-checkbox>
+```html [demo]
+<n-form>
+    <div class="demo-options">
+        <div class="grid grid--row grid--wrap grid--20-20">
+            <n-form-item class="col--1-1 col--6-12@sm col--3-12@lg" label="Size">
+                <n-select v-model="checkboxBinds.size" :options="sizes" />
+            </n-form-item>
+            <n-form-item class="col--1-1 col--6-12@sm col--3-12@lg" label="Type">
+                <n-select v-model="checkboxBinds.type" :options="types" />
+            </n-form-item>
+            <n-form-item class="col--1-1 col--6-12@sm col--3-12@lg" label="Disabled">
+                <n-switch v-model="checkboxBinds.disabled">Activate disable state</n-switch>
+            </n-form-item>
+            <n-form-item class="col--1-1 col--6-12@sm col--3-12@lg" label="AllowUncheck">
+                <n-switch v-model="checkboxBinds.allowUncheck">Enable allowUncheck</n-switch>
+            </n-form-item>
         </div>
     </div>
-</template>
-
-<script>
-    export default {
-        data()
-        {
-            return {
-                checked: true
-            };
-        }
-    } 
-</script>
-
-```
-
-### Grouped checkboxes
-
-```html
-/*vue*/
-
-<template>
-    <div class="grid grid--col grid--20-20">
-        <div class="col--1-1">
-            <n-checkbox-group v-model="checked">
-                <n-checkbox :global="true">Check all</n-checkbox>
-                <n-checkbox value="berlin">Berlin</n-checkbox>
-                <n-checkbox value="hamburg">Hamburg</n-checkbox>
-                <n-checkbox value="munich">Munich</n-checkbox>
-                <n-checkbox value="cologne">Cologne</n-checkbox>
-                <n-checkbox value="frankfurt">Frankfurt</n-checkbox>
-            </n-checkbox-group>
-        </div>
-        <div class="col--1-1">
-            <pre class="pretty">{{ checked }}</pre>
+    <div class="demo-display">
+        <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
+            <div class="col--1-1">
+                <h3>Single Checkbox</h3>
+            </div>
+            <div class="col--auto">
+                <n-checkbox v-model="checkboxValues.single" v-bind="checkboxBinds">Single checkbox option</n-checkbox>
+            </div>
+            <div class="col--flex-1-1">
+                <code style="white-space: initial">{{ checkboxValues.single }}</code>
+            </div>
         </div>
     </div>
-</template>
-
-<script>
-    export default {
-        data()
-        {
-            return {
-                checked: ['berlin']
-            };
-        }
-    } 
-</script>
-
-```
-
-### Vertical grouped checkboxes
-
-```html
-/*vue*/
-
-<template>
-    <div class="grid grid--col grid--20-20">
-        <div class="col--1-1">
-            <n-checkbox-group v-model="checked" align="vertical">
-                <n-checkbox :global="true">Check all</n-checkbox>
-                <n-checkbox value="berlin">Berlin</n-checkbox>
-                <n-checkbox value="hamburg">Hamburg</n-checkbox>
-                <n-checkbox value="munich">Munich</n-checkbox>
-                <n-checkbox value="cologne">Cologne</n-checkbox>
-                <n-checkbox value="frankfurt">Frankfurt</n-checkbox>
-            </n-checkbox-group>
-        </div>
-        <div class="col--1-1">
-            <pre class="pretty">{{ checked }}</pre>
+    <div class="demo-display">
+        <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
+            <div class="col--1-1">
+                <h3>Checkbox Group</h3>
+            </div>
+            <div class="col--auto">
+                <n-checkbox-group v-model="checkboxValues.group" :size="checkboxBinds.size">
+                    <n-checkbox value="option1" v-bind="checkboxBinds">Option 1</n-checkbox>
+                    <n-checkbox value="option2" v-bind="checkboxBinds">Option 2</n-checkbox>
+                    <n-checkbox value="option3" v-bind="checkboxBinds">Option 3</n-checkbox>
+                    <n-checkbox global v-bind="checkboxBinds">Select All</n-checkbox>
+                </n-checkbox-group>
+            </div>
+            <div class="col--flex-1-1">
+                <code style="white-space: initial">{{ checkboxValues.group }}</code>
+            </div>
         </div>
     </div>
-</template>
-
-<script>
-    export default {
-        data()
-        {
-            return {
-                checked: ['berlin']
-            };
-        }
-    } 
-</script>
-
-```
-
-### Checkbox sizes
-
-```html
-/*vue*/
-
-<template>
-    <div class="grid grid--col grid--20-20">
-        <div class="col--1-1">
-            <n-checkbox v-model="checked" size="small">Small</n-checkbox>
-            <n-checkbox v-model="checked">Default</n-checkbox>
-            <n-checkbox v-model="checked" size="large">Large</n-checkbox>
+    <div class="demo-display">
+        <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
+            <div class="col--1-1">
+                <h3>Vertical Alignment</h3>
+            </div>
+            <div class="col--auto">
+                <n-checkbox-group v-model="checkboxValues.group" :size="checkboxBinds.size" align="vertical">
+                    <n-checkbox value="option1" v-bind="checkboxBinds">Option 1</n-checkbox>
+                    <n-checkbox value="option2" v-bind="checkboxBinds">Option 2</n-checkbox>
+                    <n-checkbox value="option3" v-bind="checkboxBinds">Option 3</n-checkbox>
+                </n-checkbox-group>
+            </div>
         </div>
     </div>
-</template>
-
-<script>
-    export default {
-        data()
-        {
-            return {
-                checked: true
-            };
-        }
-    } 
-</script>
-
+</n-form>
 ```
 
-### Properties
-**value**  
-default: null  
-types: String  
-_Input value_
+<hr>
 
-**size**  
-default: 'default'  
-types: String  
-_Button size (small, default, large)_
+## Checkbox
 
-**round**  
-default: false  
-types: Boolean  
-_If button is rounded_
+| **Prop**        | **Type**  | **Default** | **Description**                                                                              |
+|-----------------|-----------|-------------|----------------------------------------------------------------------------------------------|
+| `modelValue`    | `Boolean` | `false`     | The current state of the checkbox.                                                           |
+| `value`         | `Any`     | `null`      | The value of the checkbox when used within a checkbox group.                                 |
+| `allowUncheck`  | `Boolean` | `false`     | If true, allows the checkbox to be unchecked even when disabled.                             |
+| `disabled`      | `Boolean` | `false`     | If true, disables the checkbox.                                                              |
+| `type`          | `String`  | `'primary'` | Sets the style type of the checkbox.                                                         |
+| `size`          | `String`  | `'md'`      | Sets the size of the checkbox (e.g., 'sm', 'md', 'lg').                                      |
+| `intermediate`  | `Boolean` | `false`     | If true, displays the checkbox in an intermediate state.                                     |
+| `global`        | `Boolean` | `false`     | If true and within a checkbox group, the checkbox acts as a "select all" toggle.             |
 
-**disabled**  
-default: false  
-types: Boolean  
-_If button uses disabled style and mode_
 
-**icon**  
-default: ''  
-types: String  
-_Icon class (fa fa-times)_
+| **Method**    | **Description**                                       |
+|---------------|-------------------------------------------------------|
+| `toggle()`    | Toggles the checkbox state.                           |
+| `check()`     | Sets the checkbox to checked state.                   |
+| `uncheck()`   | Sets the checkbox to unchecked state.                 |
 
-**iconDisabled**  
-default: false  
-types: Boolen  
-_If icon button will be disabled_
 
-**nativeType**  
-default: 'button'  
-types: String  
-_Native button type (a, button, div etc.)_
+| **Name**              | **Description**                             |
+|-----------------------|---------------------------------------------|
+| `$slots.default`      | Content for the checkbox label.             |
+| `$slots.label`        | Alternative slot for the checkbox label.    |
+| `$slots.checked`      | Custom content for the checked state.       |
+| `$slots.intermediate` | Custom content for the intermediate state.  |
 
-### Events
-```javascript
-    /* Allows all types which are supported by native type, but overrides default input event */
-    NDraggable.$on('input', (value) => {
-        console.log(value);
-    });
-```
+<hr>
+
+## Checkbox Group
+
+| **Prop**     | **Type** | **Default**  | **Description**                                             |
+|--------------|----------|--------------|-------------------------------------------------------------|
+| `modelValue` | `Array`  | `[]`         | Array of selected values from checkboxes in the group.      |
+| `size`       | `String` | `'md'`       | Sets the size of all checkboxes in the group.               |
+| `align`      | `String` | `'horizontal'`| Sets the alignment of checkboxes ('horizontal' or 'vertical'). |
+
+| **Method**    | **Description**                                                      |
+|---------------|----------------------------------------------------------------------|
+| `toggleAll()` | Toggles all checkboxes in the group.                                 |
+| `checkAll()`  | Checks all checkboxes in the group.                                  |
+| `uncheckAll()`| Unchecks all checkboxes in the group.                                |
+| `isChecked(value)` | Returns whether a checkbox with the specified value is checked. |
+
+| **Name**         | **Description**                             |
+|------------------|---------------------------------------------|
+| `$slots.default` | Place to put all checkbox components.       |
