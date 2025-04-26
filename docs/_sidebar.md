@@ -15,7 +15,10 @@
   - [Cascader](files/form/cascader.md)
   - [Datepicker](files/form/datepicker.md)
   - [Timepicker](files/form/timepicker.md)
+  - [Datetimepicker](files/form/datetimepicker.md)
+  - [Durationpicker](files/form/durationpicker.md)
   - [Transfer](files/form/transfer.md)
+  - [Slider](files/form/slider.md)
 
 - Data
   - [Table](files/data/table.md)

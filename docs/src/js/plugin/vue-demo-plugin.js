@@ -17,6 +17,7 @@ export const VueDemoPlugin = function (hook, vm) {
         'warning': 'Warning',
         'danger': 'Danger',
         'info': 'Info',
+        'default': 'Default',
     };
 
     window.DefaultVueData.sizes = {
@@ -67,7 +68,7 @@ export const VueDemoPlugin = function (hook, vm) {
 
     hook.afterEach(function (html) {
 
-        html = html.replace(/<code>(Mixed|Any|String|Boolean|Array|Object)<\/code>/gm,
+        html = html.replace(/<code>(Mixed|Any|String|Number|Boolean|Array|Object)<\/code>/gm,
             '<code data-type="$1">$1</code>');
 
         return '<div id="vue-remote">' + html + '</div>';
@@ -78,8 +79,27 @@ export const VueDemoPlugin = function (hook, vm) {
         let options = {
             data: function () {
                 return Obj.clone(window.VueData);
-            }
+            },
         };
+
+        options.methods = {
+            print: (arg) => {
+
+                if ( ! Any.isEmpty(arg) ) {
+                    return arg;
+                }
+
+                if ( Any.isNull(arg) ) {
+                    return 'null';
+                }
+
+                if ( Any.isString(arg) ) {
+                    return "''";
+                }
+
+                return arg;
+            }
+        }
 
         // Create vue instance
         window.VueRemote = window.Vue.createApp(options);

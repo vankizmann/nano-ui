@@ -1,164 +1,180 @@
 # Cascader
-Drag and drop list or tree.
 
-```html
-/*vue*/
-<template>
-    <div>
-        <n-cascader v-model="value" :items="items" label-prop="label"></n-cascader>
-    </div>
-</template>
-<script>
-    export default {
-        methods: {
-                    
-            generator(count = 10, depth = 1)
-            {
-                if ( ! depth ) {
-                    return [];
+The `<n-cascader>` component is a dropdown selection component for navigating hierarchical data. It allows users to select from cascading submenus that appear based on previous selections.
+
+<hr>
+
+## Example
+
+```js [demo]
+pi.Obj.assign(window.VueData, {
+    cascaderBinds: {
+        size: 'md', 
+        type: 'primary',
+        disabled: false,
+        clearable: true
+    },
+    cascaderValue: [],
+    cascaderOptions: [
+        {
+            value: 'electronics',
+            label: 'Electronics',
+            children: [
+                {
+                    value: 'smartphones',
+                    label: 'Smartphones',
+                    children: [
+                        { value: 'apple', label: 'Apple' },
+                        { value: 'samsung', label: 'Samsung' },
+                        { value: 'xiaomi', label: 'Xiaomi' }
+                    ]
+                },
+                {
+                    value: 'laptops',
+                    label: 'Laptops',
+                    children: [
+                        { value: 'dell', label: 'Dell' },
+                        { value: 'hp', label: 'HP' },
+                        { value: 'lenovo', label: 'Lenovo' }
+                    ]
                 }
-                
-                if ( ! this.total ) {
-                    this.total = 0;
-                }
-                
-                return pi.Arr.each(pi.Arr.make(count), () => {
-                        
-                    this.total++;
-   
-                    return {
-                        label: 'Item ' + this.total,
-                        value: 'value-' + this.total,
-                        children: this.generator(count, depth - 1)
-                    };
-                })
-            }
-            
+            ]
         },
-        data() {
-            return {
-                items: this.generator(10, 2), value: ['value-1']
-            }
+        {
+            value: 'clothing',
+            label: 'Clothing',
+            children: [
+                {
+                    value: 'mens',
+                    label: 'Men\'s',
+                    children: [
+                        { value: 'shirts', label: 'Shirts' },
+                        { value: 'pants', label: 'Pants' },
+                        { value: 'shoes', label: 'Shoes' }
+                    ]
+                },
+                {
+                    value: 'womens',
+                    label: 'Women\'s',
+                    children: [
+                        { value: 'dresses', label: 'Dresses' },
+                        { value: 'skirts', label: 'Skirts' },
+                        { value: 'shoes', label: 'Shoes' }
+                    ]
+                }
+            ]
         }
-    }
-</script>
+    ]
+});
 ```
 
-### Properties
-**items**  
-default: []  
-types: Array  
-_All items which will be cascader, needs to hold Objects_
-
-**use**  
-default: null  
-types: String  
-_Component which will be rendered instead of default scoped slot (Cascader)_
-
-**useBefore**  
-default: null  
-types: String  
-_Component which will be rendered instead of before scoped slot (Non cascader)_
-
-**useAfter**  
-default: null  
-types: String  
-_Component which will be rendered instead of after scoped slot (Non cascader)_
-
-**selected**  
-default: null  
-types: Array  
-_Array with all selected items can be passed with this prop aswell_
-
-**depth**  
-default: 0  
-types: Number  
-_Current level of depth (used in tree)_
-
-**group**  
-default: ['default']  
-types: Array  
-_Cascader group_
-
-**safezone**  
-default: ['default']  
-types: Number, Function  
-_Safezone for before and after_
-
-```javascript
-/* height: 40px; before: 0-10px; inner: 10-30px; after: 30-40px */
-(height) => height * 0.25;
+```html [demo]
+<n-form>
+    <div class="demo-options">
+        <div class="grid grid--row grid--wrap grid--20-20">
+            <n-form-item class="col--1-1 col--6-12@sm col--3-12@lg" label="Size">
+                <n-select v-model="cascaderBinds.size" :options="sizes" />
+            </n-form-item>
+            <n-form-item class="col--1-1 col--6-12@sm col--3-12@lg" label="Type">
+                <n-select v-model="cascaderBinds.type" :options="types" />
+            </n-form-item>
+            <n-form-item class="col--1-1 col--6-12@sm col--3-12@lg" label="Disabled">
+                <n-switch v-model="cascaderBinds.disabled">Disable cascader</n-switch>
+            </n-form-item>
+            <n-form-item class="col--1-1 col--6-12@sm col--3-12@lg" label="Clearable">
+                <n-switch v-model="cascaderBinds.clearable">Enable clear button</n-switch>
+            </n-form-item>
+            <n-form-item class="col--1-1 col--6-12@sm col--3-12@lg" label="Trigger">
+                <n-select v-model="cascaderBinds.trigger" options-value="$value" :options="['hover', 'click']" />
+            </n-form-item>
+        </div>
+    </div>
+    <div class="demo-display">
+        <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
+            <div class="col--1-1">
+                <h3>Hover Cascader</h3>
+            </div>
+            <div class="col--1-1 col--1-2@md">
+                <n-cascader v-model="cascaderValue" trigger="hover" v-bind="cascaderBinds" :options="cascaderOptions"></n-cascader>
+            </div>
+            <div class="col--1-1 col--1-2@md">
+                <code style="white-space: initial">{{ $root.print(cascaderValue) }}</code>
+            </div>
+        </div>
+    </div>
+    <div class="demo-display">
+        <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
+            <div class="col--1-1">
+                <h3>Click Cascader</h3>
+            </div>
+            <div class="col--1-1 col--1-2@md">
+                <n-cascader v-model="cascaderValue" trigger="click" v-bind="cascaderBinds" :options="cascaderOptions"></n-cascader>
+            </div>
+            <div class="col--1-1 col--1-2@md">
+                <code style="white-space: initial">{{ $root.print(cascaderValue) }}</code>
+            </div>
+        </div>
+    </div>
+</n-form>
 ```
 
-**showEmpty**  
-default: true  
-types: Boolean  
-_Render empty field_
+<hr>
 
-**itemHeight**  
-default: 34  
-types: Number  
-_Used for render list (loads 25 items in chunks to improve browser reactivity)_
+## Cascader
 
-**uniqueProp**  
-default: 'id'  
-types: String  
-_Unique prop for selected list_
+| **Prop**        | **Type**       | **Default**       | **Description**                                                                   |
+|-----------------|----------------|-------------------|-----------------------------------------------------------------------------------|
+| `modelValue`    | `Array`        | `[]`              | The current selected values.                                                      |
+| `clearValue`    | `Array`        | `[]`              | The value to set when clearing the selection.                                     |
+| `options`       | `Array`        | `[]`              | Array of options to display in the cascader.                                      |
+| `current`       | `Any`          | `null`            | Currently selected value.                                                         |
+| `placeholder`   | `String`       | `'Please select'` | Placeholder text when no option is selected.                                      |
+| `disabled`      | `Boolean`      | `false`           | If true, disables the cascader.                                                   |
+| `clearable`     | `Boolean`      | `false`           | If true, shows a button to clear the selection.                                   |
+| `size`          | `String`       | `'md'`            | Sets the size of the cascader (e.g., 'sm', 'md', 'lg').                           |
+| `type`          | `String`       | `'primary'`       | Sets the style type of the cascader.                                              |
+| `position`      | `String`       | `'bottom-start'`  | Position of the dropdown relative to the input.                                   |
+| `trigger`       | `String`       | `'hover'`         | Trigger mode for cascading menus ('hover' or 'click').                            |
+| `labelProp`     | `String`       | `'label'`         | Property name for option label.                                                   |
+| `valueProp`     | `String`       | `'value'`         | Property name for option value.                                                   |
+| `childProp`     | `String`       | `'children'`      | Property name for option children.                                                |
+| `disabledProp`  | `String`       | `'disabled'`      | Property name for option disabled state.                                          |
 
-**childProp**  
-default: null  
-types: String  
-_Children property for tree_
+| **Method**            | **Description**                                                      |
+|-----------------------|----------------------------------------------------------------------|
+| `clearCascader()`     | Clears the selected values.                                          |
 
-**transformDrop**  
-default: (item) => item  
-types: Function  
-_Transform property on drop_
+| **Event**             | **Description**                                                      |
+|-----------------------|----------------------------------------------------------------------|
+| `update:modelValue`   | Emitted when the selection changes.                                  |
+| `update:hover`        | Emitted when the hover state changes.                                |
 
-**insertNode**  
-default: true  
-types: Boolean, Function  
-_Determines if node will be added to list or just emits move_
+<hr>
 
-**removeNode**  
-default: true  
-types: Boolean, Function  
-_Determines if node will be removed from list or just emits move_
+## Cascader Panel
 
-**allowSelect**  
-default: (item, depth) => true  
-types: Boolean, Function  
-_Determines if node is selectable_
+| **Prop**        | **Type**       | **Default**       | **Description**                                                                   |
+|-----------------|----------------|-------------------|-----------------------------------------------------------------------------------|
+| `modelValue`    | `Array`        | `[]`              | The current selected values.                                                      |
+| `clearValue`    | `Array`        | `[]`              | The value to set when clearing the selection.                                     |
+| `hover`         | `Array`        | `[]`              | The current hover path.                                                           |
+| `options`       | `Array`        | `[]`              | Array of options to display in the panel.                                         |
+| `disabled`      | `Boolean`      | `false`           | If true, disables the panel.                                                      |
+| `size`          | `String`       | `'md'`            | Sets the size of the panel.                                                       |
+| `type`          | `String`       | `'primary'`       | Sets the style type of the panel.                                                 |
+| `trigger`       | `String`       | `'hover'`         | Trigger mode for cascading menus ('hover' or 'click').                            |
+| `labelProp`     | `String`       | `'label'`         | Property name for option label.                                                   |
+| `valueProp`     | `String`       | `'value'`         | Property name for option value.                                                   |
+| `childProp`     | `String`       | `'children'`      | Property name for option children.                                                |
+| `disabledProp`  | `String`       | `'disabled'`      | Property name for option disabled state.                                          |
 
-**allowDrag**  
-default: (item, depth) => true  
-types: Boolean, Function  
-_Determines if node is cascader_
+| **Method**            | **Description**                                                      |
+|-----------------------|----------------------------------------------------------------------|
+| `clearCascader()`     | Clears the selected values.                                          |
+| `hoverItem(cascade)`  | Sets the current hover path.                                         |
+| `selectItem(cascade)` | Selects the specified cascade path.                                  |
 
-**allowDrop**  
-default: (item, target, move, depth) => true  
-types: Boolean, Function  
-_Determines if node is droppable_
-
-**className**  
-default: ['n-cascader']  
-types: Array  
-_CSS classes for cascader list_
-
-### Events
-```javascript
-    /* Emits on data change */
-    NCascader.$on('input', (input) => {
-        console.log(input);
-    });
-    
-    /* Emits on move change */
-    NCascader.$on('input', (source, target, move) => {
-        console.log(source, target, move);
-    });
-    
-    /* Emits on selected change */
-    NCascader.$on('update:selected', (selected) => {
-        console.log(selected);
-    });
-```
+| **Event**             | **Description**                                                      |
+|-----------------------|----------------------------------------------------------------------|
+| `update:modelValue`   | Emitted when the selection changes.                                  |
+| `update:hover`        | Emitted when the hover path changes.                                 |
