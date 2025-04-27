@@ -25,6 +25,11 @@ export const VueDemoPlugin = function (hook, vm) {
         'horizontal': 'Horizontal',
     };
 
+    window.DefaultVueData.triggers = {
+        'click': 'Click',
+        'hover': 'Hover',
+    };
+
     window.DefaultVueData.sizes = {
         'xs': 'Mini',
         'sm': 'Small',

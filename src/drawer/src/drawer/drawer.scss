@@ -39,8 +39,7 @@
     flex-direction: column;
     min-width: 300px;
     max-width: 100%;
-    min-height: 0;
-    max-height: 100%;
+    height: 100vh;
     margin: auto;
     transform: translateX(0);
     transition: opacity 0.2s 0.1s ease-out, transform 0.2s 0.1s ease-out;
@@ -48,7 +47,14 @@
 
 .n-drawer:not(.n-ready) .n-drawer__frame {
     opacity: 0;
+}
+
+.n-drawer--right:not(.n-ready) .n-drawer__frame {
     transform: translateX(20px);
+}
+
+.n-drawer--left:not(.n-ready) .n-drawer__frame {
+    transform: translateX(-20px);
 }
 
 .n-drawer--right > .n-drawer__frame {
