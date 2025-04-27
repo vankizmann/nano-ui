@@ -5,6 +5,7 @@
 - Form
 
   - [Form](files/form/form.md)
+  - [Form Group](files/form/form-group.md)
   - [Button](files/form/button.md)
   - [Switch](files/form/switch.md)
   - [Input](files/form/input.md)
@@ -12,6 +13,7 @@
   - [Radio](files/form/radio.md)
   - [Checkbox](files/form/checkbox.md)
   - [Select](files/form/select.md)
+  - [File](files/form/file.md)
   - [Cascader](files/form/cascader.md)
   - [Datepicker](files/form/datepicker.md)
   - [Timepicker](files/form/timepicker.md)
@@ -23,6 +25,7 @@
 - Data
   - [Table](files/data/table.md)
   - [Paginator](files/data/paginator.md)
+  - [Preview](files/data/preview.md)
   - [Draggable](files/data/draggable.md)
   - [Virtualscroller](files/data/virtualscroller.md)
 

@@ -20,6 +20,11 @@ export const VueDemoPlugin = function (hook, vm) {
         'default': 'Default',
     };
 
+    window.DefaultVueData.aligns = {
+        'vertical': 'Vertical',
+        'horizontal': 'Horizontal',
+    };
+
     window.DefaultVueData.sizes = {
         'xs': 'Mini',
         'sm': 'Small',

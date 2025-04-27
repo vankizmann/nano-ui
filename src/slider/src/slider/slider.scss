@@ -39,6 +39,10 @@
     border-radius: 500px;
 }
 
+.n-disabled .n-slider__handle {
+    cursor: not-allowed;
+}
+
 .n-slider__handle span {
     pointer-events: none;
     position: absolute;

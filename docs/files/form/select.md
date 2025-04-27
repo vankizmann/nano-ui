@@ -68,8 +68,6 @@ pi.Obj.assign(window.VueData, {
                 <code style="white-space: initial">{{ selectValues.single }}</code>
             </div>
         </div>
-    </div>
-    <div class="demo-display">
         <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
             <div class="col--1-1">
                 <h3>Multiple Select</h3>
@@ -81,8 +79,6 @@ pi.Obj.assign(window.VueData, {
                 <code style="white-space: initial">{{ selectValues.multi1 }}</code>
             </div>
         </div>
-    </div>
-    <div class="demo-display">
         <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
             <div class="col--1-1">
                 <h3>Multiple Select with allowCreate</h3>

@@ -5,6 +5,15 @@
     opacity: 0.7;
 }
 
+.n-button--default:not(.n-button--link) {
+    color: $color-foreground;
+    background: rgba($color-foreground, 0.05);
+}
+
+.n-button--default:not(.n-button--link):hover {
+    background: rgba($color-foreground, 0.15);
+}
+
 @each $color, $values in $colors {
 
     $-color-base: map.get($values, 'base');

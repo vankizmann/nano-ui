@@ -51,8 +51,6 @@ pi.Obj.assign(window.VueData, {
                 <code style="white-space: initial">{{ $root.print(timeValue) }}</code>
             </div>
         </div>
-    </div>
-    <div class="demo-display">
         <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
             <div class="col--1-1">
                 <h3>Without seconds</h3>
@@ -64,8 +62,6 @@ pi.Obj.assign(window.VueData, {
                 <code style="white-space: initial">{{ $root.print(timeValue) }}</code>
             </div>
         </div>
-    </div>
-    <div class="demo-display">
         <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
             <div class="col--1-1">
                 <h3>Custom Intervals</h3>
