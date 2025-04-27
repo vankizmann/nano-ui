@@ -239,6 +239,10 @@ export default {
 
         onMousedown(event)
         {
+            if ( this.disabled ) {
+                return;
+            }
+
             if ( ! Arr.has([0, 1], event.which) ) {
                 return;
             }
@@ -357,6 +361,7 @@ export default {
     {
         let classList = [
             'n-slider',
+            'n-slider--' + this.type,
             'n-slider--' + this.size
         ];
 

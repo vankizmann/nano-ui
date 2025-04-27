@@ -62,12 +62,7 @@ pi.Obj.assign(window.VueData, {
             <div class="col--auto">
                 <n-switch :model-value="false" v-bind="switchBinds" on-type="info" off-type="default">Info</n-switch>
             </div>
-            <div class="col--flex-1-1">
-                <code style="white-space: initial">{{ switchValues.standard }}</code>
-            </div>
         </div>
-    </div>
-    <div class="demo-display">
         <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
             <div class="col--1-1">
                 <h3>With custom values</h3>

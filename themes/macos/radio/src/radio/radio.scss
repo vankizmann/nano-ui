@@ -12,7 +12,7 @@
 }
 
 .n-radio__radio span {
-    background: $color-black;
+    background: $color-foreground;
 }
 
 @each $color, $values in $colors {

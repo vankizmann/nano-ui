@@ -84,9 +84,6 @@ pi.Obj.assign(window.VueData, {
             <n-form-item class="col--1-1 col--6-12@sm col--3-12@lg" label="Clearable">
                 <n-switch v-model="cascaderBinds.clearable">Enable clear button</n-switch>
             </n-form-item>
-            <n-form-item class="col--1-1 col--6-12@sm col--3-12@lg" label="Trigger">
-                <n-select v-model="cascaderBinds.trigger" options-value="$value" :options="['hover', 'click']" />
-            </n-form-item>
         </div>
     </div>
     <div class="demo-display">
@@ -101,8 +98,6 @@ pi.Obj.assign(window.VueData, {
                 <code style="white-space: initial">{{ $root.print(cascaderValue) }}</code>
             </div>
         </div>
-    </div>
-    <div class="demo-display">
         <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
             <div class="col--1-1">
                 <h3>Click Cascader</h3>

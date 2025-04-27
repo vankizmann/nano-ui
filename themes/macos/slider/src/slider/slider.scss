@@ -1,21 +1,41 @@
+@use "sass:map";
 @import "../../../root/vars";
 
 .n-slider__bar {
     background: $color-gray-10;
 }
 
-.n-slider__range {
-    background: $color-primary;
+.n-slider.n-disabled .n-slider__range {
+    background: $color-gray-50;
 }
 
 .n-slider__handle {
     background: $color-white;
-    border: 6px solid $color-primary;
     box-shadow: 0 0 4px rgba($color-shadow, 0.15);
+}
+
+.n-slider.n-disabled .n-slider__handle {
+    border: 6px solid $color-gray-50;
 }
 
 .n-slider__handle span {
     color: $color-white;
     background: rgba($color-black, 0.8);
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map.get($values, 'base');
+    $-color-light: map.get($values, 'light');
+    $-color-dark: map.get($values, 'dark');
+
+    .n-slider--#{$color}:not(.n-disabled) .n-slider__range {
+        background: $-color-base;
+    }
+
+    .n-slider--#{$color}:not(.n-disabled) .n-slider__handle {
+        border: 6px solid $-color-base;
+    }
+
 }
 
