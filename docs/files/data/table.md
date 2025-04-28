@@ -1,6 +1,6 @@
 # Table
 
-The `<n-table>` component is a comprehensive data table solution with features for sorting, filtering, selection, and row expansion. Used together with `<n-table-column>`, it provides a flexible way to display and interact with structured data.
+The `<n-table>` component is a comprehensive data table solution with features for sorting, filtering, selection, row expansion and full drag and drop support. Used together with `<n-table-column>`, it provides a flexible way to display and interact with structured data.
 
 <hr>
 
@@ -13,6 +13,7 @@ pi.Obj.assign(window.VueData, {
         renderHandle: true,
         childProp: 'cities',
         draggable: true,
+        itemHeight: 80,
     }
 });
 ```
@@ -21,21 +22,48 @@ pi.Obj.assign(window.VueData, {
 <n-form>
     <div class="demo-options">
         <div class="grid grid--row grid--wrap grid--20-20">
-            <n-form-item label="Draggable" class="col--auto">
+            <n-form-item label="Draggable" class="col--1-1 col--6-12@sm col--3-12@lg" >
                 <n-switch v-model="tableBinds.draggable">Activate drag and drop</n-switch>
-            </n-form-item>
-            <n-form-item label="DragHandle" class="col--auto">
-                <n-switch v-model="tableBinds.renderHandle">Render drag handle</n-switch>
             </n-form-item>
         </div>
     </div>
     <div class="demo-display">
-        <n-table style="height: 600px;" v-model:items="demoItems" :render-expand="true" :item-height="80" :use-keys="true" :threshold="101" v-bind="tableBinds">
-            <n-table-column label="Name" type="string" prop="name" :fluid="true" :sort="true" :filter="true"></n-table-column>
-            <n-table-column label="Population" type="string" prop="population" :fluid="true" :sort="true" :filter="true"></n-table-column>
-            <n-table-column label="Size" type="string" prop="size" :fluid="true" :sort="true" :filter="true"></n-table-column>
-            <n-table-column label="Image" type="image" prop="flag" :fixed-width="90"></n-table-column>
-        </n-table>
+        <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
+            <div class="col--1-1">
+                <h3>Table with select</h3>
+            </div>
+            <div class="col--1-1">
+                <n-table style="height: 600px;" v-model:items="demoItemsA" :render-select="true" v-bind="tableBinds">
+                    <n-table-column label="Name" type="string" prop="name" :fluid="true" :sort="true" :filter="true"></n-table-column>
+                    <n-table-column label="Population" type="string" prop="population" :fluid="true" :sort="true" :filter="true"></n-table-column>
+                    <n-table-column label="Size" type="string" prop="size" :fluid="true" :sort="true" :filter="true"></n-table-column>
+                    <n-table-column label="Image" type="image" prop="flag" :fixed-width="90"></n-table-column>
+                </n-table>
+            </div>
+            <div class="col--1-1">
+                <h3>Table with expand</h3>
+            </div>
+            <div class="col--1-1">
+                <n-table style="height: 600px;" v-model:items="demoItemsB" :render-expand="true" v-bind="tableBinds">
+                    <n-table-column label="Name" type="string" prop="name" :fluid="true" :sort="true" :filter="true"></n-table-column>
+                    <n-table-column label="Population" type="string" prop="population" :fluid="true" :sort="true" :filter="true"></n-table-column>
+                    <n-table-column label="Size" type="string" prop="size" :fluid="true" :sort="true" :filter="true"></n-table-column>
+                    <n-table-column label="Image" type="image" prop="flag" :fixed-width="90"></n-table-column>
+                </n-table>
+            </div>
+            <div class="col--1-1">
+                <h3>Table with 10 000 items</h3>
+                <h4>Draggable is supported - but when you select all items at once and try to move your browser will crash.</h4>
+            </div>
+            <div class="col--1-1">
+                <n-table style="height: 600px;" v-model:items="demoItemsLarge" v-bind="tableBinds">
+                    <n-table-column label="Image" type="image" prop="image" :fixed-width="90"></n-table-column>
+                    <n-table-column label="Name" type="string" prop="name" :fluid="true"></n-table-column>
+                    <n-table-column label="ID" type="string" prop="id" :fluid="true"></n-table-column>
+                </n-table>
+            </div>
+        </div>
+        
     </div>
 </n-form>
 ```

@@ -80,10 +80,36 @@
     font-size: 12px;
     padding: 10px 14px;
     color: $color-gray-50;
-    margin-bottom: -5px;
+    margin-bottom: 0;
     text-transform: uppercase;
     border-radius: $md-radius;
     background: rgba($color-gray-50, 0.1);
+}
+
+.markdown-section .demo-display h3:last-child {
+    margin-bottom: -5px;
+}
+
+.markdown-section .demo-display h3:not(:last-child) {
+    border-radius: $md-radius $md-radius 0 0;
+}
+
+.markdown-section .demo-display h4 {
+    position: relative;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: $color-secondary;
+    background: rgba($color-secondary, 0.1);
+    border-radius: $md-radius;
+    margin-bottom: 0;
+}
+
+.markdown-section .demo-display h4:last-child {
+    margin-bottom: -5px;
+}
+
+.markdown-section .demo-display h3 + h4 {
+    border-radius: 0 0 $md-radius $md-radius;
 }
 
 .markdown-section .demo-display > .grid:not(:last-child) {

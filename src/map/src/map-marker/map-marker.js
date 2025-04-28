@@ -137,7 +137,7 @@ export default {
     {
         return (
             <div style="display: none;">
-                { this.$slots.default }
+                { this.$slots.default && this.$slots.default() }
             </div>
         );
     }
