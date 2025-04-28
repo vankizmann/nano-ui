@@ -4,9 +4,11 @@ import ItemHelper from "../helper/item-helper";
 
 export const VueDemoPlugin = function (hook, vm) {
 
+    let [demoItemsA, demoItemsB] = ItemHelper.chunkedList();
+
     // Global vue data
     window.VueData = window.DefaultVueData = {
-        demoItems: ItemHelper.get()
+        demoItemsA, demoItemsB, demoItemsLarge: ItemHelper.largeList(10000)
     };
 
     window.DefaultVueData.types = {

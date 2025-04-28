@@ -365,7 +365,7 @@ export default {
             let searchRegex = new RegExp(this.search, 'i');
 
             let searched = Arr.filter(this.elements, (option) => {
-                return option.label.match(searchRegex);
+                return Any.isString(option.label) && option.label.match(searchRegex);
             });
 
             this.searched = searched;
