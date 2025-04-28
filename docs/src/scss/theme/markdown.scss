@@ -35,6 +35,18 @@
     box-shadow: 0 1px 24px rgba($color-shadow, 0.1);
 }
 
+.loader-display {
+    overflow: hidden;
+    border: 1px solid $color-gray-10;
+    border-radius: $lg-radius;
+    padding: 20px;
+    background: $color-background;
+}
+
+.loader-display p:last-child {
+    margin-bottom: 0 !important;
+}
+
 .markdown-section .demo-options {
     position: relative;
     padding: 30px 40px 34px;

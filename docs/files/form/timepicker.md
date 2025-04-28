@@ -44,10 +44,10 @@ pi.Obj.assign(window.VueData, {
             <div class="col--1-1">
                 <h3>Basic Timepicker</h3>
             </div>
-            <div class="col--auto">
+            <div class="col--1-1 col--1-2@md">
                 <n-timepicker v-model="timeValue" v-bind="timepickerBinds"></n-timepicker>
             </div>
-            <div class="col--flex-1-1">
+            <div class="col--1-1 col--1-2@md">
                 <code style="white-space: initial">{{ $root.print(timeValue) }}</code>
             </div>
         </div>
@@ -55,10 +55,10 @@ pi.Obj.assign(window.VueData, {
             <div class="col--1-1">
                 <h3>Without seconds</h3>
             </div>
-            <div class="col--auto">
+            <div class="col--1-1 col--1-2@md">
                 <n-timepicker v-model="timeValue" v-bind="timepickerBinds" display-format="HH:mm"></n-timepicker>
             </div>
-            <div class="col--flex-1-1">
+            <div class="col--1-1 col--1-2@md">
                 <code style="white-space: initial">{{ $root.print(timeValue) }}</code>
             </div>
         </div>
@@ -66,10 +66,10 @@ pi.Obj.assign(window.VueData, {
             <div class="col--1-1">
                 <h3>Custom Intervals</h3>
             </div>
-            <div class="col--auto">
+            <div class="col--1-1 col--1-2@md">
                 <n-timepicker v-model="timeValue" v-bind="timepickerBinds" hours-interval="2" minutes-interval="15" seconds-interval="30"></n-timepicker>
             </div>
-            <div class="col--flex-1-1">
+            <div class="col--1-1 col--1-2@md">
                 <code style="white-space: initial">{{ $root.print(timeValue) }}</code>
             </div>
         </div>
