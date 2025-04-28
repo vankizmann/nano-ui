@@ -41,10 +41,10 @@ pi.Obj.assign(window.VueData, {
             <div class="col--1-1">
                 <h3>Basic Datetimepicker</h3>
             </div>
-            <div class="col--auto">
+            <div class="col--1-1 col--1-2@md">
                 <n-datetimepicker v-model="datetimeValue" v-bind="datetimepickerBinds" placeholder="Select date and time"></n-datetimepicker>
             </div>
-            <div class="col--flex-1-1">
+            <div class="col--1-1 col--1-2@md">
                 <code style="white-space: initial">{{ $root.print(datetimeValue) }}</code>
             </div>
         </div>
@@ -52,10 +52,10 @@ pi.Obj.assign(window.VueData, {
             <div class="col--1-1">
                 <h3>Custom Format Datetimepicker</h3>
             </div>
-            <div class="col--auto">
+            <div class="col--1-1 col--1-2@md">
                 <n-datetimepicker v-model="datetimeValue" v-bind="datetimepickerBinds" display-format="DD/MM/YYYY HH:mm:ss"></n-datetimepicker>
             </div>
-            <div class="col--flex-1-1">
+            <div class="col--1-1 col--1-2@md">
                 <code style="white-space: initial">{{ $root.print(datetimeValue) }}</code>
             </div>
         </div>

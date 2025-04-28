@@ -45,10 +45,10 @@ pi.Obj.assign(window.VueData, {
             <div class="col--1-1">
                 <h3>Single Datepicker</h3>
             </div>
-            <div class="col--auto">
+            <div class="col--1-1 col--1-2@md">
                 <n-datepicker v-model="dateValues.single" v-bind="datepickerBinds"></n-datepicker>
             </div>
-            <div class="col--flex-1-1">
+            <div class="col--1-1 col--1-2@md">
                 <code style="white-space: initial">{{ $root.print(dateValues.single) }}</code>
             </div>
         </div>
@@ -56,10 +56,10 @@ pi.Obj.assign(window.VueData, {
             <div class="col--1-1">
                 <h3>Range Datepicker</h3>
             </div>
-            <div class="col--auto">
+            <div class="col--1-1 col--1-2@md">
                 <n-datepicker v-bind="datepickerBinds" range v-model:arrive="dateValues.arrive" v-model:depart="dateValues.depart" :month-panels="2"></n-datepicker>
             </div>
-            <div class="col--flex-1-1">
+            <div class="col--1-1 col--1-2@md">
                 <code style="white-space: initial">{{ $root.print([dateValues.arrive, dateValues.depart]) }}</code>
             </div>
         </div>

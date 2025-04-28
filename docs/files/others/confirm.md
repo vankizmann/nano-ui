@@ -39,8 +39,8 @@ pi.Obj.assign(window.VueData, {
                 <n-confirm 
                     v-model:visible="confirmVisible" 
                     v-bind="confirmBinds"
-                    @confirm="Notify('Item deleted!', 'success')"
-                    @abort="Notify('Operation cancelled.', 'info')"
+                    @confirm="Alert('Item deleted!', 'success')"
+                    @abort="Notify('Operation cancelled.', 'warning')"
                 >
                     Are you sure you want to delete this item?<br>
                     This action cannot be undone.

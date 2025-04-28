@@ -1,13 +1,12 @@
 import { Dom, Obj, Arr, Any } from '@kizmann/pico-js';
 import { Install as NanoInstall } from '../../../../src/index.js';
+import ItemHelper from "../helper/item-helper";
 
 export const VueDemoPlugin = function (hook, vm) {
 
     // Global vue data
     window.VueData = window.DefaultVueData = {
-        // itemsMini: GenerateItems(50, 1),
-        // itemsMidi: GenerateItems(500, 1),
-        // itemsMaxi: GenerateItems(1000, 2),
+        demoItems: ItemHelper.get()
     };
 
     window.DefaultVueData.types = {
@@ -44,8 +43,8 @@ export const VueDemoPlugin = function (hook, vm) {
         'fa fa-trash': 'Trash'
     },
 
-        // Remote vue app
-        window.VueRemote = null;
+    // Remote vue app
+    window.VueRemote = null;
 
     hook.beforeEach(function (markdown) {
 
@@ -89,10 +88,13 @@ export const VueDemoPlugin = function (hook, vm) {
         let options = {
             data: function () {
                 return Obj.clone(window.VueData);
-            },
+            }
         };
 
         options.methods = {
+            items: (...args) => {
+                return ItemHelper.get(...args);
+            },
             print: (arg) => {
 
                 if ( ! Any.isEmpty(arg) ) {
