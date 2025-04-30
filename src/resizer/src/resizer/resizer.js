@@ -133,11 +133,13 @@ export default {
             this.bindSizechange();
         }
 
-        Event.bind('NResizer:move', 
-            this.forceWidth, this._.uid);
+        Event.bind('NResizer:move', (...args) => {
+            this.forceWidth(...args)
+        }, this._.uid);
 
-        Dom.find(window).on('resize', 
-            Any.debounce(this.onResize, 500), this._.uid);
+        Dom.find(window).on('resize', Any.debounce((...args) => {
+            this.onResize(...args)
+        }, 500), this._.uid);
     },
 
     updated()

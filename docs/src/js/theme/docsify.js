@@ -1,5 +1,6 @@
 import VueDemoPlugin from "../plugin/vue-demo-plugin.js";
 import PagetitlePlugin from "../plugin/title-plugin.js";
+import TablePlugin from "../plugin/table-plugin.js";
 
 let search = {
     namespace: 'nano-ui-docs', maxAge: 86400000, depth: 6
@@ -10,7 +11,7 @@ let options = {
 };
 
 options.plugins = [
-    VueDemoPlugin, PagetitlePlugin
+    VueDemoPlugin, PagetitlePlugin, TablePlugin
 ];
 
 window.$docsify = options;
