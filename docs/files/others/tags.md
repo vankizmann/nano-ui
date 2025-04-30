@@ -9,7 +9,7 @@ The `<n-tags>` component and its child `<n-tags-item>` components provide a way 
 ```js [demo]
 pi.Obj.assign(window.VueData, {
     tagsBinds: {
-        size: 'md', type: 'primary'
+        size: 'md',
     },
     tagsList: [
         { label: 'JavaScript', color: 'warning', icon: 'fab fa-js' },
@@ -28,9 +28,6 @@ pi.Obj.assign(window.VueData, {
             <n-form-item class="col--1-1 col--6-12@sm col--3-12@lg" label="Size">
                 <n-select v-model="tagsBinds.size" :options="sizes" />
             </n-form-item>
-            <n-form-item class="col--1-1 col--6-12@sm col--3-12@lg" label="Type">
-                <n-select v-model="tagsBinds.type" :options="types" />
-            </n-form-item>
         </div>
     </div>
     <div class="demo-display">
@@ -44,8 +41,6 @@ pi.Obj.assign(window.VueData, {
                 </n-tags>
             </div>
         </div>
-    </div>
-    <div class="demo-display">
         <div class="grid grid--row grid--wrap grid--40-40">
             <div class="col--1-1">
                 <h3>Numeric color tags</h3>

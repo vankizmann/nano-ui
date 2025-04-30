@@ -35,20 +35,20 @@ pi.Obj.assign(window.VueData, {
             <div class="col--1-1">
                 <h3>Image Preview (Contain)</h3>
             </div>
-            <div class="col--auto">
-                <n-preview style="width: 400px; height: 300px;" v-bind="previewBinds" :file="previewImage" fit="contain"></n-preview>
+            <div class="col--1-1">
+                <n-preview style="width: 400px; max-width: 100%; height: 300px;" v-bind="previewBinds" :file="previewImage" fit="contain"></n-preview>
             </div>
             <div class="col--1-1">
                 <h3>Video Preview (Cover)</h3>
             </div>
-            <div class="col--auto">
-                <n-preview style="width: 400px; height: 300px;" v-bind="previewBinds" :thumb="previewImage" :file="previewVideo"></n-preview>
+            <div class="col--1-1">
+                <n-preview style="width: 400px; max-width: 100%; height: 300px;" v-bind="previewBinds" :thumb="previewImage" :file="previewVideo"></n-preview>
             </div>
             <div class="col--1-1">
                 <h3>Plain Preview</h3>
             </div>
-            <div class="col--auto">
-                <n-preview style="width: 400px; height: 300px;" v-bind="previewBinds" :file="previewDocument"></n-preview>
+            <div class="col--1-1">
+                <n-preview style="width: 400px; max-width: 100%; height: 300px;" v-bind="previewBinds" :file="previewDocument"></n-preview>
             </div>
         </div>
     </div>

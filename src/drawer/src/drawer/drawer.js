@@ -192,7 +192,7 @@ export default {
             this.$emit('update:modelValue', true, source);
         },
 
-        closeModal(force = false, source = null)
+        closeDrawer(force = false, source = null)
         {
             if ( ! this.tempValue ) {
                 return;
@@ -266,7 +266,7 @@ export default {
             }
 
             if ( ! result ) {
-                return this.closeModal(false, 'escape');
+                return this.closeDrawer(false, 'escape');
             }
 
             if ( this.listen ) {
@@ -293,7 +293,7 @@ export default {
                 return;
             }
 
-            this.closeModal(false, 'escape');
+            this.closeDrawer(false, 'escape');
         },
 
     },
@@ -305,7 +305,7 @@ export default {
         }
 
         let props = {
-            onClick: () => this.closeModal(false, 'escape')
+            onClick: () => this.closeDrawer(false, 'escape')
         };
 
         return (
@@ -323,7 +323,7 @@ export default {
 
         return (
             <div class="n-drawer__header">
-                { [this.$slots.header && this.$slots.header({ closeModal: this.closeModal }) || this.title, this.ctor('renderClose')()] }
+                { [this.$slots.header && this.$slots.header({ closeDrawer: this.closeDrawer }) || this.title, this.ctor('renderClose')()] }
             </div>
         );
     },
@@ -336,7 +336,7 @@ export default {
 
         return (
             <div class="n-drawer__footer">
-                { this.$slots.footer({ closeModal: this.closeModal }) }
+                { this.$slots.footer({ closeDrawer: this.closeDrawer }) }
             </div>
         );
     },
@@ -345,12 +345,12 @@ export default {
     {
         let bodyHtml = (
             <NScrollbar ref="scrollbar" relative={true} wrapClass="n-drawer__wrap">
-                { this.$slots.default && this.$slots.default({ closeModal: this.closeModal }) }
+                { this.$slots.default && this.$slots.default({ closeDrawer: this.closeDrawer }) }
             </NScrollbar>
         );
 
         if ( this.$slots.body ) {
-            bodyHtml = this.$slots.body({ closeModal: this.closeModal });
+            bodyHtml = this.$slots.body({ closeDrawer: this.closeDrawer });
         }
 
         return (
