@@ -1,7 +1,13 @@
 @use "sass:color";
 @import "../root/vars";
 
-table {
+.markdown-table {
+    overflow: auto;
+    border-radius: $lg-radius;
+    max-width: 100%;
+}
+
+.markdown-table table {
     width: 100%;
     max-width: 100%;
     border-radius: $lg-radius;
@@ -11,53 +17,53 @@ table {
     box-shadow: 0 1px 24px rgba($color-shadow, 0.1);
 }
 
-table th,
-table td {
+.markdown-table table th,
+.markdown-table table td {
     min-width: 180px;
     text-align: left;
 }
 
-table thead tr th {
+.markdown-table table thead tr th {
     padding: 19px 24px;
     color: $color-gray-90;
     font-size: 13px;
 }
 
-table thead tr th b,
-table thead tr th strong {
+.markdown-table table thead tr th b,
+.markdown-table table thead tr th strong {
     font-weight: 500;
 }
 
-table thead tr:first-child th:first-child {
+.markdown-table table thead tr:first-child th:first-child {
     border-radius: $lg-radius 0 0 0;
 }
 
-table thead tr:first-child th:last-child {
+.markdown-table table thead tr:first-child th:last-child {
     border-radius: 0 $lg-radius 0 0;
 }
 
-table thead tr:last-child th {
+.markdown-table table thead tr:last-child th {
     border-bottom: 1px solid $color-gray-10;
 }
 
-table thead tr th:not(:last-child) {
+.markdown-table table thead tr th:not(:last-child) {
     border-right: 1px solid $color-gray-10;
 }
 
-table tbody tr td {
+.markdown-table table tbody tr td {
     padding: 14px 24px;
     color: $color-foreground;
     font-size: 14px;
 }
 
-table tbody tr td code {
+.markdown-table table tbody tr td code {
     background: transparent !important;
 }
 
-table tbody tr td:nth-child(1) code {
+.markdown-table table tbody tr td:nth-child(1) code {
     color: color.mix($color-primary, $color-foreground, 50%);
 }
 
-table tbody tr:not(:last-child) td {
+.markdown-table table tbody tr:not(:last-child) td {
     border-bottom: 1px solid $color-gray-10;
 }

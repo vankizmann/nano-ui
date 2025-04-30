@@ -38,6 +38,7 @@
   - [Alert](files/others/alert.md)
   - [Notify](files/others/notify.md)
   - [Loader](files/others/loader.md)
+  - [Tags](files/others/tags.md)
   - [Tabs](files/others/tabs.md)
   - [Rating](files/others/rating.md)
   - [Map](files/others/map.md)

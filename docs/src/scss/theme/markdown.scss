@@ -22,7 +22,7 @@
     color: color.mix($color-gray-90, $color-gray-40, 10%);
 }
 
-.markdown-section table {
+.markdown-section .markdown-table {
     margin-bottom: 30px;
 }
 
@@ -47,20 +47,42 @@
     margin-bottom: 0 !important;
 }
 
+.scrollbar-display {
+    overflow: hidden;
+    border: 1px solid $color-gray-10;
+    border-radius: $lg-radius;
+    background: $color-background;
+}
+
+.scrollbar-display .n-scrollbar__wrap > div {
+    padding: 20px;
+}
+
+.resizer-display {
+    overflow: hidden;
+    border: 1px solid $color-gray-10;
+    border-radius: $lg-radius;
+    background: $color-background;
+}
+
+.resizer-display > div {
+    padding: 20px;
+}
+
+.resizer-display--left > div:last-child {
+    background: $color-form;
+    border-left: 4px solid $color-gray-10;
+}
+
+.resizer-display--right > div:first-child {
+    background: $color-form;
+    border-right: 4px solid $color-gray-10;
+}
+
 .markdown-section .demo-options {
     position: relative;
     padding: 30px 40px 34px;
     border-bottom: 1px solid $color-gray-10;
-}
-
-.markdown-section .demo-options2:after {
-    content: '\00a0';
-    position: absolute;
-    left: 40px;
-    bottom: 0;
-    width: calc(100% - 80px);
-    height: 1px;
-    background: $color-gray-10;
 }
 
 .markdown-section .demo-options .n-form-item {
