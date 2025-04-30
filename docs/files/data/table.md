@@ -14,6 +14,7 @@ pi.Obj.assign(window.VueData, {
         childProp: 'cities',
         draggable: true,
         itemHeight: 80,
+        useKeys: true,
     }
 });
 ```
@@ -72,23 +73,43 @@ pi.Obj.assign(window.VueData, {
 
 ## Table
 
-| **Prop**             | **Type**         | **Default**     | **Description**                                                           |
-|----------------------|------------------|-----------------|---------------------------------------------------------------------------|
-| `items`              | `Array`          | `[]`            | Array of data items to display in the table.                              |
-| `draggable`          | `Boolean`        | `true`          | Enables row drag-and-drop functionality.                                  |
-| `visible`            | `Array`          | `[]`            | Array of column prop names that should be visible.                        |
-| `current`            | `Any`            | `null`          | The currently focused/selected item.                                      |
-| `selected`           | `Array`          | `[]`            | Array of selected items.                                                  |
-| `expanded`           | `Array`          | `[]`            | Array of expanded items (for hierarchical data).                          |
-| `filter`             | `Array`          | `[]`            | Array of active filters.                                                  |
-| `sortProp`           | `String`         | `'id'`          | Property name to sort by.                                                 |
-| `sortDir`            | `String`         | `'desc'`        | Sort direction ('asc' or 'desc').                                         |
-| `renderSelect`       | `Boolean`        | `true`          | Show selection checkboxes.                                                |
-| `renderHandle`       | `Boolean`        | `false`         | Show drag handles.                                                        |
-| `renderExpand`       | `Boolean`        | `false`         | Show expand buttons for hierarchical data.                                |
-| `itemHeight`         | `Number`         | `38`            | Height of each table row in pixels.                                       |
-| `uniqueProp`         | `String`         | `'id'`          | Property name that uniquely identifies each item.                         |
-| `childProp`          | `String`         | `'children'`    | Property name for child items in hierarchical data.                       |
+| **Prop**             | **Type**         | **Default**     | **Description**                                             |
+|----------------------|------------------|-----------------|-------------------------------------------------------------|
+| `items`              | `Array`          | `[]`            | Array of data items to display in the table.                |
+| `draggable`          | `Boolean`        | `true`          | Enables row drag-and-drop functionality.                    |
+| `visible`            | `Array`          | `[]`            | Array of column prop names that should be visible.          |
+| `current`            | `Any`            | `null`          | The currently focused/selected item.                        |
+| `selected`           | `Array`          | `[]`            | Array of selected items.                                    |
+| `expanded`           | `Array`          | `[]`            | Array of expanded items (for hierarchical data).            |
+| `filter`             | `Array`          | `[]`            | Array of active filters.                                    |
+| `sortProp`           | `String`         | `'id'`          | Property name to sort by.                                   |
+| `sortDir`            | `String`         | `'desc'`        | Sort direction ('asc' or 'desc').                           |
+| `closeFilterOnEnter` | `Boolean`        | `false`         | If true, closes filter dropdown when Enter key is pressed.  |
+| `group`              | `Array`          | `['default']`   | Group identifier for drag and drop.                         |
+| `allowGroups`        | `Array`          | `['default']`   | Groups that items can be dragged to.                        |
+| `handle`             | `Boolean`        | `false`         | If true, requires dragging by handle.                       |
+| `safezone`           | `Function`       | `(h) => h*0.51` | Function to calculate safe drop zone.                       |
+| `showEmptyIcon`      | `Boolean`        | `true`          | Shows empty icon when no items are present.                 |
+| `itemHeight`         | `Number`         | `38`            | Height of each table row in pixels.                         |
+| `itemOffset`         | `Number`         | `30`            | Indentation for hierarchical data.                          |
+| `scrollTopOnChange`  | `Boolean`        | `false`         | Scrolls to top when data changes can be function also.      |
+| `uniqueProp`         | `String`         | `'id'`          | Property name that uniquely identifies each item.           |
+| `childProp`          | `String`         | `'children'`    | Property name for child items in hierarchical data.         |
+| `renderSelect`       | `Boolean`        | `true`          | Show selection checkboxes.                                  |
+| `renderHandle`       | `Boolean`        | `false`         | Show drag handles.                                          |
+| `renderExpand`       | `Boolean`        | `false`         | Show expand buttons for hierarchical data.                  |
+| `renderCurrent`      | `Boolean`        | `true`          | Highlight the current row.                                  |
+| `transformDrop`      | `Function`       | `(node) => node`| Transform function for dropped items.                       |
+| `disableMove`        | `Boolean`        | `false`         | If true, disables drag-and-drop functionality.              |
+| `insertNode`         | `Function`       | `() => true`    | Function to determine if a node can be inserted.            |
+| `removeNode`         | `Function`       | `() => true`    | Function to determine if a node can be removed.             |
+| `allowSelect`        | `Function`       | `() => true`    | Function to determine if an item can be selected.           |
+| `allowDrag`          | `Function`       | `() => true`    | Function to determine if an item can be dragged.            |
+| `allowDrop`          | `Function`       | `() => true`    | Function to determine if an item can be dropped.            |
+| `threshold`          | `Number`         | `1`             | Threshold for drag detection.                               |
+| `useKeys`            | `Boolean`        | `false`         | Use :key="id" on items.                                     |
+| `keyEvents`          | `Boolean`        | `true`          | Enables keyboard events.                                    |
+| `highlightTimeout`   | `Number`         | `7000`          | Duration in milliseconds for highlighting after operations. |
 
 | **Method**                  | **Description**                                                      |
 |-----------------------------|----------------------------------------------------------------------|

@@ -13,6 +13,7 @@
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
 }
+
 .n-scrollbar-test > div {
     width: 16px;
     height: 16px;
@@ -70,14 +71,14 @@
 .n-scrollbar-v {
     top: 0;
     right: 0;
-    width: 10px;
+    width: 12px;
 }
 
 
 .n-scrollbar-h {
     left: 0;
     bottom: 0;
-    height: 10px;
+    height: 12px;
 }
 
 .n-scrollbar--native:not(.n-scrollbar--forced) > .n-scrollbar-v,
