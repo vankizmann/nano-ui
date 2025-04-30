@@ -46,25 +46,16 @@ pi.Obj.assign(window.VueData, {
         <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
             <div class="col--auto">
                 <n-button type="primary" @click="drawerVisible = true">Open Drawer</n-button>
-                <n-drawer 
-                    v-model="drawerVisible" 
-                    v-bind="drawerBinds"
-                    title="Drawer Title"
-                >
-                    <template #default="{ closeModal }">
-                        <h3>Navigation</h3>
-                        <n-popover-option icon="fas fa-home">Home</n-popover-option>
-                        <n-popover-option icon="fas fa-user">Profile</n-popover-option>
-                        <n-popover-option icon="fas fa-cog">Settings</n-popover-option>
-                        <n-popover-option icon="fas fa-bell">Notifications</n-popover-option>
-                        
-                        <h3 class="mt-4">Additional Information</h3>
-                        <p>This drawer can contain any content, from navigation links to forms or detailed information.</p>
+                <n-drawer v-model="drawerVisible" v-bind="drawerBinds" title="Drawer Title">
+                    <template #default="{ closeDrawer }">
+                        <h3>Information</h3>
+                        <p style="margin-bottom: 20px;">This is the modal content. You can put any components or HTML here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod eros vitae dolor rhoncus, vel tincidunt nunc vulputate.</p>
+                        <n-button type="default" @click="closeDrawer()">Close drawer in content</n-button>
                     </template>
-                    <template #footer="{ closeModal }">
+                    <template #footer="{ closeDrawer }">
                         <div class="grid grid--row grid--right grid--20-20">
                             <div class="col--auto">
-                                <n-button type="primary" @click="closeModal(false, 'done')">Done</n-button>
+                                <n-button type="primary" @click="closeDrawer()">Done</n-button>
                             </div>
                         </div>
                     </template>
@@ -99,10 +90,10 @@ pi.Obj.assign(window.VueData, {
 | `update:modelValue`   | Emitted when the drawer visibility changes, with the new value and source.  |
 | `close`               | Emitted when the drawer is closed with the source.                   |
 
-| **Slot**              | **Description**                                                      |
-|-----------------------|----------------------------------------------------------------------|
-| `default`             | Content for the drawer body. Receives `{ closeModal }` in slot props. |
-| `header`              | Content for the drawer header. Receives `{ closeModal }` in slot props. |
-| `footer`              | Content for the drawer footer. Receives `{ closeModal }` in slot props. |
-| `body`                | Override slot for the body, bypassing the scrollbar. Receives `{ closeModal }` in slot props. |
-| `raw`                 | Raw content, bypassing the entire frame structure.                   |
+| **Slot**              | **Description**                                                                            |
+|-----------------------|--------------------------------------------------------------------------------------------|
+| `default`             | Content for the drawer body. Receives `{ closeDrawer }` in slot props.                         |
+| `header`              | Content for the drawer header. Receives `{ closeDrawer }` in slot props.                       |
+| `footer`              | Content for the drawer footer. Receives `{ closeDrawer }` in slot props.                       |
+| `body`                | Override slot for the body, bypassing the scrollbar. Receives `{ closeDrawer }` in slot props. |
+| `raw`                 | Raw content, bypassing the entire frame structure.                                         |
