@@ -50,8 +50,12 @@
 }
 
 .n-table .n-table__wrap {
-    margin-right: -1px;
-    margin-bottom: -1px;
+    //margin-right: -1px;
+    //margin-bottom: -1px;
+}
+
+.n-table__header {
+    margin-left: -1px;
 }
 
 .n-table .n-table__inner {

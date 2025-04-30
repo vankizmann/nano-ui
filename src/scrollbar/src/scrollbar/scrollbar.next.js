@@ -650,7 +650,7 @@ export default {
             }
 
             let width = $inner.actual(() => {
-                return $inner.scrollWidth();
+                return $inner.scrollWidth() - 1;
             });
 
             if ( width !== this.passedWidth ) {

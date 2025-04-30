@@ -78,10 +78,6 @@ export const VueDemoPlugin = function (hook, vm) {
     });
 
     hook.afterEach(function (html) {
-
-        html = html.replace(/<code>(Mixed|Any|String|Number|Boolean|Array|Object)<\/code>/gm,
-            '<code data-type="$1">$1</code>');
-
         return '<div id="vue-remote">' + html + '</div>';
     });
 
