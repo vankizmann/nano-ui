@@ -1,6 +1,6 @@
 {
     "name": "@kizmann/nano-ui",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "license": "MIT",
     "private": false,
     "author": "Eduard Kizmann <kizmann@protonmail.ch>",
@@ -44,7 +44,7 @@
         "webpack-dev-server": "^4.0.0"
     },
     "dependencies": {
-        "@kizmann/pico-js": "^0.5.5",
+        "@kizmann/pico-js": "^1.0.3",
         "docsify": "^4.13.1",
         "moment": "^2.30.1",
         "global": "^4.4.0"
