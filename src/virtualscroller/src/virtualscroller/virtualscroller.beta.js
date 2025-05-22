@@ -1,6 +1,6 @@
 import { Arr, Obj, Any, Dom } from "@kizmann/pico-js";
 
-global.DEBUG_NVSCROLL = false;
+window.DEBUG_NVSCROLL = false;
 
 export default {
 

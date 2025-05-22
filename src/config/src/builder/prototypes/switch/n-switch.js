@@ -1,12 +1,12 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['NSwitch'] = Locale.trans('NSwitch');
+window.NanoBuilderTypes['NSwitch'] = Locale.trans('NSwitch');
 
-global.NanoBuilderIndexies['NSwitch'] = {
+window.NanoBuilderIndexies['NSwitch'] = {
     childs: true, props: {}
 };
 
-global.NanoBuilderIndexies['NSwitch']['props'] = {
+window.NanoBuilderIndexies['NSwitch']['props'] = {
     modelValue: {
         for: ['binds', 'props'], type: 'Any'
     },
@@ -17,15 +17,15 @@ global.NanoBuilderIndexies['NSwitch']['props'] = {
         for: ['binds', 'props'], type: 'Any'
     },
     onType: {
-        for: ['binds', 'props'], type: 'String', options: global.NanoPrototypeTypes
+        for: ['binds', 'props'], type: 'String', options: window.NanoPrototypeTypes
     },
     offType: {
-        for: ['binds', 'props'], type: 'String', options: global.NanoPrototypeTypes
+        for: ['binds', 'props'], type: 'String', options: window.NanoPrototypeTypes
     },
     size: {
-        for: ['binds', 'props'], type: 'String', options: global.NanoPrototypeSizes
+        for: ['binds', 'props'], type: 'String', options: window.NanoPrototypeSizes
     },
     disabled: {
-        for: ['binds', 'props'], type: 'Boolean', options: global.NanoPrototypeBools
+        for: ['binds', 'props'], type: 'Boolean', options: window.NanoPrototypeBools
     },
 };

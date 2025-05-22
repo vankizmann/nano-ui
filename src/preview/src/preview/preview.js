@@ -129,11 +129,11 @@ export default {
                 if ( Arr.has(exts, extension) ) fallback = key;
             });
 
-            if ( global.resolveVimeo(file) ) {
+            if ( window.resolveVimeo(file) ) {
                 fallback = 'video';
             }
 
-            if ( global.resolveYoutube(file) ) {
+            if ( window.resolveYoutube(file) ) {
                 fallback = 'video';
             }
 

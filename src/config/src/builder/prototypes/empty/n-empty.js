@@ -1,11 +1,11 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['NEmpty'] = Locale.trans('NEmpty');
+window.NanoBuilderTypes['NEmpty'] = Locale.trans('NEmpty');
 
-global.NanoBuilderIndexies['NEmpty'] = {
+window.NanoBuilderIndexies['NEmpty'] = {
     childs: false, props: {}
 };
 
-global.NanoBuilderIndexies['NEmpty']['props'] = {
+window.NanoBuilderIndexies['NEmpty']['props'] = {
     //
 };

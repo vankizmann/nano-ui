@@ -1,11 +1,11 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['NDurationpicker'] = Locale.trans('NDurationpicker');
+window.NanoBuilderTypes['NDurationpicker'] = Locale.trans('NDurationpicker');
 
-global.NanoBuilderIndexies['NDurationpicker'] = {
+window.NanoBuilderIndexies['NDurationpicker'] = {
     childs: false, props: {}
 };
 
-global.NanoBuilderIndexies['NDurationpicker']['props'] = {
+window.NanoBuilderIndexies['NDurationpicker']['props'] = {
     //
 };

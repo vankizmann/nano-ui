@@ -1,11 +1,11 @@
-global.NanoPrototypeSizes = [
+window.NanoPrototypeSizes = [
     'xs', 'sm', 'md', 'lg'
 ];
 
-global.NanoPrototypeTypes = [
+window.NanoPrototypeTypes = [
     'primary', 'secondary', 'success', 'warning', 'danger', 'info'
 ];
 
-global.NanoPrototypeBools = [
+window.NanoPrototypeBools = [
     'true', 'false'
 ];

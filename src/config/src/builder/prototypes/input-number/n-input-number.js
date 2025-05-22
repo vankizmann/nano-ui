@@ -1,12 +1,12 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['NInputNumber'] = Locale.trans('NInputNumber');
+window.NanoBuilderTypes['NInputNumber'] = Locale.trans('NInputNumber');
 
-global.NanoBuilderIndexies['NInputNumber'] = {
+window.NanoBuilderIndexies['NInputNumber'] = {
     childs: false, props: {}
 };
 
-global.NanoBuilderIndexies['NInputNumber']['props'] = {
+window.NanoBuilderIndexies['NInputNumber']['props'] = {
     modelValue: {
         for: ['binds', 'props'], default: null, type: 'Number'
     },
@@ -14,7 +14,7 @@ global.NanoBuilderIndexies['NInputNumber']['props'] = {
         for: ['binds', 'props'], default: null, type: 'Number'
     },
     clearable: {
-        for: ['binds', 'props'], default: false, type: 'Boolean', options: global.NanoPrototypeBools
+        for: ['binds', 'props'], default: false, type: 'Boolean', options: window.NanoPrototypeBools
     },
     min: {
         for: ['binds', 'props'], default: 0, type: 'Number'
@@ -29,13 +29,13 @@ global.NanoBuilderIndexies['NInputNumber']['props'] = {
         for: ['binds', 'props'], default: 0, type: 'Number'
     },
     size: {
-        for: ['binds', 'props'], default: 'md', type: 'String', options: global.NanoPrototypeSizes
+        for: ['binds', 'props'], default: 'md', type: 'String', options: window.NanoPrototypeSizes
     },
     type: {
-        for: ['binds', 'props'], default: 'primary', type: 'String', options: global.NanoPrototypeTypes
+        for: ['binds', 'props'], default: 'primary', type: 'String', options: window.NanoPrototypeTypes
     },
     disabled: {
-        for: ['binds', 'props'], default: false, type: 'Boolean', options: global.NanoPrototypeBools
+        for: ['binds', 'props'], default: false, type: 'Boolean', options: window.NanoPrototypeBools
     },
     placeholder: {
         for: ['binds', 'props'], default: '', type: 'String'

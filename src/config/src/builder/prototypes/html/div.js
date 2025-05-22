@@ -1,12 +1,12 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['div'] = Locale.trans('div');
+window.NanoBuilderTypes['div'] = Locale.trans('div');
 
-global.NanoBuilderIndexies['div'] = {
+window.NanoBuilderIndexies['div'] = {
     childs: false, props: {}
 };
 
-global.NanoBuilderIndexies['div']['props'] = {
+window.NanoBuilderIndexies['div']['props'] = {
     classList: {
         type: 'String'
     },

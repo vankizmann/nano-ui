@@ -1,6 +1,6 @@
 import { Obj, Arr, Str, Any, Dom } from "@kizmann/pico-js";
 
-global.resolveYoutube = function(url, fallback = null) {
+window.resolveYoutube = function(url, fallback = null) {
 
     if ( ! Any.isString(url) ) {
         return fallback;
@@ -33,7 +33,7 @@ global.resolveYoutube = function(url, fallback = null) {
     return fallback;
 }
 
-global.resolveVimeo = function(url, fallback = null) {
+window.resolveVimeo = function(url, fallback = null) {
 
     if ( ! Any.isString(url) ) {
         return fallback;
@@ -117,7 +117,7 @@ export default {
 
         resolveYoutube()
         {
-            let youtube = global.resolveYoutube(this.src);
+            let youtube = window.resolveYoutube(this.src);
 
             if ( ! youtube ) {
                 return false;
@@ -132,7 +132,7 @@ export default {
 
         resolveVimeo()
         {
-            let vimeo = global.resolveVimeo(this.src);
+            let vimeo = window.resolveVimeo(this.src);
 
             if ( ! vimeo ) {
                 return false;

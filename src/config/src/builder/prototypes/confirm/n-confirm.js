@@ -1,11 +1,11 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['NConfirm'] = Locale.trans('n-confirm');
+window.NanoBuilderTypes['NConfirm'] = Locale.trans('n-confirm');
 
-global.NanoBuilderIndexies['NConfirm'] = {
+window.NanoBuilderIndexies['NConfirm'] = {
     childs: false, props: {}
 };
 
-global.NanoBuilderIndexies['NConfirm']['props'] = {
+window.NanoBuilderIndexies['NConfirm']['props'] = {
     //
 };

@@ -1,11 +1,11 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['NForm'] = Locale.trans('NForm');
+window.NanoBuilderTypes['NForm'] = Locale.trans('NForm');
 
-global.NanoBuilderIndexies['NForm'] = {
+window.NanoBuilderIndexies['NForm'] = {
     childs: true, props: {}
 };
 
-global.NanoBuilderIndexies['NForm']['props'] = {
+window.NanoBuilderIndexies['NForm']['props'] = {
     //
 };

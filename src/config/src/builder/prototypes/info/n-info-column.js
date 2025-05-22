@@ -1,11 +1,11 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['NInfoColumn'] = Locale.trans('n-info-column');
+window.NanoBuilderTypes['NInfoColumn'] = Locale.trans('n-info-column');
 
-global.NanoBuilderIndexies['NInfoColumn'] = {
+window.NanoBuilderIndexies['NInfoColumn'] = {
     childs: false, props: {}
 };
 
-global.NanoBuilderIndexies['NInfoColumn']['props'] = {
+window.NanoBuilderIndexies['NInfoColumn']['props'] = {
     //
 };

@@ -1,11 +1,11 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['NButtonGroup'] = Locale.trans('n-button-group');
+window.NanoBuilderTypes['NButtonGroup'] = Locale.trans('n-button-group');
 
-global.NanoBuilderIndexies['NButtonGroup'] = {
+window.NanoBuilderIndexies['NButtonGroup'] = {
     childs: false, props: {}
 };
 
-global.NanoBuilderIndexies['NButtonGroup']['props'] = {
+window.NanoBuilderIndexies['NButtonGroup']['props'] = {
     //
 };
