@@ -1,11 +1,11 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['NPopover'] = Locale.trans('n-popover');
+window.NanoBuilderTypes['NPopover'] = Locale.trans('n-popover');
 
-global.NanoBuilderIndexies['NPopover'] = {
+window.NanoBuilderIndexies['NPopover'] = {
     childs: false, props: {}
 };
 
-global.NanoBuilderIndexies['NPopover']['props'] = {
+window.NanoBuilderIndexies['NPopover']['props'] = {
     //
 };

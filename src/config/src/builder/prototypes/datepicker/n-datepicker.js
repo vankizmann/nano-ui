@@ -1,11 +1,11 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['NDatepicker'] = Locale.trans('NDatepicker');
+window.NanoBuilderTypes['NDatepicker'] = Locale.trans('NDatepicker');
 
-global.NanoBuilderIndexies['NDatepicker'] = {
+window.NanoBuilderIndexies['NDatepicker'] = {
     childs: false, props: {}
 };
 
-global.NanoBuilderIndexies['NDatepicker']['props'] = {
+window.NanoBuilderIndexies['NDatepicker']['props'] = {
     //
 };

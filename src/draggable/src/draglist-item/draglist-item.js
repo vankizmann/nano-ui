@@ -157,7 +157,7 @@ export default {
 
             this.NDraggable.setCurrent(this);
 
-            if ( Arr.has(global.keyMods, 91) ) {
+            if ( Arr.has(window.keyMods, 91) ) {
                 this.NDraggable.selectItem(this);
             }
 

@@ -1,11 +1,11 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['span'] = Locale.trans('span');
+window.NanoBuilderTypes['span'] = Locale.trans('span');
 
-global.NanoBuilderIndexies['span'] = {
+window.NanoBuilderIndexies['span'] = {
     childs: false, props: {}
 };
 
-global.NanoBuilderIndexies['span']['props'] = {
+window.NanoBuilderIndexies['span']['props'] = {
     //
 };

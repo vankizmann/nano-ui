@@ -1,11 +1,11 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['NRating'] = Locale.trans('NRating');
+window.NanoBuilderTypes['NRating'] = Locale.trans('NRating');
 
-global.NanoBuilderIndexies['NRating'] = {
+window.NanoBuilderIndexies['NRating'] = {
     childs: false, props: {}
 };
 
-global.NanoBuilderIndexies['NRating']['props'] = {
+window.NanoBuilderIndexies['NRating']['props'] = {
     //
 };

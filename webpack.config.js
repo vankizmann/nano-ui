@@ -145,19 +145,10 @@ module.exports = function (env, argv) {
         },
 
         plugins: [
-            new webpack.ProvidePlugin({
-                global: 'global'
-            }),
             new HtmlWebpackPlugin(Object.assign({
                 template: path.resolve('./docs/index.template.html'),
             }, docConfig))
         ],
-
-        resolve: {
-            fallback: {
-                "global": require.resolve("global")
-            }
-        }
 
     }, docJs);
 

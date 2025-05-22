@@ -1,6 +1,6 @@
 import { Arr, Dom, Any, Locale, Obj, UUID, Num } from "@kizmann/pico-js";
 
-global.NanoBuilderPropType = {
+window.NanoBuilderPropType = {
     'root': Locale.trans('Root'),
     'binds': Locale.trans('Bind'),
     'props': Locale.trans('Property'),
@@ -8,7 +8,7 @@ global.NanoBuilderPropType = {
     'on': Locale.trans('Event'),
 };
 
-global.NanoBuilderPropCode = {
+window.NanoBuilderPropCode = {
     'string': Locale.trans('String'),
     'number': Locale.trans('Number'),
     'boolean': Locale.trans('Boolean'),
@@ -16,7 +16,7 @@ global.NanoBuilderPropCode = {
     'function': Locale.trans('Function'),
 };
 
-global.NanoBuilderProps = {
+window.NanoBuilderProps = {
     classList: {
         for: ['root', 'attrs', 'props'], type: 'String'
     },
@@ -28,11 +28,11 @@ global.NanoBuilderProps = {
     },
 };
 
-global.NanoBuilderTypes = {
+window.NanoBuilderTypes = {
     //
 };
 
-global.NanoBuilderIndexies = {
+window.NanoBuilderIndexies = {
     //
 };
 
@@ -623,9 +623,9 @@ export default {
         let group = key.replace(/^.*?([^\.]+):([^\.]+)$/, '$1')
         let value = Obj.get(this.$data, `${key}.builder.${sub}`, {});
 
-        let props = Obj.clone(Obj.get(global.NanoBuilderIndexies, `${group}.props`, {}));
+        let props = Obj.clone(Obj.get(window.NanoBuilderIndexies, `${group}.props`, {}));
 
-        props = Obj.assign({}, global.NanoBuilderProps, props);
+        props = Obj.assign({}, window.NanoBuilderProps, props);
 
         Obj.each(props, (prop, index) => {
             if ( ! Any.isEmpty(prop.for) && ! Arr.has(prop.for, value.type) ) {
@@ -634,7 +634,7 @@ export default {
         });
 
         let typeProps = {
-            size: 'sm', options: global.NanoBuilderPropType
+            size: 'sm', options: window.NanoBuilderPropType
         };
 
         typeProps['onUpdate:modelValue'] = () => {
@@ -650,7 +650,7 @@ export default {
         };
 
         let codeProps = {
-            size: 'sm', options: global.NanoBuilderPropCode
+            size: 'sm', options: window.NanoBuilderPropCode
         };
 
         codeProps['onUpdate:modelValue'] = () => {
@@ -716,7 +716,7 @@ export default {
         }
 
         let elementProps = {
-            options: global.NanoBuilderTypes, allowCreate: true, modelValue: key.replace(/^.*?([^\.]+):([^\.]+)$/, '$1'),
+            options: window.NanoBuilderTypes, allowCreate: true, modelValue: key.replace(/^.*?([^\.]+):([^\.]+)$/, '$1'),
         };
 
         elementProps['onUpdate:modelValue'] = (value) => {

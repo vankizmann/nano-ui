@@ -1,11 +1,11 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['NTable'] = Locale.trans('NTable');
+window.NanoBuilderTypes['NTable'] = Locale.trans('NTable');
 
-global.NanoBuilderIndexies['NTable'] = {
+window.NanoBuilderIndexies['NTable'] = {
     childs: false, props: {}
 };
 
-global.NanoBuilderIndexies['NTable']['props'] = {
+window.NanoBuilderIndexies['NTable']['props'] = {
     //
 };

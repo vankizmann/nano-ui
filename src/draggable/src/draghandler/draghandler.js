@@ -1,6 +1,6 @@
 import { Arr, Obj, Num, Any, Dom, Event, Locale, UUID } from "@kizmann/pico-js";
 
-global.dragMods = [];
+window.dragMods = [];
 
 class NDragCounter
 {
@@ -38,21 +38,21 @@ class NDragCounter
 
     update()
     {
-        global.dragMods = global.keyMods;
+        window.dragMods = window.keyMods;
 
         let classList = [
             'n-draggable__counter'
         ];
 
-        if ( Arr.has(global.dragMods, 18) ) {
+        if ( Arr.has(window.dragMods, 18) ) {
             classList.push('n-modify--alt');
         }
 
-        if ( Arr.has(global.dragMods, 17) ) {
+        if ( Arr.has(window.dragMods, 17) ) {
             classList.push('n-modify--ctrl');
         }
 
-        if ( Arr.has(global.dragMods, 91) ) {
+        if ( Arr.has(window.dragMods, 91) ) {
             classList.push('n-modify--meta');
         }
 
@@ -61,7 +61,7 @@ class NDragCounter
 
 }
 
-global.DragCounter = new NDragCounter;
+window.DragCounter = new NDragCounter;
 
 class NDragIndicator
 {
@@ -154,8 +154,8 @@ class NDraghandler
     {
         this.DragIndicator = new NDragIndicator(frame || this.rootNode.$el);
 
-        if ( global.DragCache ) {
-            this.bindDragstart.call(this, ...global.DragCache);
+        if ( window.DragCache ) {
+            this.bindDragstart.call(this, ...window.DragCache);
         }
 
         Dom.find(this.rootNode.$el).on('dragenter', (event) => {
@@ -356,7 +356,7 @@ class NDraghandler
             return Arr.find(this.rootNode.virtuals, { [this.rootNode.uniqueProp]: id });
         });
 
-        global.DragCounter.get(event, cache.length);
+        window.DragCounter.get(event, cache.length);
 
         Arr.map(cache, (value) => {
             return { value, item: Obj.get(this.rootNode, value.route) };
@@ -365,7 +365,7 @@ class NDraghandler
         Event.fire('NDrag:start', this.rootNode.group,
             this.dropNodes = cache);
 
-        global.DragCache = [
+        window.DragCache = [
             this.rootNode.group, this.dropNodes
         ];
 
@@ -462,7 +462,7 @@ class NDraghandler
 
         Event.fire('NDrag:end');
 
-        global.DragCache = null;
+        window.DragCache = null;
     }
 
     onDragdropNode(event, node)
@@ -646,15 +646,15 @@ class NDraghandler
 
         let eventName = 'move';
 
-        if ( Arr.has(global.dragMods, 18) ) {
+        if ( Arr.has(window.dragMods, 18) ) {
             eventName = 'moveAlt';
         }
 
-        if ( Arr.has(global.dragMods, 17) ) {
+        if ( Arr.has(window.dragMods, 17) ) {
             eventName = 'moveCtrl';
         }
 
-        if ( Arr.has(global.dragMods, 91) ) {
+        if ( Arr.has(window.dragMods, 91) ) {
             eventName = 'moveMeta';
         }
 

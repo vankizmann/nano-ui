@@ -1,11 +1,11 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['NModal'] = Locale.trans('NModal');
+window.NanoBuilderTypes['NModal'] = Locale.trans('NModal');
 
-global.NanoBuilderIndexies['NModal'] = {
+window.NanoBuilderIndexies['NModal'] = {
     childs: false, props: {}
 };
 
-global.NanoBuilderIndexies['NModal']['props'] = {
+window.NanoBuilderIndexies['NModal']['props'] = {
     //
 };

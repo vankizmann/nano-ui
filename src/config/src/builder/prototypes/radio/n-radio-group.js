@@ -1,11 +1,11 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['NRadioGroup'] = Locale.trans('NRadioGroup');
+window.NanoBuilderTypes['NRadioGroup'] = Locale.trans('NRadioGroup');
 
-global.NanoBuilderIndexies['NRadioGroup'] = {
+window.NanoBuilderIndexies['NRadioGroup'] = {
     childs: false, props: {}
 };
 
-global.NanoBuilderIndexies['NRadioGroup']['props'] = {
+window.NanoBuilderIndexies['NRadioGroup']['props'] = {
     //
 };

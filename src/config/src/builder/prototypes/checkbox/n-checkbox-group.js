@@ -1,11 +1,11 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['NCheckboxGroup'] = Locale.trans('NCheckboxGroup');
+window.NanoBuilderTypes['NCheckboxGroup'] = Locale.trans('NCheckboxGroup');
 
-global.NanoBuilderIndexies['NCheckboxGroup'] = {
+window.NanoBuilderIndexies['NCheckboxGroup'] = {
     childs: false, props: {}
 };
 
-global.NanoBuilderIndexies['NCheckboxGroup']['props'] = {
+window.NanoBuilderIndexies['NCheckboxGroup']['props'] = {
     //
 };

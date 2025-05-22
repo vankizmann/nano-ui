@@ -1,7 +1,7 @@
 import { UUID, Num, Arr, Obj, Dom, Any, Event, Locale } from "@kizmann/pico-js";
 import NDraghandler from "../draghandler/draghandler";
 
-global.DEBUG_NDLIST = false;
+window.DEBUG_NDLIST = false;
 
 export default {
 
@@ -445,7 +445,7 @@ export default {
         {
             this.virtuals = this.drag.reduce(this.items);
 
-            if ( global.DEBUG_NDLIST ) {
+            if ( window.DEBUG_NDLIST ) {
                 console.log('Total virtual items mounted: ' + this.virtuals.length);
             }
         },

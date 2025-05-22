@@ -1,26 +1,26 @@
 import { Locale } from "@kizmann/pico-js";
 
-global.NanoBuilderTypes['NButton'] = Locale.trans('NButton');
+window.NanoBuilderTypes['NButton'] = Locale.trans('NButton');
 
-global.NanoBuilderIndexies['NButton'] = {
+window.NanoBuilderIndexies['NButton'] = {
     childs: false, props: {}
 };
 
-global.NanoBuilderIndexies['NButton']['props'] = {
+window.NanoBuilderIndexies['NButton']['props'] = {
     size: {
-        for: ['binds', 'props'], type: 'String', options: global.NanoPrototypeSizes
+        for: ['binds', 'props'], type: 'String', options: window.NanoPrototypeSizes
     },
     type: {
-        for: ['binds', 'props'], type: 'String', options: global.NanoPrototypeTypes
+        for: ['binds', 'props'], type: 'String', options: window.NanoPrototypeTypes
     },
     link: {
-        for: ['binds', 'props'], type: 'Boolean', options: global.NanoPrototypeBools
+        for: ['binds', 'props'], type: 'Boolean', options: window.NanoPrototypeBools
     },
     square: {
-        for: ['binds', 'props'], type: 'Boolean', options: global.NanoPrototypeBools
+        for: ['binds', 'props'], type: 'Boolean', options: window.NanoPrototypeBools
     },
     disabled: {
-        for: ['binds', 'props'], type: 'Boolean', options: global.NanoPrototypeBools
+        for: ['binds', 'props'], type: 'Boolean', options: window.NanoPrototypeBools
     },
     icon: {
         for: ['binds', 'props'], type: 'String'

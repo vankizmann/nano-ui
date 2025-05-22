@@ -31,17 +31,17 @@ export const Settings = {
     notifyPosition: 'bottom-start'
 };
 
-export function Install(App, Icons = {}, Styles = {})
+export function Install(App, Icons = {})
 {
     /**
-     * @const global.pi
+     * @const window.pi
      */
 
-    if ( typeof global.pi === 'undefined' ) {
+    if ( typeof window.pi === 'undefined' ) {
         return console.error('pico-js is not available.');
     }
 
-    Obj.each(global.pi, (value, key) => {
+    Obj.each(window.pi, (value, key) => {
         App.config.globalProperties[key] = value;
     });
 
@@ -52,8 +52,8 @@ export function Install(App, Icons = {}, Styles = {})
     App.config.globalProperties.trans = Locale.trans;
     App.config.globalProperties.choice = Locale.choice;
 
-    global.nano.Icons = Obj.assign(Icons, global.nano.Icons);
-    global.nano.Settings = Obj.assign(Settings, global.nano.Settings);
+    window.nano.Icons = Obj.assign(Icons, window.nano.Icons);
+    window.nano.Settings = Obj.assign(Settings, window.nano.Settings);
 
     require('./alert/index').default(App);
     require('./notification/index').default(App);
@@ -103,26 +103,26 @@ export const Nano = {
     Icons: Icons, Settings: Settings, Install: Install
 };
 
-global.keyMods = [];
+window.keyMods = [];
 
 Dom.find(document).on('keydown', (event) => {
-    Arr.add(global.keyMods, event.which);
+    Arr.add(window.keyMods, event.which);
 });
 
 Dom.find(document).on('keyup', (event) => {
-    Arr.remove(global.keyMods, event.which);
+    Arr.remove(window.keyMods, event.which);
 });
 
 Dom.find(document).on('dragstart', (event) => {
-    Arr.add(global.keyMods, event.which);
+    Arr.add(window.keyMods, event.which);
 });
 
 Dom.find(document).on('dragend', (event) => {
-    global.keyMods = [];
+    window.keyMods = [];
 });
 
-if ( typeof global.nano === 'undefined' ) {
-    global.nano = Nano;
+if ( typeof window.nano === 'undefined' ) {
+    window.nano = Nano;
 }
 
 export default Nano;
