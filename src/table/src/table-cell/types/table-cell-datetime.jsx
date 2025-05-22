@@ -1,17 +1,21 @@
+import TableCell from "../table-cell.jsx";
 import { Any } from "@kizmann/pico-js";
-import InfoField from "../info-field";
 
 export default {
 
-    name: 'NInfoFieldDatetime',
+    name: 'NTableCellDatetime',
 
-    extends: InfoField,
+    extends: TableCell,
 
     render()
     {
+        if ( ! this.init ) {
+            return null;
+        }
+
         if ( this.column.cslo('default', this) ) {
             return (
-                <div>{ this.column.$slots.default(this) }</div>
+                <div>{ this.column.$slots.default(this) }</div> 
             );
         }
 

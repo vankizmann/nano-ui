@@ -1,6 +1,4 @@
-import Vue from "vue";
-
-import Switch from './src/switch/switch';
+import Switch from "./src/switch/switch.jsx";
 
 export default function (App) {
     App.component(Switch.name, Switch);

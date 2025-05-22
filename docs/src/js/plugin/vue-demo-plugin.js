@@ -1,6 +1,6 @@
-import { Dom, Obj, Arr, Any } from '@kizmann/pico-js';
-import { Install as NanoInstall } from '../../../../src/index.js';
-import ItemHelper from "../helper/item-helper";
+import { Dom, Obj, Arr, Any } from "@kizmann/pico-js";
+import { Install as NanoInstall } from "../../../../src/index.js";
+import ItemHelper from "../helper/item-helper.js";
 
 export const VueDemoPlugin = function (hook, vm) {
 

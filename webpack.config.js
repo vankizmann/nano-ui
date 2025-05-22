@@ -18,7 +18,7 @@ let libJs = {
     module: {
         rules: [
             {
-                test: /.js$/,
+                test: /.jsx?$/,
                 include: [
                     path.resolve('src'),
                 ],
@@ -48,7 +48,7 @@ let docJs = {
     module: {
         rules: [
             {
-                test: /.js$/,
+                test: /.jsx?$/,
                 include: [
                     path.resolve('src'),
                     path.resolve('node_modules/@kizmann/pico-js'),

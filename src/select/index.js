@@ -1,7 +1,5 @@
-import Vue from "vue";
-
-import Select from './src/select/select';
-import SelectOption from './src/select-option/select-option';
+import Select from "./src/select/select.jsx";
+import SelectOption from "./src/select-option/select-option.jsx";
 
 export default function (App) {
     App.component(Select.name, Select);

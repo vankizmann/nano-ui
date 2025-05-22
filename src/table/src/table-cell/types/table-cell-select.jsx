@@ -1,4 +1,4 @@
-import TableCell from "../table-cell";
+import TableCell from "../table-cell.jsx";
 import { Num, Any, Obj, Arr } from "@kizmann/pico-js";
 
 export default {

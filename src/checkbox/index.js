@@ -1,7 +1,5 @@
-import Vue from "vue";
-
-import Checkbox from './src/checkbox/checkbox';
-import CheckboxGroup from './src/checkbox-group/checkbox-group';
+import Checkbox from "./src/checkbox/checkbox.jsx";
+import CheckboxGroup from "./src/checkbox-group/checkbox-group.jsx";
 
 export default function (App) {
     App.component(Checkbox.name, Checkbox);
