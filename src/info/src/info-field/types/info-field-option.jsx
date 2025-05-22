@@ -1,5 +1,5 @@
 import { Arr, Obj, Any } from "@kizmann/pico-js";
-import InfoField from "../info-field";
+import InfoField from "../info-field.jsx";
 
 export default {
 

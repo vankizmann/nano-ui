@@ -1,8 +1,8 @@
 import { Arr, Obj, Dom, Locale } from "@kizmann/pico-js";
 
-import CtorMixin from "./mixins/src/ctor";
-import CmerMixin from "./mixins/src/cmer";
-import CsloMixin from "./mixins/src/cslo";
+import CtorMixin from "./mixins/src/ctor.js";
+import CmerMixin from "./mixins/src/cmer.js";
+import CsloMixin from "./mixins/src/cslo.js";
 
 export const Icons = {
     handle: 'fa fa-ellipsis-v',
@@ -55,48 +55,48 @@ export function Install(App, Icons = {})
     window.nano.Icons = Obj.assign(Icons, window.nano.Icons);
     window.nano.Settings = Obj.assign(Settings, window.nano.Settings);
 
-    require('./alert/index').default(App);
-    require('./notification/index').default(App);
-    require('./empty/index').default(App);
-    require('./config/index').default(App); //!complex 17.1
-    require('./scrollbar/index').default(App);
-    require('./virtualscroller/index').default(App);
-    require('./draggable/index').default(App);
-    require('./loader/index').default(App);
-    require('./resizer/index').default(App);
-    require('./popover/index').default(App);
-    require('./modal/index').default(App);
-    require('./button/index').default(App);
-    require('./input/index').default(App);
-    require('./input-number/index').default(App);
-    require('./textarea/index').default(App);
-    require('./select/index').default(App);
-    require('./checkbox/index').default(App);
-    require('./radio/index').default(App);
-    require('./slider/index').default(App);
-    require('./switch/index').default(App);
-    require('./confirm/index').default(App);
-    require('./cascader/index').default(App);
-    require('./datepicker/index').default(App);
-    require('./timepicker/index').default(App);
-    require('./datetimepicker/index').default(App);
-    require('./durationpicker/index').default(App);
-    require('./transfer/index').default(App);
-    require('./form/index').default(App); // check
-    require('./tabs/index').default(App);
-    require('./tags/index').default(App);
-    require('./collapse/index').default(App);
-    require('./table/index').default(App); // 18.1 options
-    require('./paginator/index').default(App);
-    require('./info/index').default(App); //!complex 16.1
-    require('./preview/index').default(App);
-    require('./map/index').default(App);
-    require('./file/index').default(App);
-    require('./rating/index').default(App);
-    require('./drawer/index').default(App);
+    require('./alert/index.js').default(App);
+    require('./notification/index.js').default(App);
+    require('./empty/index.js').default(App);
+    require('./config/index.js').default(App); //!complex 17.1
+    require('./scrollbar/index.js').default(App);
+    require('./virtualscroller/index.js').default(App);
+    require('./draggable/index.js').default(App);
+    require('./loader/index.js').default(App);
+    require('./resizer/index.js').default(App);
+    require('./popover/index.js').default(App);
+    require('./modal/index.js').default(App);
+    require('./button/index.js').default(App);
+    require('./input/index.js').default(App);
+    require('./input-number/index.js').default(App);
+    require('./textarea/index.js').default(App);
+    require('./select/index.js').default(App);
+    require('./checkbox/index.js').default(App);
+    require('./radio/index.js').default(App);
+    require('./slider/index.js').default(App);
+    require('./switch/index.js').default(App);
+    require('./confirm/index.js').default(App);
+    require('./cascader/index.js').default(App);
+    require('./datepicker/index.js').default(App);
+    require('./timepicker/index.js').default(App);
+    require('./datetimepicker/index.js').default(App);
+    require('./durationpicker/index.js').default(App);
+    require('./transfer/index.js').default(App);
+    require('./form/index.js').default(App); // check
+    require('./tabs/index.js').default(App);
+    require('./tags/index.js').default(App);
+    require('./collapse/index.js').default(App);
+    require('./table/index.js').default(App); // 18.1 options
+    require('./paginator/index.js').default(App);
+    require('./info/index.js').default(App); //!complex 16.1
+    require('./preview/index.js').default(App);
+    require('./map/index.js').default(App);
+    require('./file/index.js').default(App);
+    require('./rating/index.js').default(App);
+    require('./drawer/index.js').default(App);
 
-    // require('./chart/index'); // Ignore
-    // require('./wysiwyg/index'); // Ignore
+    // require('./chart/index.js'); // Ignore
+    // require('./wysiwyg/index.js'); // Ignore
 }
 
 export const Nano = {

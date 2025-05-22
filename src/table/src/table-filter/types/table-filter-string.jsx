@@ -1,4 +1,4 @@
-import TableFilter from "../table-filter";
+import TableFilter from "../table-filter.jsx";
 import { Dom, Any, Locale } from "@kizmann/pico-js";
 
 export default {

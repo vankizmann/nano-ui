@@ -1,14 +1,18 @@
+import TableCell from "../table-cell.jsx";
 import { Any } from "@kizmann/pico-js";
-import InfoField from "../info-field";
 
 export default {
 
-    name: 'NInfoFieldBoolean',
+    name: 'NTableCellString',
 
-    extends: InfoField,
+    extends: TableCell,
 
     render()
     {
+        if ( ! this.init ) {
+            return null;
+        }
+
         if ( this.column.cslo('default', this) ) {
             return (
                 <div>{ this.column.$slots.default(this) }</div>
@@ -17,7 +21,7 @@ export default {
 
         return (
             <div>
-                <span>{ Any.convertBoolean(this.input, this.column.trueText, this.column.falseText) }</span>
+                <span>{ Any.convertString(this.input, this.column.emptyText) }</span>
             </div>
         );
     }

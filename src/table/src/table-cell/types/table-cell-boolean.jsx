@@ -1,9 +1,9 @@
-import TableCell from "../table-cell";
+import TableCell from "../table-cell.jsx";
 import { Any } from "@kizmann/pico-js";
 
 export default {
 
-    name: 'NTableCellDatetime',
+    name: 'NTableCellBoolean',
 
     extends: TableCell,
 
@@ -21,7 +21,7 @@ export default {
 
         return (
             <div>
-                <span>{ Any.convertDatetime(this.input, this.column.datetimeFormat, this.column.emptyText) }</span>
+                <span>{ Any.convertBoolean(this.input, this.column.trueText, this.column.falseText) }</span>
             </div>
         );
     }

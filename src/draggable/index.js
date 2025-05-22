@@ -1,8 +1,8 @@
-import Draglist from './src/draglist/draglist';
-import DraglistItem from './src/draglist-item/draglist-item';
-import Draggrid from './src/draggrid/draggrid';
-import DraggridItem from './src/draggrid-item/draggrid-item';
-import Dropzone from './src/dropzone/dropzone';
+import Draglist from "./src/draglist/draglist.jsx";
+import DraglistItem from "./src/draglist-item/draglist-item.jsx";
+import Draggrid from "./src/draggrid/draggrid.jsx";
+import DraggridItem from "./src/draggrid-item/draggrid-item.jsx";
+import Dropzone from "./src/dropzone/dropzone.jsx";
 
 export default function (App) {
     App.component(Draglist.name, Draglist);

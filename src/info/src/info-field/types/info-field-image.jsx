@@ -1,4 +1,4 @@
-import InfoField from "../info-field";
+import InfoField from "../info-field.jsx";
 import { Obj } from "@kizmann/pico-js";
 
 export default {

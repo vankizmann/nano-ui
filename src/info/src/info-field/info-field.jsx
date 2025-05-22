@@ -1,5 +1,4 @@
 import { Obj } from "@kizmann/pico-js";
-import CtorMixin from "../../../mixins/src/ctor";
 
 export default {
 
