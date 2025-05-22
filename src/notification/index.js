@@ -1,5 +1,5 @@
-import Notifcation from "./src/notification/notification.js";
-
 export default function (App) {
-    App.config.globalProperties[Notifcation.alias] = window[Notifcation.alias] = Notifcation.handle;
+    import("./src/notification/notification.js").then(({ Notify }) => {
+        App.config.globalProperties[Notify.alias] = window[Notify.alias] = Notify.handle;
+    });
 }

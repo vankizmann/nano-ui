@@ -18,13 +18,13 @@ let libJs = {
     module: {
         rules: [
             {
-                test: /.jsx?$/,
+                test: /.c?jsx?$/,
                 include: [
                     path.resolve('src'),
                 ],
                 loader: 'babel-loader',
                 options: {
-                    configFile: path.resolve('babel.config.js')
+                    configFile: path.resolve('babel.config.cjs')
                 },
             }
         ],
@@ -44,18 +44,18 @@ let libJs = {
 };
 
 let docJs = {
-    entry: ["./docs/src/js/index.js"],
+    entry: ["./docs/src/js/index.cjs"],
     module: {
         rules: [
             {
-                test: /.jsx?$/,
+                test: /.c?jsx?$/,
                 include: [
                     path.resolve('src'),
                     path.resolve('node_modules/@kizmann/pico-js'),
                 ],
                 loader: 'babel-loader',
                 options: {
-                    configFile: path.resolve('babel.config.js')
+                    configFile: path.resolve('babel.config.cjs')
                 },
             }
         ],

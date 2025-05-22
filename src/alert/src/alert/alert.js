@@ -10,21 +10,24 @@ class AlertFrame {
 
     type = '';
 
-    options = {
-        iconPrimary: nano.Icons.info,
-        iconSecondary: nano.Icons.info,
-        iconSuccess: nano.Icons.success,
-        iconWarning: nano.Icons.warning,
-        iconDanger: nano.Icons.danger,
-        iconInfo: nano.Icons.info
-    };
+    options = {};
 
     constructor(text, type = 'primary', options = {})
     {
+        let defaultIcons = {
+            iconPrimary: window.nano.Icons.info,
+            iconSecondary: window.nano.Icons.info,
+            iconSuccess: window.nano.Icons.success,
+            iconWarning: window.nano.Icons.warning,
+            iconDanger: window.nano.Icons.danger,
+            iconInfo: window.nano.Icons.info
+        };
+
         this.text = text;
         this.type = type;
 
-        this.options = Obj.assign(this.options, options);
+        this.options = Obj.assign(this.options,
+            defaultIcons, options);
 
         this.render();
     }
@@ -104,11 +107,11 @@ class AlertFrame {
 
 }
 
-export default class Alert {
+export class Alert {
 
     static alias = 'Alert';
 
-    static size = nano.Settings.notifySize;
+    static size = window.nano.Settings.notifySize;
 
     static alert = null;
 
@@ -126,3 +129,5 @@ export default class Alert {
     }
 
 }
+
+export default Alert;
