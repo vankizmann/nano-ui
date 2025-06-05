@@ -113,7 +113,7 @@ export const Settings = {
     notifyPosition: 'bottom-start'
 };
 
-export function Install(App, Icons = {})
+export function Install(App, Icons = {}, Settings = {})
 {
     /**
      * @const window.pi
@@ -134,8 +134,8 @@ export function Install(App, Icons = {})
     App.config.globalProperties.trans = Locale.trans;
     App.config.globalProperties.choice = Locale.choice;
 
-    window.nano.Icons = Obj.assign(Icons, window.nano.Icons);
-    window.nano.Settings = Obj.assign(Settings, window.nano.Settings);
+    window.nano.Icons = Obj.assign(window.nano.Icons, Icons);
+    window.nano.Settings = Obj.assign(window.nano.Settings, Settings);
 
     Arr.each(NanoImports, (NanoModule) => {
         NanoModule(App);
