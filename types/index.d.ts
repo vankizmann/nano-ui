@@ -1,5 +1,4 @@
 // types/index.d.ts
-// import Cookie from "./library/cookie";
 
 declare interface IconsInterface {
     handle: string;
@@ -23,9 +22,16 @@ declare interface IconsInterface {
     [key: string]: string;
 }
 
+declare interface SettingsInterface {
+    iconPosition: string;
+    notifySize: string;
+    notifyPosition: string;
+    [key: string]: string;
+}
+
 export declare module "@kizmann/nano-ui" {
 
-    function Install(App: any, Icons?: Partial<IconsInterface>): void;
+    function Install(App: any, Icons?: Partial<IconsInterface>, Settings?: Partial<SettingsInterface>): void;
 
     const Icons: typeof IconsInterface;
     const Settings: typeof SettingsInterface;
@@ -41,4 +47,15 @@ export declare module "@kizmann/nano-ui" {
         Settings,
         Install
     };
+}
+
+export declare module '@vue/runtime-core' {
+    interface ComponentCustomProperties {
+        ctor: (key: string, fallback?: any) => () => any
+        cmer: (classList: any) => () => any
+        cslo: (slot: string, props?: object) => () => any
+
+        trans: (key: string, values?: object) => string;
+        choice: (key: string, count?: number, values?: object) => () => any
+    }
 }
