@@ -61,6 +61,7 @@
 .n-notification-frame.n-notification-frame--bottom-start .n-notification:not(.n-active) {
     transform: translateX(-150%);
 }
+
 .n-notification-frame.n-notification-frame--top-end .n-notification:not(.n-active),
 .n-notification-frame.n-notification-frame--bottom-end .n-notification:not(.n-active) {
     transform: translateX(150%);

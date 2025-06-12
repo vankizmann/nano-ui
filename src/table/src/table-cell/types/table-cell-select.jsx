@@ -42,6 +42,10 @@ export default {
                 return true;
             }
 
+            if ( Any.isFunction(this.column.matrixDisabled) ) {
+                return this.column.matrixDisabled(this);
+            }
+
             if ( ! Any.isFunction(this.column.disabled) ) {
                 return this.column.disabled;
             }
