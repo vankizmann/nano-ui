@@ -14,17 +14,26 @@ export default {
 
     provide()
     {
-        return { NFrame: this };
+        return { NFormFrame: this };
     },
 
-    data()
-    {
-        return { inview: [] };
+    props: {
+
+        kind: {
+            default()
+            {
+                return '';
+            },
+            type: [String]
+        },
+
     },
 
     mounted()
     {
-        Any.delay(() => this.onScrollEvent());
+        this.$nextTick(() => {
+            this.onScrollEvent();
+        });
     },
 
     methods: {
@@ -83,7 +92,9 @@ export default {
                 Dom.find(selector).removeClass('on-search');
             }, 4000);
 
-            Dom.find(selector).addClass('on-search');
+            this.$nextTick(() => {
+                Dom.find(selector).addClass('on-search');
+            });
         };
 
         let classList = [

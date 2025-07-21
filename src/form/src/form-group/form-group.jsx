@@ -8,6 +8,10 @@ export default {
 
         NForm: {
             default: undefined
+        },
+
+        NFormFrame: {
+            default: undefined
         }
 
     },
@@ -56,7 +60,7 @@ export default {
         kind: {
             default()
             {
-                return 'classic';
+                return '';
             },
             type: [String]
         },
@@ -243,16 +247,26 @@ export default {
 
     render()
     {
-        let size = this.size ;
+        let size = this.size;
 
         if ( this.NForm ) {
             size = size || this.NForm.size;
         }
 
+        let kind = this.kind;
+
+        if ( this.NFormFrame ) {
+            kind = kind || this.NFormFrame.kind;
+        }
+
+        if ( this.NForm ) {
+            kind = kind || this.NForm.kind;
+        }
+
         let classList = [
             'n-form-group', 
             'n-form-group--' + size,
-            'n-form-group--' + this.kind,
+            'n-form-group--' + kind,
             'n-form-group--' + this.type,
             'n-form-group--' + this.align,
         ];

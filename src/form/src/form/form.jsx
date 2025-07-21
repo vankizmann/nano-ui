@@ -45,6 +45,14 @@ export default {
             type: [String]
         },
 
+        kind: {
+            default()
+            {
+                return 'classic';
+            },
+            type: [String]
+        },
+
         align: {
             default()
             {
