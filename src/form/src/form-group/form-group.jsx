@@ -252,8 +252,9 @@ export default {
         let classList = [
             'n-form-group', 
             'n-form-group--' + size,
+            'n-form-group--' + this.kind,
             'n-form-group--' + this.type,
-            'n-form-group--' + this.align, 
+            'n-form-group--' + this.align,
         ];
 
         if ( this.collapse ) {

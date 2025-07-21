@@ -1,8 +1,25 @@
 @use "sass:map";
 @import "../../../root/vars";
 
-.n-form-group__collapse {
-    color: $color-gray-40;
+.n-form-group--fieldset.n-form-group--collapse {
+    border: 1px solid $color-gray-10;
+}
+
+.n-form-group--fieldset.n-form-group--collapse.n-hidden {
+    border-color: transparent;
+}
+
+.n-form-group--fieldset .n-form-group__label span,
+.n-form-group--fieldset .n-form-group__label i {
+    color: $color-white;
+}
+
+.n-form-group--classic .n-form-group__collapse {
+    color: rgba($color-foreground, 0.4);
+}
+
+.n-form-group--fieldset .n-form-group__collapse {
+    color: rgba($color-white, 0.4);
 }
 
 @each $color, $values in $colors {
@@ -11,8 +28,16 @@
     $-color-light: map.get($values, 'light');
     $-color-dark: map.get($values, 'dark');
 
-    .n-form-group--#{$color} .n-form-group__label i {
+    .n-form-group--fieldset.n-form-group--#{$color} .n-form-group__legend {
+        background: $-color-base;
+    }
+
+    .n-form-group--classic.n-form-group--#{$color} .n-form-group__label i {
         color: $-color-base;
+    }
+
+    .n-form-group--#{$color}.on-search:before {
+        background: linear-gradient(135deg, $-color-base 0, transparent 300px);
     }
 
 }

@@ -62,7 +62,7 @@ export default {
         }
 
         let buttonProps = {
-            href: 'javascript:void(0)'
+            href: '#' + item.key
         }
 
         buttonProps['onClick'] = () => {
@@ -73,7 +73,17 @@ export default {
                 item.openGroup();
             }
 
-            this.$refs.body.scrollIntoView(selector, 50);
+            if ( ! Any.isEmpty(this.timeout) ) {
+                clearTimeout(this.timeout);
+            }
+
+            Dom.find('[data-group-key]').removeClass('on-search');
+
+            this.timeout = setTimeout(() => {
+                Dom.find(selector).removeClass('on-search');
+            }, 4000);
+
+            Dom.find(selector).addClass('on-search');
         };
 
         let classList = [

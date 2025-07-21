@@ -66,7 +66,7 @@
     <div class="app-container">
         <n-form>
             <n-form-frame style="height: 90vh; border: 1px solid #eee;">
-                <n-form-group v-for="(item) in items" :label="'foobar ' +  item" icon="fa fa-ghost" :type="{ '1' : 'primary', '2': 'secondary', '3': 'danger'}[item]">
+                <n-form-group v-for="(item) in items" :label="'foobar ' +  item" icon="fa fa-ghost" :type="{ '1' : 'primary', '2': 'secondary', '3': 'danger'}[item]" kind="fieldset" :collapse="true">
                     <n-form-item label="Test">
                         <n-input></n-input>
                     </n-form-item>
@@ -78,7 +78,6 @@
                     </n-form-item>
                 </n-form-group>
             </n-form-frame>
-
         </n-form>
     </div>
 </div>
