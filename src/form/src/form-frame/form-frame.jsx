@@ -2,7 +2,7 @@ import { Arr, Any, Dom } from "@kizmann/pico-js";
 
 export default {
 
-    name: 'NFrame',
+    name: 'NFormFrame',
 
     inject: {
 
