@@ -79,7 +79,11 @@
     }
 
     .n-form-frame--#{$suffix} .n-form-frame__body .n-scrollbar__wrap {
-        padding: $-form-frame-size * 0.4 $-form-frame-size * 0.6;
+        padding: $-form-frame-size * 0.2 $-form-frame-size * 0.6 $-form-frame-size * 0.2 0;
+    }
+
+    .n-form-frame--#{$suffix} .n-form-frame__body .n-form-group {
+        padding: $-form-frame-size * 0.2 $-form-frame-size * 0.6;
     }
 
 }
