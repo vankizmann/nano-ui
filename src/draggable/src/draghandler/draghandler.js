@@ -13,7 +13,9 @@ class NDragCounter
             classList: ['n-draggable__counter']
         });
 
-        this.$el.appendTo(document.body);
+        Dom.ready(() => {
+            this.$el.appendTo(document.body);
+        });
     }
 
     get(event, count)

@@ -1,28 +1,85 @@
+@use "sass:map";
 @import "../../../root/vars";
 
-.n-frame {
+.n-form-frame {
     display: flex;
     flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
 }
 
-.n-frame-item {
-    position: relative;
-}
-
-.n-frame-item.is-resize {
+.n-form-frame__menus {
     flex: 0 0 auto;
 }
 
-.n-frame-item:not(.is-resize) {
-    flex: 1 1 auto;
+.n-form-frame__menus .n-scrollbar__wrap {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
 
-.n-frame-item.is-scrollbar > .n-scrollbar {
-    position: absolute;
-    top: 0;
-    left: 0;
+.n-form-frame__menu {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: $md-radius;
+    text-decoration: none;
+}
+
+.n-form-frame__menu:not(:last-child) {
+    margin-bottom: 1px;
+}
+
+.n-form-frame__menu i {
+    flex: 0 0 auto;
+    text-align: center;
+}
+
+.n-form-frame__menu span {
+    overflow: hidden;
+    flex: 1 1 auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.n-form-frame__body {
+    flex: 1 1 auto;
     width: 100%;
     height: 100%;
+    min-height: 0;
+}
+
+
+
+@each $suffix, $values in $form {
+
+    $-form-frame-font: map.get($values, 'font');
+    $-form-frame-size: map.get($values, 'size');
+    $-form-frame-radius: map.get($values, 'radius');
+    $-form-frame-ratio: map.get($values, 'ratio');
+
+    .n-form-frame--#{$suffix} .n-form-frame__menus {
+        width: $-form-frame-size * 8;
+    }
+
+    .n-form-frame--#{$suffix} .n-form-frame__menus .n-scrollbar__wrap {
+        padding: $-form-frame-size * 0.5 $-form-frame-size * 0.6;
+    }
+
+    .n-form-frame--#{$suffix} .n-form-frame__menu {
+        height: $-form-frame-size;
+        font-size: $-form-frame-font - 1;
+        border-radius: $-form-frame-radius;
+    }
+
+    .n-form-frame--#{$suffix} .n-form-frame__menu i {
+        width: $-form-frame-size * 0.6;
+        margin: 0 $-form-frame-size * 0.3;
+    }
+
+    .n-form-frame--#{$suffix} .n-form-frame__body .n-scrollbar__wrap {
+        padding: $-form-frame-size * 0.4 $-form-frame-size * 0.6;
+    }
+
 }
