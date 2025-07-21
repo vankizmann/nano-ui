@@ -1,0 +1,30 @@
+@use "sass:map";
+@import "../../../root/vars";
+
+.n-form-frame__menu:hover {
+    background: rgba($color-foreground, 0.05);
+}
+
+.n-form-frame__menu span {
+    color: $color-gray-80;
+}
+
+@each $color, $values in $colors {
+
+    $-color-base: map.get($values, 'base');
+    $-color-light: map.get($values, 'light');
+    $-color-dark: map.get($values, 'dark');
+
+    .n-form-frame__menu--#{$color}.is-visible {
+        background: rgba($-color-base, 0.15);
+    }
+
+    .n-form-frame__menu--#{$color} i {
+        color: $-color-base;
+    }
+
+    .n-form-frame__menu--#{$color}.is-visible span {
+        color: $-color-base;
+    }
+
+}

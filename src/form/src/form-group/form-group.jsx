@@ -137,9 +137,19 @@ export default {
 
     methods: {
 
-        collapseGroup()
+        toggleGroup()
         {
             this.$emit('update:modelValue', this.tempValue = ! this.tempValue);
+        },
+
+        openGroup()
+        {
+            this.$emit('update:modelValue', this.tempValue = true);
+        },
+
+        closeGroup()
+        {
+            this.$emit('update:modelValue', this.tempValue = true);
         }
 
     },
@@ -201,7 +211,7 @@ export default {
     renderLabel()
     {
         return (
-            <div class="n-form-group__legend" onClick={this.collapseGroup}>
+            <div class="n-form-group__legend" onClick={this.toggleGroup}>
                 { this.ctor('renderCollapse')() }
                 { this.ctor('renderText')() }
                 { this.ctor('renderAction')() }

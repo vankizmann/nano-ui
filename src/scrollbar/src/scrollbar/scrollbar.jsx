@@ -757,7 +757,7 @@ export default {
 
             Dom.find(document).off(this.mouseup,
                 null, this._.uid);
-        }
+        },
 
     },
 

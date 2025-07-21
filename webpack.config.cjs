@@ -15,7 +15,15 @@ let themes = {
 
 let libJs = {
     entry: ["./src/index.js"],
+    optimization: {
+        splitChunks: false, runtimeChunk: false
+    },
     module: {
+        parser: {
+            javascript: {
+                dynamicImportMode: 'eager'
+            }
+        },
         rules: [
             {
                 test: /.c?jsx?$/,
@@ -45,7 +53,15 @@ let libJs = {
 
 let docJs = {
     entry: ["./docs/src/js/index.cjs"],
+    optimization: {
+        splitChunks: false, runtimeChunk: false
+    },
     module: {
+        parser: {
+            javascript: {
+                dynamicImportMode: 'eager'
+            }
+        },
         rules: [
             {
                 test: /.c?jsx?$/,
