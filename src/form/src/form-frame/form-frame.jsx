@@ -82,27 +82,37 @@ export default {
         onScrollEvent()
         {
             Dom.find(this.$el).find('[data-menu-key]').each((el) => {
-                Dom.find(el).removeClass('is-visible');
+                Dom.find(el).removeClass(['is-visible', 'is-first']);
             });
 
             let options = {
-                el: `[data-group-key]`, parent: this.$el
-            }
+                el: `[data-group-key]`, parent: this.$refs.body.$refs.content
+            };
 
-            Dom.inviewMaxY(options, (el) => {
+            let el = Dom.inviewMaxY(options, (el, index) => {
 
                 let selector = `[data-menu-key="${el.attr}"]`;
 
+                let classList = [
+                    'is-visible'
+                ];
+
+                if ( index === 0 ) {
+                    classList.push('is-first');
+                }
+
                 Dom.find(this.$el).find(selector)
-                    .addClass('is-visible');
+                    .addClass(classList);
 
                 this.$refs.menu.scrollIntoView(selector)
             });
-        },
 
-        handleVisibleItems(els)
-        {
+            let star = {
+                el: el, attr: Dom.find(el).attr('data-group-key')
+            };
 
+            Dom.find(`[data-menu-key="${star.attr}"]`)
+                .addClass('is-star');
         },
 
         onSearchInput()
@@ -232,9 +242,9 @@ export default {
             //
         };
 
-        bodyProps['onScrollupdate'] = Any.debounce(() => {
+        bodyProps['onScrollupdate'] = () => {
             this.onScrollEvent();
-        });
+        };
 
         return (
             <n-scrollbar ref="body" class="n-form-frame__body" {...bodyProps}>
