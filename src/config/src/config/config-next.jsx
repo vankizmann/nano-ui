@@ -261,7 +261,7 @@ export default {
         }
 
         let defaults = {
-            binds: {}, props: {}, events: {}, content: {}
+            binds: {}, props: {}, events: {}, content: {}, slots: {}
         };
 
         let defaultsBind = {
@@ -321,19 +321,32 @@ export default {
             props.style = "display: none;";
         }
 
-        let render = () => Arr.each(setup.content, (value, key) => {
+        let slots = {
+            default: this.ctor('renderSlot')(setup.content)
+        };
+
+        Obj.each(setup.slots, (slot, key) => {
+            slots[key] = this.ctor('renderSlot')(slot);
+        });
+
+        return h(component, props, slots);
+    },
+
+    renderSlot(callback)
+    {
+        let render = () => Arr.each(callback, (value, key) => {
             return this.ctor('renderSetup')(value, key);
         });
 
-        if ( Any.isFunction(setup.content) ) {
-            render = () => setup.content.apply(this.scope);
+        if ( Any.isFunction(callback) ) {
+            render = () => callback.apply(this.scope);
         }
 
-        if ( Any.isString(setup.content) ) {
-            render = () => this.getString(setup.content);
+        if ( Any.isString(callback) ) {
+            render = () => this.getString(callback);
         }
 
-        return h(component, props, { default: render });
+        return render;
     },
 
     render()

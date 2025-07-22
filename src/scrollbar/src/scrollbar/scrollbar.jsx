@@ -196,12 +196,12 @@ export default {
             }
         },
 
-        scrollIntoView(selector, delay = 0)
+        scrollIntoView(selector, delay = 0, offset = 0)
         {
-            Any.delay(() => this.onScrollIntoView(selector), delay);
+            Any.delay(() => this.onScrollIntoView(selector, offset), delay);
         },
 
-        onScrollIntoView(selector)
+        onScrollIntoView(selector, offset = 0)
         {
             let $el = Dom.find(this.$el).find(selector);
 
