@@ -2,7 +2,7 @@
 @import "../../../root/vars";
 
 .n-form-frame__menu:hover {
-    background: rgba($color-foreground, 0.05);
+    background: rgba($color-foreground, 0.075);
 }
 
 .n-form-frame__menu span {
@@ -19,7 +19,7 @@
         background: $-color-base;
     }
 
-    .n-form-frame__menu--#{$color}.is-visible {
+    .n-form-frame__menu--#{$color}.is-first {
         background: rgba($-color-base, 0.15);
     }
 
