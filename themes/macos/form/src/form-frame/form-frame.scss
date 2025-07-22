@@ -15,6 +15,10 @@
     $-color-light: map.get($values, 'light');
     $-color-dark: map.get($values, 'dark');
 
+    .n-form-frame__menu--#{$color}.on-search:before {
+        background: $-color-base;
+    }
+
     .n-form-frame__menu--#{$color}.is-visible {
         background: rgba($-color-base, 0.15);
     }

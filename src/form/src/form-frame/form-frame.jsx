@@ -1,4 +1,4 @@
-import { Arr, Any, Dom } from "@kizmann/pico-js";
+import { Arr, Any, Dom, Str, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -19,6 +19,30 @@ export default {
 
     props: {
 
+        showSearch: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
+        searchPlaceholder: {
+            default()
+            {
+                return Locale.trans('Search ...');
+            },
+            type: [String]
+        },
+
+        searchIcon: {
+            default()
+            {
+                return 'fa fa-times';
+            },
+            type: [String]
+        },
+
         kind: {
             default()
             {
@@ -29,8 +53,17 @@ export default {
 
     },
 
+    data()
+    {
+        return { search: '' };
+    },
+
     mounted()
     {
+        this.$watch('search', () => {
+            this.onSearchInput();
+        });
+
         this.$nextTick(() => {
             this.onScrollEvent();
         });
@@ -54,27 +87,33 @@ export default {
                 this.$refs.menu.scrollIntoView(selector)
 
             }, this.$el);
-        }
+        },
 
-    },
+        onSearchInput()
+        {
+            let search = Str.lower(this.search);
 
-    renderMenu(item)
-    {
-        let labelHtml = (
-            <span>{item.label}</span>
-        );
+            Dom.find(this.$el).find(`[data-menu-key]`)
+                .removeClass('on-search');
 
-        let iconHtml = null;
+            if ( Any.isEmpty(search) ) {
+                return;
+            }
 
-        if ( item.icon ) {
-            iconHtml = (<i class={item.icon} />);
-        }
+            let groups = Arr.filter(this.NForm.groups, (group) => {
+                return Str.lower(group.label).indexOf(search) !== -1;
+            });
 
-        let buttonProps = {
-            href: '#' + item.key
-        }
+            Arr.each(groups, (group) => {
+                Dom.find(this.$el).find(`[data-menu-key="${group.key}"]`).addClass('on-search');
+            });
+        },
 
-        buttonProps['onClick'] = () => {
+        onClickEvent(item, event = null)
+        {
+            if ( ! Any.isEmpty(event) ) {
+                event.preventDefault();
+            }
 
             let selector = `[data-group-key="${item.key}"]`
 
@@ -95,6 +134,55 @@ export default {
             this.$nextTick(() => {
                 Dom.find(selector).addClass('on-search');
             });
+
+            this.$refs.body.scrollIntoView(selector)
+        }
+
+    },
+
+    renderSearch()
+    {
+        if ( ! this.showSearch ) {
+            return null;
+        }
+
+        let searchProps = {
+            placeholder: this.searchPlaceholder
+        };
+
+        if ( ! Any.isEmpty(this.search) ) {
+            searchProps.icon = this.searchIcon;
+        }
+
+        searchProps['onIconClick'] = () => {
+            this.search = '';
+        }
+
+        return (
+            <div class="n-form-frame__search">
+                <NInput vModel={this.search} {...searchProps}></NInput>
+            </div>
+        )
+    },
+
+    renderMenu(item)
+    {
+        let labelHtml = (
+            <span>{item.label}</span>
+        );
+
+        let iconHtml = null;
+
+        if ( item.icon ) {
+            iconHtml = (<i class={item.icon} />);
+        }
+
+        let buttonProps = {
+            href: '#' + item.key
+        }
+
+        buttonProps['onClick'] = (e) => {
+            this.onClickEvent(item, e)
         };
 
         let classList = [
@@ -117,7 +205,7 @@ export default {
 
         return (
             <n-scrollbar ref="menu" class="n-form-frame__menus">
-                { items } { this.$slots.menu && this.$slots.menu() }
+                { this.ctor('renderSearch')() } { items } { this.$slots.menu && this.$slots.menu() }
             </n-scrollbar>
         );
     },
@@ -145,6 +233,10 @@ export default {
             'n-form-frame',
             'n-form-frame--' + this.NForm.size
         ];
+
+        if ( ! Any.isEmpty(this.search) ) {
+            classList.push('n-form-frame--search')
+        }
 
         return (
             <div class={classList}>

@@ -20,11 +20,34 @@
 
 .n-form-frame__menu {
     cursor: pointer;
+    position: relative;
     display: flex;
     align-items: center;
     width: 100%;
     border-radius: $md-radius;
     text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.n-form-frame--search .n-form-frame__menu:not(.on-search) {
+    opacity: 0.6;
+}
+
+.n-form-frame__menu:before {
+    content: '\00a0';
+    position: absolute;
+    top: 50%;
+    display: block;
+    width: 6px;
+    height: 6px;
+    margin-top: -3px;
+    border-radius: 500px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.n-form-frame__menu.on-search:before {
+    opacity: 1;
 }
 
 .n-form-frame__menu:not(:last-child) {
@@ -67,10 +90,19 @@
         padding: $-form-frame-size * 0.5 $-form-frame-size * 0.6;
     }
 
+    .n-form-frame--#{$suffix} .n-form-frame__search {
+        margin-bottom: $-form-frame-size * 0.4;
+    }
+
     .n-form-frame--#{$suffix} .n-form-frame__menu {
         height: $-form-frame-size;
         font-size: $-form-frame-font - 1;
         border-radius: $-form-frame-radius;
+        padding-right: $-form-frame-size * 0.6;
+    }
+
+    .n-form-frame--#{$suffix} .n-form-frame__menu:before {
+        right: $-form-frame-size * 0.3;
     }
 
     .n-form-frame--#{$suffix} .n-form-frame__menu i {
@@ -80,10 +112,6 @@
 
     .n-form-frame--#{$suffix} .n-form-frame__body .n-scrollbar__wrap {
         padding: $-form-frame-size * 0.2 $-form-frame-size * 0.6 $-form-frame-size * 0.2 0;
-    }
-
-    .n-form-frame--#{$suffix} .n-form-frame__body .n-form-group {
-        padding: $-form-frame-size * 0.2 $-form-frame-size * 0.6;
     }
 
 }
