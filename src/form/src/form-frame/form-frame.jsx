@@ -51,6 +51,14 @@ export default {
             type: [String]
         },
 
+        multiple: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        }
+
     },
 
     data()
@@ -77,16 +85,24 @@ export default {
                 Dom.find(el).removeClass('is-visible');
             });
 
-            Dom.inviewMaxY(`[data-group-key]`, (el, attr) => {
+            let options = {
+                el: `[data-group-key]`, parent: this.$el
+            }
 
-                let selector = `[data-menu-key="${attr}"]`;
+            Dom.inviewMaxY(options, (el) => {
+
+                let selector = `[data-menu-key="${el.attr}"]`;
 
                 Dom.find(this.$el).find(selector)
                     .addClass('is-visible');
 
                 this.$refs.menu.scrollIntoView(selector)
+            });
+        },
 
-            }, this.$el);
+        handleVisibleItems(els)
+        {
+
         },
 
         onSearchInput()
@@ -135,7 +151,7 @@ export default {
                 Dom.find(selector).addClass('on-search');
             });
 
-            this.$refs.body.scrollIntoView(selector)
+            this.$refs.body.scrollIntoView(selector, 0, 100);
         }
 
     },

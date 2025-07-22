@@ -196,12 +196,12 @@ export default {
             }
         },
 
-        scrollIntoView(selector, delay = 0, offset = 0)
+        scrollIntoView(selector, delay = 0, padding = 0)
         {
-            Any.delay(() => this.onScrollIntoView(selector, offset), delay);
+            Any.delay(() => this.onScrollIntoView(selector, padding), delay);
         },
 
-        onScrollIntoView(selector, offset = 0)
+        onScrollIntoView(selector, padding = 0)
         {
             let $el = Dom.find(this.$el).find(selector);
 
@@ -214,11 +214,11 @@ export default {
             let offsetTop = $el.offsetTop(this.$el);
 
             if ( offsetTop < scrollTop ) {
-                this.$refs.content.scrollTop = offsetTop;
+                this.$refs.content.scrollTop = offsetTop - padding;
             }
 
             if ( offsetTop + $el.height() >= scrollTop + outerHeight ) {
-                this.$refs.content.scrollTop = offsetTop - outerHeight + $el.height();
+                this.$refs.content.scrollTop = offsetTop - outerHeight + $el.height() + padding;
             }
 
             let scrollLeft = this.$refs.content
@@ -230,11 +230,11 @@ export default {
             let offsetLeft = $el.offsetLeft(this.$el);
 
             if ( offsetLeft < scrollLeft ) {
-                this.$refs.content.scrollLeft = offsetLeft;
+                this.$refs.content.scrollLeft = offsetLeft - padding;
             }
 
             if ( offsetLeft + $el.width() >= scrollLeft + outerWidth ) {
-                this.$refs.content.scrollLeft = offsetLeft - outerWidth + $el.width();
+                this.$refs.content.scrollLeft = offsetLeft - outerWidth + $el.width() + padding;
             }
         },
 
