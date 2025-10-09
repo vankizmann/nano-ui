@@ -57,6 +57,13 @@
 .n-form-frame__menu i {
     flex: 0 0 auto;
     text-align: center;
+    transition: opacity 0.3s;
+    opacity: 0.7;
+}
+
+.n-form-frame__menu.on-search i,
+.n-form-frame__menu.is-visible i {
+    opacity: 1;
 }
 
 .n-form-frame__menu span {

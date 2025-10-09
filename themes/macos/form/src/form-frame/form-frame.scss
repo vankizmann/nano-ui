@@ -19,7 +19,7 @@
         background: $-color-base;
     }
 
-    .n-form-frame__menu--#{$color}.is-first {
+    .n-form-frame__menu--#{$color}.is-star {
         background: rgba($-color-base, 0.15);
     }
 
@@ -27,7 +27,7 @@
         color: $-color-base;
     }
 
-    .n-form-frame__menu--#{$color}.is-visible span {
+    .n-form-frame__menu--#{$color}.is-star span {
         color: $-color-base;
     }
 

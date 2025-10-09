@@ -1,4 +1,4 @@
-import { UUID } from "@kizmann/pico-js";
+import { Arr, UUID } from "@kizmann/pico-js";
 
 export default {
 
@@ -107,25 +107,30 @@ export default {
 
     },
 
+    data()
+    {
+        return {
+            uid: UUID(), tempValue: this.modelValue, items: []
+        };
+    },
+
+    provide()
+    {
+        return { NFormGroup: this };
+    },
+
     mounted()
     {
         if ( this.NForm ) {
-            this.NForm.registerGroup(this);
+            this.NForm.appendGroup(this);
         }
     },
 
     unmounted()
     {
         if ( this.NForm ) {
-            this.NForm.unregisterGroup(this);
+            this.NForm.removeGroup(this);
         }
-    },
-
-    data()
-    {
-        return {
-            tempValue: this.modelValue
-        };
     },
 
     watch: {
@@ -141,6 +146,21 @@ export default {
 
     methods: {
 
+        getItems()
+        {
+            return this.items;
+        },
+
+        appendItem(item)
+        {
+            this.items[item.uid] = item;
+        },
+
+        removeItem(item)
+        {
+            delete this.items[item.uid];
+        },
+
         toggleGroup()
         {
             this.$emit('update:modelValue', this.tempValue = ! this.tempValue);
@@ -154,7 +174,7 @@ export default {
         closeGroup()
         {
             this.$emit('update:modelValue', this.tempValue = true);
-        }
+        },
 
     },
 

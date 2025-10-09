@@ -138,14 +138,19 @@ export default {
 
     methods: {
 
-        registerGroup(group)
+        getGroups()
         {
-            this.groups[group.key] = group;
+            return this.groups;
         },
 
-        unregisterGroup(group)
+        appendGroup(group)
         {
-            delete this.groups[group.key];
+            this.groups[group.uid] = group;
+        },
+
+        removeGroup(group)
+        {
+            delete this.groups[group.uid];
         },
 
         onSubmit(event)

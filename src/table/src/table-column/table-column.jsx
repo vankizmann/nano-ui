@@ -381,7 +381,7 @@ export default {
             minWidth:   this.minWidth,
             maxWidth:   this.maxWidth,
             disabled:   !!this.fixedWidth,
-            group:      [this.NTable.uid],
+            group:      ['n-table', this.NTable.uid],
         };
 
         props['onUpdate:modelValue'] = (value) => {

@@ -6,11 +6,15 @@ export default {
 
     inject: {
 
+        NTabs: {
+            default: undefined
+        },
+
         NForm: {
             default: undefined
         },
 
-        NTabs: {
+        NFormGroup: {
             default: undefined
         },
 
@@ -175,8 +179,8 @@ export default {
 
     beforeMount()
     {
-        if ( this.NForm ) {
-            this.NForm.addItem(this);
+        if ( this.NFormGroup ) {
+            this.NFormGroup.appendItem(this);
         }
     },
 
@@ -189,8 +193,8 @@ export default {
 
     beforeUnmount()
     {
-        if ( this.NForm ) {
-            this.NForm.removeItem(this);
+        if ( this.NFormGroup ) {
+            this.NFormGroup.removeItem(this);
         }
     },
 

@@ -1,14 +1,16 @@
 import { UUID, Num, Arr, Obj, Any, Dom, Locale } from "@kizmann/pico-js";
 
+window.NDrawerStack = [];
+
 export default {
 
     name: 'NDrawer',
 
     inject: {
 
-        NScrollbar: {
+        NDrawer: {
             default: undefined
-        }
+        },
 
     },
 
@@ -385,8 +387,12 @@ export default {
 
     renderBackdrop()
     {
+        let classList = [
+            'n-drawer__backdrop',
+        ];
+
         return (
-            <div ref="backdrop" class="n-drawer__backdrop"></div>
+            <div ref="backdrop" class={classList}></div>
         );
     },
 
