@@ -5,12 +5,36 @@
     opacity: 0.7;
 }
 
-.n-button--default:not(.n-button--link) {
-    color: $color-foreground;
-    background: rgba($color-foreground, 0.05);
+.n-button--default:not(.n-button--link,.n-button--glass) {
+    color: rgba($color-foreground, 0.8);
+    background: rgba($color-foreground, 0.1);
 }
 
-.n-button--default:not(.n-button--link):hover {
+.n-button--default:not(.n-button--link,.n-button--glass):hover {
+    color: rgba($color-foreground, 0.9);
+    background: rgba($color-foreground, 0.15);
+}
+
+.n-button--default:not(.n-button--link,.n-button--glass).n-disabled {
+    color: rgba($color-foreground, 0.8);
+    background: rgba($color-foreground, 0.1);
+}
+
+.n-button--default.n-button--link:not(.n-disabled) {
+    color: rgba($color-foreground, 0.8);
+}
+
+.n-button--default.n-button--link:not(.n-disabled):hover {
+    color: rgba($color-foreground, 0.9);
+}
+
+.n-button--default.n-button--glass:not(.n-disabled) {
+    color: rgba($color-foreground, 0.8);
+    background: rgba($color-foreground, 0.1);
+}
+
+.n-button--default.n-button--glass:not(.n-disabled):hover {
+    color: rgba($color-foreground, 0.9);
     background: rgba($color-foreground, 0.15);
 }
 
@@ -24,23 +48,23 @@
      * Button primary
      */
 
-    .n-button--#{$color}:not(.n-button--link) {
+    .n-button--#{$color}:not(.n-button--link,.n-button--glass) {
         color: $color-white;
         background: $-color-base;
         border-color: $-color-base;
     }
 
-    .n-button--#{$color}:not(.n-button--link):hover {
+    .n-button--#{$color}:not(.n-button--link,.n-button--glass):hover {
         background: $-color-light;
         border-color: $-color-light;
     }
 
-    .n-button--#{$color}:not(.n-button--link):focus {
+    .n-button--#{$color}:not(.n-button--link,.n-button--glass):focus {
         background: $-color-dark;
         border-color: $-color-dark;
     }
 
-    .n-button--#{$color}:not(.n-button--link).n-disabled {
+    .n-button--#{$color}:not(.n-button--link,.n-button--glass).n-disabled {
         background: $-color-base;
         border-color: $-color-base;
     }
@@ -54,6 +78,20 @@
     }
 
     .n-button--#{$color}:not(.n-disabled).n-button--link:focus {
+        color: $-color-dark;
+    }
+
+    .n-button--#{$color}:not(.n-disabled).n-button--glass {
+        color: $-color-base;
+        background: rgba($-color-base, 0.25);
+    }
+
+    .n-button--#{$color}:not(.n-disabled).n-button--glass:hover {
+        color: $-color-dark;
+        background: rgba($-color-base, 0.35);
+    }
+
+    .n-button--#{$color}:not(.n-disabled).n-button--glass:focus {
         color: $-color-dark;
     }
 

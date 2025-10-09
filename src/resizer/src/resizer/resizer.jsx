@@ -83,7 +83,7 @@ export default {
     computed: {
 
         touch() {
-            return !! ('ontouchstart' in window || 
+            return !! ('ontouchstart' in window ||
                 navigator.msMaxTouchPoints);
         },
 
@@ -140,6 +140,8 @@ export default {
         Dom.find(window).on('resize', Any.debounce((...args) => {
             this.onResize(...args)
         }, 500), this._.uid);
+
+        this.updateHandle();
     },
 
     updated()
@@ -153,10 +155,10 @@ export default {
             this.unbindSizechange();
         }
 
-        Event.unbind('NResizer:move', 
+        Event.unbind('NResizer:move',
             this._.uid);
-        
-        Dom.find(window).off('resize', 
+
+        Dom.find(window).off('resize',
             null, this._.uid);
     },
 
@@ -167,7 +169,7 @@ export default {
             if ( ! Arr.has(group, this.group) ) {
                 return;
             }
-            
+
             if ( ! this.tempValue || ! this.group.length ) {
                 return;
             }
@@ -190,9 +192,9 @@ export default {
                 return;
             }
 
-            this.$emit('update:modelValue', 
+            this.$emit('update:modelValue',
                 this.tempValue = width);
-            
+
             this.updateHandle();
         },
 
@@ -203,7 +205,7 @@ export default {
             if ( this.position === 'left' ) {
                 style.transform =`translateX(-${this.tempValue - this.resizerWidth}px)`
             }
-    
+
             if ( this.position === 'right' ) {
                 style.transform = `translateX(${this.tempValue - this.resizerWidth}px)`
             }
@@ -213,7 +215,7 @@ export default {
 
         bindSizechange()
         {
-            Dom.find(this.NScrollbar.$el).on('resized', 
+            Dom.find(this.NScrollbar.$el).on('resized',
                 Any.debounce(this.updateWidth, 50), this._.uid);
         },
 
@@ -267,7 +269,7 @@ export default {
 
         onLeftMousemove(event)
         {
-            this.clientX = (window.innerWidth - 
+            this.clientX = (window.innerWidth -
                 this.getTouchEvent(event).clientX);
 
             let offsetX = Dom.find(this.$el)
@@ -462,7 +464,7 @@ export default {
         if ( this.disabled ) {
             return null;
         }
-        
+
         let classList = [
             'n-resizer__handle',
         ];
@@ -501,6 +503,10 @@ export default {
 
         if ( this.width ) {
             style['flex-basis'] = this.width + 'px';
+        }
+
+        if ( this.modelValue == this.tempValue ) {
+            style['flex-basis'] = this.modelValue + 'px';
         }
 
         if ( this.minWidth ) {

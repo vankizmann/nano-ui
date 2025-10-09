@@ -63,9 +63,9 @@
 <body class="n-demo">
 
 <div id="app">
-    <div class="app-container" style="margin: 20vh auto;">
+    <div class="app-container" style="margin: 5vh auto;">
         <n-form kind="fieldset">
-            <n-form-frame style="height: 60vh; border: 1px solid #eee;" :show-search="true">
+            <n-form-frame style="height: 80vh; border: 1px solid #eee;" :show-search="true">
                 <n-form-group v-for="(item) in items" :label="'foobar asd asdasd asd asdas as dasd ' +  item" icon="fa fa-ghost" :type="{ '1' : 'primary', '2': 'secondary', '3': 'danger'}[item]" :collapse="true">
                     <n-form-item label="Test">
                         <n-input></n-input>
@@ -73,10 +73,10 @@
                     <n-form-item label="Test">
                         <n-input></n-input>
                     </n-form-item>
-                    <n-form-item label="Test">
+                    <n-form-item v-if="item < 3" :label="getLabel(item)">
                         <n-input></n-input>
                     </n-form-item>
-                    <n-form-item label="Test">
+                    <n-form-item v-if="item < 2" label="Test">
                         <n-input></n-input>
                     </n-form-item>
                     <n-form-item v-if="item < 2" label="Test">
@@ -401,6 +401,12 @@
             };
 
             let methods = {};
+
+            let test = {};
+
+            methods['getLabel'] = (key) => {
+                return test[key] || (test[key] = window.pi.UUID());
+            };
 
             var config = {
                 data: function () {

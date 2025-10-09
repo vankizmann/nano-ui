@@ -31,7 +31,7 @@ export default {
         return (
             <NForm>
                 <NFormItem>
-                    <NDatepicker size="sm" vModel={this.filter.value} format={this.column.datetimeFormat} />
+                    <NDatepicker size="sm" vModel={this.filter.value} />
                 </NFormItem>
                 <NFormItem>
                     <NSelect size="sm" vModel={this.filter.operator} options={options} />

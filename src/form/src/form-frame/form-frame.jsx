@@ -63,7 +63,7 @@ export default {
 
     data()
     {
-        return { search: '' };
+        return { search: '', star: '', block: false };
     },
 
     mounted()
@@ -75,9 +75,47 @@ export default {
         this.$nextTick(() => {
             this.onScrollEvent();
         });
+
+        this.onMoveEvent();
     },
 
     methods: {
+
+        applyStar(id, block = false)
+        {
+            if ( this.block ) {
+                return;
+            }
+
+            this.block = block;
+
+            if ( ! Any.isEmpty(this.timeout) ) {
+                clearTimeout(this.timeout);
+            }
+
+            if ( block ) {
+                this.star = id;
+            }
+
+            this.timeout = setTimeout(() => {
+                this.star = id; this.block = false;
+            }, 500);
+        },
+
+        onMoveEvent()
+        {
+            Dom.find(window).on('mousemove', Any.debounce(e => {
+
+                let el = Dom.find(e.target).closest('[data-group-key]');
+
+                if ( Any.isEmpty(el) ) {
+                    return;
+                }
+
+                this.applyStar(Dom.find(el).attr('data-group-key'), true);
+
+            }, 100));
+        },
 
         onScrollEvent()
         {
@@ -107,12 +145,7 @@ export default {
                 this.$refs.menu.scrollIntoView(selector)
             });
 
-            let star = {
-                el: el, attr: Dom.find(el).attr('data-group-key')
-            };
-
-            Dom.find(`[data-menu-key="${star.attr}"]`)
-                .addClass('is-star');
+            this.applyStar(Dom.find(el).attr('data-group-key'), false);
         },
 
         onSearchInput()
@@ -127,7 +160,12 @@ export default {
             }
 
             let groups = Arr.filter(this.NForm.groups, (group) => {
-                return Str.lower(group.label).indexOf(search) !== -1;
+
+                let labels = Arr.extract(group.items, 'label')
+                    .join("\n");
+
+                return Str.lower(group.label + "\n" + labels)
+                    .indexOf(search) !== -1;
             });
 
             Arr.each(groups, (group) => {
@@ -147,19 +185,9 @@ export default {
                 item.openGroup();
             }
 
-            if ( ! Any.isEmpty(this.timeout) ) {
-                clearTimeout(this.timeout);
+            if ( this.star !== item.key ) {
+                this.applyStar(item.key, true);
             }
-
-            Dom.find('[data-group-key]').removeClass('on-search');
-
-            this.timeout = setTimeout(() => {
-                Dom.find(selector).removeClass('on-search');
-            }, 4000);
-
-            this.$nextTick(() => {
-                Dom.find(selector).addClass('on-search');
-            });
 
             this.$refs.body.scrollIntoView(selector, 0, 100);
         }
@@ -214,7 +242,11 @@ export default {
         let classList = [
             'n-form-frame__menu',
             'n-form-frame__menu--' + item.type
-        ]
+        ];
+
+        if ( this.star === item.key ) {
+            classList.push('is-star');
+        }
 
         return (
             <a class={classList} data-menu-key={item.key} {...buttonProps}>

@@ -31,6 +31,14 @@ export default {
             type: [Boolean]
         },
 
+        glass: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         square: {
             default()
             {
@@ -98,6 +106,10 @@ export default {
 
         if ( this.icon ) {
             classList.push('n-button--icon');
+        }
+
+        if ( this.glass ) {
+            classList.push('n-button--glass');
         }
 
         if ( this.link ) {
