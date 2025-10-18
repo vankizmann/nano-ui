@@ -71,14 +71,14 @@
 .n-scrollbar-v {
     top: 0;
     right: 0;
-    width: 12px;
-}
+    width: 14px;
 
+}
 
 .n-scrollbar-h {
     left: 0;
     bottom: 0;
-    height: 12px;
+    height: 14px;
 }
 
 .n-scrollbar--native:not(.n-scrollbar--forced) > .n-scrollbar-v,
@@ -92,16 +92,22 @@
 .n-scrollbar-h:before {
     content: '\00a0';
     position: absolute;
-    top: 2px;
-    bottom: 2px;
-    left: 2px;
-    right: 2px;
     display: block;
     border-radius: 500px;
     opacity: 0;
-    transition: opacity 0.15s;
+    transition: opacity 0.15s, transform 0.15s;
 }
 
+.n-scrollbar-v:before,
+.n-scrollbar-h:before {
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    right: 4px;
+}
+
+.n-scrollbar.has-vtrack > .n-scrollbar-v.is-active:before,
+.n-scrollbar.has-htrack > .n-scrollbar-h.is-active:before,
 .n-scrollbar.has-vtrack:hover > .n-scrollbar-v:before,
 .n-scrollbar.has-htrack:hover > .n-scrollbar-h:before {
     opacity: 1;

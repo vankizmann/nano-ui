@@ -986,14 +986,14 @@
         <h2>NResizer</h2>
 
         <div style="display: flex; flex-direction: row; justify-content: flex-start;">
-            <n-resizer style="width: 60%; height: 200px; padding: 20px; flex: 0 1 auto; background: rgba(110, 110, 110, 0.5);" position="right">
+            <n-resizer flex="0 0 60%" style="height: 200px; padding: 20px; background: rgba(110, 110, 110, 0.5);" position="right">
                 Resizercontent
             </n-resizer>
         </div>
 
 
         <div style="display: flex; flex-direction: row; justify-content: flex-end;">
-            <n-resizer style="width: 60%; height: 200px; padding: 20px; flex: 0 1 auto; background: rgba(110, 110, 110, 0.5);" position="left">
+            <n-resizer flex="0 0 60%" style="height: 200px; padding: 20px; background: rgba(110, 110, 110, 0.5);" position="left">
                 Resizercontent
             </n-resizer>
         </div>
@@ -1013,7 +1013,7 @@
             </div>
         </div>
 
-        <n-table ref="table" v-model:items="virtualTree" :handle="true" :render-handle="true" :render-expand="true" :item-height="100" style="margin-top: 30px; min-height: 500px;">
+        <n-table ref="table" v-model:items="virtualTree" :handle="true" :render-handle="true" :render-expand="true" :item-height="100" style="margin-top: 30px; height: 500px;">
             <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true">
                 <!--                <template v-slot:default="{item}">{{ item.value }}</template>-->
             </n-table-column>
@@ -1024,7 +1024,7 @@
             <n-table-column label="ID" type="string" prop="id" :breakpoint="1300"></n-table-column>
         </n-table>
 
-        <n-table v-model:items="virtualTree" :draggable="false" :render-expand="true" :item-height="36" style="margin-top: 30px; min-height: 500px;">
+        <n-table v-model:items="virtualTree" :draggable="false" :render-expand="true" :item-height="36" style="margin-top: 30px; height: 500px;">
             <n-table-column label="Label" type="string" prop="label"></n-table-column>
             <n-table-column v-model="treeSelect" label="Select" type="select" :allow-uncheck="true" :fixed-width="120">
                 <template v-slot:default="{ item }"></template>

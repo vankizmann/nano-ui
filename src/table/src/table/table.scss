@@ -6,7 +6,6 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    border-radius: $md-radius + 2;
 }
 
 .n-table:before {
@@ -20,22 +19,23 @@
     background: transparent;
     z-index: 50;
     pointer-events: none;
-    border-radius: $md-radius + 2;
     border: 1px solid transparent;
 }
 
-.n-table .n-table__header {
-    border-radius: $md-radius + 2 $md-radius + 2 0 0;
+.n-table > .n-scrollbar {
+    flex: 1 1 auto;
 }
 
-.n-table .n-table__wrap,
-.n-table .n-table__inner,
-.n-table > .n-scrollbar,
-.n-table > .n-scrollbar > .n-scrollbar-content,
-.n-table > .n-scrollbar > .n-scrollbar-content > .n-scrollbar__wrap {
+.n-table .n-table__header {
+    display: inline-flex;
+}
+
+.n-table .n-table__wrap {
     min-width: 100%;
+    min-height: 0;
+    max-height: 100%;
     flex: 1 1 auto;
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
@@ -52,10 +52,6 @@
 .n-table .n-table__wrap {
     //margin-right: -1px;
     //margin-bottom: -1px;
-}
-
-.n-table__header {
-    margin-left: -1px;
 }
 
 .n-table .n-table__inner {
@@ -90,6 +86,7 @@
 
 .n-table__body .n-scrollbar {
     flex: 1 1 auto;
+    max-height: 100%;
 }
 
 .n-table__body .n-scrollbar__wrap {
@@ -108,6 +105,10 @@
     display: flex;
     flex-direction: row;
     align-items: stretch;
-    justify-content: stretch;
+    justify-content: flex-start;
     border-bottom: 1px solid transparent;
+}
+
+.n-table .n-fixed {
+    flex: 0 0 auto !important;
 }

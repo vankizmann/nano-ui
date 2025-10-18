@@ -93,7 +93,7 @@ export default {
     {
         Any.delay(() => {
             if ( this.$refs.scrollbar ) {
-                this.$refs.scrollbar.adaptHeight();
+                // this.$refs.scrollbar.adaptHeight();
             }
         }, 500);
     },

@@ -107,7 +107,7 @@ export default {
         useKeys: {
             default()
             {
-                return false;
+                return true;
             },
             type: [Boolean]
         },
@@ -136,14 +136,14 @@ export default {
     beforeMount()
     {
         this.scrollTop = 0;
+        this.init = false;
+        this.ready = [];
     },
 
     mounted()
     {
-
         this.bindAdaptScroll()
     },
-
 
     beforeUnmount()
     {
@@ -151,6 +151,25 @@ export default {
     },
 
     methods: {
+
+        callWhenReady(cb)
+        {
+            if ( this.init ) {
+                return cb.call(this);
+            }
+
+            this.ready.push(cb);
+        },
+
+        clearWhenReady()
+        {
+            console.log('ready and clear', this.ready);
+            Arr.each(this.ready, cb => {
+                cb.call(this);
+            });
+
+            this.ready = [];
+        },
 
         bindAdaptScroll()
         {
@@ -192,9 +211,9 @@ export default {
             this.$refs.scrollbar.scrollIntoView(selector);
         },
 
-        scrollToIndex(index, delay = 0)
+        scrollToIndex(index)
         {
-            Any.delay(() => this.onScrollToIndex(index), delay);
+            this.callWhenReady(() => this.onScrollToIndex(index))
         },
 
         onScrollToIndex(index)
@@ -218,15 +237,18 @@ export default {
                 return this.scrollTo(0, targetTop);
             }
 
-            targetTop = targetTop - this.height +
-                this.itemHeight;
+            targetTop = targetTop - this.height;
+
+            if ( targetTop > this.scrollTop ) {
+                targetTop += this.itemHeight
+            }
 
             this.scrollTo(0, targetTop);
         },
 
-        scrollTo(x = 0, y = 0, delay = 0)
+        scrollTo(x = 0, y = 0)
         {
-            Any.delay(() => this.onScrollTo(x, y), delay);
+            this.callWhenReady(() => this.onScrollTo(x, y));
         },
 
         onScrollTo(x = 0, y = 0)
@@ -235,7 +257,13 @@ export default {
                 return;
             }
 
-            this.$refs.scrollbar.scrollTo(x, y);
+            this.scrollTop = y;
+
+            let cb = () => {
+                this.$refs.scrollbar.scrollTo(x, y);
+            };
+
+            this.refreshDriver(false, cb);
         },
 
         clearState()
@@ -252,7 +280,7 @@ export default {
             this.scrollTop = this.$refs.scrollbar.
                 $refs.content.scrollTop;
 
-            Any.async(this.refreshDriver);
+            this.refreshDriver(false);
         },
 
         onScrollupdate()
@@ -270,43 +298,44 @@ export default {
 
             this.scrollTop = scrollTop;
 
-            let offset = this.$refs.scrollbar.$el.offsetHeight -
-                this.$refs.scrollbar.$el.clientHeight;
+            Any.async(this.refreshDriver);
+        },
 
-            let isOutOfRange = scrollTop < 0 || scrollTop + this.height
-                > this.$refs.inner.scrollHeight + offset;
+        onSizechange(width, height)
+        {
+            let init = [
+                this.width === 0, this.height === 0
+            ];
 
-            if ( isOutOfRange ) {
-                return;
+            [this.width, this.height] = [
+                width, height
+            ];
+
+            this.init = Arr.has(init, true);
+
+            if ( this.init ) {
+                this.clearWhenReady();
             }
 
             Any.async(this.refreshDriver);
         },
 
-        onSizechange(height, width, el)
-        {
-            this.width = width;
-            this.height = height;
 
-            Any.async(this.refreshDriver);
-        },
-
-
-        refreshDriver(queue = true)
+        refreshDriver(queue = true, callback = null)
         {
             if ( Any.isEmpty(this.timer) ) {
                 this.timer = Date.now();
             }
 
-            if ( Date.now() - this.timer > 20 ) {
+            if ( Date.now() - this.timer > 30 ) {
                 queue = false;
             }
 
             clearTimeout(this.to);
 
             this.to = setTimeout(() => {
-                this.refreshDriver(false);
-            }, 25);
+                this.refreshDriver(false, callback);
+            }, 35);
 
             if ( queue ) {
                 return;
@@ -356,6 +385,10 @@ export default {
             }
 
             this.state = state;
+
+            if ( Any.isFunction(callback) ) {
+                callback.call(this);
+            }
         },
 
     },
@@ -495,15 +528,17 @@ export default {
         };
 
         let style = {
-            'overflow-y': 'hidden'
+            'overflow-y': 'hidden',
         };
 
         let totalHeight = Math.ceil(this.items.length / this.state.grid) *
             this.itemHeight;
 
         if ( this.threshold && this.items.length ) {
-            style.height = Math.ceil(totalHeight + this.offsetY) + 'px';
+            style.height = totalHeight + 'px';
         }
+
+        console.log('vscroll rerender', Obj.clone(this.$data), style)
 
         return (
             <NScrollbar class={classList} ref="scrollbar" {...props}>

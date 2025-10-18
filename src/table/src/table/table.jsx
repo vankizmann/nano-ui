@@ -262,7 +262,7 @@ export default {
         useKeys: {
             default()
             {
-                return false;
+                return true;
             },
             type: [Boolean]
         },
@@ -616,8 +616,7 @@ export default {
     render()
     {
         let except = [
-            'visible', 'filter', 'sortProp',
-            'sortDir', 'closeFilterOnEnter'
+            'visible', 'filter', 'sortProp', 'sortDir', 'closeFilterOnEnter'
         ];
 
         let props = Obj.except(this.$props, except, {
@@ -662,10 +661,8 @@ export default {
 
         return (
             <div class="n-table">
-                <NScrollbar ref="scrollbar" class="n-table__wrap" fixture={true} overflowY={false}>
-                    <div class="n-table__inner">
-                        {[this.ctor('renderHead')(), draggableHtml]}
-                    </div>
+                <NScrollbar ref="scrollbar" wrapClass="n-table__wrap" overflowY={false}>
+                    {[this.ctor('renderHead')(), draggableHtml]}
                 </NScrollbar>
                 {this.$slots.default && this.$slots.default()}
             </div>

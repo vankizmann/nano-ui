@@ -1,6 +1,11 @@
 @import "../../../root/vars";
 
+.n-table {
+    border-radius: $md-radius + 2;
+}
+
 .n-table:before {
+    border-radius: $md-radius + 2;
     border: 1px solid $color-gray-15;
 }
 

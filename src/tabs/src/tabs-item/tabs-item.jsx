@@ -114,7 +114,7 @@ export default {
 
         return (
             <div class="n-tabs__tab-icon">
-                { this.$slots.icon && this.$slots.icon() || <i class={this.icon}></i> }
+                { this.$slots.icon && this.$slots.icon() || <i class={'n-icon ' + this.icon}></i> }
             </div>
         );
     },

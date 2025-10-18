@@ -70,8 +70,12 @@
 
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--auto">
+                <n-select type="secondary" :multiple="true" :options="virtualDataShort" :lazy="true"></n-select>
+            </div>
+            <div class="col--auto">
                 <n-select type="secondary" :multiple="true" :options="virtualData" :lazy="true"></n-select>
             </div>
+        </div>
         </div>
 
     </div>
@@ -119,6 +123,7 @@
             };
 
             data.virtualData = itemGenerator(1000);
+            data.virtualDataShort = itemGenerator(4);
 
             let methods = {};
 

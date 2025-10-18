@@ -201,8 +201,12 @@ export default {
             return null;
         }
 
+        let scrollbarProps = {
+            offsetY: 0, wrapClass: 'n-timepicker-panel__wrap'
+        };
+
         return (
-            <NScrollbar ref="hour" class="n-timepicker-panel__panel" wrapClass="n-timepicker-panel__wrap">
+            <NScrollbar ref="hour" class="n-timepicker-panel__panel" {...scrollbarProps}>
                 {Arr.each(this.hoursGrid, this.ctor('renderHourItem'))}
             </NScrollbar>
         );
@@ -235,8 +239,12 @@ export default {
             return null;
         }
 
+        let scrollbarProps = {
+            offsetY: 0, wrapClass: 'n-timepicker-panel__wrap'
+        };
+
         return (
-            <NScrollbar ref="minute" class="n-timepicker-panel__panel" wrapClass="n-timepicker-panel__wrap">
+            <NScrollbar ref="minute" class="n-timepicker-panel__panel" {...scrollbarProps}>
                 {Arr.each(this.minutesGrid, this.ctor('renderMinuteItem'))}
             </NScrollbar>
         );
@@ -269,8 +277,12 @@ export default {
             return null;
         }
 
+        let scrollbarProps = {
+            offsetY: 0, wrapClass: 'n-timepicker-panel__wrap'
+        };
+
         return (
-            <NScrollbar ref="second" class="n-timepicker-panel__panel" wrapClass="n-timepicker-panel__wrap">
+            <NScrollbar ref="second" class="n-timepicker-panel__panel" {...scrollbarProps}>
                 {Arr.each(this.secondsGrid, this.ctor('renderSecondItem'))}
             </NScrollbar>
         );

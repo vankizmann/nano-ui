@@ -77,7 +77,7 @@ export default {
         }
 
         return (
-            <i class={this.icon}></i>
+            <i class={'n-icon ' + this.icon}></i>
         );
     },
 
@@ -99,7 +99,6 @@ export default {
         let classList = [
             'n-tags-item',
             'n-tags-item--' + size,
-            ,
         ];
 
         if ( this.type === -1 ) {

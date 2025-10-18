@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../dist/themes/glossy.light.css">
+
+
+    <style>
+
+        div {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
+            font-size: 14px;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        #app {
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 20px 30px 40px 30px;
+        }
+
+        .app-options {
+            border-bottom: 1px solid rgba(110, 110, 110, 0.15);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: bold;
+            padding-bottom: 10px;
+            margin: 50px 0 15px;
+            border-bottom: 1px solid rgba(110, 110, 110, 0.15);
+        }
+
+    </style>
+
+    <script src="https://unpkg.com/moment"></script>
+    <script src="https://unpkg.com/vue@3.4.6"></script>
+    <script src="https://vankizmann.github.io/pico-js/dist/pico-js.js"></script>
+    <script src="../dist/nano-ui.js"></script>
+    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+
+    <style>
+
+        .stars {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 100px;
+            background-color: #080808;
+            background-blend-mode: normal;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+            opacity: 0.9;
+            animation: float 6s ease-in-out infinite, drift 8s ease-in-out infinite;
+        }
+
+        /* Vertical floating movement */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-20px) scale(1.3);
+            }
+        }
+
+        /* Slight horizontal drifting movement */
+        @keyframes drift {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(14px);
+            }
+        }
+
+        /* Random positioning & delays for natural variation */
+        .star:nth-child(1)  { top: 10%; left: 20%; animation-delay: 0s, 0.5s; }
+        .star:nth-child(2)  { top: 30%; left: 40%; animation-delay: 4.5s, 4s; }
+        .star:nth-child(3)  { top: 50%; left: 70%; animation-delay: 2.2s, 1.2s; }
+        .star:nth-child(4)  { top: 80%; left: 60%; animation-delay: 0.8s, 2s; }
+        .star:nth-child(5)  { top: 15%; left: 80%; animation-delay: 4.1s, 1.7s; }
+        .star:nth-child(6)  { top: 60%; left: 25%; animation-delay: 0.4s, 1.3s; }
+        .star:nth-child(7)  { top: 40%; left: 10%; animation-delay: 1.8s, 4.4s; }
+        .star:nth-child(8)  { top: 70%; left: 85%; animation-delay: 4.5s, 0.6s; }
+        .star:nth-child(9)  { top: 25%; left: 65%; animation-delay: 2.5s, 3.1s; }
+        .star:nth-child(10) { top: 55%; left: 35%; animation-delay: 3.2s, 0.9s; }
+        .star:nth-child(11) { top: 5%; left: 50%; animation-delay: 1.1s, 2.8s; }
+        .star:nth-child(12) { top: 90%; left: 15%; animation-delay: 0.3s, 3.5s; }
+        .star:nth-child(13) { top: 35%; left: 75%; animation-delay: 4.7s, 1.0s; }
+        .star:nth-child(14) { top: 65%; left: 5%; animation-delay: 2.0s, 4.2s; }
+        .star:nth-child(15) { top: 20%; left: 90%; animation-delay: 3.8s, 0.4s; }
+        .star:nth-child(16) { top: 50%; left: 20%; animation-delay: 1.6s, 3.0s; }
+        .star:nth-child(17) { top: 75%; left: 55%; animation-delay: 0.7s, 2.6s; }
+        .star:nth-child(18) { top: 10%; left: 35%; animation-delay: 4.3s, 1.1s; }
+        .star:nth-child(19) { top: 45%; left: 80%; animation-delay: 2.9s, 0.5s; }
+        .star:nth-child(20) { top: 85%; left: 30%; animation-delay: 1.4s, 3.9s; }
+        .star:nth-child(21) { top: 60%; left: 70%; animation-delay: 3.5s, 0.8s; }
+        .star:nth-child(22) { top: 15%; left: 10%; animation-delay: 0.6s, 2.7s; }
+        .star:nth-child(23) { top: 30%; left: 85%; animation-delay: 4.0s, 1.5s; }
+        .star:nth-child(24) { top: 55%; left: 5%; animation-delay: 2.3s, 3.6s; }
+        .star:nth-child(25) { top: 5%; left: 70%; animation-delay: 1.0s, 4.1s; }
+        .star:nth-child(26) { top: 80%; left: 40%; animation-delay: 3.1s, 0.9s; }
+        .star:nth-child(27) { top: 25%; left: 15%; animation-delay: 0.2s, 2.4s; }
+        .star:nth-child(28) { top: 65%; left: 90%; animation-delay: 4.4s, 1.3s; }
+        .star:nth-child(29) { top: 40%; left: 50%; animation-delay: 1.9s, 3.8s; }
+        .star:nth-child(30) { top: 90%; left: 75%; animation-delay: 2.7s, 0.6s; }
+
+
+        /* Optional: make some stars slightly larger for depth */
+        .star:nth-child(3), .star:nth-child(5) {
+            width: 4px;
+            height: 4px;
+            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+
+        .star:nth-child(1), .star:nth-child(7) {
+            width: 2px;
+            height: 2px;
+        }
+
+        .spacer {
+            margin: 20px;
+        }
+
+        .menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: #0F0F0F;
+            z-index: 10;
+        }
+
+        .inverse-radius {
+            width: 200px;
+            height: 200px;
+            background: #4ade80; /* green */
+            --r: 30px; /* radius size */
+
+            /* create inward rounded corners */
+            -webkit-mask:
+                    radial-gradient(circle at top left, transparent var(--r), black 0) top left,
+                    radial-gradient(circle at top right, transparent var(--r), black 0) top right,
+                    radial-gradient(circle at bottom left, transparent var(--r), black 0) bottom left,
+                    radial-gradient(circle at bottom right, transparent var(--r), black 0) bottom right;
+            -webkit-mask-size: 50% 50%;
+            -webkit-mask-repeat: no-repeat;
+            mask: inherit;
+        }
+
+        .card {
+            overflow: hidden;
+            position: relative;
+            width: 420px;
+            height: 420px;
+            border-radius: 20px;
+            background-color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: #222;
+        }
+
+        .card .button {
+            margin-top: 12px;
+        }
+
+        @keyframes drift {
+            0%   { transform: translate(0%, 0%) rotate(0) scale(1.0); }
+            25%  { transform: translate(4%, -9%) rotate(20deg)scale(1.6); }
+            50%  { transform: translate(-13%, 13%) rotate(-40deg) scale(2.0); }
+            75%  { transform: translate(8%, 2%) rotate(30deg) scale(1.6); }
+            100% { transform: translate(0%, 0%) rotate(0) scale(1.0); }
+        }
+
+        .card:before {
+            z-index: -1;
+            content: '\00a0';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-blend-mode: normal;
+        }
+
+        .card1:before {
+            background-image:
+                    radial-gradient(at 20% -30%, #E8E8E8, transparent 55%),  /* light gray highlight */
+                    radial-gradient(at 110% 30%, #C8C8C8, transparent 75%),  /* mid-gray tone */
+                    radial-gradient(at 10% 100%, #F0F0F0, transparent 50%),  /* pale near-white */
+                    radial-gradient(at 40% 120%, #B0B0B0, transparent 75%);  /* deeper gray accent */
+            animation-duration: 10s;
+        }
+
+        .card2:before {
+            background-image:
+                    radial-gradient(at 20% -30%, #B0DFFF, transparent 55%),  /* soft sky blue */
+                    radial-gradient(at 110% 30%, #A0B0FF, transparent 75%),  /* pastel periwinkle */
+                    radial-gradient(at 10% 100%, #B0FFE5, transparent 50%),  /* minty blue-green */
+                    radial-gradient(at 40% 120%, #80E0FF, transparent 75%);  /* bright cyan-blue */
+            animation-duration: 7s;
+        }
+
+        .card3:before {
+            background-image:
+                    radial-gradient(at 20% -30%, #FFD8B0, transparent 55%),  /* soft peach/orange */
+                    radial-gradient(at 100% 30%, #FFB0A0, transparent 75%),  /* pastel coral/red */
+                    radial-gradient(at 10% 100%, #FFE5B0, transparent 50%),  /* light golden yellow */
+                    radial-gradient(at 40% 120%, #FF9F80, transparent 75%);  /* warm orange */
+            animation-delay: 9s;
+        }
+
+        .card4:before {
+            background-image:
+                    radial-gradient(at 20% -30%, #F7B0FF, transparent 60%),  /* soft pastel pink */
+                    radial-gradient(at 100% 30%, #D0A0FF, transparent 80%),  /* light purple/lavender */
+                    radial-gradient(at 10% 100%, #FFB0E0, transparent 60%),  /* soft pink-magenta */
+                    radial-gradient(at 40% 120%, #C080FF, transparent 80%);  /* vibrant purple accent */
+            animation-delay: 4s;
+        }
+
+        .card:after {
+            content: '\00a0';
+            z-index: 10;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-shadow: inset 0 -1px 2px 0 rgba(0, 0, 0, 0.05);
+            pointer-events: none;
+        }
+
+        .icon {
+            align-self: flex-end;
+            opacity: 0.6;
+        }
+
+        .percent {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+
+        body {
+            background: #F2F2F2 !important;
+        }
+
+        .shadow-box {
+            position: relative;
+            display: inline-flex;
+            flex-direction: row;
+            box-sizing: border-box;
+        }
+
+        .shadow-box:before {
+            z-index: 0;
+            content: '\00a0';
+            position: absolute;
+            bottom: -1px;
+            left: 2px;
+            display: block;
+            width: 100%;
+            height: 100%;
+            max-width: calc(100% - 4px);
+            max-height: calc(100% - 9px);
+            filter: blur(1px);
+            border-radius: 20px;
+            background: #000;
+            opacity: 0.09;
+            transition: max-height 0.2s ease, filter 0.2s ease;
+        }
+
+        .shadow-box:hover:before {
+            filter: blur(8px);
+            max-height: 100%;
+        }
+
+        .shadow-box > * {
+            z-index: 1;
+            display: inline-block;
+            position: relative;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+        }
+
+        .button {
+            box-sizing: border-box;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            padding: 0 13px;
+            border-radius: 9px;
+            display: inline-block;
+            height: 36px;
+            line-height: 36px;
+            transition: background 0.3s ease;
+        }
+
+        .button.button--bold {
+            background: #6e63da;
+            color: #fff;
+        }
+
+        .button.button--bold:before {
+            //background: #A096FF;
+        }
+
+        .button.button--glass {
+            background: rgba(110, 99, 218, 0.25);
+            color: #6e63da;
+        }
+
+        .button.button--glass:before {
+            //background: #A096FF;
+        }
+
+        .button:before {
+            z-index: 0;
+            content: '\00a0';
+            position: absolute;
+            top: -20%;
+            left: 0;
+            display: block;
+            width: 100%;
+            height: 200%;
+            max-height: 60%;
+            filter: blur(10px);
+            background-image:
+                    radial-gradient(at 100% 30%, rgba(160, 176, 255, 1), transparent 80%),  /* pastel periwinkle */
+                    radial-gradient(at 10% 100%, rgba(192, 160, 255, 1), transparent 60%);  /* pastel purple */
+            background-blend-mode: normal;
+            mix-blend-mode: screen;
+            opacity: 0.2;
+            transition: max-width 0.3s ease, max-height 0.3s ease, opacity 0.3s ease;
+        }
+
+        .button i, .button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .button i {
+            opacity: 0.9;
+            margin-right: 5px;
+            font-size: 0.76em;
+        }
+
+        .button:hover:before {
+            z-index: 0;
+            opacity: 0.5;
+            max-height: 140%;
+        }
+
+        .box {
+            border-radius: 20px;
+            background: #fff;
+            padding: 15px 20px;
+        }
+
+        .n-drawer__frame {
+            border-radius: 20px 0 0 20px;
+        }
+
+        .inverse {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 30px;
+        }
+
+        :root {
+            --corner-color: #2563eb; /* color for the filled outside */
+            --radius: 20;            /* corner radius in px */
+            --size: 80;              /* size of the pseudo element box */
+        }
+
+        .inverse::before {
+            content: "";
+            position: absolute;
+            top: -1px;   /* align precisely at top-left edge */
+            left: -1px;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+            background: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'>\
+<path fill='red' fill-rule='evenodd' d='M0,0 H80 V80 H0 Z M0,%23R Q0,0 %23R,0 H80 V80 H0 Z'/>\
+</svg>") no-repeat;
+            background-size: 100% 100%;
+            /* Replace tokens manually via CSS custom props with pre-encoded values if needed */
+        }
+
+    </style>
+
+</head>
+<body class="n-demo">
+
+<div id="app">
+    <div class="app-container" style="margin: 5vh auto;">
+        <div class="inverse"></div>
+        <div style="display: flex; flex-direction: row; height: 100px; background: #aaa;">
+            <div style="height: 100px; background: blue; flex: 1 1 50%;"></div>
+            <n-resizer style="height: 100px; background: red;" flex="1 1 80%" position="left"></n-resizer>
+        </div>
+
+        <n-button>
+            HAL:LO HAL:LO HAL:LO HAL:LO
+        </n-button>
+        <n-popover trigger="click" :width="-1">
+            <n-draglist :items="items">
+                <div>Fooobar</div>
+            </n-draglist>
+        </n-popover>
+
+        <n-scrollbar2 style="max-height: 300px;">
+            <div style="margin: 1px; padding: 11px; border: 2px solid red; background: #aaa;">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, pariatur?
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, aliquid atque ea labore laborum omnis ratione recusandae rem totam velit.
+            </div>
+        </n-scrollbar2>
+
+        <n-scrollbar2 style="max-height: 200px; max-width: 200px;">
+            <div style="margin: 1px; padding: 11px; border: 2px solid red; background: #aaa; width: 500px;">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, pariatur?
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, aliquid atque ea labore laborum omnis ratione recusandae rem totam velit.
+            </div>
+        </n-scrollbar2>
+        <div style="display: flex; min-height: 200px;">
+            <div style="flex: 1 1 20%; background: red;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias at debitis dolorem eligendi expedita laboriosam laborum magni repudiandae sapiente voluptates.</div>
+            <div style="flex: 1 1 10%; background: red;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias at debitis dolorem eligendi expedita laboriosam laborum magni repudiandae sapiente voluptates.</div>
+            <div style="flex: 0 0 100px; background: purple;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad delectus dolore eaque earum est perferendis porro quae! A aliquam culpa, dolor facilis fuga impedit ipsa ipsum iure quos reiciendis, tempore.</div>
+            <div style="flex: 0 0 auto; background: blue;">
+                <div style="width: 30px"></div>
+            </div>
+            <div style="flex: 1 1 20%; background: orange;">ipsum dolor sit amet, consectetur adipisicing elit. Odit, optio.</div>
+        </div>
+
+        <div style="display: flex; width: 100%;">
+
+            <div class="shadow-box spacer" style="display: none;">
+                <div class="card">
+                    <div class="icon">⏱️</div>
+                    <h3>Prioritized tasks</h3>
+                    <p class="percent">83%</p>
+                    <p class="subtitle">Avg. Completed</p>
+                    <div class="button button--bold">
+                        <i class="fa fa-arrow-left"></i> <span>Hallo du da</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="shadow-box spacer" style="flex: 1 1 auto; width: 33.32%;">
+                <div class="card card2">
+                    <div class="icon">⏱️</div>
+                    <h3>Prioritized tasks</h3>
+                    <p class="percent">83%</p>
+                    <p class="subtitle">Avg. Completed</p>
+                    <div class="button button--bold">
+                        <i class="fa fa-arrow-left"></i> <span>Hallo du da</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="shadow-box spacer" style="flex: 1 1 auto; width: 33.32%;">
+                <div class="card card3">
+                    <div class="icon">⏱️</div>
+                    <h3>Prioritized tasks</h3>
+                    <p class="percent">83%</p>
+                    <p class="subtitle">Avg. Completed</p>
+                    <div class="button button--bold">
+                        <i class="fa fa-arrow-left"></i> <span>Hallo du da</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="shadow-box spacer" style="flex: 1 1 auto; width: 33.32%;">
+                <div class="card card4">
+                    <div class="icon">⏱️</div>
+                    <h3>Prioritized tasks</h3>
+                    <p class="percent">83%</p>
+                    <p class="subtitle">Avg. Completed</p>
+                    <div class="button button--bold">
+                        <i class="fa fa-arrow-left"></i> <span>Hallo du da</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="shadow-box spacer">
+            <div class="box">
+
+                <n-form>
+                    <n-form-item label="Foobar">
+                        <n-input placeholder="Tipper mal was"></n-input>
+                    </n-form-item>
+                    <n-form-item label="Foobar">
+                        <n-switch>Tipper mal was</n-switch>
+                    </n-form-item>
+                    <n-form-item label="Foobar">
+                        <n-slider>Tipper mal was</n-slider>
+                    </n-form-item>
+                </n-form>
+
+                <div style="display: flex; flex-wrap: wrap;">
+                    <n-button icon="fa fa-arrow-left" :glass="true">
+                        Hallo du da
+                    </n-button>
+                    <n-drawer>
+                        hello
+                    </n-drawer>
+                    <n-button icon="fa fa-arrow-left" style="margin-left: 20px">
+                        Hallo du da
+                    </n-button>
+                    <n-popover type="tooltip">Huhu</n-popover>
+
+                    <n-button type="success" :glass="true" style="margin-left: 20px">
+                        Hallo du da
+                    </n-button>
+
+                    <n-button type="success" style="margin-left: 20px">
+                        Hallo du da
+                    </n-button>
+
+                    <n-button type="warning" :glass="true" style="margin-left: 20px">
+                        Hallo du da
+                    </n-button>
+
+                    <n-button type="warning" style="margin-left: 20px">
+                        Hallo du da
+                    </n-button>
+
+                    <n-button type="danger" :glass="true" style="margin-left: 20px">
+                        Hallo du da
+                    </n-button>
+
+                    <n-button type="danger" style="margin-left: 20px">
+                        Hallo du da
+                    </n-button>
+
+                    <n-button type="info" :glass="true" style="margin-left: 20px">
+                        Hallo du da
+                    </n-button>
+
+                    <n-button type="info"  style="margin-left: 20px">
+                        Hallo du da
+                    </n-button>
+
+                    <n-button type="secondary" :glass="true" style="margin-left: 20px">
+                        Hallo du da
+                    </n-button>
+
+                    <n-button type="secondary"  style="margin-left: 20px">
+                        Hallo du da
+                    </n-button>
+                </div>
+
+
+                <div>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquam amet at beatae deleniti dolor dolore dolorem error est, eveniet explicabo ipsa iste, laudantium, minus molestiae nam nemo nostrum numquam odit officiis pariatur perferendis porro possimus quia ratione repellat repudiandae sed suscipit velit vero! Commodi debitis delectus dolorum ex, facere impedit laboriosam nihil non, placeat quam quo reiciendis temporibus unde?
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    (function (nano) {
+
+        'use strict';
+
+        pi.Locale.set('URL', "URL2");
+        pi.Locale.set('URX', "URX2");
+
+        pi.Dom.ready(function () {
+
+            let data = {
+                items: pi.Arr.make(10)
+            };
+
+            data.demoModel = {
+                test: true,
+                label: 'foobar',
+                option: {
+                    url: 'http://', redirect: 'AHA'
+                }
+            };
+
+            data.demoScope = {
+                testme: () => {
+                    console.log('abc');
+                }
+            }
+
+            data.sizes = {
+                xs: 'XS',
+                sm: 'SM',
+                md: 'MD',
+                lg: 'LG'
+            };
+
+            data.types = {
+                primary: 'Primary',
+                secondary: 'Secondary',
+                success: 'Success',
+                warning: 'Warning',
+                danger: 'Danger',
+                info: 'Info'
+            };
+
+            data.modals = {
+                default: 'Default',
+                preview: 'Preview',
+            };
+
+            pi.Obj.set(data, 'demoConfigNext.NFormGroup:root', {
+                vShow: [
+                    '$model.test'
+                ],
+                props: {
+                    label: '$model.label',
+                    icon: 'fa fa-directions'
+                }
+            });
+
+            pi.Obj.set(data, 'demoConfigNext.NFormGroup:root.content.NFormItem:url', {
+                props: {
+                    label: '\\@URX',
+                    test: function () {
+                        console.log(123);
+                    }
+                },
+                content: {
+                    'NInput': {
+                        binds: {
+                            modelValue: '$model.option.url'
+                        }
+                    }
+                }
+            });
+
+            pi.Obj.set(data, 'demoConfigNext.NFormGroup:root.content.NFormItem:menu', {
+                props: {
+                    label: pi.Locale.trans('Menu')
+                },
+                content: {
+                    'NSwitch': {
+                        binds: {
+                            modelValue: '$model.option.redirect'
+                        },
+                        props: {
+                            "foo": "@bar"
+                        },
+                        content: [
+                            "@123"
+                        ]
+                    }
+                }
+            });
+
+            data.demoConfig = {
+                'NFormGroup:00': {
+                    $props: {
+                        label: pi.Locale.trans('Redirect'),
+                        icon: 'fa fa-directions'
+                    },
+                    content: {
+                        'div:00': {
+                            class: 'grid grid--row grid--wrap grid--30',
+                            content: {
+                                'div:00': {
+                                    class: 'col--1-1 col--1-2@sm',
+                                    content: {
+                                        'NFormItem:00': {
+                                            $props: {
+                                                label: pi.Locale.trans('URL')
+                                            },
+                                            content: {
+                                                'NInput:00': {
+                                                    model: {
+                                                        path: 'option.url'
+                                                    }
+                                                }
+                                            }
+                                        },
+                                    }
+                                },
+                                'div:10': {
+                                    class: 'col--1-1 col--1-2@sm',
+                                    content: {
+                                        'NFormItem:00': {
+                                            $props: {
+                                                label: pi.Locale.trans('Menu')
+                                            },
+                                            content: {
+                                                'Nswitch:00': {
+                                                    model: {
+                                                        path: 'option.redirect'
+                                                    },
+                                                    content: [
+                                                        pi.Locale.trans("foobar")
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+            };
+
+            data.configData = { label: 'asdasda' };
+
+            data.testData = [];
+
+            let itemGenerator = function (count = 100, index = 0) {
+                return pi.Arr.each(pi.Arr.make(count), function (value) {
+
+                    let id = pi.UUID();
+
+                    return {
+                        id: id,
+                        value: id,
+                        matrix: 10,
+                        label: `Item ${index ++}`,
+                        image: 'https://picsum.photos/300/300.jpg?' + id,
+                        date: pi.Now.make('now').format('YYYY-MM-DD HH:mm:ss', true),
+                        enabled: !!Math.floor(Math.random() * 2)
+                    };
+                });
+            };
+
+
+            data.cascaderData = pi.Arr.each(itemGenerator(5), function (item) {
+
+                let children = pi.Arr.each(itemGenerator(5), function (item) {
+                    return pi.Obj.assign(item, { children: itemGenerator(5) });
+                });
+
+                return pi.Obj.assign(item, { children: children });
+            });
+
+            data.virtualData = itemGenerator(10000);
+
+            data.virtualTree = pi.Arr.each(itemGenerator(100), function (item) {
+                return pi.Obj.assign(item, { children: itemGenerator(10) });
+            });
+
+
+            data.virtualItem = null;
+
+            data.treeSelect = null;
+            data.treeMatrix = [data.virtualTree[3]];
+
+            data.foobar = 'huhu';
+
+            data.n_theme = pi.Cookie.get('theme', 'light', 'string');
+
+            pi.Dom.find('#theme').attr('href', '../dist/themes/' +
+                data.n_theme + '.css');
+
+            data.n_form = {
+                size: 'md', conditional: true, modelValue: false
+            };
+
+            data.n_tags = {
+                size: 'md',
+            };
+
+            data.n_rating = {
+                size: 'md', choice: 'No stars|:value star|:value stars', disabled: false
+            };
+
+            data.n_button = {
+                icon: 'fa fa-ghost', size: 'md', square: false, link: false, disabled: false
+            };
+
+            data.n_textarea = {
+                size: 'md', placeholder: 'Placeholder', autoRows: false, disabled: false
+            };
+
+            data.n_input = {
+                value: 'Demo', icon: 'fa fa-ghost', size: 'md', placeholder: 'Placeholder', disabled: false
+            };
+
+            data.n_number = {
+                test: '', value: 3, size: 'md', placeholder: '', disabled: false, minValue: 0, maxValue: 10
+            };
+
+            data.n_select = {
+                size: 'md', allowCreate: false, clearable: true, disabled: false
+            };
+
+            data.n_cascader = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_checkbox = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_radio = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_slider = {
+                size: 'md', disabled: false, temp_value: 30,
+            };
+
+            data.n_switch = {
+                size: 'md', disabled: false
+            };
+
+            data.n_datepicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_timepicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_datetimepicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false
+            };
+
+            data.n_durationpicker = {
+                size: 'md', type: 'primary', clearable: true, disabled: false, modelValue: 124521
+            };
+
+            data.n_transfer = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_modal = {
+                size: 'md', type: 'default', disabled: false
+            };
+
+            data.n_confirm = {
+                size: 'md', type: 'primary', disabled: false
+            };
+
+            data.n_tabs = {
+                value: 'default', size: 'md', type: 'primary'
+            };
+
+            data.n_collapse = {
+                value: ['default'], size: 'md', type: 'primary', relative: false
+            };
+
+            data.n_paginator = {
+                size: 'md', type: 'primary'
+            };
+
+            data.n_draggable = {
+                count: 0
+            };
+
+            data.n_loader = {
+                size: 'md', type: 'primary', visible: true
+            };
+
+            data.n_map = {
+                lat: 53.55, lng: 9.99
+            };
+
+            data.n_preview = {
+                file: null
+            };
+
+            let methods = {};
+
+            let test = {};
+
+            methods['getLabel'] = (key) => {
+                return test[key] || (test[key] = window.pi.UUID());
+            };
+
+            var config = {
+                data: function () {
+
+                    this.icons = pi.Obj.assign(nano.Icons, {
+                        ghost: 'fa fa-ghost'
+                    });
+
+                    data.demoIcons = pi.Arr.reduce(pi.Obj.values(nano.Icons), function (merge, icon) {
+                        return pi.Obj.assign(merge, { [icon]: icon });
+                    }, {});
+
+                    return data;
+                },
+                mounted: function () {
+                    let self = this;
+                },
+                methods: methods
+            };
+
+            window.App = Vue.createApp(config);
+
+            window.App.config.devtools = true;
+
+            window.App.use(function (App) {
+                window.nano.Install(App);
+            });
+
+            window.App.mount('#app');
+        });
+
+    })(window.nano);
+</script>
+
+</body>
+</html>
