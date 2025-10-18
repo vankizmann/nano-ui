@@ -95,7 +95,6 @@ export default {
     },
 
 
-
     methods: {
 
         forcePage(page)
@@ -175,11 +174,11 @@ export default {
     renderLimit()
     {
         let props = {
-            modelValue:     this.tempLimit,
-            size:           this.size,
-            type:           this.type,
-            optionsValue:  '$value.value',
-            optionsLabel:  '$value.label',
+            modelValue: this.tempLimit,
+            size: this.size,
+            type: this.type,
+            optionsValue: '$value.value',
+            optionsLabel: '$value.label',
         };
 
         props.options = Arr.each(this.limitOptions, (limit) => {
@@ -201,7 +200,7 @@ export default {
     {
         return (
             <div class="n-paginator__count">
-                { this.choice('No items|Total :count item|Total :count items', this.total) }
+                {this.choice('No items|Total :count item|Total :count items', this.total)}
             </div>
         );
     },
@@ -210,7 +209,7 @@ export default {
     {
         return (
             <div class="n-paginator__spacer">
-                { /* Nothing :( */ }
+                { /* Nothing :( */}
             </div>
         );
     },
@@ -218,28 +217,30 @@ export default {
     renderGoto()
     {
         if ( this.pageOptions.length > 500 ) {
-            return null;
+            // return null;
         }
 
         let props = {
-            modelValue:     this.tempPage,
-            size:           this.size,
-            type:           this.type,
-            undefinedText:  '?',
-            optionsValue:   '$value.value',
-            optionsLabel:   '$value.label',
+            modelValue: this.tempPage,
+            size: this.size,
+            type: this.type,
+            undefinedText: '?',
+            lazy: true,
+            options: this.pageOptions,
+            optionsValue: '$value',
+            optionsLabel: '$value',
         };
 
-        props.options = Arr.reduce(this.pageOptions, (merge, index) => {
-            return Arr.push(merge, {
-                value: index, label: index
-            });
-        }, []);
+        // props.options = Arr.reduce(this.pageOptions, (merge, index) => {
+        //     return Arr.push(merge, {
+        //         value: index, label: index
+        //     });
+        // }, []);
 
         props['onUpdate:modelValue'] = this.onPageInput;
 
         return (
-            <div class="n-paginator__goto">
+            <div class="n-paginator__goto" key={'paginate' + this.pageOptions.length}>
                 <NSelect {...props} />
             </div>
         );
@@ -369,7 +370,7 @@ export default {
         };
 
         return (
-            <NButton {...props}>{ current }</NButton>
+            <NButton {...props}>{current}</NButton>
         );
     },
 
@@ -381,18 +382,18 @@ export default {
 
         return (
             <div class="n-paginator__pages">
-                { this.ctor('renderFirst')() }
-                { this.ctor('renderPrev')() }
-                { ...pages }
-                { this.ctor('renderNext')() }
-                { this.ctor('renderLast')() }
+                {this.ctor('renderFirst')()}
+                {this.ctor('renderPrev')()}
+                {...pages}
+                {this.ctor('renderNext')()}
+                {this.ctor('renderLast')()}
             </div>
         );
     },
 
     renderSlot(view)
     {
-        let renderFunction = this.ctor('render' + 
+        let renderFunction = this.ctor('render' +
             Str.ucfirst(view));
 
         if ( Any.isFunction(renderFunction) ) {

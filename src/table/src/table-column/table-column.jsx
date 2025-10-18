@@ -174,14 +174,6 @@ export default {
             type: [String]
         },
 
-        fluid: {
-            default()
-            {
-                return false;
-            },
-            type: [Boolean]
-        },
-
         fixedWidth: {
             default()
             {
@@ -353,10 +345,6 @@ export default {
             classList.push('n-sorted', 'n-' + sortDirection);
         }
 
-        if ( this.fluid || !this.width ) {
-            classList.push('n-fluid');
-        }
-
         if ( this.fixedWidth ) {
             classList.push('n-fixed');
         }
@@ -365,35 +353,35 @@ export default {
             classList.push('n-filtered');
         }
 
-        let style = {};
+        let flex = '1 1 auto';
 
-        if ( this.fixedWidth ) {
-            style.width = this.fixedWidth + 'px';
-        }
-
-        if ( this.width ) {
-            style.flexBasis = this.width + 'px';
+        if ( ! Any.isEmpty(this.width) ) {
+            flex = `1 1 ${this.width}`;
         }
 
         let props = {
             modelValue: this.tempWidth,
-            width:      this.width,
+            flex:       flex,
             minWidth:   this.minWidth,
             maxWidth:   this.maxWidth,
             disabled:   !!this.fixedWidth,
             group:      ['n-table', this.NTable.uid],
         };
 
+        props['onUpdateWidth'] = (value) => {
+            this.tempWidth = value;
+        };
+
         props['onUpdate:modelValue'] = (value) => {
             this.tempWidth = value;
-        }
+        };
 
         if ( this.sort ) {
             props.onMousedown = this.sortByColumn;
         }
 
         return (
-            <NResizer ref="column" class={classList} style={style} {...props}>
+            <NResizer ref="column" class={classList} {...props}>
                 {this.ctor('renderHeadSort')()}
                 {this.ctor('renderHeadLabel')()}
                 {this.ctor('renderHeadFilter')()}
@@ -471,10 +459,6 @@ export default {
             'n-table-cell--' + this.align,
             'n-table-cell--' + this.type,
         ];
-
-        if ( this.fluid ) {
-            classList.push('n-fluid');
-        }
 
         if ( this.tempWidth ) {
             classList.push('n-fixed');

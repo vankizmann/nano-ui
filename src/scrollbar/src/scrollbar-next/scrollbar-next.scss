@@ -1,0 +1,148 @@
+@import "../../../root/vars";
+
+.n-scrollbar-next {
+    position: relative;
+    overflow: hidden;
+}
+
+.n-scrollbar-next-test {
+    opacity: 0;
+    position: fixed;
+    width: 15px;
+    height: 15px;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.n-scrollbar-next-test > div {
+    width: 16px;
+    height: 16px;
+}
+
+.n-scrollbar-next-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.n-scrollbar-next:not(.n-scrollbar-next--native) > .n-scrollbar-next-content {
+    right: -15px;
+    bottom: -15px;
+}
+
+.n-scrollbar-next.n-windows:not(.n-scrollbar-next--native) > .n-scrollbar-next-content {
+    right: -17px;
+    bottom: -17px;
+}
+
+.n-scrollbar-next.n-scrollbar-next--forced.n-scrollbar-next--native > .n-scrollbar-next-content {
+    padding-right: 16px;
+    padding-bottom: 16px;
+    right: -16px;
+    bottom: -16px;
+}
+
+.n-scrollbar-next:not(.n-overflow-x) > .n-scrollbar-next-content {
+    bottom: 0;
+    overflow-x: hidden;
+}
+
+.n-scrollbar-next:not(.n-overflow-y) > .n-scrollbar-next-content {
+    right: 0;
+    overflow-y: hidden;
+}
+
+.n-scrollbar-next > .n-scrollbar-next-content > .n-scrollbar-next__wrap {
+    position: relative;
+}
+
+.n-scrollbar-next-v,
+.n-scrollbar-next-h {
+    cursor: default;
+    position: absolute;
+    z-index: 100;
+    user-select: none;
+}
+
+.n-scrollbar-next-v {
+    top: 0;
+    right: 0;
+    width: 14px;
+
+}
+
+.n-scrollbar-next-h {
+    left: 0;
+    bottom: 0;
+    height: 14px;
+}
+
+.n-scrollbar-next--native:not(.n-scrollbar-next--forced) > .n-scrollbar-next-v,
+.n-scrollbar-next:not(.has-vtrack) > .n-scrollbar-next-v,
+.n-scrollbar-next--native:not(.n-scrollbar-next--forced) > .n-scrollbar-next-h,
+.n-scrollbar-next:not(.has-htrack) > .n-scrollbar-next-h {
+    display: none;
+}
+
+.n-scrollbar-next-v:before,
+.n-scrollbar-next-h:before {
+    content: '\00a0';
+    position: absolute;
+    display: block;
+    border-radius: 500px;
+    opacity: 0;
+    transition: opacity 0.15s;
+    background: rgba(0, 255, 0, 0.4);
+}
+
+.n-scrollbar-next-v:before {
+    top: 2px;
+    bottom: 2px;
+    left: 5px;
+    right: 5px;
+}
+
+.n-scrollbar-next-h:before {
+    top: 5px;
+    bottom: 5px;
+    left: 2px;
+    right: 2px;
+}
+
+.n-scrollbar-next-v:after,
+.n-scrollbar-next-h:after {
+    content: '\00a0';
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    display: block;
+    border-radius: 500px;
+    opacity: 0;
+    transition: opacity 0.15s;
+    background: rgba(255, 0, 0, 0.4);
+}
+
+.n-scrollbar-next-v.is-active:after,
+.n-scrollbar-next-h.is-active:after,
+.n-scrollbar-next-v:hover:after,
+.n-scrollbar-next-h:hover:after {
+    opacity: 1;
+}
+
+.n-scrollbar-next.has-vtrack > .n-scrollbar-next-v.is-active:before,
+.n-scrollbar-next.has-htrack > .n-scrollbar-next-h.is-active:before,
+.n-scrollbar-next.has-vtrack:hover > .n-scrollbar-next-v:before,
+.n-scrollbar-next.has-htrack:hover > .n-scrollbar-next-h:before {
+    opacity: 1;
+}
+
+.n-scrollbar-next--touch.has-vtrack > .n-scrollbar-next-v:before,
+.n-scrollbar-next--touch.has-htrack > .n-scrollbar-next-h:before {
+    opacity: 1;
+}

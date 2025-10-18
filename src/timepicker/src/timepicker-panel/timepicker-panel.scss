@@ -16,10 +16,11 @@
     flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
+    max-height: 260px;
 }
 
 .n-timepicker-panel__panel {
-flex: 1 0 auto;
+    flex: 1 0 auto;
     min-height: 0;
 }
 

@@ -326,8 +326,6 @@ export default {
             if ( !this.focus ) {
                 this.$refs.popover.open();
             }
-
-            clearInterval(this.refresh);
         },
 
         onInputInput(event)
@@ -364,11 +362,9 @@ export default {
 
             let searchRegex = new RegExp(this.search, 'i');
 
-            let searched = Arr.filter(this.elements, (option) => {
-                return Any.isString(option.label) && option.label.match(searchRegex);
+            this.searched = Arr.filter(this.elements, (option) => {
+                return Any.string(option.label || '').match(searchRegex);
             });
-
-            this.searched = searched;
         },
 
         toggleOption(value, event = null)
@@ -505,8 +501,8 @@ export default {
                 this.$refs.scrollbar.scrollIntoView(`[data-option="${selected._.uid}"]`);
             }
 
-            if ( this.$refs.virtualbar ) {
-                this.$refs.virtualbar.scrollToIndex(this.index);
+            if ( this.$refs.virtualscroll ) {
+                this.$refs.virtualscroll.scrollToIndex(this.index);
             }
         },
 
@@ -534,14 +530,14 @@ export default {
                 return;
             }
 
-            if ( this.$refs.virtualbar ) {
-                this.$refs.virtualbar.scrollToIndex(index, 250);
+            if ( this.$refs.virtualscroll ) {
+                this.$refs.virtualscroll.scrollToIndex(index, 0);
             }
 
             let select = `[data-option="${Obj.get(this.elements[index], '_.uid', 0)}"]`;
 
             if ( this.$refs.scrollbar ) {
-                this.$refs.scrollbar.scrollIntoView(select, 250);
+                this.$refs.scrollbar.scrollIntoView(select, 0);
             }
         }
 
@@ -758,7 +754,7 @@ export default {
             return emptyHtml;
         }
 
-        if ( this.lazy ) {
+        if ( this.lazy || true ) {
             return this.ctor('renderLazyItems')();
         }
 
@@ -767,8 +763,8 @@ export default {
         });
 
         let props = {
-            relative: true, size: this.size
-        }
+            size: this.size
+        };
 
         return (
             <NScrollbar ref="scrollbar" class="n-select__body" {...props}>
@@ -822,7 +818,7 @@ export default {
     renderLazyItems()
     {
         let props = {
-            items: this.searched
+            items: this.searched, offsetY: 0
         };
 
         props.renderNode = ({ value, index }) => {
@@ -830,7 +826,7 @@ export default {
         };
 
         return (
-            <NVirtualscroller ref="virtualbar" class="n-select__body n-virtual" {...props} />
+            <NVirtualscroller ref="virtualscroll" class="n-select__body n-virtual" {...props} />
         );
     },
 
