@@ -538,8 +538,6 @@ export default {
             style.height = totalHeight + 'px';
         }
 
-        console.log('vscroll rerender', Obj.clone(this.$data), style)
-
         return (
             <NScrollbar class={classList} ref="scrollbar" {...props}>
                 <div ref="inner" class="n-virtualscroller__inner" style={style}>

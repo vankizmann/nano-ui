@@ -221,8 +221,6 @@ export default {
                 return;
             }
 
-            console.log('scroller emit size', this.width, this.height)
-
             let styles = {
                 //
             };

@@ -1,0 +1,56 @@
+@import "../../../root/vars";
+
+.n-preview-modal {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    padding: 40px 80px;
+}
+
+.n-preview-modal:not(.n-ready) {
+    pointer-events: none;
+    opacity: 0;
+}
+
+.n-preview-modal__close {
+    cursor: pointer;
+    z-index: 100;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.n-preview-modal .n-preview-frame {
+    background: transparent !important;
+}
+
+.n-preview-modal__prev,
+.n-preview-modal__next {
+    cursor: pointer;
+    z-index: 500;
+    position: absolute;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    transform: translateY(-50%);
+}
+
+.n-preview-modal__prev {
+    left: 20px;
+}
+
+.n-preview-modal__next {
+    right: 20px;
+}

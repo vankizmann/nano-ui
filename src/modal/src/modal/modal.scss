@@ -27,7 +27,7 @@
     transition: opacity 0.5s ease-in-out;
 }
 
-.n-modal:not(.n-ready) .n-modal__backdrop {
+.n-modal:not(.n-ready,.n-loop) .n-modal__backdrop {
     opacity: 0;
 }
 
@@ -47,7 +47,7 @@
     transition: opacity 0.2s 0.1s ease-out, transform 0.2s 0.1s ease-out;
 }
 
-.n-modal:not(.n-ready) .n-modal__frame {
+.n-modal:not(.n-ready,.n-loop) .n-modal__frame {
     opacity: 0;
     transform: translateY(20px);
 }

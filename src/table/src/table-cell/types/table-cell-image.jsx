@@ -33,13 +33,19 @@ export default {
             'n-table-cell--' + this.column.type
         ];
 
-        let props = {
+        let previewProps = {
             fit: 'contain',
-        }
+            index: this.NDraggableItem.index,
+            group: this.column.uid,
+        };
+
+        previewProps['onSlide'] = () => {
+            this.NTable.$refs.draggable.setRawCurrent(this.NDraggableItem.index);
+        };
 
         return (
             <div class={classList}>
-                <NPreview file={this.preview || this.input} thumb={this.input} {...props} />
+                <NPreview file={this.preview || this.input} thumb={this.input} {...previewProps} />
             </div>
         );
     }

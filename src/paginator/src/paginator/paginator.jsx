@@ -231,12 +231,6 @@ export default {
             optionsLabel: '$value',
         };
 
-        // props.options = Arr.reduce(this.pageOptions, (merge, index) => {
-        //     return Arr.push(merge, {
-        //         value: index, label: index
-        //     });
-        // }, []);
-
         props['onUpdate:modelValue'] = this.onPageInput;
 
         return (

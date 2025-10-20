@@ -1,22 +1,6 @@
-import { Obj, Arr, Any, Dom } from "@kizmann/pico-js";
-
-const fileMap = {
-    image: [
-        'jpg', 'jpeg', 'gif', 'svg', 'png'
-    ],
-    video: [
-        'mp4', 'webm', 'mov'
-    ],
-    font: [
-        'woff', 'ttf', 'otf'
-    ],
-    text: [
-        'csv', 'txt', 'html'
-    ],
-    application: [
-        'pdf', 'doc', 'xls'
-    ]
-}
+import { UUID, Obj, Arr, Any, Event } from "@kizmann/pico-js";
+import { NPreviewHandler } from "../_tools/preview-handler.js"
+import { NPreviewHelper } from "../_tools/preview-helper.js"
 
 export default {
 
@@ -38,6 +22,22 @@ export default {
             }
         },
 
+        index: {
+            default()
+            {
+                return 0;
+            },
+            type: [Number, String]
+        },
+
+        group: {
+            default()
+            {
+                return UUID();
+            },
+            type: [String]
+        },
+
         fit: {
             default()
             {
@@ -51,7 +51,7 @@ export default {
             {
                 return null;
             },
-            typre: [String]
+            type: [String]
         },
 
         preview: {
@@ -59,7 +59,7 @@ export default {
             {
                 return true;
             },
-            typre: [Boolean]
+            type: [Boolean]
         },
 
         showSrc: {
@@ -67,15 +67,7 @@ export default {
             {
                 return true;
             },
-            typre: [Boolean]
-        },
-
-        map: {
-            default()
-            {
-                return fileMap;
-            },
-            type: [Object]
+            type: [Boolean]
         }
 
     },
@@ -94,82 +86,31 @@ export default {
 
         fileMime()
         {
-            return this.getFileMime();
+            return this.mime || NPreviewHelper.getMime(this.tempFile);
         },
 
         thumbMime()
         {
-            return this.getThumbMime();
+            return this.mime || NPreviewHelper.getMime(this.tempThumb);
         },
 
     },
 
-    data()
+    provide()
     {
-        return {
-            lightbox: false, load: false
-        };
+        return { NPreview: this };
     },
 
     methods: {
 
-        getFileMime(fallback = null)
+        openBox()
         {
-            let file = Obj.get(this.tempFile, 'name',
-                this.tempFile);
-
-            if ( Any.isEmpty(file) ) {
-                return fallback;
-            }
-
-            let extension = file.replace(/^.*?\.([^.?]+)(\?.*?)?$/,
-                '$1');
-
-            Obj.each(this.map, (exts, key) => {
-                if ( Arr.has(exts, extension) ) fallback = key;
-            });
-
-            if ( window.resolveVimeo(file) ) {
-                fallback = 'video';
-            }
-
-            if ( window.resolveYoutube(file) ) {
-                fallback = 'video';
-            }
-
-            if ( Any.isString(this.mime) ) {
-                fallback = this.mime;
-            }
-
-            return fallback;
+            this.$refs.modal.openBox();
         },
 
-        getThumbMime(fallback = null)
+        closeBox()
         {
-            if ( Any.isString(this.mime) ) {
-                return this.mime;
-            }
-
-            let file = Obj.get(this.tempThumb, 'name',
-                this.tempThumb);
-
-            if ( Any.isEmpty(file) ) {
-                return fallback;
-            }
-
-            let extension = file.replace(/^.*?\.([^.?]+)(\?.*?)?$/,
-                '$1');
-
-            Obj.each(this.map, (exts, key) => {
-                if ( Arr.has(exts, extension) ) fallback = key;
-            });
-
-            return fallback;
-        },
-
-        showLightbox()
-        {
-            this.lightbox = true;
+            this.$refs.modal.closeBox();
         },
 
     },
@@ -185,50 +126,42 @@ export default {
         }
 
         let props = {
-            type: this.thumbMime,
-            showSrc: false,
-        }
+            type: this.fileMime, showSrc: false,
+        };
 
         return (<NPreviewPlain src={this.tempThumb} {...props} />);
     },
 
     renderFull()
     {
-        let isObject = Any.isObject(this.tempFile);
-
         if ( this.fileMime === 'image' ) {
-            return (<NPreviewImage src={this.tempFile} />);
+            return (<NPreviewImage class={classList} src={this.tempFile} />);
         }
 
-        if ( this.fileMime === 'video' && ! isObject ) {
-            return (<NPreviewVideo src={this.tempFile} />);
+        if ( this.fileMime === 'video' ) {
+            return (<NPreviewVideo class={classList} src={this.tempFile} />);
         }
 
         let props = {
-            type: this.thumbMime,
-            showSrc: this.showSrc,
-        }
+            type: this.fileMime, showSrc: this.showSrc,
+        };
 
-        return (<NPreviewPlain src={this.tempFile} {...props} />);
+        return (<NPreviewPlain class={classList} src={this.tempFile} {...props} />);
     },
 
-    renderLightbox()
+    renderModal()
     {
-        if ( ! this.lightbox || ! this.preview ) {
+        if ( ! this.preview ) {
             return null;
         }
 
-        let slots = {
-            raw: this.ctor('renderFull')
-        }
+        let modalProps = {
+            index: this.index, group: this.group, file: this.tempFile, showSrc: this.showSrc
+        };
 
-        let props = {
-            type: 'preview',
-            width: '80%',
-            height: '90%',
-        }
-
-        return (<NModal vModel={this.lightbox} {...props} v-slots={slots} />);
+        return (
+            <NPreviewModal ref="modal" {...modalProps} />
+        );
     },
 
     render()
@@ -249,14 +182,14 @@ export default {
         let props = {};
 
         if ( this.preview ) {
-            props.onClick = this.showLightbox;
+            props.onClick = () => this.openBox();
         }
 
         let key = btoa(this.tempThumb);
 
         return (
             <div key={key} class={classList} {...props}>
-                { [this.ctor('renderPreview')(), this.ctor('renderLightbox')()] }
+                { [this.ctor('renderPreview')(), this.ctor('renderModal')()] }
             </div>
         );
     }
