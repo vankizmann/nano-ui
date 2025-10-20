@@ -1,58 +1,5 @@
 import { Obj, Arr, Str, Any, Dom } from "@kizmann/pico-js";
-
-window.resolveYoutube = function(url, fallback = null) {
-
-    if ( ! Any.isString(url) ) {
-        return fallback;
-    }
-
-    let host = url.match(/^https?:\/\/(www\.)?(youtube\.com|youtu\.be)/);
-
-    if ( ! host ) {
-        return fallback;
-    }
-
-    let id = url.match(/(\?v=.*?)(?=&|$)/);
-
-    if ( id && id.length === 2 ) {
-        return id[0].replace(/^\?v=/, '');
-    }
-
-    let path = url.match(/(\.be\/.*?)(?=\?|$)/);
-
-    if ( path && path.length === 2 ) {
-        return path[0].replace(/^\.be\//, '');
-    }
-
-    let frame = url.match(/(\/embed\/)(.*?$)/);
-
-    if ( frame && frame.length === 3 ) {
-        return frame[0].replace(/^\/embed\//, '');
-    }
-
-    return fallback;
-}
-
-window.resolveVimeo = function(url, fallback = null) {
-
-    if ( ! Any.isString(url) ) {
-        return fallback;
-    }
-
-    let host = url.match(/^https?:\/\/(www\.|player\.)?vimeo\.com/);
-
-    if ( ! host ) {
-        return fallback;
-    }
-
-    let path = url.match(/(\/[0-9]+)(&|$)/);
-
-    if ( path && path.length === 3 ) {
-        return path[0].replace(/(^\/|&$)/, '');
-    }
-
-    return fallback;
-}
+import { NPreviewHelper } from "../_tools/preview-helper.js"
 
 export default {
 
@@ -117,7 +64,7 @@ export default {
 
         resolveYoutube()
         {
-            let youtube = window.resolveYoutube(this.src);
+            let youtube = NPreviewHelper.getYoutubeKey(this.src);
 
             if ( ! youtube ) {
                 return false;
@@ -132,7 +79,7 @@ export default {
 
         resolveVimeo()
         {
-            let vimeo = window.resolveVimeo(this.src);
+            let vimeo = NPreviewHelper.getVimeoKey(this.src);
 
             if ( ! vimeo ) {
                 return false;
@@ -173,12 +120,9 @@ export default {
     {
         let src = Obj.get(this.src, 'name', this.src);
 
-        let extension = src.replace(/^.*?\.([^.?]+)(\?.*?)?$/,
-            '$1');
-
         return (
             <video width="320" height="240" controls>
-                <source src={this.tempSrc || this.src} type={`video/${extension}`} />
+                <source src={this.tempSrc || this.src} type={NPreviewHelper.getFullMime(src)} />
             </video>
         );
     },

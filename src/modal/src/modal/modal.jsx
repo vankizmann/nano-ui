@@ -408,7 +408,7 @@ export default {
             'n-modal',
             'n-modal--' + this.size,
             'n-modal--' + this.type,
-            'n-modal--' + this.position
+            'n-modal--' + this.position,
         ];
 
         if ( this.tempValue ) {

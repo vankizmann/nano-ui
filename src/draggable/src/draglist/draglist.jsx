@@ -884,7 +884,7 @@ export default {
     renderItem(props)
     {
         return (
-            <NDraglistItem {...Obj.except(props, ['index'])}>
+            <NDraglistItem {...props}>
                 { { default: this.$slots.default } }
             </NDraglistItem>
         );

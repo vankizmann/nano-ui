@@ -25,6 +25,10 @@ export default {
             required: true
         },
 
+        index: {
+            required: false
+        },
+
     },
 
     computed: {
@@ -313,8 +317,7 @@ export default {
         }
 
         let props = {
-            onClick: this.onClick,
-            onDblclick: this.onDblclick,
+            onClick: this.onClick, onDblclick: this.onDblclick,
         };
 
         if ( this.NDraggable.draggable && ! this.NDraggable.handle && this.isDraggable() ) {
