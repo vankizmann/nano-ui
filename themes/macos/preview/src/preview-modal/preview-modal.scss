@@ -3,8 +3,9 @@
 
 .n-preview-modal {
     background: rgba($color-black, 0.95);
-    backdrop-filter: blur(10px);
     transition: opacity 0.3s;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
 }
 
 .n-preview-modal__close,
