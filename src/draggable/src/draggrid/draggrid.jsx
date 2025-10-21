@@ -139,7 +139,7 @@ export default {
         useKeys: {
             default()
             {
-                return false;
+                return true;
             },
             type: [Boolean]
         },

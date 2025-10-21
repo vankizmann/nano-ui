@@ -21,38 +21,6 @@ export default {
 
     props: {
 
-        options: {
-            default()
-            {
-                return {};
-            },
-            type: [Object]
-        },
-
-        relative: {
-            default()
-            {
-                return false;
-            },
-            type: [Boolean]
-        },
-
-        fixture: {
-            default()
-            {
-                return false;
-            },
-            type: [Boolean]
-        },
-
-        allowNative: {
-            default()
-            {
-                return false;
-            },
-            type: [Boolean]
-        },
-
         overflowY: {
             default()
             {
@@ -139,6 +107,11 @@ export default {
 
     beforeMount()
     {
+        this.outer = {};
+        this.state = {};
+
+        this.hasHtrack = false;
+        this.hasVtrack = false;
         this.adaptScrollBehavior();
     },
 
@@ -163,6 +136,8 @@ export default {
 
         Dom.find(this.$refs.content).on('scroll',
             this.onScroll, passive);
+
+        this.getWrapperSize();
     },
 
     beforeUnmount()
@@ -188,13 +163,15 @@ export default {
                 return;
             }
 
-            let now = this.$refs.wrapper.getBoundingClientRect();
+            let rect = this.$refs.wrapper.getBoundingClientRect();
 
-            if ( Any.isEqual(this.last || {}, now) ) {
+            let now = {
+                width: Math.round(rect.width), height: Math.round(rect.height)
+            };
+
+            if ( Any.isEqual(this.state, now) ) {
                 return;
             }
-
-            this.last = now;
 
             clearInterval(this.interval);
 
@@ -216,22 +193,31 @@ export default {
                     Math.round(this.$refs.wrapper.getBoundingClientRect().height)
                 ];
 
-                Event.fire('NScrollbar:paused', this.$el);
-
-                if ( ! this.NScrollbar ) {
-                    console.log(Dom.find(this.$refs.wrapper).width(), Dom.find(this.$el).attr('class'), width);
-                }
+                console.log('hm?', this.$refs.wrapper.scrollHeight, height)
 
                 Dom.find(this.$el).removeClass('is-paused');
             });
 
-            if ( width === this.width && height === this.height ) {
+            let outer = {
+                width: Math.round(this.$refs.content.clientWidth),
+                height: Math.round(this.$refs.content.clientHeight),
+            };
+
+            let rainbow = [
+                width === this.width, height === this.height
+            ]
+
+            if ( ! Arr.has(rainbow, true) && Any.isEqual(this.outer, outer) ) {
                 return;
             }
 
-            if ( ! this.NScrollbar ) {
-                console.log('set new width', width);
-            }
+            this.outer = outer;
+
+            this.state = {
+                width, height
+            };
+
+            console.log('set new', this.state);
 
             [this.width, this.height] = [
                 width, height
@@ -339,7 +325,7 @@ export default {
 
         adaptScrollHeight()
         {
-            if ( this.native && this.allowNative ) {
+            if ( this.native ) {
                 return;
             }
 
@@ -374,13 +360,13 @@ export default {
                 height: (this.barHeight = Math.ceil(barHeight)) + 'px'
             });
 
-            let hasVtrack = outerHeight && outerHeight < innerHeight;
+            this.hasVtrack = outerHeight && outerHeight < innerHeight;
 
-            if ( hasVtrack ) {
+            if ( this.hasVtrack ) {
                 Dom.find(this.$el).addClass('has-vtrack');
             }
 
-            if ( !hasVtrack ) {
+            if ( !this.hasVtrack ) {
                 Dom.find(this.$el).removeClass('has-vtrack');
             }
 
@@ -389,7 +375,7 @@ export default {
 
         adaptScrollWidth()
         {
-            if ( this.native && this.allowNative ) {
+            if ( this.native ) {
                 return;
             }
 
@@ -424,13 +410,13 @@ export default {
                 width: (this.barWidth = Math.ceil(barWidth)) + 'px'
             });
 
-            let hasHtrack = outerWidth && outerWidth < innerWidth;
+            this.hasHtrack = outerWidth && outerWidth < innerWidth;
 
-            if ( hasHtrack ) {
+            if ( this.hasHtrack ) {
                 Dom.find(this.$el).addClass('has-htrack');
             }
 
-            if ( !hasHtrack ) {
+            if ( !this.hasHtrack ) {
                 Dom.find(this.$el).removeClass('has-htrack');
             }
 
@@ -439,7 +425,7 @@ export default {
 
         adaptScrollPosition(scroll = {})
         {
-            if ( this.native && this.allowNative ) {
+            if ( this.native ) {
                 return;
             }
 
@@ -506,6 +492,7 @@ export default {
             }
 
             event.stopPropagation();
+            event.preventDefault();
 
             Dom.find(document).on(this.mousemove,
                 this.onVbarMousemove, this._.uid);
@@ -557,6 +544,7 @@ export default {
             }
 
             event.stopPropagation();
+            event.preventDefault();
 
             Dom.find(document).on(this.mousemove,
                 this.onHbarMousemove, this._.uid);
@@ -613,10 +601,6 @@ export default {
             classList.push('n-scrollbar--native');
         }
 
-        if ( !this.allowNative ) {
-            classList.push('n-scrollbar--forced');
-        }
-
         if ( this.touch ) {
             classList.push('n-scrollbar--touch');
         }
@@ -631,6 +615,14 @@ export default {
 
         if ( this.overflowX ) {
             classList.push('n-overflow-x');
+        }
+
+        if ( this.hasHtrack ) {
+            classList.push('has-htrack');
+        }
+
+        if ( this.hasVtrack ) {
+            classList.push('has-vtrack');
         }
 
         let vbarProps = {

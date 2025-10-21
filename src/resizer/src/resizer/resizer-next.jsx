@@ -19,7 +19,7 @@ export default {
             {
                 return '';
             },
-            type: [String]
+            type: [Number, String]
         },
 
         flex: {
@@ -513,6 +513,12 @@ export default {
 
         if ( !Any.isEmpty(this.flex) ) {
             style['flex'] = this.flex;
+        }
+
+        let width = this.width;
+
+        if ( Any.isNumber(width) ) {
+            width = width + 'px';
         }
 
         if ( !Any.isEmpty(this.width) ) {

@@ -10,14 +10,14 @@
     <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="../dist/nano-ui.css">
+    <link id="theme" rel="stylesheet" href="../dist/themes/light.css">
 
-
-    <script src="https://unpkg.com/moment"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.5/vue.window.prod.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://unpkg.com/vue@3.4.6"></script>
+    <!-- <script src="../node_modules/pico-js/dist/pico-js.js"></script> -->
     <script src="https://vankizmann.github.io/pico-js/dist/pico-js.js"></script>
     <script src="../dist/nano-ui.js"></script>
-    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
 
     <link rel="stylesheet" href="../docs/dist/index.css">
 
@@ -100,11 +100,16 @@
             </template>
         </n-virtualscroller>
 
-        <n-draggrid ref="draggrid" v-model:items="virtualTree" :item-height="100" :item-width="200" style="height: 500px; margin-top: 30px; box-shadow: 0 0 2px 2px #dddedf; border-radius: 4px;">
-            <template v-slot:default="{ item }">
-                <div style="width: 200px; height: 100px; padding: 0 15px; line-height: 30px;">{{ item.label }}</div>
-            </template>
-        </n-draggrid>
+        <div style="height: 500px; margin-top: 30px; box-shadow: 0 0 2px 2px #dddedf; border-radius: 4px; display: flex; flex-direction: column;">
+            <div style="background: yellow; height: 80px; flex: 0 0 auto;">
+
+            </div>
+            <n-draggrid ref="draggrid" v-model:items="virtualTree" :item-height="100" :item-width="200" style="min-height: 0; flex: 1 1 auto;">
+                <template v-slot:default="{ item }">
+                    <div style="width: 200px; height: 100px; padding: 0 15px; line-height: 30px;">{{ item.label }}</div>
+                </template>
+            </n-draggrid>
+        </div>
 
         <n-draggrid ref="draggrid" v-model:items="testData" :item-height="100" :item-width="200" :threshold="0" style="height: 500px; margin-top: 30px; box-shadow: 0 0 2px 2px #dddedf; border-radius: 4px;">
             <template v-slot:default="{ item }">

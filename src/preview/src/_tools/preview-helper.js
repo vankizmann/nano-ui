@@ -25,14 +25,17 @@ export class NPreviewHelper
 {
     static getExtension(source, fallback = 'plain')
     {
-        let extension = source.replace(/^.*?\.([^.?]+)(\?.*?)?$/,
-            '$1');
+        let match = source.match(/\.([^.?]+)(\?.*?)?$/);
 
-        if ( Any.isEmpty(extension) ) {
+        if ( ! match ) {
             return fallback;
         }
 
-        return extension;
+        if ( Any.isEmpty(match[1]) ) {
+            return fallback;
+        }
+
+        return match[1];
     }
 
     static getMime(source, fallback = 'text')

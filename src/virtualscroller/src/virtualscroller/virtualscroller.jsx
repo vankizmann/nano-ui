@@ -121,7 +121,7 @@ export default {
         };
 
         return {
-            state, buffer: [], width: 0, height: 0, load: true
+            state, buffer: [], width: 0, height: 0, init: false
         };
     },
 
@@ -136,7 +136,6 @@ export default {
     beforeMount()
     {
         this.scrollTop = 0;
-        this.init = false;
         this.ready = [];
     },
 
@@ -163,7 +162,6 @@ export default {
 
         clearWhenReady()
         {
-            console.log('ready and clear', this.ready);
             Arr.each(this.ready, cb => {
                 cb.call(this);
             });
@@ -311,13 +309,15 @@ export default {
                 width, height
             ];
 
-            this.init = Arr.has(init, true);
+            this.init |= Arr.has(init, true);
 
             if ( this.init ) {
                 this.clearWhenReady();
             }
 
-            Any.async(this.refreshDriver);
+            Any.async(() => {
+                this.refreshDriver(false);
+            });
         },
 
 
@@ -327,7 +327,7 @@ export default {
                 this.timer = Date.now();
             }
 
-            if ( Date.now() - this.timer > 30 ) {
+            if ( Date.now() - this.timer > 5 ) {
                 queue = false;
             }
 
@@ -335,7 +335,7 @@ export default {
 
             this.to = setTimeout(() => {
                 this.refreshDriver(false, callback);
-            }, 35);
+            }, 10);
 
             if ( queue ) {
                 return;
@@ -428,7 +428,7 @@ export default {
             style.height = this.itemHeight + 'px';
         }
 
-        if ( this.state.grid !== 1 ) {
+        if ( this.itemWidth ) {
             style.width = this.itemWidth + 'px';
         }
 
@@ -517,6 +517,10 @@ export default {
 
         if ( this.threshold && this.threshold <= this.items.length ) {
             classList.push('n-virtualscroller--absolute');
+        }
+
+        if ( this.init ) {
+            classList.push('n-state');
         }
 
         let props = {

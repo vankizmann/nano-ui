@@ -1,4 +1,5 @@
 import { Any, Obj, Locale } from "@kizmann/pico-js";
+import { NPreviewHelper } from "../_tools/preview-helper.js";
 
 export default {
 
@@ -38,13 +39,7 @@ export default {
 
         tempExt()
         {
-            let regex = /^.*?\.([^.?]+)(\?.*?)?$/;
-
-            if ( Any.isEmpty(this.tempSrc) ) {
-                return null;
-            }
-
-            return this.tempSrc.replace(regex, '$1');
+            return NPreviewHelper.getExtension(this.tempSrc);
         }
 
     },

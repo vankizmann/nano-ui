@@ -128,7 +128,7 @@ export class NPreviewHandler
         let el = NPreviewHandler.create();
 
         el.css({
-            'z-index': window.zIndex++
+            'z-index': window.zIndex + 10000
         });
 
         let keydownFn = (e) => {
