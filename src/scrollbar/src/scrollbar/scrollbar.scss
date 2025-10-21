@@ -5,6 +5,19 @@
     overflow: hidden;
 }
 
+.n-scrollbar.is-paused .n-scrollbar {
+    display: none !important;
+    width: 0 !important;
+}
+
+//.n-scrollbar.is-paused > .n-scrollbar-content > * {
+//    max-width: 100% !important;
+//}
+
+.n-scrollbar.is-paused .n-table__wrap {
+    display: flex;
+}
+
 .n-scrollbar-test {
     opacity: 0;
     position: fixed;

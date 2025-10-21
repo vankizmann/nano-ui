@@ -68,7 +68,7 @@
         
         <h2>NVirtualscroller</h2>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
+        <div v-if="false" class="grid grid--row grid--wrap grid--10-10">
             <div class="col--auto">
                 <n-button type="primary" @click="virtualTree = virtualData">
                     Swap items
@@ -96,13 +96,13 @@
             </div>
         </div>
 
-        <n-virtualscroller ref="virtualscroller" :items="virtualData" style="height: 500px; margin-top: 30px; box-shadow: 0 0 2px 2px #dddedf; border-radius: 4px;">
+        <n-virtualscroller v-if="false" ref="virtualscroller" :items="virtualData" style="height: 500px; margin-top: 30px; box-shadow: 0 0 2px 2px #dddedf; border-radius: 4px;">
             <template v-slot:default="{ value }">
                 <div style="padding: 0 15px; line-height: 30px;">{{ value.label }}</div>
             </template>
         </n-virtualscroller>
 
-        <n-draglist v-model:items="virtualTree" unique-prop="uid" :render-select="true" :render-expand="true" style="height: 300px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
+        <n-draglist v-if="false" v-model:items="virtualTree" unique-prop="uid" :render-select="true" :render-expand="true" style="height: 300px; margin-top: 30px; border: 2px solid #dddedf; border-radius: 4px;">
             <template v-slot:default="{ value, item }">
                 <div style="padding: 0 15px; line-height: 34px;">{{ item.label }}</div>
             </template>

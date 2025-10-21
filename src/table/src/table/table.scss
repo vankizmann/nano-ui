@@ -34,7 +34,6 @@
     min-width: 100%;
     min-height: 0;
     max-height: 100%;
-    flex: 1 1 auto;
     display: inline-flex;
     flex-direction: column;
     align-items: stretch;
@@ -89,6 +88,10 @@
     max-height: 100%;
 }
 
+.n-table__body .n-scrollbar .n-scrollbar-spacer {
+    width: auto !important;
+}
+
 .n-table__body .n-scrollbar__wrap {
     padding-bottom: 0 !important;
 }
@@ -107,8 +110,4 @@
     align-items: stretch;
     justify-content: flex-start;
     border-bottom: 1px solid transparent;
-}
-
-.n-table .n-fixed {
-    flex: 0 0 auto !important;
 }
