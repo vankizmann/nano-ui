@@ -5,15 +5,6 @@
     overflow: hidden;
 }
 
-.n-scrollbar.is-paused .n-scrollbar {
-    display: none !important;
-    width: 0 !important;
-}
-
-//.n-scrollbar.is-paused > .n-scrollbar-content > * {
-//    max-width: 100% !important;
-//}
-
 .n-scrollbar.is-paused .n-table__wrap {
     display: flex;
 }
@@ -33,6 +24,7 @@
 }
 
 .n-scrollbar-content {
+    z-index: 50;
     position: absolute;
     top: 0;
     left: 0;
@@ -50,13 +42,6 @@
 .n-scrollbar.n-windows:not(.n-scrollbar--native) > .n-scrollbar-content {
     right: -17px;
     bottom: -17px;
-}
-
-.n-scrollbar.n-scrollbar--forced.n-scrollbar--native > .n-scrollbar-content {
-    padding-right: 16px;
-    padding-bottom: 16px;
-    right: -16px;
-    bottom: -16px;
 }
 
 .n-scrollbar:not(.n-overflow-x) > .n-scrollbar-content {
@@ -77,7 +62,7 @@
 .n-scrollbar-h {
     cursor: default;
     position: absolute;
-    z-index: 100;
+    z-index: 500;
     user-select: none;
 }
 
@@ -94,9 +79,9 @@
     height: 14px;
 }
 
-.n-scrollbar--native:not(.n-scrollbar--forced) > .n-scrollbar-v,
+.n-scrollbar--native > .n-scrollbar-v,
 .n-scrollbar:not(.has-vtrack) > .n-scrollbar-v,
-.n-scrollbar--native:not(.n-scrollbar--forced) > .n-scrollbar-h,
+.n-scrollbar--native > .n-scrollbar-h,
 .n-scrollbar:not(.has-htrack) > .n-scrollbar-h {
     display: none;
 }

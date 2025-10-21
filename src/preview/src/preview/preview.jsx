@@ -135,18 +135,18 @@ export default {
     renderFull()
     {
         if ( this.fileMime === 'image' ) {
-            return (<NPreviewImage class={classList} src={this.tempFile} />);
+            return (<NPreviewImage src={this.tempFile} />);
         }
 
         if ( this.fileMime === 'video' ) {
-            return (<NPreviewVideo class={classList} src={this.tempFile} />);
+            return (<NPreviewVideo src={this.tempFile} />);
         }
 
         let props = {
             type: this.fileMime, showSrc: this.showSrc,
         };
 
-        return (<NPreviewPlain class={classList} src={this.tempFile} {...props} />);
+        return (<NPreviewPlain src={this.tempFile} {...props} />);
     },
 
     renderModal()
