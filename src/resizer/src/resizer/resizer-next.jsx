@@ -4,14 +4,6 @@ export default {
 
     name: 'NResizer',
 
-    inject: {
-
-        NScrollbar: {
-            default: undefined
-        }
-
-    },
-
     props: {
 
         modelValue: {
@@ -146,6 +138,10 @@ export default {
             this.getWidthDebounced();
         }
 
+        Event.bind('NScrollbar:paused', (...args) => {
+            this.updateRemoteWidth(...args)
+        }, this._.uid);
+
         Event.bind('NResizer:move', (...args) => {
             this.forceWidth(...args)
         }, this._.uid);
@@ -155,12 +151,15 @@ export default {
 
     updated()
     {
-        this.getWidthDebounced();
+        // this.getWidthDebounced();
     },
 
     unmounted()
     {
         this.observer.disconnect();
+
+        Event.unbind('NScrollbar:paused',
+            this._.uid);
 
         Event.unbind('NResizer:move',
             this._.uid);
@@ -170,6 +169,10 @@ export default {
 
         getWidthDebounced()
         {
+            if ( Dom.find(this.$el).inside('.n-paused') ) {
+                return;
+            }
+
             let now = this.$el.getBoundingClientRect();
 
             if ( Any.isEqual(this.last || {}, now) ) {
@@ -204,6 +207,13 @@ export default {
             Dom.find(this.$el).css(style);
         },
 
+        updateRemoteWidth(el)
+        {
+            if ( Dom.find(el).contains(this.$el) ) {
+                this.updateWidth();
+            }
+        },
+
         updateWidth()
         {
             let width = Dom.find(this.$el).width();
@@ -214,7 +224,9 @@ export default {
 
             this.$emit('updateWidth', this.tempValue = width);
 
-            Event.fire('NResizer:changed');
+            console.log('update resize width ' + width + 'px');
+
+            // Event.fire('NResizer:changed');
 
             this.updateHandle();
         },

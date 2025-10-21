@@ -4,6 +4,14 @@ export default {
 
     name: 'NScrollbar',
 
+    inject: {
+
+        NScrollbar: {
+            default: undefined
+        }
+
+    },
+
     provide()
     {
         return {
@@ -146,9 +154,6 @@ export default {
             this.observer.observe(this.$refs.wrapper);
         }
 
-        Event.bind('NScrollbar:resize',
-            this.onResize, this._.uid);
-
         Event.bind('NResizer:moved',
             this.getWrapperSizeDebounced, this._.uid);
 
@@ -160,13 +165,9 @@ export default {
             this.onScroll, passive);
     },
 
-
     beforeUnmount()
     {
         this.observer.disconnect();
-
-        Event.unbind('NScrollbar:resize',
-            this._.uid);
 
         Event.unbind('NResizer:moved',
             this._.uid);
@@ -183,6 +184,10 @@ export default {
 
         getWrapperSizeDebounced()
         {
+            if ( Dom.find(this.$el).inside('is-paused') ) {
+                return;
+            }
+
             let now = this.$refs.wrapper.getBoundingClientRect();
 
             if ( Any.isEqual(this.last || {}, now) ) {
@@ -203,14 +208,29 @@ export default {
             let [width, height] = [0, 0];
 
             Dom.find(this.$refs.spacer).actual(() => {
+
+                Dom.find(this.$el).addClass('is-paused');
+
                 [width, height] = [
                     Math.round(this.$refs.wrapper.getBoundingClientRect().width),
                     Math.round(this.$refs.wrapper.getBoundingClientRect().height)
                 ];
+
+                Event.fire('NScrollbar:paused', this.$el);
+
+                if ( ! this.NScrollbar ) {
+                    console.log(Dom.find(this.$refs.wrapper).width(), Dom.find(this.$el).attr('class'), width);
+                }
+
+                Dom.find(this.$el).removeClass('is-paused');
             });
 
             if ( width === this.width && height === this.height ) {
                 return;
+            }
+
+            if ( ! this.NScrollbar ) {
+                console.log('set new width', width);
             }
 
             [this.width, this.height] = [

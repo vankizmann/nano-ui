@@ -355,8 +355,12 @@ export default {
 
         let flex = '1 1 auto';
 
-        if ( ! Any.isEmpty(this.width) ) {
+        if ( this.width != 0 ) {
             flex = `1 1 ${this.width}`;
+        }
+
+        if ( this.fixedWidth != 0 ) {
+            flex = `0 0 ${this.fixedWidth}px`;
         }
 
         let props = {
