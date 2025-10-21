@@ -149,11 +149,6 @@ export default {
         this.updateHandle();
     },
 
-    updated()
-    {
-        // this.getWidthDebounced();
-    },
-
     unmounted()
     {
         this.observer.disconnect();
@@ -289,8 +284,8 @@ export default {
             let scrollX = Dom.find(this.$el)
                 .scroll('right');
 
-            let targetWidth = (this.clientX + scrollX - offsetX) -
-                (this.resizerWidth * 2);
+            let targetWidth = (this.clientX + scrollX - offsetX) +
+                (this.resizerWidth * 0.5);
 
             if ( this.minWidth ) {
                 targetWidth = Math.max(targetWidth,
@@ -301,6 +296,8 @@ export default {
                 targetWidth = Math.min(targetWidth,
                     this.maxWidth - this.resizerWidth);
             }
+
+            console.log('aaaaa')
 
             let style = {
                 transform: `translateX(-${targetWidth - this.resizerWidth}px)`
@@ -327,8 +324,8 @@ export default {
             let scrollX = Dom.find(this.$el)
                 .scroll('right');
 
-            let targetWidth = this.clientX + scrollX - offsetX -
-                (this.resizerWidth * 2);
+            let targetWidth = this.clientX + scrollX - offsetX +
+                (this.resizerWidth * 0.5);
 
             if ( this.minWidth ) {
                 targetWidth = Math.max(targetWidth, this.minWidth);
