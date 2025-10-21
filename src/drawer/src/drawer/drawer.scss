@@ -23,7 +23,9 @@
     bottom: 0;
     left: 0;
     right: 0;
-    transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.3s;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 .n-drawer:not(.n-ready) .n-drawer__backdrop {
