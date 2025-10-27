@@ -446,6 +446,12 @@
             </n-draglist>
         </n-popover>
 
+        <n-switch v-model="disableConfirm">Disable confirm</n-switch>
+
+        <n-button @click="showConfirm">
+            Confirm
+        </n-button>
+
         <n-scrollbar style="max-height: 300px;">
             <div style="margin: 1px; padding: 11px; border: 2px solid red; background: #aaa;">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, pariatur?
@@ -614,6 +620,8 @@
             let data = {
                 items: pi.Arr.make(10)
             };
+
+            data.disableConfirm = false;
 
             data.demoModel = {
                 test: true,
@@ -912,6 +920,18 @@
 
             methods['getLabel'] = (key) => {
                 return test[key] || (test[key] = window.pi.UUID());
+            };
+
+            methods['showConfirm'] = function () {
+                window.Confirm.make({ text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut ', type: 'danger' }, () => {
+                    return this.disableConfirm;
+                })
+                    .then(() => {
+                        console.log('accept');
+                    })
+                    .catch(() => {
+                        console.log('cancel');
+                    });
             };
 
             var config = {

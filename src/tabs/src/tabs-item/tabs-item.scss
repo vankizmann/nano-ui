@@ -2,7 +2,8 @@
 @import "../../../root/vars";
 
 .n-tabs-item {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
+    min-height: 0;
 }
 
 .n-tabs__tab-icon {

@@ -1,14 +1,55 @@
 @use "sass:map";
 @import "../../../root/vars";
 
+.n-confirm {
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    background: rgba(#000, 0.8);
+    transition: opacity 0.3s;
+}
+
+.n-confirm:not(.n-ready) {
+    opacity: 0;
+}
+
+.n-confirm-frame {
+    border-radius: $lg-radius;
+    background: $color-background;
+    transition: transform 0.3s;
+    box-shadow: 0 1px 8px 3px rgba(#000, 0.4);
+}
+
+.n-confirm:not(.n-ready) .n-confirm-frame {
+    transform: translateY(50px) scale(0.6);
+}
+
+.n-confirm__text {
+    color: $color-foreground;
+}
+
+
+.n-confirm .n-button--cancel {
+    color: rgba($color-foreground, 0.6);
+    background: rgba($color-gray-50, 0.2);
+}
+
+.n-confirm .n-button--confirm {
+    color: $color-white;
+}
+
+
 @each $color, $values in $colors {
 
     $-color-base: map.get($values, 'base');
     $-color-light: map.get($values, 'light');
     $-color-dark: map.get($values, 'dark');
 
-    .n-confirm--#{$color} .n-confirm__icon {
+    .n-confirm--#{$color} .n-confirm__icon i {
         color: $-color-base;
+    }
+
+    .n-confirm--#{$color} .n-button--confirm {
+        background: $-color-base;
     }
 
 }

@@ -262,8 +262,10 @@ export default {
 
         onScrollTo(x = 0, y = 0)
         {
-            this.$refs.content.scrollTop = y;
-            this.$refs.content.scrollLeft = x;
+            if (this.$refs.content) {
+                this.$refs.content.scrollTop = y;
+                this.$refs.content.scrollLeft = x;
+            }
 
             // if ( this.$refs.content.scrollTop != y || this.$refs.content.scrollLeft != x ) {
             //     setTimeout(() => this.onScrollTo(x, y), 5);

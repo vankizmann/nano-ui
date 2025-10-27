@@ -1,29 +1,10 @@
 import { Any, Arr, Dom, Obj } from "@kizmann/pico-js";
 
-window.NPreviewMimes = {
-    image: [
-        'jpg', 'jpeg', 'gif', 'svg', 'png', 'bmp'
-    ],
-    video: [
-        'mp4', 'webm', 'mov'
-    ],
-    audio: [
-        'mp3', 'aac',
-    ],
-    font: [
-        'woff', 'ttf', 'otf'
-    ],
-    text: [
-        'csv', 'txt', 'html'
-    ],
-    application: [
-        'pdf', 'doc', 'xls'
-    ]
-};
-
-export class NPreviewHelper
+export class PreviewHelper
 {
-    static getExtension(source, fallback = 'plain')
+    static alias = 'PreviewHelper';
+
+    static getExt(source, fallback = 'plain')
     {
         let match = source.match(/\.([^.?]+)(\?.*?)?$/);
 
@@ -38,7 +19,7 @@ export class NPreviewHelper
         return match[1];
     }
 
-    static getMime(source, fallback = 'text')
+    static getType(source, fallback = 'text')
     {
         let file = Obj.get(source, 'name', source);
 
@@ -46,24 +27,24 @@ export class NPreviewHelper
             return fallback;
         }
 
-        let extension = NPreviewHelper.getExtension(file);
+        let extension = PreviewHelper.getExt(file);
 
-        if ( NPreviewHelper.getYoutubeKey(file) ) {
+        if ( PreviewHelper.getYoutubeKey(file) ) {
             return 'video';
         }
 
-        if ( NPreviewHelper.getVimeoKey(file) ) {
+        if ( PreviewHelper.getVimeoKey(file) ) {
             return 'video';
         }
 
-        Obj.each(window.NPreviewMimes, (exts, key) => {
+        Obj.each(window.PreviewMimes, (exts, key) => {
             if ( Arr.has(exts, extension) ) fallback = key;
         });
 
         return fallback;
     }
 
-    static getFullMime(source, fallback = 'text/plain')
+    static getMime(source, fallback = 'text/plain')
     {
         let file = Obj.get(source, 'name', source);
 
@@ -71,15 +52,15 @@ export class NPreviewHelper
             return fallback;
         }
 
-        if ( NPreviewHelper.getYoutubeKey(source) ) {
+        if ( PreviewHelper.getYoutubeKey(source) ) {
             return 'video/youtube';
         }
 
-        if ( NPreviewHelper.getVimeoKey(source) ) {
+        if ( PreviewHelper.getVimeoKey(source) ) {
             return 'video/vimeo';
         }
 
-        return NPreviewHelper.getMime(file) + '/' + NPreviewHelper.getExtension(file);
+        return PreviewHelper.getType(file) + '/' + PreviewHelper.getExt(file);
     }
 
     static getVimeoKey(source, fallback = null)
@@ -138,8 +119,8 @@ export class NPreviewHelper
 
 }
 
-export default { NPreviewHelper }
-
-if ( ! window.NPreviewHelper ) {
-    window.NPreviewHelper = NPreviewHelper;
+if ( ! window[PreviewHelper.alias] ) {
+    window[PreviewHelper.alias] = PreviewHelper;
 }
+
+export default PreviewHelper;

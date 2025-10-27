@@ -146,6 +146,7 @@ export default {
     data()
     {
         return {
+            uid: UUID(),
             tempValue: false,
             clientX: 0,
             clientY: 0,
@@ -163,7 +164,7 @@ export default {
 
         tempValue()
         {
-            Any.delay(this.refreshVisible, 50);
+            // Any.delay(this.refreshVisible, 50);
         }
 
     },
@@ -185,37 +186,24 @@ export default {
             Dom.find(document.body).append(this.$el);
         }
 
-        if ( this.listen && this.trigger === 'hover' ) {
-            Dom.find(document.body).on('mousemove', 
-                Any.framerate(this.onHover, 30), this._.uid);
-        }
+        this.popel = this.Popover.append(this.$el, {
+            uid: this.uid, target: this.target, listen: this.listen, trigger: this.trigger,
+        });
 
-        if ( this.listen && this.trigger === 'click' ) {
-            Dom.find(document.body).on(this.mousedown, 
-                Any.framerate(this.onClick, 30), this._.uid);
-        }
+        this.popel.on('open', () => {
+            this.$emit('update:modelValue', this.tempValue = true);
+        });
 
-        if ( this.listen && this.trigger === 'context' ) {
-            Dom.find(document.body).on('contextmenu', 
-                Any.framerate(this.onContext, 30), this._.uid);
-        }
-
-        Dom.find(document.body).on(this.mousedown, 
-            Any.framerate(this.onExit, 30), this._.uid);
-
-        Event.bind('NPopover:close', this.onCloseEvent, this._.uid);
+        this.popel.on('close', () => {
+            this.$emit('update:modelValue', this.tempValue = false);
+        });
     },
 
     beforeUnmount()
     {
+        this.Popover.remove({ uid: this.uid });
+
         this.$el.remove();
-
-        Dom.find(document).off('mousemove', null, this._.uid);
-        Dom.find(document).off('mousedown', null, this._.uid);
-        Dom.find(document).off('contextmenu', null, this._.uid);
-
-        Event.unbind('NPopover:close', this._.uid);
-        
     },
 
     methods: {
@@ -229,6 +217,8 @@ export default {
         {
             this.$emit('update:modelValue', 
                 this.tempValue = true);
+
+            this.popel.show();
         },
 
         close(type = null)
@@ -253,6 +243,8 @@ export default {
 
             this.$emit('update:modelValue', 
                 this.tempValue = false);
+
+            this.popel.hide();
         },
 
         pause()

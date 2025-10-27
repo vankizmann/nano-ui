@@ -1,5 +1,4 @@
 import { Obj, Arr, Str, Any, Dom } from "@kizmann/pico-js";
-import { NPreviewHelper } from "../_tools/preview-helper.js"
 
 export default {
 
@@ -64,7 +63,7 @@ export default {
 
         resolveYoutube()
         {
-            let youtube = NPreviewHelper.getYoutubeKey(this.src);
+            let youtube = this.PreviewHelper.getYoutubeKey(this.src);
 
             if ( ! youtube ) {
                 return false;
@@ -79,7 +78,7 @@ export default {
 
         resolveVimeo()
         {
-            let vimeo = NPreviewHelper.getVimeoKey(this.src);
+            let vimeo = this.PreviewHelper.getVimeoKey(this.src);
 
             if ( ! vimeo ) {
                 return false;
@@ -122,7 +121,7 @@ export default {
 
         return (
             <video width="320" height="240" controls>
-                <source src={this.tempSrc || this.src} type={NPreviewHelper.getFullMime(src)} />
+                <source src={this.tempSrc || this.src} type={this.PreviewHelper.getMime(src)} />
             </video>
         );
     },

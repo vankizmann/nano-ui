@@ -1,5 +1,4 @@
 import { Any, Obj, Locale } from "@kizmann/pico-js";
-import { NPreviewHelper } from "../_tools/preview-helper.js";
 
 export default {
 
@@ -8,13 +7,6 @@ export default {
     props: {
 
         src: {
-            default()
-            {
-                return null;
-            }
-        },
-
-        type: {
             default()
             {
                 return null;
@@ -32,14 +24,8 @@ export default {
 
     computed: {
 
-        tempSrc()
-        {
+        file() {
             return Obj.get(this.src, 'name', this.src);
-        },
-
-        tempExt()
-        {
-            return NPreviewHelper.getExtension(this.tempSrc);
         }
 
     },
@@ -53,11 +39,11 @@ export default {
         let slots = [];
 
         slots[0] = (
-            <li>{ this.type || Locale.trans('plain') }/{ this.tempExt || Locale.trans('none') }</li>
+            <li>{ this.PreviewHelper.getMime(this.file) }</li>
         );
 
         if ( this.showSrc ) {
-            slots[1] = (<li>{ this.tempSrc }</li>);
+            slots[1] = (<li>{ this.file }</li>);
         }
 
         return (

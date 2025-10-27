@@ -1,32 +1,34 @@
 import { Any, Arr, Obj, Dom } from "@kizmann/pico-js";
 
-window.NPreviewCacheGroups = {};
+window.PreviewGroups = {};
 
-export class NPreviewHandler
+export class PreviewHandler
 {
-    current = null;
+    static alias = 'PreviewHandler';
+
+    static current = null;
 
     static append(item)
     {
-        if ( !window.NPreviewCacheGroups[item.group] ) {
-            window.NPreviewCacheGroups[item.group] = {};
+        if ( !window.PreviewGroups[item.group] ) {
+            window.PreviewGroups[item.group] = {};
         }
 
-        window.NPreviewCacheGroups[item.group][item.uid] = item;
+        window.PreviewGroups[item.group][item.uid] = item;
     }
 
     static remove(item)
     {
-        delete window.NPreviewCacheGroups[item.group][item.uid];
+        delete window.PreviewGroups[item.group][item.uid];
     }
 
     static get(group)
     {
-        if ( !window.NPreviewCacheGroups[group] ) {
-            window.NPreviewCacheGroups[group] = {};
+        if ( !window.PreviewGroups[group] ) {
+            window.PreviewGroups[group] = {};
         }
 
-        return Arr.sort(window.NPreviewCacheGroups[group], 'index');
+        return Arr.sort(window.PreviewGroups[group], 'index');
     }
 
     static next()
@@ -35,7 +37,7 @@ export class NPreviewHandler
             return null;
         }
 
-        let items = NPreviewHandler.get(this.current.group);
+        let items = this.get(this.current.group);
 
         let index = Arr.findIndex(items, {
             uid: this.current.uid
@@ -47,7 +49,7 @@ export class NPreviewHandler
             next = Arr.get(items, index + 1);
         }
 
-        return NPreviewHandler.switch(next);
+        return this.switch(next);
     }
 
     static prev()
@@ -56,7 +58,7 @@ export class NPreviewHandler
             return null;
         }
 
-        let items = NPreviewHandler.get(this.current.group);
+        let items = this.get(this.current.group);
 
         let index = Arr.findIndex(items, {
             uid: this.current.uid
@@ -68,7 +70,7 @@ export class NPreviewHandler
             prev = Arr.get(items, index - 1);
         }
 
-        return NPreviewHandler.switch(prev);
+        return this.switch(prev);
     }
 
     static create()
@@ -91,7 +93,7 @@ export class NPreviewHandler
         });
 
         close.on('click', () => {
-            NPreviewHandler.close()
+            this.close()
         });
 
         close.appendTo(el);
@@ -102,7 +104,7 @@ export class NPreviewHandler
         });
 
         prev.on('click', () => {
-            NPreviewHandler.prev()
+            this.prev()
         });
 
         prev.appendTo(el);
@@ -113,7 +115,7 @@ export class NPreviewHandler
         });
 
         next.on('click', () => {
-            NPreviewHandler.next()
+            this.next()
         });
 
         next.appendTo(el);
@@ -125,7 +127,7 @@ export class NPreviewHandler
 
     static open(item)
     {
-        let el = NPreviewHandler.create();
+        let el = this.create();
 
         el.css({
             'z-index': window.zIndex + 10000
@@ -134,15 +136,18 @@ export class NPreviewHandler
         let keydownFn = (e) => {
 
             if ( e.keyCode === 27 ) {
-                return NPreviewHandler.close();
+                e.stopPropagation();
+                return this.close();
             }
 
             if ( e.keyCode === 37 ) {
-                return NPreviewHandler.prev();
+                e.stopPropagation();
+                return this.prev();
             }
 
             if ( e.keyCode === 39 ) {
-                return NPreviewHandler.next();
+                e.stopPropagation();
+                return this.next();
             }
 
         }
@@ -151,20 +156,20 @@ export class NPreviewHandler
             uid: 'n-preview-modal'
         });
 
-        NPreviewHandler.switch(item);
+        this.switch(item);
 
         el.addClass('n-ready');
     }
 
     static close()
     {
-        let el = NPreviewHandler.create();
+        let el = this.create();
 
         Dom.find(window).off('keydown', null, {
             uid: 'n-preview-modal'
         });
 
-        NPreviewHandler.switch(null);
+        this.switch(null);
 
         el.removeClass('n-ready');
     }
@@ -186,8 +191,8 @@ export class NPreviewHandler
 
 }
 
-export default { NPreviewHandler }
-
-if ( ! window.NPreviewHandler ) {
-    window.NPreviewHandler = NPreviewHandler;
+if ( ! window.PreviewHandler ) {
+    window.PreviewHandler = PreviewHandler;
 }
+
+export default PreviewHandler;
