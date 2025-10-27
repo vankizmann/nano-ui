@@ -2,35 +2,63 @@
 @import "../../../root/vars";
 
 .n-confirm {
+    z-index: 90000;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-confirm-frame {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    max-width: 420px;
-}
-
-.n-confirm__icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    max-width: 100%;
 }
 
 .n-confirm__body {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.n-confirm__icon {
+    z-index: 0;
+    position: relative;
     text-align: center;
 }
 
-.n-confirm__actions {
+.n-confirm__icon i {
+    z-index: 10;
+    position: relative;
+    font-size: 2em;
+}
+
+.n-confirm__text {
+    z-index: 10;
+    position: relative;
+    text-align: center;
+}
+
+.n-confirm__text p {
+    font-size: 1em;
+}
+
+.n-confirm__action {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
-    width: 100%;
 }
 
-.n-confirm__actions.n-reverse {
+.n-confirm.n-reverse .n-confirm__action {
     flex-direction: row-reverse;
 }
+
+
 
 @each $suffix, $values in $form {
 
@@ -41,34 +69,24 @@
 
     .n-confirm--#{$suffix} {
         font-size: $-confirm-font;
-        border-radius: $-confirm-radius + 2;
+        padding: $-confirm-size * 1.4;
     }
 
-    $-confirm-padding: $-confirm-size * $-confirm-ratio;
+    .n-confirm--#{$suffix} .n-confirm-frame {
+        width: $-confirm-size * 12;
+        padding: $-confirm-size * 0.6 $-confirm-size * 1.4;
+    }
+
+    .n-confirm--#{$suffix} .n-confirm__body:not(:empty) {
+        margin-bottom: $-confirm-size * 0.8;
+    }
 
     .n-confirm--#{$suffix} .n-confirm__icon {
-        font-size: $-confirm-font + 4;
-        padding: $-confirm-padding * 1.2 $-confirm-padding * 2;
+        margin-bottom: $-confirm-size * 0.4;
     }
 
-    .n-confirm--#{$suffix} .n-confirm__body {
-        padding: 0 $-confirm-padding * 2;
-    }
-    
-    .n-confirm--#{$suffix} .n-confirm__action {
-        padding: $-confirm-padding * 1.2 $-confirm-padding * 2;
-    }
-
-    .n-confirm--#{$suffix} .n-confirm__action > button {
-        margin: 0 $-confirm-padding;
-    }
-
-    .n-confirm--#{$suffix} .n-confirm__action > button:first-child {
-        margin-left: 0;
-    }
-
-    .n-confirm--#{$suffix} .n-confirm__action > button:last-child {
-        margin-right: 0;
+    .n-confirm--#{$suffix} .n-confirm__action > *:not(:last-child) {
+        margin-right: $-confirm-size * 0.6;
     }
 
 }

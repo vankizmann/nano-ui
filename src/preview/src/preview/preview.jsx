@@ -1,6 +1,4 @@
 import { UUID, Obj, Arr, Any, Event } from "@kizmann/pico-js";
-import { NPreviewHandler } from "../_tools/preview-handler.js"
-import { NPreviewHelper } from "../_tools/preview-helper.js"
 
 export default {
 
@@ -84,16 +82,6 @@ export default {
             return this.thumb || this.file;
         },
 
-        fileMime()
-        {
-            return this.mime || NPreviewHelper.getMime(this.tempFile);
-        },
-
-        thumbMime()
-        {
-            return this.mime || NPreviewHelper.getMime(this.tempThumb);
-        },
-
     },
 
     provide()
@@ -121,12 +109,14 @@ export default {
             return this.ctor('renderFull')();
         }
 
-        if ( this.thumbMime === 'image' ) {
+        let type = this.PreviewHelper.getType(this.tempThumb);
+
+        if ( type === 'image' ) {
             return (<NPreviewImage src={this.tempThumb} />);
         }
 
         let props = {
-            type: this.fileMime, showSrc: false,
+            showSrc: false,
         };
 
         return (<NPreviewPlain src={this.tempThumb} {...props} />);
@@ -134,16 +124,18 @@ export default {
 
     renderFull()
     {
-        if ( this.fileMime === 'image' ) {
+        let type = this.PreviewHelper.getType(this.tempFile);
+
+        if ( type === 'image' ) {
             return (<NPreviewImage src={this.tempFile} />);
         }
 
-        if ( this.fileMime === 'video' ) {
+        if ( type === 'video' ) {
             return (<NPreviewVideo src={this.tempFile} />);
         }
 
         let props = {
-            type: this.fileMime, showSrc: this.showSrc,
+            showSrc: this.showSrc,
         };
 
         return (<NPreviewPlain src={this.tempFile} {...props} />);
@@ -156,7 +148,7 @@ export default {
         }
 
         let modalProps = {
-            index: this.index, group: this.group, file: this.tempFile, showSrc: this.showSrc
+            index: this.index, group: this.group, file: this.tempFile
         };
 
         return (
@@ -175,8 +167,10 @@ export default {
             classList.push('n-clickable');
         }
 
-        if ( this.fileMime ) {
-            classList.push('n-mime-' + this.fileMime);
+        let type = this.PreviewHelper.getType(this.tempFile);
+
+        if ( type ) {
+            classList.push('n-mime-' + type);
         }
 
         let props = {};

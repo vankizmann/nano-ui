@@ -1,6 +1,4 @@
-import { Any, Event, UUID } from "@kizmann/pico-js";
-import { NPreviewHandler } from "../_tools/preview-handler.js";
-import { NPreviewHelper } from "../_tools/preview-helper.js";
+import { Any, Event, Obj, UUID } from "@kizmann/pico-js";
 
 export default {
 
@@ -46,6 +44,14 @@ export default {
         return { uid: UUID(), visible: false };
     },
 
+    computed: {
+
+        tempFile() {
+            return Obj.get(this.file, 'name', this.file);
+        }
+
+    },
+
     watch: {
 
         visible: function (value) {
@@ -58,76 +64,40 @@ export default {
 
     mounted()
     {
-        NPreviewHandler.create()
+        this.PreviewHandler.create()
             .append(this.$el);
 
-        NPreviewHandler.append(this);
+        this.PreviewHandler.append(this);
     },
 
     beforeUnmount()
     {
         this.$el.remove();
 
-        NPreviewHandler.remove(this);
+        this.PreviewHandler.remove(this);
     },
 
     methods: {
 
         openBox()
         {
-            NPreviewHandler.open(this);
+            this.PreviewHandler.open(this);
         },
 
         closeBox()
         {
-            NPreviewHandler.close();
+            this.PreviewHandler.close();
         }
 
     },
 
-    renderPrev()
-    {
-        let prevProps = {
-            size: 'lg', square: true, icon: 'fa fa-angle-left'
-        };
-
-        prevProps['onClick'] = () => {
-            this.gotoPrev();
-        };
-
-        return (
-            <div class="n-preview__prev">
-                <NButton {...prevProps} />
-            </div>
-        );
-    },
-
-    renderNext()
-    {
-        let nextProps = {
-            size: 'lg', square: true, icon: 'fa fa-angle-right'
-        };
-
-        nextProps['onClick'] = () => {
-            this.gotoNext();
-        };
-
-        return (
-            <div class="n-preview__next">
-                <NButton {...nextProps} />
-            </div>
-        );
-    },
-
-
-
-    renderImage()
+    renderFull()
     {
         let classList = [
             'n-preview-frame'
         ];
 
-        let mime = NPreviewHelper.getMime(this.file);
+        let mime = this.PreviewHelper.getType(this.tempFile);
 
         if ( mime === 'image' ) {
             return (<NPreviewImage class={classList} src={this.file} />);
@@ -138,7 +108,7 @@ export default {
         }
 
         let props = {
-            type: mime, showSrc: this.showSrc,
+            showSrc: this.NPreview ? this.NPreview.showSrc : false,
         };
 
         return (<NPreviewPlain class={classList} src={this.file} {...props} />);
@@ -150,7 +120,7 @@ export default {
             return null;
         }
 
-        return this.ctor('renderImage')();
+        return this.ctor('renderFull')();
     },
 
 }

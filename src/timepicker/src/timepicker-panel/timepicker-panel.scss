@@ -8,15 +8,16 @@
     align-items: stretch;
     justify-content: stretch;
     border: 1px solid transparent;
+    max-height: 270px;
 }
 
 .n-timepicker-panel__body {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
+    min-height: 0;
     display: flex;
     flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
-    max-height: 260px;
 }
 
 .n-timepicker-panel__panel {

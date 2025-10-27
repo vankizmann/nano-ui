@@ -1,0 +1,102 @@
+.n-confirm-beta {
+    z-index: 20000;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    background: rgba($color-black, 0.8);
+    transition: opacity 0.3s;
+}
+
+.n-confirm-beta:not(.n-ready) {
+    opacity: 0;
+}
+
+.n-confirm-frame {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 360px;
+    max-width: 100%;
+    padding: 20px 40px;
+    border-radius: $lg-radius;
+    background: rgba($color-gray-80, 0.85);
+    transition: transform 0.4s;
+    box-shadow: inset 0 1px 0 rgba(#fff, 0.1), 0 1px 16px 3px rgba($color-black, 0.4);
+}
+
+.n-confirm-beta:not(.n-ready) .n-confirm-frame {
+    transform: translateY(50px) scale(0.6);
+}
+
+.n-confirm-beta__body {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.n-confirm-beta__body:not(:empty) {
+    margin-bottom: 20px;
+}
+
+.n-confirm-beta__icon {
+    z-index: 0;
+    position: relative;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.n-confirm-beta__icon:before {
+    z-index: 5;
+    pointer-events: none;
+    content: '\00a0';
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    display: block;
+    width: 800px;
+    height: 800px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(at center center, rgba($color-success, 0.4), transparent 50%);
+}
+
+.n-confirm-beta__icon i {
+    z-index: 10;
+    position: relative;
+    font-size: 2em;
+    color: $color-success;
+}
+
+.n-confirm-beta__text {
+    z-index: 10;
+    position: relative;
+    color: rgba($color-white, 0.9);
+    text-align: center;
+}
+
+.n-confirm-beta__action {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.n-confirm-beta__action > *:not(:last-child) {
+    margin-right: 12px;
+}
+
+.n-confirm-beta .n-button--cancel {
+    color: rgba($color-white, 0.6);
+    background: rgba($color-gray-50, 0.2);
+}
+
+.n-confirm-beta .n-button--confirm {
+    color: $color-white;
+    background: $color-success;
+}

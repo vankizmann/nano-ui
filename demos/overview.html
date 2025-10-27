@@ -798,6 +798,12 @@
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur corporis deserunt fuga harum illum ipsa, itaque nemo optio sunt? Aperiam cum ducimus explicabo, fugiat ipsum minima molestias odio quis quod.
                 </n-confirm>
             </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-button @click="confirmTest = true">Open confirm</n-button>
+                <n-confirm v-model:visible="confirmTest" :listen="false" @abort="log('Abort')" @confirm="log('Confirm')">
+                    <p>Boookeeeerrs</p>
+                </n-confirm>
+            </div>
         </div>
 
 
@@ -1128,7 +1134,9 @@
 
         pi.Dom.ready(function () {
 
-            let data = {};
+            let data = {
+                confirmTest: false
+            };
 
             data.sizes = {
                 xs: 'XS',

@@ -1,4 +1,4 @@
-import { Obj, Locale } from "@kizmann/pico-js";
+import { Obj, Locale, Dom, Arr, Any } from "@kizmann/pico-js";
 
 export default {
 
@@ -14,15 +14,15 @@ export default {
             type: [Boolean]
         },
 
-        listen: {
+        disabled: {
             default()
             {
-                return true;
+                return false;
             },
             type: [Boolean]
         },
 
-        update: {
+        listen: {
             default()
             {
                 return true;
@@ -53,50 +53,18 @@ export default {
             type: [String]
         },
 
-        width: {
-            default()
-            {
-                return 'auto';
-            },
-            type: [String]
-        },
-
-        position: {
-            default()
-            {
-                return 'center-center';
-            },
-            type: [String]
-        },
-
-        closable: {
-            default()
-            {
-                return true;
-            },
-            type: [Boolean]
-        },
-
         confirmText: {
             default()
             {
-                return Locale.trans('Confirm');
+                return Locale.trans('Okay2');
             },
             type: [String]
         },
 
-        abortText: {
+        cancelText: {
             default()
             {
-                return Locale.trans('Abort');
-            },
-            type: [String]
-        },
-
-        buttonSize: {
-            default()
-            {
-                return 'md';
+                return Locale.trans('Cancel2');
             },
             type: [String]
         },
@@ -117,112 +85,122 @@ export default {
     data()
     {
         return {
-            tempVisible: this.visible
+            tempVisible: false, activeState: false,
         };
+    },
+
+    mounted()
+    {
+        this.$watch('tempVisible', () => {
+            this.changeVisible();
+        });
+
+        this.target = Dom.find(this.selector || this.$el)
+            .previous().get(0);
+
+        Dom.find(document.body).on('mousedown',
+            this.eventClick, this._.uid);
+    },
+
+    unmounted()
+    {
+        Dom.find(document.body).off('mousedown',
+            null, this._.uid);
     },
 
     methods: {
 
-        abort(event)
+        extractText(fallback)
         {
-            this.$refs.modal.closeModal(true, 'self');
+            if ( ! this.$slots.default ) {
+                return fallback;
+            }
+
+            let nodes = this.$slots.default();
+
+            if ( Any.isEmpty(nodes) ) {
+                return fallback;
+            }
+
+            let html = [];
+
+            nodes.map((el) => {
+
+                if ( ! Any.isString(el.children) ) {
+                    return;
+                }
+
+                html.push(el.children);
+            });
+
+            return html.join(' ');
+        },
+
+        changeVisible()
+        {
+            if ( ! this.tempVisible || this.activeState ) {
+                return;
+            }
+
+            let text = this.trans('Are you sure?');
+
+            if ( this.$slots.default ) {
+                text = this.extractText(text);
+            }
+
+            let options = Obj.only(this.$props, ['size', 'type', 'confirmText', 'cancelText'], {
+                text
+            });
+
+            this.Confirm.make(options)
+                .then(() => {
+                    this.activeState = false;
+                    this.confirm();
+                })
+                .catch(() => {
+                    this.activeState = false;
+                    this.abort();
+                });
+
+            console.log(this.tempVisible, this.activeState);
+
+            this.activeState = true;
+        },
+
+        abort()
+        {
+            this.$emit('update:visible', this.tempVisible = false);
             this.$emit('abort');
         },
 
-        confirm(event)
+        confirm()
         {
-            this.$refs.modal.closeModal(true, 'self');
+            this.$emit('update:visible', this.tempVisible = false);
             this.$emit('confirm');
         },
 
-        eventInput(value, source)
+        eventClick(event, el)
         {
-            if ( ! value && source !== 'self' ) {
-                this.$emit('abort');
+            if ( !this.listen || this.disabled || event.which !== 1 ) {
+                return;
             }
 
-            this.$emit('update:visible', this.tempVisible = value);
-        }
+            let result = !! Dom.find(el).closest(this.target);
 
-    },
+            if ( result === this.tempVisible ) {
+                return;
+            }
 
-    renderIcon()
-    {
-        return (
-            <div class="n-confirm__icon">
-                <span class={nano.Icons[this.type]}></span>
-            </div>
-        );
-    },
+            event.preventDefault();
 
-    renderBody()
-    {
-        return (
-            <div class="n-confirm__body">
-                { this.$slots.default && this.$slots.default() || this.trans('Are you sure?') }
-            </div>
-        );
-    },
+            this.tempVisible = true;
+        },
 
-    renderAction()
-    {
-        let classList = [
-            'n-confirm__action'
-        ];
-
-        if ( window.WIN ) {
-            classList.push('n-reverse');
-        }
-
-        return (
-            <div class={classList}>
-                <NButton size={this.buttonSize} type={this.type} link={true} onClick={this.abort}>
-                    { this.abortText }
-                </NButton>
-                <NButton size={this.buttonSize} type={this.type} link={false} onClick={this.confirm}>
-                    { this.confirmText }
-                </NButton>
-            </div>
-        );
     },
 
     render()
     {
-        let classList = [
-            'n-confirm',
-            'n-confirm--' + this.type,
-            'n-confirm--' + this.size
-        ];
-
-        let props = {
-            type: 'default',
-            selector: this.selector,
-            listen: this.listen,
-            update: this.update,
-            width: this.width,
-            position: this.position,
-            closable: this.closable,
-            modelValue: this.tempVisible,
-        };
-
-        // Override input listener
-        props['onUpdate:modelValue'] = this.eventInput;
-
-        let innerHtml = {
-            raw: () => (
-                <div class={classList}>
-                    { this.ctor('renderIcon')() }
-                    { this.ctor('renderBody')() }
-                    { this.ctor('renderAction')() }
-                </div>
-            )
-        };
-
-        return (
-            <NModal ref="modal" {...props}>
-                { innerHtml }
-            </NModal>
-        );
+        return null;
     }
 
 }
