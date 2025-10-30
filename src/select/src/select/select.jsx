@@ -208,7 +208,6 @@ export default {
         };
     },
 
-
     beforeMount()
     {
         if ( this.lazy ) {
@@ -255,7 +254,7 @@ export default {
 
         focus()
         {
-            this.$nextTick(this.scrollToClosest);
+            this.$nextTick(() => this.scrollToClosest());
         },
 
     },
@@ -318,13 +317,13 @@ export default {
                 event.preventDefault();
             }
 
-            this.$refs.input.focus();
+            this.focus = true;
         },
 
         onFocusInput()
         {
             if ( !this.focus ) {
-                this.$refs.popover.open();
+                this.focus = true;
             }
         },
 

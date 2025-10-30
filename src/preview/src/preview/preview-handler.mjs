@@ -129,10 +129,6 @@ export class PreviewHandler
     {
         let el = this.create();
 
-        el.css({
-            'z-index': window.zIndex + 10000
-        });
-
         let keydownFn = (e) => {
 
             if ( e.keyCode === 27 ) {
@@ -158,6 +154,10 @@ export class PreviewHandler
 
         this.switch(item);
 
+        if ( this.get(item.group).length > 1 ) {
+            el.addClass('n-multi');
+        }
+
         el.addClass('n-ready');
     }
 
@@ -171,7 +171,7 @@ export class PreviewHandler
 
         this.switch(null);
 
-        el.removeClass('n-ready');
+        el.removeClass(['n-ready', 'n-multi']);
     }
 
     static switch(item)

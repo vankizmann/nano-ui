@@ -112,6 +112,7 @@ export default {
 
         this.hasHtrack = false;
         this.hasVtrack = false;
+
         this.adaptScrollBehavior();
     },
 
@@ -142,7 +143,9 @@ export default {
 
     beforeUnmount()
     {
-        this.observer.disconnect();
+        if ( this.observer ) {
+            this.observer.disconnect();
+        }
 
         Event.unbind('NResizer:moved',
             this._.uid);
@@ -193,8 +196,6 @@ export default {
                     Math.round(this.$refs.wrapper.getBoundingClientRect().height)
                 ];
 
-                console.log('hm?', this.$refs.wrapper.scrollHeight, height)
-
                 Dom.find(this.$el).removeClass('is-paused');
             });
 
@@ -216,8 +217,6 @@ export default {
             this.state = {
                 width, height
             };
-
-            console.log('set new', this.state);
 
             [this.width, this.height] = [
                 width, height

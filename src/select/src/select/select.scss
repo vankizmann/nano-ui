@@ -126,6 +126,10 @@
      text-align: center;
 }
 
+.n-popover--select > .n-scrollbar {
+    width: 100%;
+}
+
 .n-popover--select.n-virtual {
     overflow: hidden;
 }

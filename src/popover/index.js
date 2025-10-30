@@ -13,7 +13,6 @@ export default function (App) {
     ];
 
     pi.Arr.each(directives, (glob) => {
-        console.log('register', glob.alias)
         App.config.globalProperties[glob.alias] = glob;
     });
 
