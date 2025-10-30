@@ -219,10 +219,6 @@ export default {
 
             this.$emit('updateWidth', this.tempValue = width);
 
-            console.log('update resize width ' + width + 'px');
-
-            // Event.fire('NResizer:changed');
-
             this.updateHandle();
         },
 

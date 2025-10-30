@@ -119,30 +119,6 @@ export default {
 
     },
 
-    computed: {
-
-        touch() {
-            return !! ('ontouchstart' in window || 
-                navigator.msMaxTouchPoints);
-        },
-
-        mousedown() {
-            return this.touch ? 'touchstart' :
-                'mousedown';
-        },
-
-        mousemove() {
-            return this.touch ? 'touchmove' :
-                'mousemove';
-        },
-
-        mouseup() {
-            return this.touch ? 'touchend' :
-                'mouseup';
-        }
-
-    },
-
     data()
     {
         return {
@@ -186,16 +162,37 @@ export default {
             Dom.find(document.body).append(this.$el);
         }
 
-        this.popel = this.Popover.append(this.$el, {
-            uid: this.uid, target: this.target, listen: this.listen, trigger: this.trigger,
-        });
+        let options = {
+            uid: this.uid,
+            target: this.target,
+            listen: this.listen,
+            position: this.position,
+            trigger: this.trigger,
+            width: this.width,
+            scrollClose: this.scrollClose,
+            multiClose: this.multiClose,
+        };
+
+        if ( this.NPopover ) {
+            options.parent = this.NPopover.popel;
+        }
+
+        this.popel = this.Popover.append(this.$el, options);
 
         this.popel.on('open', () => {
-            this.$emit('update:modelValue', this.tempValue = true);
+            if ( this.tempValue !== true ) {
+                this.$emit('update:modelValue', this.tempValue = true);
+            }
         });
 
         this.popel.on('close', () => {
-            this.$emit('update:modelValue', this.tempValue = false);
+            if ( this.tempValue !== false ) {
+                this.$emit('update:modelValue', this.tempValue = false);
+            }
+        });
+
+        this.$watch('tempValue', () => {
+            this.tempValue ? this.popel.show() : this.popel.hide();
         });
     },
 
@@ -215,21 +212,12 @@ export default {
 
         open()
         {
-            this.$emit('update:modelValue', 
-                this.tempValue = true);
-
-            this.popel.show();
+            this.$emit('update:modelValue', this.tempValue = true);
         },
 
         close(type = null)
         {
-            if ( this.prevent ) {
-                return;
-            }
-
-            delete this.timer;
-
-            if ( ! type ) {
+            if ( !type ) {
                 this.$emit('close');
             }
 
@@ -241,10 +229,9 @@ export default {
                 this.$emit('multiClose');
             }
 
-            this.$emit('update:modelValue', 
-                this.tempValue = false);
+            this.$emit('update:modelValue', this.tempValue = false);
 
-            this.popel.hide();
+            // this.popel.hide();
         },
 
         pause()
@@ -268,7 +255,7 @@ export default {
         {
             Dom.find(this.$el).css(null);
 
-            if ( ! this.tempValue ) {
+            if ( !this.tempValue ) {
                 return this.stopRefreshInterval();
             }
 
@@ -279,7 +266,7 @@ export default {
 
         startRefreshInterval()
         {
-            this.refresh = setInterval(this.updatePosition, 
+            this.refresh = setInterval(this.updatePosition,
                 1000 / this.framerate);
 
             let onReady = () => {
@@ -317,7 +304,7 @@ export default {
 
         isSameOffset(offset)
         {
-            if ( ! this.passedOffset ) {
+            if ( !this.passedOffset ) {
                 return false;
             }
 
@@ -325,12 +312,12 @@ export default {
                 return offset[key] === this.passedOffset[key];
             });
 
-            return ! Arr.has(rainbow, false);
+            return !Arr.has(rainbow, false);
         },
 
         isSameSize(size)
         {
-            if ( ! this.passedSize ) {
+            if ( !this.passedSize ) {
                 return false;
             }
 
@@ -338,7 +325,7 @@ export default {
                 return size[key] === this.passedSize[key];
             });
 
-            return ! Arr.has(rainbow, false);
+            return !Arr.has(rainbow, false);
         },
 
         getTargetHorizontal(position, fallback = null)
@@ -353,7 +340,7 @@ export default {
 
             let windowRect = this.$el.getBoundingClientRect();
 
-            if ( this.width === -1 ) {
+            if ( this.width === - 1 ) {
                 windowRect.width = targetRect.width;
             }
 
@@ -361,7 +348,7 @@ export default {
 
                 // Set above the tagret element
                 start: targetRect.top - windowRect.height,
-                
+
                 // Set at bottom of target element
                 end: targetRect.top + targetRect.height,
 
@@ -373,11 +360,11 @@ export default {
                 start: targetRect.left,
 
                 // Set into the center of the target element
-                center: targetRect.left + (targetRect.width * 0.5) - 
+                center: targetRect.left + (targetRect.width * 0.5) -
                     (windowRect.width * 0.5),
 
                 // Set on the right of the target element
-                end: targetRect.left + targetRect.width - 
+                end: targetRect.left + targetRect.width -
                     windowRect.width,
 
             };
@@ -418,10 +405,10 @@ export default {
                 inverse = inverse.replace(/^(bottom)\-/, 'top-');
             }
 
-            let broken = offset.y + windowRect.height > 
+            let broken = offset.y + windowRect.height >
                 window.innerHeight || offset.y < 0;
 
-            if ( this.scrollClose && broken && ! fallback ) {
+            if ( this.scrollClose && broken && !fallback ) {
                 return this.getTargetHorizontal(inverse, offset);
             }
 
@@ -432,7 +419,7 @@ export default {
             if ( offset.y < 0 ) {
                 offset.y = 0;
             }
-        
+
             if ( offset.y + windowRect.height > window.innerHeight ) {
                 offset.y = window.innerHeight - windowRect.height;
             }
@@ -440,7 +427,7 @@ export default {
             if ( offset.x < 0 ) {
                 offset.x = 0;
             }
-        
+
             if ( offset.x + windowRect.width > window.innerWidth ) {
                 offset.x = window.innerWidth - windowRect.width -
                     (window.innerWidth - document.body.clientWidth);
@@ -461,21 +448,21 @@ export default {
 
             let windowRect = this.$el.getBoundingClientRect();
 
-            if ( this.width === -1 ) {
+            if ( this.width === - 1 ) {
                 windowRect.width = targetRect.width;
             }
-            
+
             let posY = {
 
                 // Set at top edge of the target element
                 start: targetRect.top,
 
                 // Set at the middle of the target element
-                center: targetRect.top + (targetRect.height * 0.5) - 
+                center: targetRect.top + (targetRect.height * 0.5) -
                     (windowRect.height * 0.5),
 
                 // Ste at the bottom of the target elemnent
-                end: targetRect.top + targetRect.height - 
+                end: targetRect.top + targetRect.height -
                     windowRect.height,
 
             };
@@ -526,10 +513,10 @@ export default {
                 inverse = inverse.replace(/^(right)\-/, 'left-');
             }
 
-            let broken = offset.x + windowRect.width > 
+            let broken = offset.x + windowRect.width >
                 window.innerWidth || offset.x < 0;
 
-            if ( this.scrollClose && broken && ! fallback ) {
+            if ( this.scrollClose && broken && !fallback ) {
                 return this.getTargetVertical(inverse, offset);
             }
 
@@ -540,15 +527,15 @@ export default {
             if ( offset.y < 0 ) {
                 offset.y = 0;
             }
-        
-            if ( offset.y + windowRect.height >  window.innerHeight ) {
+
+            if ( offset.y + windowRect.height > window.innerHeight ) {
                 offset.y = window.innerHeight - windowRect.height;
             }
 
             if ( offset.x < 0 ) {
                 offset.x = 0;
             }
-        
+
             if ( offset.x + windowRect.width > window.innerWidth ) {
                 offset.x = window.innerWidth - windowRect.width -
                     (window.innerWidth - document.body.clientWidth);
@@ -583,7 +570,7 @@ export default {
                 return;
             }
 
-            if ( ! this.timer ) {
+            if ( !this.timer ) {
                 this.timer = Date.now();
             }
 
@@ -599,12 +586,12 @@ export default {
                 .scroll();
 
             let style = {
-                'z-index':  window.zIndex++,
-                'top':      Math.round(offset.y + scroll.top) + 'px', 
-                'left':     Math.round(offset.x + scroll.left) + 'px', 
+                'z-index': window.zIndex ++,
+                'top': Math.round(offset.y + scroll.top) + 'px',
+                'left': Math.round(offset.x + scroll.left) + 'px',
             };
 
-            if ( this.width === -1 ) {
+            if ( this.width === - 1 ) {
                 style.width = rect.width + 'px';
             }
 
@@ -629,13 +616,13 @@ export default {
             let target = Dom.find(el).closest(this.target),
                 source = Dom.find(el).closest(this.$el);
 
-            let result = (!! target || !! source);
+            let result = (!!target || !!source);
 
             if ( this.tempValue === result ) {
                 return;
             }
 
-            if ( ! result ) {
+            if ( !result ) {
                 return this.$nextTick(this.close);
             }
 
@@ -647,14 +634,14 @@ export default {
             let keyCode = event.which === 1 ||
                 event.which === 0;
 
-            if ( this.disabled || this.tempValue || ! keyCode ) {
+            if ( this.disabled || this.tempValue || !keyCode ) {
                 return;
             }
 
             let target = Dom.find(el).closest(this.target),
                 source = Dom.find(el).closest(this.$el);
 
-            let result = (!! target || !! source);
+            let result = (!!target || !!source);
 
             if ( this.tempValue === result ) {
                 return;
@@ -667,7 +654,7 @@ export default {
         {
             let keyCode = event.which === 3;
 
-            if ( this.disabled || this.tempValue || ! keyCode ) {
+            if ( this.disabled || this.tempValue || !keyCode ) {
                 return;
             }
 
@@ -677,7 +664,7 @@ export default {
             this.clientX = event.clientX;
             this.clientY = event.clientY;
 
-            let result = (!! target || !! source);
+            let result = (!!target || !!source);
 
             if ( result ) {
                 event.preventDefault();
@@ -693,17 +680,17 @@ export default {
 
         onExit(event, el)
         {
-            if ( this.disabled || ! this.tempValue ) {
+            if ( this.disabled || !this.tempValue ) {
                 return;
             }
 
-            if ( !! Dom.find(el).closest(this.$el) ) {
+            if ( !!Dom.find(el).closest(this.$el) ) {
                 return;
             }
 
             let target = Dom.find(el).closest(this.target);
 
-            if ( this.trigger !== 'context' && !! target ) {
+            if ( this.trigger !== 'context' && !!target ) {
                 return;
             }
 
@@ -720,17 +707,17 @@ export default {
 
         return (
             <div class="n-popover__frame">
-                { this.$slots.header &&
+                {this.$slots.header &&
                     <div class="n-popover__header">
-                        { this.$slots.header() }
+                        {this.$slots.header()}
                     </div>
                 }
                 <div class="n-popover__body">
-                    { this.$slots.default() }
+                    {this.$slots.default()}
                 </div>
-                { this.$slots.footer &&
+                {this.$slots.footer &&
                     <div class="n-popover__footer">
-                        { this.$slots.footer() }
+                        {this.$slots.footer()}
                     </div>
                 }
             </div>
@@ -739,10 +726,6 @@ export default {
 
     render()
     {
-        if ( ! window.zIndex ) {
-            window.zIndex = 9000;
-        }
-
         let classList = [
             'n-popover',
             'n-popover--' + this.type,
@@ -750,7 +733,7 @@ export default {
             'n-popover--' + this.position,
         ];
 
-        if ( ! this.tempValue ) {
+        if ( !this.tempValue ) {
             classList.push('n-hidden');
         }
 
@@ -760,9 +743,13 @@ export default {
             viewBody = this.tempValue;
         }
 
+        if ( viewBody ) {
+            classList.push('n-ready');
+        }
+
         return (
             <div class={classList}>
-                { viewBody && this.ctor('renderBody')() }
+                {viewBody && this.ctor('renderBody')()}
             </div>
         );
     }

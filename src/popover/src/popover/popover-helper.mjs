@@ -7,6 +7,11 @@ export class PopoverHelper
         return !! ('ontouchstart' in window || navigator.msMaxTouchPoints);
     }
 
+    static getScrollEvent()
+    {
+        return 'scroll';
+    }
+
     static getHoverEvent()
     {
         if ( this.getTouchState() ) {

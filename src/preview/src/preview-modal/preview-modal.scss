@@ -1,6 +1,7 @@
 @import "../../../root/vars";
 
 .n-preview-modal {
+    z-index: 999999998;
     overflow: hidden;
     position: fixed;
     top: 0;
@@ -39,12 +40,17 @@
     z-index: 500;
     position: absolute;
     top: 50%;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     width: 40px;
     height: 40px;
     transform: translateY(-50%);
+}
+
+.n-preview-modal.n-multi .n-preview-modal__prev,
+.n-preview-modal.n-multi .n-preview-modal__next {
+    display: flex;
 }
 
 .n-preview-modal__prev {

@@ -20,6 +20,10 @@ $table-filter-height: 18px !default;
     margin-left: auto;
 }
 
+.n-table-filter__popover {
+    width: 240px;
+}
+
 .n-table-filter__popover .n-form-item {
     margin-bottom: 5px;
 }

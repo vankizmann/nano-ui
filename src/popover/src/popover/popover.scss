@@ -5,7 +5,7 @@
     position: absolute;
     display: inline-flex;
     flex-direction: column;
-    transition: opacity 0.2s ease-out;
+    transition: opacity 0.1s;
 }
 
 .n-popover:not([data-ready]) {
