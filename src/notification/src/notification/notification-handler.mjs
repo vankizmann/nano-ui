@@ -1,26 +1,27 @@
 import { UUID, Str, Obj, Dom, Any } from "@kizmann/pico-js";
+import NotificationElement from "./notification-element.mjs";
 
 window.NotificationBag = {};
 
 export class NotificationHandler
 {
 
-    static alias = 'Notify';
+    static alias = 'NotificationHandler';
 
     static notifications = {};
 
     static handle(...args)
     {
-        let { uid, el } = this.create(undefined, ...args);
+        let { uid, el } = NotificationHandler.create(undefined, ...args);
 
-        let wrapper = this.element();
+        let wrapper = NotificationHandler.element();
 
         // Append element to dom
         window.NotificationBag[uid].append(wrapper);
 
         // Queue remove
         Any.delay(() => {
-            this.remove(uid);
+            NotificationHandler.remove(uid);
         }, el.options.duration);
 
         return uid;
@@ -28,7 +29,7 @@ export class NotificationHandler
 
     static create(uid = UUID(), ...args)
     {
-        window.NotificationBag[uid] = new Notification(...args);
+        window.NotificationBag[uid] = new NotificationElement(...args);
 
         return { uid, el: window.NotificationBag[uid] };
     }
@@ -69,6 +70,10 @@ export class NotificationHandler
         return el;
     }
 
+}
+
+if ( ! window[NotificationHandler.alias] ) {
+    window[NotificationHandler.alias] = NotificationHandler;
 }
 
 export default NotificationHandler;

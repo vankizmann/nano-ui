@@ -158,10 +158,6 @@ export default {
             this.target = Dom.find(this.$el).parent().get(0);
         }
 
-        if ( this.window ) {
-            Dom.find(document.body).append(this.$el);
-        }
-
         let options = {
             uid: this.uid,
             target: this.target,
@@ -194,6 +190,8 @@ export default {
         this.$watch('tempValue', () => {
             this.tempValue ? this.popel.show() : this.popel.hide();
         });
+
+        Dom.find(document.body).append(this.$el);
     },
 
     beforeUnmount()

@@ -170,8 +170,6 @@ export class ConfirmModule
     {
         let cls = Obj.get(this.options, 'class', []);
 
-        console.log(this.options);
-
         if ( Any.isString(cls) ) {
             cls = cls.split(' ');
         }

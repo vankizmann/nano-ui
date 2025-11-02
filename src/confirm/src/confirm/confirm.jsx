@@ -6,7 +6,7 @@ export default {
 
     props: {
 
-        visible: {
+        modelValue: {
             default()
             {
                 return false;
@@ -73,10 +73,10 @@ export default {
 
     watch: {
 
-        visible()
+        modelValue()
         {
-            if ( this.visible !== this.tempVisible ) {
-                this.tempVisible = this.visible;
+            if ( this.modelValue !== this.tempValue ) {
+                this.tempValue = this.modelValue;
             }
         }
 
@@ -85,13 +85,17 @@ export default {
     data()
     {
         return {
-            tempVisible: false, activeState: false,
+            tempValue: this.modelValue, activeState: false,
         };
     },
 
     mounted()
     {
-        this.$watch('tempVisible', () => {
+        this.$watch('tempValue', () => {
+            this.changeVisible();
+        });
+
+        this.$nextTick(() => {
             this.changeVisible();
         });
 
@@ -100,6 +104,8 @@ export default {
 
         Dom.find(document.body).on('mousedown',
             this.eventClick, this._.uid);
+
+        Dom.find(document.body).append(this.$el);
     },
 
     unmounted()
@@ -112,7 +118,7 @@ export default {
 
         extractText(fallback)
         {
-            if ( ! this.$slots.default ) {
+            if ( !this.$slots.default ) {
                 return fallback;
             }
 
@@ -126,7 +132,7 @@ export default {
 
             nodes.map((el) => {
 
-                if ( ! Any.isString(el.children) ) {
+                if ( !Any.isString(el.children) ) {
                     return;
                 }
 
@@ -138,14 +144,14 @@ export default {
 
         changeVisible()
         {
-            if ( ! this.tempVisible || this.activeState ) {
+            if ( !this.tempValue || this.activeState ) {
                 return;
             }
 
             let text = this.trans('Are you sure?');
 
             if ( this.$slots.default ) {
-                text = this.extractText(text);
+                text = this.$el.innerHTML;
             }
 
             let options = Obj.only(this.$props, ['size', 'type', 'confirmText', 'cancelText'], {
@@ -162,20 +168,18 @@ export default {
                     this.abort();
                 });
 
-            console.log(this.tempVisible, this.activeState);
-
             this.activeState = true;
         },
 
         abort()
         {
-            this.$emit('update:visible', this.tempVisible = false);
+            this.$emit('update:modelValue', this.tempValue = false);
             this.$emit('abort');
         },
 
         confirm()
         {
-            this.$emit('update:visible', this.tempVisible = false);
+            this.$emit('update:modelValue', this.tempValue = false);
             this.$emit('confirm');
         },
 
@@ -185,22 +189,26 @@ export default {
                 return;
             }
 
-            let result = !! Dom.find(el).closest(this.target);
+            let result = !!Dom.find(el).closest(this.target);
 
-            if ( result === this.tempVisible ) {
+            if ( result === this.tempValue ) {
                 return;
             }
 
             event.preventDefault();
 
-            this.tempVisible = true;
+            this.$emit('update:modelValue', this.tempValue = true);
         },
 
     },
 
     render()
     {
-        return null;
+        return (
+            <div data-confirm="text" style="display: none !important;">
+                {this.$slots.default && this.$slots.default()}
+            </div>
+        );
     }
 
 }
