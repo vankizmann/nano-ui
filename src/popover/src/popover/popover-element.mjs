@@ -184,10 +184,10 @@ export class PopoverElement
         }
 
         if ( ! result ) {
-            return this.hide('hover');
+            return this.hideQueue('hover');
         }
 
-        this.show('hover');
+        this.showQueue('hover');
     }
 
     onClick(event)
@@ -211,7 +211,7 @@ export class PopoverElement
 
         console.log('click vis true', el)
 
-        this.show('click');
+        this.showQueue('click');
     }
 
     onContext(event)
@@ -241,7 +241,7 @@ export class PopoverElement
             return;
         }
 
-        this.show('context');
+        this.showQueue('context');
     }
 
     bindResizeObserver()

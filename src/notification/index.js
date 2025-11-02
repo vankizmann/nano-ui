@@ -23,4 +23,7 @@ export default function (App) {
         App.config.globalProperties[glob.alias] = glob;
     });
 
+    if ( ! window['Notify'] ) {
+        App.config.globalProperties['Notify'] = window['Notify'] = NotificationHandler.handle;
+    }
 }

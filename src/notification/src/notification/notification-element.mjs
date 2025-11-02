@@ -1,11 +1,8 @@
-
-
 import { Dom, Obj } from "@kizmann/pico-js";
 
-
-export class PopoverElement
+export class NotificationElement
 {
-    static alias = 'PopoverElement';
+    static alias = 'NotificationElement';
 
     el = null;
 
@@ -71,4 +68,8 @@ export class PopoverElement
 
 }
 
-export default PopoverElement;
+if ( ! window[NotificationElement.alias] ) {
+    window[NotificationElement.alias] = NotificationElement;
+}
+
+export default NotificationElement;
