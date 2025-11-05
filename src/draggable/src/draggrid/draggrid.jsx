@@ -734,8 +734,8 @@ export default {
         }
 
         let passed = [
-            'threshold', 'deathzone', 'itemHeight', 'itemWidth',
-            'overflowX', 'overflowY',  'offsetX', 'offsetY', 'useKeys'
+            'threshold', 'deathzone', 'itemHeight', 'itemWidth', 'overflowX', 'overflowY',
+            'offsetX', 'offsetY', 'useKeys', 'uniqueProp'
         ];
 
         let props = Obj.only(this.$props, passed, {

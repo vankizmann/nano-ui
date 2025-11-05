@@ -14,14 +14,14 @@
 
 @mixin NanoBackdropDefault() {
     background: rgba($color-shadow, 0.7);
-    backdrop-filter: blur(1px);
-    -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
 }
 
 @mixin NanoBackdropFocus() {
     background: rgba($color-shadow, 0.8);
-    backdrop-filter: blur(1px);
-    -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
 }
 
 @mixin NanoBackdropBlur() {

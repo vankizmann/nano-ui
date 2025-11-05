@@ -12,10 +12,12 @@
     z-index: 220;
     content: '\00a0';
     position: absolute;
-    display: block;
-    background: $color-foreground;
+    display: none;
 }
 
+.n-popover:not([data-position="auto"]):before {
+    display: block;
+}
 
 .n-popover[data-position^="top-"]:before,
 .n-popover[data-position^="bottom-"]:before {
@@ -63,12 +65,12 @@
 
 .n-popover[data-position="top-start"]:before,
 .n-popover[data-position="bottom-start"]:before {
-    left: 20px;
+    left: 6px;
 }
 
 .n-popover[data-position="top-end"]:before,
 .n-popover[data-position="bottom-end"]:before {
-    right: 20px;
+    right: 6px;
 }
 
 .n-popover[data-position="top-center"]:before,
