@@ -56,7 +56,7 @@ export class ConfirmHandler
         let icon = Obj.get(window.ConfirmIcons, this.options.type, 'fa fa-ghost');
 
         let child = Dom.make('div', {
-            classList: 'n-confirm__icon', innerHTML: `<i class="${icon}"></i>`
+            classList: 'n-confirm__icon', innerHTML: `<i class="n-icon ${icon}"></i>`
         });
 
         child.appendTo(el);

@@ -42,7 +42,7 @@ export class AlertHandler
         let icon = Obj.get(window.AlertIcons, this.options.type, 'fa fa-ghost');
 
         let child = Dom.make('div', {
-            classList: 'n-alert__icon', innerHTML: `<i class="${icon}"></i>`
+            classList: 'n-alert__icon', innerHTML: `<i class="n-icon ${icon}"></i>`
         });
 
         child.appendTo(el);

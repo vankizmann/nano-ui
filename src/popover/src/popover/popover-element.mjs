@@ -270,8 +270,28 @@ export class PopoverElement
     {
         let { el, target, width } = this.options;
 
-        let [rect, offset, scroll] = [
-            target.getBoundingClientRect(), this.getTargetOffset(), Dom.find(document.body).scroll()
+        let [rect, vars] = [
+            target.getBoundingClientRect(), Dom.find(el).css()
+        ];
+
+        if ( ! vars['--parent-width'] ) {
+            vars['--parent-width'] = `${rect.width}px`;
+        }
+
+        if ( ! vars['--parent-max-width'] && Dom.find(el).innerWidth() ) {
+            vars['--parent-max-width'] = `${el.clientWidth}px`;
+        }
+
+        if ( ! vars['--parent-height'] ) {
+            vars['--parent-height'] = `${rect.height}px`;
+        }
+
+        if ( ! vars['--parent-max-height'] && Dom.find(el).innerHeight() ) {
+            vars['--parent-max-height'] = `${el.clientHeight}px`;
+        }
+
+        let [offset, scroll] = [
+            this.getTargetOffset(), Dom.find(document.body).scroll()
         ];
 
         Dom.find(el).attr('data-position', offset.position);
@@ -280,11 +300,11 @@ export class PopoverElement
             window.zIndex = 9000;
         }
 
-        let style = {
+        let style = Obj.assign(vars, {
             'z-index':  window.zIndex++,
             'top':      Math.round(offset.y + scroll.top) + 'px',
             'left':     Math.round(offset.x + scroll.left) + 'px',
-        };
+        });
 
         if ( width === -1 ) {
             style.width = Math.round(rect.width) + 'px';
