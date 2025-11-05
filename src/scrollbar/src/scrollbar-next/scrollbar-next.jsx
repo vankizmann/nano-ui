@@ -40,7 +40,7 @@ export default {
         offsetY: {
             default()
             {
-                return 10;
+                return 0;
             },
             type: [Number]
         },
@@ -331,7 +331,7 @@ export default {
             }
 
             let [innerHeight, outerHeight] = [
-                this.height || 0, this.$el.clientHeight || 0
+                this.$refs.content.scrollHeight || 0, this.$el.clientHeight || 0
             ];
 
             let compare = [
@@ -381,7 +381,7 @@ export default {
             }
 
             let [innerWidth, outerWidth] = [
-                this.width || 0, this.$el.clientWidth || 0
+                this.$refs.content.scrollWidth || 0, this.$el.clientWidth || 0
             ];
 
             let compare = [

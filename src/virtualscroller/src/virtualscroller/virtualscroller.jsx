@@ -75,7 +75,7 @@ export default {
         offsetY: {
             default()
             {
-                return 10;
+                return 0;
             },
             type: [Number]
         },
