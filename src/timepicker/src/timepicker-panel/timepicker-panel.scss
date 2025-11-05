@@ -11,6 +11,13 @@
     max-height: 270px;
 }
 
+.n-timepicker-panel__header {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .n-timepicker-panel__body {
     flex: 1 1 auto;
     min-height: 0;
@@ -60,7 +67,11 @@
 
     $-timepicker-panel-padding: $-timepicker-panel-size * $-timepicker-panel-ratio;
 
-    .n-timepicker-panel--#{$suffix} .n-timepicker-panel__header,
+    .n-timepicker-panel--#{$suffix} .n-timepicker-panel__header {
+        height: $-timepicker-panel-size * 1.5;
+        padding: 0 $-timepicker-panel-padding;
+    }
+
     .n-timepicker-panel--#{$suffix} .n-timepicker-panel__footer {
         padding: $-timepicker-panel-padding * 0.7 $-timepicker-panel-padding;
     }

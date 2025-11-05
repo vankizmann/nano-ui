@@ -58,8 +58,6 @@
     flex-direction: row-reverse;
 }
 
-
-
 @each $suffix, $values in $form {
 
     $-confirm-font: map.get($values, 'font');
@@ -73,6 +71,7 @@
     }
 
     .n-confirm--#{$suffix} .n-confirm-frame {
+        border-radius: $-confirm-radius;
         width: $-confirm-size * 12;
         padding: $-confirm-size * 0.6 $-confirm-size * 1.4;
     }

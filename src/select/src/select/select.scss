@@ -114,7 +114,6 @@
 .n-select__body,
 .n-select__empty {
      overflow: hidden;
-     margin: 1px 0;
      max-height: 210px;
 }
 
@@ -128,10 +127,6 @@
 
 .n-popover--select > .n-scrollbar {
     width: 100%;
-}
-
-.n-popover--select.n-virtual {
-    overflow: hidden;
 }
 
 @each $suffix, $values in $form {

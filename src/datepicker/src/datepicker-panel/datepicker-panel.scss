@@ -7,7 +7,17 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
+}
+
+div:not(.n-popover) > .n-datepicker-panel {
     border: 1px solid transparent;
+}
+
+.n-datepicker-panel__header {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: stretch;
 }
 
 .n-datepicker-panel__body,
@@ -20,6 +30,7 @@
 
 .n-datepicker-panel__panels,
 .n-datepicker-panel__toolbar {
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: stretch;
@@ -146,7 +157,11 @@
         height: $-datepicker-panel-size - 4;
     }
 
-    .n-datepicker-panel--#{$suffix} .n-datepicker-panel__header,
+    .n-datepicker-panel--#{$suffix} .n-datepicker-panel__header {
+        height: $-datepicker-panel-size * 1.5;
+        padding: 0 $-datepicker-panel-padding;
+    }
+
     .n-datepicker-panel--#{$suffix} .n-datepicker-panel__footer {
         padding: $-datepicker-panel-padding * 0.7 $-datepicker-panel-padding;
     }

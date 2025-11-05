@@ -39,10 +39,25 @@
     $-popover-body: map.get($values, 'body');
     $-popover-footer: map.get($values, 'footer');
 
+    .n-popover--#{$suffix}[data-position^="top-"]:before {
+        background: svg-load('angle-down.svg', fill=$-popover-body) no-repeat center / contain;
+    }
+
+    .n-popover--#{$suffix}[data-position^="bottom-"]:before {
+        background: svg-load('angle-up.svg', fill=$-popover-body) no-repeat center / contain;
+    }
+
+    .n-popover--#{$suffix}[data-position^="left-"]:before {
+        background: svg-load('angle-right.svg', fill=$-popover-body) no-repeat center / contain;
+    }
+
+    .n-popover--#{$suffix}[data-position^="right-"]:before {
+        background: svg-load('angle-left.svg', fill=$-popover-body) no-repeat center / contain;
+    }
+
     .n-popover--#{$suffix} .n-popover__frame {
         color: $-popover-color;
         background: $-popover-body;
-        border: 1px solid $-popover-border;
     }
 
     .n-popover--#{$suffix} .n-popover__header {

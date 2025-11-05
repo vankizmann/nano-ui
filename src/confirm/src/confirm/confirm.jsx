@@ -56,7 +56,7 @@ export default {
         confirmText: {
             default()
             {
-                return Locale.trans('Okay2');
+                return Locale.trans('Okay');
             },
             type: [String]
         },
@@ -64,7 +64,7 @@ export default {
         cancelText: {
             default()
             {
-                return Locale.trans('Cancel2');
+                return Locale.trans('Cancel');
             },
             type: [String]
         },

@@ -3,6 +3,9 @@
 
 .n-datepicker-panel {
     background: $color-input;
+}
+
+div:not(.n-popover,.n-datetimepicker-panel) > .n-datepicker-panel {
     border: 1px solid $color-gray-10;
 }
 

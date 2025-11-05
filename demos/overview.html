@@ -848,6 +848,29 @@
             </div>
         </div>
 
+        <h2>Alert</h2>
+
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1 col--1-3@md">
+                <n-button type="primary" @click="alert('primary')">Notify</n-button>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-button type="secondary" @click="alert('secondary')">Notify</n-button>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-button type="success" @click="alert('success')">Notify</n-button>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-button type="warning" @click="alert('warning')">Notify</n-button>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-button type="danger" @click="alert('danger')">Notify</n-button>
+            </div>
+            <div class="col--1-1 col--1-3@md">
+                <n-button type="info" @click="alert('info')">Notify</n-button>
+            </div>
+        </div>
+
         <h2>NTabs</h2>
 
         <div class="app-options grid grid--row grid--wrap grid--30-30">
@@ -1439,7 +1462,11 @@
             };
 
             methods.notify = function (type) {
-                this.Notify('Lorem ipsum dolore', type);
+                this.Notification.make('Lorem ipsum dolore', type);
+            };
+
+            methods.alert = function (type) {
+                this.Alert.make('Lorem ipsum dolore', type);
             };
 
             var config = {

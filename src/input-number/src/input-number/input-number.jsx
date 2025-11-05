@@ -202,23 +202,31 @@ export default {
 
         onNextDown()
         {
+            clearTimeout(this.prevTimeout);
+            clearInterval(this.prevInterval);
+
             this.nextStep();
 
             this.nextTimeout = setTimeout(() => {
                 this.nextInterval = setInterval(this.nextStep, 100);
             }, 400);
 
-            Dom.find(document).on('mouseup', this.onNextUp,
-                this._.uid);
+            Dom.find(window).on('mouseup', this.onNextUp, {
+                uid: this._.uid + 'next'
+            });
         },
 
-        onNextUp()
+        onNextUp(event)
         {
+            event.preventDefault();
+            event.stopPropagation();
+
             clearTimeout(this.nextTimeout);
             clearInterval(this.nextInterval);
 
-            Dom.find(document).off('mouseup', null,
-                this._.uid);
+            Dom.find(window).off('mouseup', null, {
+                uid: this._.uid + 'next'
+            });
         },
 
         prevStep()
@@ -235,29 +243,36 @@ export default {
 
             value = Num.float(value).toFixed(this.precision);
 
-            this.$emit('update:modelValue',
-                this.tempValue = Num.float(value));
+            this.$emit('update:modelValue', this.tempValue = Num.float(value));
         },
 
         onPrevDown()
         {
+            clearTimeout(this.nextTimeout);
+            clearInterval(this.nextInterval);
+
             this.prevStep();
 
             this.prevTimeout = setTimeout(() => {
                 this.prevInterval = setInterval(this.prevStep, 100);
             }, 400);
 
-            Dom.find(document).on('mouseup', this.onPrevUp,
-                this._.uid);
+            Dom.find(window).on('mouseup', this.onPrevUp, {
+                uid: this._.uid + 'prev'
+            });
         },
 
-        onPrevUp()
+        onPrevUp(event)
         {
+            event.preventDefault();
+            event.stopPropagation();
+
             clearTimeout(this.prevTimeout);
             clearInterval(this.prevInterval);
 
-            Dom.find(document).off('mouseup', null,
-                this._.uid);
+            Dom.find(window).off('mouseup', null, {
+                uid: this._.uid + 'prev'
+            });
         },
 
         onKeydown(event)

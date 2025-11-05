@@ -6,11 +6,11 @@ window.NotificationBag = {};
 export class NotificationHandler
 {
 
-    static alias = 'NotificationHandler';
+    static alias = 'Notification';
 
     static notifications = {};
 
-    static handle(...args)
+    static make(...args)
     {
         let { uid, el } = NotificationHandler.create(undefined, ...args);
 
@@ -70,10 +70,6 @@ export class NotificationHandler
         return el;
     }
 
-}
-
-if ( ! window[NotificationHandler.alias] ) {
-    window[NotificationHandler.alias] = NotificationHandler;
 }
 
 export default NotificationHandler;

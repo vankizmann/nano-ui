@@ -8,6 +8,91 @@
     transition: opacity 0.1s;
 }
 
+.n-popover:before {
+    z-index: 220;
+    content: '\00a0';
+    position: absolute;
+    display: block;
+    background: $color-foreground;
+}
+
+
+.n-popover[data-position^="top-"]:before,
+.n-popover[data-position^="bottom-"]:before {
+    width: 16px;
+    height: 6px;
+}
+
+.n-popover[data-position^="top-"] {
+    padding-bottom: 6px;
+}
+
+.n-popover[data-position^="bottom-"] {
+    padding-top: 6px;
+}
+
+.n-popover[data-position^="top-"]:before {
+    bottom: 0;
+}
+
+.n-popover[data-position^="bottom-"]:before {
+    top: 0;
+}
+
+.n-popover[data-position^="left-"]:before,
+.n-popover[data-position^="right-"]:before {
+    width: 6px;
+    height: 16px;
+}
+
+.n-popover[data-position^="left-"] {
+    padding-right: 6px;
+}
+
+.n-popover[data-position^="right-"] {
+    padding-left: 6px;
+}
+
+.n-popover[data-position^="left-"]:before {
+    right: 0;
+}
+
+.n-popover[data-position^="right-"]:before {
+    left: 0;
+}
+
+.n-popover[data-position="top-start"]:before,
+.n-popover[data-position="bottom-start"]:before {
+    left: 20px;
+}
+
+.n-popover[data-position="top-end"]:before,
+.n-popover[data-position="bottom-end"]:before {
+    right: 20px;
+}
+
+.n-popover[data-position="top-center"]:before,
+.n-popover[data-position="bottom-center"]:before {
+    left: 50%;
+    margin-left: -8px;
+}
+
+.n-popover[data-position="left-start"]:before,
+.n-popover[data-position="right-start"]:before{
+    top: 6px;
+}
+
+.n-popover[data-position="left-end"]:before,
+.n-popover[data-position="right-end"]:before{
+    bottom: 6px;
+}
+
+.n-popover[data-position="left-center"]:before,
+.n-popover[data-position="right-center"]:before {
+    top: 50%;
+    margin-top: -8px;
+}
+
 .n-popover:not([data-ready]) {
     opacity: 0;
 }

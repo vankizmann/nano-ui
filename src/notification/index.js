@@ -3,7 +3,7 @@ import NotificationHandler from "./src/notification/notification-handler.mjs";
 
 export default function (App) {
 
-    const DefaultNotifcationIcons = {
+    const NotifcationIcons = {
         primary: window.nano.Icons.info,
         secondary: window.nano.Icons.info,
         success: window.nano.Icons.success,
@@ -12,7 +12,7 @@ export default function (App) {
         info: window.nano.Icons.info
     };
 
-    window.NotifcationIcons = pi.Obj.assign(DefaultNotifcationIcons,
+    window.NotifcationIcons = pi.Obj.assign(NotifcationIcons,
         window.NotifcationIcons || {});
 
     let directives = [
@@ -20,10 +20,6 @@ export default function (App) {
     ];
 
     pi.Arr.each(directives, (glob) => {
-        App.config.globalProperties[glob.alias] = glob;
+        App.config.globalProperties[glob.alias] = window[glob.alias] = glob;
     });
-
-    if ( ! window['Notify'] ) {
-        App.config.globalProperties['Notify'] = window['Notify'] = NotificationHandler.handle;
-    }
 }

@@ -13,7 +13,7 @@ export default function (App) {
     ];
 
     pi.Arr.each(directives, (glob) => {
-        App.config.globalProperties[glob.alias] = glob;
+        App.config.globalProperties[glob.alias] = window[glob.alias] = glob;
     });
 
     let components = [
