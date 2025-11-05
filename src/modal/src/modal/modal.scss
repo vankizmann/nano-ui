@@ -25,8 +25,6 @@
     left: 0;
     right: 0;
     transition: opacity 0.3s;
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
 }
 
 .n-modal:not(.n-ready,.n-loop) .n-modal__backdrop {

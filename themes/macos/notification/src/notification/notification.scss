@@ -1,9 +1,10 @@
 @use "sass:map";
 @import "../../../root/vars";
+@import "../../../root/mixins";
 
 .n-notification {
+    @include NanoBoxshadowSm;
     background: $color-white;
-    box-shadow: 0 1px 5px 1px rgba($color-shadow, 0.20);
 }
 
 

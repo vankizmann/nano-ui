@@ -267,6 +267,9 @@ export default {
 
     renderPanel()
     {
+        let classList = [
+            'n-popover-shadow',
+        ];
         
         let props = Obj.except(this.$props, ['modelValue'], {
             modelValue: this.tempValue.format(this.format) || null,
@@ -275,7 +278,7 @@ export default {
         props['onUpdate:modelValue'] = this.onTimepickerInput;
 
         return (
-            <NTimepickerPanel class="n-timepicker__body" {...props}></NTimepickerPanel>
+            <NTimepickerPanel class={classList} {...props}></NTimepickerPanel>
         );
     },
 

@@ -1,8 +1,13 @@
 @use 'sass:map';
 @import "../../../root/vars";
+@import "../../../root/mixins";
 
 .n-popover__frame {
-    box-shadow: 0 1px 3px 1px rgba($color-shadow, 0.15);
+    @include NanoBoxshadowMd;
+}
+
+.n-popover-shadow {
+    @include NanoBoxshadowMd;
 }
 
 .n-popover-option {

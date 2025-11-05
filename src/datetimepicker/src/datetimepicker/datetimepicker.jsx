@@ -321,7 +321,7 @@ export default {
     renderPanels()
     {
         return (
-            <div class="n-datetimepicker-panel">
+            <div class="n-popover-shadow n-datetimepicker-panel">
                 {[this.ctor('renderDatePanel')(), this.ctor('renderTimePanel')()]}
             </div>
         );

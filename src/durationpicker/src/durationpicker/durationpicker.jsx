@@ -417,7 +417,7 @@ export default {
             }
 
             return (
-                <NScrollbar ref="scrollbar" class="n-durationpicker__body" {...scrollProps}>
+                <NScrollbar ref="scrollbar" class="n-popover-shadow n-durationpicker-panel" {...scrollProps}>
                     {this.ctor('renderItems')()}
                 </NScrollbar>
             )

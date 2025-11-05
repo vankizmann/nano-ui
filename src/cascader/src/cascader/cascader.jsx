@@ -271,7 +271,7 @@ export default {
         props['onUpdate:modelValue'] = this.onCascaderInput;
 
         return (
-            <NCascaderPanel class="n-cascader__body" {...props}></NCascaderPanel>
+            <NCascaderPanel class="n-popover-shadow" {...props}></NCascaderPanel>
         );
     },
 

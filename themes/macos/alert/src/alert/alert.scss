@@ -1,10 +1,9 @@
 @use "sass:map";
 @import "../../../root/vars";
+@import "../../../root/mixins";
 
 .n-alert {
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-    background: rgba(#000, 0.8);
+    @include NanoBackdropFocus;
     transition: opacity 0.3s;
 }
 
@@ -13,11 +12,11 @@
 }
 
 .n-alert-frame {
+    @include NanoBoxshadowLg;
     border-radius: $lg-radius;
     background: $color-black;
     border: 2px solid transparent;
     transition: transform 0.3s;
-    box-shadow: 0 1px 20px 0 rgba(#000, 0.4);
 }
 
 .n-alert:not(.n-ready) .n-alert-frame {
