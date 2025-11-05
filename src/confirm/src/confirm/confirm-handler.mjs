@@ -1,15 +1,6 @@
 import { Any, Arr, Dom, Locale, Obj, UUID } from "@kizmann/pico-js";
 
-window.NConfirmIcons = {
-    primary: window.nano.Icons.info,
-    secondary: window.nano.Icons.info,
-    success: window.nano.Icons.success,
-    warning: window.nano.Icons.warning,
-    danger: window.nano.Icons.danger,
-    info: window.nano.Icons.info
-};
-
-export class ConfirmModule
+export class ConfirmHandler
 {
     static alias = 'Confirm';
 
@@ -21,12 +12,14 @@ export class ConfirmModule
 
     static make(options = {}, cb = () => false)
     {
-        return new ConfirmModule(options).promise(cb);
+        return new ConfirmHandler(options).promise(cb);
     }
 
     constructor(options = {})
     {
-        this.options = Obj.assign(this.options, options);
+        this.options = Obj.assign(this.options, options, {
+            uid: UUID()
+        });
     }
 
     close(next)
@@ -131,7 +124,7 @@ export class ConfirmModule
 
     bindEvents(confirm, cancel)
     {
-        let uid = Dom.find(this.modal).attr('data-confirm');
+        let { uid } = this.options;
 
         Dom.find(window).on('keydown', (e) => {
             if ( e.keyCode === 27 ) {
@@ -142,8 +135,8 @@ export class ConfirmModule
             }
         }, { uid });
 
-        Dom.find(window).on('click', (e) => {
-            if ( Dom.find(e.target).inside('[data-confirm]') && ! Dom.find(e.target).inside('.n-confirm-frame') ) {
+        Dom.find(this.modal).on('click', (e) => {
+            if ( ! Dom.find(e.target).inside('.n-confirm-frame') ) {
                cancel();
             }
         }, { uid });
@@ -155,13 +148,13 @@ export class ConfirmModule
 
     unbindEvents()
     {
-        let uid = Dom.find(this.modal).attr('data-confirm');
+        let { uid } = this.options;
 
         Dom.find(window).off('keydown', null, {
             uid
         });
 
-        Dom.find(window).off('click', null, {
+        Dom.find(this.modal).off('click', null, {
             uid
         });
     }
@@ -188,7 +181,7 @@ export class ConfirmModule
             classList: Arr.merge(classList, cls).join(' ')
         });
 
-        modal.attr('data-confirm', UUID());
+        modal.attr('data-confirm', this.options.uid);
 
         let frame = Dom.make('div', {
             classList: ['n-confirm-frame']
@@ -228,10 +221,4 @@ export class ConfirmModule
     }
 }
 
-export default {
-    ConfirmModule
-}
-
-if ( !window[ConfirmModule.alias] ) {
-    window[ConfirmModule.alias] = ConfirmModule;
-}
+export default ConfirmHandler;

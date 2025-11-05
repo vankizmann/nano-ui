@@ -2,6 +2,9 @@
 
 .n-cascader-panel {
     background: $color-input;
+}
+
+div:not(.n-popover) > .n-cascader-panel {
     border: 1px solid $color-gray-15;
 }
 

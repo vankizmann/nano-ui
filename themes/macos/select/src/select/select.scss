@@ -21,9 +21,8 @@
 
 .n-select__body,
 .n-select__empty {
-    border: 1px solid $color-gray-15;
     background: $color-input;
-    box-shadow: 0 1px 3px 1px rgba($color-shadow, 0.15);
+    box-shadow: 0 1px 3px 1px rgba($color-shadow, 0.2);
 }
 
 .n-select__empty {

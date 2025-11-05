@@ -7,7 +7,6 @@
     align-items: stretch;
     justify-content: stretch;
     width: 100%;
-    border: 1px solid transparent;
 }
 
 .n-datetimepicker.n-disabled {
@@ -108,14 +107,8 @@
     width: 100%;
 }
 
-.n-datetimepicker__body,
-.n-datetimepicker__empty {
-     overflow: hidden;
-     margin: 1px 0;
-     border: 0;
-}
-
-.n-datetimepicker__body {
+.n-datetimepicker-panel {
+    overflow: hidden;
     display: flex;
     flex-direction: row;
     justify-content: stretch;
@@ -178,8 +171,7 @@
         font-size: $-datepicker-font - 4;
     }
 
-    .n-popover--#{$suffix} .n-datetimepicker__body,
-    .n-popover--#{$suffix} .n-datetimepicker__empty {
+    .n-popover--#{$suffix} .n-datetimepicker-panel {
         border-radius: $-datepicker-radius;
     }
 

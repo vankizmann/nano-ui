@@ -107,9 +107,17 @@ export default {
         useKeys: {
             default()
             {
-                return true;
+                return false;
             },
             type: [Boolean]
+        },
+
+        uniqueProp: {
+            default()
+            {
+                return 'id';
+            },
+            type: [String]
         },
 
     },
@@ -216,10 +224,6 @@ export default {
 
         onScrollToIndex(index)
         {
-            if ( ! this.$refs.scrollbar ) {
-                return;
-            }
-
             let total = Math.ceil(this.items.length /
                 this.state.grid);
 
@@ -232,16 +236,10 @@ export default {
             let targetTop = index * this.itemHeight;
 
             if ( this.scrollTop > targetTop ) {
-                return this.scrollTo(0, targetTop);
+                return this.onScrollTo(0, targetTop);
             }
 
-            targetTop = targetTop - this.height;
-
-            if ( targetTop > this.scrollTop ) {
-                targetTop += this.itemHeight
-            }
-
-            this.scrollTo(0, targetTop);
+            this.onScrollTo(0, targetTop - this.height + this.itemHeight);
         },
 
         scrollTo(x = 0, y = 0)
@@ -251,17 +249,11 @@ export default {
 
         onScrollTo(x = 0, y = 0)
         {
-            if ( ! this.$refs.scrollbar ) {
-                return;
+            if ( this.$refs.scrollbar ) {
+                this.$refs.scrollbar.scrollTo(x, this.scrollTop = y);
             }
 
-            this.scrollTop = y;
-
-            let cb = () => {
-                this.$refs.scrollbar.scrollTo(x, y);
-            };
-
-            this.refreshDriver(false, cb);
+            this.refreshDriver(true);
         },
 
         clearState()
@@ -296,7 +288,7 @@ export default {
 
             this.scrollTop = scrollTop;
 
-            Any.async(this.refreshDriver);
+            this.refreshDriver(true);
         },
 
         onSizechange(width, height)
@@ -315,9 +307,7 @@ export default {
                 this.clearWhenReady();
             }
 
-            Any.async(() => {
-                this.refreshDriver(false);
-            });
+            this.refreshDriver(false);
         },
 
 
@@ -384,6 +374,7 @@ export default {
                 return;
             }
 
+            console.log('iwas mit a')
             this.state = state;
 
             if ( Any.isFunction(callback) ) {
@@ -411,8 +402,8 @@ export default {
             'data-index': passed.index
         };
 
-        if ( this.NDraggable && this.useKeys ) {
-            props.key = passed.value[this.NDraggable.uniqueProp];
+        if ( this.uniqueProp && this.useKeys ) {
+            props.key = passed.value[this.uniqueProp];
         }
 
         let style = {};

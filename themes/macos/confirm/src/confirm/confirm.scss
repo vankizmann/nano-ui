@@ -16,7 +16,7 @@
     border-radius: $lg-radius;
     background: $color-background;
     transition: transform 0.3s;
-    box-shadow: 0 1px 8px 3px rgba(#000, 0.4);
+    box-shadow: 0 1px 20px 0 rgba(#000, 0.4);
 }
 
 .n-confirm:not(.n-ready) .n-confirm-frame {

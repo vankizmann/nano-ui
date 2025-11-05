@@ -1,13 +1,27 @@
 @use "sass:map";
 @import "../../../root/vars";
 
-.n-alert-backdrop {
+.n-alert {
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
     background: rgba(#000, 0.8);
+    transition: opacity 0.3s;
 }
 
-.n-alert {
+.n-alert:not(.n-ready) {
+    opacity: 0;
+}
+
+.n-alert-frame {
+    border-radius: $lg-radius;
     background: $color-black;
-    box-shadow: 0 1px 5px 1px rgba($color-shadow, 0.20);
+    border: 2px solid transparent;
+    transition: transform 0.3s;
+    box-shadow: 0 1px 20px 0 rgba(#000, 0.4);
+}
+
+.n-alert:not(.n-ready) .n-alert-frame {
+    transform: translateY(50px) scale(0.6);
 }
 
 .n-alert__text {
@@ -20,7 +34,11 @@
     $-color-light: map.get($values, 'light');
     $-color-dark: map.get($values, 'dark');
 
-    .n-alert-frame--#{$color} .n-alert__icon {
+    .n-alert--#{$color} .n-alert-frame {
+        //border-color: $-color-base;
+    }
+
+    .n-alert--#{$color} .n-alert__icon {
         color: $-color-base;
     }
 

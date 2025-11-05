@@ -119,6 +119,10 @@ export class PopoverElement
 
     showQueue(event = 'default')
     {
+        if ( this.visible ) {
+            return this.updatePosition();
+        }
+
         let { el } = this.options;
 
         Dom.find(el).attr('data-ready', 'true');
@@ -220,7 +224,7 @@ export class PopoverElement
 
         let keyCode = event.which === 3;
 
-        if ( this.visible || !keyCode ) {
+        if ( !keyCode ) {
             return;
         }
 
@@ -237,7 +241,7 @@ export class PopoverElement
             event.stopPropagation();
         }
 
-        if ( this.visible === result ) {
+        if ( ! result ) {
             return;
         }
 
@@ -269,6 +273,8 @@ export class PopoverElement
         let [rect, offset, scroll] = [
             target.getBoundingClientRect(), this.getTargetOffset(), Dom.find(document.body).scroll()
         ];
+
+        Dom.find(el).attr('data-position', offset.position);
 
         if ( ! window.zIndex ) {
             window.zIndex = 9000;
@@ -396,7 +402,11 @@ export class PopoverElement
                 (window.innerWidth - document.body.clientWidth);
         }
 
-        return offset;
+        if ( broken ) {
+            position = 'auto';
+        }
+
+        return Obj.assign(offset, { position });
     }
 
     getTargetVertical(position, fallback = null)
@@ -508,7 +518,11 @@ export class PopoverElement
                 (window.innerWidth - document.body.clientWidth);
         }
 
-        return offset;
+        if ( broken ) {
+            position = 'auto';
+        }
+
+        return Obj.assign(offset, { position });
     }
 
     getTargetOffset()

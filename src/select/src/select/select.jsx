@@ -55,7 +55,7 @@ export default {
         position: {
             default()
             {
-                return 'bottom-center';
+                return 'bottom-start';
             },
             type: [String]
         },
@@ -817,7 +817,7 @@ export default {
     renderLazyItems()
     {
         let props = {
-            items: this.searched, offsetY: 0
+            items: this.searched, offsetY: 0, uniqueProp: 'tempValue'
         };
 
         props.renderNode = ({ value, index }) => {
@@ -845,6 +845,7 @@ export default {
             width: - 1,
             listen: true,
             size: this.size,
+            position: this.position,
             scrollClose: true,
             disabled: this.deepDisabled,
             onClose: this.resetInput

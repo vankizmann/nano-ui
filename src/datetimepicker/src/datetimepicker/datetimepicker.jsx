@@ -321,7 +321,7 @@ export default {
     renderPanels()
     {
         return (
-            <div class="n-datetimepicker__body">
+            <div class="n-datetimepicker-panel">
                 {[this.ctor('renderDatePanel')(), this.ctor('renderTimePanel')()]}
             </div>
         );
