@@ -50,8 +50,7 @@ export class NotificationElement
             this.remove();
         });
 
-        let iconClass = Obj.get(window.NotifcationIcons,
-            this.options.type, 'fa fa-ghost');
+        let iconClass = Obj.get(window.NotifcationIcons, this.options.type, 'fa fa-ghost');
 
         let icon = Dom.make('div', {
             classList: 'n-notification__icon', innerHTML: `<i class="${iconClass}"></i>`

@@ -903,8 +903,8 @@ export default {
         }
 
         let passed = [
-            'threshold', 'bufferItems', 'itemHeight', 
-            'overflowX', 'overflowY',  'offsetX', 'offsetY', 'useKeys'
+            'threshold', 'itemHeight', 'overflowX', 'overflowY', 'offsetX', 'offsetY',
+            'useKeys', 'uniqueProp'
         ];
 
         let props = Obj.only(this.$props, passed, {

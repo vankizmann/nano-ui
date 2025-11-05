@@ -94,9 +94,27 @@
 
 }
 
+$-tooltip-background: rgba($color-black, 0.9) !default;
+
+.n-popover--tooltip[data-position^="top-"]:before {
+    background: svg-load('angle-down.svg', fill=$-tooltip-background) no-repeat center / contain;
+}
+
+.n-popover--tooltip[data-position^="bottom-"]:before {
+    background: svg-load('angle-up.svg', fill=$-tooltip-background) no-repeat center / contain;
+}
+
+.n-popover--tooltip[data-position^="left-"]:before {
+    background: svg-load('angle-right.svg', fill=$-tooltip-background) no-repeat center / contain;
+}
+
+.n-popover--tooltip[data-position^="right-"]:before {
+    background: svg-load('angle-left.svg', fill=$-tooltip-background) no-repeat center / contain;
+}
+
 .n-popover--tooltip .n-popover__frame {
     color: $color-white;
-    background: rgba($color-black, 0.9);
+    background: $-tooltip-background;
 }
 
 .n-popover--tooltip .n-popover__body {
