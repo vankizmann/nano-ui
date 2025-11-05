@@ -1,4 +1,4 @@
 <svg width="16" height="8" viewBox="0 0 16 8" xmlns="http://www.w3.org/2000/svg" fill="#fff">
-    <path d="M1 1 L8 8 L15 1 Z" fill="rgba(0, 0, 0, 0.15)" />
+    <path d="M1 1 L8 8 L15 1 Z" fill="rgba(0, 0, 0, 0.2)" />
     <path d="M1 0 L8 7 L15 0 Z" />
 </svg>

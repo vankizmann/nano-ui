@@ -100,14 +100,9 @@
     width: 100%;
 }
 
-.n-durationpicker__body,
-.n-durationpicker__empty {
+.n-durationpicker-panel {
     overflow: hidden;
     max-height: 210px;
-}
-
-.n-durationpicker__empty {
-     text-align: center;
 }
 
 @each $suffix, $values in $form {
@@ -150,13 +145,8 @@
         font-size: $-duration-font - 4;
     }
 
-    .n-popover--#{$suffix} .n-durationpicker__body,
-    .n-popover--#{$suffix} .n-durationpicker__empty {
+    .n-popover--#{$suffix} .n-durationpicker-panel {
         border-radius: $-duration-radius;
-    }
-
-    .n-popover--#{$suffix} .n-durationpicker__empty {
-        padding: $-duration-padding;
     }
 
 }

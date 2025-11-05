@@ -1,11 +1,10 @@
 @use 'sass:map';
 @import "../../../root/vars";
+@import "../../../root/mixins";
 
 .n-preview-modal {
-    background: rgba($color-black, 0.95);
+    @include NanoBackdropBlur;
     transition: opacity 0.3s;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
 }
 
 .n-preview-modal__close,

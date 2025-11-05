@@ -744,7 +744,7 @@ export default {
     renderItems()
     {
         let emptyHtml = (
-            <div class="n-select__empty">
+            <div class="n-popover-shadow n-select__empty">
                 <NEmptyIcon inline={true}>{this.trans(this.emptyText)}</NEmptyIcon>
             </div>
         );
@@ -825,7 +825,7 @@ export default {
         };
 
         return (
-            <NVirtualscroller ref="virtualscroll" class="n-select__body n-virtual" {...props} />
+            <NVirtualscroller ref="virtualscroll" class="n-popover-shadow n-select__body" {...props} />
         );
     },
 

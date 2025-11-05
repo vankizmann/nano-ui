@@ -63,7 +63,9 @@ export default {
 
     data()
     {
-        return { search: '', star: '', block: false };
+        return {
+            search: ''
+        };
     },
 
     mounted()
@@ -87,19 +89,29 @@ export default {
                 return;
             }
 
-            this.block = block;
-
             if ( ! Any.isEmpty(this.timeout) ) {
                 clearTimeout(this.timeout);
             }
 
             if ( block ) {
-                this.star = id;
+                this.onApplyStar(id, block);
             }
 
             this.timeout = setTimeout(() => {
-                this.star = id; this.block = false;
+                this.onApplyStar(id, false);
             }, 500);
+        },
+
+        onApplyStar(id, block = false)
+        {
+            this.block = block;
+
+            Dom.find(this.$el).find(`[data-menu-key]`).each((el) => {
+                Dom.find(el).removeClass('is-star');
+            });
+
+            Dom.find(this.$el).find(`[data-menu-key="${id}"]`)
+                .addClass('is-star');
         },
 
         onMoveEvent()
@@ -243,10 +255,6 @@ export default {
             'n-form-frame__menu',
             'n-form-frame__menu--' + item.type
         ];
-
-        if ( this.star === item.key ) {
-            classList.push('is-star');
-        }
 
         return (
             <a class={classList} data-menu-key={item.key} {...buttonProps}>

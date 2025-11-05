@@ -528,6 +528,9 @@ export default {
 
     renderItems()
     {
+        let classList = [
+            'n-popover-shadow',
+        ];
         
         let props = Obj.except(this.$props, ['modelValue'], {
             arrive: this.tempArrive.format(this.format) || null,
@@ -540,7 +543,7 @@ export default {
         props['onUpdate:modelValue'] = this.onDatepickerInput;
 
         return (
-            <NDatepickerPanel class="n-datepicker__body" {...props}></NDatepickerPanel>
+            <NDatepickerPanel class={classList} {...props}></NDatepickerPanel>
         );
     },
 

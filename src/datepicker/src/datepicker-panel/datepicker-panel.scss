@@ -9,7 +9,7 @@
     justify-content: stretch;
 }
 
-div:not(.n-popover) > .n-datepicker-panel {
+div:not(.n-popover,.n-datetimepicker-panel) > .n-datepicker-panel {
     border: 1px solid transparent;
 }
 
