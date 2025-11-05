@@ -21,8 +21,15 @@
 
 .n-popover[data-position^="top-"]:before,
 .n-popover[data-position^="bottom-"]:before {
+    left: 0;
     width: 16px;
     height: 6px;
+}
+
+.n-popover[data-position^="top-"]:before,
+.n-popover[data-position^="bottom-"]:before {
+    width: var(--parent-width, 16px);
+    max-width: var(--parent-max-width, 100%);
 }
 
 .n-popover[data-position^="top-"] {
@@ -43,8 +50,15 @@
 
 .n-popover[data-position^="left-"]:before,
 .n-popover[data-position^="right-"]:before {
+    top: 0;
     width: 6px;
     height: 16px;
+}
+
+.n-popover[data-position^="left-"]:before,
+.n-popover[data-position^="right-"]:before {
+    height: var(--parent-height, 16px);
+    max-height: var(--parent-max-height, 100%);
 }
 
 .n-popover[data-position^="left-"] {
@@ -63,37 +77,6 @@
     left: 0;
 }
 
-.n-popover[data-position="top-start"]:before,
-.n-popover[data-position="bottom-start"]:before {
-    left: 6px;
-}
-
-.n-popover[data-position="top-end"]:before,
-.n-popover[data-position="bottom-end"]:before {
-    right: 6px;
-}
-
-.n-popover[data-position="top-center"]:before,
-.n-popover[data-position="bottom-center"]:before {
-    left: 50%;
-    margin-left: -8px;
-}
-
-.n-popover[data-position="left-start"]:before,
-.n-popover[data-position="right-start"]:before{
-    top: 6px;
-}
-
-.n-popover[data-position="left-end"]:before,
-.n-popover[data-position="right-end"]:before{
-    bottom: 6px;
-}
-
-.n-popover[data-position="left-center"]:before,
-.n-popover[data-position="right-center"]:before {
-    top: 50%;
-    margin-top: -8px;
-}
 
 .n-popover:not([data-ready]) {
     opacity: 0;
