@@ -26,10 +26,6 @@
     flex: 1 1 auto;
 }
 
-.n-table .n-table__header {
-    display: inline-flex;
-}
-
 .n-table .n-table__wrap {
     min-width: 100%;
     min-height: 0;
@@ -38,6 +34,7 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
+    overflow: hidden;
 }
 
 .n-table > .n-scrollbar.n-windows > .n-scrollbar-content {
@@ -105,7 +102,7 @@
     position: relative;
     flex: 0 0 auto;
     height: 40px;
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     align-items: stretch;
     justify-content: flex-start;

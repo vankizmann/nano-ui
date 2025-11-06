@@ -923,7 +923,9 @@
             };
 
             methods['showConfirm'] = function () {
-                window.Confirm.make({ text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut ', type: 'danger' }, () => {
+                window.Confirm.make({
+                        text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut ', type: 'danger'
+                    }, () => {
                     return this.disableConfirm;
                 })
                     .then(() => {

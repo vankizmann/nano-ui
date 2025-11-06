@@ -753,7 +753,7 @@ export default {
             return emptyHtml;
         }
 
-        if ( this.lazy || true ) {
+        if ( this.lazy ) {
             return this.ctor('renderLazyItems')();
         }
 
@@ -766,7 +766,7 @@ export default {
         };
 
         return (
-            <NScrollbar ref="scrollbar" class="n-select__body" {...props}>
+            <NScrollbar ref="scrollbar" class="n-popover-shadow n-select__body" {...props}>
                 {Obj.values(options)}
             </NScrollbar>
         );
