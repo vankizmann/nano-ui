@@ -31,7 +31,8 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: stretch;
+    justify-content: flex-start;
+    overflow: hidden;
 }
 
 .n-virtualscroller__row > .n-virtualscroller__item {

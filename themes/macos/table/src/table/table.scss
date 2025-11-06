@@ -14,7 +14,6 @@
 }
 
 .n-table .n-table__header {
-    border: 1px solid $color-gray-15;
+    border-bottom: 1px solid $color-gray-15;
     background: $color-form;
-    box-shadow: 0 0 3px rgba($color-shadow, 0.10);
 }

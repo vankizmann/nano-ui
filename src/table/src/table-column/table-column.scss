@@ -21,9 +21,10 @@
 
 // Column
 
-.n-table__header .n-table-column {
+.n-table__header .n-table-column,
+.n-table__body .n-table-cell {
     border-left: 1px solid transparent;
-    border-right: 1px solid transparent;
+    //border-right: 1px solid transparent;
 }
 
 .n-table-column .n-table-column__label {
