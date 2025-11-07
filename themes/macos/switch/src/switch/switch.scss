@@ -1,30 +1,19 @@
-@use "sass:map";
-@use "sass:color";
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-switch__switch {
-    background: $color-gray-10;
-    border: 1px solid $color-gray-15;
+    background: color('gray-15');
+    box-shadow: inset 0 0 1px color('shadow', 0.35);
 }
 
 .n-switch__switch span {
-    background: $color-white;
-    box-shadow: 0 1px 2px rgba($color-shadow, 0.15);
+    background: color('white');
+    box-shadow: 0 1px 2px color('shadow', 0.15);
 }
 
-@each $color, $values in $colors {
+.n-switch:not(.n-switch--default,.n-disabled) .n-switch__switch {
+    background: color('base-color');
+}
 
-    $-color-base: map.get($values, 'base');
-    $-color-light: map.get($values, 'light');
-    $-color-dark: map.get($values, 'dark');
-
-    .n-switch--#{$color}:not(.n-disabled) .n-switch__switch {
-        background: $-color-base;
-        border-color: color.mix($-color-dark, $-color-base, 25%);
-    }
-
-    .n-switch--#{$color}:not(.n-disabled) .n-switch__label {
-        color: $-color-base;
-    }
-
+.n-switch:not(.n-switch--default,.n-disabled) .n-switch__label {
+    color: color('base-color');
 }

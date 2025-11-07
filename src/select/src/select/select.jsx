@@ -36,6 +36,14 @@ export default {
             type: [String]
         },
 
+        theme: {
+            default()
+            {
+                return 'dark';
+            },
+            type: [String]
+        },
+
         lazy: {
             default()
             {
@@ -832,7 +840,8 @@ export default {
     renderPopover()
     {
         let classList = [
-            'n-popover--select'
+            'n-popover--select',
+            'n-theme--dark'
         ];
 
         if ( this.lazy ) {

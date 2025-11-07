@@ -1,36 +1,25 @@
-@use 'sass:map';
-@import "../../../root/vars";
-@import "../../../root/mixins";
+@import "src/root/helpers";
 
 .n-modal__backdrop {
-    @include NanoBackdropDefault;
+    background: color('shadow', 0.7);
+    backdrop-filter: blur(1.5px);
 }
 
 .n-modal__frame {
-    @include NanoBoxshadowLg;
+    box-shadow: 0 2px 20px color('shadow', 0.1), 0 0 2px color('shadow', 0.15);
 }
 
-@each $suffix, $values in $modal {
+.n-modal__frame {
+    color: color('text');
+    background: color('background');
+}
 
-    $-modal-color: map.get($values, 'color');
-    $-modal-border: map.get($values, 'border');
-    $-modal-header: map.get($values, 'header');
-    $-modal-body: map.get($values, 'body');
-    $-modal-footer: map.get($values, 'footer');
+.n-modal__header {
+    border-bottom: 1px solid color('gray-15');
+    background: color('background');
+}
 
-    .n-modal--#{$suffix} .n-modal__frame {
-        color: $-modal-color;
-        background: $-modal-body;
-    }
-
-    .n-modal--#{$suffix} .n-modal__header {
-        border-bottom: 1px solid $-modal-border;
-        background: $-modal-header;
-    }
-
-    .n-modal--#{$suffix} .n-modal__footer {
-        border-top: 1px solid $-modal-border;
-        background: $-modal-footer;
-    }
-
+.n-modal__footer {
+    border-top: 1px solid color('gray-15');
+    background: color('background');
 }

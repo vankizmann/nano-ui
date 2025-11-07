@@ -1,9 +1,8 @@
-@use "sass:map";
-@import "../../../root/vars";
-@import "../../../root/mixins";
+@import "src/root/helpers";
 
 .n-alert {
-    @include NanoBackdropFocus;
+    background: color('shadow', 0.8);
+    backdrop-filter: blur(1.5px);
     transition: opacity 0.3s;
 }
 
@@ -12,11 +11,9 @@
 }
 
 .n-alert-frame {
-    @include NanoBoxshadowLg;
-    border-radius: $lg-radius;
-    background: $color-black;
-    border: 2px solid transparent;
+    background: color('background');
     transition: transform 0.3s;
+    box-shadow: 0 2px 20px color('shadow', 0.1), 0 0 2px color('shadow', 0.15);
 }
 
 .n-alert:not(.n-ready) .n-alert-frame {
@@ -24,21 +21,9 @@
 }
 
 .n-alert__text {
-    color: $color-gray-40;
+    color: color('gray-40');
 }
 
-@each $color, $values in $colors {
-
-    $-color-base: map.get($values, 'base');
-    $-color-light: map.get($values, 'light');
-    $-color-dark: map.get($values, 'dark');
-
-    .n-alert--#{$color} .n-alert-frame {
-        //border-color: $-color-base;
-    }
-
-    .n-alert--#{$color} .n-alert__icon {
-        color: $-color-base;
-    }
-
+.n-alert__icon {
+    color: color('base-color');
 }

@@ -340,7 +340,7 @@ export default {
             this.tempValue <= this.min;
 
         let props = {
-            type: 'input-number',
+            type: 'reset',
             size: this.size,
             icon: 'fa fa-minus',
             square: true,
@@ -357,7 +357,7 @@ export default {
             this.tempValue >= this.max;
 
         let props = {
-            type: 'input-number',
+            type: 'reset',
             size: this.size,
             icon: 'fa fa-plus',
             square: true,
@@ -370,8 +370,9 @@ export default {
 
     renderInput()
     {
-        let props = Obj.except(this.$attrs,
-            ['class', 'style']);
+        let props = Obj.except(this.$attrs, [
+            'class', 'style'
+        ]);
 
         Obj.assign(props, {
             value: this.getDisplayValue(),

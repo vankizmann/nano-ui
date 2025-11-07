@@ -1,9 +1,8 @@
-@use 'sass:map';
-@import "../../../root/vars";
-@import "../../../root/mixins";
+@import "src/root/helpers";
 
 .n-preview-modal {
-    @include NanoBackdropBlur;
+    background: color('shadow', 0.95);
+    backdrop-filter: blur(6px);
     transition: opacity 0.3s;
 }
 
@@ -11,15 +10,15 @@
 .n-preview-modal__prev,
 .n-preview-modal__next {
     border-radius: 500px;
-    color: $color-white;
-    background: rgba($color-white, 0.25);
+    color: color('white');
+    background: color('white', 0.25);
     transition: background 0.2s;
 }
 
 .n-preview-modal__close:hover,
 .n-preview-modal__prev:hover,
 .n-preview-modal__next:hover {
-    background: rgba($color-white, 0.35);
+    background: color('white', 0.35);
 }
 
 .n-preview-modal .n-preview-frame {

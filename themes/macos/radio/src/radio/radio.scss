@@ -1,46 +1,34 @@
 @use "sass:map";
 @import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-radio__radio {
-    color: $color-black;
-    background: $color-input;
-    border: 1px solid $color-gray-15;
+    color: color('foreground');
+    background: color('form-input');
+    border: 1px solid color('gray-15');
 }
 
 .n-radio.n-disabled .n-radio__radio  {
-    background: $color-input-off;
+    background: color('form-disabled');
 }
 
 .n-radio__radio span {
-    background: $color-foreground;
+    background: color('foreground');
 }
 
-@each $color, $values in $colors {
+.n-radio:not(.n-disabled):hover .n-radio__radio {
+    border-color: color('base-color-bg-30');
+}
 
-    $-color-base: map.get($values, 'base');
-    $-color-light: map.get($values, 'light');
-    $-color-dark: map.get($values, 'dark');
+.n-radio.n-checked:not(.n-disabled) .n-radio__radio {
+    background: color('base-color');
+    border-color: color('base-color');
+}
 
-    .n-radio--#{$color}:not(.n-disabled):hover .n-radio__radio {
-        border-color: $-color-base;
-    }
+.n-radio.n-checked:not(.n-disabled) .n-radio__radio span {
+    background: color('base-text');
+}
 
-    .n-radio--#{$color}.n-checked:not(.n-disabled) .n-radio__radio {
-        background: $-color-base;
-        border-color: $-color-base;
-    }
-
-    .n-radio--#{$color}.n-checked:not(.n-disabled) .n-radio__radio span {
-        background: $color-white;
-    }
-
-    .n-radio--#{$color}.n-checked:not(.n-disabled) .n-radio__radio:not(.n-disabled):hover {
-        background: $-color-light;
-        border-color: $-color-light;
-    }
-
-    .n-radio--#{$color}.n-checked:not(.n-disabled) .n-radio__label {
-        color: $-color-base;
-    }
-
+.n-radio.n-checked:not(.n-disabled) .n-radio__label {
+    color: color('base-color');
 }

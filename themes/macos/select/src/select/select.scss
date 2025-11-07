@@ -1,47 +1,41 @@
-@use "sass:map";
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-select {
-    background: $color-input;
-    border: 1px solid $color-gray-15;
+    background: color('form-input');
+    border: 1px solid color('gray-15');
 }
 
 .n-select.n-disabled {
-    background: $color-input-off;
+    background: color('form-disabled');
 }
 
 .n-select__clear,
 .n-select__angle {
-    color: $color-gray-60;
+    color: color('gray-60');
 }
 
 .n-select__clear i {
-    background: rgba($color-gray-15, 0.6);
+    background: color('gray-15', 0.6);
 }
 
 .n-select__body,
 .n-select__empty {
-    background: $color-input;
+    background: color('form-input');
 }
 
 .n-select__empty {
-    color: $color-gray-60;
+    color: color('gray-60');
 }
 
-@each $color, $values in $colors {
+.n-select:not(.n-disabled):hover {
+    border-color: color('base-color-bg-30');
+}
 
-    $-color-base: map.get($values, 'base');
-    $-color-light: map.get($values, 'light');
-    $-color-dark: map.get($values, 'dark');
+.n-select:not(.n-disabled).n-focus {
+    border-color: color('base-color');
+}
 
-     .n-select--#{$color}:not(.n-disabled):hover,
-     .n-select--#{$color}:not(.n-disabled).n-focus {
-        border-color: $-color-base;
-    }
-
-    .n-select--#{$color} .n-select__item {
-        color: $color-white;
-        background: $-color-base;
-    }
-
+.n-select .n-select__item {
+    color: color('base-color-fg-40');
+    background: color('base-color', 0.25);
 }

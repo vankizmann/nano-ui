@@ -38,3 +38,103 @@
 @import "./config/index";
 @import "./drawer/index";
 
+@import "src/root/vars-new";
+@import "src/root/helpers";
+
+:root {
+    @include css-sizes($size-md);
+}
+
+.n-theme--light {
+    @include css-colors($color-light);
+
+    [class*="--neutral"] {
+        @include css-colors($color-light-base-neutral);
+    }
+
+    [class*="--primary"] {
+        @include css-colors($color-light-base-primary);
+    }
+
+    [class*="--secondary"] {
+        @include css-colors($color-light-base-secondary);
+    }
+
+    [class*="--success"] {
+        @include css-colors($color-light-base-success);
+    }
+
+    [class*="--warning"] {
+        @include css-colors($color-light-base-warning);
+    }
+
+    [class*="--danger"] {
+        @include css-colors($color-light-base-danger);
+    }
+
+    [class*="--info"] {
+        @include css-colors($color-light-base-info);
+    }
+
+}
+
+.n-theme--dark {
+    @include css-colors($color-dark);
+
+    [class*="--neutral"] {
+        @include css-colors($color-dark-base-neutral);
+    }
+
+    [class*="--primary"] {
+        @include css-colors($color-dark-base-primary);
+    }
+
+    [class*="--secondary"] {
+        @include css-colors($color-dark-base-secondary);
+    }
+
+    [class*="--success"] {
+        @include css-colors($color-dark-base-success);
+    }
+
+    [class*="--warning"] {
+        @include css-colors($color-dark-base-warning);
+    }
+
+    [class*="--danger"] {
+        @include css-colors($color-dark-base-danger);
+    }
+
+    [class*="--info"] {
+        @include css-colors($color-dark-base-info);
+    }
+
+}
+
+body[class*="n-theme--"] {
+    background: color('background');
+}
+
+[class*="n-theme--"] {
+    color: color('text');
+}
+
+[class*="--xs"] {
+    @include css-sizes($size-xs);
+}
+
+[class*="--sm"] {
+    @include css-sizes($size-sm);
+}
+
+[class*="--md"] {
+    @include css-sizes($size-md);
+}
+
+[class*="--lg"] {
+    @include css-sizes($size-lg);
+}
+
+[class*="--xl"] {
+    @include css-sizes($size-xl);
+}

@@ -37,6 +37,10 @@ div:not(.n-popover,.n-datetimepicker-panel) > .n-datepicker-panel {
     justify-content: stretch;
 }
 
+.n-datepicker-panel__toolbar > div:not(:last-child) {
+    margin-right: 5px;
+}
+
 .n-datepicker-panel__display {
     flex: 1 1 auto;
 }

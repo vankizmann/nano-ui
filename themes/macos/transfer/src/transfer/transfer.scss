@@ -1,18 +1,19 @@
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-transfer__panel {
-    border: 1px solid $color-gray-15;
+    background: color('form-input');
+    border: 1px solid color('gray-15');
 }
 
 .n-transfer__header {
-    border-bottom: 1px solid $color-gray-15;
+    border-bottom: 1px solid color('gray-15');
 }
 
 .n-transfer__search {
-    background: $color-input;
-    border-bottom: 1px solid $color-gray-15;
+    background: color('form-input');
+    border-bottom: 1px solid color('gray-15');
 }
 
 .n-transfer__item-count {
-    color: $color-gray-60;
+    color: color('gray-60');
 }

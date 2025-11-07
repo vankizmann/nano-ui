@@ -3,8 +3,8 @@
 $color-white:           #ffffff !default;
 $color-black:           #111111 !default;
 
-$color-foreground:      $color-white !default;
-$color-background:      $color-black !default;
+$color-foreground:      $color-black !default;
+$color-background:      $color-white !default;
 
 $color-gray-05:         color.mix($color-foreground, $color-background, 0.05 * 100%) !default;
 $color-gray-10:         color.mix($color-foreground, $color-background, 0.10 * 100%) !default;
@@ -168,6 +168,7 @@ $colors: (
 
 $popover: (
         'default': (
+                'primary': $color-primary,
                 'color': $color-foreground,
                 'border': $color-gray-15,
                 'header': $color-form,
@@ -175,6 +176,7 @@ $popover: (
                 'footer': $color-form,
         ),
         'negative': (
+                'primary': $color-primary-lighter,
                 'color': $color-background,
                 'border': $color-gray-95,
                 'header': $color-foreground,

@@ -1,98 +1,64 @@
 @use "sass:map";
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-button.n-disabled {
     opacity: 0.7;
 }
 
-.n-button--default:not(.n-button--link,.n-button--glass) {
-    color: rgba($color-foreground, 0.8);
-    background: rgba($color-foreground, 0.1);
+.n-button:not(.n-button--reset,.n-button--link,.n-button--glass) {
+    color: color('base-text');
+    background: color('base-color');
+    border-color: color('base-color');
 }
 
-.n-button--default:not(.n-button--link,.n-button--glass):hover {
-    color: rgba($color-foreground, 0.9);
-    background: rgba($color-foreground, 0.15);
+.n-button:not(.n-button--reset,.n-button--link,.n-button--glass):hover {
+    background: color('base-color-bg-10');
+    border-color: color('base-color-bg-10');
 }
 
-.n-button--default:not(.n-button--link,.n-button--glass).n-disabled {
-    color: rgba($color-foreground, 0.8);
-    background: rgba($color-foreground, 0.1);
+.n-button:not(.n-button--reset,.n-button--link,.n-button--glass):focus {
+    background: color('base-color-fg-10');
+    border-color: color('base-color-fg-10');
 }
 
-.n-button--default.n-button--link:not(.n-disabled) {
-    color: rgba($color-foreground, 0.8);
+.n-button:not(.n-button--reset,.n-button--link,.n-button--glass).n-disabled {
+    background: color('base-color');
+    border-color: color('base-color');
 }
 
-.n-button--default.n-button--link:not(.n-disabled):hover {
-    color: rgba($color-foreground, 0.9);
+.n-button.n-disabled:not(.n-button--reset).n-button--link {
+    color: color('text');
 }
 
-.n-button--default.n-button--glass:not(.n-disabled) {
-    color: rgba($color-foreground, 0.8);
-    background: rgba($color-foreground, 0.1);
+.n-button:not(.n-button--reset,.n-disabled).n-button--link {
+    color: color('base-color-fg-10');
 }
 
-.n-button--default.n-button--glass:not(.n-disabled):hover {
-    color: rgba($color-foreground, 0.9);
-    background: rgba($color-foreground, 0.15);
+.n-button.n-button--neutral:not(.n-disabled).n-button--link {
+    color: color('base-color-fg-30');
 }
 
-@each $color, $values in $colors {
+.n-button:not(.n-button--reset,.n-disabled).n-button--link:hover {
+    color: color('base-color');
+}
 
-    $-color-base: map.get($values, 'base');
-    $-color-light: map.get($values, 'light');
-    $-color-dark: map.get($values, 'dark');
+.n-button:not(.n-button--reset,.n-disabled).n-button--link:focus {
+    color: color('base-color-bg-10');
+}
 
-    /**
-     * Button primary
-     */
+.n-button:not(.n-button--reset,.n-disabled).n-button--glass {
+    color: color('base-color-fg-20');
+    background: color('base-color', 0.25);
+}
 
-    .n-button--#{$color}:not(.n-button--link,.n-button--glass) {
-        color: $color-white;
-        background: $-color-base;
-        border-color: $-color-base;
-    }
+.n-button.n-button--neutral:not(.n-disabled).n-button--glass {
+    color: color('base-color-fg-50');
+}
 
-    .n-button--#{$color}:not(.n-button--link,.n-button--glass):hover {
-        background: $-color-light;
-        border-color: $-color-light;
-    }
+.n-button:not(.n-button--reset,.n-disabled).n-button--glass:hover {
+    background: color('base-color', 0.30);
+}
 
-    .n-button--#{$color}:not(.n-button--link,.n-button--glass):focus {
-        background: $-color-dark;
-        border-color: $-color-dark;
-    }
-
-    .n-button--#{$color}:not(.n-button--link,.n-button--glass).n-disabled {
-        background: $-color-base;
-        border-color: $-color-base;
-    }
-
-    .n-button--#{$color}:not(.n-disabled).n-button--link {
-        color: $-color-base;
-    }
-
-    .n-button--#{$color}:not(.n-disabled).n-button--link:hover {
-        color: $-color-light;
-    }
-
-    .n-button--#{$color}:not(.n-disabled).n-button--link:focus {
-        color: $-color-dark;
-    }
-
-    .n-button--#{$color}:not(.n-disabled).n-button--glass {
-        color: $-color-base;
-        background: rgba($-color-base, 0.25);
-    }
-
-    .n-button--#{$color}:not(.n-disabled).n-button--glass:hover {
-        color: $-color-dark;
-        background: rgba($-color-base, 0.35);
-    }
-
-    .n-button--#{$color}:not(.n-disabled).n-button--glass:focus {
-        color: $-color-dark;
-    }
-
+.n-button:not(.n-button--reset,.n-disabled).n-button--glass:focus {
+    background: color('base-color', 0.35);
 }

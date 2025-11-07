@@ -77,6 +77,14 @@ export default {
             type: [String]
         },
 
+        theme: {
+            default()
+            {
+                return 'dark';
+            },
+            type: [String]
+        },
+
         size: {
             default()
             {
@@ -743,6 +751,10 @@ export default {
 
         if ( viewBody ) {
             classList.push('n-ready');
+        }
+
+        if ( this.theme ) {
+            classList.push('n-theme--' + this.theme);
         }
 
         return (
