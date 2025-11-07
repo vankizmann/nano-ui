@@ -1,13 +1,17 @@
-@import "../../../root/vars";
+@import "src/root/helpers";
+
+.n-empty-icon__text {
+    color: color('text', 0.4);
+}
+
+.n-empty-icon__frame {
+    background: color('text', 0.8);
+}
 
 .n-empty-icon--default .n-empty-icon__frame {
-    background-image: svg-load('empty-default.svg', fill=$color-foreground);
+    mask: svg-load('empty.svg') no-repeat center / contain;
 }
 
 .n-empty-icon--ufo .n-empty-icon__frame {
-    background-image: svg-load('empty-space.svg', fill=$color-foreground);
-}
-
-.n-empty-icon__text {
-    color: rgba($color-foreground, 0.4);
+    mask: svg-load('empty-ufo.svg') no-repeat center / contain;
 }

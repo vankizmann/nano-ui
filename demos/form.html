@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="../dist/nano-ui.css">
-    <link id="theme" rel="stylesheet" href="../dist/themes/light.css">
+    <link id="theme" rel="stylesheet" href="../dist/themes/macos.css">
 
     <link rel="stylesheet" href="../style.css">
 
@@ -60,7 +60,7 @@
     <script src="https://maps.googleapis.com/maps/api/js"></script>
 
 </head>
-<body class="n-demo">
+<body class="n-demo n-theme--dark">
 
 <div id="app">
     <div class="app-container" style="margin: 5vh auto;">
@@ -289,8 +289,8 @@
 
             data.n_theme = pi.Cookie.get('theme', 'light', 'string');
 
-            pi.Dom.find('#theme').attr('href', '../dist/themes/' +
-                data.n_theme + '.css');
+            // pi.Dom.find('#theme').attr('href', '../dist/themes/' +
+            //     data.n_theme + '.css');
 
             data.n_form = {
                 size: 'md', conditional: true, modelValue: false

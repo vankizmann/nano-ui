@@ -47,66 +47,80 @@
 
 .n-theme--light {
     @include css-colors($color-light);
+    @include css-colors($color-light-base-neutral, '-neutral');
+    @include css-colors($color-light-base-primary, '-primary');
+    @include css-colors($color-light-base-secondary, '-secondary');
+    @include css-colors($color-light-base-success, '-success');
+    @include css-colors($color-light-base-warning, '-warning');
+    @include css-colors($color-light-base-danger, '-danger');
+    @include css-colors($color-light-base-info, '-info');
 
     [class*="--neutral"] {
-        @include css-colors($color-light-base-neutral);
+        @include css-remaps($color-light-base-neutral, '-neutral');
     }
 
     [class*="--primary"] {
-        @include css-colors($color-light-base-primary);
+        @include css-remaps($color-light-base-primary, '-primary');
     }
 
     [class*="--secondary"] {
-        @include css-colors($color-light-base-secondary);
+        @include css-remaps($color-light-base-secondary, '-secondary');
     }
 
     [class*="--success"] {
-        @include css-colors($color-light-base-success);
+        @include css-remaps($color-light-base-success, '-success');
     }
 
     [class*="--warning"] {
-        @include css-colors($color-light-base-warning);
+        @include css-remaps($color-light-base-warning, '-warning');
     }
 
     [class*="--danger"] {
-        @include css-colors($color-light-base-danger);
+        @include css-remaps($color-light-base-danger, '-danger');
     }
 
     [class*="--info"] {
-        @include css-colors($color-light-base-info);
+        @include css-remaps($color-light-base-info, '-info');
     }
 
 }
 
 .n-theme--dark {
     @include css-colors($color-dark);
+    @include css-colors($color-dark-base-neutral, '-neutral');
+    @include css-colors($color-dark-base-primary, '-primary');
+    @include css-colors($color-dark-base-secondary, '-secondary');
+    @include css-colors($color-dark-base-success, '-success');
+    @include css-colors($color-dark-base-warning, '-warning');
+    @include css-colors($color-dark-base-danger, '-danger');
+    @include css-colors($color-dark-base-info, '-info');
 
     [class*="--neutral"] {
-        @include css-colors($color-dark-base-neutral);
+        @include css-remaps($color-dark-base-neutral, '-neutral');
     }
 
     [class*="--primary"] {
-        @include css-colors($color-dark-base-primary);
+        @include css-remaps($color-dark-base-primary, '-primary');
     }
 
     [class*="--secondary"] {
-        @include css-colors($color-dark-base-secondary);
+        @include css-remaps($color-dark-base-secondary, '-secondary');
     }
 
     [class*="--success"] {
-        @include css-colors($color-dark-base-success);
+        @include css-remaps($color-dark-base-success, '-success');
     }
 
     [class*="--warning"] {
-        @include css-colors($color-dark-base-warning);
+        @include css-remaps($color-dark-base-warning, '-warning');
     }
 
     [class*="--danger"] {
-        @include css-colors($color-dark-base-danger);
+        @include css-remaps($color-dark-base-danger, '-danger');
     }
 
     [class*="--info"] {
-        @include css-colors($color-dark-base-info);
+        @include css-remaps($color-dark-base-info, '-info');
     }
 
 }

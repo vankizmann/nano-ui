@@ -12,35 +12,35 @@
 }
 
 .n-popover[data-position^="top-"]:before {
-    mask: svg-load('angle-down.svg') no-repeat center / contain;
+    mask: svg-load('angle-down.svg') no-repeat center 0 / contain;
 }
 
 .n-popover[data-position^="top-"]:after {
-    mask: svg-load('angle-down-shadow.svg') no-repeat center / contain;
+    mask: svg-load('angle-down-shadow.svg') no-repeat center 0 / contain;
 }
 
 .n-popover[data-position^="bottom-"]:before {
-    mask: svg-load('angle-up.svg') no-repeat center / contain;
+    mask: svg-load('angle-up.svg') no-repeat center 0 / contain;
 }
 
 .n-popover[data-position^="bottom-"]:after {
-    mask: svg-load('angle-up-shadow.svg') no-repeat center / contain;
+    mask: svg-load('angle-up-shadow.svg') no-repeat center 0 / contain;
 }
 
 .n-popover[data-position^="left-"]:before {
-    mask: svg-load('angle-right.svg') no-repeat center / contain;
+    mask: svg-load('angle-right.svg') no-repeat 0 center / contain;
 }
 
 .n-popover[data-position^="left-"]:after {
-    mask: svg-load('angle-right-shadow.svg') no-repeat center / contain;
+    mask: svg-load('angle-right-shadow.svg') no-repeat 0 center / contain;
 }
 
 .n-popover[data-position^="right-"]:before {
-    mask: svg-load('angle-left.svg') no-repeat center / contain;
+    mask: svg-load('angle-left.svg') no-repeat 0 center / contain;
 }
 
 .n-popover[data-position^="right-"]:after {
-    mask: svg-load('angle-left-shadow.svg') no-repeat center / contain;
+    mask: svg-load('angle-left-shadow.svg') no-repeat 0 center / contain;
 }
 
 .n-popover__frame {

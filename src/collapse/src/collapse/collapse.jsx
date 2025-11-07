@@ -56,6 +56,26 @@ export default {
 
     methods: {
 
+        getIndex(tab)
+        {
+            if ( tab.sort !== -1 ) {
+                return 1000 + tab.sort;
+            }
+
+            return Arr.findIndex(this.elements, {
+                name: tab.name
+            });
+        },
+
+        getSorted()
+        {
+            let indexies = Arr.each(this.elements, (val) => {
+                return { name: val.name, index: this.getIndex(val) };
+            });
+
+            return Arr.sort(indexies, 'index');
+        },
+
         addTab(tab)
         {
             Arr.add(this.elements, tab,
