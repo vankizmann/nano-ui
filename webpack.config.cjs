@@ -7,12 +7,12 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 let themes = {
     './src/index.scss': './nano-ui.css',
-    './docs/src/scss/index-light.scss': '../docs/dist/light.css',
-    './docs/src/scss/index-dark.scss': '../docs/dist/dark.css',
-    './themes/macos/index-dark.scss': './themes/dark.css',
-    './themes/macos/index-light.scss': './themes/light.css',
-    './themes/glossy/index-dark.scss': './themes/glossy.dark.css',
-    './themes/glossy/index-light.scss': './themes/glossy.light.css',
+    // './docs/src/scss/index-light.scss': '../docs/dist/light.css',
+    // './docs/src/scss/index-dark.scss': '../docs/dist/dark.css',
+    './themes/macos/index.scss': './themes/macos.css',
+    // './themes/macos/index-light.scss': './themes/light.css',
+    // './themes/glossy/index-dark.scss': './themes/glossy.dark.css',
+    // './themes/glossy/index-light.scss': './themes/glossy.light.css',
 };
 
 let libJs = {

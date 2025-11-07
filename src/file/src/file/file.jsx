@@ -37,6 +37,14 @@ export default {
             type: [String]
         },
 
+        glass: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         disabled: {
             default()
             {
@@ -167,6 +175,7 @@ export default {
             size: this.size,
             disabled: this.disabled,
             icon: this.icon,
+            glass: this.glass,
             onClick: this.openContext
         };
 

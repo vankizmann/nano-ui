@@ -62,6 +62,14 @@ export default {
             type: [Boolean]
         },
 
+        type: {
+            default()
+            {
+                return 'primary';
+            },
+            type: [String]
+        },
+
         position: {
             default()
             {
@@ -502,6 +510,7 @@ export default {
     {
         let classList = [
             'n-resizer',
+            'n-resizer--' + this.type,
             'n-resizer--' + this.position,
         ];
 

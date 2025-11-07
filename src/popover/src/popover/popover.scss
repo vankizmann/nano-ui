@@ -8,28 +8,63 @@
     transition: opacity 0.1s;
 }
 
-.n-popover:before {
-    z-index: 220;
+.n-popover:before,
+.n-popover:after {
     content: '\00a0';
     position: absolute;
     display: none;
 }
 
-.n-popover:not([data-position="auto"]):before {
+.n-popover:before {
+    z-index: 220;
+}
+
+.n-popover:after {
+    z-index: 210;
+}
+
+.n-popover:not([data-position="auto"]):before,
+.n-popover:not([data-position="auto"]):after {
     display: block;
 }
 
 .n-popover[data-position^="top-"]:before,
-.n-popover[data-position^="bottom-"]:before {
+.n-popover[data-position^="top-"]:after,
+.n-popover[data-position^="bottom-"]:before,
+.n-popover[data-position^="bottom-"]:after {
     left: 0;
     width: 16px;
     height: 6px;
 }
 
 .n-popover[data-position^="top-"]:before,
-.n-popover[data-position^="bottom-"]:before {
+.n-popover[data-position^="top-"]:after,
+.n-popover[data-position^="bottom-"]:before,
+.n-popover[data-position^="bottom-"]:after {
     width: var(--parent-width, 16px);
     max-width: var(--parent-max-width, 100%);
+}
+
+.n-popover[data-position="top-start"]:before,
+.n-popover[data-position="top-start"]:after,
+.n-popover[data-position="bottom-start"]:before,
+.n-popover[data-position="bottom-start"]:after {
+    left: 0;
+}
+
+.n-popover[data-position="top-end"]:before,
+.n-popover[data-position="top-end"]:after,
+.n-popover[data-position="bottom-end"]:before,
+.n-popover[data-position="bottom-end"]:after {
+    right: 0;
+}
+
+.n-popover[data-position="top-center"]:before,
+.n-popover[data-position="top-center"]:after,
+.n-popover[data-position="bottom-center"]:before,
+.n-popover[data-position="bottom-center"]:after {
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .n-popover[data-position^="top-"] {
@@ -40,25 +75,52 @@
     padding-top: 6px;
 }
 
-.n-popover[data-position^="top-"]:before {
+.n-popover[data-position^="top-"]:before,
+.n-popover[data-position^="top-"]:after {
     bottom: 0;
 }
 
-.n-popover[data-position^="bottom-"]:before {
+.n-popover[data-position^="bottom-"]:before,
+.n-popover[data-position^="bottom-"]:after {
     top: 0;
 }
 
 .n-popover[data-position^="left-"]:before,
-.n-popover[data-position^="right-"]:before {
-    top: 0;
+.n-popover[data-position^="left-"]:after,
+.n-popover[data-position^="right-"]:before,
+.n-popover[data-position^="right-"]:after {
     width: 6px;
     height: 16px;
 }
 
 .n-popover[data-position^="left-"]:before,
-.n-popover[data-position^="right-"]:before {
+.n-popover[data-position^="left-"]:after,
+.n-popover[data-position^="right-"]:before,
+.n-popover[data-position^="right-"]:after {
     height: var(--parent-height, 16px);
     max-height: var(--parent-max-height, 100%);
+}
+
+.n-popover[data-position="left-start"]:before,
+.n-popover[data-position="left-start"]:after,
+.n-popover[data-position="right-start"]:before,
+.n-popover[data-position="right-start"]:after {
+    top: 0;
+}
+
+.n-popover[data-position="left-end"]:before,
+.n-popover[data-position="left-end"]:after,
+.n-popover[data-position="right-end"]:before,
+.n-popover[data-position="right-end"]:after {
+    bottom: 0;
+}
+
+.n-popover[data-position="left-center"]:before,
+.n-popover[data-position="left-center"]:after,
+.n-popover[data-position="right-center"]:before,
+.n-popover[data-position="right-center"]:after {
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .n-popover[data-position^="left-"] {
@@ -69,11 +131,13 @@
     padding-left: 6px;
 }
 
-.n-popover[data-position^="left-"]:before {
+.n-popover[data-position^="left-"]:before,
+.n-popover[data-position^="left-"]:after {
     right: 0;
 }
 
-.n-popover[data-position^="right-"]:before {
+.n-popover[data-position^="right-"]:before,
+.n-popover[data-position^="right-"]:after {
     left: 0;
 }
 
@@ -189,11 +253,11 @@
     .n-popover--#{$suffix} .n-popover__header {
         padding: $-popover-padding $-popover-padding * 1.2;
     }
-    
+
     .n-popover--#{$suffix} .n-popover__body {
         padding: $-popover-padding $-popover-padding * 1.2;
     }
-    
+
     .n-popover--#{$suffix} .n-popover__footer {
         padding: $-popover-padding $-popover-padding * 1.2;
     }

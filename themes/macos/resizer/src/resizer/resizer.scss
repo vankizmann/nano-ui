@@ -1,5 +1,5 @@
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-resizer__handle:before {
-    background: rgba($color-primary, 0.9);
+    background: color('base-color', 0.9);
 }

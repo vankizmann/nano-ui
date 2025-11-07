@@ -1,51 +1,44 @@
-@use "sass:map";
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-timepicker {
-    background: $color-input;
-    border: 1px solid $color-gray-15;
+    background: color('form-input');
+    border: 1px solid color('gray-15');
+}
+
+.n-timepicker:not(.n-disabled):hover {
+    border-color: color('base-color-bg-30');
+}
+
+.n-timepicker:not(.n-disabled).n-focus {
+    border-color: color('base-color');
 }
 
 .n-timepicker.n-disabled {
-    background: $color-input-off;
+    background: color('form-disabled');
 }
 
 .n-timepicker__seperator {
-    color: $color-gray-60;
+    color: color('gray-60');
 }
 
 .n-timepicker__clear,
 .n-timepicker__angle {
-    color: $color-gray-60;
+    color: color('gray-60');
 }
 
 .n-timepicker__clear i {
-    background: rgba($color-gray-15, 0.6);
+    background: color('gray-15', 0.6);
 }
 
 .n-timepicker__placeholder {
-    color: rgba($color-black, 0.5);
+    color: color('foreground', 0.5);
 }
 
 .n-timepicker__body,
 .n-timepicker__empty {
-     background: $color-input;
-     box-shadow: 0 1px 3px 1px rgba($color-shadow, 0.15);
+     background: color('form-input');
 }
 
 .n-timepicker__empty {
-     color: $color-gray-60;
-}
-
-@each $color, $values in $colors {
-
-    $-color-base: map.get($values, 'base');
-    $-color-light: map.get($values, 'light');
-    $-color-dark: map.get($values, 'dark');
-
-     .n-timepicker--#{$color}:not(.n-disabled):hover,
-     .n-timepicker--#{$color}:not(.n-disabled).n-focus {
-        border-color: $-color-base;
-    }
-
+     color: color('gray-60');
 }

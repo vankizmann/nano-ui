@@ -1,0 +1,40 @@
+
+$size-xs: (
+        'height': 26px,
+        'padding': 8px,
+        'font': 0.8em,
+        'radius': 2px,
+        'ratio': 0.40,
+) !default;
+
+$size-sm: (
+        'height': 28px,
+        'padding': 10px,
+        'font': 0.9em,
+        'radius': 4px,
+        'ratio': 0.40,
+) !default;
+
+$size-md: (
+        'height': 32px,
+        'padding': 14px,
+        'font': 1.0em,
+        'radius': 6px,
+        'ratio': 0.40,
+) !default;
+
+$size-lg: (
+        'height': 34px,
+        'padding': 16px,
+        'font': 1.2em,
+        'radius': 9px,
+        'ratio': 0.40,
+) !default;
+
+$size-xl: (
+        'height': 36px,
+        'padding': 18px,
+        'font': 1.4em,
+        'radius': 12px,
+        'ratio': 0.40,
+) !default;

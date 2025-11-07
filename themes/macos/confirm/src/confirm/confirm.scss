@@ -1,9 +1,8 @@
-@use "sass:map";
-@import "../../../root/vars";
-@import "../../../root/mixins";
+@import "src/root/helpers";
 
 .n-confirm {
-    @include NanoBackdropFocus;
+    background: color('shadow', 0.8);
+    backdrop-filter: blur(1.5px);
     transition: opacity 0.3s;
 }
 
@@ -12,10 +11,9 @@
 }
 
 .n-confirm-frame {
-    @include NanoBoxshadowLg;
-    border-radius: $lg-radius;
-    background: $color-background;
+    background: color('background');
     transition: transform 0.3s;
+    box-shadow: 0 2px 20px color('shadow', 0.1), 0 0 2px color('shadow', 0.15);
 }
 
 .n-confirm:not(.n-ready) .n-confirm-frame {
@@ -23,32 +21,15 @@
 }
 
 .n-confirm__text {
-    color: $color-foreground;
+    color: color('text');
 }
 
-
-.n-confirm .n-button--cancel {
-    color: rgba($color-foreground, 0.6);
-    background: rgba($color-gray-50, 0.2);
+.n-confirm .n-button--reset {
+    color: color('foreground', 0.6);
+    background: color('gray-50', 0.2);
 }
 
-.n-confirm .n-button--confirm {
-    color: $color-white;
+.n-confirm__icon i {
+    color: color('base-color');
 }
 
-
-@each $color, $values in $colors {
-
-    $-color-base: map.get($values, 'base');
-    $-color-light: map.get($values, 'light');
-    $-color-dark: map.get($values, 'dark');
-
-    .n-confirm--#{$color} .n-confirm__icon i {
-        color: $-color-base;
-    }
-
-    .n-confirm--#{$color} .n-button--confirm {
-        background: $-color-base;
-    }
-
-}

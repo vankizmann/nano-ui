@@ -75,7 +75,7 @@ export class ConfirmHandler
     {
         let classList = [
             'n-button',
-            'n-button--confirm',
+            'n-button--auto',
             'n-button--' + this.options.size,
         ];
 
@@ -100,7 +100,7 @@ export class ConfirmHandler
     {
         let classList = [
             'n-button',
-            'n-button--cancel',
+            'n-button--reset',
             'n-button--' + this.options.size,
         ];
 
@@ -171,6 +171,8 @@ export class ConfirmHandler
             'n-confirm--' + this.options.size,
             'n-confirm--' + this.options.type,
         ];
+
+        classList.push('n-theme--dark');
 
         if ( window.WIN ) {
             classList.push('n-reverse');

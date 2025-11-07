@@ -1,41 +1,32 @@
-@use "sass:map";
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-slider__bar {
-    background: $color-gray-10;
+    background: color('gray-10');
 }
 
 .n-slider.n-disabled .n-slider__range {
-    background: $color-gray-50;
+    background: color('gray-50');
 }
 
 .n-slider__handle {
-    background: $color-white;
-    box-shadow: 0 0 4px rgba($color-shadow, 0.15);
+    background: color('white');
+    box-shadow: 0 0 4px color('shadow', 0.15);
 }
 
 .n-slider.n-disabled .n-slider__handle {
-    border: 6px solid $color-gray-50;
+    border: 6px solid color('gray-50');
 }
 
 .n-slider__handle span {
-    color: $color-white;
-    background: rgba($color-black, 0.8);
+    color: color('white', 0.9);
+    background: color('shadow', 0.8);
 }
 
-@each $color, $values in $colors {
+.n-slider:not(.n-disabled) .n-slider__range {
+    background: color('base-color');
+}
 
-    $-color-base: map.get($values, 'base');
-    $-color-light: map.get($values, 'light');
-    $-color-dark: map.get($values, 'dark');
-
-    .n-slider--#{$color}:not(.n-disabled) .n-slider__range {
-        background: $-color-base;
-    }
-
-    .n-slider--#{$color}:not(.n-disabled) .n-slider__handle {
-        border: 6px solid $-color-base;
-    }
-
+.n-slider:not(.n-disabled) .n-slider__handle {
+    border: 6px solid color('base-color');
 }
 

@@ -1,39 +1,27 @@
-@use "sass:map";
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-input {
-    background: $color-input;
-    border: 1px solid $color-gray-15;
+    color: color('foreground');
+    background: color('form-input');
+    border: 1px solid color('gray-15');
 }
 
 .n-input.n-disabled  {
-    background: $color-input-off;
+    background: color('form-disabled');
 }
 
-.n-input .n-button--input {
-    color: $color-gray-60;
+.n-input .n-button {
+    color: color('gray-60');
 }
 
-@each $color, $values in $colors {
+.n-input:not(.n-disabled) .n-button:not(.n-disabled):hover {
+    color: color('base-color');
+}
 
-    $-color-base: map.get($values, 'base');
-    $-color-light: map.get($values, 'light');
-    $-color-dark: map.get($values, 'dark');
+.n-input:not(.n-disabled):hover {
+    border-color: color('base-color-bg-30');
+}
 
-    /**
-     * Button primary
-     */
-
-    .n-input--#{$color}:not(.n-disabled):hover {
-        border-color: $-color-base;
-    }
-
-    .n-input--#{$color}:not(.n-disabled).n-focus {
-        border-color: $-color-light;
-    }
-
-    .n-input--#{$color}:not(.n-disabled) .n-button--input:not(.n-disabled):hover {
-        color: $-color-base;
-    }
-
+.n-input:not(.n-disabled).n-focus {
+    border-color: color('base-color');
 }

@@ -105,6 +105,8 @@ export class AlertHandler
             'n-alert--' + this.options.type,
         ];
 
+        classList.push('n-theme--dark');
+
         let modal = Dom.make('div', {
             classList: Arr.merge(classList, cls).join(' ')
         });

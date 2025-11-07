@@ -1,45 +1,26 @@
-@use "sass:map";
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-checkbox__checkbox {
-    color: $color-foreground;
-    background: $color-input;
-    border: 1px solid $color-gray-15;
+    color: color('foreground');
+    background: color('form-input');
+    border: 1px solid color('gray-15');
 }
 
 .n-checkbox.n-disabled .n-checkbox__checkbox  {
-    background: $color-input-off;
+    background: color('form-disabled');
 }
 
-@each $color, $values in $colors {
+.n-checkbox:not(.n-disabled):hover .n-checkbox__checkbox {
+    border-color: color('base-color-bg-30');
+}
 
-    $-color-base: map.get($values, 'base');
-    $-color-light: map.get($values, 'light');
-    $-color-dark: map.get($values, 'dark');
+.n-checkbox.n-checked:not(.n-disabled) .n-checkbox__checkbox,
+.n-checkbox.n-intermediate:not(.n-disabled) .n-checkbox__checkbox {
+    color: color('base-text');
+    background: color('base-color');
+    border-color: color('base-color');
+}
 
-    /**
-     * Button primary
-     */
-
-    .n-checkbox--#{$color}:not(.n-disabled):hover .n-checkbox__checkbox {
-        border-color: $-color-base;
-    }
-
-    .n-checkbox--#{$color}.n-checked:not(.n-disabled) .n-checkbox__checkbox,
-    .n-checkbox--#{$color}.n-intermediate:not(.n-disabled) .n-checkbox__checkbox {
-        color: $color-white;
-        background: $-color-base;
-        border-color: $-color-base;
-    }
-
-    .n-checkbox--#{$color}.n-checked:not(.n-disabled) .n-checkbox__checkbox:not(.n-disabled):hover,
-    .n-checkbox--#{$color}.n-intermediate:not(.n-disabled) .n-checkbox__checkbox:not(.n-disabled):hover {
-        background: $-color-light;
-        border-color: $-color-light;
-    }
-
-    .n-checkbox--#{$color}.n-checked:not(.n-disabled) .n-checkbox__label {
-        color: $-color-base;
-    }
-
+.n-checkbox.n-checked:not(.n-disabled) .n-checkbox__label {
+    color: color('base-color');
 }

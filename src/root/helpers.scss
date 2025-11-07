@@ -1,0 +1,20 @@
+
+@mixin css-colors($colors) {
+    @each $name, $color in $colors {
+        --n-color-#{$name}: #{red($color)}, #{green($color)}, #{blue($color)};
+    }
+}
+
+@mixin css-sizes($sizes) {
+    @each $name, $value in $sizes {
+        --n-size-#{$name}: #{$value};
+    }
+}
+
+@function color($color, $opacity: 1) {
+    @return unquote("rgba(var(--n-color-#{$color}), #{$opacity})")
+};
+
+@function size($size) {
+    @return unquote("var(--n-size-#{$size})")
+};

@@ -1,22 +1,10 @@
-@use "sass:map";
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-load:before {
-    border: 2px solid $color-primary;
+    border: 2px solid color('base-color');
 }
 
 .n-load:after {
-    background: rgba($color-background, 0.7);
+    background: color('background', 0.7);
 }
 
-@each $color, $values in $colors {
-
-    $-color-base: map.get($values, 'base');
-    $-color-light: map.get($values, 'light');
-    $-color-dark: map.get($values, 'dark');
-
-    .n-loader--#{$color}.n-load:before {
-        border-color: $-color-base;
-    }
-
-}

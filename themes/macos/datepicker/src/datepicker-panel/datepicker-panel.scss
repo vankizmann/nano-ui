@@ -1,48 +1,40 @@
 @use "sass:map";
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-datepicker-panel {
-    background: $color-input;
+    background: color('form-input');
 }
 
 div:not(.n-popover,.n-datetimepicker-panel) > .n-datepicker-panel {
-    border: 1px solid $color-gray-10;
+    border: 1px solid color('gray-15');
 }
 
 .n-datepicker-panel__header {
-    border-bottom: 1px solid $color-gray-10;
+    border-bottom: 1px solid color('gray-15');
 }
 
 .n-datepicker-panel__footer {
-    border-top: 1px solid $color-gray-10;
+    border-top: 1px solid color('gray-10');
 }
 
 .n-datepicker-panel__display .n-datepicker-panel__month:hover,
 .n-datepicker-panel__display .n-datepicker-panel__year:hover {
-    background: rgba($color-gray-15, 0.6);
+    background: color('gray-15', 0.6);
+}
+
+.n-datepicker-panel .n-datepicker-panel__body .n-datepicker-panel__day.n-selected,
+.n-datepicker-panel .n-datepicker-panel__body .n-datepicker-panel__month.n-selected,
+.n-datepicker-panel .n-datepicker-panel__body .n-datepicker-panel__year.n-selected {
+    color: color('base-text');
+    background: color('base-color');
 }
 
 .n-datepicker-panel__dateview .n-datepicker-panel__day.n-arrive:not(.n-selected),
 .n-datepicker-panel__dateview .n-datepicker-panel__day.n-depart:not(.n-selected),
 .n-datepicker-panel__dateview .n-datepicker-panel__day.n-between:not(.n-selected) {
-    background: rgba($color-gray-15, 0.6);
+    background: color('gray-15', 0.6);
 }
 
 .n-datepicker-panel__body .n-datepicker-panel__day:not(.n-current)  {
-    color: $color-gray-40;
-}
-
-@each $color, $values in $colors {
-
-    $-color-base: map.get($values, 'base');
-    $-color-light: map.get($values, 'light');
-    $-color-dark: map.get($values, 'dark');
-
-    .n-datepicker-panel--#{$color} .n-datepicker-panel__body .n-datepicker-panel__day.n-selected,
-    .n-datepicker-panel--#{$color} .n-datepicker-panel__body .n-datepicker-panel__month.n-selected,
-    .n-datepicker-panel--#{$color} .n-datepicker-panel__body .n-datepicker-panel__year.n-selected {
-        color: $color-white;
-        background: $-color-base;
-    }
-
+    color: color('gray-40');
 }

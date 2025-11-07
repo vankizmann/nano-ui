@@ -1,36 +1,25 @@
-@use 'sass:map';
-@import "../../../root/vars";
-@import "../../../root/mixins";
+@import "src/root/helpers";
 
 .n-drawer__backdrop {
-    @include NanoBackdropDefault;
+    background: color('shadow', 0.7);
+    backdrop-filter: blur(1.5px);
 }
 
 .n-drawer__frame {
-    @include NanoBoxshadowLg;
+    box-shadow: 0 2px 20px color('shadow', 0.1), 0 0 2px color('shadow', 0.15);
 }
 
-@each $suffix, $values in $drawer {
+.n-drawer__frame {
+    color: color('text');
+    background: color('background');
+}
 
-    $-drawer-color: map.get($values, 'color');
-    $-drawer-border: map.get($values, 'border');
-    $-drawer-header: map.get($values, 'header');
-    $-drawer-body: map.get($values, 'body');
-    $-drawer-footer: map.get($values, 'footer');
+.n-drawer__header {
+    border-bottom: 1px solid color('gray-15');
+    background: color('background');
+}
 
-    .n-drawer--#{$suffix} .n-drawer__frame {
-        color: $-drawer-color;
-        background: $-drawer-body;
-    }
-
-    .n-drawer--#{$suffix} .n-drawer__header {
-        border-bottom: 1px solid $-drawer-border;
-        background: $-drawer-header;
-    }
-
-    .n-drawer--#{$suffix} .n-drawer__footer {
-        border-top: 1px solid $-drawer-border;
-        background: $-drawer-footer;
-    }
-
+.n-drawer__footer {
+    border-top: 1px solid color('gray-15');
+    background: color('background');
 }

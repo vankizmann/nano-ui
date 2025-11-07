@@ -180,7 +180,7 @@ export default {
         }
 
         let props = {
-            type: 'input',
+            type: 'reset',
             icon: this.icon,
             size: this.size,
             square: true,

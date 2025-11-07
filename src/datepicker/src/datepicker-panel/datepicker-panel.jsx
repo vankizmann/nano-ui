@@ -290,7 +290,7 @@ export default {
     {
         let props = {
             type: this.type,
-            link: true,
+            glass: true,
             icon: nano.Icons.angleLeft,
             onClick: closure
         };
@@ -302,7 +302,7 @@ export default {
     {
         let props = {
             type: this.type,
-            link: true,
+            glass: true,
             icon: nano.Icons.angleRight,
             onClick: closure
         };
