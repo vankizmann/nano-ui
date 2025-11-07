@@ -49,7 +49,7 @@ export default {
         sort: {
             default()
             {
-                return 0;
+                return - 1;
             },
             type: [Number]
         },
@@ -102,7 +102,7 @@ export default {
     data()
     {
         return {
-            _key: null, init: false, dragger: 0
+            init: false, dragger: 0
         }
     },
 
@@ -153,9 +153,19 @@ export default {
             return null;
         }
 
+        let sorted = this.NCollapse.getSorted();
+
         let classList = [
             'n-collapse__header'
         ];
+
+        if ( Arr.first(sorted)['name'] === this.name ) {
+            classList.push('is-first');
+        }
+
+        if ( Arr.last(sorted)['name'] === this.name ) {
+            classList.push('is-last');
+        }
 
         if ( Arr.has(this.NCollapse.tempValue, this.name) ) {
             classList.push('n-active');
@@ -190,7 +200,7 @@ export default {
         };
 
         props.style = {
-            order: this.sort + 1,
+            order: (Arr.find(sorted, { name: this.name })['index'] * 10) + 1
         };
 
         return (
@@ -204,9 +214,19 @@ export default {
 
     renderBody()
     {
+        let sorted = this.NCollapse.getSorted();
+
         let classList = [
             'n-collapse__body'
         ];
+
+        if ( Arr.first(sorted)['name'] === this.name ) {
+            classList.push('is-first');
+        }
+
+        if ( Arr.last(sorted)['name'] === this.name ) {
+            classList.push('is-last');
+        }
 
         let tempValue = Arr.clone(this.NCollapse.tempValue);
 
@@ -231,7 +251,7 @@ export default {
         this.init = true;
 
         let style = {
-            order: this.sort + 2
+            order: (Arr.find(sorted, { name: this.name })['index'] * 10) + 2
         };
 
         if ( !Arr.has(tempValue, this.name) ) {

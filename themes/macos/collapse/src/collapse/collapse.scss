@@ -1,22 +1,13 @@
-@use "sass:map";
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-collapse {
-    border: 1px solid $color-gray-15;
+    border: 1px solid color('gray-15');
 }
 
-.n-collapse__header:not(:first-child) {
-    border-top: 1px solid $color-gray-15;
+.n-collapse__header:not(.is-first) {
+    border-top: 1px solid color('gray-15');
 }
 
 .n-collapse__header.n-active {
-    border-bottom: 1px solid $color-gray-15;
-}
-
-@each $color, $values in $colors {
-
-    $-color-base: map.get($values, 'base');
-    $-color-light: map.get($values, 'light');
-    $-color-dark: map.get($values, 'dark');
-
+    border-bottom: 1px solid color('gray-15');
 }

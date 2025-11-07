@@ -1,7 +1,13 @@
 
-@mixin css-colors($colors) {
+@mixin css-colors($colors, $prefix: '') {
     @each $name, $color in $colors {
-        --n-color-#{$name}: #{red($color)}, #{green($color)}, #{blue($color)};
+        --n-color#{$prefix}-#{$name}: #{red($color)}, #{green($color)}, #{blue($color)};
+    }
+}
+
+@mixin css-remaps($colors, $prefix: '-default') {
+    @each $name, $color in $colors {
+        --n-color-base-#{$name}: var(--n-color#{$prefix}-#{$name});
     }
 }
 

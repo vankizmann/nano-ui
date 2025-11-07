@@ -2,7 +2,7 @@
 
 .n-rating__stars span:before,
 .n-rating__stars span:after {
-    mask: svg-load('star-default.svg') no-repeat 0 0 / cover;
+    mask: svg-load('star.svg') no-repeat 0 0 / cover;
 }
 
 .n-rating__stars span:after {

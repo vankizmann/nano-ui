@@ -1,15 +1,15 @@
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-draggable__indicator {
-    border-bottom: 1px solid $color-primary;
+    border-bottom: 1px solid color('primary-color');
 }
 
 .n-draggable__counter {
-    color: $color-white;
-    background: $color-primary;
+    color: color('primary-text');
+    background: color('primary-color');
 }
 
 .n-draggable__counter[class*="n-modify--"] {
-    color: $color-white;
-    background: $color-warning;
+    color: color('warning-text');
+    background: color('warning-color');
 }

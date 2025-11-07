@@ -1,19 +1,23 @@
-@use "sass:map";
-@import "../../../root/vars";
+@import "src/root/helpers";
 
-.n-tabs__tab-icon {
-    color: $color-gray-40;
+.n-tabs__tab:not(.is-active) .n-tabs__tab-icon {
+    opacity: 0.6;
 }
 
-@each $color, $values in $colors {
+.n-tabs:not(.n-float) .n-tabs__tab.n-active .n-tabs__tab-icon,
+.n-tabs:not(.n-float) .n-tabs__tab.n-active .n-tabs__tab-label {
+    color: color('base-color');
+}
 
-    $-color-base: map.get($values, 'base');
-    $-color-light: map.get($values, 'light');
-    $-color-dark: map.get($values, 'dark');
+.n-tabs.n-float .n-tabs__tab {
+    background: color('gray-20', 0.7);
+}
 
-    .n-tabs--#{$color} .n-tabs__tab.n-active .n-tabs__tab-icon,
-    .n-tabs--#{$color} .n-tabs__tab.n-active .n-tabs__tab-label {
-        color: $-color-base;
-    }
+.n-tabs.n-float .n-tabs__tab.n-active {
+    background: color('base-color');
+}
 
+.n-tabs.n-float .n-tabs__tab.n-active .n-tabs__tab-icon,
+.n-tabs.n-float .n-tabs__tab.n-active .n-tabs__tab-label {
+    color: color('base-text');
 }
