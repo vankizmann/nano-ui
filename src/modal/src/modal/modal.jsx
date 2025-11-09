@@ -77,10 +77,10 @@ export default {
             type: [String]
         },
 
-        type: {
+        theme: {
             default()
             {
-                return 'default';
+                return 'auto';
             },
             type: [String]
         },
@@ -407,9 +407,12 @@ export default {
         let classList = [
             'n-modal',
             'n-modal--' + this.size,
-            'n-modal--' + this.type,
             'n-modal--' + this.position,
         ];
+
+        if ( this.theme ) {
+            classList.push('n-theme--' + this.theme);
+        }
 
         if ( this.tempValue ) {
             this.queueRefreshTimeout();

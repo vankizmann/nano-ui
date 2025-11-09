@@ -889,7 +889,7 @@ export default {
         return Obj.values(Obj.each(this.options, optionRender));
     },
 
-    renderElement()
+    render()
     {
         let classList = [
             'n-select',
@@ -919,17 +919,10 @@ export default {
         return (
             <div class={classList} onClick={this.focusInput}>
                 {this.ctor('renderDisplay')()}
+                {this.ctor('renderPopover')()}
                 {this.ctor('renderOptions')()}
             </div>
         );
     },
-
-    render()
-    {
-        return [
-            this.ctor('renderElement')(),
-            this.ctor('renderPopover')()
-        ];
-    }
 
 }

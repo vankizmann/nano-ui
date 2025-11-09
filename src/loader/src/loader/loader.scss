@@ -1,5 +1,13 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
+
+@keyframes NLoading {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
 
 .n-loader {
     position: relative;
@@ -7,7 +15,7 @@
 
 .n-load:before {
     content: '\00a0';
-    z-index: 8001;
+    z-index: 8010;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -16,7 +24,6 @@
     height: 30px;
     margin: -15px 0 0 -15px;
     border-radius: 500px;
-    border: 2px solid transparent;
     border-bottom-color: transparent !important;
     animation: NLoading 1s linear infinite;
 }
@@ -40,29 +47,9 @@
     display: none !important;
 }
 
-@keyframes NLoading {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-
-@each $suffix, $values in $form {
-
-    $-loader-font: map.get($values, 'font');
-    $-loader-size: map.get($values, 'size');
-    $-loader-radius: map.get($values, 'radius');
-    $-loader-ratio: map.get($values, 'ratio');
-
-    $-loader-calc: round(($-loader-size / 1px) * ($-loader-font / 2px) * 0.085);
-
-    .n-loader--#{$suffix}.n-load:before {
-        width: #{($-loader-calc * 2)  + 'px'};
-        height: #{($-loader-calc * 2)  + 'px'};
-        margin: -#{$-loader-calc + 'px'} 0 0 -#{$-loader-calc + 'px'};
-    }
-
+.n-loader.n-load:before {
+    width: size('base-hgt-loader');
+    height: size('base-hgt-loader');
+    margin-top: calc(#{"#{size('base-hgt-loader')} * -0.5"});
+    margin-left: calc(#{"#{size('base-hgt-loader')} * -0.5"});
 }

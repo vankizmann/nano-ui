@@ -587,7 +587,7 @@ export default {
         return (
             <NPopover trigger="context" width={220}>
                 <NPopoverGroup>
-                    Toggle column visiblity
+                    {this.trans('Toggle column visiblity')}
                 </NPopoverGroup>
                 <NCheckboxGroup vModel={this.tempVisible} size="sm" align="vertical">
                     {Obj.values(columns)}

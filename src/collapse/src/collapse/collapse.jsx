@@ -69,8 +69,9 @@ export default {
 
         getSorted()
         {
-            let indexies = Arr.each(this.elements, (val) => {
-                return { name: val.name, index: this.getIndex(val) };
+            // Fix for vue constructor prop warning
+            let indexies = Arr.each(Any.keys(this.elements), (key) => {
+                return { name: this.elements[key]['name'], index: this.getIndex(this.elements[key]) };
             });
 
             return Arr.sort(indexies, 'index');
@@ -78,8 +79,9 @@ export default {
 
         addTab(tab)
         {
-            Arr.add(this.elements, tab,
-                { name: tab.name });
+            Arr.add(this.elements, tab, {
+                name: tab.name
+            });
 
             if ( this.init) {
                 this.$nextTick(this.$forceUpdate);
@@ -88,8 +90,9 @@ export default {
 
         removeTab(tab)
         {
-            Arr.remove(this.elements,
-                { name: tab.name });
+            Arr.remove(this.elements, {
+                name: tab.name
+            });
 
             if ( this.init) {
                 this.$nextTick(this.$forceUpdate);

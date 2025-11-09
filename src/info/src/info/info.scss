@@ -1,5 +1,3 @@
-@use 'sass:map';
-@import "../../../root/vars";
 @import "src/root/helpers";
 
 .n-info {
@@ -10,6 +8,7 @@
     justify-content: stretch;
     border: 1px solid transparent;
     font-size: size('base-fnt');
+    border-radius: size('base-rad');
 }
 
 .n-info__body {
@@ -17,33 +16,14 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
+    padding: calc(#{"#{size('base-pad-vertical')} * 2"}) calc(#{"#{size('base-pad')} * 2"});
 }
 
 .n-info__empty {
     margin: auto;
+    padding: calc(#{"#{size('base-pad')} * 2"}) size('base-pad');
 }
 
-@each $suffix, $values in $form {
-
-    $-info-font: map.get($values, 'font');
-    $-info-size: map.get($values, 'size');
-    $-info-radius: map.get($values, 'radius');
-    $-info-ratio: map.get($values, 'ratio');
-
-    .n-info--#{$suffix} {
-        border-radius: $-info-radius + 2;
-    }
-
-    .n-info--#{$suffix} .n-info__body {
-        padding: $-info-size * 0.3 $-info-size * 0.5;
-    }
-
-    .n-info--#{$suffix} .n-info__empty {
-        padding: $-info-size $-info-size * 0.5;
-    }
-
-    .n-info--#{$suffix} .n-info__column:not(:last-child) {
-        margin-bottom: $-info-size * 0.5;
-    }
-
+.n-info__column:not(:last-child) {
+    margin-bottom: size('base-pad');
 }

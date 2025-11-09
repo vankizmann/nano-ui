@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-drawer {
     position: fixed;
@@ -104,39 +103,36 @@
     opacity: 0.6;
 }
 
-@each $suffix, $values in $form {
+.n-drawer {
+    font-size: size('base-fnt');
+}
 
-    $-drawer-font: map.get($values, 'font');
-    $-drawer-size: map.get($values, 'size');
-    $-drawer-radius: map.get($values, 'radius');
-    $-drawer-ratio: map.get($values, 'ratio');
+.n-drawer--left .n-drawer__frame {
+    border-radius: 0 size('base-rad-window') size('base-rad-window') 0;
+}
 
-    .n-drawer--#{$suffix} {
-        font-size: $-drawer-font;
-    }
+.n-drawer--right .n-drawer__frame {
+    border-radius: size('base-rad-window') 0 0 size('base-rad-window');
+}
 
-    $-drawer-padding: $-drawer-size * $-drawer-ratio;
+.n-drawer__header {
+    padding: calc(#{"#{size('base-pad-vertical')} * 2"}) calc(#{"#{size('base-pad')} * 2"});
+}
 
-    .n-drawer--#{$suffix} .n-drawer__header {
-        padding: $-drawer-padding * 1.5 $-drawer-padding * 2;
-    }
+.n-drawer.n-closable .n-drawer__header {
+    padding-right: calc(#{"(#{size('base-pad')} * 2) + #{size('base-hgt')}"});
+}
 
-    .n-drawer--#{$suffix}.n-closable .n-drawer__header {
-        padding-right: $-drawer-size + ($-drawer-padding * 2);
-    }
-    
-    .n-drawer--#{$suffix}:not(.n-raw) .n-drawer__wrap {
-        padding: $-drawer-padding * 1.5 $-drawer-padding * 2;
-    }
-    
-    .n-drawer--#{$suffix} .n-drawer__footer {
-        padding: $-drawer-padding * 1.5 $-drawer-padding * 2;
-    }
+.n-drawer:not(.n-raw) .n-drawer__wrap {
+    padding: calc(#{"#{size('base-pad-vertical')} * 2"}) calc(#{"#{size('base-pad')} * 2"});
+}
 
-    .n-drawer__close {
-        width: $-drawer-size;
-        height: $-drawer-size;
-        right: $-drawer-padding * 0.8;
-    }
+.n-drawer__footer {
+    padding: calc(#{"#{size('base-pad-vertical')} * 2"}) calc(#{"#{size('base-pad')} * 2"});
+}
 
+.n-drawer__close {
+    width: size('base-hgt');
+    height: size('base-hgt');
+    right: size('base-pad');
 }
