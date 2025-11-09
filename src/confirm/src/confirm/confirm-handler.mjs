@@ -100,7 +100,8 @@ export class ConfirmHandler
     {
         let classList = [
             'n-button',
-            'n-button--reset',
+            'n-button--glass',
+            'n-button--neutral',
             'n-button--' + this.options.size,
         ];
 

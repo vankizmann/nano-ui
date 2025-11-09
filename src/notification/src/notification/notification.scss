@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-notification-frame {
     z-index: 999999999;
@@ -54,9 +53,17 @@
     justify-content: flex-start;
     width: 100%;
     max-width: 280px;
-    margin: 5px;
+    margin: size('base-pad');
+    padding: calc(#{"#{size('base-pad-vertical')} * 1.6"}) calc(#{"#{size('base-pad')} * 1.6"});
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
     transition: transform 0.15s;
 }
+
+.n-notification:not(:first-child) {
+    margin-bottom: 0;
+}
+
 
 .n-notification-frame.n-notification-frame--top-start .n-notification:not(.n-active),
 .n-notification-frame.n-notification-frame--bottom-start .n-notification:not(.n-active) {
@@ -73,6 +80,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-right: size('base-pad');
+    font-size: 1.15em;
 }
 
 .n-notification__text {
@@ -80,26 +89,4 @@
     flex: 1 1 auto;
     line-height: 1.2;
     overflow-wrap: break-word;
-}
-
-@each $suffix, $values in $form {
-
-    $-notification-font: map.get($values, 'font');
-    $-notification-size: map.get($values, 'size');
-    $-notification-radius: map.get($values, 'radius');
-    $-notification-ratio: map.get($values, 'ratio');
-
-    $-notification-padding:  $-notification-size * $-notification-ratio;
-
-    .n-notification-frame--#{$suffix} .n-notification {
-        font-size: $-notification-font;
-        padding: $-notification-padding $-notification-padding;
-        border-radius: $-notification-radius;
-    }
-
-    .n-notification-frame--#{$suffix} .n-notification .n-notification__icon {
-        font-size: $-notification-font + 2;
-        margin-right: $-notification-padding;
-    }
-
 }

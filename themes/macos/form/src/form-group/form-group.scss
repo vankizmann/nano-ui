@@ -1,6 +1,6 @@
 @import "src/root/helpers";
 
-.n-form-group--fieldset {
+.n-form-group--fieldset .n-form-group__body {
     border: 1px solid color('gray-10');
 }
 
@@ -18,10 +18,10 @@
 }
 
 .n-form-group--fieldset .n-form-group__collapse {
-    color: color('text', 0.6);
+    color: color('base-text', 0.6);
 }
 
-.n-form-group--fieldset .n-form-group__label span {
+.n-form-group--classic .n-form-group__label span {
     color: color('text');
 }
 
@@ -30,5 +30,5 @@
 }
 
 .n-form-group--classic .n-form-group__collapse {
-    color: color('base-text', 0.6);
+    color: color('text', 0.6);
 }

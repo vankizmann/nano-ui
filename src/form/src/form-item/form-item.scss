@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-form-item {
     position: relative;
@@ -29,7 +28,8 @@
     position: absolute;
     right: 0;
     top: 0;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     border-radius: 500px;
 }
 
@@ -45,37 +45,27 @@
     position: absolute;
     top: 100%;
     left: 0;
-    color: $color-danger;
 }
 
-@each $suffix, $values in $form {
+.n-form-item {
+    margin-bottom: calc(#{"#{size('base-hgt')} * 0.7"});
+}
 
-    $-form-item-font: map.get($values, 'font');
-    $-form-item-size: map.get($values, 'size');
-    $-form-item-radius: map.get($values, 'radius');
-    $-form-item-ratio: map.get($values, 'ratio');
+.n-form-item__condition {
+    font-size: size('base-fnt-label');
+    padding: 0 size('base-pad');
+    height: calc(#{"#{size('base-hgt')} * 0.6"});
+}
 
-    .n-form-item--#{$suffix} {
-        margin-bottom: $-form-item-size * $-form-item-ratio * 2.2;
-    }
+.n-form-item__label {
+    font-size: size('base-fnt');
+}
 
-    .n-form-item--#{$suffix} .n-form-item__condition {
-        font-size: $-form-item-font - 2;
-        padding: $-form-item-size * $-form-item-ratio * 0.15 $-form-item-size * $-form-item-ratio * 0.75;
-    }
+.n-form-item__label,
+.n-form-item__input {
+    margin: calc(#{"#{size('base-pad-vertical')} * 0.25"}) 0;
+}
 
-    .n-form-item--#{$suffix} .n-form-item__label {
-        font-size: $-form-item-font;
-    }
-
-    .n-form-item--#{$suffix} .n-form-item__label,
-    .n-form-item--#{$suffix} .n-form-item__input {
-        margin-top: $-form-item-size * $-form-item-ratio * 0.25;
-        margin-bottom: $-form-item-size * $-form-item-ratio * 0.25;
-    }
-
-    .n-form-item--#{$suffix} .n-form-item__error {
-        font-size: $-form-item-font - 2;
-    }
-
+.n-form-item__error {
+    font-size: size('base-fnt-label');
 }

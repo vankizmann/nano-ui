@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-modal {
     position: fixed;
@@ -143,44 +142,32 @@
     opacity: 0.6;
 }
 
+.n-modal {
+    font-size: size('base-fnt');
+}
 
-@each $suffix, $values in $form {
+.n-modal__frame {
+    border-radius: size('base-rad-window');
+}
 
-    $-modal-font: map.get($values, 'font');
-    $-modal-size: map.get($values, 'size');
-    $-modal-radius: map.get($values, 'radius');
-    $-modal-ratio: map.get($values, 'ratio');
+.n-modal__header {
+    padding: calc(#{"#{size('base-pad-vertical')} * 2"}) calc(#{"#{size('base-pad')} * 2"});
+}
 
-    .n-modal--#{$suffix} {
-        font-size: $-modal-font;
-    }
+.n-modal.n-closable .n-modal__header {
+    padding-right: calc(#{"(#{size('base-pad')} * 2) + #{size('base-hgt')}"});
+}
 
-    .n-modal--#{$suffix} .n-modal__frame {
-        border-radius: $-modal-radius + 2;
-    }
+.n-modal:not(.n-raw) .n-modal__wrap {
+    padding: calc(#{"#{size('base-pad-vertical')} * 2"}) calc(#{"#{size('base-pad')} * 2"});
+}
 
-    $-modal-padding: $-modal-size * $-modal-ratio;
+.n-modal__footer {
+    padding: calc(#{"#{size('base-pad-vertical')} * 2"}) calc(#{"#{size('base-pad')} * 2"});
+}
 
-    .n-modal--#{$suffix} .n-modal__header {
-        padding: $-modal-padding * 1.5 $-modal-padding * 2;
-    }
-
-    .n-modal--#{$suffix}.n-closable .n-modal__header {
-        padding-right: $-modal-size + ($-modal-padding * 2);
-    }
-    
-    .n-modal--#{$suffix}:not(.n-raw) .n-modal__wrap {
-        padding: $-modal-padding * 1.5 $-modal-padding * 2;
-    }
-    
-    .n-modal--#{$suffix} .n-modal__footer {
-        padding: $-modal-padding * 1.5 $-modal-padding * 2;
-    }
-
-    .n-modal__close {
-        width: $-modal-size;
-        height: $-modal-size;
-        right: $-modal-padding * 0.8;
-    }
-
+.n-modal__close {
+    width: size('base-hgt');
+    height: size('base-hgt');
+    right: size('base-pad');
 }

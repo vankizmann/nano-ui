@@ -71,10 +71,10 @@ export default {
             type: [String]
         },
 
-        type: {
+        theme: {
             default()
             {
-                return 'default';
+                return 'auto';
             },
             type: [String]
         },
@@ -405,9 +405,12 @@ export default {
         let classList = [
             'n-drawer',
             'n-drawer--' + this.size,
-            'n-drawer--' + this.type,
             'n-drawer--' + this.position
         ];
+
+        if ( this.theme ) {
+            classList.push('n-theme--' + this.theme);
+        }
 
         if ( this.tempValue ) {
             this.queueRefreshTimeout();

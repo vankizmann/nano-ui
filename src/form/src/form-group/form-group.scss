@@ -1,5 +1,6 @@
 @use 'sass:map';
 @import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-form-group {
     position: relative;
@@ -27,7 +28,7 @@
     cursor: pointer;
 }
 
-.n-form-group--classic .n-form-group__legend {
+.n-form-group__legend {
     cursor: default;
     display: flex;
     flex-direction: row;
@@ -40,7 +41,6 @@
 }
 
 .n-form-group--fieldset .n-form-group__legend {
-    position: absolute;
     display: inline-flex;
 }
 
@@ -70,7 +70,11 @@
 }
 
 .n-form-group__icon {
-    flex: 0 1 auto;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .n-form-group__text {
@@ -82,70 +86,61 @@
     display: none;
 }
 
-@each $suffix, $values in $form {
+.n-form-group {
+    font-size: size('base-fnt');
+    margin-bottom: size('base-pad-vertical');
+}
 
-    $-form-group-font: map.get($values, 'font');
-    $-form-group-size: map.get($values, 'size');
-    $-form-group-radius: map.get($values, 'radius');
-    $-form-group-ratio: map.get($values, 'ratio');
+.n-form-group__body {
+    border-radius: size('base-rad');
+}
 
-    .n-form-group--#{$suffix},
-    .n-form-group--#{$suffix}:before {
-        border-radius: $-form-group-radius;
-    }
+.n-form-group--fieldset .n-form-group__body {
+    padding: 0 calc(#{"#{size('base-pad')} * 2"});
+}
 
-    .n-form-group--#{$suffix}.n-form-group--fieldset {
-        margin-bottom: $-form-group-size;
-        padding: 0 $-form-group-size * 0.6;
-    }
+.n-form-group--fieldset:not(:last-child) .n-form-group__body {
+    margin-bottom: size('base-hgt'); // $-fbottomrm-group-size * 1.4;
+}
 
-    .n-form-group--#{$suffix}.n-form-group--fieldset:first-child {
-        margin-top: $-form-group-size * 0.8;
-    }
+.n-form-group.n-form-group--classic .n-form-group__legend {
+    min-height: size('base-hgt');
+}
 
-    .n-form-group--#{$suffix}.n-form-group--fieldset:not(:first-child) {
-        margin-top: $-form-group-size * 1.4;
-    }
+.n-form-group.n-form-group--fieldset .n-form-group__legend {
+    margin-left: calc(#{"#{size('base-pad')} * 2"});
+    min-height: size('base-hgt'); //$-form-group-size;
+    border-radius: size('base-rad'); //$-form-group-radius;
+    padding: 0 size('base-pad'); //0 $-form-group-size * 0.3;
+}
 
-    .n-form-group--#{$suffix}.n-form-group--classic .n-form-group__legend {
-        font-size: $-form-group-font;
-        min-height: $-form-group-size * 1.2;
-    }
+.n-form-group.n-form-group--classic .n-form-group__label span {
+    font-size: 1.2em; //$-form-group-font + 1;
+}
 
-    .n-form-group--#{$suffix}.n-form-group--fieldset .n-form-group__legend {
-        min-height: $-form-group-size;
-        border-radius: $-form-group-radius;
-        top: $-form-group-size * -0.5;
-        padding: 0 $-form-group-size * 0.3;
-    }
+.n-form-group.n-form-group--fieldset .n-form-group__label span {
+    font-size: 1em; //$-form-group-font - 2;
+}
 
-    .n-form-group--#{$suffix}.n-form-group--classic .n-form-group__label span {
-        font-size: $-form-group-font + 1;
-    }
+.n-form-group .n-form-group__icon,
+.n-form-group .n-form-group__collapse {
+    width: size('base-hgt-inline');
+    height: size('base-hgt-inline');
+}
 
-    .n-form-group--#{$suffix}.n-form-group--fieldset .n-form-group__label span {
-        font-size: $-form-group-font - 2;
-    }
+.n-form-group.n-form-group--fieldset .n-form-group__collapse {
+    margin-left: calc(#{"#{size('base-pad')} * 0.7"})
+}
 
-    .n-form-group--#{$suffix} .n-form-group__collapse {
-        width: $-form-group-size;
-        height: $-form-group-size;
-    }
+.n-form-group .n-form-group__icon {
+    margin-right: calc(#{"#{size('base-pad')} * 0.7"})
+}
 
-    .n-form-group--#{$suffix}.n-form-group--fieldset .n-form-group__collapse {
-        margin-right: $-form-group-size * -0.3;
-    }
+.n-form-group.n-form-group--classic .n-form-group__body {
+    padding-top: size('base-pad-vertical');
+}
 
-    .n-form-group--#{$suffix} .n-form-group__icon {
-        margin-right: $-form-group-size * $-form-group-ratio * 0.7;
-    }
-
-    .n-form-group--#{$suffix}.n-form-group--classic .n-form-group__body {
-        padding-top: $-form-group-size * $-form-group-ratio;
-    }
-
-    .n-form-group--#{$suffix}.n-form-group--fieldset .n-form-group__body {
-        padding-top: $-form-group-size;
-    }
-
+.n-form-group.n-form-group--fieldset .n-form-group__body {
+    padding-top: size('base-hgt');
+    margin-top: calc(#{"#{size('base-hgt')} * -0.5"});
 }

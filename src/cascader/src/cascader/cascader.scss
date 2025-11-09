@@ -24,7 +24,9 @@
     flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
-    width: 100%;
+    width: calc(100% + 2px);
+    margin: -1px;
+    border: 1px solid transparent;
 }
 
 .n-cascader__clear,

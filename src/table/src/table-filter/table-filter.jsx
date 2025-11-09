@@ -227,7 +227,7 @@ export default {
         let props = {
             class: 'n-table-filter__popover',
             trigger: 'click',
-            size: 'sm',
+            size: 'md',
             width: 220,
         }
 

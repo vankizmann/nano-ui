@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-table-cell {
     position: relative;
@@ -8,7 +7,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: stretch;
-    padding: 0 10px;
+    padding: 0 size('base-pad');
 }
 
 .n-table-cell.n-fluid {
@@ -73,18 +72,9 @@
     opacity: 0.7;
 }
 
-@each $suffix, $values in $form {
-
-    $-table-font: map.get($values, 'font');
-    $-table-size: map.get($values, 'size');
-    $-table-radius: map.get($values, 'radius');
-    $-table-ratio: map.get($values, 'ratio');
-
-    .n-draglist--#{$suffix} .n-table-cell--checkbox i {
-        width: $-table-size - 16;
-        height: $-table-size - 16;
-        border-radius: $-table-radius - 1;
-        font-size: $-table-font - 4;
-    }
-
+.n-table-cell--checkbox i {
+    width: size('base-hgt-inline');
+    height: size('base-hgt-inline');
+    border-radius: size('base-rad-inline');
+    font-size: size('base-fnt-inline');
 }

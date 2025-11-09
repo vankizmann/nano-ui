@@ -54,7 +54,7 @@
 
     <script src="https://unpkg.com/moment"></script>
     <script src="https://unpkg.com/vue@3.4.6"></script>
-    <script src="https://pico-js.local/dist/pico-js.js"></script>
+    <script src="https://unpkg.com/@kizmann/pico-js/dist/pico-js.js"></script>
     <script src="../dist/nano-ui.js"></script>
     <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
@@ -124,6 +124,25 @@
 
             </n-form-group>
             <n-form-group label="FormGroup2">
+
+                <n-form-item label="Foo" prop="foo" tooltip="lorem ipsum dolore" :conditional="n_form.conditional" v-model="n_form.modelValue">
+                    <n-input></n-input>
+                </n-form-item>
+
+                <n-form-item label="Bar" prop="bar" :conditional="n_form.conditional" v-model="n_form.modelValue">
+                    <n-input-number></n-input-number>
+                </n-form-item>
+
+                <n-form-item label="Bar" prop="bar" :conditional="n_form.conditional" v-model="n_form.modelValue">
+                    <n-select></n-select>
+                </n-form-item>
+
+                <n-form-item label="Bar" prop="bar" :conditional="n_form.conditional" v-model="n_form.modelValue">
+                    <n-switch>test</n-switch>
+                </n-form-item>
+
+            </n-form-group>
+            <n-form-group label="FormGroup2" icon="fa fa-ghost" kind="fieldset">
 
                 <n-form-item label="Foo" prop="foo" tooltip="lorem ipsum dolore" :conditional="n_form.conditional" v-model="n_form.modelValue">
                     <n-input></n-input>
@@ -707,7 +726,7 @@
                 <n-select style="width: 100px;" v-model="n_modal.size" :options="sizes"></n-select>
             </div>
             <div class="col--auto">
-                <n-select style="width: 210px;" v-model="n_modal.type" :options="modals"></n-select>
+                <n-select style="width: 210px;" v-model="n_modal.theme" :options="themes"></n-select>
             </div>
             <div class="col--auto">
                 <n-checkbox v-model="n_modal.disabled">Disabled</n-checkbox>
@@ -746,6 +765,9 @@
         <div class="app-options grid grid--row grid--wrap grid--30-30">
             <div class="col--auto">
                 <n-select style="width: 100px;" v-model="n_drawer.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_drawer.theme" :options="themes"></n-select>
             </div>
             <div class="col--auto">
                 <n-select style="width: 210px;" v-model="n_drawer.position" :options="drawers"></n-select>
@@ -1131,7 +1153,7 @@
 
         <h2>NPreviewVideo</h2>
 
-        <div style="margin: 0 auto; max-width: 480px;">
+        <div style="margin: 0 auto; max-width: 480px;" v-if="false">
             <n-preview-video src="https://www.youtube.com/embed/nFhMY2itmlc" @resolve:youtube="log"></n-preview-video>
             <n-preview-video src="https://vimeo.com/128079949" @resolve:vimeo="log"></n-preview-video>
             <n-preview-video src="https://www.w3schools.com/html/mov_bbb.webm"></n-preview-video>
@@ -1183,9 +1205,10 @@
                 info: 'Info'
             };
 
-            data.modals = {
-                default: 'Default',
-                preview: 'Preview',
+            data.themes = {
+                auto: 'Auto',
+                light: 'Light',
+                dark: 'Dark',
             };
 
             data.drawers = {
@@ -1401,11 +1424,11 @@
             };
 
             data.n_modal = {
-                size: 'md', type: 'default', disabled: false
+                size: 'md', theme: 'auto', disabled: false
             };
 
             data.n_drawer = {
-                size: 'md', position: 'right', disabled: false
+                size: 'md', theme: 'auto', position: 'right', disabled: false
             };
 
             data.n_confirm = {
