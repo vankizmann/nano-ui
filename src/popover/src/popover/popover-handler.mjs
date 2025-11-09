@@ -89,8 +89,6 @@ export class PopoverHandler
             return;
         }
 
-        console.log('fade', el);
-
         current.hide('exit');
     }
 

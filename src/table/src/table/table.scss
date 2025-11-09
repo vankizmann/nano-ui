@@ -1,4 +1,5 @@
 @import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-table {
     overflow: hidden;
@@ -6,6 +7,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    border-radius: size('base-radius');
 }
 
 .n-table:before {
@@ -20,6 +22,7 @@
     background: transparent;
     pointer-events: none;
     border: 1px solid transparent;
+    border-radius: size('base-radius');
 }
 
 .n-table > .n-scrollbar {

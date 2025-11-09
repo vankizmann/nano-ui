@@ -60,7 +60,7 @@
     <script src="https://maps.googleapis.com/maps/api/js"></script>
 
 </head>
-<body class="n-demo n-theme--dark">
+<body class="n-demo">
 
 <div id="app" class="nano-theme-preview">
     <div class="app-container">
@@ -88,19 +88,14 @@
         <div class="grid grid--row">
             <div class="col--1-1">
                 <n-tags v-bind="n_tags">
-                    <n-tags-item color="0" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna sjkdnajks dnjkandjknas jkdnajkdjaksn djkans jkdnj</n-tags-item>
-                    <n-tags-item color="1" icon="fa fa-ghost">Foo</n-tags-item>
-                    <n-tags-item color="2" icon="fa fa-ghost">Foo</n-tags-item>
-                    <n-tags-item color="3">Foo</n-tags-item>
-                    <n-tags-item color="4" icon="fa fa-ghost">Foo</n-tags-item>
-                    <n-tags-item color="5" icon="fa fa-ghost">Foo</n-tags-item>
-                    <n-tags-item color="6" icon="fa fa-ghost">Foo</n-tags-item>
-                    <n-tags-item color="7" icon="fa fa-ghost">Foo</n-tags-item>
-                    <n-tags-item color="8">Foo</n-tags-item>
-                    <n-tags-item color="9" icon="fa fa-ghost">Foo</n-tags-item>
-                    <n-tags-item color="10" icon="fa fa-ghost">Foo</n-tags-item>
-                    <n-tags-item color="11" icon="fa fa-ghost">Foo</n-tags-item>
-                    <n-tags-item color="12" icon="fa fa-ghost">Foo</n-tags-item>
+                    <template v-for="type in ['neutral', 'primary', 'success', 'warning', 'danger', 'info']">
+                        <n-tags-item :type="type" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna</n-tags-item>
+                    </template>
+                </n-tags>
+                <n-tags v-bind="n_tags">
+                    <template v-for="(value, index) in Array(20).fill(0)">
+                        <n-tags-item :color="index" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna</n-tags-item>
+                    </template>
                 </n-tags>
             </div>
         </div>
@@ -359,7 +354,7 @@
 
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--1-1 col--1-3@md">
-                <n-textarea class="test" v-bind="n_textarea" type="primary"></n-textarea>
+                <n-textarea class="test" v-bind="n_textarea" type="primary" :min-rows="1" :max-rows="1"></n-textarea>
             </div>
             <div class="col--1-1 col--1-3@md">
                 <n-textarea v-bind="n_textarea" type="secondary"></n-textarea>
@@ -400,7 +395,7 @@
                 <n-select v-bind="n_select" type="secondary" :options="icons" :lazy="true"></n-select>
             </div>
             <div class="col--1-1 col--1-3@md">
-                <n-select v-bind="n_select" v-model="foobar" :multiple="true" type="primary" :options="icons"></n-select>
+                <n-select v-bind="n_select" v-model="foobar" :multiple="true" :collapse="false" type="primary" :options="icons"></n-select>
             </div>
             <div class="col--1-1 col--1-3@md">
                 <n-select v-bind="n_select" type="secondary" :options="icons"></n-select>
@@ -443,6 +438,9 @@
             <div class="col--1-1 col--1-8@md col--right">
                 <n-cascader v-bind="n_cascader" :options="cascaderData"></n-cascader>
             </div>
+            <div class="col--1-1 col--1-8@md col--right">
+                <n-cascader v-bind="n_cascader" :options="[]"></n-cascader>
+            </div>
         </div>
 
 
@@ -479,6 +477,13 @@
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--1-1">
                 <n-checkbox-group v-bind="n_checkbox">
+                    <n-checkbox :global="true" v-bind="n_checkbox">Check all</n-checkbox>
+                    <n-checkbox value="test1" v-bind="n_checkbox">Foobar 1</n-checkbox>
+                    <n-checkbox value="test2" v-bind="n_checkbox">Foobar 2</n-checkbox>
+                    <n-checkbox value="test3" v-bind="n_checkbox">Foobar 3</n-checkbox>
+                    <n-checkbox value="test4" v-bind="n_checkbox">Foobar 4</n-checkbox>
+                </n-checkbox-group>
+                <n-checkbox-group v-bind="n_checkbox" align="vertical">
                     <n-checkbox :global="true" v-bind="n_checkbox">Check all</n-checkbox>
                     <n-checkbox value="test1" v-bind="n_checkbox">Foobar 1</n-checkbox>
                     <n-checkbox value="test2" v-bind="n_checkbox">Foobar 2</n-checkbox>
@@ -1165,7 +1170,8 @@
                 xs: 'XS',
                 sm: 'SM',
                 md: 'MD',
-                lg: 'LG'
+                lg: 'LG',
+                xl: 'XL'
             };
 
             data.types = {
@@ -1320,8 +1326,7 @@
 
             data.n_theme = pi.Cookie.get('theme', 'light', 'string');
 
-            // pi.Dom.find('#theme').attr('href', '../dist/themes/' +
-            //     data.n_theme + '.css');
+            pi.Dom.find('body').addClass('n-theme--' + data.n_theme);
 
             data.n_form = {
                 size: 'md', conditional: true, modelValue: false
@@ -1441,8 +1446,7 @@
 
                 pi.Cookie.set('theme', this.n_theme = value);
 
-                pi.Dom.find('#theme').attr('href', '../dist/themes/' +
-                    this.n_theme + '.css');
+                pi.Dom.find('body').addClass('n-theme--' + data.n_theme);
             }
 
             methods.searchLocation = function () {

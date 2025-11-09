@@ -428,7 +428,7 @@ export default {
         );
     },
 
-    render()
+    renderElement()
     {
         let classList = [
             'n-durationpicker',
@@ -455,9 +455,16 @@ export default {
         return (
             <div class={classList}>
                 { this.ctor('renderDisplay')() }
-                { this.ctor('renderPopover')() }
             </div>
         );
+    },
+
+    render()
+    {
+        return [
+            this.ctor('renderElement')(),
+            this.ctor('renderPopover')()
+        ];
     }
 
 }

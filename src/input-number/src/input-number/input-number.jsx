@@ -12,7 +12,7 @@ export default {
         NFormItem: {
             default: undefined
         }
-        
+
     },
 
 
@@ -124,7 +124,8 @@ export default {
 
     computed: {
 
-        deepDisabled() {
+        deepDisabled()
+        {
             return this.NFormItem ? this.NFormItem.disabled(this.disabled) :
                 this.disabled;
         }
@@ -399,7 +400,7 @@ export default {
         }
 
         return (
-            <div class="n-input-number__clear" {...props}>
+            <div class="n-input-number__clear n-form-clear" {...props}>
                 <i class={nano.Icons.times}></i>
             </div>
         );

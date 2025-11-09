@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-rating {
     overflow: hidden;
@@ -8,6 +7,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+    font-size: size('base-font');
 }
 
 .n-rating__stars {
@@ -22,6 +22,12 @@
     flex: 0 0 auto;
     position: relative;
     display: block;
+    width: calc(#{"#{size('base-hgt')} * 0.45"});
+    height: calc(#{"#{size('base-hgt')} * 0.45"});
+}
+
+.n-rating__stars span:not(:last-child) {
+    margin-right: calc(#{"#{size('base-pad')} * 0.3"});
 }
 
 .n-rating__stars span:before,
@@ -65,35 +71,11 @@
     text-overflow: ellipsis;
 }
 
-@each $suffix, $values in $form {
+.n-rating .n-rating__value {
+    margin-left: size('base-pad');
+}
 
-    $-rating-font: map.get($values, 'font');
-    $-rating-size: map.get($values, 'size');
-    $-rating-radius: map.get($values, 'radius');
-    $-rating-ratio: map.get($values, 'ratio');
-
-    $-rating-star: $-rating-size * $-rating-ratio * 1.2;
-
-    .n-rating--#{$suffix} {
-        font-size: $-rating-font;
-    }
-
-    .n-rating--#{$suffix} .n-rating__stars span {
-        width: $-rating-star;
-        height: $-rating-star;
-    }
-
-    .n-rating--#{$suffix} .n-rating__stars span:not(:last-child) {
-        margin-right: $-rating-star / 4;
-    }
-
-    .n-rating--#{$suffix} .n-rating__stars span:before,
-    .n-rating--#{$suffix} .n-rating__stars span:after {
-        background-size: $-rating-star $-rating-star;
-    }
-
-    .n-rating--#{$suffix} .n-rating__value {
-        margin-left: $-rating-star;
-    }
-
+.n-rating .n-rating__value {
+    font-size: size('base-fnt');
+    margin-left: size('base-pad');
 }

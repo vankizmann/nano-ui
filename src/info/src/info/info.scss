@@ -1,5 +1,6 @@
 @use 'sass:map';
 @import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-info {
     position: relative;
@@ -8,6 +9,7 @@
     align-items: stretch;
     justify-content: stretch;
     border: 1px solid transparent;
+    font-size: size('base-fnt');
 }
 
 .n-info__body {
@@ -29,7 +31,6 @@
     $-info-ratio: map.get($values, 'ratio');
 
     .n-info--#{$suffix} {
-        font-size: $-info-font;
         border-radius: $-info-radius + 2;
     }
 

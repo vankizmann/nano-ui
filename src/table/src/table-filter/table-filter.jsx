@@ -184,7 +184,7 @@ export default {
     {
         let props = {
             type: 'primary',
-            link: true,
+            glass: true,
             size: 'xs',
             disabled: ! this.canApply
         };
@@ -199,8 +199,8 @@ export default {
     renderReset()
     {
         let props = {
-            type: 'danger',
-            link: true,
+            type: 'neutral',
+            glass: true,
             size: 'xs',
             disabled: this.canReset,
         };

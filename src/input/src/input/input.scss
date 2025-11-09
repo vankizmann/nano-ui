@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-input {
     position: relative;
@@ -7,6 +6,8 @@
     align-items: stretch;
     justify-content: stretch;
     width: 100%;
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
     border: 1px solid transparent;
 }
 
@@ -19,12 +20,22 @@
     appearance: none;
     display: block;
     width: 100%;
+    height: calc(#{"#{size('base-hgt')} - 2px"});
     white-space: nowrap;
     text-decoration: none;
     line-height: 1.2;
+    padding: 0 size('base-pad');
     border: none;
     background: transparent;
     box-shadow: none;
+}
+
+.n-input.n-input--icon.n-input--icon-before input {
+    padding-left: calc(#{"#{size('base-hgt')} + #{size('base-pad')}"});
+}
+
+.n-input.n-input--icon.n-input--icon-after input {
+    padding-right: calc(#{"#{size('base-hgt')} + #{size('base-pad')}"});
 }
 
 .n-input.n-disabled input {
@@ -43,31 +54,4 @@
 
 .n-input.n-input--icon.n-input--icon-after .n-button {
     right: 1px;
-}
-
-@each $suffix, $values in $form {
-
-    $-input-font: map.get($values, 'font');
-    $-input-size: map.get($values, 'size');
-    $-input-radius: map.get($values, 'radius');
-    $-input-ratio: map.get($values, 'ratio');
-
-    .n-input--#{$suffix} {
-        font-size: $-input-font;
-        border-radius: $-input-radius;
-    }
-
-    .n-input--#{$suffix} input {
-        height: $-input-size - 2;
-        padding: 0 $-input-size * $-input-ratio;
-    }
-
-    .n-input--#{$suffix}.n-input--icon.n-input--icon-before input {
-        padding-left: $-input-size + ($-input-size * $-input-ratio);
-    }
-    
-    .n-input--#{$suffix}.n-input--icon.n-input--icon-after input {
-        padding-right: $-input-size + ($-input-size * $-input-ratio);
-    }
-
 }

@@ -47,6 +47,8 @@
 
 .n-theme--light {
     @include css-colors($color-light);
+    @include css-colors($color-light-tags, '-tags');
+
     @include css-colors($color-light-base-neutral, '-neutral');
     @include css-colors($color-light-base-primary, '-primary');
     @include css-colors($color-light-base-secondary, '-secondary');
@@ -54,6 +56,13 @@
     @include css-colors($color-light-base-warning, '-warning');
     @include css-colors($color-light-base-danger, '-danger');
     @include css-colors($color-light-base-info, '-info');
+
+    @include css-sizes($size-xs, '-xs');
+    @include css-sizes($size-sm, '-sm');
+    @include css-sizes($size-md, '-md');
+    @include css-sizes($size-lg, '-lg');
+    @include css-sizes($size-xl, '-xl');
+
 
     [class*="--neutral"] {
         @include css-remaps($color-light-base-neutral, '-neutral');
@@ -83,10 +92,32 @@
         @include css-remaps($color-light-base-info, '-info');
     }
 
+    [class*="--xs"] {
+        @include css-remaps($size-xs, '-xs', '-size');
+    }
+
+    [class*="--sm"] {
+        @include css-remaps($size-sm, '-sm', '-size');
+    }
+
+    [class*="--md"] {
+        @include css-remaps($size-md, '-md', '-size');
+    }
+
+    [class*="--lg"] {
+        @include css-remaps($size-lg, '-lg', '-size');
+    }
+
+    [class*="--xl"] {
+        @include css-remaps($size-xl, '-xl', '-size');
+    }
+
 }
 
 .n-theme--dark {
     @include css-colors($color-dark);
+    @include css-colors($color-dark-tags, '-tags');
+
     @include css-colors($color-dark-base-neutral, '-neutral');
     @include css-colors($color-dark-base-primary, '-primary');
     @include css-colors($color-dark-base-secondary, '-secondary');
@@ -95,32 +126,58 @@
     @include css-colors($color-dark-base-danger, '-danger');
     @include css-colors($color-dark-base-info, '-info');
 
+    @include css-sizes($size-xs, '-xs');
+    @include css-sizes($size-sm, '-sm');
+    @include css-sizes($size-md, '-md');
+    @include css-sizes($size-lg, '-lg');
+    @include css-sizes($size-xl, '-xl');
+
     [class*="--neutral"] {
-        @include css-remaps($color-dark-base-neutral, '-neutral');
+        @include css-remaps($color-dark-base-neutral, '-neutral', '-color');
     }
 
     [class*="--primary"] {
-        @include css-remaps($color-dark-base-primary, '-primary');
+        @include css-remaps($color-dark-base-primary, '-primary', '-color');
     }
 
     [class*="--secondary"] {
-        @include css-remaps($color-dark-base-secondary, '-secondary');
+        @include css-remaps($color-dark-base-secondary, '-secondary', '-color');
     }
 
     [class*="--success"] {
-        @include css-remaps($color-dark-base-success, '-success');
+        @include css-remaps($color-dark-base-success, '-success', '-color');
     }
 
     [class*="--warning"] {
-        @include css-remaps($color-dark-base-warning, '-warning');
+        @include css-remaps($color-dark-base-warning, '-warning', '-color');
     }
 
     [class*="--danger"] {
-        @include css-remaps($color-dark-base-danger, '-danger');
+        @include css-remaps($color-dark-base-danger, '-danger', '-color');
     }
 
     [class*="--info"] {
-        @include css-remaps($color-dark-base-info, '-info');
+        @include css-remaps($color-dark-base-info, '-info', '-color');
+    }
+
+    [class*="--xs"] {
+        @include css-remaps($size-xs, '-xs', '-size');
+    }
+
+    [class*="--sm"] {
+        @include css-remaps($size-sm, '-sm', '-size');
+    }
+
+    [class*="--md"] {
+        @include css-remaps($size-md, '-md', '-size');
+    }
+
+    [class*="--lg"] {
+        @include css-remaps($size-lg, '-lg', '-size');
+    }
+
+    [class*="--xl"] {
+        @include css-remaps($size-xl, '-xl', '-size');
     }
 
 }
@@ -133,22 +190,4 @@ body[class*="n-theme--"] {
     color: color('text');
 }
 
-[class*="--xs"] {
-    @include css-sizes($size-xs);
-}
 
-[class*="--sm"] {
-    @include css-sizes($size-sm);
-}
-
-[class*="--md"] {
-    @include css-sizes($size-md);
-}
-
-[class*="--lg"] {
-    @include css-sizes($size-lg);
-}
-
-[class*="--xl"] {
-    @include css-sizes($size-xl);
-}

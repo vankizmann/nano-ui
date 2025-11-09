@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-cascader {
     cursor: default;
@@ -8,6 +7,9 @@
     align-items: stretch;
     justify-content: stretch;
     width: 100%;
+    min-height: size('base-hgt');
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
     border: 1px solid transparent;
 }
 
@@ -30,9 +32,6 @@
     order: 100;
     flex: 0 0 auto;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
 }
 
 .n-cascader__clear {
@@ -57,15 +56,6 @@
     transform: scaleY(-1);
 }
 
-.n-cascader__clear i,
-.n-cascader__angle i {
-    text-align: center;
-}
-
-.n-cascader__clear i {
-    border-radius: 500px;
-}
-
 .n-cascader__items,
 .n-cascader__placeholder {
     overflow: hidden;
@@ -88,6 +78,8 @@
 .n-cascader__item:not(:last-child):after {
     content: '/';
     opacity: 0.3;
+    display: inline-block;
+    text-align: center;
 }
 
 .n-cascader__item span {
@@ -103,70 +95,25 @@
      border: 0;
 }
 
-.n-cascader__empty {
-     text-align: center;
-     color: $color-gray-60;
+.n-cascader__items,
+.n-cascader__placeholder {
+    padding: 0 size('base-pad');
 }
 
-@each $suffix, $values in $form {
+.n-cascader__clear,
+.n-cascader__angle {
+    width: size('base-hgt')
+}
 
-    $-cascader-font: map.get($values, 'font');
-    $-cascader-size: map.get($values, 'size');
-    $-cascader-radius: map.get($values, 'radius');
-    $-cascader-ratio: map.get($values, 'ratio');
+.n-cascader__body,
+.n-cascader__empty {
+    border-radius: size('base-rad')
+}
 
-    .n-cascader--#{$suffix} {
-        min-height: $-cascader-size;
-        font-size: $-cascader-font;
-        border-radius: $-cascader-radius;
-    }
+.n-cascader__empty {
+    padding: size('base-pad-vertical') size('base-pad')
+}
 
-    $-cascader-padding: $-cascader-size * $-cascader-ratio * 0.5;
-
-    .n-cascader--#{$suffix} .n-cascader__display,
-    .n-cascader--#{$suffix} .n-cascader__placeholder {
-        padding: 0 $-cascader-padding;
-    }
-
-    .n-cascader--#{$suffix} .n-cascader__clear,
-    .n-cascader--#{$suffix} .n-cascader__angle {
-        width: $-cascader-size;
-        margin: 0 -#{$-cascader-padding} 0 -#{$-cascader-padding};
-    }
-    .n-cascader--#{$suffix} .n-cascader__clear i,
-    .n-cascader--#{$suffix} .n-cascader__angle i {
-        width: $-cascader-size - 14;
-        height: $-cascader-size - 14;
-        line-height: $-cascader-size - 14;
-    }
-
-    .n-cascader--#{$suffix} .n-cascader__angle i {
-        font-size: $-cascader-font - 2;
-    }
-
-    .n-cascader--#{$suffix} .n-cascader__clear i {
-        font-size: $-cascader-font - 4;
-    }
-
-    .n-cascader--#{$suffix} .n-cascader__items {
-        padding: 0 $-cascader-padding * 0.5;
-    }
-
-    .n-cascader--#{$suffix} .n-cascader__item {
-        padding: 0 $-cascader-padding * 0.5;
-    }
-
-    .n-cascader--#{$suffix} .n-cascader__item:after {
-        margin-left: $-cascader-padding;
-    }
-
-    .n-popover--#{$suffix} .n-cascader__body,
-    .n-popover--#{$suffix} .n-cascader__empty {
-        border-radius: $-cascader-radius;
-    }
-
-    .n-popover--#{$suffix} .n-cascader__empty {
-        padding: $-cascader-padding;
-    }
-
+.n-cascader__item:after {
+    width: calc(#{"#{size('base-pad')} * 2"});
 }

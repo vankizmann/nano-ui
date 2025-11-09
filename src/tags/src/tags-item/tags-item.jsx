@@ -33,15 +33,15 @@ export default {
         type: {
             default()
             {
-                return -1;
+                return null;
             },
-            type: [String, Number]
+            type: [String]
         },
 
         color: {
             default()
             {
-                return 0;
+                return null;
             },
             type: [String, Number]
         },
@@ -101,12 +101,12 @@ export default {
             'n-tags-item--' + size,
         ];
 
-        if ( this.type === -1 ) {
-            classList.push('n-tags-item--color-' + this.color);
+        if ( this.type !== null ) {
+            classList.push('n-tags-item--' + this.type);
         }
 
-        if ( this.type !== -1 ) {
-            classList.push('n-tags-item--color-' + this.type);
+        if ( this.color !== null ) {
+            classList.push('n-tags-item--color-' + this.color);
         }
 
         return (

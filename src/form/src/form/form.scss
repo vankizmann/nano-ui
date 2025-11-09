@@ -1,1 +1,25 @@
-@import "../../../root/vars";
+@import "src/root/helpers";
+
+.n-form-clear,
+.n-form-angle {
+    position: relative;
+}
+
+.n-form-clear i,
+.n-form-angle i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(#{"#{size('base-hgt')} - 14px"});
+    height: calc(#{"#{size('base-hgt')} - 14px"});
+}
+
+.n-form-clear i,
+.n-form-angle i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    border-radius: size('base-rad-circle');
+}

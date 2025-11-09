@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-textarea {
     position: relative;
@@ -7,6 +6,7 @@
     align-items: stretch;
     justify-content: stretch;
     width: 100%;
+    font-size: size('base-fnt');
 }
 
 .n-textarea.n-disabled {
@@ -18,34 +18,17 @@
     appearance: none;
     display: block;
     width: 100%;
+    min-height: size('base-hgt');
     text-decoration: none;
+    font-size: 1em;
     line-height: 1.2;
     background: transparent;
     box-shadow: none;
+    border-radius: size('base-rad');
     border: 1px solid transparent;
+    padding: calc(#{"#{size('base-hgt')} * 0.2"}) size('base-pad');
 }
 
 .n-textarea.n-disabled textarea {
     cursor: not-allowed;
-}
-
-@each $suffix, $values in $form {
-
-    $-textarea-font: map.get($values, 'font');
-    $-textarea-size: map.get($values, 'size');
-    $-textarea-radius: map.get($values, 'radius');
-    $-textarea-ratio: map.get($values, 'ratio');
-
-    .n-textarea--#{$suffix} {
-        font-size: $-textarea-font;
-    }
-
-    $-textarea-line: $-textarea-size - 2 - ($-textarea-font * 1.2);
-
-    .n-textarea--#{$suffix} textarea {
-        min-height: $-textarea-size;
-        padding: $-textarea-line * 0.5 $-textarea-size * $-textarea-ratio;
-        border-radius: $-textarea-radius;
-    }
-
 }

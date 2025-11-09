@@ -1,5 +1,5 @@
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-info-field.n-info-field--image > div {
-     background-color: rgba($color-gray-50, 0.2);
+     background-color: color('gray-50', 0.2);
 }
