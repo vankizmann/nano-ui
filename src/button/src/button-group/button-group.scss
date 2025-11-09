@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-button-group {
     display: flex;
@@ -9,6 +8,14 @@
 .n-button-group > *:not(:first-child):not(:last-child) {
     position: relative;
     border-radius: 0;
+}
+
+.n-button-group > *:not(:first-child):last-child {
+    border-radius: 0 size('base-rad') size('base-rad') 0;
+}
+
+.n-button-group > *:not(:last-child):first-child {
+    border-radius: size('base-rad') 0 0 size('base-rad');
 }
 
 .n-button-group > *:not(:last-child) {
@@ -22,21 +29,4 @@
 .n-button-group > *:hover,
 .n-button-group > *.n-focus {
     z-index: 10;
-}
-
-@each $suffix, $values in $form {
-
-    $-button-group-font: map.get($values, 'font');
-    $-button-group-size: map.get($values, 'size');
-    $-button-group-radius: map.get($values, 'radius');
-    $-button-group-ratio: map.get($values, 'ratio');
-
-    .n-button-group--#{$suffix} > *:not(:first-child):last-child {
-        border-radius: 0 $-button-group-radius $-button-group-radius 0;
-    }
-
-    .n-button-group--#{$suffix} > *:not(:last-child):first-child {
-        border-radius: $-button-group-radius 0 0 $-button-group-radius;
-    }
-
 }

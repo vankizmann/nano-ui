@@ -17,22 +17,13 @@
     background: color('form-disabled');
 }
 
-.n-cascader__clear,
-.n-cascader__angle {
-    color: color('gray-60');
-}
-
-.n-cascader__clear i {
-    background: color('gray-15', 0.6);
-}
-
 .n-cascader__placeholder {
     color: color('foreground', 0.6);
 }
 
 .n-cascader__body,
 .n-cascader__empty {
-     background: color('background');
+     background: color('form');
 }
 
 .n-cascader__empty {

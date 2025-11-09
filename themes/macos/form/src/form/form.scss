@@ -1,1 +1,17 @@
-@import "../../../root/vars";
+@import "src/root/helpers";
+
+.n-form-clear {
+    color: color('gray-60');
+}
+
+.n-form-clear i {
+    background: color('foreground', 0.1);
+}
+
+.n-form-clear:hover i {
+    background: color('foreground', 0.15);
+}
+
+.n-form-angle {
+    color: color('gray-60');
+}

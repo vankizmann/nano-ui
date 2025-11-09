@@ -1,7 +1,7 @@
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-scrollbar-v:before,
 .n-scrollbar-h:before {
-    background: rgba($color-foreground, 0.4);
+    background: color('foreground', 0.4);
 }
 

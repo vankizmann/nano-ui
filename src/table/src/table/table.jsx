@@ -663,7 +663,7 @@ export default {
         );
 
         return (
-            <div class="n-table">
+            <div class="n-table n-table--md">
                 <NScrollbar ref="scrollbar" wrapClass="n-table__wrap" overflowY={false}>
                     {[this.ctor('renderHead')(), draggableHtml]}
                 </NScrollbar>

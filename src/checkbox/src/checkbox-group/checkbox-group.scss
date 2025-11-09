@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-checkbox-group {
     display: flex;
@@ -21,39 +20,30 @@
     align-items: flex-start;
 }
 
+.n-checkbox-group.n-checkbox-group--horizontal .n-checkbox {
+    min-height: 0;
+}
+
 .n-checkbox-group.n-checkbox-group--vertical .n-checkbox {
     width: 100%;
 }
 
-@each $suffix, $values in $form {
+.n-checkbox-group.n-checkbox-group--horizontal .n-checkbox:not(:first-child) {
+    margin-left: calc(#{"#{size('base-pad')} * 1.2"});
+}
 
-    $-checkbox-group-font: map.get($values, 'font');
-    $-checkbox-group-size: map.get($values, 'size');
-    $-checkbox-group-radius: map.get($values, 'radius');
-    $-checkbox-group-ratio: map.get($values, 'ratio');
+.n-checkbox-group.n-checkbox-group--horizontal .n-checkbox:last-child {
+    padding-right: 0;
+}
 
-    .n-checkbox-group--#{$suffix}.n-checkbox-group--horizontal .n-checkbox {
-        min-height: 0;
-    }
+.n-checkbox-group.n-checkbox-group--vertical .n-checkbox {
+    min-height: 0;
+}
 
-    .n-checkbox-group--#{$suffix}.n-checkbox-group--horizontal .n-checkbox:not(:first-child) {
-        margin-left: $-checkbox-group-size * $-checkbox-group-ratio;
-    }
+.n-checkbox-group.n-checkbox-group--vertical .n-checkbox:not(:first-child) {
+    margin-top: 3px;
+}
 
-    .n-checkbox-group--#{$suffix}.n-checkbox-group--horizontal .n-checkbox:last-child {
-        padding-right: 0;
-    }
-
-    .n-checkbox-group--#{$suffix}.n-checkbox-group--vertical .n-checkbox {
-        min-height: 0;
-    }
-
-    .n-checkbox-group--#{$suffix}.n-checkbox-group--vertical .n-checkbox:not(:first-child) {
-        margin-top: $-checkbox-group-size * $-checkbox-group-ratio * 0.5;
-    }
-
-    .n-checkbox-group--#{$suffix}.n-checkbox-group--vertical .n-checkbox:last-child {
-        padding-bottom: 0;
-    }
-
+.n-checkbox-group.n-checkbox-group--vertical .n-checkbox:last-child {
+    padding-bottom: 0;
 }

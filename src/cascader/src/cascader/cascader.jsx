@@ -45,6 +45,14 @@ export default {
             type: [String]
         },
 
+        emptyText: {
+            default()
+            {
+                return 'No items';
+            },
+            type: [String]
+        },
+
         disabled: {
             default()
             {
@@ -190,7 +198,7 @@ export default {
         }
 
         return (
-            <div class="n-cascader__clear" {...props}>
+            <div class="n-cascader__clear n-form-clear" {...props}>
                 <i class={ nano.Icons.times }></i>
             </div>
         );
@@ -199,7 +207,7 @@ export default {
     renderLabelAngle()
     {
         return (
-            <div class="n-cascader__angle">
+            <div class="n-cascader__angle n-form-angle">
                 <i class={ nano.Icons.angleDown }></i>
             </div>
         );
@@ -262,6 +270,16 @@ export default {
 
     renderItems()
     {
+        let emptyHtml = (
+            <div class="n-popover-shadow n-cascader__empty">
+                <NEmptyIcon inline={true}>{this.trans(this.emptyText)}</NEmptyIcon>
+            </div>
+        );
+
+        if ( Any.isEmpty(this.options) ) {
+            return emptyHtml;
+        }
+
         let props = Obj.except(this.$props, ['modelValue'], {
             hover: this.tempHover,
             modelValue: this.tempValue,
@@ -293,7 +311,7 @@ export default {
         );
     },
 
-    render()
+    renderElement()
     {
         let classList = [
             'n-cascader',
@@ -320,9 +338,16 @@ export default {
         return (
             <div class={classList}>
                 { this.ctor('renderDisplay')() }
-                { this.ctor('renderPopover')() }
             </div>
         );
+    },
+
+    render()
+    {
+        return [
+            this.ctor('renderElement')(),
+            this.ctor('renderPopover')()
+        ];
     }
 
 }

@@ -1,26 +1,28 @@
+@use "sass:color";
+@use "sass:string";
 
 @mixin css-colors($colors, $prefix: '') {
     @each $name, $color in $colors {
-        --n-color#{$prefix}-#{$name}: #{red($color)}, #{green($color)}, #{blue($color)};
+        --n-color#{$prefix}-#{$name}: #{color.channel($color, 'red')}, #{color.channel($color, 'green')}, #{color.channel($color, 'blue')};
     }
 }
 
-@mixin css-remaps($colors, $prefix: '-default') {
-    @each $name, $color in $colors {
-        --n-color-base-#{$name}: var(--n-color#{$prefix}-#{$name});
-    }
-}
-
-@mixin css-sizes($sizes) {
+@mixin css-sizes($sizes, $prefix: '') {
     @each $name, $value in $sizes {
-        --n-size-#{$name}: #{$value};
+        --n-size#{$prefix}-#{$name}: #{$value};
+    }
+}
+
+@mixin css-remaps($values, $suffix: '-default', $affix: '-color') {
+    @each $name, $value in $values {
+        --n#{$affix}-base-#{$name}: var(--n#{$affix}#{$suffix}-#{$name});
     }
 }
 
 @function color($color, $opacity: 1) {
-    @return unquote("rgba(var(--n-color-#{$color}), #{$opacity})")
+    @return string.unquote("rgba(var(--n-color-#{$color}), #{$opacity})")
 };
 
 @function size($size) {
-    @return unquote("var(--n-size-#{$size})")
+    @return string.unquote("var(--n-size-#{$size})")
 };

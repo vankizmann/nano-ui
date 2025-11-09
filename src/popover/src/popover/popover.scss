@@ -1,11 +1,11 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-popover {
     position: absolute;
     display: inline-flex;
     flex-direction: column;
     transition: opacity 0.1s;
+    font-size: size('base-fnt');
 }
 
 .n-popover:before,
@@ -156,6 +156,7 @@
 
 .n-popover__frame {
     overflow: hidden;
+    border-radius: size('base-rad');
 }
 
 .n-popover__header {
@@ -177,14 +178,18 @@
     flex-direction: row;
     align-items: center;
     justify-content: stretch;
-    text-decoration: none
+    text-decoration: none;
+    padding: calc(#{"#{size('base-pad')} - 2px"}) size('base-pad');
+    font-size: size('base-fnt');
 }
 
 .n-popover-group {
+    font-size: 0.8em;
     font-weight: bold;
 }
 
 .n-popover-option {
+    font-size: 1em;
     width: 100%;
 }
 
@@ -222,7 +227,9 @@
 
 .n-popover-option .n-icon {
     flex: 0 0 auto;
+    font-size: size('base-fnt-icon');
     text-align: center;
+    width: calc(#{"#{size('base-pad')} * 2"});
 }
 
 .n-popover-option .n-icon--before {
@@ -233,78 +240,45 @@
     order: 3;
 }
 
-@each $suffix, $values in $form {
+.n-popover .n-popover__header {
+    padding: size('base-pad-vertical') size('base-pad');
+}
 
-    $-popover-font: map.get($values, 'font');
-    $-popover-size: map.get($values, 'size');
-    $-popover-radius: map.get($values, 'radius');
-    $-popover-ratio: map.get($values, 'ratio');
+.n-popover .n-popover__body {
+    padding: size('base-pad-vertical') size('base-pad');
+}
 
-    .n-popover--#{$suffix} {
-        font-size: $-popover-font;
-    }
+.n-popover .n-popover__footer {
+    padding: size('base-pad-vertical') size('base-pad');
+}
 
-    .n-popover--#{$suffix} .n-popover__frame {
-        border-radius: $-popover-radius;
-    }
+.n-popover .n-popover__body .n-popover-group:first-child,
+.n-popover .n-popover__body .n-popover-option:first-child {
+    margin-top: calc(#{"#{size('base-pad-vertical')} * -1"});
+}
 
-    $-popover-padding: $-popover-size * $-popover-ratio;
+.n-popover  .n-popover__body .n-popover-group:last-child,
+.n-popover  .n-popover__body .n-popover-option:last-child {
+    margin-bottom: calc(#{"#{size('base-pad-vertical')} * -1"});
+}
 
-    .n-popover--#{$suffix} .n-popover__header {
-        padding: $-popover-padding $-popover-padding * 1.2;
-    }
+.n-popover .n-popover__body .n-popover-group,
+.n-popover .n-popover__body .n-popover-option {
+    width: calc(#{"100% + (#{size('base-pad')} * 2)"});
+    margin: 0 calc(#{"#{size('base-pad')} * -1"});
+}
 
-    .n-popover--#{$suffix} .n-popover__body {
-        padding: $-popover-padding $-popover-padding * 1.2;
-    }
+.n-popover-option .n-image {
+    width: calc(#{"#{size('base-pad')} * 2"});
+    height: calc(#{"#{size('base-pad')} * 2"});
+}
 
-    .n-popover--#{$suffix} .n-popover__footer {
-        padding: $-popover-padding $-popover-padding * 1.2;
-    }
+.n-popover-option .n-image--before,
+.n-popover-option .n-icon--before {
+    margin-right: size('base-pad');
+}
 
-    .n-popover-group.n-popover-group--#{$suffix} {
-        font-size: $-popover-font - 2;
-        padding: $-popover-padding * 0.8 $-popover-padding * 1.2 $-popover-padding * 0.4;
-    }
-
-    .n-popover-option.n-popover-option--#{$suffix} {
-        padding: $-popover-padding * 0.6 $-popover-padding * 1.2;
-    }
-
-    .n-popover--#{$suffix} .n-popover__body .n-popover-group,
-    .n-popover--#{$suffix} .n-popover__body .n-popover-option {
-        width: calc(100% + #{$-popover-padding * 2.4});
-        margin: 0 -#{$-popover-padding * 1.2};
-    }
-
-    .n-popover--#{$suffix} .n-popover__body .n-popover-group:first-child,
-    .n-popover--#{$suffix} .n-popover__body .n-popover-option:first-child {
-        margin-top: -#{$-popover-padding};
-    }
-
-    .n-popover--#{$suffix}  .n-popover__body .n-popover-group:last-child,
-    .n-popover--#{$suffix}  .n-popover__body .n-popover-option:last-child {
-        margin-bottom: -#{$-popover-padding};
-    }
-
-    .n-popover-option--#{$suffix} .n-image {
-        width: $-popover-font + 10;
-        height: $-popover-font + 10;
-    }
-
-    .n-popover-option--#{$suffix} .n-icon {
-        width: $-popover-font;
-        font-size: $-popover-font - 4;
-    }
-
-    .n-popover-option--#{$suffix} .n-image--before,
-    .n-popover-option--#{$suffix} .n-icon--before {
-        margin-right: $-popover-padding;
-    }
-
-    .n-popover-option--#{$suffix} .n-image--after,
-    .n-popover-option--#{$suffix} .n-icon--after {
-        margin-left: $-popover-padding;
-    }
-
+.n-popover-option .n-image--after,
+.n-popover-option .n-icon--after {
+    margin-left: size('base-pad');
 }

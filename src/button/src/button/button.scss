@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-button {
     appearance: none;
@@ -8,10 +7,24 @@
     justify-content: center;
     white-space: nowrap;
     text-decoration: none;
+    font-size: size('base-font');
     line-height: 1.2;
     background: transparent;
     border: 1px solid transparent;
     transition: border 0.10s, background 0.10s;
+}
+
+.n-button:not(.n-button--link) {
+    height: size('base-hgt');
+    border-radius: size('base-rad');
+}
+
+.n-button.n-button--square:not(.n-button--link) {
+    width: size('base-hgt');
+}
+
+.n-button:not(.n-button--link):not(.n-button--square) {
+    padding: 0 size('base-pad');
 }
 
 .n-button.n-disabled {
@@ -19,39 +32,13 @@
 }
 
 .n-button .n-icon {
-    font-size: 0.8em;
+    font-size: size('base-fnt-icon');
 }
 
-@each $suffix, $values in $form {
+.n-button .n-icon.n-icon--before:not(:last-child) {
+    margin-right: calc(#{"#{size('base-pad')} * 0.8"});
+}
 
-    $-button-font: map.get($values, 'font');
-    $-button-size: map.get($values, 'size');
-    $-button-radius: map.get($values, 'radius');
-    $-button-ratio: map.get($values, 'ratio');
-
-    .n-button--#{$suffix} {
-        font-size: $-button-font;
-    }
-
-    .n-button--#{$suffix}:not(.n-button--link) {
-        height: $-button-size;
-        border-radius: $-button-radius;
-    }
-
-    .n-button--#{$suffix}.n-button--square:not(.n-button--link) {
-        width: $-button-size;
-    }
-
-    .n-button--#{$suffix}:not(.n-button--link):not(.n-button--square) {
-        padding: 0 $-button-size * $-button-ratio;
-    }
-
-    .n-button--#{$suffix} .n-icon.n-icon--before:not(:last-child) {
-        margin-right: $-button-font * $-button-ratio;
-    }
-
-    .n-button--#{$suffix} .n-icon.n-icon--after:not(:first-child) {
-        margin-left: $-button-font * $-button-ratio;
-    }
-
+.n-button .n-icon.n-icon--after:not(:first-child) {
+    margin-left: calc(#{"#{size('base-pad')} * 0.8"});
 }

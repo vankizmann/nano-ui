@@ -1,5 +1,4 @@
-@use "sass:map";
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-table-cell.n-changed:before {
     content: '\00a0';
@@ -10,42 +9,30 @@
     width: 0;
     height: 0;
     border: 3px solid transparent;
-    border-bottom-color: $color-danger;
+    border-bottom-color: color('danger-color');
     transform: rotate(-45deg);
 }
 
 .n-table-cell--image > div {
-    background-color: $color-gray-05;
+    background-color: color('gray-50', 0.2);
 }
 
 .n-table-cell--checkbox i {
-    background: $color-input;
-    border: 1px solid $color-gray-15;
+    background: color('form-input');
+    border: 1px solid color('gray-15');
 }
 
 .n-table-cell--checkbox.n-disabled i {
-    background: $color-input-off;
+    background: color('form-disabled');
 }
 
-@each $color, $values in $colors {
+.n-table-cell--checkbox.n-checked:not(.n-disabled) i,
+.n-table-cell--checkbox.n-checked:not(.n-uncheck) i {
+    color: color('base-text');
+    background: color('base-color');
+    border-color: color('base-color');
+}
 
-    $-color-base: map.get($values, 'base');
-    $-color-light: map.get($values, 'light');
-    $-color-dark: map.get($values, 'dark');
-
-    .n-draglist--#{$color} .n-table-cell--checkbox.n-checked:not(.n-disabled) i,
-    .n-draglist--#{$color} .n-table-cell--checkbox.n-checked:not(.n-uncheck) i {
-        color: $color-white;
-        background: $-color-base;
-        border-color: $-color-base;
-    }
-
-    .n-draglist--#{$color} .n-table-cell--checkbox:not(.n-disabled):hover i {
-        border-color: $-color-light;
-    }
-
-    .n-draglist--#{$color} .n-table-cell--checkbox.n-checked:not(.n-disabled):hover i {
-        background: $-color-light;
-    }
-
+.n-table-cell--checkbox:not(.n-disabled):hover i {
+    border-color: color('base-color-bg-30');
 }

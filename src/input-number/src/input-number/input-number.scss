@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-input-number {
     position: relative;
@@ -7,6 +6,8 @@
     align-items: stretch;
     justify-content: stretch;
     width: 100%;
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
     border: 1px solid transparent;
 }
 
@@ -19,9 +20,12 @@
     appearance: none;
     display: block;
     width: 100%;
+    height: calc(#{"#{size('base-hgt')} - 2px"});
     white-space: nowrap;
     text-decoration: none;
+    font-size: 1em;
     line-height: 1.2;
+    padding: 0 size('base-pad');
     border: none;
     background: transparent;
     box-shadow: none;
@@ -36,69 +40,20 @@
     border-radius: 0;
 }
 
+.n-input-number .n-button.n-button--reset {
+    width: calc(#{"#{size('base-hgt')} - 2px"});
+    height: calc(#{"#{size('base-hgt')} - 2px"});
+}
+
 .n-input-number .n-button:not(.n-disabled) {
     cursor: default;
 }
 
-.n-input-number__clear {
-    flex: 0 0 auto;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-.n-input-number__clear {
+.n-input-number .n-input-number__clear {
     display: none;
+    width: calc(#{"#{size('base-hgt')} - 2px"});
 }
 
-.n-input-number__clear i {
-    display: inline-block;
-    text-align: center;
-    border-radius: 500px;
-}
-
-.n-input-number:hover.n-clearable:not(.n-empty) .n-input-number__clear {
+.n-input-number.n-clearable:not(.n-empty):hover .n-input-number__clear {
     display: flex;
-}
-
-
-
-@each $suffix, $values in $form {
-
-    $-input-number-font: map.get($values, 'font');
-    $-input-number-size: map.get($values, 'size');
-    $-input-number-radius: map.get($values, 'radius');
-    $-input-number-ratio: map.get($values, 'ratio');
-
-    .n-input-number--#{$suffix} {
-        font-size: $-input-number-font;
-        border-radius: $-input-number-radius;
-    }
-
-    .n-input-number--#{$suffix} input {
-        height: $-input-number-size - 2;
-        padding: 0 $-input-number-size * $-input-number-ratio;
-    }
-
-    .n-input-number--#{$suffix} .n-button {
-        font-size: $-input-number-font - 4;
-    }
-
-    .n-input-number--#{$suffix} .n-button.n-button--square:not(.n-button--link) {
-        width: $-input-number-size - 2;
-        height: $-input-number-size - 2;
-    }
-
-    .n-input-number--#{$suffix} .n-input-number__clear {
-        margin-right: $-input-number-size * $-input-number-ratio * 0.5;
-    }
-
-    .n-input-number--#{$suffix} .n-input-number__clear i {
-        font-size: $-input-number-font - 4;
-        width: $-input-number-size - 14;
-        height: $-input-number-size - 14;
-        line-height: $-input-number-size - 14;
-    }
-
 }

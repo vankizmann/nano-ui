@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-checkbox {
     cursor: default;
@@ -7,6 +6,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: stretch;
+    min-height: size('base-hgt');
+    font-size: size('base-fnt');
 }
 
 .n-checkbox.n-disabled {
@@ -25,6 +26,7 @@
 
 .n-checkbox__checkbox i {
     opacity: 0;
+    font-size: size('base-fnt-inline');
 }
 
 .n-checkbox.n-checked .n-checkbox__checkbox i,
@@ -32,33 +34,12 @@
     opacity: 1;
 }
 
-@each $suffix, $values in $form {
+.n-checkbox .n-checkbox__checkbox {
+    width: size('base-hgt-inline');
+    height: size('base-hgt-inline');
+    border-radius: size('base-rad-inline');
+}
 
-    $-checkbox-font: map.get($values, 'font');
-    $-checkbox-size: map.get($values, 'size');
-    $-checkbox-radius: map.get($values, 'radius');
-    $-checkbox-ratio: map.get($values, 'ratio');
-
-    .n-checkbox--#{$suffix} {
-        min-height: $-checkbox-size;
-        font-size: $-checkbox-font;
-    }
-
-    .n-checkbox--#{$suffix} .n-checkbox__checkbox {
-        font-size: $-checkbox-font - 3;
-        width: $-checkbox-size - 14;
-        height: $-checkbox-size - 14;
-        border-radius: $-checkbox-radius - 1;
-    }
-
-    .n-checkbox--#{$suffix} .n-checkbox__checkbox i {
-
-    }
-
-    $-checkbox-padding: $-checkbox-size * $-checkbox-ratio;
-
-    .n-checkbox--#{$suffix} .n-checkbox__label {
-        padding: 0 0 0 $-checkbox-padding * 0.5;
-    }
-
+.n-checkbox .n-checkbox__label {
+    padding-left: calc(#{"#{size('base-pad')} * 0.8"});
 }

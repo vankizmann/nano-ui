@@ -563,7 +563,7 @@ export default {
         }
 
         return (
-            <div class="n-select__clear" {...props}>
+            <div class="n-select__clear n-form-clear" {...props}>
                 <i class={nano.Icons.times}></i>
             </div>
         );
@@ -572,7 +572,7 @@ export default {
     renderLabelAngle()
     {
         return (
-            <div class="n-select__angle">
+            <div class="n-select__angle n-form-angle">
                 <i class={nano.Icons.angleDown}></i>
             </div>
         );
@@ -841,7 +841,6 @@ export default {
     {
         let classList = [
             'n-popover--select',
-            'n-theme--dark'
         ];
 
         if ( this.lazy ) {
@@ -890,7 +889,7 @@ export default {
         return Obj.values(Obj.each(this.options, optionRender));
     },
 
-    render()
+    renderElement()
     {
         let classList = [
             'n-select',
@@ -920,10 +919,17 @@ export default {
         return (
             <div class={classList} onClick={this.focusInput}>
                 {this.ctor('renderDisplay')()}
-                {this.ctor('renderPopover')()}
                 {this.ctor('renderOptions')()}
             </div>
         );
+    },
+
+    render()
+    {
+        return [
+            this.ctor('renderElement')(),
+            this.ctor('renderPopover')()
+        ];
     }
 
 }

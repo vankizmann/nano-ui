@@ -10,7 +10,14 @@ export class PopoverElement
     visible = false;
 
     options = {
-        parent: null, target: null, listen: false, trigger: 'hover', position: 'bottom-center', width: -1, scrollClose: true, multiClose: true,
+        parent: null,
+        target: null,
+        listen: false,
+        trigger: 'hover',
+        position: 'bottom-center',
+        width: -1,
+        scrollClose: true,
+        multiClose: true,
     };
 
     client = {
@@ -169,8 +176,6 @@ export class PopoverElement
 
         this.visible = false;
 
-        console.log('hide', event, el);
-
         PopoverHandler.unsetCurrent(this);
     }
 
@@ -212,8 +217,6 @@ export class PopoverElement
         if ( this.visible === result ) {
             return;
         }
-
-        console.log('click vis true', el)
 
         this.showQueue('click');
     }

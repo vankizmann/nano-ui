@@ -1,5 +1,6 @@
 @use 'sass:map';
 @import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-empty-icon {
     pointer-events: none;
@@ -9,6 +10,7 @@
     justify-content: center;
     width: 100%;
     margin: 0 auto;
+    font-size: size('base-fnt');
 }
 
 .n-empty-icon.n-inline {
@@ -18,15 +20,17 @@
 
 .n-empty-icon__frame {
     display: block;
-    width: 35%;
-    min-width: 36px;
-    margin: 0 auto;
-    opacity: 0.3;
+    opacity: 0.5;
+}
+
+.n-empty-icon:not(.n-inline) .n-empty-icon__frame {
+    width: calc(#{"#{size('base-pad')} * 4.5"});
+    height: calc(#{"#{size('base-pad')} * 4.5"});
 }
 
 .n-empty-icon.n-inline .n-empty-icon__frame {
-    width: 36px;
-    margin: 0 10px 0 0;
+    width: calc(#{"#{size('base-pad')} * 2.75"});
+    height: calc(#{"#{size('base-pad')} * 2.75"});
 }
 
 .n-empty-icon.n-disabled .n-empty-icon__frame {
@@ -41,21 +45,7 @@
     padding-bottom: 100%;
 }
 
-@each $suffix, $values in $form {
 
-    $-empty-icon-font: map.get($values, 'font');
-    $-empty-icon-size: map.get($values, 'size');
-    $-empty-icon-radius: map.get($values, 'radius');
-    $-empty-icon-ratio: map.get($values, 'ratio');
-
-    .n-empty-icon--#{$suffix} {
-        font-size: $-empty-icon-font;
-    }
-
-    .n-empty-icon--#{$suffix} .n-empty-icon__frame {
-        max-width: $-empty-icon-size * 2.5;
-        max-height: $-empty-icon-size * 2.5;
-        margin-bottom: $-empty-icon-size * 0.2;
-    }
-
+.n-empty-icon.n-inline .n-empty-icon__text {
+    margin-left: size('base-pad');
 }
