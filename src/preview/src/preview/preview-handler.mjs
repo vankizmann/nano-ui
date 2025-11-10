@@ -81,8 +81,15 @@ export class PreviewHandler
             return el;
         }
 
+        let classList = [
+            'n-preview-modal',
+            'n-preview-modal--md',
+            'n-preview-modal--primary',
+            'n-theme--dark'
+        ];
+
         let el = Dom.make('div', {
-            classList: 'n-preview-modal'
+            classList: classList.join(' ')
         });
 
         el.attr('data-preview', 'nano');

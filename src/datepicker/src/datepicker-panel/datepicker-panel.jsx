@@ -291,6 +291,7 @@ export default {
         let props = {
             type: this.type,
             glass: true,
+            square: true,
             icon: nano.Icons.angleLeft,
             onClick: closure
         };
@@ -303,6 +304,7 @@ export default {
         let props = {
             type: this.type,
             glass: true,
+            square: true,
             icon: nano.Icons.angleRight,
             onClick: closure
         };

@@ -267,7 +267,7 @@ export default {
         }
 
         return (
-            <div class="n-datetimepicker__clear" {...props}>
+            <div class="n-datetimepicker__clear n-form-clear" {...props}>
                 <i class={ nano.Icons.times }></i>
             </div>
         );
@@ -276,7 +276,7 @@ export default {
     renderLabelAngle()
     {
         return (
-            <div class="n-datetimepicker__angle">
+            <div class="n-datetimepicker__angle n-form-angle">
                 <i class={ nano.Icons.angleDown }></i>
             </div>
         );
@@ -381,7 +381,7 @@ export default {
         );
     },
 
-    renderElement()
+    render()
     {
         let classList = [
             'n-datetimepicker',
@@ -410,16 +410,9 @@ export default {
         return (
             <div class={classList}>
                 { this.ctor('renderDisplay')() }
+                { this.ctor('renderPopover')() }
             </div>
         );
-    },
-
-    render()
-    {
-        return [
-            this.ctor('renderElement')(),
-            this.ctor('renderPopover')()
-        ];
     }
 
 }

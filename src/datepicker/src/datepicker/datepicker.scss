@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-datepicker {
     display: flex;
@@ -20,7 +19,9 @@
     flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
-    width: 100%;
+    width: calc(100% + 2px);
+    margin: -1px;
+    border: 1px solid transparent;
 }
 
 .n-datepicker__seperator {
@@ -118,54 +119,23 @@
      text-align: center;
 }
 
-@each $suffix, $values in $form {
-
-    $-datepicker-font: map.get($values, 'font');
-    $-datepicker-size: map.get($values, 'size');
-    $-datepicker-radius: map.get($values, 'radius');
-    $-datepicker-ratio: map.get($values, 'ratio');
-
-    .n-datepicker--#{$suffix} {
-        min-height: $-datepicker-size;
-        font-size: $-datepicker-font;
-        border-radius: $-datepicker-radius;
-    }
-
-    $-datepicker-padding: $-datepicker-size * $-datepicker-ratio * 0.5;
-
-    .n-datepicker--#{$suffix} .n-datepicker__display,
-    .n-datepicker--#{$suffix} .n-datepicker__seperator,
-    .n-datepicker--#{$suffix} .n-datepicker__input input {
-        padding: 0 $-datepicker-padding;
-    }
-
-    .n-datepicker--#{$suffix} .n-datepicker__clear,
-    .n-datepicker--#{$suffix} .n-datepicker__angle {
-        width: $-datepicker-size;
-        margin: 0 -#{$-datepicker-padding} 0 -#{$-datepicker-padding};
-    }
-    .n-datepicker--#{$suffix} .n-datepicker__clear i,
-    .n-datepicker--#{$suffix} .n-datepicker__angle i {
-        width: $-datepicker-size - 14;
-        height: $-datepicker-size - 14;
-        line-height: $-datepicker-size - 14;
-    }
-
-    .n-datepicker--#{$suffix} .n-datepicker__angle i {
-        font-size: $-datepicker-font - 2;
-    }
-
-    .n-datepicker--#{$suffix} .n-datepicker__clear i {
-        font-size: $-datepicker-font - 4;
-    }
-
-    .n-popover--#{$suffix} .n-datepicker__body,
-    .n-popover--#{$suffix} .n-datepicker__empty {
-        border-radius: $-datepicker-radius;
-    }
-
-    .n-popover--#{$suffix} .n-datepicker__empty {
-        padding: $-datepicker-padding;
-    }
-
+.n-datepicker {
+    height: size('base-hgt');
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
 }
+
+//.n-datepicker__seperator,
+.n-datepicker__input input {
+    padding: 0 size('base-pad');
+}
+
+.n-datepicker__clear,
+.n-datepicker__angle {
+    width: size('base-hgt');
+}
+
+.n-datepicker__body {
+    border-radius: size('base-rad');
+}
+

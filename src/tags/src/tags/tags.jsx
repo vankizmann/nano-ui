@@ -98,6 +98,7 @@ export default {
     {
         let classList = [
             'n-tags',
+            'n-tags--' + this.size,
         ];
 
         return (

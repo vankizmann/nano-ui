@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-draggrid-item {
     cursor: default;
@@ -12,10 +11,6 @@
 
 .n-draggrid-item.n-nodrop > * > * {
     pointer-events: none;
-}
-
-.n-draggrid-item.n-nodrop {
-    background: rgba($color-danger, 0.1);
 }
 
 .n-draggrid-item__element {
@@ -59,34 +54,17 @@
     display: none;
 }
 
-@each $suffix, $values in $form {
+.n-draggrid-item__ellipsis,
+.n-draggrid-item__checkbox {
+    width: size('base-hgt-inline');
+    height: size('base-hgt-inline');
+    border-radius: size('base-rad-inline');
+}
 
-    $-draggrid-font: map.get($values, 'font');
-    $-draggrid-size: map.get($values, 'size');
-    $-draggrid-radius: map.get($values, 'radius');
-    $-draggrid-ratio: map.get($values, 'ratio');
+.n-draggrid-item__ellipsis {
+    font-size: size('base-fnt-icon');
+}
 
-    .n-draggrid--#{$suffix} {
-        font-size: $-draggrid-font;
-    }
-
-    .n-draggrid--#{$suffix} .n-draggrid__empty {
-        padding: $-draggrid-size $-draggrid-size * 0.5;
-    }
-
-    .n-draggrid--#{$suffix} .n-draggrid-item__ellipsis,
-    .n-draggrid--#{$suffix} .n-draggrid-item__checkbox {
-        width: $-draggrid-size - 16;
-        height: $-draggrid-size - 16;
-        border-radius: $-draggrid-radius - 1;
-    }
-
-    .n-draggrid--#{$suffix} .n-draggrid-item__ellipsis {
-        font-size: $-draggrid-font - 2;
-    }
-
-    .n-draggrid--#{$suffix} .n-draggrid-item__checkbox {
-        font-size: $-draggrid-font - 4;
-    }
-
+.n-draggrid-item__checkbox {
+    font-size: size('base-fnt-inline');
 }

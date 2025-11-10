@@ -1,5 +1,9 @@
-@import "../../../root/vars";
+@import "src/root/helpers";
+
+.n-tags {
+    margin-bottom: calc(#{"#{size('base-pad-vertical')} * -1"});
+}
 
 .n-tags .n-tags-item {
-    margin: 0 6px 6px 0;
+    margin: 0 size('base-pad-vertical') size('base-pad-vertical') 0;
 }

@@ -420,7 +420,7 @@ export default {
         }
 
         return (
-            <div class="n-datepicker__clear" {...props}>
+            <div class="n-datepicker__clear n-form-clear" {...props}>
                 <i class={ nano.Icons.times }></i>
             </div>
         );
@@ -429,7 +429,7 @@ export default {
     renderLabelAngle()
     {
         return (
-            <div class="n-datepicker__angle">
+            <div class="n-datepicker__angle n-form-angle">
                 <i class={ nano.Icons.angleDown }></i>
             </div>
         );
@@ -531,8 +531,19 @@ export default {
         let classList = [
             'n-popover-shadow',
         ];
+
+        let excludes = [
+            'modelValue',
+            'placeholder',
+            'placeholderArrive',
+            'placeholderDepart',
+            'rangeSeparator',
+            'position',
+            'clearable',
+            'displayFormat'
+        ];
         
-        let props = Obj.except(this.$props, ['modelValue'], {
+        let props = Obj.except(this.$props, excludes, {
             arrive: this.tempArrive.format(this.format) || null,
             depart: this.tempDepart.format(this.format) || null,
             modelValue: this.tempValue.format(this.format) || null,
@@ -565,7 +576,7 @@ export default {
         );
     },
 
-    renderElement()
+    render()
     {
         let classList = [
             'n-datepicker',
@@ -599,16 +610,9 @@ export default {
         return (
             <div class={classList}>
                 { this.ctor('renderDisplay')() }
+                { this.ctor('renderPopover')() }
             </div>
         );
-    },
-
-    render()
-    {
-        return [
-            this.ctor('renderElement')(),
-            this.ctor('renderPopover')()
-        ];
     }
 
 }

@@ -1,5 +1,6 @@
 @use 'sass:map';
 @import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-timepicker-panel {
     cursor: default;
@@ -8,6 +9,8 @@
     align-items: stretch;
     justify-content: stretch;
     max-height: 270px;
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
 }
 
 .n-timepicker-panel__header {
@@ -49,11 +52,6 @@
     $-timepicker-panel-size: map.get($values, 'size');
     $-timepicker-panel-radius: map.get($values, 'radius');
     $-timepicker-panel-ratio: map.get($values, 'ratio');
-
-    .n-timepicker-panel--#{$suffix} {
-        font-size: $-timepicker-panel-font;
-        border-radius: $-timepicker-panel-radius;
-    }
 
     .n-timepicker-panel--#{$suffix} .n-timepicker-panel__panel {
         width: $-timepicker-panel-size * 2;

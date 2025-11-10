@@ -220,13 +220,13 @@ export default {
             'n-collapse__body'
         ];
 
-        // if ( Arr.first(sorted)['name'] === this.name ) {
-        //     classList.push('is-first');
-        // }
-        //
-        // if ( Arr.last(sorted)['name'] === this.name ) {
-        //     classList.push('is-last');
-        // }
+        if ( Arr.first(sorted)['name'] === this.name ) {
+            classList.push('is-first');
+        }
+
+        if ( Arr.last(sorted)['name'] === this.name ) {
+            classList.push('is-last');
+        }
 
         let tempValue = Arr.clone(this.NCollapse.tempValue);
 
@@ -251,7 +251,7 @@ export default {
         this.init = true;
 
         let style = {
-            // order: (Arr.find(sorted, { name: this.name })['index'] * 10) + 2
+            order: (Arr.find(sorted, { name: this.name })['index'] * 10) + 2
         };
 
         if ( !Arr.has(tempValue, this.name) ) {
@@ -270,8 +270,7 @@ export default {
     render()
     {
         return [
-            this.ctor('renderBody')()
-            // this.ctor('renderHeader')(), this.ctor('renderBody')()
+            this.ctor('renderHeader')(), this.ctor('renderBody')()
         ];
     }
 }

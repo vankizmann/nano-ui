@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-durationpicker {
     display: flex;
@@ -20,7 +19,9 @@
     flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
-    width: 100%;
+    width: calc(100% + 2px);
+    margin: -1px;
+    border: 1px solid transparent;
 }
 
 .n-durationpicker__input {
@@ -105,48 +106,23 @@
     max-height: 210px;
 }
 
-@each $suffix, $values in $form {
+@import "src/root/helpers";
 
-    $-duration-font: map.get($values, 'font');
-    $-duration-size: map.get($values, 'size');
-    $-duration-radius: map.get($values, 'radius');
-    $-duration-ratio: map.get($values, 'ratio');
+.n-durationpicker {
+    height: size('base-hgt');
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
+}
 
-    .n-durationpicker--#{$suffix} {
-        min-height: $-duration-size;
-        font-size: $-duration-font;
-        border-radius: $-duration-radius;
-    }
+.n-durationpicker__input input {
+    padding: 0 size('base-pad');
+}
 
-    $-duration-padding: $-duration-size * $-duration-ratio * 0.5;
+.n-durationpicker__clear,
+.n-durationpicker__angle {
+    width: size('base-hgt');
+}
 
-    .n-durationpicker--#{$suffix} .n-durationpicker__display,
-    .n-durationpicker--#{$suffix} .n-durationpicker__input input {
-        padding: 0 $-duration-padding;
-    }
-
-    .n-durationpicker--#{$suffix} .n-durationpicker__clear,
-    .n-durationpicker--#{$suffix} .n-durationpicker__angle {
-        width: $-duration-size;
-        margin: 0 -#{$-duration-padding} 0 -#{$-duration-padding};
-    }
-    .n-durationpicker--#{$suffix} .n-durationpicker__clear i,
-    .n-durationpicker--#{$suffix} .n-durationpicker__angle i {
-        width: $-duration-size - 14;
-        height: $-duration-size - 14;
-        line-height: $-duration-size - 14;
-    }
-
-    .n-durationpicker--#{$suffix} .n-durationpicker__angle i {
-        font-size: $-duration-font - 2;
-    }
-
-    .n-durationpicker--#{$suffix} .n-durationpicker__clear i {
-        font-size: $-duration-font - 4;
-    }
-
-    .n-popover--#{$suffix} .n-durationpicker-panel {
-        border-radius: $-duration-radius;
-    }
-
+.n-durationpicker-panel {
+    border-radius: size('base-rad');
 }

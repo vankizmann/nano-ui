@@ -1,5 +1,6 @@
 @use 'sass:map';
 @import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-slider {
     position: relative;

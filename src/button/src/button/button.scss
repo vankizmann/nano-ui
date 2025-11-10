@@ -7,11 +7,15 @@
     justify-content: center;
     white-space: nowrap;
     text-decoration: none;
-    font-size: size('base-font');
+    font-size: size('base-fnt');
     line-height: 1.2;
     background: transparent;
     border: 1px solid transparent;
     transition: border 0.10s, background 0.10s;
+}
+
+.n-button:not(.n-button--square) {
+    min-width: size('base-hgt');
 }
 
 .n-button:not(.n-button--link) {

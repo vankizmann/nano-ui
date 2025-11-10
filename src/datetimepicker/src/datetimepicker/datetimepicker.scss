@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-datetimepicker {
     display: flex;
@@ -19,7 +18,9 @@
     flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
-    width: 100%;
+    width: calc(100% + 2px);
+    margin: -1px;
+    border: 1px solid transparent;
 }
 
 .n-datetimepicker__seperator {
@@ -130,53 +131,21 @@
      text-align: center;
 }
 
-@each $suffix, $values in $form {
+.n-datetimepicker {
+    height: size('base-hgt');
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
+}
 
-    $-datepicker-font: map.get($values, 'font');
-    $-datepicker-size: map.get($values, 'size');
-    $-datepicker-radius: map.get($values, 'radius');
-    $-datepicker-ratio: map.get($values, 'ratio');
+.n-datetimepicker__input input {
+    padding: 0 size('base-pad');
+}
 
-    .n-datetimepicker--#{$suffix} {
-        min-height: $-datepicker-size;
-        font-size: $-datepicker-font;
-        border-radius: $-datepicker-radius;
-    }
+.n-datetimepicker__clear,
+.n-datetimepicker__angle {
+    width: size('base-hgt');
+}
 
-    $-datepicker-padding: $-datepicker-size * $-datepicker-ratio * 0.5;
-
-    .n-datetimepicker--#{$suffix} .n-datetimepicker__display,
-    .n-datetimepicker--#{$suffix} .n-datetimepicker__seperator,
-    .n-datetimepicker--#{$suffix} .n-datetimepicker__input input {
-        padding: 0 $-datepicker-padding;
-    }
-
-    .n-datetimepicker--#{$suffix} .n-datetimepicker__clear,
-    .n-datetimepicker--#{$suffix} .n-datetimepicker__angle {
-        width: $-datepicker-size;
-        margin: 0 -#{$-datepicker-padding} 0 -#{$-datepicker-padding};
-    }
-    .n-datetimepicker--#{$suffix} .n-datetimepicker__clear i,
-    .n-datetimepicker--#{$suffix} .n-datetimepicker__angle i {
-        width: $-datepicker-size - 14;
-        height: $-datepicker-size - 14;
-        line-height: $-datepicker-size - 14;
-    }
-
-    .n-datetimepicker--#{$suffix} .n-datetimepicker__angle i {
-        font-size: $-datepicker-font - 2;
-    }
-
-    .n-datetimepicker--#{$suffix} .n-datetimepicker__clear i {
-        font-size: $-datepicker-font - 4;
-    }
-
-    .n-popover--#{$suffix} .n-datetimepicker-panel {
-        border-radius: $-datepicker-radius;
-    }
-
-    .n-popover--#{$suffix} .n-datetimepicker__empty {
-        padding: $-datepicker-padding;
-    }
-
+.n-datetimepicker-panel {
+    border-radius: size('base-rad');
 }
