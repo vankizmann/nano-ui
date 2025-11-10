@@ -1,6 +1,4 @@
-@import "../../../root/vars";
-
-$table-filter-height: 18px !default;
+@import "src/root/helpers";
 
 .n-table-filter__footer {
     position: relative;
@@ -25,7 +23,7 @@ $table-filter-height: 18px !default;
 }
 
 .n-table-filter__popover .n-form-item {
-    margin-bottom: 5px;
+    margin-bottom: size('base-pad-vertical');
 }
 
 .n-table-filter__popover .n-form-item:last-child {

@@ -1,5 +1,6 @@
 @use 'sass:map';
 @import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-datepicker-panel {
     cursor: default;
@@ -7,6 +8,8 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
 }
 
 div:not(.n-popover,.n-datetimepicker-panel) > .n-datepicker-panel {
@@ -43,6 +46,9 @@ div:not(.n-popover,.n-datetimepicker-panel) > .n-datepicker-panel {
 
 .n-datepicker-panel__display {
     flex: 1 1 auto;
+    width: calc(100% + 2px);
+    margin: -1px;
+    border: 1px solid transparent;
 }
 
 .n-datepicker-panel__display .n-datepicker-panel__month,
@@ -68,6 +74,10 @@ div:not(.n-popover,.n-datetimepicker-panel) > .n-datepicker-panel {
     flex-direction: row;
     align-items: stretch;
     justify-content: flex-end;
+}
+
+.n-datepicker-panel__legend {
+    font-size: 0.95em;
 }
 
 .n-datepicker-panel__legend,
@@ -143,8 +153,6 @@ div:not(.n-popover,.n-datetimepicker-panel) > .n-datepicker-panel {
     $-datepicker-panel-ratio: map.get($values, 'ratio');
 
     .n-datepicker-panel--#{$suffix} {
-        font-size: $-datepicker-panel-font;
-        border-radius: $-datepicker-panel-radius;
     }
 
     $-datepicker-panel-padding: $-datepicker-panel-size * $-datepicker-panel-ratio;

@@ -1,5 +1,3 @@
-@use 'sass:map';
-@import "../../../root/vars";
 @import "src/root/helpers";
 
 .n-empty-icon {
@@ -44,7 +42,6 @@
     height: 0;
     padding-bottom: 100%;
 }
-
 
 .n-empty-icon.n-inline .n-empty-icon__text {
     margin-left: size('base-pad');

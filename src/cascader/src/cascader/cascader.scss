@@ -104,16 +104,16 @@
 
 .n-cascader__clear,
 .n-cascader__angle {
-    width: size('base-hgt')
+    width: size('base-hgt');
 }
 
 .n-cascader__body,
 .n-cascader__empty {
-    border-radius: size('base-rad')
+    border-radius: size('base-rad');
 }
 
 .n-cascader__empty {
-    padding: size('base-pad-vertical') size('base-pad')
+    padding: size('base-pad-vertical') size('base-pad');
 }
 
 .n-cascader__item:after {

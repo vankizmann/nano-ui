@@ -1,9 +1,8 @@
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-preview-image {
     position: relative;
     width: 100%;
-    background: rgba($color-gray-50, 0.1);
 }
 
 .n-modal__frame > .n-preview-image {
@@ -34,7 +33,6 @@
     height: 20px;
     margin: -10px 0 0 -10px;
     border-radius: 500px;
-    border: 2px solid rgba($color-gray-50, 0.2);
     border-top-color: transparent;
     animation: NImage 1s linear infinite;
 }

@@ -374,7 +374,6 @@ export default {
                 return;
             }
 
-            console.log('iwas mit a')
             this.state = state;
 
             if ( Any.isFunction(callback) ) {

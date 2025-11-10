@@ -236,16 +236,16 @@ export default {
         }
 
         let labelHtml = (
-            <div class="n-form-item__label">
-                <label onClick={this.focusInput}>
-                    {this.$slots.label && this.$slots.label() || this.label}
-                </label>
-            </div>
+            <label onClick={this.focusInput}>
+                {this.$slots.label && this.$slots.label() || this.label}
+            </label>
         );
 
-        return [
-            labelHtml, this.ctor('renderTooltip')()
-        ]
+        return (
+            <div class="n-form-item__label">
+                {[labelHtml, this.ctor('renderTooltip')()]}
+            </div>
+        );
     },
 
     renderError()

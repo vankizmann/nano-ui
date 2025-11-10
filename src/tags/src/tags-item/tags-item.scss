@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-tags-item {
     overflow: hidden;
@@ -23,32 +22,14 @@
     flex: 1 1 auto;
 }
 
-@each $suffix, $values in $form {
+.n-tags-item {
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
+    padding: 0 size('base-pad');
+    height: calc(#{"#{size('base-hgt')} * 0.9"});
+}
 
-    $-tags-item-font: map.get($values, 'font');
-    $-tags-item-size: map.get($values, 'size');
-    $-tags-item-radius: map.get($values, 'radius');
-    $-tags-item-ratio: map.get($values, 'ratio');
-
-    .n-tags-item--#{$suffix} {
-        border-radius: $-tags-item-radius;
-        padding: 0 $-tags-item-size * 0.3 0 $-tags-item-size * 0.3;
-    }
-
-    .n-tags-item--#{$suffix} i,
-    .n-tags-item--#{$suffix} span {
-        height:  $-tags-item-size * 0.8;
-        line-height:  $-tags-item-size * 0.8;
-    }
-
-    .n-tags-item--#{$suffix} i {
-        height:  $-tags-item-size * 0.8;
-        margin-right: $-tags-item-size * 0.2;
-        font-size: $-tags-item-font - 2;
-    }
-
-    .n-tags-item--#{$suffix} span {
-        font-size: $-tags-item-font - 1;
-        margin-left: 2px;
-    }
+.n-tags-item i {
+    margin-right: calc(#{"#{size('base-pad')} * 0.6"});
+    font-size: size('base-fnt-icon');
 }

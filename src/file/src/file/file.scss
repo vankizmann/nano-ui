@@ -1,4 +1,4 @@
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-file {
     position: relative;
@@ -17,7 +17,7 @@
 
 .n-file > .n-button {
     flex: 0 0 auto;
-    margin-left: 7px;
+    margin-left: size('base-pad');
 }
 
 .n-file .n-file__input {

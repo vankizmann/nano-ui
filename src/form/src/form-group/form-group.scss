@@ -1,5 +1,3 @@
-@use 'sass:map';
-@import "../../../root/vars";
 @import "src/root/helpers";
 
 .n-form-group {
@@ -100,7 +98,7 @@
 }
 
 .n-form-group--fieldset:not(:last-child) .n-form-group__body {
-    margin-bottom: size('base-hgt'); // $-fbottomrm-group-size * 1.4;
+    margin-bottom: size('base-hgt');
 }
 
 .n-form-group.n-form-group--classic .n-form-group__legend {
@@ -109,17 +107,17 @@
 
 .n-form-group.n-form-group--fieldset .n-form-group__legend {
     margin-left: calc(#{"#{size('base-pad')} * 2"});
-    min-height: size('base-hgt'); //$-form-group-size;
-    border-radius: size('base-rad'); //$-form-group-radius;
-    padding: 0 size('base-pad'); //0 $-form-group-size * 0.3;
+    min-height: size('base-hgt');
+    border-radius: size('base-rad');
+    padding: 0 size('base-pad');
 }
 
 .n-form-group.n-form-group--classic .n-form-group__label span {
-    font-size: 1.2em; //$-form-group-font + 1;
+    font-size: 1.2em;
 }
 
 .n-form-group.n-form-group--fieldset .n-form-group__label span {
-    font-size: 1em; //$-form-group-font - 2;
+    font-size: 1em;
 }
 
 .n-form-group .n-form-group__icon,

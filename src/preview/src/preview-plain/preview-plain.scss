@@ -1,9 +1,8 @@
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-preview-plain {
     position: relative;
     width: 100%;
-    background: rgba($color-gray-50, 0.1);
 }
 
 .n-modal__frame > .n-preview-plain {
@@ -38,5 +37,4 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: rgba($color-gray-50, 0.6);
 }

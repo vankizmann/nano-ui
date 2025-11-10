@@ -95,6 +95,7 @@ export const Icons = {
     calendar: 'fa fa-calendar',
     times: 'fa fa-times',
     primary: 'fa fa-info-circle',
+    secondary: 'fa fa-info-circle',
     success: 'fa fa-check-circle',
     warning: 'fa fa-exclamation-circle',
     danger: 'fa fa-times-circle',

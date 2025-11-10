@@ -26,13 +26,12 @@
 
 .n-switch__switch span {
     position: absolute;
-    top: 50%;
-    left: 3px;
+    top: 2px;
+    left: 2px;
     display: block;
     width: calc(#{"#{size('base-hgt-inline')} - 4px"});
     height: calc(#{"#{size('base-hgt-inline')} - 4px"});
     border-radius: 500px;
-    transform: translateY(-50%);
     transition: left 0.15s;
 }
 

@@ -1,4 +1,4 @@
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-preview-modal {
     z-index: 999999997;
@@ -9,7 +9,11 @@
     bottom: 0;
     left: 0;
     display: flex;
-    padding: 40px 80px;
+    padding: size('base-hgt') calc(#{"#{size('base-hgt')} * 2.4"});
+}
+
+.n-preview-modal i {
+    font-size: 1.2em;
 }
 
 .n-preview-modal:not(.n-ready) {
@@ -17,17 +21,22 @@
     opacity: 0;
 }
 
+.n-preview-modal__close,
+.n-preview-modal__prev,
+.n-preview-modal__next {
+    width: calc(#{"#{size('base-hgt')} * 1.2"});
+    height: calc(#{"#{size('base-hgt')} * 1.2"});
+}
+
 .n-preview-modal__close {
     cursor: pointer;
     z-index: 100;
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: calc(#{"#{size('base-hgt')} * 0.5"});
+    right: calc(#{"#{size('base-hgt')} * 0.5"});
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
 }
 
 .n-preview-modal .n-preview-frame {
@@ -43,8 +52,6 @@
     display: none;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
     transform: translateY(-50%);
 }
 
@@ -54,9 +61,9 @@
 }
 
 .n-preview-modal__prev {
-    left: 20px;
+    left: calc(#{"#{size('base-hgt')} * 0.5"});
 }
 
 .n-preview-modal__next {
-    right: 20px;
+    right: calc(#{"#{size('base-hgt')} * 0.5"});
 }

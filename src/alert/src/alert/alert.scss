@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-alert {
     z-index: 999999998;
@@ -61,30 +60,17 @@
     font-size: 1em;
 }
 
-@each $suffix, $values in $form {
+.n-alert {
+    font-size: size('base-fnt');
+    padding: calc(#{"#{size('base-pad')} * 3"});
+}
 
-    $-alert-font: map.get($values, 'font');
-    $-alert-size: map.get($values, 'size');
-    $-alert-radius: map.get($values, 'radius');
-    $-alert-ratio: map.get($values, 'ratio');
+.n-alert-frame {
+    width: calc(#{"#{size('base-hgt')} * 12"});
+    padding: calc(#{"#{size('base-pad-vertical')} * 3"}) calc(#{"#{size('base-pad')} * 3"});
+    border-radius: size('base-rad-window');
+}
 
-    .n-alert--#{$suffix} {
-        font-size: $-alert-font;
-        padding: $-alert-size * 1.4;
-    }
-
-    .n-alert--#{$suffix} .n-alert-frame {
-        border-radius: $-alert-radius;
-        width: $-alert-size * 12;
-        padding: $-alert-size * 0.6 $-alert-size * 1.4;
-    }
-
-    .n-alert--#{$suffix} .n-alert__icon {
-        margin-bottom: $-alert-size * 0.4;
-    }
-
-    .n-alert--#{$suffix} .n-alert__text {
-        margin-bottom: $-alert-size * 0.4;
-    }
-
+.n-alert__icon {
+    margin-bottom: calc(#{"#{size('base-pad-vertical')} * 2"});
 }

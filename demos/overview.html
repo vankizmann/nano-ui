@@ -38,16 +38,36 @@
         }
 
         .app-options {
-            border-bottom: 1px solid rgba(110, 110, 110, 0.15);
+            position: relative;
+            margin-top: 0;
+            border-radius: 6px;
             margin-bottom: 20px;
+        }
+
+        .app-options:before,
+        .app-options:after {
+            content: '\00a0';
+            position: absolute;
+            display: block;
+            height: 1px;
+            left: calc(var(--grid-gap-h) * 0.5);
+            right: calc(var(--grid-gap-h) * 0.5);
+            background: rgb(var(--n-color-gray-10));
+        }
+
+        .app-options:before {
+            top: 0;
+        }
+
+        .app-options:after {
+            bottom: 0;
         }
 
         h2 {
             font-size: 32px;
             font-weight: bold;
             padding-bottom: 10px;
-            margin: 50px 0 15px;
-            border-bottom: 1px solid rgba(110, 110, 110, 0.15);
+            margin: 50px 0 10px;
         }
 
     </style>
@@ -67,14 +87,8 @@
 
         <h2>Theme</h2>
 
-        <div class="grid grid--row">
-            <div class="col--1-1 col--1-3@md">
-                <n-select :model-value="n_theme" @update:model-value="changeTheme">
-                    <n-select-option value="none" label="None"></n-select-option>
-                    <n-select-option value="light" label="Light"></n-select-option>
-                    <n-select-option value="dark" label="Dark"></n-select-option>
-                </n-select>
-            </div>
+        <div>
+            <n-select :model-value="n_theme" @update:model-value="changeTheme" :options="themes"></n-select>
         </div>
 
         <h2>NTagsItem</h2>
@@ -85,13 +99,16 @@
             </div>
         </div>
 
-        <div class="grid grid--row">
+        <div class="grid grid--row grid--wrap grid--30-30">
             <div class="col--1-1">
                 <n-tags v-bind="n_tags">
-                    <template v-for="type in ['neutral', 'primary', 'success', 'warning', 'danger', 'info']">
+                    <template v-for="type in ['neutral', 'primary', 'secondary', 'success', 'warning', 'danger', 'info']">
                         <n-tags-item :type="type" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna</n-tags-item>
                     </template>
                 </n-tags>
+            </div>
+
+            <div class="col--1-1">
                 <n-tags v-bind="n_tags">
                     <template v-for="(value, index) in Array(20).fill(0)">
                         <n-tags-item :color="index" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna</n-tags-item>
@@ -502,6 +519,8 @@
                     <n-checkbox value="test3" v-bind="n_checkbox">Foobar 3</n-checkbox>
                     <n-checkbox value="test4" v-bind="n_checkbox">Foobar 4</n-checkbox>
                 </n-checkbox-group>
+            </div>
+            <div class="col--1-1">
                 <n-checkbox-group v-bind="n_checkbox" align="vertical">
                     <n-checkbox :global="true" v-bind="n_checkbox">Check all</n-checkbox>
                     <n-checkbox value="test1" v-bind="n_checkbox">Foobar 1</n-checkbox>
@@ -529,6 +548,14 @@
         <div class="grid grid--row grid--wrap grid--10-10">
             <div class="col--1-1">
                 <n-radio-group v-bind="n_radio">
+                    <n-radio value="test1" v-bind="n_radio">Foobar 1</n-radio>
+                    <n-radio value="test2" v-bind="n_radio">Foobar 2</n-radio>
+                    <n-radio value="test3" v-bind="n_radio">Foobar 3</n-radio>
+                    <n-radio value="test4" v-bind="n_radio">Foobar 4</n-radio>
+                </n-radio-group>
+            </div>
+            <div class="col--1-1">
+                <n-radio-group v-bind="n_radio" align="vertical">
                     <n-radio value="test1" v-bind="n_radio">Foobar 1</n-radio>
                     <n-radio value="test2" v-bind="n_radio">Foobar 2</n-radio>
                     <n-radio value="test3" v-bind="n_radio">Foobar 3</n-radio>
@@ -924,14 +951,31 @@
             </n-tabs-item>
         </n-tabs>
 
-        <n-collapse v-bind="n_collapse" style="height: 900px;">
-            <n-collapse-item :sort="3" name="keep" label="Keep" :keep="true">
+        <h2>NCollapse</h2>
+
+        <div class="app-options grid grid--row grid--wrap grid--30-30">
+            <div class="col--auto">
+                <n-select style="width: 100px;" v-model="n_collapse.size" :options="sizes"></n-select>
+            </div>
+            <div class="col--auto">
+                <n-select style="width: 210px;" v-model="n_collapse.type" :options="types"></n-select>
+            </div>
+        </div>
+
+        <n-collapse v-bind="n_collapse" style="height: 600px;">
+            <n-collapse-item :sort="3" name="keep" label="Keep" icon="fa fa-ghost" :keep="true">
                 <n-textarea></n-textarea>
             </n-collapse-item>
             <n-collapse-item :sort="4" name="bar" label="Headline in extra extra extra extra extra extra looooong">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, modi?
             </n-collapse-item>
-            <n-collapse-item :sort="2" name="bar2" label="KKKKAKS SAKK ">
+            <n-collapse-item :sort="2" name="bar2" label="KKKKAKS SAKK">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, modi?
+                <br><br><br><br><br><br>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, modi?
+                <br><br><br><br><br><br>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, modi?
+                <br><br><br><br><br><br>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, modi?
             </n-collapse-item>
         </n-collapse>
@@ -942,7 +986,7 @@
             <div class="col--auto">
                 <n-select style="width: 100px;" v-model="n_paginator.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">`
+            <div class="col--auto">
                 <n-select style="width: 210px;" v-model="n_paginator.type" :options="types"></n-select>
             </div>
         </div>
@@ -1069,23 +1113,23 @@
             </div>
         </div>
 
-        <n-table ref="table" v-model:items="virtualTree" :handle="true" :render-handle="true" :render-expand="true" :item-height="100" style="margin-top: 30px; height: 500px;">
-            <n-table-column label="Label" type="string" prop="label" align="center" :min-width="500" :sort="true" :filter="true">
-                <!--                <template v-slot:default="{item}">{{ item.value }}</template>-->
-            </n-table-column>
-            <n-table-column label="Image" type="image" prop="image" :fixed-width="130"></n-table-column>
-            <n-table-column label="Date" type="datetime" prop="date" :disabled="true" :sort="true" :width="50" :min-width="500" :filter="true"></n-table-column>
-            <n-table-column label="Enabled 3123 asd as" type="option" prop="enabled" :sort="true" :filter="true" :options="[{ value: true, name: 'JAAAA' }, { value: false, name: 'NEEEEEJ' }]" options-value="$value.value" :width="10" options-label="$value.name"></n-table-column>
-            <n-table-column label="Value" type="string" prop="value" :sort="true" :filter="true" :min-width="500" :width="20"></n-table-column>
-            <n-table-column label="ID" type="string" prop="id" :breakpoint="1300"></n-table-column>
-        </n-table>
-
         <n-table v-model:items="virtualTree" :draggable="false" :render-expand="true" :item-height="36" style="margin-top: 30px; height: 500px;">
             <n-table-column label="Label" type="string" prop="label"></n-table-column>
             <n-table-column v-model="treeSelect" label="Select" type="select" :allow-uncheck="true" :fixed-width="120">
                 <template v-slot:default="{ item }"></template>
             </n-table-column>
             <n-table-column v-model="treeMatrix" label="Matrix 2" type="matrix" :matrix="-1" align="center" :fixed-width="120"></n-table-column>
+        </n-table>
+
+        <n-table ref="table" v-model:items="virtualTree" :handle="true" :render-handle="true" :render-expand="true" :item-height="100" style="margin-top: 30px; height: 500px;">
+            <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true">
+                <!--                <template v-slot:default="{item}">{{ item.value }}</template>-->
+            </n-table-column>
+            <n-table-column label="Image" type="image" prop="image" :fixed-width="130"></n-table-column>
+            <n-table-column label="Date" type="datetime" prop="date" :disabled="true" :sort="true" :width="50" :filter="true"></n-table-column>
+            <n-table-column label="Enabled 3123 asd as" type="option" prop="enabled" :sort="true" :filter="true" :options="[{ value: true, name: 'JAAAA' }, { value: false, name: 'NEEEEEJ' }]" options-value="$value.value" :width="10" options-label="$value.name"></n-table-column>
+            <n-table-column label="Value" type="string" prop="value" :sort="true" :filter="true" :width="20"></n-table-column>
+            <n-table-column label="ID" type="string" prop="id" :breakpoint="1300"></n-table-column>
         </n-table>
 
         <!-- <n-table ref="table2" v-model:items="virtualTree" :render-expand="true" :item-height="100" style="margin-top: 30px;">
@@ -1142,14 +1186,27 @@
 
         <h2>NPreview</h2>
 
-        <n-file v-model="n_preview.file"></n-file>
+        <div class="grid grid--row grid--wrap grid--10-10">
+            <div class="col--1-1">
+                <n-file v-model="n_preview.file"></n-file>
+            </div>
+            <div class="col--auto" v-if="n_preview.file">
+                <n-preview :file="n_preview.file" style="width: 160px;"></n-preview>
+            </div>
+            <div class="col--auto">
+                <n-preview group="foobar" :index="0" file="https://picsum.photos/1920/1920.jpg" thumb="https://picsum.photos/300/300.jpg" style="width: 160px;"></n-preview>
+            </div>
+            <div class="col--auto">
+                <n-preview group="foobar" :index="4" file="https://www.youtube.com/watch?v=m_Nw_BF90_4" thumb="https://via.placeholder.com/100/000/fff.jpg?text=Youtube" style="width: 160px;"></n-preview>
+            </div>
+            <div class="col--auto">
+                <n-preview group="foobar" :index="2" file="https://vimeo.com/128079949" thumb="https://via.placeholder.com/100/000/fff.jpg?text=Vimeo" style="width: 160px;"></n-preview>
+            </div>
+            <div class="col--auto">
+                <n-preview group="foobar" :index="3" file="https://www.w3schools.com/html/mov_bbb.webm" thumb="https://via.placeholder.com/100/000/fff.jpg?text=WEBM" style="width: 160px;"></n-preview>
+            </div>
+        </div>
 
-        <n-preview v-if="n_preview.file" :file="n_preview.file" style="width: 100px;"></n-preview>
-
-        <n-preview group="foobar" :index="0" file="https://picsum.photos/1920/1920.jpg" thumb="https://picsum.photos/300/300.jpg" style="width: 100px;"></n-preview>
-        <n-preview group="foobar" :index="4" file="https://www.youtube.com/watch?v=m_Nw_BF90_4" thumb="https://via.placeholder.com/100/000/fff.jpg?text=Youtube" style="width: 100px;"></n-preview>
-        <n-preview group="foobar" :index="2" file="https://vimeo.com/128079949" thumb="https://via.placeholder.com/100/000/fff.jpg?text=Vimeo" style="width: 100px;"></n-preview>
-        <n-preview group="foobar" :index="3" file="https://www.w3schools.com/html/mov_bbb.webm" thumb="https://via.placeholder.com/100/000/fff.jpg?text=WEBM" style="width: 100px;"></n-preview>
 
         <h2>NPreviewVideo</h2>
 
@@ -1436,7 +1493,7 @@
             };
 
             data.n_tabs = {
-                value: 'default', size: 'md', type: 'primary', float: true
+                value: 'default', size: 'md', type: 'primary', float: false
             };
 
             data.n_collapse = {
@@ -1469,6 +1526,7 @@
 
                 pi.Cookie.set('theme', this.n_theme = value);
 
+                pi.Dom.find('body').removeClass(['n-theme--dark', 'n-theme--light']);
                 pi.Dom.find('body').addClass('n-theme--' + data.n_theme);
             }
 
@@ -1489,11 +1547,11 @@
             };
 
             methods.notify = function (type) {
-                this.Notification.make('Lorem ipsum dolore', type);
+                this.Notification.make('Lorem ipsum dolore Lorem ipsum dolore Lorem ipsum dolore', type);
             };
 
             methods.alert = function (type) {
-                this.Alert.make('Lorem ipsum dolore', type);
+                this.Alert.make('Lorem ipsum dolore Lorem ipsum dolore Lorem ipsum dolore', type);
             };
 
             var config = {

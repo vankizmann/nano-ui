@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-timepicker {
     display: flex;
@@ -20,7 +19,9 @@
     flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
-    width: 100%;
+    width: calc(100% + 2px);
+    margin: -1px;
+    border: 1px solid transparent;
 }
 
 .n-timepicker__seperator {
@@ -118,54 +119,22 @@
      text-align: center;
 }
 
-@each $suffix, $values in $form {
+.n-timepicker {
+    height: size('base-hgt');
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
+}
 
-    $-timepicker-font: map.get($values, 'font');
-    $-timepicker-size: map.get($values, 'size');
-    $-timepicker-radius: map.get($values, 'radius');
-    $-timepicker-ratio: map.get($values, 'ratio');
+.n-timepicker__seperator,
+.n-timepicker__input input {
+    padding: 0 size('base-pad');
+}
 
-    .n-timepicker--#{$suffix} {
-        min-height: $-timepicker-size;
-        font-size: $-timepicker-font;
-        border-radius: $-timepicker-radius;
-    }
+.n-timepicker__clear,
+.n-timepicker__angle {
+    width: size('base-hgt');
+}
 
-    $-timepicker-padding: $-timepicker-size * $-timepicker-ratio * 0.5;
-
-    .n-timepicker--#{$suffix} .n-timepicker__display,
-    .n-timepicker--#{$suffix} .n-timepicker__seperator,
-    .n-timepicker--#{$suffix} .n-timepicker__input input {
-        padding: 0 $-timepicker-padding;
-    }
-
-    .n-timepicker--#{$suffix} .n-timepicker__clear,
-    .n-timepicker--#{$suffix} .n-timepicker__angle {
-        width: $-timepicker-size;
-        margin: 0 -#{$-timepicker-padding} 0 -#{$-timepicker-padding};
-    }
-    .n-timepicker--#{$suffix} .n-timepicker__clear i,
-    .n-timepicker--#{$suffix} .n-timepicker__angle i {
-        width: $-timepicker-size - 14;
-        height: $-timepicker-size - 14;
-        line-height: $-timepicker-size - 14;
-    }
-
-    .n-timepicker--#{$suffix} .n-timepicker__angle i {
-        font-size: $-timepicker-font - 2;
-    }
-
-    .n-timepicker--#{$suffix} .n-timepicker__clear i {
-        font-size: $-timepicker-font - 4;
-    }
-
-    .n-popover--#{$suffix} .n-timepicker__body,
-    .n-popover--#{$suffix} .n-timepicker__empty {
-        border-radius: $-timepicker-radius;
-    }
-
-    .n-popover--#{$suffix} .n-timepicker__empty {
-        padding: $-timepicker-padding;
-    }
-
+.n-timepicker__body {
+    border-radius: size('base-rad');
 }
