@@ -98,7 +98,7 @@
 .n-table .n-table__header {
     position: relative;
     flex: 0 0 auto;
-    height: calc(#{"#{size('base-hgt')} * 1.4"});
+    height: size('base-hgt', 'calc($ * 1.4)');
     display: inline-flex;
     flex-direction: row;
     align-items: stretch;

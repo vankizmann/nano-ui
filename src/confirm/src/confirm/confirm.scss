@@ -56,12 +56,12 @@
 
 .n-confirm {
     font-size: size('base-fnt');
-    padding: calc(#{"#{size('base-pad')} * 3"});
+    padding: size('base-pad', 'calc($ * 3)');
 }
 
 .n-confirm-frame {
-    width: calc(#{"#{size('base-hgt')} * 12"});
-    padding: calc(#{"#{size('base-pad-vertical')} * 3"}) calc(#{"#{size('base-pad')} * 3"});
+    width: size('base-hgt', 'calc($ * 12)');
+    padding: size('base-pad-vertical', 'calc($ * 3)') size('base-pad', 'calc($ * 3)');
     border-radius: size('base-rad-window');
 }
 
@@ -70,13 +70,13 @@
 }
 
 .n-confirm__body:not(:empty) {
-    margin-bottom: calc(#{"#{size('base-pad-vertical')} * 2"});
+    margin-bottom: size('base-pad-vertical', 'calc($ * 2)');
 }
 
 .n-confirm__icon {
-    margin-bottom: calc(#{"#{size('base-pad-vertical')} * 1.5"});
+    margin-bottom: size('base-pad-vertical', 'calc($ * 1.5)');
 }
 
 .n-confirm__action > *:not(:last-child) {
-    margin-right: calc(#{"#{size('base-pad')} * 1.5"});
+    margin-right: size('base-pad', 'calc($ * 1.5)');
 }

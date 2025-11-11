@@ -50,6 +50,6 @@
 .n-loader.n-load:before {
     width: size('base-hgt-loader');
     height: size('base-hgt-loader');
-    margin-top: calc(#{"#{size('base-hgt-loader')} * -0.5"});
-    margin-left: calc(#{"#{size('base-hgt-loader')} * -0.5"});
+    margin-top: size('base-hgt-loader', 'calc($ * -0.5)');
+    margin-left: size('base-hgt-loader', 'calc($ * -0.5)');
 }

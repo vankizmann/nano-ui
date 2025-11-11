@@ -20,7 +20,7 @@
     appearance: none;
     display: block;
     width: 100%;
-    height: calc(#{"#{size('base-hgt')} - 2px"});
+    height: size('base-hgt', 'calc($ - 2px)');
     white-space: nowrap;
     text-decoration: none;
     font-size: 1em;
@@ -41,8 +41,8 @@
 }
 
 .n-input-number .n-button.n-button--reset {
-    width: calc(#{"#{size('base-hgt')} - 2px"});
-    height: calc(#{"#{size('base-hgt')} - 2px"});
+    width: size('base-hgt', 'calc($ - 2px)');
+    height: size('base-hgt', 'calc($ - 2px)');
 }
 
 .n-input-number .n-button:not(.n-disabled) {
@@ -51,7 +51,7 @@
 
 .n-input-number .n-input-number__clear {
     display: none;
-    width: calc(#{"#{size('base-hgt')} - 2px"});
+    width: size('base-hgt', 'calc($ - 2px)');
 }
 
 .n-input-number.n-clearable:not(.n-empty):hover .n-input-number__clear {

@@ -117,5 +117,5 @@
 }
 
 .n-cascader__item:after {
-    width: calc(#{"#{size('base-pad')} * 2"});
+    width: size('base-pad', 'calc($ * 2)');
 }

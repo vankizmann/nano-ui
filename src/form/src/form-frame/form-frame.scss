@@ -1,5 +1,4 @@
-@use "sass:map";
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-form-frame {
     display: flex;
@@ -24,7 +23,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    border-radius: $md-radius;
+    border-radius: size('base-rad');
     text-decoration: none;
     transition: opacity 0.3s;
 }
@@ -81,45 +80,34 @@
     min-height: 0;
 }
 
+.n-form-frame__menus {
+    width: size('base-hgt', 'calc($ * 9)');
+}
 
+.n-form-frame__menus .n-scrollbar__wrap {
+    padding: size('base-pad-vertical', 'calc($ * 2)') size('base-pad', 'calc($ * 2)');
+}
 
-@each $suffix, $values in $form {
+.n-form-frame__search {
+    margin-bottom: size('base-pad-vertical')
+}
 
-    $-form-frame-font: map.get($values, 'font');
-    $-form-frame-size: map.get($values, 'size');
-    $-form-frame-radius: map.get($values, 'radius');
-    $-form-frame-ratio: map.get($values, 'ratio');
+.n-form-frame__menu {
+    height: size('base-hgt');
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
+    padding-right: size('base-pad');
+}
 
-    .n-form-frame--#{$suffix} .n-form-frame__menus {
-        width: $-form-frame-size * 8;
-    }
+.n-form-frame__menu:before {
+    right: size('base-pad');
+}
 
-    .n-form-frame--#{$suffix} .n-form-frame__menus .n-scrollbar__wrap {
-        padding: $-form-frame-size * 0.5 $-form-frame-size * 0.6;
-    }
+.n-form-frame__menu i {
+    width: size('base-hgt');
+    margin: 0 size('base-pad');
+}
 
-    .n-form-frame--#{$suffix} .n-form-frame__search {
-        margin-bottom: $-form-frame-size * 0.4;
-    }
-
-    .n-form-frame--#{$suffix} .n-form-frame__menu {
-        height: $-form-frame-size;
-        font-size: $-form-frame-font - 1;
-        border-radius: $-form-frame-radius;
-        padding-right: $-form-frame-size * 0.6;
-    }
-
-    .n-form-frame--#{$suffix} .n-form-frame__menu:before {
-        right: $-form-frame-size * 0.3;
-    }
-
-    .n-form-frame--#{$suffix} .n-form-frame__menu i {
-        width: $-form-frame-size * 0.6;
-        margin: 0 $-form-frame-size * 0.3;
-    }
-
-    .n-form-frame--#{$suffix} .n-form-frame__body .n-scrollbar__wrap {
-        padding: $-form-frame-size * 0.2 $-form-frame-size * 0.6 $-form-frame-size * 0.2 0;
-    }
-
+.n-form-frame__body .n-scrollbar__wrap {
+    padding: size('base-pad-vertical', 'calc($ * 2)') size('base-pad', 'calc($ * 2)');
 }

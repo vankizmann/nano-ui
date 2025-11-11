@@ -1,17 +1,18 @@
 @import "src/root/helpers";
 
 .n-transfer__panel {
-    background: color('form-input');
+    background: color('background');
     border: 1px solid color('gray-15');
 }
 
 .n-transfer__header {
     border-bottom: 1px solid color('gray-15');
+    background: color('form');
 }
 
-.n-transfer__search {
-    background: color('form-input');
-    border-bottom: 1px solid color('gray-15');
+.n-transfer__search .n-input {
+    border-color: transparent;
+    background: color('background');
 }
 
 .n-transfer__item-count {

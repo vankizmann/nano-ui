@@ -560,7 +560,12 @@ export default {
 
     renderPopover()
     {
+        let classList = [
+            'n-popover--datepicker',
+        ];
+
         let props = {
+            class: classList,
             trigger: 'click',
             width: 0,
             size: this.size,

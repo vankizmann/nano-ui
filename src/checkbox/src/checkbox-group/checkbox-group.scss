@@ -29,7 +29,7 @@
 }
 
 .n-checkbox-group.n-checkbox-group--horizontal .n-checkbox:not(:first-child) {
-    margin-left: calc(#{"#{size('base-pad')} * 1.2"});
+    margin-left: size('base-pad', 'calc($ * 1.2)');
 }
 
 .n-checkbox-group.n-checkbox-group--horizontal .n-checkbox:last-child {

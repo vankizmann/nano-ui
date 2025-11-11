@@ -20,7 +20,7 @@
     appearance: none;
     display: block;
     width: 100%;
-    height: calc(#{"#{size('base-hgt')} - 2px"});
+    height: size('base-hgt', 'calc($ - 2px)');
     white-space: nowrap;
     text-decoration: none;
     line-height: 1.2;
@@ -31,11 +31,11 @@
 }
 
 .n-input.n-input--icon.n-input--icon-before input {
-    padding-left: calc(#{"#{size('base-hgt')} + #{size('base-pad')}"});
+    padding-left: size('base-pad');
 }
 
 .n-input.n-input--icon.n-input--icon-after input {
-    padding-right: calc(#{"#{size('base-hgt')} + #{size('base-pad')}"});
+    padding-right: size('base-pad');
 }
 
 .n-input.n-disabled input {
@@ -43,15 +43,6 @@
 }
 
 .n-input .n-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.n-input.n-input--icon.n-input--icon-before .n-button {
-    left: 1px;
-}
-
-.n-input.n-input--icon.n-input--icon-after .n-button {
-    right: 1px;
+    width: size('base-hgt', 'calc($ - 2px)');
+    height: size('base-hgt', 'calc($ - 2px)');
 }

@@ -52,15 +52,15 @@
 
 .n-table-column .n-table-column__sort {
     flex: 0 0 auto;
-    margin-right: calc(#{"#{size('base-pad')} * 0.5"});
+    margin-right: size('base-pad', 'calc($ * 0.5)');
 }
 
 .n-table-column .n-table-column__sort > i {
     position: relative;
     display: block;
-    width: calc(#{"#{size('base-hgt')} - 12px"});
-    height: calc(#{"#{size('base-hgt')} - 12px"});
-    border-radius: $md-radius;
+    width: size('base-hgt', 'calc($ - 12px)');
+    height: size('base-hgt', 'calc($ - 12px)');
+    border-radius: size('base-rad');
 }
 
 .n-table-column .n-table-column__sort > i:before {
@@ -91,7 +91,7 @@
 
 .n-table .n-table-column .n-table-column__filter {
     flex: 0 0 auto;
-    margin-left: calc(#{"#{size('base-pad')} * 0.5"});
+    margin-left: size('base-pad', 'calc($ * 0.5)');
 }
 
 .n-table-column .n-table-column__label {
@@ -117,8 +117,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: calc(#{"#{size('base-hgt')} - 12px"});
-    height: calc(#{"#{size('base-hgt')} - 12px"});
+    width: size('base-hgt', 'calc($ - 12px)');
+    height: size('base-hgt', 'calc($ - 12px)');
     text-align: center;
     border-radius: size('base-rad-inline');
 }

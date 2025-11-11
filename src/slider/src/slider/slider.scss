@@ -1,10 +1,9 @@
-@use 'sass:map';
-@import "../../../root/vars";
 @import "src/root/helpers";
 
 .n-slider {
     position: relative;
     width: 100%;
+    height: size('base-hgt');
 }
 
 .n-slider__bar {
@@ -30,13 +29,16 @@
 .n-slider__handle {
     cursor: grab;
     z-index: 9000;
-    position: absolute;
+    position: absolute !important;
     left: 0;
     top: 50%;
-    width: 20px;
-    height: 20px;
-    margin: -10px 0 0 -10px;
-    border: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: size('base-hgt', 'calc($ - 12px)');
+    height: size('base-hgt', 'calc($ - 12px)');
+    margin-top: size('base-hgt', 'calc(($ - 12px) * -0.5)');
+    margin-left: size('base-hgt', 'calc(($ - 12px) * -0.5)');
     border-radius: 500px;
 }
 
@@ -45,17 +47,10 @@
 }
 
 .n-slider__handle span {
-    pointer-events: none;
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    padding: 4px 8px;
-    border-radius: 3px;
-    font-size: 13px;
-    display: inline-block;
-    opacity: 0;
-    transform: translate(-50%, -25%);
-    transition: opacity 0.3s;
+    display: block;
+    width: size('base-hgt-inline', 'calc($ - 10px)');
+    height: size('base-hgt-inline', 'calc($ - 10px)');
+    border-radius: 500px;
 }
 
 .n-slider__handle:hover span,
@@ -63,32 +58,6 @@
     opacity: 1;
 }
 
-@each $suffix, $values in $form {
-
-    $-slider-font: map.get($values, 'font');
-    $-slider-size: map.get($values, 'size');
-    $-slider-radius: map.get($values, 'radius');
-    $-slider-ratio: map.get($values, 'ratio');
-
-    .n-slider--#{$suffix} {
-        height: 32px;
-    }
-
-    .n-slider--#{$suffix} .n-slider__bar {
-        margin-top: -#{$-slider-size * 0.1};
-        height: $-slider-size * 0.2;
-    }
-
-    .n-slider--#{$suffix} .n-slider__handle {
-        width: $-slider-size * 0.6;
-        height: $-slider-size * 0.6;
-        margin: -#{$-slider-size * 0.3} 0 0 -#{$-slider-size * 0.3};
-    }
-
-    .n-slider--#{$suffix} .n-slider__handle span {
-        padding: $-slider-size * 0.15 $-slider-size * 0.3;
-        border-radius: $-slider-radius;
-        font-size: $-slider-font - 2;
-    }
-
+.n-slider__bar {
+    height: 6px;
 }

@@ -116,7 +116,7 @@
 }
 
 .n-drawer__header {
-    padding: calc(#{"#{size('base-pad-vertical')} * 2"}) calc(#{"#{size('base-pad')} * 2"});
+    padding: size('base-pad-vertical', 'calc($ * 2)') size('base-pad', 'calc($ * 2)');
 }
 
 .n-drawer.n-closable .n-drawer__header {
@@ -124,11 +124,11 @@
 }
 
 .n-drawer:not(.n-raw) .n-drawer__wrap {
-    padding: calc(#{"#{size('base-pad-vertical')} * 2"}) calc(#{"#{size('base-pad')} * 2"});
+    padding: size('base-pad-vertical', 'calc($ * 2)') size('base-pad', 'calc($ * 2)');
 }
 
 .n-drawer__footer {
-    padding: calc(#{"#{size('base-pad-vertical')} * 2"}) calc(#{"#{size('base-pad')} * 2"});
+    padding: size('base-pad-vertical', 'calc($ * 2)') size('base-pad', 'calc($ * 2)');
 }
 
 .n-drawer__close {

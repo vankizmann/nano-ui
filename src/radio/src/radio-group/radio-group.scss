@@ -25,7 +25,7 @@
 }
 
 .n-radio-group.n-radio-group--horizontal .n-radio:not(:first-child) {
-    margin-left: calc(#{"#{size('base-pad')} * 1.2"});
+    margin-left: size('base-pad', 'calc($ * 1.2)');
 }
 
 .n-radio-group.n-radio-group--horizontal .n-radio:last-child {

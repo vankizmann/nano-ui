@@ -48,13 +48,13 @@
 }
 
 .n-form-item {
-    margin-bottom: calc(#{"#{size('base-hgt')} * 0.7"});
+    margin-bottom: size('base-hgt', 'calc($ * 0.7)');
 }
 
 .n-form-item__condition {
     font-size: size('base-fnt-label');
     padding: 0 size('base-pad');
-    height: calc(#{"#{size('base-hgt')} * 0.6"});
+    height: size('base-hgt', 'calc($ * 0.6)');
 }
 
 .n-form-item__label {
@@ -63,7 +63,7 @@
 
 .n-form-item__label,
 .n-form-item__input {
-    margin: calc(#{"#{size('base-pad-vertical')} * 0.25"}) 0;
+    margin: size('base-pad-vertical', 'calc($ * 0.25)') 0;
 }
 
 .n-form-item__error {

@@ -41,5 +41,5 @@
 }
 
 .n-checkbox .n-checkbox__label {
-    padding-left: calc(#{"#{size('base-pad')} * 0.8"});
+    padding-left: size('base-pad', 'calc($ * 0.8)');
 }

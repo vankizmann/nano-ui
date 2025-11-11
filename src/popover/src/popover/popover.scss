@@ -41,8 +41,8 @@
 .n-popover[data-position^="top-"]:after,
 .n-popover[data-position^="bottom-"]:before,
 .n-popover[data-position^="bottom-"]:after {
-    width: var(--parent-width, 16px);
-    max-width: var(--parent-max-width, 100%);
+    width: var(--n-parent-width, 16px);
+    max-width: var(--n-node-width, 100%);
 }
 
 .n-popover[data-position="top-start"]:before,
@@ -97,8 +97,8 @@
 .n-popover[data-position^="left-"]:after,
 .n-popover[data-position^="right-"]:before,
 .n-popover[data-position^="right-"]:after {
-    height: var(--parent-height, 16px);
-    max-height: var(--parent-max-height, 100%);
+    height: var(--n-parent-height, 16px);
+    max-height: var(--n-node-height, 100%);
 }
 
 .n-popover[data-position="left-start"]:before,
@@ -179,7 +179,7 @@
     align-items: center;
     justify-content: stretch;
     text-decoration: none;
-    padding: calc(#{"#{size('base-pad')} - 2px"}) size('base-pad');
+    padding: size('base-pad', 'calc($ - 2px)') size('base-pad');
     font-size: size('base-fnt');
 }
 
@@ -229,7 +229,7 @@
     flex: 0 0 auto;
     font-size: size('base-fnt-icon');
     text-align: center;
-    width: calc(#{"#{size('base-pad')} * 2"});
+    width: size('base-pad', 'calc($ * 2)');
 }
 
 .n-popover-option .n-icon--before {
@@ -254,23 +254,23 @@
 
 .n-popover .n-popover__body .n-popover-group:first-child,
 .n-popover .n-popover__body .n-popover-option:first-child {
-    margin-top: calc(#{"#{size('base-pad-vertical')} * -1"});
+    margin-top: size('base-pad-vertical', 'calc($ * -1)');
 }
 
 .n-popover  .n-popover__body .n-popover-group:last-child,
 .n-popover  .n-popover__body .n-popover-option:last-child {
-    margin-bottom: calc(#{"#{size('base-pad-vertical')} * -1"});
+    margin-bottom: size('base-pad-vertical', 'calc($ * -1)');
 }
 
 .n-popover .n-popover__body .n-popover-group,
 .n-popover .n-popover__body .n-popover-option {
-    width: calc(#{"100% + (#{size('base-pad')} * 2)"});
-    margin: 0 calc(#{"#{size('base-pad')} * -1"});
+    width: size('base-pad', 'calc(100% + ($ * 2))');
+    margin: 0 size('base-pad', 'calc($ * -1)');
 }
 
 .n-popover-option .n-image {
-    width: calc(#{"#{size('base-pad')} * 2"});
-    height: calc(#{"#{size('base-pad')} * 2"});
+    width: size('base-pad', 'calc($ * 2)');
+    height: size('base-pad', 'calc($ * 2)');
 }
 
 .n-popover-option .n-image--before,

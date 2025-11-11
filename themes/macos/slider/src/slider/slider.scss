@@ -14,12 +14,7 @@
 }
 
 .n-slider.n-disabled .n-slider__handle {
-    border: 6px solid color('gray-50');
-}
-
-.n-slider__handle span {
-    color: color('white', 0.9);
-    background: color('shadow', 0.8);
+    background: color('gray-50');
 }
 
 .n-slider:not(.n-disabled) .n-slider__range {
@@ -27,6 +22,10 @@
 }
 
 .n-slider:not(.n-disabled) .n-slider__handle {
-    border: 6px solid color('base-color');
+    background: color('base-color');
+}
+
+.n-slider__handle span {
+    background: color('base-text');
 }
 

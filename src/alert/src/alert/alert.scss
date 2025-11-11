@@ -62,15 +62,15 @@
 
 .n-alert {
     font-size: size('base-fnt');
-    padding: calc(#{"#{size('base-pad')} * 3"});
+    padding: size('base-pad', 'calc($ * 3)');
 }
 
 .n-alert-frame {
-    width: calc(#{"#{size('base-hgt')} * 12"});
-    padding: calc(#{"#{size('base-pad-vertical')} * 3"}) calc(#{"#{size('base-pad')} * 3"});
+    width: size('base-hgt', 'calc($ * 12)');
+    padding: size('base-pad-vertical', 'calc($ * 3)') size('base-pad', 'calc($ * 3)');
     border-radius: size('base-rad-window');
 }
 
 .n-alert__icon {
-    margin-bottom: calc(#{"#{size('base-pad-vertical')} * 2"});
+    margin-bottom: size('base-pad-vertical', 'calc($ * 2)');
 }

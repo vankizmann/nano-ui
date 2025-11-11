@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@import "src/root/helpers";
 
 .n-transfer {
     display: flex;
@@ -52,17 +51,8 @@
 }
 
 .n-transfer__search {
-    flex: 0 0 auto;
-}
-
-.n-transfer__search .n-input {
-    border: 0;
-    border-radius: 0;
-    background: transparent !important;
-}
-
-.n-transfer__search .n-input input {
-    min-height: 36px;
+    flex:  1 0 30%;
+    max-width: 220px;
 }
 
 .n-transfer__body {
@@ -84,50 +74,40 @@
     content: ')';
 }
 
-@each $suffix, $values in $form {
+.n-transfer {
+    font-size: size('base-fnt');
+}
 
-    $-transfer-font: map.get($values, 'font');
-    $-transfer-size: map.get($values, 'size');
-    $-transfer-radius: map.get($values, 'radius');
-    $-transfer-ratio: map.get($values, 'ratio');
+.n-transfer__panel {
+    border-radius: size('base-rad');
+}
 
-    .n-transfer--#{$suffix} {
-        font-size: $-transfer-font;
-    }
+.n-transfer__header {
+    height: size('base-hgt', 'calc($ * 1.6)');
+    padding: 0 size('base-pad');
+}
 
-    .n-transfer--#{$suffix} .n-transfer__panel {
-        border-radius: $-transfer-radius + 2;
-    }
+.n-transfer__title {
+    font-size: 1.15em;
+    padding: 0 size('base-pad');
+}
 
-    $-transfer-padding:  $-transfer-size * $-transfer-ratio;
+.n-transfer__item-count {
+    margin-left: size('base-pad', 'calc($ * 0.5)');
+}
 
-    .n-transfer--#{$suffix} .n-transfer__header {
-        font-size: $-transfer-font + 2;
-        padding: $-transfer-padding * 0.5;
-    }
+.n-transfer__controls {
+    padding: 0 size('base-pad');
+}
 
-    .n-transfer--#{$suffix} .n-transfer__title {
-        padding: 0 $-transfer-padding * 0.5;
-    }
+.n-transfer__controls > button:not(:last-child) {
+    margin-bottom: size('base-pad-vertical');
+}
 
-    .n-transfer--#{$suffix} .n-transfer__item-count {
-        margin-left: $-transfer-padding * 0.5;
-    }
+.n-draglist-item {
+    padding: 0 size('base-pad');
+}
 
-    .n-transfer--#{$suffix} .n-transfer__controls {
-        padding: 0 $-transfer-padding;
-    }
-
-    .n-transfer--#{$suffix} .n-transfer__controls > button:not(:last-child) {
-        margin-bottom: $-transfer-padding * 0.5;
-    }
-
-    .n-transfer--#{$suffix} .n-draglist-item {
-        padding: 0 $-transfer-padding * 0.5;
-    }
-
-    .n-transfer--#{$suffix} .n-transfer__body .n-draglist-item__element {
-        padding: 0 $-transfer-padding * 0.5;
-    }
-
+.n-transfer__body .n-draglist-item__element {
+    padding: 0 size('base-pad');
 }

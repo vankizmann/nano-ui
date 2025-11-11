@@ -297,20 +297,20 @@ export class PopoverElement
 
         Dom.find(el).css(style);
 
-        if ( ! style['--parent-width'] ) {
-            style['--parent-width'] = `${rect.width}px`;
+        if ( ! style['--n-parent-width'] ) {
+            style['--n-parent-width'] = `${rect.width}px`;
         }
 
-        if ( ! style['--parent-max-width'] && Dom.find(el).innerWidth() ) {
-            style['--parent-max-width'] = `${el.clientWidth}px`;
+        if ( ! style['--n-node-width'] && Dom.find(el).innerWidth() ) {
+            style['--n-node-width'] = `${el.clientWidth}px`;
         }
 
-        if ( ! style['--parent-height'] ) {
-            style['--parent-height'] = `${rect.height}px`;
+        if ( ! style['--n-parent-height'] ) {
+            style['--n-parent-height'] = `${rect.height}px`;
         }
 
-        if ( ! style['--parent-max-height'] && Dom.find(el).innerHeight() ) {
-            style['--parent-max-height'] = `${el.clientHeight}px`;
+        if ( ! style['--n-node-height'] && Dom.find(el).innerHeight() ) {
+            style['--n-node-height'] = `${el.clientHeight}px`;
         }
 
         Dom.find(el).css(style);

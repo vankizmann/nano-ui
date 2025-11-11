@@ -40,10 +40,10 @@
 }
 
 .n-radio .n-radio__radio span {
-    width: calc(#{"#{size('base-hgt-inline')} - 10px"});
-    height: calc(#{"#{size('base-hgt-inline')} - 10px"});
+    width: size('base-hgt-inline', 'calc($ - 10px)');
+    height: size('base-hgt-inline', 'calc($ - 10px)');
 }
 
 .n-radio .n-radio__label {
-    padding-left: calc(#{"#{size('base-pad')} * 0.8"});
+    padding-left: size('base-pad', 'calc($ * 0.8)');
 }
