@@ -1,0 +1,31 @@
+@use "src/root/helpers" as *;
+
+.n-cascader {
+    background: color('form-input');
+    border: 1px solid color('gray-15');
+}
+
+.n-cascader:not(.n-disabled):hover {
+    border-color: color('base-color-bg-30');
+}
+
+.n-cascader:not(.n-disabled).n-focus {
+    border-color: color('base-color');
+}
+
+.n-cascader.n-disabled {
+    background: color('form-disabled');
+}
+
+.n-cascader__placeholder {
+    color: color('foreground', 0.6);
+}
+
+.n-cascader__body,
+.n-cascader__empty {
+     background: color('form');
+}
+
+.n-cascader__empty {
+     color: color('gray-60');
+}

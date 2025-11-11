@@ -1,0 +1,32 @@
+@use "src/root/helpers" as *;
+
+.n-radio__radio {
+    color: color('foreground');
+    background: color('form-input');
+    border: 1px solid color('gray-15');
+}
+
+.n-radio.n-disabled .n-radio__radio  {
+    background: color('form-disabled');
+}
+
+.n-radio__radio span {
+    background: color('foreground');
+}
+
+.n-radio:not(.n-disabled):hover .n-radio__radio {
+    border-color: color('base-color-bg-30');
+}
+
+.n-radio.n-checked:not(.n-disabled) .n-radio__radio {
+    background: color('base-color');
+    border-color: color('base-color');
+}
+
+.n-radio.n-checked:not(.n-disabled) .n-radio__radio span {
+    background: color('base-text');
+}
+
+.n-radio.n-checked:not(.n-disabled) .n-radio__label {
+    color: color('base-color');
+}

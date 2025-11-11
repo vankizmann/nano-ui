@@ -1,4 +1,4 @@
-@import "src/root/helpers";
+@use "src/root/helpers" as *;
 
 .n-table {
     overflow: hidden;
@@ -98,7 +98,7 @@
 .n-table .n-table__header {
     position: relative;
     flex: 0 0 auto;
-    height: size('base-hgt', 'calc($ * 1.4)');
+    height: size('base-hgt', 'calc($ + 10px)');
     display: inline-flex;
     flex-direction: row;
     align-items: stretch;

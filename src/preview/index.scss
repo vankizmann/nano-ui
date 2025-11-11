@@ -1,5 +1,5 @@
-@import "./src/preview/preview";
-@import "./src/preview-modal/preview-modal";
-@import "./src/preview-plain/preview-plain";
-@import "./src/preview-image/preview-image";
-@import "./src/preview-video/preview-video";
+@forward "./src/preview/preview";
+@forward "./src/preview-modal/preview-modal";
+@forward "./src/preview-plain/preview-plain";
+@forward "./src/preview-image/preview-image";
+@forward "./src/preview-video/preview-video";

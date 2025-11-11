@@ -1,0 +1,47 @@
+@use "src/root/helpers" as *;
+
+.n-datetimepicker {
+    background: color('form-input');
+    border: 1px solid color('gray-15');
+}
+
+.n-datetimepicker:not(.n-disabled):hover {
+    border-color: color('base-color-bg-30');
+}
+
+.n-datetimepicker:not(.n-disabled).n-focus {
+    border-color: color('base-color');
+}
+
+.n-datetimepicker.n-disabled {
+    background: color('form-disabled');
+}
+
+.n-datetimepicker__seperator {
+    color: color('gray-60');
+}
+
+.n-datetimepicker__clear,
+.n-datetimepicker__angle {
+    color: color('gray-60');
+}
+
+.n-datetimepicker__clear i {
+    background: color('gray-15', 0.6);
+}
+
+.n-datetimepicker__placeholder {
+    color: color('gray-15', 0.5);
+}
+
+.n-datetimepicker-panel {
+     background: color('form-input');
+}
+
+.n-datetimepicker__time-panel.n-timepicker-panel {
+    background: color('foreground', 0.05);
+}
+
+.n-datetimepicker-panel .n-datetimepicker__date-panel {
+    border-right: 1px solid color('gray-15');
+}

@@ -138,6 +138,19 @@ export default {
         );
     },
 
+    renderHeaderAction()
+    {
+        if ( ! this.$slots.action ) {
+            return null;
+        }
+
+        return (
+            <div class="n-collapse__header-action">
+                {this.$slots.action && this.$slots.action()}
+            </div>
+        );
+    },
+
     renderHeaderAngle()
     {
         return (
@@ -207,6 +220,7 @@ export default {
             <div ref="header" class={classList} {...props}>
                 {this.ctor('renderHeaderIcon')()}
                 {this.ctor('renderHeaderLabel')()}
+                {this.ctor('renderHeaderAction')()}
                 {this.ctor('renderHeaderAngle')()}
             </div>
         );

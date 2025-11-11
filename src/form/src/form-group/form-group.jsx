@@ -235,23 +235,25 @@ export default {
     renderLabel()
     {
         return (
-            <div class="n-form-group__legend" onClick={this.toggleGroup}>
-                { this.ctor('renderCollapse')() }
-                { this.ctor('renderText')() }
-                { this.ctor('renderAction')() }
+            <div class="n-form-group__header" onClick={this.toggleGroup}>
+                <div class="n-form-group__legend">
+                    {this.ctor('renderCollapse')()}
+                    {this.ctor('renderText')()}
+                    {this.ctor('renderAction')()}
+                </div>
             </div>
         );
     },
 
     renderTooltip()
     {
-        if ( ! this.tooltip ) {
+        if ( !this.tooltip ) {
             return null;
         }
 
         return (
             <NPopover type="tooltip" size="sm" position={this.tooltipPosition}>
-                {this.tooltip}
+            {this.tooltip}
             </NPopover>
         );
     },

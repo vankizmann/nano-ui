@@ -1,25 +1,18 @@
-@import "src/root/helpers";
+@use "src/root/helpers" as *;
 
 .n-form-group {
     position: relative;
 }
 
-.n-form-group:before {
-    pointer-events: none;
+.n-form-group.n-form-group--fieldset.n-hidden:after {
     z-index: 0;
     content: '\00a0';
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 0;
     display: block;
     width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.4s;
-}
-
-.n-form-group.on-search:before {
-    opacity: 0.1;
+    height: 1px;
 }
 
 .n-form-group--collapse .n-form-group__legend {
@@ -43,6 +36,7 @@
 }
 
 .n-form-group__collapse {
+    order: 900;
     flex: 0 0 auto;
     display: flex;
     flex-direction: row;
@@ -60,6 +54,7 @@
 }
 
 .n-form-group__label {
+    overflow: hidden;
     flex: 1 1 auto;
     display: flex;
     flex-direction: row;
@@ -77,6 +72,9 @@
 
 .n-form-group__text {
     flex: 1 1 auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     font-weight: bold;
 }
 
@@ -87,6 +85,11 @@
 .n-form-group {
     font-size: size('base-fnt');
     margin-bottom: size('base-pad-vertical');
+}
+
+.n-form-group__header {
+    z-index: 10;
+    position: relative;
 }
 
 .n-form-group__body {
@@ -107,7 +110,7 @@
 
 .n-form-group.n-form-group--fieldset .n-form-group__legend {
     margin-left: size('base-pad', 'calc($ * 2)');
-    min-height: size('base-hgt');
+    height: size('base-hgt');
     border-radius: size('base-rad');
     padding: 0 size('base-pad');
 }
@@ -141,4 +144,26 @@
 .n-form-group.n-form-group--fieldset .n-form-group__body {
     padding-top: size('base-hgt');
     margin-top: size('base-hgt', 'calc($ * -0.5)');
+}
+
+.n-form-group__action {
+    flex: 0 0 auto;
+    padding: 0 size('base-pad');
+}
+
+.n-form-group.n-form-group--fieldset .n-form-group__action {
+    position: absolute;
+    top: 0;
+    right: size('base-pad');
+    display: inline-flex;
+    align-items: center;
+    height: size('base-hgt');
+}
+
+.n-form-group.n-form-group--fieldset .n-form-group__action {
+    order: 1000;
+}
+
+.n-form-group__action > *:not(:last-child) {
+    margin-right: size('base-pad');
 }

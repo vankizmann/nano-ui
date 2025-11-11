@@ -1,0 +1,35 @@
+@use "src/root/helpers" as *;
+
+.n-confirm {
+    background: color('shadow', 0.8);
+    backdrop-filter: blur(1.5px);
+    transition: opacity 0.3s;
+}
+
+.n-confirm:not(.n-ready) {
+    opacity: 0;
+}
+
+.n-confirm-frame {
+    background: color('background');
+    transition: transform 0.3s;
+    box-shadow: 0 2px 20px color('shadow', 0.1), 0 0 2px color('shadow', 0.15);
+}
+
+.n-confirm:not(.n-ready) .n-confirm-frame {
+    transform: translateY(50px) scale(0.6);
+}
+
+.n-confirm__text {
+    color: color('text');
+}
+
+.n-confirm .n-button--reset {
+    color: color('foreground', 0.6);
+    background: color('gray-50', 0.2);
+}
+
+.n-confirm__icon i {
+    color: color('base-color');
+}
+

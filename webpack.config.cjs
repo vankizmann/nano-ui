@@ -9,7 +9,7 @@ let themes = {
     './src/index.scss': './nano-ui.css',
     // './docs/src/scss/index-light.scss': '../docs/dist/light.css',
     // './docs/src/scss/index-dark.scss': '../docs/dist/dark.css',
-    './themes/macos/index.scss': './themes/macos.css',
+    './themes/default/example.scss': './themes/default.css',
 };
 
 let libJs = {

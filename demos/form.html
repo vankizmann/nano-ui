@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="../dist/nano-ui.css">
-    <link id="theme" rel="stylesheet" href="../dist/themes/macos.css">
+    <link id="theme" rel="stylesheet" href="../dist/themes/default.css">
 
     <link rel="stylesheet" href="../style.css">
 
@@ -67,6 +67,9 @@
         <n-form kind="fieldset">
             <n-form-frame style="height: 80vh; border: 1px solid #eee;" :show-search="true">
                 <n-form-group v-for="(item) in items" :label="'foobar asd asdasd asd asdas as dasd ' +  item" icon="fa fa-ghost" :type="{ '1' : 'primary', '2': 'secondary', '3': 'danger'}[item]" :collapse="true">
+                    <template #action>
+                        <n-button type="auto" :glass="true" size="xs">Action</n-button>
+                    </template>
                     <n-form-item label="Test">
                         <n-input></n-input>
                     </n-form-item>

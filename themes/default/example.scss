@@ -1,0 +1,25 @@
+@forward "./index";
+@forward "src/root/vars/sizes-default";
+
+$color-primary: #2B70E3;
+
+@use "src/root/vars/colors-light" as theme-light with (
+    $color-primary: $color-primary,
+);
+
+@use "src/root/vars/colors-dark" as theme-dark with (
+    $color-primary: $color-primary,
+);
+
+[class*="n-theme--"] {
+    color: rgb(var(--n-color-text));
+}
+
+.n-theme--light {
+    @include theme-light.remap();
+}
+
+.n-theme--dark {
+    @include theme-dark.remap();
+}
+

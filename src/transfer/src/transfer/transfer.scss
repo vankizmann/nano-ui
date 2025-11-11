@@ -1,4 +1,4 @@
-@import "src/root/helpers";
+@use "src/root/helpers" as *;
 
 .n-transfer {
     display: flex;
@@ -88,7 +88,7 @@
 }
 
 .n-transfer__title {
-    font-size: 1.15em;
+    font-size: 1.05em;
     padding: 0 size('base-pad');
 }
 

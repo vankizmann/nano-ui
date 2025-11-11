@@ -1,0 +1,23 @@
+@use "src/root/helpers" as *;
+
+.n-tabs__tab:not(.is-active) .n-tabs__tab-icon {
+    opacity: 0.6;
+}
+
+.n-tabs:not(.n-float) .n-tabs__tab.n-active .n-tabs__tab-icon,
+.n-tabs:not(.n-float) .n-tabs__tab.n-active .n-tabs__tab-label {
+    color: color('base-color');
+}
+
+.n-tabs.n-float .n-tabs__tab {
+    background: color('gray-20', 0.7);
+}
+
+.n-tabs.n-float .n-tabs__tab.n-active {
+    background: color('base-color');
+}
+
+.n-tabs.n-float .n-tabs__tab.n-active .n-tabs__tab-icon,
+.n-tabs.n-float .n-tabs__tab.n-active .n-tabs__tab-label {
+    color: color('base-text');
+}

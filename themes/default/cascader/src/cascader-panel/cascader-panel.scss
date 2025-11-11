@@ -1,0 +1,17 @@
+@use "src/root/helpers" as *;
+
+.n-cascader-panel {
+    background: color('form-input');
+}
+
+div:not(.n-popover) > .n-cascader-panel {
+    border: 1px solid color('gray-15');
+}
+
+.n-cascader-panel .n-popover-option:not(.n-active) i {
+    color: color('gray-40');
+}
+
+.n-cascader-panel__items:not(:first-child) {
+    border-left: 1px solid color('gray-15');
+}

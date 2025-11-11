@@ -1,0 +1,42 @@
+@use "src/root/helpers" as *;
+
+.n-form-group.n-form-group--fieldset.n-hidden:after {
+    background: color('gray-10');
+}
+
+.n-form-group--fieldset .n-form-group__body {
+    border: 1px solid color('gray-10');
+}
+
+.n-form-group--fieldset.n-form-group--collapse.n-hidden {
+    border-color: transparent;
+}
+
+.n-form-group--fieldset .n-form-group__legend {
+    background: color('base-color');
+}
+
+.n-form-group--fieldset .n-form-group__label span,
+.n-form-group--fieldset .n-form-group__label i {
+    color: color('base-text');
+}
+
+.n-form-group--fieldset .n-form-group__collapse {
+    color: color('base-text', 0.6);
+}
+
+.n-form-group--classic .n-form-group__label span {
+    color: color('text');
+}
+
+.n-form-group--classic .n-form-group__label i {
+    color: color('base-color');
+}
+
+.n-form-group--classic .n-form-group__collapse {
+    color: color('text', 0.6);
+}
+
+.n-form-group--fieldset .n-form-group__action {
+    background: color('background');
+}

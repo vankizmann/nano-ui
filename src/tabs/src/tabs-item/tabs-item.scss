@@ -1,9 +1,18 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@use "src/root/helpers" as *;
 
 .n-tabs-item {
     flex: 1 1 auto;
     min-height: 0;
+}
+
+.n-tabs-item:not(.n-scrollbar),
+.n-tabs-item.n-scrollbar .n-scrollbar__wrap {
+    padding-top: size('base-pad-vertical', 'calc($ * 2)');
+}
+
+.n-tabs.n-float .n-tabs-item:not(.n-scrollbar),
+.n-tabs.n-float .n-tabs-item.n-scrollbar .n-scrollbar__wrap {
+    padding-top: calc(#{"(#{size('base-pad-vertical')} * 2) + #{size('base-hgt')}"});
 }
 
 .n-tabs__tab-label span {
@@ -12,24 +21,10 @@
     text-overflow: ellipsis;
 }
 
-@each $suffix, $values in $form {
+.n-tabs__tab-icon {
+    margin-right: size('base-pad');
+}
 
-    $-tabs-font: map.get($values, 'font');
-    $-tabs-size: map.get($values, 'size');
-    $-tabs-radius: map.get($values, 'radius');
-    $-tabs-ratio: map.get($values, 'ratio');
-
-    .n-tabs--#{$suffix} .n-tabs-item {
-        margin-top: $-tabs-size * $-tabs-ratio;
-    }
-
-    .n-tabs--#{$suffix} .n-tabs__tab-icon {
-        font-size: $-tabs-font - 2;
-        margin-right: $-tabs-size * $-tabs-ratio * 0.7;
-    }
-
-    .n-tabs--#{$suffix} .n-tabs__tab-label {
-        font-size: $-tabs-font;
-    }
-
+.n-tabs__tab-icon i {
+    font-size: size('base-fnt-icon');
 }

@@ -1,0 +1,18 @@
+@use "src/root/helpers" as *;
+
+.n-textarea textarea {
+    background: color('form-input');
+    border: 1px solid color('gray-15');
+}
+
+.n-textarea.n-disabled textarea  {
+    background: color('form-disabled');
+}
+
+.n-textarea:not(.n-disabled):hover textarea {
+    border-color: color('base-color-bg-30');
+}
+
+.n-textarea:not(.n-disabled) textarea:focus {
+    border-color: color('base-color');
+}

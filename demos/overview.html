@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="../dist/nano-ui.css">
-    <link id="theme" rel="stylesheet" href="../dist/themes/macos.css">
+    <link id="theme" rel="stylesheet" href="../dist/themes/default.css">
 
     <link rel="stylesheet" href="../style.css">
 
@@ -129,7 +129,12 @@
         </div>
 
         <n-form :errors="{ foo: 'ERROR' }">
-            <n-form-group label="FormGroup" :model-value="false" :collapse="true" icon="fa fa-ghost">
+            <n-form-group label="FormGroup asd ada sd asd asd afsdfg sdgsd gsdg sdg sd sdf sdf aqwwq dqcdassdaw dad wa fsdfawd adas" :model-value="false" :collapse="true" icon="fa fa-ghost">
+
+                <template #action>
+                    <n-button type="danger" :glass="true" :link="true" size="xs">Delete</n-button>
+                    <n-button :glass="true" size="xs">Action</n-button>
+                </template>
 
                 <n-form-item label="Foo" prop="foo" tooltip="lorem ipsum dolore">
                     <n-input></n-input>
@@ -159,7 +164,12 @@
                 </n-form-item>
 
             </n-form-group>
-            <n-form-group label="FormGroup2" icon="fa fa-ghost" kind="fieldset">
+            <n-form-group label="FormGroup2" icon="fa fa-ghost" kind="fieldset" :collapse="true">
+
+                <template #action>
+                    <n-button type="danger" :glass="true" :link="true" size="xs">Delete</n-button>
+                    <n-button :glass="true" size="xs">Action</n-button>
+                </template>
 
                 <n-form-item label="Foo" prop="foo" tooltip="lorem ipsum dolore" :conditional="n_form.conditional" v-model="n_form.modelValue">
                     <n-input></n-input>
@@ -965,9 +975,17 @@
         <n-collapse v-bind="n_collapse" style="height: 600px;">
             <n-collapse-item :sort="3" name="keep" label="Keep" icon="fa fa-ghost" :keep="true">
                 <n-textarea></n-textarea>
+                <template #action>
+                    <n-button :glass="true" :link="true" size="xs">Action</n-button>
+                </template>
             </n-collapse-item>
             <n-collapse-item :sort="4" name="bar" label="Headline in extra extra extra extra extra extra looooong">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, modi?
+
+                <template #action>
+                    <n-button type="danger" :glass="true" :link="true" size="xs">Delete</n-button>
+                    <n-button :glass="true" size="xs">Action</n-button>
+                </template>
             </n-collapse-item>
             <n-collapse-item :sort="2" name="bar2" label="KKKKAKS SAKK">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, modi?

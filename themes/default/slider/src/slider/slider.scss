@@ -1,0 +1,31 @@
+@use "src/root/helpers" as *;
+
+.n-slider__bar {
+    background: color('gray-10');
+}
+
+.n-slider.n-disabled .n-slider__range {
+    background: color('gray-50');
+}
+
+.n-slider__handle {
+    background: color('white');
+    box-shadow: 0 0 4px color('shadow', 0.15);
+}
+
+.n-slider.n-disabled .n-slider__handle {
+    background: color('gray-50');
+}
+
+.n-slider:not(.n-disabled) .n-slider__range {
+    background: color('base-color');
+}
+
+.n-slider:not(.n-disabled) .n-slider__handle {
+    background: color('base-color');
+}
+
+.n-slider__handle span {
+    background: color('base-text');
+}
+

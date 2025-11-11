@@ -1,0 +1,10 @@
+@use "src/root/helpers" as *;
+
+.n-load:before {
+    border: 2px solid color('base-color');
+}
+
+.n-load:after {
+    background: color('background', 0.7);
+}
+

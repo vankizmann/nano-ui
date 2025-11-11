@@ -1,0 +1,52 @@
+@use "src/root/helpers" as *;
+
+.n-draggrid-item.n-current {
+    background: color('gray-35', 0.1);
+}
+
+.n-draggrid-item.n-nodrop {
+    background: color('danger', 0.1);
+}
+
+.n-draggrid-item .n-draggrid-item__ellipsis {
+    color: color('gray-30');
+}
+
+.n-draggrid-item__checkbox {
+    background: color('form-input');
+    border: 1px solid color('gray-15');
+}
+
+.n-draggrid-item.n-disabled .n-draggrid-item__checkbox {
+    background: color('form-disabled');
+}
+
+.n-draggrid-item.n-dragover {
+    background: color('base-color', 0.075);
+}
+
+.n-draggrid-item.n-highlight {
+    animation: NDraggridItem 1s linear infinite;
+}
+
+.n-draggrid-item.n-selected .n-draggrid-item__checkbox {
+    color: color('base-text');
+    background: color('base-color');
+    border-color: color('base-color');
+}
+
+.n-draggrid-item:not(.n-disabled) .n-draggrid-item__checkbox:hover {
+    border-color: color('base-color-bg-10');
+}
+
+@keyframes NDraggridItem {
+    0% {
+        background: color('base-color', 0);
+    }
+    50% {
+        background: color('base-color', 0.15);
+    }
+    100% {
+        background: color('base-color', 0);
+    }
+}

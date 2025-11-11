@@ -1,0 +1,56 @@
+@use "src/root/helpers" as *;
+
+.n-draglist-item.n-current {
+    background: color('gray-35', 0.1);
+}
+
+.n-draglist-item.n-nodrop {
+    background: color('danger', 0.1);
+}
+
+.n-draglist-item .n-draglist-item__ellipsis {
+    color: color('gray-30');
+}
+
+.n-draglist-item .n-draglist-item__expand {
+    color: color('gray-60');
+}
+
+.n-draglist-item__checkbox {
+    background: color('form-input');
+    border: 1px solid color('gray-15');
+}
+
+.n-draglist-item.n-disabled .n-draglist-item__checkbox {
+    background: color('form-disabled');
+}
+
+.n-draglist-item.n-dragover {
+    background: color('base-color', 0.075);
+}
+
+.n-draglist-item.n-highlight {
+    animation: NDraglistItem 1s linear infinite;
+}
+
+.n-draglist-item.n-selected .n-draglist-item__checkbox {
+    color: color('base-text');
+    background: color('base-color');
+    border-color: color('base-color');
+}
+
+.n-draglist-item:not(.n-disabled) .n-draglist-item__checkbox:hover {
+    border-color: color('base-color-bg-10');
+}
+
+@keyframes NDraglistItem {
+    0% {
+        background: color('base-color', 0);
+    }
+    50% {
+        background: color('base-color', 0.15);
+    }
+    100% {
+        background: color('base-color', 0);
+    }
+}

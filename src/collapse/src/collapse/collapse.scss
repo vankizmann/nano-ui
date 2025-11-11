@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@use "src/root/helpers" as *;
 
 .n-collapse {
     overflow: hidden;
@@ -7,6 +6,7 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
+    font-size: size('base-fnt');
 }
 
 .n-collapse__header {
@@ -17,36 +17,27 @@
     flex-direction: row;
     align-items: center;
     justify-content: stretch;
+    border-bottom: 1px solid transparent;
 }
 
 .n-collapse__body {
     position: relative;
-    flex: 1 1 auto;
+    flex: 1 1 100%;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
 }
 
-@each $suffix, $values in $form {
+.n-collapse {
+    border-radius: size('base-rad');
+}
 
-    $-collapse-font: map.get($values, 'font');
-    $-collapse-size: map.get($values, 'size');
-    $-collapse-radius: map.get($values, 'radius');
-    $-collapse-ratio: map.get($values, 'ratio');
+.n-collapse__header {
+    height: size('base-hgt', 'calc($ + 10px)');
+    padding: 0 size('base-pad');
+}
 
-    .n-collapse--#{$suffix} {
-        border-radius: $-collapse-radius;
-    }
-
-    $-collapse-padding: $-collapse-size * $-collapse-ratio;
-
-    .n-collapse--#{$suffix} .n-collapse__header {
-        padding: $-collapse-padding * 0.8 $-collapse-padding * 1.2;
-    }
-
-    .n-collapse--#{$suffix} .n-collapse__body > .n-scrollbar-content {
-        padding: $-collapse-padding * 1.2;
-    }
-
+.n-collapse__body > .n-scrollbar-content {
+    padding: size('base-pad-vertical', 'calc($ * 1.4)') size('base-pad');
 }

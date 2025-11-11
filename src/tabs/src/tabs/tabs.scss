@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import "../../../root/vars";
+@use "src/root/helpers" as *;
 
 .n-tabs {
     display: flex;
@@ -77,34 +76,21 @@
     justify-content: stretch;
 }
 
-@each $suffix, $values in $form {
+.n-tabs__tab {
+    padding: size('base-pad-vertical', 'calc($ * 1.4)') size('base-pad');
+}
 
-    $-tabs-font: map.get($values, 'font');
-    $-tabs-size: map.get($values, 'size');
-    $-tabs-radius: map.get($values, 'radius');
-    $-tabs-ratio: map.get($values, 'ratio');
+.n-tabs.n-float .n-tabs__header {
+    padding: size('base-pad-vertical') 0;
+}
 
-    $-tabs-spacer: $-tabs-size * $-tabs-ratio;
+.n-tabs.n-float .n-tabs__tab {
+    border-radius: size('base-rad');
+    height: size('base-hgt');
+    padding: 0 size('base-pad');
+    margin-right: size('base-pad');
+}
 
-    .n-tabs--#{$suffix} .n-tabs__tab {
-        padding: $-tabs-spacer;
-    }
-
-    .n-tabs--#{$suffix}.n-float .n-tabs__tab {
-        border-radius: $-tabs-radius;
-        height: $-tabs-font * 2.4;
-        line-height: $-tabs-font * 2.4;
-        padding: 0 $-tabs-spacer;
-        margin: $-tabs-font * 0.6;
-    }
-
-    .n-tabs.n-float .n-tabs__tab:not(:first-child) {
-        margin-left: 0;
-    }
-
-    .n-tabs.n-float .n-tabs-item:not(.n-scrollbar),
-    .n-tabs.n-float .n-tabs-item.n-scrollbar .n-scrollbar__wrap {
-        margin-top: $-tabs-font * 2.8;
-    }
-
+.n-tabs.n-float .n-tabs__tab:not(:first-child) {
+    margin-left: 0;
 }
