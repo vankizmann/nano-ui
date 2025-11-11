@@ -1,4 +1,4 @@
-@import "src/root/helpers";
+@use "src/root/helpers" as *;
 
 .n-durationpicker {
     display: flex;
@@ -105,8 +105,6 @@
     overflow: hidden;
     max-height: 210px;
 }
-
-@import "src/root/helpers";
 
 .n-durationpicker {
     height: size('base-hgt');

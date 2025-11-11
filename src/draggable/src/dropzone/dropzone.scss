@@ -1,4 +1,4 @@
-@import "src/root/helpers";
+@use "src/root/helpers" as *;
 
 .n-dropzone {
     font-size: size('base-fnt');
@@ -6,5 +6,5 @@
 
 .n-dropzone__empty {
     margin: auto;
-    padding: size('base-pad-vertical') size('base-pad');
+    padding: size('base-pad-vertical', 'calc($ * 2)') size('base-pad');
 }

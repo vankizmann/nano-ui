@@ -1,0 +1,17 @@
+@use "src/root/helpers" as *;
+
+.n-tags-item {
+    color: color('base-color');
+    background: color('base-color', 0.25);
+}
+
+.n-tags-item i {
+    opacity: 0.8;
+}
+
+@for $i from 0 through 20 {
+    .n-tags-item--color-#{$i} {
+        color: color('tag-#{$i}');
+        background: color('tag-#{$i}', 0.25);
+    }
+}

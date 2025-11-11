@@ -1,0 +1,7 @@
+@use "src/root/helpers" as *;
+
+.n-scrollbar-v:before,
+.n-scrollbar-h:before {
+    background: color('foreground', 0.4);
+}
+

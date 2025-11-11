@@ -13,9 +13,9 @@
     }
 }
 
-@mixin css-remaps($values, $suffix: '-default', $affix: '-color') {
+@mixin css-remaps($values, $source: '-color-default', $target: '-color-base') {
     @each $name, $value in $values {
-        --n#{$affix}-base-#{$name}: var(--n#{$affix}#{$suffix}-#{$name});
+        --n#{$target}-#{$name}: var(--n#{$source}-#{$name});
     }
 }
 

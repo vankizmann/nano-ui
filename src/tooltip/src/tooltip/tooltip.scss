@@ -1,0 +1,119 @@
+@use "src/root/helpers" as *;
+
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip=""]:before,
+[data-tooltip-ltr=""]:before,
+[data-tooltip-rtl=""]:before,
+[data-tooltip=""]:after,
+[data-tooltip-ltr=""]:after,
+[data-tooltip-rtl=""]:after {
+    display: none !important;
+}
+
+[data-tooltip]:before,
+[data-tooltip-ltr]:before,
+[data-tooltip-rtl]:before,
+[data-tooltip]:after,
+[data-tooltip-ltr]:after,
+[data-tooltip-rtl]:after {
+    z-index: 999999999;
+    position: absolute;
+    display: inline-flex;
+    opacity: 0;
+    visibility: hidden;
+}
+
+[data-tooltip]:before,
+[data-tooltip-ltr]:before,
+[data-tooltip-rtl]:before {
+    bottom: calc(100% + 6px);
+    padding: size('base-pad-vertical', 'calc($ * 0.5)') size('base-pad');
+    font-size: size('base-fnt-label');
+    border-radius: size('base-rad');
+}
+
+[data-tooltip]:after,
+[data-tooltip-ltr]:after,
+[data-tooltip-rtl]:after {
+    content: '\00a0';
+    bottom: 100%;
+    width: 28px;
+    height: 6px;
+}
+
+[data-tooltip]:before {
+    content: attr(data-tooltip);
+}
+
+[data-tooltip]:before,
+[data-tooltip]:after {
+    left: 50%;
+    transform: translate(-50%, -6px);
+}
+
+[data-tooltip-ltr]:before {
+    content: attr(data-tooltip-ltr);
+}
+
+[data-tooltip-ltr]:before,
+[data-tooltip-ltr]:after {
+    left: 0;
+    transform: translateY(-6px);
+}
+
+[data-tooltip-rtl]:before {
+    content: attr(data-tooltip-rtl);
+}
+
+[data-tooltip-rtl]:before,
+[data-tooltip-rtl]:after {
+    right: 0;
+    transform: translateY(-6px);
+}
+
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after,
+[data-tooltip].n-move:before,
+[data-tooltip].n-move:after {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+}
+
+[data-tooltip-ltr]:hover:before,
+[data-tooltip-ltr]:hover:after,
+[data-tooltip-ltr].n-move:before,
+[data-tooltip-ltr].n-move:after,
+[data-tooltip-rtl]:hover:before,
+[data-tooltip-rtl]:hover:after,
+[data-tooltip-rtl].n-move:before,
+[data-tooltip-rtl].n-move:after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+[data-tooltip]:before,
+[data-tooltip-ltr]:before,
+[data-tooltip-rtl]:before,
+[data-tooltip]:after,
+[data-tooltip-ltr]:after,
+[data-tooltip-rtl]:after {
+    background: color('tooltip', 0.95);
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+[data-tooltip]:before,
+[data-tooltip-ltr]:before,
+[data-tooltip-rtl]:before {
+    color: color('white');
+}
+
+[data-tooltip]:after,
+[data-tooltip-ltr]:after,
+[data-tooltip-rtl]:after {
+    mask: svg-load('angle-down.svg') no-repeat center 0 / contain;
+}

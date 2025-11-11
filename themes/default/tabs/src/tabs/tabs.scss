@@ -1,0 +1,9 @@
+@use "src/root/helpers" as *;
+
+.n-tabs:not(.n-float) > .n-tabs__header:after {
+    border-bottom: 1px solid color('gray-15');
+}
+
+.n-tabs__indicator {
+    background: color('base-color');
+}

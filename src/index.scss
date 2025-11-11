@@ -1,195 +1,44 @@
-@import "./empty/index";
-@import "./alert/index";
-@import "./notification/index";
-@import "./scrollbar/index";
-@import "./resizer/index";
-@import "./virtualscroller/index";
-@import "./draggable/index";
-@import "./loader/index";
-@import "./form/index";
-@import "./button/index";
-@import "./input/index";
-@import "./input-number/index";
-@import "./textarea/index";
-@import "./slider/index";
-@import "./switch/index";
-@import "./checkbox/index";
-@import "./radio/index";
-@import "./select/index";
-@import "./cascader/index";
-@import "./datepicker/index";
-@import "./timepicker/index";
-@import "./datetimepicker/index";
-@import "./durationpicker/index";
-@import "./transfer/index";
-@import "./file/index";
-@import "./popover/index";
-@import "./modal/index";
-@import "./confirm/index";
-@import "./table/index";
-@import "./paginator/index";
-@import "./tabs/index";
-@import "./tags/index";
-@import "./collapse/index";
-@import "./info/index";
-@import "./map/index";
-@import "./preview/index";
-@import "./rating/index";
-@import "./config/index";
-@import "./drawer/index";
-
-@import "src/root/tooltip/tooltip";
-
-@import "src/root/vars-new";
-@import "src/root/helpers";
-
-:root {
-    @include css-sizes($size-md);
-}
-
-.n-theme--light {
-    @include css-colors($color-light);
-    @include css-colors($color-light-tags, '-tags');
-
-    @include css-colors($color-light-base-neutral, '-neutral');
-    @include css-colors($color-light-base-primary, '-primary');
-    @include css-colors($color-light-base-secondary, '-secondary');
-    @include css-colors($color-light-base-success, '-success');
-    @include css-colors($color-light-base-warning, '-warning');
-    @include css-colors($color-light-base-danger, '-danger');
-    @include css-colors($color-light-base-info, '-info');
-
-    @include css-sizes($size-xs, '-xs');
-    @include css-sizes($size-sm, '-sm');
-    @include css-sizes($size-md, '-md');
-    @include css-sizes($size-lg, '-lg');
-    @include css-sizes($size-xl, '-xl');
+@forward "./empty/index";
+@forward "./alert/index";
+@forward "./notification/index";
+@forward "./scrollbar/index";
+@forward "./resizer/index";
+@forward "./virtualscroller/index";
+@forward "./draggable/index";
+@forward "./loader/index";
+@forward "./form/index";
+@forward "./button/index";
+@forward "./input/index";
+@forward "./input-number/index";
+@forward "./textarea/index";
+@forward "./slider/index";
+@forward "./switch/index";
+@forward "./checkbox/index";
+@forward "./radio/index";
+@forward "./select/index";
+@forward "./cascader/index";
+@forward "./datepicker/index";
+@forward "./timepicker/index";
+@forward "./datetimepicker/index";
+@forward "./durationpicker/index";
+@forward "./transfer/index";
+@forward "./file/index";
+@forward "./popover/index";
+@forward "./modal/index";
+@forward "./confirm/index";
+@forward "./table/index";
+@forward "./paginator/index";
+@forward "./tabs/index";
+@forward "./tags/index";
+@forward "./collapse/index";
+@forward "./info/index";
+@forward "./map/index";
+@forward "./preview/index";
+@forward "./rating/index";
+@forward "./config/index";
+@forward "./drawer/index";
+@forward "./tooltip/index";
 
 
-    [class*="--neutral"] {
-        @include css-remaps($color-light-base-neutral, '-neutral');
-    }
-
-    [class*="--primary"] {
-        @include css-remaps($color-light-base-primary, '-primary');
-    }
-
-    [class*="--secondary"] {
-        @include css-remaps($color-light-base-secondary, '-secondary');
-    }
-
-    [class*="--success"] {
-        @include css-remaps($color-light-base-success, '-success');
-    }
-
-    [class*="--warning"] {
-        @include css-remaps($color-light-base-warning, '-warning');
-    }
-
-    [class*="--danger"] {
-        @include css-remaps($color-light-base-danger, '-danger');
-    }
-
-    [class*="--info"] {
-        @include css-remaps($color-light-base-info, '-info');
-    }
-
-    [class*="--xs"] {
-        @include css-remaps($size-xs, '-xs', '-size');
-    }
-
-    [class*="--sm"] {
-        @include css-remaps($size-sm, '-sm', '-size');
-    }
-
-    [class*="--md"] {
-        @include css-remaps($size-md, '-md', '-size');
-    }
-
-    [class*="--lg"] {
-        @include css-remaps($size-lg, '-lg', '-size');
-    }
-
-    [class*="--xl"] {
-        @include css-remaps($size-xl, '-xl', '-size');
-    }
-
-}
-
-.n-theme--dark {
-    @include css-colors($color-dark);
-    @include css-colors($color-dark-tags, '-tags');
-
-    @include css-colors($color-dark-base-neutral, '-neutral');
-    @include css-colors($color-dark-base-primary, '-primary');
-    @include css-colors($color-dark-base-secondary, '-secondary');
-    @include css-colors($color-dark-base-success, '-success');
-    @include css-colors($color-dark-base-warning, '-warning');
-    @include css-colors($color-dark-base-danger, '-danger');
-    @include css-colors($color-dark-base-info, '-info');
-
-    @include css-sizes($size-xs, '-xs');
-    @include css-sizes($size-sm, '-sm');
-    @include css-sizes($size-md, '-md');
-    @include css-sizes($size-lg, '-lg');
-    @include css-sizes($size-xl, '-xl');
-
-    [class*="--neutral"] {
-        @include css-remaps($color-dark-base-neutral, '-neutral', '-color');
-    }
-
-    [class*="--primary"] {
-        @include css-remaps($color-dark-base-primary, '-primary', '-color');
-    }
-
-    [class*="--secondary"] {
-        @include css-remaps($color-dark-base-secondary, '-secondary', '-color');
-    }
-
-    [class*="--success"] {
-        @include css-remaps($color-dark-base-success, '-success', '-color');
-    }
-
-    [class*="--warning"] {
-        @include css-remaps($color-dark-base-warning, '-warning', '-color');
-    }
-
-    [class*="--danger"] {
-        @include css-remaps($color-dark-base-danger, '-danger', '-color');
-    }
-
-    [class*="--info"] {
-        @include css-remaps($color-dark-base-info, '-info', '-color');
-    }
-
-    [class*="--xs"] {
-        @include css-remaps($size-xs, '-xs', '-size');
-    }
-
-    [class*="--sm"] {
-        @include css-remaps($size-sm, '-sm', '-size');
-    }
-
-    [class*="--md"] {
-        @include css-remaps($size-md, '-md', '-size');
-    }
-
-    [class*="--lg"] {
-        @include css-remaps($size-lg, '-lg', '-size');
-    }
-
-    [class*="--xl"] {
-        @include css-remaps($size-xl, '-xl', '-size');
-    }
-
-}
-
-body[class*="n-theme--"] {
-    background: color('background');
-}
-
-[class*="n-theme--"] {
-    color: color('text');
-}
 
 

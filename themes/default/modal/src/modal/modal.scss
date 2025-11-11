@@ -1,0 +1,25 @@
+@use "src/root/helpers" as *;
+
+.n-modal__backdrop {
+    background: color('shadow', 0.7);
+    backdrop-filter: blur(1.5px);
+}
+
+.n-modal__frame {
+    box-shadow: 0 2px 20px color('shadow', 0.1), 0 0 2px color('shadow', 0.15);
+}
+
+.n-modal__frame {
+    color: color('text');
+    background: color('background');
+}
+
+.n-modal__header {
+    border-bottom: 1px solid color('gray-15');
+    background: color('background');
+}
+
+.n-modal__footer {
+    border-top: 1px solid color('gray-15');
+    background: color('background');
+}

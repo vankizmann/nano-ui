@@ -1,8 +1,7 @@
-@import "../../../root/vars";
+@use "src/root/helpers" as *;
 
 .n-map {
     position: relative;
-    color: $color-black !important;
 }
 
 .n-map:before {

@@ -1,0 +1,29 @@
+@use "src/root/helpers" as *;
+
+.n-alert {
+    background: color('shadow', 0.8);
+    backdrop-filter: blur(1.5px);
+    transition: opacity 0.3s;
+}
+
+.n-alert:not(.n-ready) {
+    opacity: 0;
+}
+
+.n-alert-frame {
+    background: color('background');
+    transition: transform 0.3s;
+    box-shadow: 0 2px 20px color('shadow', 0.1), 0 0 2px color('shadow', 0.15);
+}
+
+.n-alert:not(.n-ready) .n-alert-frame {
+    transform: translateY(50px) scale(0.6);
+}
+
+.n-alert__text {
+    color: color('gray-40');
+}
+
+.n-alert__icon {
+    color: color('base-color');
+}

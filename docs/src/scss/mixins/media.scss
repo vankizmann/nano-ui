@@ -1,5 +1,5 @@
 @use 'sass:map';
-@import "./base";
+@use "./base";
 
 $--media-steps: (
     'xs': 'screen and (min-width: 576px)',

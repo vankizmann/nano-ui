@@ -1,4 +1,4 @@
-@import "src/root/helpers";
+@use "src/root/helpers" as *;
 
 .n-tags {
     margin-bottom: size('base-pad-vertical', 'calc($ * -1)');

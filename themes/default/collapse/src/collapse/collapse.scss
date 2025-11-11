@@ -1,0 +1,17 @@
+@use "src/root/helpers" as *;
+
+.n-collapse {
+    border: 1px solid color('gray-15');
+}
+
+.n-collapse__header:not(.is-last) {
+    border-bottom: 1px solid color('gray-15');
+}
+
+.n-collapse__body.is-last {
+    border-top: 1px solid color('gray-15');
+}
+
+.n-collapse__body:not(.is-last) {
+    border-bottom: 1px solid color('gray-15');
+}

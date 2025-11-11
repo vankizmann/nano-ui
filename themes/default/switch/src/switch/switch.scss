@@ -1,0 +1,19 @@
+@use "src/root/helpers" as *;
+
+.n-switch__switch {
+    background: color('gray-15');
+    box-shadow: inset 0 0 1px color('shadow', 0.35);
+}
+
+.n-switch__switch span {
+    background: color('white');
+    box-shadow: 0 1px 2px color('shadow', 0.15);
+}
+
+.n-switch:not(.n-switch--default,.n-disabled) .n-switch__switch {
+    background: color('base-color');
+}
+
+.n-switch:not(.n-switch--default,.n-disabled) .n-switch__label {
+    color: color('base-color');
+}

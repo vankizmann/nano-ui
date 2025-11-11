@@ -1,4 +1,4 @@
-@import "src/root/helpers";
+@use "src/root/helpers" as *;
 
 .n-alert {
     z-index: 999999998;

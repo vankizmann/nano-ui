@@ -1,0 +1,34 @@
+@use "src/root/helpers" as *;
+
+.n-table-cell.n-changed:before {
+    content: '\00a0';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    display: block;
+    width: 0;
+    height: 0;
+    border: 3px solid transparent;
+    border-bottom-color: color('danger-color');
+    transform: rotate(-45deg);
+}
+
+.n-table-cell--checkbox i {
+    background: color('form-input');
+    border: 1px solid color('gray-15');
+}
+
+.n-table-cell--checkbox.n-disabled i {
+    background: color('form-disabled');
+}
+
+.n-table-cell--checkbox.n-checked:not(.n-disabled) i,
+.n-table-cell--checkbox.n-checked:not(.n-uncheck) i {
+    color: color('base-text');
+    background: color('base-color');
+    border-color: color('base-color');
+}
+
+.n-table-cell--checkbox:not(.n-disabled):hover i {
+    border-color: color('base-color-bg-30');
+}

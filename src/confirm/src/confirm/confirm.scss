@@ -1,4 +1,4 @@
-@import "src/root/helpers";
+@use "src/root/helpers" as *;
 
 .n-confirm {
     z-index: 90000;

@@ -1,4 +1,4 @@
-@import "src/root/helpers";
+@use "src/root/helpers" as *;
 
 .n-button {
     appearance: none;
@@ -14,16 +14,19 @@
     transition: border 0.10s, background 0.10s;
 }
 
-.n-button:not(.n-button--link) {
+.n-button:not(.n-button--link),
+.n-button.n-button--glass.n-button--link {
     height: size('base-hgt');
     border-radius: size('base-rad');
 }
 
-.n-button.n-button--square:not(.n-button--link) {
+.n-button.n-button--square:not(.n-button--link),
+.n-button.n-button--square.n-button--glass.n-button--link {
     width: size('base-hgt');
 }
 
-.n-button:not(.n-button--link):not(.n-button--square) {
+.n-button:not(.n-button--link):not(.n-button--square),
+.n-button.n-button--glass.n-button--link:not(.n-button--square) {
     padding: 0 size('base-pad');
 }
 

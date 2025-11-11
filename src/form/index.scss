@@ -1,4 +1,4 @@
-@import "./src/form/form";
-@import "./src/form-group/form-group";
-@import "./src/form-item/form-item";
-@import "./src/form-frame/form-frame";
+@forward "./src/form/form";
+@forward "./src/form-group/form-group";
+@forward "./src/form-item/form-item";
+@forward "./src/form-frame/form-frame";

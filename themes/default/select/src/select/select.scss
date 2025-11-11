@@ -1,0 +1,32 @@
+@use "src/root/helpers" as *;
+
+.n-select {
+    background: color('form-input');
+    border: 1px solid color('gray-15');
+}
+
+.n-select.n-disabled {
+    background: color('form-disabled');
+}
+
+.n-select__body,
+.n-select__empty {
+    background: color('form-input');
+}
+
+.n-select__empty {
+    color: color('gray-60');
+}
+
+.n-select:not(.n-disabled):hover {
+    border-color: color('base-color-bg-30');
+}
+
+.n-select:not(.n-disabled).n-focus {
+    border-color: color('base-color');
+}
+
+.n-select .n-select__item {
+    color: color('base-color-fg-40');
+    background: color('base-color', 0.25);
+}

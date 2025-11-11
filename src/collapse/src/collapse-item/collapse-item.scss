@@ -1,24 +1,26 @@
-@use 'sass:map';
-@import "../../../root/vars";
-
-.n-collapse__header-icon {
-    flex: 0 0 auto;
-    color: $color-gray-40;
-}
+@use "src/root/helpers" as *;
 
 .n-collapse__header-label {
     flex: 1 1 auto;
 }
 
-.n-collapse__header-label span {
+.n-collapse__header-label {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
+.n-collapse__header-icon,
 .n-collapse__header-angle {
     flex: 0 0 auto;
-    color: $color-gray-40;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: size('base-hgt-inline');
+    height: size('base-hgt-inline');
+}
+
+.n-collapse__header-angle {
     transition: transform 0.3s;
 }
 
@@ -26,29 +28,25 @@
     transform: rotate(90deg);
 }
 
-@each $suffix, $values in $form {
+.n-collapse__header-icon {
+    font-size: size('base-fnt-icon');
+    margin-right: size('base-pad', 'calc($ * 0.6)');
+}
 
-    $-collapse-font: map.get($values, 'font');
-    $-collapse-size: map.get($values, 'size');
-    $-collapse-radius: map.get($values, 'radius');
-    $-collapse-ratio: map.get($values, 'ratio');
+.n-collapse__header-label {
+    font-size: 1.05em;
+}
 
-    .n-collapse--#{$suffix} .n-collapse-item {
-        margin-top: $-collapse-size * $-collapse-ratio;
-    }
+.n-collapse__header-angle {
+    font-size: size('base-fnt-icon');
+    margin-left: size('base-pad', 'calc($ * 0.6)');
+}
 
-    .n-collapse--#{$suffix} .n-collapse__header-icon {
-        font-size: $-collapse-font - 2;
-        margin-right: $-collapse-size * $-collapse-ratio * 0.7;
-    }
+.n-collapse__header-action {
+    flex: 0 0 auto;
+    margin: 0 size('base-pad', 'calc($ * 0.6)');
+}
 
-    .n-collapse--#{$suffix} .n-collapse__header-label {
-        font-size: $-collapse-font + 1;
-    }
-
-    .n-collapse--#{$suffix} .n-collapse__header-angle {
-        font-size: $-collapse-font - 2;
-        margin-left: $-collapse-size * $-collapse-ratio * 0.7;
-    }
-
+.n-collapse__header-action > *:not(:last-child) {
+    margin-right: size('base-pad');
 }
