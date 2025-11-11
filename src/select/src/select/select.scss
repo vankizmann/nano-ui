@@ -120,7 +120,7 @@
 }
 
 .n-select__display.n-multiple .n-select__input input {
-    min-height: calc(#{"#{size('base-hgt')} - 6px"});
+    min-height: size('base-hgt', 'calc($ - 6px)');
 }
 
 .n-select__clear,
@@ -134,14 +134,14 @@
 
 .n-select__items {
     padding: 2px 0;
-    margin-left: calc(#{"#{size('base-pad')} * -0.25"});
+    margin-left: size('base-pad', 'calc($ * -0.25)');
 }
 
 .n-select__item {
     margin: 2px -2px 2px 7px;
-    height: calc(#{"#{size('base-hgt')} - 10px"});
-    padding: 0 calc(#{"#{size('base-pad')} * 0.8"});
-    border-radius: calc(#{"#{size('base-rad')} - 2px"});
+    height: size('base-hgt', 'calc($ - 10px)');
+    padding: 0 size('base-pad', 'calc($ * 0.8)');
+    border-radius: size('base-rad', 'calc($ - 2px)');
 }
 
 .n-select__item span {
@@ -153,5 +153,5 @@
 }
 
 .n-select__item > *:not(:last-child) {
-    margin-right: calc(#{"#{size('base-pad')} * 0.5"});
+    margin-right: size('base-pad', 'calc($ * 0.5)');
 }

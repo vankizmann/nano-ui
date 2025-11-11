@@ -151,7 +151,7 @@
 }
 
 .n-modal__header {
-    padding: calc(#{"#{size('base-pad-vertical')} * 2"}) calc(#{"#{size('base-pad')} * 2"});
+    padding: size('base-pad-vertical', 'calc($ * 2)') size('base-pad', 'calc($ * 2)');
 }
 
 .n-modal.n-closable .n-modal__header {
@@ -159,11 +159,11 @@
 }
 
 .n-modal:not(.n-raw) .n-modal__wrap {
-    padding: calc(#{"#{size('base-pad-vertical')} * 2"}) calc(#{"#{size('base-pad')} * 2"});
+    padding: size('base-pad-vertical', 'calc($ * 2)') size('base-pad', 'calc($ * 2)');
 }
 
 .n-modal__footer {
-    padding: calc(#{"#{size('base-pad-vertical')} * 2"}) calc(#{"#{size('base-pad')} * 2"});
+    padding: size('base-pad-vertical', 'calc($ * 2)') size('base-pad', 'calc($ * 2)');
 }
 
 .n-modal__close {

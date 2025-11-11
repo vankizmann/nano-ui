@@ -54,7 +54,7 @@
     width: 100%;
     max-width: 280px;
     margin: size('base-pad');
-    padding: calc(#{"#{size('base-pad-vertical')} * 1.6"}) calc(#{"#{size('base-pad')} * 1.6"});
+    padding: size('base-pad-vertical', 'calc($ * 1.6)') size('base-pad', 'calc($ * 1.6)');
     font-size: size('base-fnt');
     border-radius: size('base-rad');
     transition: transform 0.15s;

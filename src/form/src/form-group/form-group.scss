@@ -94,7 +94,7 @@
 }
 
 .n-form-group--fieldset .n-form-group__body {
-    padding: 0 calc(#{"#{size('base-pad')} * 2"});
+    padding: 0 size('base-pad', 'calc($ * 2)');
 }
 
 .n-form-group--fieldset:not(:last-child) .n-form-group__body {
@@ -106,7 +106,7 @@
 }
 
 .n-form-group.n-form-group--fieldset .n-form-group__legend {
-    margin-left: calc(#{"#{size('base-pad')} * 2"});
+    margin-left: size('base-pad', 'calc($ * 2)');
     min-height: size('base-hgt');
     border-radius: size('base-rad');
     padding: 0 size('base-pad');
@@ -127,11 +127,11 @@
 }
 
 .n-form-group.n-form-group--fieldset .n-form-group__collapse {
-    margin-left: calc(#{"#{size('base-pad')} * 0.7"})
+    margin-left: size('base-pad', 'calc($ * 0.7)');
 }
 
 .n-form-group .n-form-group__icon {
-    margin-right: calc(#{"#{size('base-pad')} * 0.7"})
+    margin-right: size('base-pad', 'calc($ * 0.7)');
 }
 
 .n-form-group.n-form-group--classic .n-form-group__body {
@@ -140,5 +140,5 @@
 
 .n-form-group.n-form-group--fieldset .n-form-group__body {
     padding-top: size('base-hgt');
-    margin-top: calc(#{"#{size('base-hgt')} * -0.5"});
+    margin-top: size('base-hgt', 'calc($ * -0.5)');
 }

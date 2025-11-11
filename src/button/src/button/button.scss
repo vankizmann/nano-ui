@@ -14,10 +14,6 @@
     transition: border 0.10s, background 0.10s;
 }
 
-.n-button:not(.n-button--square) {
-    min-width: size('base-hgt');
-}
-
 .n-button:not(.n-button--link) {
     height: size('base-hgt');
     border-radius: size('base-rad');
@@ -40,9 +36,9 @@
 }
 
 .n-button .n-icon.n-icon--before:not(:last-child) {
-    margin-right: calc(#{"#{size('base-pad')} * 0.8"});
+    margin-right: size('base-pad', 'calc($ * 0.8)');
 }
 
 .n-button .n-icon.n-icon--after:not(:first-child) {
-    margin-left: calc(#{"#{size('base-pad')} * 0.8"});
+    margin-left: size('base-pad', 'calc($ * 0.8)');
 }

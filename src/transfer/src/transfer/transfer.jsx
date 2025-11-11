@@ -316,6 +316,7 @@ export default {
             <div class="n-transfer__header">
                 { this.ctor('renderSourceSelect')() }
                 { this.ctor('renderSourceTitle')() }
+                { this.ctor('renderSourceSearch')() }
             </div>
         );
     },
@@ -416,6 +417,7 @@ export default {
             <div class="n-transfer__header">
                 { this.ctor('renderTargetSelect')() }
                 { this.ctor('renderTargetTitle')() }
+                { this.ctor('renderTargetSearch')() }
             </div>
         );
     },
@@ -524,7 +526,6 @@ export default {
             <div class={classList}>
                 <div class="n-transfer__panel">
                     { this.ctor('renderSourceHeader')() }
-                    { this.ctor('renderSourceSearch')() }
                     { this.ctor('renderSourceBody')() }
                 </div>
                 <div class="n-transfer__controls">
@@ -533,7 +534,6 @@ export default {
                 </div>
                 <div class="n-transfer__panel">
                     { this.ctor('renderTargetHeader')() }
-                    { this.ctor('renderTargetSearch')() }
                     { this.ctor('renderTargetBody')() }
                 </div>
             </div>

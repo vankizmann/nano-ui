@@ -5,6 +5,7 @@ $dark-color-black:           #1F1F1F !default;
 
 $dark-color-text:            #E3E3E3 !default;
 $dark-color-shadow:          #000000 !default;
+$dark-color-tooltip:         #161616 !default;
 
 $dark-color-foreground:      $dark-color-white !default;
 $dark-color-background:      $dark-color-black !default;
@@ -187,6 +188,7 @@ $color-dark: (
         'black': $dark-color-black,
         'text': $dark-color-text,
         'shadow': $dark-color-shadow,
+        'tooltip': $dark-color-tooltip,
         'foreground': $dark-color-foreground,
         'background': $dark-color-background,
         'form': $dark-color-form,

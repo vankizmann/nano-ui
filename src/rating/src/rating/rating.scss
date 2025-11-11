@@ -22,12 +22,12 @@
     flex: 0 0 auto;
     position: relative;
     display: block;
-    width: calc(#{"#{size('base-hgt')} * 0.45"});
-    height: calc(#{"#{size('base-hgt')} * 0.45"});
+    width: size('base-hgt', 'calc($ * 0.45)');
+    height: size('base-hgt', 'calc($ * 0.45)');
 }
 
 .n-rating__stars span:not(:last-child) {
-    margin-right: calc(#{"#{size('base-pad')} * 0.3"});
+    margin-right: size('base-pad', 'calc($ * 0.3)');
 }
 
 .n-rating__stars span:before,

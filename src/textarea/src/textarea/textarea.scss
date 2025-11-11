@@ -26,7 +26,7 @@
     box-shadow: none;
     border-radius: size('base-rad');
     border: 1px solid transparent;
-    padding: calc(#{"#{size('base-hgt')} * 0.2"}) size('base-pad');
+    padding: size('base-hgt', 'calc($ * 0.2)') size('base-pad');
 }
 
 .n-textarea.n-disabled textarea {

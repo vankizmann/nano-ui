@@ -18,7 +18,7 @@
 .n-switch__switch {
     flex: 0 0 auto;
     position: relative;
-    width: calc(#{"#{size('base-hgt-inline')} * 1.9"});
+    width: size('base-hgt-inline', 'calc($ * 1.9)');
     height: size('base-hgt-inline');
     border-radius: 500px;
     transition: background 0.15s;
@@ -29,14 +29,14 @@
     top: 2px;
     left: 2px;
     display: block;
-    width: calc(#{"#{size('base-hgt-inline')} - 4px"});
-    height: calc(#{"#{size('base-hgt-inline')} - 4px"});
+    width: size('base-hgt-inline', 'calc($ - 4px)');
+    height: size('base-hgt-inline', 'calc($ - 4px)');
     border-radius: 500px;
     transition: left 0.15s;
 }
 
 .n-switch.n-on .n-switch__switch span {
-    left: calc(#{"(#{size('base-hgt-inline')} * 1.9) - #{size('base-hgt-inline')} + 2px"});
+    left: size('base-hgt-inline', 'calc(($ * 1.9) - $ + 2px)');
 }
 
 .n-switch .n-switch__label {

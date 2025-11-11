@@ -11,8 +11,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: calc(#{"#{size('base-hgt')} - 14px"});
-    height: calc(#{"#{size('base-hgt')} - 14px"});
+    width: size('base-hgt', 'calc($ - 14px)');
+    height: size('base-hgt', 'calc($ - 14px)');
 }
 
 .n-form-clear i,

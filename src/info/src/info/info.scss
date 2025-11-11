@@ -16,12 +16,12 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
-    padding: calc(#{"#{size('base-pad-vertical')} * 2"}) calc(#{"#{size('base-pad')} * 2"});
+    padding: size('base-pad-vertical', 'calc($ * 2)') size('base-pad', 'calc($ * 2)');
 }
 
 .n-info__empty {
     margin: auto;
-    padding: calc(#{"#{size('base-pad')} * 2"}) size('base-pad');
+    padding: size('base-pad', 'calc($ * 2)') size('base-pad');
 }
 
 .n-info__column:not(:last-child) {

@@ -5,6 +5,7 @@ $light-color-black:           #090b10 !default;
 
 $light-color-text:            #212121 !default;
 $light-color-shadow:          #000000 !default;
+$light-color-tooltip:         #161616 !default;
 
 $light-color-foreground:      $light-color-black !default;
 $light-color-background:      $light-color-white !default;
@@ -186,6 +187,7 @@ $color-light: (
         'black': $light-color-black,
         'text': $light-color-text,
         'shadow': $light-color-shadow,
+        'tooltip': $light-color-tooltip,
         'foreground': $light-color-foreground,
         'background': $light-color-background,
         'form': $light-color-form,

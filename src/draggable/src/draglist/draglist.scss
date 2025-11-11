@@ -2,5 +2,5 @@
 
 .n-draglist__empty {
     margin: auto;
-    padding: calc(#{"#{size('base-pad-vertical')} * 2"}) size('base-pad');
+    padding: size('base-pad-vertical', 'calc($ * 2)') size('base-pad');
 }

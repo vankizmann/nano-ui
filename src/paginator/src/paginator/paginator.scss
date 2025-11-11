@@ -7,6 +7,11 @@
     justify-content: stretch;
 }
 
+
+.n-paginator .n-button {
+    min-width: size('base-hgt');
+}
+
 .n-paginator__spacer {
     flex: 1 1 auto;
 }
@@ -39,7 +44,7 @@
 }
 
 .n-paginator > div {
-    padding: 0 calc(#{"#{size('base-pad')} * 0.5"});
+    padding: 0 size('base-pad', 'calc($ * 0.5)');
 }
 
 .n-paginator > div:first-child {
@@ -51,15 +56,15 @@
 }
 
 .n-paginator__limit .n-select {
-    width: calc(#{"#{size('base-hgt')} * 4.2"});
+    width: size('base-hgt', 'calc($ * 4.2)');
 }
 
 .n-paginator__goto .n-select {
-    width: calc(#{"#{size('base-hgt')} * 3.2"});
+    width: size('base-hgt', 'calc($ * 3.2)');
 }
 
 .n-paginator__pages > button:not(:last-child) {
-    margin-right: calc(#{"#{size('base-pad')} * 0.4"});
+    margin-right: size('base-pad', 'calc($ * 0.4)');
 }
 
 .n-paginator__pages > button:first-child {

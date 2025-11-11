@@ -198,24 +198,6 @@ export default {
         }
     },
 
-    renderTooltip()
-    {
-        if ( !this.tooltip && !this.$slots.tooltip ) {
-            return null;
-        }
-
-        let props = {
-            size: 'sm',
-            position: this.tooltipPosition,
-        };
-
-        return (
-            <NPopover type="tooltip" {...props}>
-                {this.$slots.tooltip && this.$slots.tooltip() || this.tooltip}
-            </NPopover>
-        );
-    },
-
     renderCondition()
     {
         if ( ! this.conditional ) {
@@ -235,15 +217,11 @@ export default {
             return null;
         }
 
-        let labelHtml = (
-            <label onClick={this.focusInput}>
-                {this.$slots.label && this.$slots.label() || this.label}
-            </label>
-        );
-
         return (
             <div class="n-form-item__label">
-                {[labelHtml, this.ctor('renderTooltip')()]}
+                <label onClick={this.focusInput} data-tooltip-ltr={this.tooltip}>
+                    {this.$slots.label && this.$slots.label() || this.label}
+                </label>
             </div>
         );
     },

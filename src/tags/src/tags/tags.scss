@@ -1,7 +1,7 @@
 @import "src/root/helpers";
 
 .n-tags {
-    margin-bottom: calc(#{"#{size('base-pad-vertical')} * -1"});
+    margin-bottom: size('base-pad-vertical', 'calc($ * -1)');
 }
 
 .n-tags .n-tags-item {

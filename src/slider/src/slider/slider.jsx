@@ -322,11 +322,13 @@ export default {
             this.onMousedown(event, this.index = index);
         };
 
-        let key = Arr.findIndex(this.steps, value);
+        let [key, tooltip] = [
+            Arr.findIndex(this.steps, value), Obj.get(this.labels, key, value)
+        ];
 
         return (
-            <div class="n-slider__handle" {...handleProps}>
-                <span>{ Obj.get(this.labels, key, value) }</span>
+            <div class="n-slider__handle" data-tooltip={tooltip} {...handleProps}>
+                <span></span>
             </div>
         );
     },

@@ -19,10 +19,23 @@
     }
 }
 
+@function string-replace($string, $search, $replace: "") {
+    $i: string.index($string, $search);
+
+    @if not $i {
+        @return $string;
+    }
+
+    $string: string.slice($string, 1, $i - 1) + $replace +
+        string.slice($string, $i + string.length($search));
+
+    @return string-replace($string, $search, $replace);
+}
+
 @function color($color, $opacity: 1) {
     @return string.unquote("rgba(var(--n-color-#{$color}), #{$opacity})")
 };
 
-@function size($size) {
-    @return string.unquote("var(--n-size-#{$size})")
+@function size($size, $context: '$') {
+    @return string.unquote(string-replace($context, "$", "var(--n-size-#{$size})"));
 };

@@ -22,13 +22,13 @@
 }
 
 .n-empty-icon:not(.n-inline) .n-empty-icon__frame {
-    width: calc(#{"#{size('base-pad')} * 4.5"});
-    height: calc(#{"#{size('base-pad')} * 4.5"});
+    width: size('base-pad', 'calc($ * 4.5)');
+    height: size('base-pad', 'calc($ * 4.5)');
 }
 
 .n-empty-icon.n-inline .n-empty-icon__frame {
-    width: calc(#{"#{size('base-pad')} * 2.75"});
-    height: calc(#{"#{size('base-pad')} * 2.75"});
+    width: size('base-pad', 'calc($ * 2.5)');
+    height: size('base-pad', 'calc($ * 2.5)');
 }
 
 .n-empty-icon.n-disabled .n-empty-icon__frame {
