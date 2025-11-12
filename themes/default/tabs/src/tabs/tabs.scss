@@ -1,4 +1,4 @@
-@use "src/root/helpers" as *;
+@use "@kizmann/nano-ui/src/root/helpers" as *;
 
 .n-tabs:not(.n-float) > .n-tabs__header:after {
     border-bottom: 1px solid color('gray-15');

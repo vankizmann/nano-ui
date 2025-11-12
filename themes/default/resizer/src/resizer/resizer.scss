@@ -1,4 +1,4 @@
-@use "src/root/helpers" as *;
+@use "@kizmann/nano-ui/src/root/helpers" as *;
 
 .n-resizer__handle:before {
     background: color('base-color', 0.9);
