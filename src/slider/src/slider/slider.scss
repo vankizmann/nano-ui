@@ -28,17 +28,17 @@
 
 .n-slider__handle {
     cursor: grab;
-    z-index: 9000;
+    z-index: 10;
     position: absolute !important;
     left: 0;
     top: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: size('base-hgt', 'calc($ - 12px)');
-    height: size('base-hgt', 'calc($ - 12px)');
-    margin-top: size('base-hgt', 'calc(($ - 12px) * -0.5)');
-    margin-left: size('base-hgt', 'calc(($ - 12px) * -0.5)');
+    width: size('base-hgt-inline', 'calc($ + 6px)');
+    height: size('base-hgt-inline', 'calc($ + 6px)');
+    margin-top: size('base-hgt-inline', 'calc(($ + 6px) * -0.5)');
+    margin-left: size('base-hgt-inline', 'calc(($ + 6px) * -0.5)');
     border-radius: 500px;
 }
 
@@ -47,10 +47,31 @@
 }
 
 .n-slider__handle span {
+    position: relative;
     display: block;
-    width: size('base-hgt-inline', 'calc($ - 10px)');
-    height: size('base-hgt-inline', 'calc($ - 10px)');
+    width: 8px;
+    height: 8px;
+}
+
+.n-slider__handle span:before,
+.n-slider__handle span:after {
+    content: '\00a0';
+    position: absolute;
+    top: 0;
+    display: block;
+    width: 3px;
+    height: 100%;
     border-radius: 500px;
+}
+
+.n-slider__handle span:before {
+    left: 0;
+    background: #fff;
+}
+
+.n-slider__handle span:after {
+    right: 0;
+    background: #fff;
 }
 
 .n-slider__handle:hover span,

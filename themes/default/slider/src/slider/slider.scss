@@ -9,8 +9,7 @@
 }
 
 .n-slider__handle {
-    background: color('white');
-    box-shadow: 0 0 4px color('shadow', 0.15);
+    box-shadow: 0 0 6px color('shadow', 0.25);
 }
 
 .n-slider.n-disabled .n-slider__handle {
@@ -25,7 +24,7 @@
     background: color('base-color');
 }
 
-.n-slider__handle span {
-    background: color('base-text');
+.n-slider__handle span:before,
+.n-slider__handle span:after {
+    background: color('black', 0.4);
 }
-
