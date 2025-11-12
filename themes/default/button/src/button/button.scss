@@ -1,5 +1,9 @@
 @use "@kizmann/nano-ui/src/root/helpers" as *;
 
+.n-button {
+    transition: opacity 0.2s, color 0.2s, background 0.2s;
+}
+
 .n-button.n-disabled {
     color: color('text', 0.7);
     opacity: 0.7;
@@ -16,10 +20,10 @@
     border-color: color('base-color-bg-10');
 }
 
-.n-button:not(.n-button--reset,.n-button--link,.n-button--glass):focus {
-    background: color('base-color-fg-10');
-    border-color: color('base-color-fg-10');
-}
+//.n-button:not(.n-button--reset,.n-button--link,.n-button--glass):focus {
+//    background: color('base-color-fg-10');
+//    border-color: color('base-color-fg-10');
+//}
 
 .n-button:not(.n-button--reset,.n-button--link,.n-button--glass).n-disabled {
     background: color('base-color');
@@ -42,39 +46,42 @@
     color: color('base-color');
 }
 
-.n-button:not(.n-button--reset,.n-disabled,.n-button--glass).n-button--link:focus {
-    color: color('base-color-bg-10');
+//.n-button:not(.n-button--reset,.n-disabled,.n-button--glass).n-button--link:focus {
+//    color: color('base-color-bg-10');
+//}
+
+.n-button:not(.n-button--reset,.n-button--link).n-button--glass {
+    color: color('base-color-fg-10');
 }
 
 .n-button:not(.n-button--reset,.n-disabled,.n-button--link).n-button--glass {
-    color: color('base-color-fg-20');
     background: color('base-color', 0.25);
 }
 
 .n-button.n-button--neutral:not(.n-disabled,.n-button--link).n-button--glass {
-    color: color('base-color-fg-50');
+    color: color('base-color-fg-30');
 }
 
 .n-button:not(.n-button--reset,.n-disabled,.n-button--link).n-button--glass:hover {
     background: color('base-color', 0.30);
 }
 
-.n-button:not(.n-button--reset,.n-disabled,.n-button--link).n-button--glass:focus {
-    background: color('base-color', 0.35);
-}
+//.n-button:not(.n-button--reset,.n-disabled,.n-button--link).n-button--glass:focus {
+//    background: color('base-color', 0.35);
+//}
 
-.n-button:not(.n-button--reset,.n-disabled).n-button--link.n-button--glass {
-    color: color('base-color-fg-20');
+.n-button:not(.n-button--reset).n-button--link.n-button--glass {
+    color: color('base-color-fg-10');
 }
 
 .n-button.n-button--neutral:not(.n-disabled).n-button--link.n-button--glass {
-    color: color('base-color-fg-50');
+    color: color('base-color-fg-20');
 }
 
 .n-button:not(.n-button--reset,.n-disabled).n-button--link.n-button--glass:hover {
     background: color('base-color', 0.30);
 }
 
-.n-button:not(.n-button--reset,.n-disabled).n-button--link.n-button--glass:focus {
-    background: color('base-color', 0.35);
-}
+//.n-button:not(.n-button--reset,.n-disabled).n-button--link.n-button--glass:focus {
+//    background: color('base-color', 0.35);
+//}
