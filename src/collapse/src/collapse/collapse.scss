@@ -38,6 +38,7 @@
     padding: 0 size('base-pad');
 }
 
-.n-collapse__body > .n-scrollbar-content {
+.n-collapse__body:not(.n-scrollbar),
+.n-scrollbar.n-collapse__body > .n-scrollbar-content {
     padding: size('base-pad-vertical', 'calc($ * 1.4)') size('base-pad');
 }
