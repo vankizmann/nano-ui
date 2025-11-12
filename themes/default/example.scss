@@ -1,13 +1,13 @@
 @forward "./index";
-@forward "src/root/vars/sizes-default";
+@forward "./root/vars/sizes-default";
 
 $color-primary: #2B70E3;
 
-@use "src/root/vars/colors-light" as theme-light with (
+@use "./root/vars/colors-light" as theme-light with (
     $color-primary: $color-primary,
 );
 
-@use "src/root/vars/colors-dark" as theme-dark with (
+@use "./root/vars/colors-dark" as theme-dark with (
     $color-primary: $color-primary,
 );
 

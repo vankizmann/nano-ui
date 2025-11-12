@@ -1,23 +1,23 @@
 @use 'sass:color';
-@use "src/root/helpers" as *;
+@use "@kizmann/nano-ui/src/root/helpers" as *;
 
 $color-white:           #ffffff !default;
-$color-black:           #090b10 !default;
+$color-black:           #1F1F1F !default;
 
-$color-text:            #212121 !default;
+$color-text:            #E3E3E3 !default;
 $color-shadow:          #000000 !default;
 $color-tooltip:         #161616 !default;
 
-$color-foreground:      $color-black !default;
-$color-background:      $color-white !default;
+$color-foreground:      $color-white !default;
+$color-background:      $color-black !default;
 
-$color-neutral:         #9C9C9C !default;
-$color-primary:         #2B70E3 !default;
-$color-secondary:       #B367D6 !default;
-$color-success:         #42BD97 !default;
-$color-warning:         #ED9E5A !default;
-$color-danger:          #DE4361 !default;
-$color-info:            #51BDD6 !default;
+$color-neutral:         #8A8A8A !default;
+$color-primary:         #2F89FE !default;
+$color-secondary:       #d31f9d !default;
+$color-success:         #06C493 !default;
+$color-warning:         #FFBF3F !default;
+$color-danger:          #F9536E !default;
+$color-info:            #4BD6F9 !default;
 
 $color-gray-05:               color.mix($color-foreground, $color-background, 0.05 * 100%) !default;
 $color-gray-10:               color.mix($color-foreground, $color-background, 0.10 * 100%) !default;
@@ -40,8 +40,8 @@ $color-gray-90:               color.mix($color-foreground, $color-background, 0.
 $color-gray-95:               color.mix($color-foreground, $color-background, 0.95 * 100%) !default;
 
 $color-form:                  $color-gray-05 !default;
-$color-form-input:            $color-white !default;
-$color-form-disabled:         $color-gray-10 !default;
+$color-form-input:            $color-gray-05 !default;
+$color-form-disabled:         $color-background !default;
 
 $color-tag-0:                 #D74242 !default;
 $color-tag-1:                 #D76342 !default;
@@ -256,6 +256,7 @@ $colors: (
         'tag-19': $color-tag-19,
 ) !default;
 
+
 $color-base-neutral: (
         'text': $color-white,
         'color': $color-neutral,
@@ -417,29 +418,6 @@ $color-base-info: (
         'color-bg-90': $color-info-bg-90,
 ) !default;
 
-$color-tags: (
-        0:  #D74242,  // red
-        1:  #D76342,  // red-orange
-        2:  #D78442,  // orange
-        3:  #D7A142,  // orange-yellow
-        4:  #C2A732,  // yellow
-        5:  #A2B02E,  // yellow-green
-        6:  #8BB531,  // green
-        7:  #5EBF36,  // green-cyan
-        8:  #3AC778,  // teal
-        9:  #39C498,  // cyan
-        10: #37BFBF,  // cyan-blue
-        11: #42B0D7,  // light blue
-        12: #428BD7,  // blue
-        13: #434AE5,  // blue-indigo
-        14: #5C42D7,  // blue-indigo
-        15: #7842D7,  // indigo
-        16: #9542D7,  // purple
-        17: #D742CD,  // magenta
-        18: #D74285,  // pink-purple
-        19: #D74260   // reddish-pin
-) !default;
-
 $color-list: (
         'neutral': $color-base-neutral,
         'primary': $color-base-primary,
@@ -453,19 +431,19 @@ $color-list: (
 :root {
 
     @each $name, $values in $color-list {
-        @include css-colors($values, '-light-#{$name}');
+        @include css-colors($values, '-dark-#{$name}');
     }
 
-    @include css-colors($colors, '-light');
+    @include css-colors($colors, '-dark');
 }
 
 @mixin remap() {
 
     @each $name, $values in $color-list {
         [class*="--#{$name}"] {
-            @include css-remaps($values, '-color-light-#{$name}', '-color-base');
+            @include css-remaps($values, '-color-dark-#{$name}', '-color-base');
         }
     }
 
-    @include css-remaps($colors, '-color-light', '-color');
+    @include css-remaps($colors, '-color-dark', '-color');
 }

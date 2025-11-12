@@ -84,6 +84,11 @@ let docJs = {
 
 let themeFn = (entry, target) => ({
     entry: [entry],
+    resolve: {
+        alias: {
+            "@kizmann/nano-ui": path.resolve(__dirname),
+        }
+    },
     module: {
         rules: [
             {
@@ -104,8 +109,7 @@ let themeFn = (entry, target) => ({
         })
     ],
     output: {
-        filename: ".ignore.js",
-        path: path.resolve(__dirname, "dist"),
+        filename: ".ignore.js", path: path.resolve(__dirname, "dist"),
     }
 });
 
