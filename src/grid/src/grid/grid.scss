@@ -23,7 +23,7 @@
 }
 
 .n-grid > [class*="col-"] {
-    flex: var(--grid-col-flex, 1 1 auto);
+    flex: var(--grid-col-flex, 0 0 auto);
     width: calc(var(--grid-col, 100%) - var(--grid-gap-h, 0));
     margin: calc(var(--grid-gap-v, 0) * 0.5) calc(var(--grid-gap-h, 0) * 0.5);
 }
@@ -74,48 +74,28 @@
 
 @mixin grid-gap($suffix: '') {
 
-    .n-grid.gap-10#{$suffix} {
-        --grid-gap-h: 10px;
-        --grid-gap-v: 10px;
-    }
+    @each $step in (5, 10, 15, 20, 25, 30) {
+        .n-grid.gap-#{$step}#{$suffix} {
+            --grid-gap-h: #{$step}px;
+            --grid-gap-v: #{$step}px;
+        }
 
-    .n-grid.gap-h-10#{$suffix} {
-        --grid-gap-h: 10px;
-    }
+        .n-grid.gap-h-#{$step}#{$suffix} {
+            --grid-gap-h: #{$step}px;
+        }
 
-    .n-grid.gap-v-10#{$suffix} {
-        --grid-gap-h: 10px;
-    }
-
-    .n-grid.gap-20#{$suffix} {
-        --grid-gap-h: 20px;
-        --grid-gap-v: 20px;
-    }
-
-    .n-grid.gap-h-20#{$suffix} {
-        --grid-gap-h: 20px;
-    }
-
-    .n-grid.gap-v-20#{$suffix} {
-        --grid-gap-h: 20px;
-    }
-
-    .n-grid.gap-30#{$suffix} {
-        --grid-gap-h: 30px;
-        --grid-gap-v: 30px;
-    }
-
-    .n-grid.gap-h-30#{$suffix} {
-        --grid-gap-h: 30px;
-    }
-
-    .n-grid.gap-v-30#{$suffix} {
-        --grid-gap-h: 30px;
+        .n-grid.gap-v-#{$step}#{$suffix} {
+            --grid-gap-h: #{$step}px;
+        }
     }
 
 }
 
 @mixin grid-column($suffix: '') {
+
+    .n-grid > .col-auto#{$suffix} {
+        --grid-col: auto;
+    }
 
     @each $step in (1, 2) {
         .n-grid > .col-#{$step}\-2#{$suffix} {

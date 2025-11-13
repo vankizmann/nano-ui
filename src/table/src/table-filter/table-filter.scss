@@ -18,14 +18,18 @@
     margin-left: auto;
 }
 
+.n-popover.n-table-filter__popover {
+    --n-color-popover: var(--n-color-form);
+}
+
 .n-table-filter__popover {
     width: 240px;
 }
 
 .n-table-filter__popover .n-form-item {
-    margin-bottom: size('base-pad-vertical');
+    padding-bottom: size('base-pad-vertical');
 }
 
 .n-table-filter__popover .n-form-item:last-child {
-    margin-bottom: 0;
+    padding-bottom: 0;
 }
