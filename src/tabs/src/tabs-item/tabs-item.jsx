@@ -188,6 +188,14 @@ export default {
             element = resolveComponent('NScrollbar');
         }
 
-        return h(element, { class: classList, style }, this.$slots);
+        let props = {
+            class: classList, style
+        }
+
+        if ( element !== 'div' ) {
+            props.wrapClass = 'n-tabs__wrap';
+        }
+
+        return h(element, props, this.$slots);
     }
 }
