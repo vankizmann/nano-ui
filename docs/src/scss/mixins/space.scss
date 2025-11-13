@@ -1,5 +1,5 @@
-@use "./base";
-@use "./media";
+@use "./base" as *;
+@use "./media" as *;
 
 $--space-gutter: (
     10px, 15px, 20px, 30px, 40px, 60px

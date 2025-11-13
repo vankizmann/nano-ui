@@ -1,23 +1,24 @@
 @use 'sass:color';
-@use "@kizmann/nano-ui/src/root/helpers" as *;
+@use "../helpers" as *;
 
 $color-white:           #ffffff !default;
-$color-black:           #1F1F1F !default;
+$color-black:           #161616 !default;
 
 $color-text:            #E3E3E3 !default;
 $color-shadow:          #000000 !default;
 $color-tooltip:         #161616 !default;
+$color-popover:         #292929 !default;
 
 $color-foreground:      $color-white !default;
 $color-background:      $color-black !default;
 
 $color-neutral:         #8A8A8A !default;
-$color-primary:         #2F89FE !default;
-$color-secondary:       #d31f9d !default;
-$color-success:         #06C493 !default;
-$color-warning:         #FFBF3F !default;
-$color-danger:          #F9536E !default;
-$color-info:            #4BD6F9 !default;
+$color-primary:         #2B70E3 !default;
+$color-secondary:       #C23399 !default;
+$color-success:         #42BD97 !default;
+$color-warning:         #ED9E5A !default;
+$color-danger:          #DE4361 !default;
+$color-info:            #51BDD6 !default;
 
 $color-gray-05:               color.mix($color-foreground, $color-background, 0.05 * 100%) !default;
 $color-gray-10:               color.mix($color-foreground, $color-background, 0.10 * 100%) !default;
@@ -40,8 +41,8 @@ $color-gray-90:               color.mix($color-foreground, $color-background, 0.
 $color-gray-95:               color.mix($color-foreground, $color-background, 0.95 * 100%) !default;
 
 $color-form:                  $color-gray-05 !default;
-$color-form-input:            $color-gray-05 !default;
-$color-form-disabled:         $color-background !default;
+$color-form-input:            $color-background !default;
+$color-form-disabled:         $color-gray-10 !default;
 
 $color-tag-0:                 #D74242 !default;
 $color-tag-1:                 #D76342 !default;
@@ -210,6 +211,7 @@ $colors: (
         'text': $color-text,
         'shadow': $color-shadow,
         'tooltip': $color-tooltip,
+        'popover': $color-popover,
         'foreground': $color-foreground,
         'background': $color-background,
         'form': $color-form,
@@ -437,7 +439,7 @@ $color-list: (
     @include css-colors($colors, '-dark');
 }
 
-@mixin remap() {
+@mixin exports() {
 
     @each $name, $values in $color-list {
         [class*="--#{$name}"] {
@@ -446,4 +448,10 @@ $color-list: (
     }
 
     @include css-remaps($colors, '-color-dark', '-color');
+}
+
+@mixin default() {
+    @each $name, $values in $color-list {
+        @include css-remaps($values, '-color-dark-#{$name}', '-color');
+    }
 }

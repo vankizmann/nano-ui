@@ -1,4 +1,4 @@
-@use "@kizmann/nano-ui/src/root/helpers" as *;
+@use "../../../root/helpers" as *;
 
 .n-select {
     background: color('form-input');
@@ -11,7 +11,7 @@
 
 .n-select__body,
 .n-select__empty {
-    background: color('form-input');
+    background: color('popover');
 }
 
 .n-select__empty {

@@ -1,5 +1,5 @@
-@use "../root/vars";
-@use "../mixins/media";
+@use "../../../../src/root/helpers" as *;
+@use "../mixins/media" as *;
 
 header {
     overflow: hidden;
@@ -7,7 +7,7 @@ header {
     width: 100%;
 
     @include media('sm') {
-        border-bottom: 1px solid $color-gray-10;
+        border-bottom: 1px solid color('gray-10');
     }
 }
 
@@ -97,7 +97,7 @@ header .social a {
     width: 37px;
     font-size: 15px;
     border-radius: 500px;
-    color: $color-gray-70;
+    color: color('gray-70');
 
     @include media('lg') {
         padding: 0 18px;
@@ -107,13 +107,13 @@ header .social a {
 }
 
 header .social.black a {
-    color: rgba($color-foreground, 0.9);
-    background: $color-gray-10;
+    color: color('foreground', 0.9);
+    background: color('gray-10');
 }
 
 header .social.blue a {
-    color: $color-foreground;
-    background: rgba($color-secondary, 0.5);
+    color: color('foreground');
+    background: color('secondary', 0.5);
 }
 
 header .social a span {
@@ -139,9 +139,9 @@ header .theme.last {
 }
 
 header .theme a {
-    color: $color-gray-50;
+    color: color('gray-50');
 }
 
 header .theme a.active {
-    color: $color-foreground;
+    color: color('foreground');
 }

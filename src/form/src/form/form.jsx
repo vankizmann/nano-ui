@@ -45,6 +45,14 @@ export default {
             type: [String]
         },
 
+        type: {
+            default()
+            {
+                return 'primary';
+            },
+            type: [String]
+        },
+
         kind: {
             default()
             {
@@ -223,6 +231,8 @@ export default {
     {
         let classList = [
             'n-form',
+            'n-form--' + this.size,
+            'n-form--' + this.type,
             'n-form--' + this.align,
         ];
 

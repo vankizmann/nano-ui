@@ -1,14 +1,17 @@
+@use "sass:list";
+@use "sass:math";
+
 @function reverse($list) {
 
-    $result: ();
+    $result: (); $length: list.length($list);
 
-    @for $i from length($list) * -1 through -1 {
-        $result: append($result, nth($list, abs($i)));
+    @for $i from $length through 1 {
+        $result: list.append($result, list.nth($list, $i));
     }
 
     @return $result;
 }
 
 @function strip($number) {
-    @return $number / ($number * 0 + 1);
+    @return math.div($number, 1);
 }

@@ -1,4 +1,4 @@
-@use "@kizmann/nano-ui/src/root/helpers" as *;
+@use "../../../root/helpers" as *;
 
 .n-datetimepicker {
     background: color('form-input');
@@ -35,11 +35,15 @@
 }
 
 .n-datetimepicker-panel {
-     background: color('form-input');
+    background: color('popover');
+}
+
+.n-datetimepicker__date-panel.n-datepicker-panel {
+     background: transparent;
 }
 
 .n-datetimepicker__time-panel.n-timepicker-panel {
-    background: color('foreground', 0.05);
+    background: color('foreground', 0.025);
 }
 
 .n-datetimepicker-panel .n-datetimepicker__date-panel {

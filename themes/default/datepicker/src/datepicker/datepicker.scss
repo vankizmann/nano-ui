@@ -1,4 +1,4 @@
-@use "@kizmann/nano-ui/src/root/helpers" as *;
+@use "../../../root/helpers" as *;
 
 .n-datepicker {
     background: color('form-input');
@@ -36,7 +36,7 @@
 
 .n-datepicker__body,
 .n-datepicker__empty {
-     background: color('form-input');
+     background: color('popover');
 }
 
 .n-datepicker__empty {

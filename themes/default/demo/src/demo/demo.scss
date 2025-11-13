@@ -1,4 +1,4 @@
-@use "@kizmann/nano-ui/src/root/helpers" as *;
+@use "../../../root/helpers" as *;
 
 input, textarea {
     outline: none !important;
@@ -48,8 +48,18 @@ input, textarea {
     --grid-gap-v: 10px;
 }
 
+.grid--20-20 {
+    --grid-gap-h: 20px;
+    --grid-gap-v: 10px;
+}
+
 .grid--30-30 {
     --grid-gap-h: 30px;
+    --grid-gap-v: 20px;
+}
+
+.grid--40-40 {
+    --grid-gap-h: 40px;
     --grid-gap-v: 20px;
 }
 

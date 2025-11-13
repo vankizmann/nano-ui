@@ -1,16 +1,15 @@
-@use "sass:color";
-@use "../root/vars";
+@use "../../../../src/root/helpers" as *;
 
 .markdown-section pre {
-    border-radius: $lg-radius;
+    border-radius: size('default-lg-rad');
     font-family: "JetBrains Mono", monospace;
     overflow: auto;
     padding: 0;
     position: relative;
     word-wrap: normal;
     margin-bottom: 30px;
-    background: color.mix($color-black, $color-white, 95%);
-    box-shadow: 0 1px 24px rgba($color-shadow, 0.1);
+    background: color('form-input');
+    box-shadow: 0 1px 24px color('shadow', 0.1);
 }
 
 .markdown-section pre > code {
@@ -26,7 +25,7 @@
 
 /* code highlight */
 .token.comment, .token.prolog, .token.doctype, .token.cdata {
-    color: $color-gray-55;
+    color: color('gray-55');
 }
 
 .token.namespace {
@@ -38,19 +37,19 @@
 }
 
 .token.punctuation {
-    color: $color-gray-40;
+    color: color('gray-40');
 }
 
 .token.property {
-    color: color.mix($color-white, $color-warning, 15%);
+    color: color('warning-color-fg-20');
 }
 
 .token.tag {
-    color: color.mix($color-white, $color-primary, 15%);
+    color: color('primary-color-fg-20');
 }
 
 .token.string {
-    color: color.mix($color-white, $color-info, 15%);
+    color: color('info-color-fg-20');
 }
 
 .token.selector {
@@ -58,7 +57,7 @@
 }
 
 .token.attr-name {
-    color: color.mix($color-white, $color-success, 15%);
+    color: color('success-color-fg-20');
 }
 
 .token.entity, .token.url, .language-css .token.string, .style .token.string {
@@ -66,19 +65,19 @@
 }
 
 .token.attr-value, .token.control, .token.directive, .token.unit {
-    color: color.mix($color-white, $color-danger, 15%);
+    color: color('danger-color-fg-20');
 }
 
 .token.keyword, .token.function {
-    color: color.mix($color-white, $color-warning, 15%);
+    color: color('warning-color-fg-20');
 }
 
 .token.statement, .token.regex, .token.atrule {
-    color: color.mix($color-white, $color-info, 15%);
+    color: color('info-color-fg-20');
 }
 
 .token.placeholder, .token.variable {
-    color: color.mix($color-white, $color-info, 15%);
+    color: color('info-color-fg-20');
 }
 
 .token.deleted {
@@ -108,7 +107,7 @@
 
 .markdown-section pre > code {
     background-color: transparent;
-    color: $color-white;
+    color: color('text');
     display: block;
     line-height: inherit;
     margin: 0 2px;
@@ -129,7 +128,7 @@ code .token {
 }
 
 pre::after {
-    color: $color-gray-50;
+    color: color('gray-50');
     content: attr(data-lang);
     font-size: 13px;
     height: 15px;

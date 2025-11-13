@@ -20,22 +20,22 @@ pi.Obj.assign(window.VueData, {
                 <h3>Default Alert</h3>
             </div>
             <div class="col--auto">
-                <n-button type="primary" @click="Alert('Primary alert message', 'primary')">Primary</n-button>
+                <n-button type="primary" @click="Alert.make('Primary alert message', 'primary')">Primary</n-button>
             </div>
             <div class="col--auto">
-                <n-button type="secondary" @click="Alert('Secondary alert message', 'secondary')">Secondary</n-button>
+                <n-button type="secondary" @click="Alert.make('Secondary alert message', 'secondary')">Secondary</n-button>
             </div>
             <div class="col--auto">
-                <n-button type="success" @click="Alert('Success alert message', 'success')">Success</n-button>
+                <n-button type="success" @click="Alert.make('Success alert message', 'success')">Success</n-button>
             </div>
             <div class="col--auto">
-                <n-button type="warning" @click="Alert('Warning alert message', 'warning')">Warning</n-button>
+                <n-button type="warning" @click="Alert.make('Warning alert message', 'warning')">Warning</n-button>
             </div>
             <div class="col--auto">
-                <n-button type="danger" @click="Alert('Danger alert message', 'danger')">Danger</n-button>
+                <n-button type="danger" @click="Alert.make('Danger alert message', 'danger')">Danger</n-button>
             </div>
             <div class="col--auto">
-                <n-button type="info" @click="Alert('Info alert message', 'info')">Info</n-button>
+                <n-button type="info" @click="Alert.make('Info alert message', 'info')">Info</n-button>
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@ pi.Obj.assign(window.VueData, {
 ## Usage
 
 ```javascript
-Alert.handle('Custom alert', 'warning', {
+Alert.make('Custom alert', 'warning', {
     icon: 'fas fa-exclamation-circle'
 });
 ```

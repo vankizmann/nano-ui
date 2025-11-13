@@ -59,6 +59,52 @@ pi.Obj.assign(window.VueData, {
         </div>
         <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
             <div class="col--1-1">
+                <h3>Glass</h3>
+            </div>
+            <div class="col--auto">
+                <n-button v-bind="buttonBinds" :glass="true" type="primary">Primary</n-button>
+            </div>
+            <div class="col--auto">
+                <n-button v-bind="buttonBinds" :glass="true" type="secondary">Secondary</n-button>
+            </div>
+            <div class="col--auto">
+                <n-button v-bind="buttonBinds" :glass="true" type="success">Success</n-button>
+            </div>
+            <div class="col--auto">
+                <n-button v-bind="buttonBinds" :glass="true" type="warning">Warning</n-button>
+            </div>
+            <div class="col--auto">
+                <n-button v-bind="buttonBinds" :glass="true" type="danger">Danger</n-button>
+            </div>
+            <div class="col--auto">
+                <n-button v-bind="buttonBinds" :glass="true" type="info">Info</n-button>
+            </div>
+        </div>
+        <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
+            <div class="col--1-1">
+                <h3>Glass + Link</h3>
+            </div>
+            <div class="col--auto">
+                <n-button v-bind="buttonBinds" :glass="true" :link="true" type="primary">Primary</n-button>
+            </div>
+            <div class="col--auto">
+                <n-button v-bind="buttonBinds" :glass="true" :link="true" type="secondary">Secondary</n-button>
+            </div>
+            <div class="col--auto">
+                <n-button v-bind="buttonBinds" :glass="true" :link="true" type="success">Success</n-button>
+            </div>
+            <div class="col--auto">
+                <n-button v-bind="buttonBinds" :glass="true" :link="true" type="warning">Warning</n-button>
+            </div>
+            <div class="col--auto">
+                <n-button v-bind="buttonBinds" :glass="true" :link="true" type="danger">Danger</n-button>
+            </div>
+            <div class="col--auto">
+                <n-button v-bind="buttonBinds" :glass="true" :link="true" type="info">Info</n-button>
+            </div>
+        </div>
+        <div class="grid grid--row grid--wrap grid--40-40 grid--middle">
+            <div class="col--1-1">
                 <h3>Link</h3>
             </div>
             <div class="col--auto">

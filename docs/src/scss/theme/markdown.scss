@@ -1,5 +1,4 @@
-@use "sass:color";
-@use "../root/vars";
+@use "../../../../src/root/helpers" as *;
 
 .markdown-section h1,
 .markdown-section h2,
@@ -12,14 +11,14 @@
 }
 
 .markdown-section code {
-    border-radius: $md-radius;
+    border-radius: size('default-md-rad');
     margin: 0 2px;
     padding: 2px 5px;
     white-space: pre-wrap;
 }
 
 .markdown-section table code[data-type] {
-    color: color.mix($color-gray-90, $color-gray-40, 10%);
+    color: color('gray-70');
 }
 
 .markdown-section .markdown-table {
@@ -30,17 +29,17 @@
     overflow: hidden;
     position: relative;
     margin-bottom: 30px;
-    border-radius: $lg-radius;
-    background: $color-input;
-    box-shadow: 0 1px 24px rgba($color-shadow, 0.1);
+    border-radius: size('default-lg-rad');
+    background: color('form-input');
+    box-shadow: 0 1px 24px color('shadow', 0.1);
 }
 
 .loader-display {
     overflow: hidden;
-    border: 1px solid $color-gray-10;
-    border-radius: $lg-radius;
+    border: 1px solid color('gray-10');
+    border-radius: size('default-lg-rad');
     padding: 20px;
-    background: $color-background;
+    background: color('background');
 }
 
 .loader-display p:last-child {
@@ -49,9 +48,9 @@
 
 .scrollbar-display {
     overflow: hidden;
-    border: 1px solid $color-gray-10;
-    border-radius: $lg-radius;
-    background: $color-background;
+    border: 1px solid color('gray-10');
+    border-radius: size('default-lg-rad');
+    background: color('background');
 }
 
 .scrollbar-display .n-scrollbar__wrap > div {
@@ -60,9 +59,9 @@
 
 .resizer-display {
     overflow: hidden;
-    border: 1px solid $color-gray-10;
-    border-radius: $lg-radius;
-    background: $color-background;
+    border: 1px solid color('gray-10');
+    border-radius: size('default-lg-rad');
+    background: color('background');
 }
 
 .resizer-display > div {
@@ -70,19 +69,19 @@
 }
 
 .resizer-display--left > div:last-child {
-    background: $color-form;
-    border-left: 4px solid $color-gray-10;
+    background: color('form');
+    border-left: 4px solid color('gray-10');
 }
 
 .resizer-display--right > div:first-child {
-    background: $color-form;
-    border-right: 4px solid $color-gray-10;
+    background: color('form');
+    border-right: 4px solid color('gray-10');
 }
 
 .markdown-section .demo-options {
     position: relative;
     padding: 30px 40px 34px;
-    border-bottom: 1px solid $color-gray-10;
+    border-bottom: 1px solid color('gray-10');
 }
 
 .markdown-section .demo-options .n-form-item {
@@ -101,11 +100,11 @@
     position: relative;
     font-size: 12px;
     padding: 10px 14px;
-    color: $color-gray-50;
+    color: color('gray-50');
     margin-bottom: 0;
     text-transform: uppercase;
-    border-radius: $md-radius;
-    background: rgba($color-gray-50, 0.1);
+    border-radius: size('default-md-rad');
+    background: color('gray-50', 0.1);
 }
 
 .markdown-section .demo-display h3:last-child {
@@ -113,16 +112,16 @@
 }
 
 .markdown-section .demo-display h3:not(:last-child) {
-    border-radius: $md-radius $md-radius 0 0;
+    border-radius: size('default-md-rad') size('default-md-rad') 0 0;
 }
 
 .markdown-section .demo-display h4 {
     position: relative;
     padding: 10px 14px;
     font-size: 13px;
-    color: $color-secondary;
-    background: rgba($color-secondary, 0.1);
-    border-radius: $md-radius;
+    color: color('secondary');
+    background: color('secondary', 0.1);
+    border-radius: size('default-md-rad');
     margin-bottom: 0;
 }
 
@@ -131,7 +130,7 @@
 }
 
 .markdown-section .demo-display h3 + h4 {
-    border-radius: 0 0 $md-radius $md-radius;
+    border-radius: 0 0 size('default-md-rad') size('default-md-rad');
 }
 
 .markdown-section .demo-display > .grid:not(:last-child) {
