@@ -1,0 +1,160 @@
+@use "sass:math";
+@use "../../../root/helpers" as *;
+
+:root {
+    --grid-display: flex;
+    --grid-direction: row;
+    --grid-wrap: wrap;
+    --grid-align: flex-start;
+    --grid-justify: flex-start;
+    --grid-col: 100%;
+    --grid-col-flex: 0 0 auto;
+    --grid-gap-h: 20px;
+    --grid-gap-v: 10px;
+}
+
+.n-grid {
+    display: var(--grid-display, flex);
+    flex-direction: var(--grid-direction, row);
+    flex-wrap: var(--grid-wrap, wrap);
+    align-items: var(--grid-align, flex-start);
+    justify-content: var(--grid-justify, flex-start);
+    margin: calc(var(--grid-gap-v, 0) * -0.5) calc(var(--grid-gap-h, 0) * -0.5);
+}
+
+.n-grid > [class*="col-"] {
+    flex: var(--grid-col-flex, 1 1 auto);
+    width: calc(var(--grid-col, 100%) - var(--grid-gap-h, 0));
+    margin: calc(var(--grid-gap-v, 0) * 0.5) calc(var(--grid-gap-h, 0) * 0.5);
+}
+
+@mixin grid($suffix: '') {
+
+    .n-grid.column#{$suffix} {
+        --grid-direction: column;
+    }
+
+    .n-grid.row#{$suffix} {
+        --grid-direction: row;
+    }
+
+    .n-grid.wrap#{$suffix} {
+        --grid-wrap: wrap;
+    }
+
+    .n-grid.nowrap#{$suffix} {
+        --grid-wrap: nowrap;
+    }
+
+    .n-grid.align-start#{$suffix} {
+        --grid-align: flex-start;
+    }
+
+    .n-grid.align-center#{$suffix} {
+        --grid-align: center;
+    }
+
+    .n-grid.align-end#{$suffix} {
+        --grid-align: flex-end;
+    }
+
+    .n-grid.justify-start#{$suffix} {
+        --grid-justify: flex-start;
+    }
+
+    .n-grid.justify-center#{$suffix} {
+        --grid-justify: center;
+    }
+
+    .n-grid.justify-end#{$suffix} {
+        --grid-justify: flex-end;
+    }
+
+}
+
+@mixin grid-gap($suffix: '') {
+
+    .n-grid.gap-10#{$suffix} {
+        --grid-gap-h: 10px;
+        --grid-gap-v: 10px;
+    }
+
+    .n-grid.gap-h-10#{$suffix} {
+        --grid-gap-h: 10px;
+    }
+
+    .n-grid.gap-v-10#{$suffix} {
+        --grid-gap-h: 10px;
+    }
+
+    .n-grid.gap-20#{$suffix} {
+        --grid-gap-h: 20px;
+        --grid-gap-v: 20px;
+    }
+
+    .n-grid.gap-h-20#{$suffix} {
+        --grid-gap-h: 20px;
+    }
+
+    .n-grid.gap-v-20#{$suffix} {
+        --grid-gap-h: 20px;
+    }
+
+    .n-grid.gap-30#{$suffix} {
+        --grid-gap-h: 30px;
+        --grid-gap-v: 30px;
+    }
+
+    .n-grid.gap-h-30#{$suffix} {
+        --grid-gap-h: 30px;
+    }
+
+    .n-grid.gap-v-30#{$suffix} {
+        --grid-gap-h: 30px;
+    }
+
+}
+
+@mixin grid-column($suffix: '') {
+
+    @each $step in (1, 2) {
+        .n-grid > .col-#{$step}\-2#{$suffix} {
+            --grid-col: #{(math.div(100%, 2) * $step) - 0.001};
+        }
+    }
+
+    @each $step in (1, 2, 3) {
+        .n-grid > .col-#{$step}\-3#{$suffix} {
+            --grid-col: #{(math.div(100%, 3) * $step) - 0.001};
+        }
+    }
+
+    @each $step in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12) {
+        .n-grid > .col-#{$step}\-12#{$suffix} {
+            --grid-col: #{(math.div(100%, 12) * $step) - 0.001};
+        }
+    }
+
+}
+
+$breakpoints: (
+        'xs': 'screen and (min-width: 576px)',
+        'sm': 'screen and (min-width: 768px)',
+        'md': 'screen and (min-width: 992px)',
+        'lg': 'screen and (min-width: 1200px)',
+        'xl': 'screen and (min-width: 1440px)'
+);
+
+@include grid();
+@include grid-gap();
+@include grid-column();
+
+@each $name, $query in $breakpoints {
+    @media #{$query} {
+        @include grid(\@ + $name);
+        @include grid-gap(\@ + $name);
+        @include grid-column(\@ + $name);
+    }
+}
+
+

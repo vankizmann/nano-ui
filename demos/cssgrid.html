@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="../dist/nano-ui.css">
+    <link id="theme" rel="stylesheet" href="../dist/themes/default.css">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+
+        div {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
+            font-size: 14px;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        #app {
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 20px 30px 40px 30px;
+        }
+
+        .app-options {
+            border-bottom: 1px solid rgba(110, 110, 110, 0.15);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: bold;
+            padding-bottom: 10px;
+            margin: 50px 0 15px;
+            border-bottom: 1px solid rgba(110, 110, 110, 0.15);
+        }
+
+        .fillme:before {
+            content: '\00a0';
+            display: block;
+            width: 100%;
+            height: 0;
+            padding-bottom: 30%;
+            background: red;
+        }
+
+    </style>
+
+</head>
+<body class="n-demo n-theme--dark">
+
+    <div class="app-container">
+        <div class="n-grid gap-10 gap-20@sm gap-30@lg align-center@lg">
+            <div class="col-1-1 col-1-2@sm col-1-3@lg fillme">
+            </div>
+            <div class="col-1-1 col-1-2@sm col-1-3@lg fillme">
+            </div>
+            <div class="col-1-1 col-1-3@lg fillme">
+            </div>
+            <div class="col-1-3 fillme">
+            </div>
+            <div class="col-1-3 fillme">
+            </div>
+            <div class="col-1-3 fillme">
+            </div>
+            <div class="col-1-12 fillme">
+            </div>
+            <div class="col-2-12 fillme">
+            </div>
+            <div class="col-4-12 fillme">
+            </div>
+            <div class="col-5-12 fillme">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
