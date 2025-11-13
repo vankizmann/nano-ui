@@ -137,7 +137,7 @@ export default {
         modelValue(value)
         {
             if ( value !== this.tempValue ) {
-                this.tempValue = this.getValue(value);
+                this.tempValue = value;
             }
         }
 
@@ -146,7 +146,7 @@ export default {
     data()
     {
         return {
-            focus: false, tempValue: this.getValue(),
+            focus: false, tempValue: this.modelValue,
         }
     },
 
@@ -172,8 +172,7 @@ export default {
 
         getDisplayValue()
         {
-
-            if ( Any.isEmpty(this.modelValue) ) {
+            if ( Any.isEmpty(this.tempValue) ) {
                 return null;
             }
 

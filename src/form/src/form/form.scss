@@ -1,5 +1,13 @@
 @use "../../../root/helpers" as *;
 
+.n-disabled .n-form-clear {
+    display: none !important;
+}
+
+.n-disabled .n-form-angle {
+    display: inline-flex !important;
+}
+
 .n-form-clear,
 .n-form-angle {
     position: relative;

@@ -96,13 +96,13 @@
 
         <h2>NTagsItem</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_tags.size" :options="sizes"></n-select>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--30-30">
+        <div class="n-grid gap-30">
             <div class="col--1-1">
                 <n-tags v-bind="n_tags">
                     <template v-for="type in ['neutral', 'primary', 'secondary', 'success', 'warning', 'danger', 'info']">
@@ -122,11 +122,11 @@
 
         <h2>NForm</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-switch v-model="n_form.conditional">Conditional</n-switch>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-switch v-model="n_form.modelValue">Enabled</n-switch>
             </div>
         </div>
@@ -148,21 +148,21 @@
                 </n-form-item>
 
             </n-form-group>
-            <n-form-group label="FormGroup2">
+            <n-form-group label="FormGroup2" grid="25">
 
-                <n-form-item label="Foo" prop="foo" tooltip="lorem ipsum dolore" :conditional="n_form.conditional" v-model="n_form.modelValue">
+                <n-form-item class="col-1-1 col-1-2@md" label="Foo" prop="foo" tooltip="lorem ipsum dolore" :conditional="n_form.conditional" v-model="n_form.modelValue">
                     <n-input></n-input>
                 </n-form-item>
 
-                <n-form-item label="Bar" prop="bar" :conditional="n_form.conditional" v-model="n_form.modelValue">
+                <n-form-item class="col-1-1 col-1-2@md" label="Bar" prop="bar">
                     <n-input-number></n-input-number>
                 </n-form-item>
 
-                <n-form-item label="Bar" prop="bar" :conditional="n_form.conditional" v-model="n_form.modelValue">
+                <n-form-item class="col-1-1 col-2-3@md" label="Bar" prop="bar" :conditional="n_form.conditional" v-model="n_form.modelValue">
                     <n-select></n-select>
                 </n-form-item>
 
-                <n-form-item label="Bar" prop="bar" :conditional="n_form.conditional" v-model="n_form.modelValue">
+                <n-form-item class="col-1-1 col-1-3@md" label="Bar" prop="bar">
                     <n-switch>test</n-switch>
                 </n-form-item>
 
@@ -230,143 +230,144 @@
 
         <h2>NRating</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_rating.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_rating.disabled">Disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
-            <div class="col--1-1 col--1-3@md">
+        <div class="n-grid gap-10">
+            <div class="col-1-1 col-1-3@md">
                 <n-rating :model-value="3.5" v-bind="n_rating" type="primary" />
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-rating :model-value="3" v-bind="n_rating" type="secondary" />
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-rating :model-value="3.5" v-bind="n_rating" type="success" />
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-rating :model-value="0" v-bind="n_rating" type="warning" />
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-rating :model-value="1" v-bind="n_rating" type="danger" />
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-rating :model-value="3.5" v-bind="n_rating" type="info" />
             </div>
         </div>
 
         <h2>NButton</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_button.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 200px;" v-model="n_button.icon" placeholder="Icon" :clearable="true" :options="demoIcons" />
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_button.square">Square</n-checkbox>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_button.link">Link</n-checkbox>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_button.glass">Glass</n-checkbox>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_button.disabled">Disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
-            <div class="col--1-1 col--1-3@md">
+        <div class="n-grid gap-10">
+            <div class="col-1-1 col-auto@md">
                 <n-button v-bind="n_button" type="neutral">Button</n-button>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-auto@md">
                 <n-button v-bind="n_button" type="primary">Button</n-button>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-auto@md">
                 <n-button v-bind="n_button" type="secondary">Button</n-button>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-auto@md">
                 <n-button v-bind="n_button" type="success">Button</n-button>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-auto@md">
                 <n-button v-bind="n_button" type="warning">Button</n-button>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-auto@md">
                 <n-button v-bind="n_button" type="danger">Button</n-button>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-auto@md">
                 <n-button v-bind="n_button" type="info">Button</n-button>
             </div>
         </div>
 
         <h2>NInput</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_input.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 200px;" v-model="n_input.icon" :clearable="true" placeholder="Icon" :options="demoIcons"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-input v-model="n_input.placeholder"></n-input>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_input.disabled">Disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
-            <div class="col--1-1 col--1-3@md">
+        <div class="n-grid gap-10">
+            <div class="col-1-1 col-1-3@md">
                 <n-input v-model="n_input.value" v-bind="n_input" type="primary"></n-input>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-input v-model="n_input.value" v-bind="n_input" type="secondary"></n-input>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-input v-model="n_input.value" v-bind="n_input" type="success"></n-input>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-input v-model="n_input.value" v-bind="n_input" type="warning"></n-input>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-input v-model="n_input.value" v-bind="n_input" type="danger"></n-input>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-input v-model="n_input.value" v-bind="n_input" type="info"></n-input>
             </div>
         </div>
 
         <h2>NInputNumber</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_number.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-input v-model="n_number.placeholder"></n-input>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_number.disabled">Disabled</n-checkbox>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-input-number v-model="n_number.minValue" :min="-100" :max="100" placeholder="Min. Value"></n-input-number>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-input-number v-model="n_number.maxValue" :min="-100" :max="100" placeholder="Max. Value"></n-input-number>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
-            <div class="col--1-1 col--1-3@md">
+        <div class="n-grid gap-10">
+            <div class="col-1-1 col-1-3@md">
+                <n-input-number v-model="n_number.test" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" format=":count USD" type="primary" :precision="2" :clearable="true"></n-input-number>
                 <n-input-number v-model="n_number.test" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" format=":count USD" type="primary" :precision="2" :clearable="true"></n-input-number>
                 <!--                <n-input-number v-model="n_number.value" :min="n_number.minValue" :max="n_number.maxValue" v-bind="n_number" format=":count USD" type="primary"></n-input-number>-->
             </div>
@@ -389,98 +390,98 @@
 
         <h2>NTextarea</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_textarea.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_textarea.autoRows">Auto rows</n-checkbox>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_textarea.disabled">Disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
-            <div class="col--1-1 col--1-3@md">
+        <div class="n-grid gap-10">
+            <div class="col-1-1 col-1-3@md">
                 <n-textarea class="test" v-bind="n_textarea" type="primary" :min-rows="1"></n-textarea>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-textarea v-bind="n_textarea" type="secondary"></n-textarea>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-textarea v-bind="n_textarea" type="success"></n-textarea>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-textarea v-bind="n_textarea" type="warning"></n-textarea>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-textarea v-bind="n_textarea" type="danger"></n-textarea>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-textarea v-bind="n_textarea" type="info"></n-textarea>
             </div>
         </div>
 
         <h2>NSelect</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_select.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_select.clearable">Clearable</n-checkbox>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_select.allowCreate">Allow create</n-checkbox>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_select.disabled">Disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
-            <div class="col--1-1 col--1-3@md">
+        <div class="n-grid gap-10">
+            <div class="col-1-1 col-1-3@md">
                 <n-select v-bind="n_select" type="secondary" :options="icons" :lazy="true"></n-select>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-select v-bind="n_select" v-model="foobar" :multiple="true" :collapse="false" type="primary" :options="icons"></n-select>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-select v-bind="n_select" type="secondary" :options="icons"></n-select>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-select v-bind="n_select" :multiple="true" type="success" :options="icons"></n-select>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-select v-bind="n_select" type="warning" :options="icons"></n-select>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-select v-bind="n_select" :multiple="true" type="danger" :options="icons"></n-select>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-select v-bind="n_select" type="info" :options="icons"></n-select>
             </div>
         </div>
 
         <h2>NCascader</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_cascader.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 210px;" v-model="n_cascader.type" :options="types"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_cascader.clearable">Clearable</n-checkbox>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_cascader.disabled">Disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
+        <div class="n-grid gap-10">
             <div class="col--1-1">
                 <n-cascader-panel v-bind="n_cascader" trigger="click" :options="cascaderData"></n-cascader-panel>
             </div>
@@ -495,7 +496,7 @@
 
         <h2>NButtonGroup</h2>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
+        <div class="n-grid gap-10">
             <div class="col--1-1">
                 <n-button-group>
                     <n-input v-model="n_input.value" v-bind="n_input" type="primary"></n-input>
@@ -508,22 +509,22 @@
 
         <h2>NCheckbox</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_checkbox.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 210px;" v-model="n_checkbox.type" :options="types"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_checkbox.disabled">Disabled</n-checkbox>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_checkbox.allowUncheck">Allow uncheck while disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
+        <div class="n-grid gap-10">
             <div class="col--1-1">
                 <n-checkbox-group v-bind="n_checkbox">
                     <n-checkbox :global="true" v-bind="n_checkbox">Check all</n-checkbox>
@@ -546,19 +547,19 @@
 
         <h2>NRadio</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_radio.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 210px;" v-model="n_radio.type" :options="types"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_radio.disabled">Disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
+        <div class="n-grid gap-10">
             <div class="col--1-1">
                 <n-radio-group v-bind="n_radio">
                     <n-radio value="test1" v-bind="n_radio">Foobar 1</n-radio>
@@ -579,16 +580,16 @@
 
         <h2>NSlider</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_slider.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_slider.disabled">Disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
+        <div class="n-grid gap-10">
             <div class="col--1-1">
                 <n-slider v-bind="n_slider" on-type="primary" v-model="n_slider.temp_value">Slider</n-slider>
             </div>
@@ -605,155 +606,155 @@
 
         <h2>NSwitch</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_switch.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_switch.disabled">Disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
-            <div class="col--1-1 col--1-3@md">
+        <div class="n-grid gap-10">
+            <div class="col-1-1 col-1-3@md">
                 <n-switch v-bind="n_switch" on-type="primary">Switch</n-switch>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-switch v-bind="n_switch" on-type="secondary">Switch</n-switch>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-switch v-bind="n_switch" on-type="success">Switch</n-switch>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-switch v-bind="n_switch" on-type="warning">Switch</n-switch>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-switch v-bind="n_switch" on-type="danger">Switch</n-switch>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-switch v-bind="n_switch" on-type="info">Switch</n-switch>
             </div>
         </div>
 
         <h2>NDatepicker</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_datepicker.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 210px;" v-model="n_datepicker.type" :options="types"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_datepicker.clearable">Clearable</n-checkbox>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_datepicker.disabled">Disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
+        <div class="n-grid gap-10">
             <div class="col--1-1">
                 <n-datepicker-panel v-bind="n_datepicker" min-date="now" :month-panels="2" :range="true"></n-datepicker-panel>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-datepicker v-bind="n_datepicker"></n-datepicker>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-datepicker v-bind="n_datepicker" :range="true" :month-panels="2"></n-datepicker>
             </div>
         </div>
 
         <h2>NTimepicker</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_timepicker.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 210px;" v-model="n_timepicker.type" :options="types"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_timepicker.clearable">Clearable</n-checkbox>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_timepicker.disabled">Disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
+        <div class="n-grid gap-10">
             <div class="col--1-1">
                 <n-timepicker-panel v-bind="n_timepicker"></n-timepicker-panel>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-timepicker v-bind="n_timepicker"></n-timepicker>
             </div>
         </div>
 
         <h2>NDatetimepicker</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_datetimepicker.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 210px;" v-model="n_datetimepicker.type" :options="types"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_datetimepicker.clearable">Clearable</n-checkbox>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_datetimepicker.disabled">Disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
-            <div class="col--1-1 col--1-3@md">
+        <div class="n-grid gap-10">
+            <div class="col-1-1 col-1-3@md">
                 <n-datetimepicker v-bind="n_datetimepicker"></n-datetimepicker>
             </div>
         </div>
 
         <h2>NDurationpicker</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_durationpicker.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 210px;" v-model="n_durationpicker.type" :options="types"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_durationpicker.clearable">Clearable</n-checkbox>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_durationpicker.disabled">Disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
-            <div class="col--1-1 col--1-3@md">
+        <div class="n-grid gap-10">
+            <div class="col-1-1 col-1-3@md">
                 <n-durationpicker v-bind="n_durationpicker"></n-durationpicker>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-1-3@md">
                 <n-durationpicker v-model="n_durationpicker.modelValue" v-bind="n_durationpicker"></n-durationpicker>
             </div>
         </div>
 
         <h2>NTransfer</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_transfer.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 210px;" v-model="n_transfer.type" :options="types"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_cascader.disabled">Disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
+        <div class="n-grid gap-10">
             <div class="col--1-1">
                 <n-transfer v-bind="n_transfer" trigger="hover" :options="cascaderData"></n-transfer>
             </div>
@@ -761,20 +762,20 @@
 
         <h2>NModal</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_modal.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 210px;" v-model="n_modal.theme" :options="themes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_modal.disabled">Disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
-            <div class="col--1-1 col--1-3@md">
+        <div class="n-grid gap-10">
+            <div class="col-1-1 col-1-3@md">
                 <n-button>Open modal</n-button>
                 <n-modal v-bind="n_modal">
                     <template v-slot:header>
@@ -802,23 +803,23 @@
 
         <h2>NDrawer</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_drawer.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 210px;" v-model="n_drawer.theme" :options="themes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 210px;" v-model="n_drawer.position" :options="drawers"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_drawer.disabled">Disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
-            <div class="col--1-1 col--1-3@md">
+        <div class="n-grid gap-10">
+            <div class="col-1-1 col-1-3@md">
                 <n-button>Open drawer</n-button>
                 <n-drawer v-bind="n_drawer">
                     <template v-slot:header>
@@ -846,26 +847,26 @@
 
         <h2>NConfirm</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_confirm.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 210px;" v-model="n_confirm.type" :options="types"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_confirm.disabled">Disabled</n-checkbox>
             </div>
         </div>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
-            <div class="col--1-1 col--1-3@md">
+        <div class="n-grid gap-10">
+            <div class="col-1-1 col-auto@md">
                 <n-button>Open confirm</n-button>
                 <n-confirm v-bind="n_confirm" @abort="log('Abort')" @confirm="log('Confirm')">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur corporis deserunt fuga harum illum ipsa, itaque nemo optio sunt? Aperiam cum ducimus explicabo, fugiat ipsum minima molestias odio quis quod.
                 </n-confirm>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-auto@md">
                 <n-button @click="confirmTest = true">Open confirm</n-button>
                 <n-confirm v-model="confirmTest" :listen="false" @abort="log('Abort')" @confirm="log('Confirm')">
                     <p>Boookeeeerrs</p>
@@ -876,14 +877,14 @@
 
         <h2>NLoader</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_loader.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 210px;" v-model="n_loader.type" :options="types"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-checkbox v-model="n_loader.visible">Visible</n-checkbox>
             </div>
         </div>
@@ -894,60 +895,60 @@
 
         <h2>Notify</h2>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
-            <div class="col--1-1 col--1-3@md">
+        <div class="n-grid gap-10">
+            <div class="col-1-1 col-auto@md">
                 <n-button type="primary" @click="notify('primary')">Notify</n-button>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-auto@md">
                 <n-button type="secondary" @click="notify('secondary')">Notify</n-button>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-auto@md">
                 <n-button type="success" @click="notify('success')">Notify</n-button>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-auto@md">
                 <n-button type="warning" @click="notify('warning')">Notify</n-button>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-auto@md">
                 <n-button type="danger" @click="notify('danger')">Notify</n-button>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-auto@md">
                 <n-button type="info" @click="notify('info')">Notify</n-button>
             </div>
         </div>
 
         <h2>Alert</h2>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
-            <div class="col--1-1 col--1-3@md">
+        <div class="n-grid gap-10">
+            <div class="col-1-1 col-auto@md">
                 <n-button type="primary" @click="alert('primary')">Notify</n-button>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-auto@md">
                 <n-button type="secondary" @click="alert('secondary')">Notify</n-button>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-auto@md">
                 <n-button type="success" @click="alert('success')">Notify</n-button>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-auto@md">
                 <n-button type="warning" @click="alert('warning')">Notify</n-button>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-auto@md">
                 <n-button type="danger" @click="alert('danger')">Notify</n-button>
             </div>
-            <div class="col--1-1 col--1-3@md">
+            <div class="col-1-1 col-auto@md">
                 <n-button type="info" @click="alert('info')">Notify</n-button>
             </div>
         </div>
 
         <h2>NTabs</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_tabs.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 210px;" v-model="n_tabs.type" :options="types"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-switch v-model="n_tabs.float">Float</n-switch>
             </div>
         </div>
@@ -966,11 +967,11 @@
 
         <h2>NCollapse</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_collapse.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 210px;" v-model="n_collapse.type" :options="types"></n-select>
             </div>
         </div>
@@ -1003,11 +1004,11 @@
 
         <h2>NPaginator</h2>
 
-        <div class="app-options grid grid--row grid--wrap grid--30-30">
-            <div class="col--auto">
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
                 <n-select style="width: 100px;" v-model="n_paginator.size" :options="sizes"></n-select>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-select style="width: 210px;" v-model="n_paginator.type" :options="types"></n-select>
             </div>
         </div>
@@ -1016,23 +1017,23 @@
 
         <h2>NVirtualscroller</h2>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
-            <div class="col--auto">
+        <div class="n-grid gap-10">
+            <div class="col-auto">
                 <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(0)">
                     Scroll to first item
                 </n-button>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(2000)">
                     Scroll to item 2000
                 </n-button>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(7100)">
                     Scroll to item 7100
                 </n-button>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(-1)">
                     Scroll to last item
                 </n-button>
@@ -1047,13 +1048,13 @@
 
         <h2>NDraglist</h2>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
-            <div class="col--auto">
+        <div class="n-grid gap-10">
+            <div class="col-auto">
                 <n-button type="primary" @click="n_draggable.count++">
                     Add draggable list with 1000 items
                 </n-button>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-button type="danger" @click="n_draggable.count ? n_draggable.count-- : 0">
                     Remove draggable list with 1000 items
                 </n-button>
@@ -1121,13 +1122,13 @@
 
         <h2>NTable</h2>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
-            <div class="col--auto">
+        <div class="n-grid gap-10">
+            <div class="col-auto">
                 <n-button type="primary" @click="$refs.table.resetFilter()">
                     Reset filter
                 </n-button>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-button type="primary" @click="$refs.table.highlightNode(virtualTree[2]['children'][3]['id'])">
                     Highlight node
                 </n-button>
@@ -1207,23 +1208,23 @@
 
         <h2>NPreview</h2>
 
-        <div class="grid grid--row grid--wrap grid--10-10">
+        <div class="n-grid gap-10">
             <div class="col--1-1">
                 <n-file v-model="n_preview.file"></n-file>
             </div>
-            <div class="col--auto" v-if="n_preview.file">
+            <div class="col-auto" v-if="n_preview.file">
                 <n-preview :file="n_preview.file" style="width: 160px;"></n-preview>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-preview group="foobar" :index="0" file="https://picsum.photos/1920/1920.jpg" thumb="https://picsum.photos/300/300.jpg" style="width: 160px;"></n-preview>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-preview group="foobar" :index="4" file="https://www.youtube.com/watch?v=m_Nw_BF90_4" thumb="https://via.placeholder.com/100/000/fff.jpg?text=Youtube" style="width: 160px;"></n-preview>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-preview group="foobar" :index="2" file="https://vimeo.com/128079949" thumb="https://via.placeholder.com/100/000/fff.jpg?text=Vimeo" style="width: 160px;"></n-preview>
             </div>
-            <div class="col--auto">
+            <div class="col-auto">
                 <n-preview group="foobar" :index="3" file="https://www.w3schools.com/html/mov_bbb.webm" thumb="https://via.placeholder.com/100/000/fff.jpg?text=WEBM" style="width: 160px;"></n-preview>
             </div>
         </div>
@@ -1454,7 +1455,7 @@
             };
 
             data.n_number = {
-                test: '', value: 3, size: 'md', placeholder: '', disabled: false, minValue: 0, maxValue: 10
+                test: 2, value: 3, size: 'md', placeholder: '', disabled: false, minValue: 0, maxValue: 10
             };
 
             data.n_select = {

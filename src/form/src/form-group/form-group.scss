@@ -4,7 +4,7 @@
     position: relative;
 }
 
-.n-form-group.n-form-group--fieldset.n-hidden:after {
+.n-form-group.n-form-group--fieldset.n-form-group--collapse.n-hidden:after {
     z-index: 0;
     content: '\00a0';
     position: absolute;

@@ -27,7 +27,7 @@
     cursor: pointer;
     position: absolute;
     right: 0;
-    top: 0;
+    top: size('base-pad-vertical', 'calc($ * 0.25)');
     display: inline-flex;
     align-items: center;
     border-radius: 500px;
@@ -43,11 +43,12 @@
 
 .n-form-item__error {
     position: absolute;
-    top: 100%;
+    bottom: 0;
     left: 0;
+    transform: translateY(100%);
 }
 
-.n-form-item {
+.n-form-item:not([class*="col-"]) {
     margin-bottom: size('base-hgt', 'calc($ * 0.7)');
 }
 

@@ -81,6 +81,14 @@ export default {
             type: [String]
         },
 
+        grid: {
+            default()
+            {
+                return '';
+            },
+            type: [String, Number]
+        },
+
         collapse: {
             default()
             {
@@ -253,15 +261,23 @@ export default {
 
         return (
             <NPopover type="tooltip" size="sm" position={this.tooltipPosition}>
-            {this.tooltip}
+                {this.tooltip}
             </NPopover>
         );
     },
 
     renderBody()
     {
+        let classList = [
+            'n-form-group__body'
+        ];
+
+        if ( this.grid ) {
+            classList.push(`n-grid gap-${this.grid}`);
+        }
+
         return (
-            <div class="n-form-group__body">
+            <div class={classList}>
                 { this.$slots.default && this.$slots.default() }
             </div>
         );

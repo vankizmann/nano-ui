@@ -56,11 +56,11 @@
 }
 
 .n-paginator__limit .n-select {
-    width: size('base-hgt', 'calc($ * 4.2)');
+    width: size('base-hgt-inline', 'calc($ * 8)');
 }
 
 .n-paginator__goto .n-select {
-    width: size('base-hgt', 'calc($ * 3.2)');
+    width: size('base-hgt-inline', 'calc($ * 5)');
 }
 
 .n-paginator__pages > button:not(:last-child) {
