@@ -1,7 +1,11 @@
-@use "@kizmann/nano-ui/src/root/helpers" as *;
+@use "../../../root/helpers" as *;
 
 .n-cascader-panel {
     background: color('form-input');
+}
+
+.n-popover > .n-cascader-panel {
+    background: color('popover');
 }
 
 div:not(.n-popover) > .n-cascader-panel {

@@ -2,9 +2,9 @@
 @use "../helpers" as *;
 
 $color-white:           #ffffff !default;
-$color-black:           #090b10 !default;
+$color-black:           #1D1F24 !default;
 
-$color-text:            #212121 !default;
+$color-text:            #1D1F24 !default;
 $color-shadow:          #000000 !default;
 $color-tooltip:         #161616 !default;
 $color-popover:         #ffffff !default;
@@ -12,7 +12,7 @@ $color-popover:         #ffffff !default;
 $color-foreground:      $color-black !default;
 $color-background:      $color-white !default;
 
-$color-neutral:         #9C9C9C !default;
+$color-neutral:         #6C7078 !default;
 $color-primary:         #2B70E3 !default;
 $color-secondary:       #C23399 !default;
 $color-success:         #42BD97 !default;

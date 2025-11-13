@@ -49,10 +49,10 @@ pi.Obj.assign(window.VueData, {
                     <template #footer="{ closeModal }">
                         <div class="grid grid--row grid--right grid--20-20">
                             <div class="col--auto">
-                                <n-button type="default" @click="closeModal(false, 'cancel')">Cancel</n-button>
+                                <n-button :glass="true" @click="closeModal(false, 'cancel')">Cancel</n-button>
                             </div>
                             <div class="col--auto">
-                                <n-button type="primary" @click="closeModal(false, 'confirm')">Confirm</n-button>
+                                <n-button @click="closeModal(false, 'confirm')">Confirm</n-button>
                             </div>
                         </div>
                     </template>

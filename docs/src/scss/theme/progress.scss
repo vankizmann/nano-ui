@@ -1,9 +1,10 @@
-@use "../root/vars";
+@use "../../../../src/root/helpers" as *;
 
 .progress {
+    z-index: 99999999;
     position: fixed;
     left: 0;
     top: 0;
-    background: $color-secondary;
+    background: color('secondary-color');
     height: 4px;
 }

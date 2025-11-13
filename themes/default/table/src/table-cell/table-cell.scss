@@ -1,4 +1,4 @@
-@use "@kizmann/nano-ui/src/root/helpers" as *;
+@use "../../../root/helpers" as *;
 
 .n-table-cell.n-changed:before {
     content: '\00a0';

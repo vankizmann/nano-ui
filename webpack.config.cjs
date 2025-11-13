@@ -7,8 +7,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 let themes = {
     './src/index.scss': './nano-ui.css',
-    // './docs/src/scss/index-light.scss': '../docs/dist/light.css',
-    // './docs/src/scss/index-dark.scss': '../docs/dist/dark.css',
+    './docs/src/scss/index.scss': '../docs/dist/index.css',
     './themes/default/example.scss': './themes/default.css',
 };
 
@@ -84,11 +83,6 @@ let docJs = {
 
 let themeFn = (entry, target) => ({
     entry: [entry],
-    resolve: {
-        alias: {
-            "@kizmann/nano-ui": path.resolve(__dirname),
-        }
-    },
     module: {
         rules: [
             {
@@ -159,8 +153,7 @@ module.exports = function (env, argv) {
     let docJsBundle = Object.assign({
 
         output: {
-            filename: "dist/docs.js",
-            path: path.resolve(__dirname, "docs"),
+            filename: "dist/docs.js", path: path.resolve(__dirname, "docs"),
         },
 
         plugins: [

@@ -1,4 +1,4 @@
-@use "@kizmann/nano-ui/src/root/helpers" as *;
+@use "../../../root/helpers" as *;
 
 .n-datetimepicker {
     display: flex;
@@ -124,7 +124,7 @@
 .n-datetimepicker__time-panel.n-timepicker-panel {
     border: none;
     border-radius: 0;
-    max-height: 310px;
+    max-height: size('base-hgt', 'calc($ * 10)');
 }
 
 .n-datetimepicker__empty {

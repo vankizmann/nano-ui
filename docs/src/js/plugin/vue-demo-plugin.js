@@ -32,10 +32,11 @@ export const VueDemoPlugin = function (hook, vm) {
     };
 
     window.DefaultVueData.sizes = {
-        'xs': 'Mini',
-        'sm': 'Small',
-        'md': 'Medium',
-        'lg': 'Large'
+        'xs': 'XS',
+        'sm': 'SM',
+        'md': 'MD',
+        'lg': 'LG',
+        'xl': 'XL'
     };
 
     window.DefaultVueData.icons = {

@@ -1,4 +1,4 @@
-# Notify
+# Notification
 
 The Notification system provides a way to display non-intrusive messages to users. It handles creation, display, and automatic removal of notification toasts with various styles and options.
 
@@ -20,22 +20,22 @@ pi.Obj.assign(window.VueData, {
                 <h3>Default Notify</h3>
             </div>
             <div class="col--auto">
-                <n-button type="primary" @click="Notify('Primary notification', 'primary')">Primary</n-button>
+                <n-button type="primary" @click="Notification.make('Primary notification', 'primary')">Primary</n-button>
             </div>
             <div class="col--auto">
-                <n-button type="secondary" @click="Notify('Secondary notification', 'secondary')">Secondary</n-button>
+                <n-button type="secondary" @click="Notification.make('Secondary notification', 'secondary')">Secondary</n-button>
             </div>
             <div class="col--auto">
-                <n-button type="success" @click="Notify('Success notification', 'success')">Success</n-button>
+                <n-button type="success" @click="Notification.make('Success notification', 'success')">Success</n-button>
             </div>
             <div class="col--auto">
-                <n-button type="warning" @click="Notify('Warning notification', 'warning')">Warning</n-button>
+                <n-button type="warning" @click="Notification.make('Warning notification', 'warning')">Warning</n-button>
             </div>
             <div class="col--auto">
-                <n-button type="danger" @click="Notify('Danger notification', 'danger')">Danger</n-button>
+                <n-button type="danger" @click="Notification.make('Danger notification', 'danger')">Danger</n-button>
             </div>
             <div class="col--auto">
-                <n-button type="info" @click="Notify('Info notification', 'info')">Info</n-button>
+                <n-button type="info" @click="Notification.make('Info notification', 'info')">Info</n-button>
             </div>
         </div>
     </div>
@@ -46,7 +46,7 @@ pi.Obj.assign(window.VueData, {
 ## Usage
 
 ```javascript
-Notify.handle('Operation successful!', 'success', {
+Notification.make('Operation successful!', 'success', {
     duration: 5000 // Display for 5 seconds
 });
 

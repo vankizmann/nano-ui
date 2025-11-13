@@ -2,17 +2,17 @@
 @use "../helpers" as *;
 
 $color-white:           #ffffff !default;
-$color-black:           #090b10 !default;
+$color-black:           #1D1F24 !default;
 
-$color-text:            #212121 !default;
+$color-text:            #E3E3E3 !default;
 $color-shadow:          #000000 !default;
 $color-tooltip:         #161616 !default;
-$color-popover:         #ffffff !default;
+$color-popover:         #2D3138 !default;
 
-$color-foreground:      $color-black !default;
-$color-background:      $color-white !default;
+$color-foreground:      $color-white !default;
+$color-background:      $color-black !default;
 
-$color-neutral:         #9C9C9C !default;
+$color-neutral:         #6C7078 !default;
 $color-primary:         #2B70E3 !default;
 $color-secondary:       #C23399 !default;
 $color-success:         #42BD97 !default;
@@ -258,6 +258,7 @@ $colors: (
         'tag-19': $color-tag-19,
 ) !default;
 
+
 $color-base-neutral: (
         'text': $color-white,
         'color': $color-neutral,
@@ -419,29 +420,6 @@ $color-base-info: (
         'color-bg-90': $color-info-bg-90,
 ) !default;
 
-$color-tags: (
-        0:  #D74242,  // red
-        1:  #D76342,  // red-orange
-        2:  #D78442,  // orange
-        3:  #D7A142,  // orange-yellow
-        4:  #C2A732,  // yellow
-        5:  #A2B02E,  // yellow-green
-        6:  #8BB531,  // green
-        7:  #5EBF36,  // green-cyan
-        8:  #3AC778,  // teal
-        9:  #39C498,  // cyan
-        10: #37BFBF,  // cyan-blue
-        11: #42B0D7,  // light blue
-        12: #428BD7,  // blue
-        13: #434AE5,  // blue-indigo
-        14: #5C42D7,  // blue-indigo
-        15: #7842D7,  // indigo
-        16: #9542D7,  // purple
-        17: #D742CD,  // magenta
-        18: #D74285,  // pink-purple
-        19: #D74260   // reddish-pin
-) !default;
-
 $color-list: (
         'neutral': $color-base-neutral,
         'primary': $color-base-primary,
@@ -455,25 +433,25 @@ $color-list: (
 :root {
 
     @each $name, $values in $color-list {
-        @include css-colors($values, '-light-#{$name}');
+        @include css-colors($values, '-dark-#{$name}');
     }
 
-    @include css-colors($colors, '-light');
+    @include css-colors($colors, '-dark');
 }
 
 @mixin exports() {
 
     @each $name, $values in $color-list {
         [class*="--#{$name}"] {
-            @include css-remaps($values, '-color-light-#{$name}', '-color-base');
+            @include css-remaps($values, '-color-dark-#{$name}', '-color-base');
         }
     }
 
-    @include css-remaps($colors, '-color-light', '-color');
+    @include css-remaps($colors, '-color-dark', '-color');
 }
 
 @mixin default() {
     @each $name, $values in $color-list {
-        @include css-remaps($values, '-color-dark-#{$name}', '-color-#{$name}');
+        @include css-remaps($values, '-color-dark-#{$name}', '-color');
     }
 }

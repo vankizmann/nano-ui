@@ -73,7 +73,7 @@ pi.Obj.assign(window.VueData, {
                 <h3>Vertical Alignment</h3>
             </div>
             <div class="col--auto">
-                <n-checkbox-group v-model="checkboxValues.group" :size="checkboxBinds.size" align="vertical">
+                <n-checkbox-group :size="checkboxBinds.size" align="vertical">
                     <n-checkbox value="option1" v-bind="checkboxBinds">Option 1</n-checkbox>
                     <n-checkbox value="option2" v-bind="checkboxBinds">Option 2</n-checkbox>
                     <n-checkbox value="option3" v-bind="checkboxBinds">Option 3</n-checkbox>

@@ -12,11 +12,11 @@ pi.Obj.assign(window.VueData, {
         size: 'md',
     },
     tagsList: [
-        { label: 'JavaScript', color: 'warning', icon: 'fab fa-js' },
-        { label: 'Python', color: 'primary', icon: 'fab fa-python' },
-        { label: 'HTML', color: 'danger', icon: 'fab fa-html5' },
-        { label: 'CSS', color: 'info', icon: 'fab fa-css3-alt' },
-        { label: 'Vue.js', color: 'success', icon: 'fab fa-vuejs' }
+        { label: 'JavaScript', type: 'warning', icon: 'fab fa-js' },
+        { label: 'Python', type: 'primary', icon: 'fab fa-python' },
+        { label: 'HTML', type: 'danger', icon: 'fab fa-html5' },
+        { label: 'CSS', type: 'info', icon: 'fab fa-css3-alt' },
+        { label: 'Vue.js', type: 'success', icon: 'fab fa-vuejs' }
     ]
 });
 ```
@@ -37,7 +37,7 @@ pi.Obj.assign(window.VueData, {
             </div>
             <div class="col--1-1">
                 <n-tags v-bind="tagsBinds">
-                    <n-tags-item v-for="tag in tagsList" :key="tag.label" :label="tag.label" :icon="tag.icon" :color="tag.color"></n-tags-item>
+                    <n-tags-item v-for="tag in tagsList" :key="tag.label" :label="tag.label" :icon="tag.icon" :type="tag.type"></n-tags-item>
                 </n-tags>
             </div>
         </div>

@@ -1,7 +1,7 @@
-@use "@kizmann/nano-ui/src/root/helpers" as *;
+@use "../helpers" as *;
 
 $size-xs: (
-        'hgt': 26px,
+        'hgt': 22px,
         'hgt-inline': 14px,
         'hgt-loader': 18px,
         'pad': 6px,
@@ -17,7 +17,7 @@ $size-xs: (
 ) !default;
 
 $size-sm: (
-        'hgt': 30px,
+        'hgt': 26px,
         'hgt-inline': 16px,
         'hgt-loader': 28px,
         'pad': 8px,

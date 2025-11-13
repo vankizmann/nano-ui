@@ -1,6 +1,6 @@
 @use "sass:math";
-@use "./base";
-@use "./media";
+@use "./base" as *;
+@use "./media" as *;
 
 $--grid-steps: (
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
@@ -96,30 +96,30 @@ $--grid-gutters: (
 
     .grid--#{strip($gutter)}#{$suffix} {
         width: calc(100% + #{$gutter});
-        margin-left: -#{$gutter / 2};
-        margin-right: -#{$gutter / 2};
+        margin-left: -#{$gutter * 0.5};
+        margin-right: -#{$gutter * 0.5};
     }
 
     .grid--#{strip($gutter)}-#{strip($gutter)}#{$suffix} {
         width: calc(100% + #{$gutter});
-        margin-left: -#{math.div($gutter, 2)};
-        margin-right: -#{math.div($gutter, 2)};
-        margin-top: -#{math.div($gutter, 2)};
-        margin-bottom: -#{math.div($gutter, 2)};
+        margin-left: #{$gutter * -0.5};
+        margin-right: #{$gutter * -0.5};
+        margin-top: #{$gutter * -0.5};
+        margin-bottom: #{$gutter * -0.5};
     }
 
     .grid--#{strip($gutter)}#{$suffix} > [class^="col"],
     .grid--#{strip($gutter)}#{$suffix} > [class*="col"] {
-        padding-left: math.div($gutter, 2);
-        padding-right: math.div($gutter, 2);
+        padding-left: #{$gutter * 0.5};
+        padding-right: #{$gutter * 0.5};
     }
 
     .grid--#{strip($gutter)}-#{strip($gutter)}#{$suffix} > [class^="col"],
     .grid--#{strip($gutter)}-#{strip($gutter)}#{$suffix} > [class*="col"] {
-        padding-left: math.div($gutter, 2);
-        padding-right: math.div($gutter, 2);
-        padding-top: math.div($gutter, 2);
-        padding-bottom: math.div($gutter, 2);
+        padding-left: #{$gutter * 0.5};
+        padding-right: #{$gutter * 0.5};
+        padding-top: #{$gutter * 0.5};
+        padding-bottom: #{$gutter * 0.5};
     }
 
 }

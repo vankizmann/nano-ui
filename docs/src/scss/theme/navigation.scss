@@ -1,5 +1,4 @@
-@use "sass:color";
-@use "../root/vars";
+@use "../../../../src/root/helpers" as *;
 
 .sidebar-nav {
     order: 300;
@@ -9,7 +8,7 @@
     padding: 4px 6px;
     font-size: 11px;
     font-weight: 600;
-    color: $color-gray-30;
+    color: color('gray-30');
     text-transform: uppercase;
 }
 
@@ -34,25 +33,25 @@
 .sidebar-nav a:active,
 .sidebar-nav a:visited {
     font-size: 15px;
-    color: $color-gray-80;
+    color: color('gray-80');
     padding: 4px 8px;
-    border-radius: $md-radius;
+    border-radius: size('default-md-rad');
 }
 
 .sidebar-nav ul ul ul > li > a:before {
     content: '-';
-    color: $color-gray-20;
+    color: color('gray-20');
     margin-right: 8px;
 }
 
 .sidebar-nav a:hover {
-    color: $color-gray-75;
+    color: color('gray-75');
 }
 
 .sidebar-nav li.active > a,
 .sidebar-nav li.active > a:active,
 .sidebar-nav li.active > a:visited {
-    color: color.mix($color-foreground, $color-secondary, 30%) !important;
+    color: color('secondary-color-fg-30') !important;
 }
 
 .sidebar-nav > ul > li > ul > li.active > a,
@@ -61,8 +60,8 @@
 .sidebar-nav li > a:has(+ .app-sub-sidebar),
 .sidebar-nav li > a:active:has(+ .app-sub-sidebar),
 .sidebar-nav li > a:visited:has(+ .app-sub-sidebar) {
-    color: color.mix($color-foreground, $color-secondary, 30%);
-    background: rgba($color-secondary, 0.1);
+    color: color('secondary-color-fg-30');
+    background: color('secondary-color', 0.1);
 }
 
 .app-sub-sidebar {
@@ -74,7 +73,7 @@
 .app-sub-sidebar li a:visited {
     padding: 0 8px;
     font-size: 14px;
-    color: $color-gray-50;
+    color: color('gray-50');
 }
 
 body.sticky-sub-nav .app-sub-sidebar {
@@ -84,9 +83,9 @@ body.sticky-sub-nav .app-sub-sidebar {
     display: block;
     max-height: calc(100vh - 60px);
     padding: 20px;
-    border-radius: $lg-radius;
-    background: $color-input;
-    box-shadow: 0 1px 24px rgba($color-shadow, 0.1);
+    border-radius: size('default-lg-rad');
+    background: color('form-input');
+    box-shadow: 0 1px 24px color('shadow', 0.1);
 }
 
 body.sticky-sub-nav .app-sub-sidebar li > a,

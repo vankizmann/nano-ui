@@ -3,11 +3,11 @@
 
 $color-primary: #2B70E3;
 
-@use "./root/vars/colors-light" as theme-light with (
+@use "./root/vars/colors-light-bluish" as theme-light with (
     $color-primary: $color-primary,
 );
 
-@use "./root/vars/colors-dark" as theme-dark with (
+@use "./root/vars/colors-dark-bluish" as theme-dark with (
     $color-primary: $color-primary,
 );
 
@@ -15,11 +15,15 @@ $color-primary: #2B70E3;
     color: rgb(var(--n-color-text));
 }
 
+:root {
+    @include theme-light.default();
+}
+
 .n-theme--light {
-    @include theme-light.remap();
+    @include theme-light.exports();
 }
 
 .n-theme--dark {
-    @include theme-dark.remap();
+    @include theme-dark.exports();
 }
 
