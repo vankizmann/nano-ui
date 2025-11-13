@@ -37,7 +37,7 @@
 }
 
 .n-radio-group.n-radio-group--vertical .n-radio:not(:first-child) {
-    margin-top: 3px;
+    margin-top: size('base-pad-vertical', 'calc($ * 0.7)');
 }
 
 .n-radio-group.n-radio-group--vertical .n-radio:last-child {

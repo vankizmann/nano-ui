@@ -41,7 +41,7 @@
 }
 
 .n-checkbox-group.n-checkbox-group--vertical .n-checkbox:not(:first-child) {
-    margin-top: 3px;
+    margin-top: size('base-pad-vertical', 'calc($ * 0.7)');
 }
 
 .n-checkbox-group.n-checkbox-group--vertical .n-checkbox:last-child {
