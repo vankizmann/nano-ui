@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <style>
+        :root {
+            --test: #C23399;
+        }
+    </style>
+</head>
+<body>
+
+<svg width="600" height="600" viewBox="0 0 150 150" style="transform: rotate(-90deg)">
+    <style>
+        .ring {
+            opacity: 1.5;
+            stroke: var(--test) !important;
+            pointer-events: stroke;
+            transition: stroke-width 0.25s ease;
+        }
+        .ring:hover {
+            stroke-width: 12; /* increase stroke on hover */
+        }
+    </style>
+    <circle class="donut-ring" cx="75" cy="75" r="57.2958" fill="transparent" stroke="transparent" stroke-width="3"></circle>
+
+    <circle class="ring donut-segment" cx="75" cy="75" r="57.2958" fill="transparent" stroke="#d2d3d4" stroke-width="16" stroke-dasharray="102 360" stroke-dashoffset="-246" stroke-linecap="round"></circle>
+
+    <circle class="ring donut-segment" cx="75" cy="75" r="57.2958" fill="transparent" stroke="#0ea5e9" stroke-width="16" stroke-dasharray="48 360" stroke-dashoffset="-184" stroke-linecap="round"></circle>
+
+    <circle class="ring donut-segment" cx="75" cy="75" r="57.2958" fill="transparent" stroke="#b1c94e" stroke-width="32" stroke-dasharray="166 360" stroke-dashoffset="-4" stroke-linecap="round"></circle>
+</svg>
+</body>
+</html>
