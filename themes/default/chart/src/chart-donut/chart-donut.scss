@@ -1,0 +1,9 @@
+@use "../../../root/helpers" as *;
+
+.n-chart-donut__text span:first-child {
+    color: color('text');
+}
+
+.n-chart-donut__text span:last-child {
+    color: color('text', 0.5);
+}

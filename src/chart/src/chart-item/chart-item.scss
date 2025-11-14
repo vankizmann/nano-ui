@@ -1,0 +1,8 @@
+@use "../../../root/helpers" as *;
+
+.n-chart-donut circle.n-chart-item {
+    transform: rotate(-90deg);
+    transform-origin: center;
+    pointer-events: stroke;
+    stroke-width: var(--n-stroke-width);
+}

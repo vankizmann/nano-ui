@@ -1,0 +1,20 @@
+@use "../../../root/helpers" as *;
+
+.n-chart-donut circle.n-chart-item {
+    stroke: color('base-color');
+    transition: opacity 0.2s;
+}
+
+.n-chart-donut circle.n-chart-item:hover {
+    opacity: 0.5;
+}
+
+.n-chart-donut circle.n-chart-item--other {
+    stroke: color('foreground', 0.2);
+}
+
+@for $i from 0 through 20 {
+    .n-chart-donut circle.n-chart-item--color-#{$i} {
+        stroke: color('tag-#{$i}');
+    }
+}

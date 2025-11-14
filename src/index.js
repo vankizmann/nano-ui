@@ -43,6 +43,7 @@ import Map from "./map/index.js";
 import File from "./file/index.js";
 import Rating from "./rating/index.js";
 import Drawer from "./drawer/index.js";
+import Chart from "./chart/index.js";
 
 const NanoImports = [
     Alert,
@@ -83,7 +84,8 @@ const NanoImports = [
     Map,
     File,
     Rating,
-    Drawer
+    Drawer,
+    Chart
 ];
 
 export const Icons = {

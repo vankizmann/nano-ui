@@ -27,9 +27,9 @@
 }
 
 .n-table-filter__popover .n-form-item {
-    padding-bottom: size('base-pad-vertical');
+    margin-bottom: size('base-pad-vertical');
 }
 
 .n-table-filter__popover .n-form-item:last-child {
-    padding-bottom: 0;
+    margin-bottom: 0;
 }

@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nano UI</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../dist/nano-ui.css">
+    <link id="theme" rel="stylesheet" href="../dist/themes/default.css">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+
+        div {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            font-size: 14px;
+        }
+
+        body {
+            font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        #app {
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            min-height: 100vh;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 20px 30px 40px 30px;
+        }
+
+        .app-options {
+            position: relative;
+            margin-top: 0;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .app-options:before,
+        .app-options:after {
+            content: '\00a0';
+            position: absolute;
+            display: block;
+            height: 1px;
+            left: calc(var(--grid-gap-h) * 0.5);
+            right: calc(var(--grid-gap-h) * 0.5);
+            background: rgb(var(--n-color-gray-10));
+        }
+
+        .app-options:before {
+            top: 0;
+        }
+
+        .app-options:after {
+            bottom: 0;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: bold;
+            padding-bottom: 10px;
+            margin: 50px 0 10px;
+        }
+
+    </style>
+
+    <script src="https://unpkg.com/moment"></script>
+    <script src="https://unpkg.com/vue@3.4.6"></script>
+    <script src="https://unpkg.com/@kizmann/pico-js/dist/pico-js.js"></script>
+    <script src="../dist/nano-ui.js"></script>
+    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+
+</head>
+<body class="n-demo">
+
+<div id="app" class="nano-theme-preview">
+    <div class="app-container">
+
+        <h2>Theme</h2>
+
+        <div>
+            <n-select :model-value="n_theme" @update:model-value="changeTheme" :options="themes"></n-select>
+        </div>
+
+        <h2>NDonutChart</h2>
+
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
+                <n-input-number v-model="n_donut.width" :min="-100" :max="100" placeholder="Stroke width"></n-input-number>
+            </div>
+            <div class="col-auto">
+                <n-input-number v-model="n_donut.color" :min="-100" :max="100" placeholder="Color"></n-input-number>
+            </div>
+        </div>
+
+        <div class="n-grid gap-30">
+            <div class="col-auto">
+                <n-chart-donut v-bind="n_donut" size="xs">
+                    <n-chart-item value="80" type="primary"></n-chart-item>
+                    <n-chart-item value="20" type="warning"></n-chart-item>
+                    <n-chart-item value="25" type="success"></n-chart-item>
+                    <n-chart-item value="40" type="danger"></n-chart-item>
+                </n-chart-donut>
+            </div>
+            <div class="col-auto">
+                <n-chart-donut v-bind="n_donut" :overlap="true" linecap="normal" size="sm">
+                    <n-chart-item value="40" color="9"></n-chart-item>
+                    <n-chart-item value="20" color="10"></n-chart-item>
+                    <n-chart-item value="25" color="11"></n-chart-item>
+                    <n-chart-item value="40" color="12"></n-chart-item>
+                    <n-chart-item value="80" color="13"></n-chart-item>
+                    <n-chart-item value="20" color="14"></n-chart-item>
+                </n-chart-donut>
+            </div>
+            <div class="col-auto">
+                <n-chart-donut v-bind="n_donut" :limit="5">
+                    <n-chart-item value="400" color="auto"></n-chart-item>
+                    <n-chart-item value="200" color="auto"></n-chart-item>
+                    <n-chart-item value="250" color="auto"></n-chart-item>
+                    <n-chart-item value="400" color="auto"></n-chart-item>
+                    <n-chart-item value="800" color="auto"></n-chart-item>
+                    <n-chart-item value="200" color="auto"></n-chart-item>
+                    <n-chart-item value="250" color="auto"></n-chart-item>
+                </n-chart-donut>
+            </div>
+            <div class="col-auto">
+                <n-chart-donut v-bind="n_donut" limit="3" size="xl">
+                    <n-chart-item value="40" color="auto"></n-chart-item>
+                    <n-chart-item value="35" color="auto"></n-chart-item>
+                    <n-chart-item value="30" color="auto"></n-chart-item>
+                    <n-chart-item value="30" color="auto"></n-chart-item>
+                </n-chart-donut>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    (function (nano) {
+
+        'use strict';
+
+        pi.Dom.ready(function () {
+
+            let data = {
+                confirmTest: false
+            };
+
+            data.sizes = {
+                xs: 'XS',
+                sm: 'SM',
+                md: 'MD',
+                lg: 'LG',
+                xl: 'XL'
+            };
+
+            data.types = {
+                primary: 'Primary',
+                secondary: 'Secondary',
+                success: 'Success',
+                warning: 'Warning',
+                danger: 'Danger',
+                info: 'Info'
+            };
+
+            data.themes = {
+                auto: 'Auto',
+                light: 'Light',
+                dark: 'Dark',
+            };
+
+            data.configData = { label: 'asdasda' };
+
+
+            data.n_theme = pi.Cookie.get('theme', 'light', 'string');
+
+            pi.Dom.find('body').addClass('n-theme--' + data.n_theme);
+
+            data.n_donut = {
+                width: 10, color: 0
+            };
+
+            let methods = {};
+
+            methods.changeTheme = function (value) {
+
+                pi.Cookie.set('theme', this.n_theme = value);
+
+                pi.Dom.find('body').removeClass(['n-theme--dark', 'n-theme--light']);
+                pi.Dom.find('body').addClass('n-theme--' + data.n_theme);
+            }
+
+            var config = {
+                data: function () {
+
+                    this.icons = pi.Obj.assign(nano.Icons, {
+                        ghost: 'fa fa-ghost'
+                    });
+
+                    data.demoIcons = pi.Arr.reduce(pi.Obj.values(nano.Icons), function (merge, icon) {
+                        return pi.Obj.assign(merge, { [icon]: icon });
+                    }, {});
+
+                    return data;
+                },
+                mounted: function () {
+                    //
+                },
+                methods: methods
+            };
+
+            window.App = Vue.createApp(config);
+
+            window.App.config.devtools = true;
+
+            window.App.use(function (App) {
+                nano.Install(App);
+            });
+
+            window.App.mount('#app');
+        });
+
+    })(window.nano);
+</script>
+
+</body>
+</html>
