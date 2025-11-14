@@ -12,25 +12,73 @@
 </head>
 <body>
 
-<svg width="600" height="600" viewBox="0 0 150 150" style="transform: rotate(-90deg)">
-    <style>
-        .ring {
-            opacity: 1.5;
-            stroke: var(--test) !important;
-            pointer-events: stroke;
-            transition: stroke-width 0.25s ease;
-        }
-        .ring:hover {
-            stroke-width: 12; /* increase stroke on hover */
-        }
-    </style>
-    <circle class="donut-ring" cx="75" cy="75" r="57.2958" fill="transparent" stroke="transparent" stroke-width="3"></circle>
+<svg width="300" height="150" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
 
-    <circle class="ring donut-segment" cx="75" cy="75" r="57.2958" fill="transparent" stroke="#d2d3d4" stroke-width="16" stroke-dasharray="102 360" stroke-dashoffset="-246" stroke-linecap="round"></circle>
-
-    <circle class="ring donut-segment" cx="75" cy="75" r="57.2958" fill="transparent" stroke="#0ea5e9" stroke-width="16" stroke-dasharray="48 360" stroke-dashoffset="-184" stroke-linecap="round"></circle>
-
-    <circle class="ring donut-segment" cx="75" cy="75" r="57.2958" fill="transparent" stroke="#b1c94e" stroke-width="32" stroke-dasharray="166 360" stroke-dashoffset="-4" stroke-linecap="round"></circle>
+    <!-- Half donut using fill only -->
+    <path id="test" d="
+    M 150 20
+    A 100 100 0 0 1 250 120
+    L 230 120
+    A 80 80 0 0 0 150 40
+    Z
+  " fill="#4caf50"/>
 </svg>
+
+<script>
+    function createRoundedPathString(pathCoords) {
+        const path = [];
+        const curveRadius = 3;
+
+        // Reset indexes, so there are no gaps
+        pathCoords = pathCoords.slice();
+
+        for (let i = 0; i < pathCoords.length; i++) {
+
+            // 1. Get current coord and the next two (startpoint, cornerpoint, endpoint) to calculate rounded curve
+            const c2Index = ((i + 1) > pathCoords.length - 1) ? (i + 1) % pathCoords.length : i + 1;
+            const c3Index = ((i + 2) > pathCoords.length - 1) ? (i + 2) % pathCoords.length : i + 2;
+
+            const c1 = pathCoords[i];
+            const c2 = pathCoords[c2Index];
+            const c3 = pathCoords[c3Index];
+
+            // 2. For each 3 coords, enter two new path commands: Line to start of curve, bezier curve around corner.
+
+            // Calculate curvePoint c1 -> c2
+            const c1c2Distance = Math.sqrt(Math.pow(c1.x - c2.x, 2) + Math.pow(c1.y - c2.y, 2));
+            const c1c2DistanceRatio = (c1c2Distance - curveRadius) / c1c2Distance;
+            const c1c2CurvePoint = [
+                ((1 - c1c2DistanceRatio) * c1.x + c1c2DistanceRatio * c2.x).toFixed(1),
+                ((1 - c1c2DistanceRatio) * c1.y + c1c2DistanceRatio * c2.y).toFixed(1)
+            ];
+
+            // Calculate curvePoint c2 -> c3
+            const c2c3Distance = Math.sqrt(Math.pow(c2.x - c3.x, 2) + Math.pow(c2.y - c3.y, 2));
+            const c2c3DistanceRatio = curveRadius / c2c3Distance;
+            const c2c3CurvePoint = [
+                ((1 - c2c3DistanceRatio) * c2.x + c2c3DistanceRatio * c3.x).toFixed(1),
+                ((1 - c2c3DistanceRatio) * c2.y + c2c3DistanceRatio * c3.y).toFixed(1)
+            ];
+
+            // If at last coord of polygon, also save that as starting point
+            if (i === pathCoords.length - 1) {
+                path.unshift('M' + c2c3CurvePoint.join(','));
+            }
+
+            // Line to start of curve (L endcoord)
+            path.push('L' + c1c2CurvePoint.join(','));
+            // Bezier line around curve (Q controlcoord endcoord)
+            path.push('Q' + c2.x + ',' + c2.y + ',' + c2c3CurvePoint.join(','));
+        }
+        // Logically connect path to starting point again (shouldn't be necessary as path ends there anyway, but seems cleaner)
+        path.push('Z');
+
+        return path.join(' ');
+    }
+
+
+</script>
+
+
 </body>
 </html>

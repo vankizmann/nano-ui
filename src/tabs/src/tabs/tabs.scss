@@ -89,6 +89,9 @@
     border-radius: size('base-rad');
     height: size('base-hgt');
     padding: 0 size('base-pad');
+}
+
+.n-tabs.n-float .n-tabs__tab:not(:last-child) {
     margin-right: size('base-pad');
 }
 

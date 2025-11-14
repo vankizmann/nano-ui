@@ -1,0 +1,77 @@
+@use "../../../root/helpers" as *;
+
+.n-chart-donut {
+    overflow: hidden;
+    position: relative;
+    font-size: size('base-fnt');
+    border-radius: 500px;
+    width: size('base-hgt-inline', 'calc($ * 11)');
+}
+
+.n-chart-donut:before {
+    content: '\00a0';
+    z-index: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: size('base-hgt-inline', 'calc($ * 6.4)');
+    height: size('base-hgt-inline', 'calc($ * 6.4)');
+    border-radius: 500px;
+    transform: translate(-50%, -50%);
+}
+
+.n-chart-donut:not(.n-chart-donut--overlap) circle {
+    stroke-linecap: round;
+}
+
+.n-chart-donut svg {
+    width: 100%;
+    height: auto;
+}
+
+.n-chart-donut circle {
+    fill: transparent;
+}
+
+.n-chart-donut__base {
+    pointer-events: none;
+    stroke-width: var(--n-stroke-hover-width);
+    stroke: transparent;
+}
+
+@property --n-chart-value {
+    syntax: '<integer>';
+    initial-value: 0;
+    inherits: true;
+}
+
+.n-chart-donut__text {
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    transform: translateY(-50%);
+}
+
+.n-chart-donut__text span:first-child {
+    font-size: 1.8em;
+    transition: --n-chart-value 0.3s;
+    counter-reset: chart-counter var(--n-chart-value);
+}
+
+.n-chart-donut__text span:first-child:after {
+    content: counter(chart-counter);
+}
+
+.n-chart-donut__text span:last-child {
+    font-size: 0.95em;
+}
+
+.n-chart-donut__text span:last-child:after {
+    content: var(--n-chart-label);
+}
