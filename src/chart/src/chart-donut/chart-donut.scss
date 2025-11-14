@@ -60,6 +60,7 @@
 
 .n-chart-donut__text span:first-child {
     font-size: 1.8em;
+    line-height: 1.3;
     transition: --n-chart-value 0.3s;
     counter-reset: chart-counter var(--n-chart-value);
 }
@@ -70,6 +71,7 @@
 
 .n-chart-donut__text span:last-child {
     font-size: 0.95em;
+    line-height: 1.3;
 }
 
 .n-chart-donut__text span:last-child:after {
