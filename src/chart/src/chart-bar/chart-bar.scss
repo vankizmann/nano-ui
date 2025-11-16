@@ -1,0 +1,37 @@
+@use "../../../root/helpers" as *;
+
+.n-chart-bar__bars {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    height: size('base-hgt', 'calc($ * 8)');
+}
+
+.n-chart-bar .n-chart-item {
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 size('base-pad', 'calc($ * 2)');
+}
+
+.n-chart-bar .n-chart-item:before {
+    content: '\00a0';
+    width: size('base-hgt', 'calc($ * 2)');
+    height: var(--n-chart-height);
+    border-radius: size('base-rad-inline');
+}
+
+.n-chart-bar .n-chart-item:before {
+    background: color('base-color');
+    transition: opacity 0.2s;
+}
+
+.n-chart-bar .n-chart-item[class*="n-chart-item--color-"]:before {
+    background: color('tag-active');
+}
+
+.n-chart-bar .n-chart-item:hover:before {
+    opacity: 0.6;
+}

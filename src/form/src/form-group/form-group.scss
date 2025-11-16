@@ -110,7 +110,7 @@
 
 .n-form-group.n-form-group--fieldset .n-form-group__legend {
     margin-left: size('base-pad', 'calc($ * 2)');
-    height: size('base-hgt');
+    height: size('base-hgt', 'calc($ * 1.2)');
     border-radius: size('base-rad');
     padding: 0 size('base-pad');
 }
@@ -143,7 +143,7 @@
 
 .n-form-group.n-form-group--fieldset .n-form-group__body {
     padding-top: size('base-hgt');
-    margin-top: size('base-hgt', 'calc($ * -0.5)');
+    margin-top: size('base-hgt', 'calc($ * -0.6)');
 }
 
 .n-form-group__action {
@@ -157,7 +157,7 @@
     right: size('base-pad');
     display: inline-flex;
     align-items: center;
-    height: size('base-hgt');
+    height: size('base-hgt', 'calc($ * 1.2)');
 }
 
 .n-form-group.n-form-group--fieldset .n-form-group__action {
