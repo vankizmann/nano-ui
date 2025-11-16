@@ -16,7 +16,7 @@ export default {
         width: {
             default()
             {
-                return 10;
+                return 6;
             },
             type: [Number]
         },
@@ -25,6 +25,14 @@ export default {
             default()
             {
                 return 10;
+            },
+            type: [Number]
+        },
+
+        colorLimit: {
+            default()
+            {
+                return 19;
             },
             type: [Number]
         },
@@ -53,14 +61,6 @@ export default {
             type: [String]
         },
 
-        linecap: {
-            default()
-            {
-                return 'round';
-            },
-            type: [String]
-        },
-
         overlap: {
             default()
             {
@@ -72,7 +72,7 @@ export default {
         limit: {
             default()
             {
-                return 4;
+                return 0;
             },
             type: [Number]
         }
@@ -141,20 +141,8 @@ export default {
     renderCircle(item, index)
     {
         let classList = [
-            'n-chart-item'
+            'n-chart-item', item.getClass(index),
         ];
-
-        if ( !Any.isEmpty(item.type) ) {
-            classList.push('n-chart-item--' + item.type);
-        }
-
-        if ( !Any.isEmpty(item.color) ) {
-            classList.push('n-chart-item--color-' + item.color);
-        }
-
-        if ( item.color === 'auto' ) {
-            classList.push('n-chart-item--color-' + (this.color + index));
-        }
 
         let [distance] = [
             360 / this.total * Num.float(item.value),
@@ -163,13 +151,13 @@ export default {
         let offset = this.last * - 1;
 
         if ( !this.overlap ) {
-            offset += this.width * - 0.5;
+            offset = Math.min(offset + (this.width * - 0.5), 0);
         }
 
         let dashar = distance;
 
         if ( !this.overlap ) {
-            dashar -= this.width * 1.2;
+            dashar = Math.max(dashar - (this.width * 1.2), 0);
         }
 
         let props = {
@@ -203,7 +191,11 @@ export default {
         });
 
         let item = {
-            label: this.otherLabel, value: Num.combine(count), type: 'other'
+            label: this.otherLabel, value: Num.combine(count)
+        };
+
+        item['getClass'] = () => {
+            return 'n-chart-item--other';
         };
 
         return this.ctor('renderCircle')(item, 100);
@@ -216,9 +208,9 @@ export default {
         let elements = Arr.sort(this.elements, 'value')
             .reverse();
 
-        let chunks = Arr.chunk(elements, this.limit);
+        let visibles = Arr.splice(elements, 0, this.limit || elements.length);
 
-        let items = Arr.each(chunks[0], (item, index) => {
+        let items = Arr.each(visibles, (item, index) => {
             return this.ctor('renderCircle')(item, index);
         });
 
@@ -228,7 +220,7 @@ export default {
 
         return (
             <svg width="600" height="600" viewBox="0 0 150 150">
-                {[baseHtml, ...items, this.ctor('renderOtherCircle')(chunks[1])]}
+                {[baseHtml, ...items, this.ctor('renderOtherCircle')(elements)]}
             </svg>
         );
     },

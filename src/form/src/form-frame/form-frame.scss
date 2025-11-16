@@ -93,7 +93,7 @@
 }
 
 .n-form-frame__menu {
-    height: size('base-hgt');
+    height: size('base-hgt', 'calc($ * 1.2)');
     font-size: size('base-fnt');
     border-radius: size('base-rad');
     padding-right: size('base-pad');

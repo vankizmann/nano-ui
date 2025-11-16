@@ -104,6 +104,9 @@
             <div class="col-auto">
                 <n-input-number v-model="n_donut.color" :min="-100" :max="100" placeholder="Color"></n-input-number>
             </div>
+            <div class="col-auto">
+                <n-input-number v-model="n_donut.limit" :min="-100" :max="100" placeholder="Limit"></n-input-number>
+            </div>
         </div>
 
         <div class="n-grid gap-30">
@@ -126,9 +129,9 @@
                 </n-chart-donut>
             </div>
             <div class="col-auto">
-                <n-chart-donut v-bind="n_donut" :limit="5">
-                    <n-chart-item value="400" color="auto"></n-chart-item>
-                    <n-chart-item value="200" color="auto"></n-chart-item>
+                <n-chart-donut v-bind="n_donut">
+                    <n-chart-item value="4800" color="auto"></n-chart-item>
+                    <n-chart-item value="2000" color="auto"></n-chart-item>
                     <n-chart-item value="250" color="auto"></n-chart-item>
                     <n-chart-item value="400" color="auto"></n-chart-item>
                     <n-chart-item value="800" color="auto"></n-chart-item>
@@ -137,12 +140,60 @@
                 </n-chart-donut>
             </div>
             <div class="col-auto">
-                <n-chart-donut v-bind="n_donut" limit="3" size="xl">
+                <n-chart-donut v-bind="n_donut" size="xl">
                     <n-chart-item value="40" color="auto"></n-chart-item>
                     <n-chart-item value="35" color="auto"></n-chart-item>
                     <n-chart-item value="30" color="auto"></n-chart-item>
                     <n-chart-item value="30" color="auto"></n-chart-item>
                 </n-chart-donut>
+            </div>
+        </div>
+
+        <h2>NBarChart</h2>
+
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
+                <n-input-number v-model="n_bar.color" :min="-100" :max="100" placeholder="Color"></n-input-number>
+            </div>
+        </div>
+
+        <div class="n-grid gap-30">
+            <div class="col-auto">
+                <n-chart-bar v-bind="n_bar" size="xs">
+                    <n-chart-item value="80" type="primary"></n-chart-item>
+                    <n-chart-item value="20" type="warning"></n-chart-item>
+                    <n-chart-item value="25" type="success"></n-chart-item>
+                    <n-chart-item value="40" type="danger"></n-chart-item>
+                </n-chart-bar>
+            </div>
+            <div class="col-auto">
+                <n-chart-bar v-bind="n_bar" size="sm">
+                    <n-chart-item value="40" color="9"></n-chart-item>
+                    <n-chart-item value="20" color="10"></n-chart-item>
+                    <n-chart-item value="25" color="11"></n-chart-item>
+                    <n-chart-item value="40" color="12"></n-chart-item>
+                    <n-chart-item value="80" color="13"></n-chart-item>
+                    <n-chart-item value="20" color="14"></n-chart-item>
+                </n-chart-bar>
+            </div>
+            <div class="col-auto">
+                <n-chart-bar v-bind="n_bar">
+                    <n-chart-item value="4800" color="auto"></n-chart-item>
+                    <n-chart-item value="2000" color="auto"></n-chart-item>
+                    <n-chart-item value="250" color="auto"></n-chart-item>
+                    <n-chart-item value="400" color="auto"></n-chart-item>
+                    <n-chart-item value="800" color="auto"></n-chart-item>
+                    <n-chart-item value="200" color="auto"></n-chart-item>
+                    <n-chart-item value="250" color="auto"></n-chart-item>
+                </n-chart-bar>
+            </div>
+            <div class="col-auto">
+                <n-chart-bar v-bind="n_bar" size="xl">
+                    <n-chart-item value="40" color="auto"></n-chart-item>
+                    <n-chart-item value="35" color="auto"></n-chart-item>
+                    <n-chart-item value="30" color="auto"></n-chart-item>
+                    <n-chart-item value="30" color="auto"></n-chart-item>
+                </n-chart-bar>
             </div>
         </div>
 
@@ -191,7 +242,11 @@
             pi.Dom.find('body').addClass('n-theme--' + data.n_theme);
 
             data.n_donut = {
-                width: 10, color: 0
+                width: 6, color: 0, limit: 5
+            };
+
+            data.n_bar = {
+                color: 0,
             };
 
             let methods = {};

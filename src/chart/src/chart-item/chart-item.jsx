@@ -66,6 +66,33 @@ export default {
         }
     },
 
+    methods: {
+
+        getClass(index)
+        {
+            if ( ! Any.isEmpty(this.type) ) {
+                return 'n-chart-item--' + this.type;
+            }
+
+            return 'n-chart-item--color-' + this.getColor(index);
+        },
+
+        getColor(index)
+        {
+            if ( this.color !== 'auto' ) {
+                return this.color;
+            }
+
+            let color = this.NChart.color + index;
+
+            let subdivide = Math.floor(color /
+                this.NChart.colorLimit);
+
+            return color - (subdivide * this.NChart.colorLimit);
+        }
+
+    },
+
     render()
     {
         return null;
