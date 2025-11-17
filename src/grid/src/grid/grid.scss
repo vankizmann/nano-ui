@@ -19,13 +19,19 @@
     flex-wrap: var(--grid-wrap, wrap);
     align-items: var(--grid-align, flex-start);
     justify-content: var(--grid-justify, flex-start);
-    margin: calc(var(--grid-gap-v, 0) * -0.5) calc(var(--grid-gap-h, 0) * -0.5);
+    margin-top: calc(var(--grid-gap-v) * -0.5);
+    margin-bottom: calc(var(--grid-gap-v) * -0.5);
+    margin-left: calc(var(--grid-gap-h) * -0.5);
+    margin-right: calc(var(--grid-gap-h) * -0.5);
 }
 
 .n-grid > [class*="col-"] {
     flex: var(--grid-col-flex, 0 0 auto);
     width: calc(var(--grid-col, 100%) - var(--grid-gap-h, 0));
-    margin: calc(var(--grid-gap-v, 0) * 0.5) calc(var(--grid-gap-h, 0) * 0.5);
+    margin-top: calc(var(--grid-gap-v) * 0.5);
+    margin-bottom: calc(var(--grid-gap-v) * 0.5);
+    margin-left: calc(var(--grid-gap-h) * 0.5);
+    margin-right: calc(var(--grid-gap-h) * 0.5);
 }
 
 @mixin grid($suffix: '') {
@@ -85,7 +91,7 @@
         }
 
         .n-grid.gap-v-#{$step}#{$suffix} {
-            --grid-gap-h: #{$step}px;
+            --grid-gap-v: #{$step}px;
         }
     }
 
