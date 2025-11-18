@@ -20,6 +20,14 @@ export default {
             type: [String, Number]
         },
 
+        axis: {
+            default()
+            {
+                return '2018';
+            },
+            type: [String]
+        },
+
         label: {
             default()
             {

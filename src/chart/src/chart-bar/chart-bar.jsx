@@ -13,14 +13,6 @@ export default {
 
     props: {
 
-        width: {
-            default()
-            {
-                return 20;
-            },
-            type: [String]
-        },
-
         color: {
             default()
             {
@@ -56,6 +48,17 @@ export default {
             });
 
             return Num.combine(count);
+        },
+
+        min()
+        {
+            let min = Number.MAX_VALUE;
+
+            Arr.each(this.elements, (item) => {
+                min = Math.min(min, Num.float(item.value));
+            });
+
+            return Num.float(min);
         },
 
         max()
@@ -112,8 +115,30 @@ export default {
             '--n-chart-height': Num.int(height) + '%'
         };
 
+        let html = [];
+
+        html.push(
+            <div class="n-chart-bar__bar">
+                {/* Chart bar */}
+            </div>
+        );
+
+        html.push(
+            <div class="n-chart-bar__dot">
+                {/* Chart dor */}
+            </div>
+        );
+
+        html.push(
+            <div class="n-chart-bar__value">
+                <span>{item.axis}</span>
+                <span>{item.value}</span>
+            </div>
+        );
+
         return (
             <div class={classList} style={style}>
+                {html}
             </div>
         );
     },
@@ -127,6 +152,16 @@ export default {
         return (
             <div class="n-chart-bar__bars">
                 {items}
+            </div>
+        );
+    },
+
+    renderAxis()
+    {
+        return (
+            <div class="n-chart-bar__axis">
+                <span>{this.max}</span>
+                <span>{this.min}</span>
             </div>
         );
     },
