@@ -88,7 +88,7 @@ export default {
         renderLegend: {
             default()
             {
-                return true;
+                return false;
             },
             type: [Boolean]
         }
