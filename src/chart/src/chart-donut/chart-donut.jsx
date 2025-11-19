@@ -1,4 +1,4 @@
-import { Arr, Num, Any, Dom, UUID, Locale } from "@kizmann/pico-js";
+import { Arr, Num, Any, Dom, UUID, Locale, Obj } from "@kizmann/pico-js";
 
 export default {
 
@@ -88,6 +88,15 @@ export default {
             });
 
             return Num.combine(count);
+        },
+
+        fixed()
+        {
+            let count = Arr.each(this.elements, (item) => {
+                return Num.float(item.value);
+            });
+
+            return Num.combine(count);
         }
 
     },
@@ -101,6 +110,11 @@ export default {
         return {
             attrs, elements: []
         };
+    },
+
+    beforeMount()
+    {
+        this.vis = this.hid = [];
     },
 
     methods: {
@@ -140,47 +154,63 @@ export default {
 
     renderCircle(item, index)
     {
-        let classList = [
-            'n-chart-item', item.getClass(index),
-        ];
+        let gaps = (this.vis.length) * (this.width * 2);
+
+        if ( ! Any.isEmpty(this.hid) ) {
+            gaps = (this.vis.length + 1) * (this.width * 2);
+        }
 
         let [distance] = [
-            360 / this.total * Num.float(item.value),
+            ((360 - gaps) * Num.float(item.value) / this.total) + (this.width * 2),
         ];
 
-        let offset = this.last * - 1;
+
+        let offset = (this.last * - 1);
 
         if ( !this.overlap ) {
-            offset = Math.min(offset + (this.width * - 0.5), 0);
+            offset = Math.min(offset - (this.width * 0.5), 0);
         }
 
         let dashar = distance;
 
         if ( !this.overlap ) {
-            dashar = Math.max(dashar - (this.width * 1.2), 0);
+            dashar = Math.max(dashar - (this.width * 1.5), 0);
         }
 
-        let props = {
+        let classBlock = [
+            'n-chart-item', item.getClass(index),
+        ];
+
+        let classHover = [
+            'n-chart-hover'
+        ];
+
+        let propsBlock = {
             'stroke-dashoffset': Num.fixed(offset, 4),
             'stroke-dasharray': Num.fixed(dashar, 4) + ' 360'
         };
 
-        props['onmouseenter'] = () => {
+        let propsHover = propsBlock;
+
+        propsHover['onmouseenter'] = () => {
             this.onMouseenter(item);
         };
 
-        props['onmouseleave'] = () => {
+        propsHover['onmouseleave'] = () => {
             this.onMouseleave(item);
         };
 
-        this.last = Num.float(distance + this.last);
+        this.last = distance + this.last;
 
         return (
-            <circle class={classList} {...props} {...this.attrs}></circle>
+            <g class="n-chart-group">
+                <circle class={classHover} {...propsHover} {...this.attrs}></circle>
+                <circle class={classBlock} {...propsBlock} {...this.attrs}></circle>
+            </g>
         );
     },
 
-    renderOtherCircle(others)
+    renderOtherCircle(others, items)
     {
         if ( Any.isEmpty(others) ) {
             return null;
@@ -198,7 +228,7 @@ export default {
             return 'n-chart-item--other';
         };
 
-        return this.ctor('renderCircle')(item, 100);
+        return this.ctor('renderCircle')(item, items.length, items);
     },
 
     renderSvg()
@@ -210,6 +240,12 @@ export default {
 
         let visibles = Arr.splice(elements, 0, this.limit || elements.length);
 
+        [this.vis, this.hid] = [
+            visibles, elements
+        ];
+
+        console.log(this.vis, this.hid)
+
         let items = Arr.each(visibles, (item, index) => {
             return this.ctor('renderCircle')(item, index);
         });
@@ -218,9 +254,13 @@ export default {
             <circle class="n-chart-donut__base" {...this.attrs}></circle>
         );
 
+        let othersHtml = this.ctor('renderOtherCircle')(...[
+            elements, visibles
+        ]);
+
         return (
             <svg width="600" height="600" viewBox="0 0 150 150">
-                {[baseHtml, ...items, this.ctor('renderOtherCircle')(elements)]}
+                {[baseHtml, ...items, othersHtml]}
             </svg>
         );
     },
