@@ -244,8 +244,6 @@ export default {
             visibles, elements
         ];
 
-        console.log(this.vis, this.hid)
-
         let items = Arr.each(visibles, (item, index) => {
             return this.ctor('renderCircle')(item, index);
         });

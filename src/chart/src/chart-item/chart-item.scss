@@ -1,6 +1,6 @@
 @use "../../../root/helpers" as *;
 
-g.n-chart-group {
+.n-chart-donut g.n-chart-group {
     transform: rotate(-90deg);
     transform-origin: center;
 }
