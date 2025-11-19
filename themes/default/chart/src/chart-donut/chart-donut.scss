@@ -9,10 +9,6 @@
     stroke: color('foreground', 0.2);
 }
 
-.n-chart-donut circle.n-chart-item[class*="n-chart-item--color-"] {
-    stroke: color('tag-active');
-}
-
 circle.n-chart-hover:hover + circle.n-chart-item {
     opacity: 0.5;
 }

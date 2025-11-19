@@ -13,6 +13,14 @@ export default {
 
     props: {
 
+        sort: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         width: {
             default()
             {
@@ -235,16 +243,29 @@ export default {
     {
         this.last = 0;
 
-        let elements = Arr.sort(this.elements, 'value')
-            .reverse();
-
-        let visibles = Arr.splice(elements, 0, this.limit || elements.length);
-
-        [this.vis, this.hid] = [
-            visibles, elements
+        let [elements, sorted] = [
+            Arr.clone(this.elements), Arr.sort(this.elements, 'value').reverse()
         ];
 
-        let items = Arr.each(visibles, (item, index) => {
+        if ( this.sort ) {
+            elements = Arr.clone(sorted);
+        }
+
+        let temp = Arr.splice(sorted, 0, this.limit || elements.length);
+
+        let visible = Arr.filter(elements, (el) => {
+            return !! Arr.find(temp, { uid: el.uid});
+        });
+
+        let hidden = Arr.filter(elements, (el) => {
+            return ! Arr.find(temp, { uid: el.uid});
+        });
+
+        [this.vis, this.hid] = [
+            visible, hidden
+        ];
+
+        let items = Arr.each(visible, (item, index) => {
             return this.ctor('renderCircle')(item, index);
         });
 
@@ -253,7 +274,7 @@ export default {
         );
 
         let othersHtml = this.ctor('renderOtherCircle')(...[
-            elements, visibles
+            hidden, visible
         ]);
 
         return (

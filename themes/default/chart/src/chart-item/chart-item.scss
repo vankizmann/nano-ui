@@ -1,7 +1,7 @@
 @use "../../../root/helpers" as *;
 
 @for $i from 0 through 20 {
-    .n-chart-item--color-#{$i} {
-        --n-color-tag-active: var(--n-color-tag-#{$i});
+    .n-chart-item--color-#{$i}, .n-chart-legend--color-#{$i} {
+        --n-color-base-color: var(--n-color-tag-#{$i});
     }
 }

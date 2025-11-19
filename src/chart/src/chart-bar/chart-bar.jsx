@@ -75,6 +75,14 @@ export default {
                 return 5;
             },
             type: [Number]
+        },
+
+        renderLegend: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
         }
 
     },
@@ -143,7 +151,7 @@ export default {
 
     },
 
-    renderBar(item, index)
+    renderBarItem(item, index)
     {
         let classList = [
             'n-chart-item', item.getClass(index),
@@ -183,7 +191,7 @@ export default {
         );
     },
 
-    renderOtherBar(hidden, visible)
+    renderBarOther(hidden, visible)
     {
         if ( Any.isEmpty(hidden) ) {
             return null;
@@ -201,7 +209,7 @@ export default {
             return 'n-chart-item--other';
         };
 
-        return this.ctor('renderBar')(item, visible.length);
+        return this.ctor('renderBarItem')(item, visible.length);
     },
 
     renderBars()
@@ -211,7 +219,7 @@ export default {
         ];
 
         if ( this.sort ) {
-            elements = sorted;
+            elements = Arr.clone(sorted);
         }
 
         let temp = Arr.splice(sorted, 0, this.limit || elements.length);
@@ -229,11 +237,11 @@ export default {
         ];
 
         let items = Arr.each(visible, (item, index) => {
-            return this.ctor('renderBar')(item, index);
+            return this.ctor('renderBarItem')(item, index);
         });
 
-        let othersHtml = this.ctor('renderOtherBar')(...[
-            hidden, visible
+        let othersHtml = this.ctor('renderBarOther')(...[
+            this.hid, this.vis
         ]);
 
         return (
@@ -253,6 +261,58 @@ export default {
         );
     },
 
+    renderLegendOther(hidden, visible)
+    {
+        if ( Any.isEmpty(hidden) ) {
+            return null;
+        }
+
+        let count = Arr.each(hidden, (item) => {
+            return Num.float(item.value);
+        });
+
+        let item = {
+            axis: this.otherLabel, value: Num.combine(count)
+        };
+
+        item['getClass'] = () => {
+            return 'n-chart-legend--other';
+        };
+
+        return this.ctor('renderLegendItem')(item, visible.length);
+    },
+
+    renderLegendItem(item, index)
+    {
+        let classList = [
+            'n-chart-legend',
+            item.getClass(index, 'n-chart-legend')
+        ];
+
+        return (
+            <div class={classList}>
+                <span>{item.value}</span> <span>{item.axis}</span>
+            </div>
+        );
+    },
+
+    renderLegend()
+    {
+        let items = Arr.each(this.vis, (item, index) => {
+            return this.ctor('renderLegendItem')(item, index);
+        });
+
+        let othersHtml = this.ctor('renderLegendOther')(...[
+            this.hid, this.vis
+        ]);
+
+        return (
+            <div class="n-chart-bar__legend">
+                {[...items, othersHtml]}
+            </div>
+        )
+    },
+
     render()
     {
         let classList = [
@@ -260,9 +320,21 @@ export default {
             'n-chart-bar--' + this.size,
         ];
 
+        let bodyHtml = [
+            this.ctor('renderBars')(),
+        ];
+
+        if ( this.$slots.default ) {
+            bodyHtml.push(this.$slots.default());
+        }
+
+        if ( this.renderLegend ) {
+            bodyHtml.push(this.ctor('renderLegend')());
+        }
+
         return (
             <div class={classList}>
-                {[this.ctor('renderBars')(), this.$slots.default && this.$slots.default()]}
+                {bodyHtml}
             </div>
         );
     }
