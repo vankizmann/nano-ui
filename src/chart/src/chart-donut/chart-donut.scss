@@ -54,17 +54,25 @@
     pointer-events: none;
     position: absolute;
     top: 50%;
-    left: 0;
+    left: 22%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 56%;
     transform: translateY(-50%);
+}
+
+.n-chart-donut__text span {
+    overflow: hidden;
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .n-chart-donut__text span:first-child {
     font-size: 1.8em;
-    line-height: 1.3;
+    line-height: 1.2em;
     transition: --n-chart-value 0.3s;
     counter-reset: chart-counter var(--n-chart-value);
 }
@@ -75,7 +83,7 @@
 
 .n-chart-donut__text span:last-child {
     font-size: 0.95em;
-    line-height: 1.3;
+    line-height: 1.2em;
 }
 
 .n-chart-donut__text span:last-child:after {
