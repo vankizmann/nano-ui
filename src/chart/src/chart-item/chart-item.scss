@@ -1,14 +1,30 @@
 @use "../../../root/helpers" as *;
 
 .n-chart-legend {
+    display: flex;
+    align-items: center;
     color: color('text', 0.6);
-    font-size: size('base-fnt');
+}
+
+.n-chart-legend:not(:last-child) {
+    margin-bottom: size('base-pad-vertical');
 }
 
 .n-chart-legend span:first-child {
-    color: color('base-color');
+    flex: 1 1 auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: size('base-fnt');
 }
 
-.n-chart-donut circle.n-chart-item--other {
-    stroke: color('foreground', 0.2);
+.n-chart-legend span:last-child {
+    flex: 0 0 auto;
+    font-size: size('base-fnt-label');
+    display: inline-flex;
+    padding: size('base-pad-vertical', 'calc($ * 0.3)') size('base-pad', 'calc($ * 0.5)');
+    margin-left: size('base-pad');
+    border-radius: size('base-rad-inline');
+    color: color('base-color');
+    background: color('base-color', 0.15);
 }
