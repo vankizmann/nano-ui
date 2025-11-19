@@ -299,6 +299,10 @@ export default {
 
     renderLegend()
     {
+        if ( ! this.renderLegend ) {
+            return null;
+        }
+
         let items = Arr.each(this.vis, (item, index) => {
             return this.ctor('renderLegendItem')(item, index);
         });
@@ -323,14 +327,11 @@ export default {
 
         let bodyHtml = [
             this.ctor('renderBars')(),
+            this.ctor('renderLegend')(),
         ];
 
         if ( this.$slots.default ) {
             bodyHtml.push(this.$slots.default());
-        }
-
-        if ( this.renderLegend ) {
-            bodyHtml.push(this.ctor('renderLegend')());
         }
 
         return (

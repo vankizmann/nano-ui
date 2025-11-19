@@ -1,14 +1,23 @@
 @use "../../../root/helpers" as *;
 
 .n-chart-donut {
-    overflow: hidden;
-    position: relative;
-    font-size: size('base-fnt');
-    border-radius: 500px;
-    width: size('base-hgt-inline', 'calc($ * 11)');
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
 }
 
-.n-chart-donut:before {
+.n-chart-donut__chart {
+    flex: 0 0 auto;
+    overflow: hidden;
+    position: relative;
+    width: size('base-hgt-inline', 'calc($ * 11)');
+    margin-bottom: auto;
+    border-radius: 500px;
+    font-size: size('base-fnt');
+}
+
+.n-chart-donut__chart:before {
     pointer-events: none;
     content: '\00a0';
     z-index: 0;
@@ -104,4 +113,11 @@
 
 .n-chart-donut__text span:last-child:after {
     content: var(--n-chart-label);
+}
+
+.n-chart-donut__legend {
+    flex: 1 1 auto;
+    border-left: 1px solid color('gray-05');
+    margin-left: size('base-pad', 'calc($ * 2)');
+    padding-left: size('base-pad', 'calc($ * 2.5)');
 }

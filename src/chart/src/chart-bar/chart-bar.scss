@@ -13,9 +13,9 @@
     flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
-    padding-top: size('base-pad-vertical');
+    padding-top: size('base-pad-vertical', 'calc($ * 0.5)');
     font-size: size('base-fnt');
-    height: size('base-hgt', 'calc($ * 6)');
+    min-height: size('base-hgt', 'calc($ * 6)');
 }
 
 .n-chart-bar .n-chart-bar__axis {
@@ -136,6 +136,7 @@
 
 .n-chart-bar__legend {
     flex: 1 1 auto;
+    min-height: 0;
     border-left: 1px solid color('gray-05');
     margin-left: size('base-pad', 'calc($ * 2)');
     padding-left: size('base-pad', 'calc($ * 2.5)');

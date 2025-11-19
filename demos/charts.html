@@ -174,6 +174,9 @@
             <div class="col-auto">
                 <n-input-number v-model="n_bar.color" :min="-100" :max="100" placeholder="Color"></n-input-number>
             </div>
+            <div class="col-auto">
+                <n-input-number v-model="n_bar.limit" :min="-100" :max="100" placeholder="Limit"></n-input-number>
+            </div>
         </div>
 
         <div class="n-grid gap-30">
@@ -195,6 +198,22 @@
                     <n-chart-item value="40" color="12"></n-chart-item>
                     <n-chart-item value="80" color="13"></n-chart-item>
                     <n-chart-item value="20" color="14"></n-chart-item>
+                    <n-chart-item value="2" color="auto"></n-chart-item>
+                    <n-chart-item value="6" color="auto"></n-chart-item>
+                    <n-chart-item value="7" color="auto"></n-chart-item>
+                    <n-chart-item value="2" color="auto"></n-chart-item>
+                    <n-chart-item value="2" color="auto"></n-chart-item>
+                    <n-chart-item value="2" color="auto"></n-chart-item>
+                    <n-chart-item value="6" color="auto"></n-chart-item>
+                    <n-chart-item value="7" color="auto"></n-chart-item>
+                    <n-chart-item value="2" color="auto"></n-chart-item>
+                    <n-chart-item value="2" color="auto"></n-chart-item>
+                    <n-chart-item value="2" color="auto"></n-chart-item>
+                    <n-chart-item value="6" color="auto"></n-chart-item>
+                    <n-chart-item value="7" color="auto"></n-chart-item>
+                    <n-chart-item value="2" color="auto"></n-chart-item>
+                    <n-chart-item value="2" color="auto"></n-chart-item>
+                    <n-chart-item value="2" color="auto"></n-chart-item>
                 </n-chart-bar>
             </div>
             <div class="col-auto">
@@ -268,7 +287,7 @@
             };
 
             data.n_bar = {
-                color: 0,
+                color: 0, limit: 5
             };
 
             let methods = {};
