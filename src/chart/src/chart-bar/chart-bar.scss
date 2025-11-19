@@ -72,9 +72,14 @@
     transition: opacity 0.2s, max-height 0.4s;
 }
 
+.n-chart-bar .n-chart-item.n-chart-item--other .n-chart-bar__bar:before {
+    background: color('foreground', 0.2);
+}
+
 .n-chart-bar .n-chart-item[class*="n-chart-item--color-"] .n-chart-bar__bar:before {
     background: color('tag-active');
 }
+
 
 .n-chart-bar .n-chart-item:hover .n-chart-bar__bar:before {
     opacity: 0.6;
