@@ -88,7 +88,7 @@ export default {
         renderLegend: {
             default()
             {
-                return false;
+                return true;
             },
             type: [Boolean]
         }
@@ -120,7 +120,7 @@ export default {
     data()
     {
         let attrs = {
-            'cx': '75', 'cy': '75', 'r': '57.2958'
+            'cx': '65', 'cy': '65', 'r': '57.2958'
         };
 
         return {
@@ -286,7 +286,7 @@ export default {
         ]);
 
         return (
-            <svg width="600" height="600" viewBox="0 0 150 150">
+            <svg width="600" height="600" viewBox="0 0 130 130">
                 {[baseHtml, ...items, othersHtml]}
             </svg>
         );
