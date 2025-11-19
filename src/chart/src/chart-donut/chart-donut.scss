@@ -21,8 +21,12 @@
     transform: translate(-50%, -50%);
 }
 
-.n-chart-donut:not(.n-chart-donut--overlap) circle {
+.n-chart-donut:not(.n-chart-donut--overlap) .n-chart-item {
     stroke-linecap: round;
+}
+
+.n-chart-donut:not(.n-chart-donut--overlap) .n-chart-hover {
+    stroke-linecap: square;
 }
 
 .n-chart-donut svg {
