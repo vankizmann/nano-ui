@@ -291,7 +291,8 @@ export default {
 
         return (
             <div class={classList}>
-                <span>{item.value}</span> <span>{item.axis}</span>
+                <span>{item.axis}</span>
+                <span>{item.value}</span>
             </div>
         );
     },
