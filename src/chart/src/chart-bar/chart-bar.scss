@@ -12,6 +12,7 @@
     flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
+    padding-top: size('base-pad-vertical');
     font-size: size('base-fnt');
     height: size('base-hgt', 'calc($ * 6)');
 }
@@ -76,28 +77,24 @@
     background: color('foreground', 0.2);
 }
 
-.n-chart-bar .n-chart-item[class*="n-chart-item--color-"] .n-chart-bar__bar:before {
-    background: color('tag-active');
-}
-
-
 .n-chart-bar .n-chart-item:hover .n-chart-bar__bar:before {
     opacity: 0.6;
     max-height: 500px;
 }
 
 .n-chart-bar .n-chart-item .n-chart-bar__dot {
-    height: size('base-hgt');
+    height: size('base-hgt-inline');
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 
 .n-chart-bar .n-chart-item .n-chart-bar__dot:before {
     content: '\00a0';
     display: inline-block;
-    width: size('base-hgt-inline', 'calc($ * 0.4)');
-    height: size('base-hgt-inline', 'calc($ * 0.4)');
+    width: 5px;
+    height: 5px;
     border-radius: 500px;
     background: color('text', 0.3);
 }
@@ -134,4 +131,10 @@
     font-size: 1em;
     font-weight: bold;
     color: color('text');
+}
+
+.n-chart-bar__legend {
+    border-left: 1px solid color('gray-05');
+    margin-left: size('base-pad', 'calc($ * 2)');
+    padding: 0 size('base-pad', 'calc($ * 2.5)');
 }

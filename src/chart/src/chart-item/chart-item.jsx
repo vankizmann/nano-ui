@@ -23,7 +23,7 @@ export default {
         axis: {
             default()
             {
-                return '';
+                return Locale.trans('Items');
             },
             type: [String]
         },
@@ -31,7 +31,7 @@ export default {
         label: {
             default()
             {
-                return Locale.trans('Item count');
+                return Locale.trans('Items');
             },
             type: [String]
         },
@@ -76,13 +76,13 @@ export default {
 
     methods: {
 
-        getClass(index)
+        getClass(index, className = 'n-chart-item')
         {
             if ( ! Any.isEmpty(this.type) ) {
-                return 'n-chart-item--' + this.type;
+                return className + '--' + this.type;
             }
 
-            return 'n-chart-item--color-' + this.getColor(index);
+            return className + '--color-' + this.getColor(index);
         },
 
         getColor(index)
@@ -96,7 +96,8 @@ export default {
             let subdivide = Math.floor(color /
                 this.NChart.colorLimit);
 
-            return color - (subdivide * this.NChart.colorLimit);
+            return color - (this.NChart.colorLimit *
+                subdivide);
         }
 
     },

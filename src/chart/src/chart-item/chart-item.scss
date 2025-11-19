@@ -1,16 +1,14 @@
 @use "../../../root/helpers" as *;
 
-.n-chart-donut g.n-chart-group {
-    transform: rotate(-90deg);
-    transform-origin: center;
+.n-chart-legend {
+    color: color('text', 0.6);
+    font-size: size('base-fnt');
 }
 
-.n-chart-donut circle.n-chart-item {
-    pointer-events: none;
-    stroke-width: var(--n-stroke-width);
+.n-chart-legend span:first-child {
+    color: color('base-color');
 }
 
-.n-chart-donut circle.n-chart-hover {
-    pointer-events: stroke;
-    stroke-width: calc(var(--n-stroke-width) * 2px);
+.n-chart-donut circle.n-chart-item--other {
+    stroke: color('foreground', 0.2);
 }

@@ -180,13 +180,15 @@
             <div class="col-auto">
                 <n-chart-bar v-bind="n_bar" size="xs">
                     <n-chart-item value="80" type="primary"></n-chart-item>
-                    <n-chart-item value="20" type="warning"></n-chart-item>
-                    <n-chart-item value="25" type="success"></n-chart-item>
-                    <n-chart-item value="40" type="danger"></n-chart-item>
+                    <n-chart-item value="20" type="primary"></n-chart-item>
+                    <n-chart-item value="25" type="primary"></n-chart-item>
+                    <n-chart-item value="40" type="primary"></n-chart-item>
+                    <n-chart-item value="25" type="primary"></n-chart-item>
+                    <n-chart-item value="40" type="primary"></n-chart-item>
                 </n-chart-bar>
             </div>
             <div class="col-auto">
-                <n-chart-bar v-bind="n_bar" size="sm">
+                <n-chart-bar v-bind="n_bar" :sort="true" size="sm">
                     <n-chart-item value="40" color="9"></n-chart-item>
                     <n-chart-item value="20" color="10"></n-chart-item>
                     <n-chart-item value="25" color="11"></n-chart-item>
