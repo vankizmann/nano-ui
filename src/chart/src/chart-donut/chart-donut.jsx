@@ -321,7 +321,7 @@ export default {
         });
 
         let item = {
-            axis: this.otherLabel, value: Num.combine(count)
+            label: this.otherLabel, value: Num.combine(count)
         };
 
         item['getClass'] = () => {
