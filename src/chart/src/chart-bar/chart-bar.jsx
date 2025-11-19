@@ -37,6 +37,14 @@ export default {
             type: [String]
         },
 
+        minHeight: {
+            default()
+            {
+                return 0;
+            },
+            type: [Number]
+        }
+
     },
 
     computed: {
@@ -109,7 +117,8 @@ export default {
             'n-chart-item', item.getClass(index),
         ];
 
-        let height = (100 / this.max) * Num.float(item.value);
+        let height = Math.max((100 / this.max) * Num.float(item.value),
+            this.minHeight);
 
         let style = {
             '--n-chart-height': Num.int(height) + '%'

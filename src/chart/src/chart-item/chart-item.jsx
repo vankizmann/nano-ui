@@ -23,7 +23,7 @@ export default {
         axis: {
             default()
             {
-                return '2018';
+                return '';
             },
             type: [String]
         },
