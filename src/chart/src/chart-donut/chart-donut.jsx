@@ -83,6 +83,14 @@ export default {
                 return 0;
             },
             type: [Number]
+        },
+
+        renderLegend: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
         }
 
     },
@@ -293,6 +301,72 @@ export default {
         );
     },
 
+    renderDonut()
+    {
+        return (
+            <div class="n-chart-donut__chart">
+                {[this.ctor('renderSvg')(), this.ctor('renderText')()]}
+            </div>
+        )
+    },
+
+    renderLegendOther(hidden, visible)
+    {
+        if ( Any.isEmpty(hidden) ) {
+            return null;
+        }
+
+        let count = Arr.each(hidden, (item) => {
+            return Num.float(item.value);
+        });
+
+        let item = {
+            axis: this.otherLabel, value: Num.combine(count)
+        };
+
+        item['getClass'] = () => {
+            return 'n-chart-legend--other';
+        };
+
+        return this.ctor('renderLegendItem')(item, visible.length);
+    },
+
+    renderLegendItem(item, index)
+    {
+        let classList = [
+            'n-chart-legend',
+            item.getClass(index, 'n-chart-legend')
+        ];
+
+        return (
+            <div class={classList}>
+                <span>{item.axis}</span>
+                <span>{item.value}</span>
+            </div>
+        );
+    },
+
+    renderLegend()
+    {
+        if ( ! this.renderLegend ) {
+            return null;
+        }
+
+        let items = Arr.each(this.vis, (item, index) => {
+            return this.ctor('renderLegendItem')(item, index);
+        });
+
+        let othersHtml = this.ctor('renderLegendOther')(...[
+            this.hid, this.vis
+        ]);
+
+        return (
+            <div class="n-chart-donut__legend">
+                {[...items, othersHtml]}
+            </div>
+        )
+    },
+
     render()
     {
         let classList = [
@@ -311,9 +385,18 @@ export default {
             '--n-stroke-hover-width': Num.int(this.width * 1.2)
         };
 
+        let bodyHtml = [
+            this.ctor('renderDonut')(),
+            this.ctor('renderLegend')(),
+        ];
+
+        if ( this.$slots.default ) {
+            bodyHtml.push(this.$slots.default());
+        }
+
         return (
             <div class={classList} style={style}>
-                {[this.ctor('renderText')(), this.ctor('renderSvg')(), this.$slots.default && this.$slots.default()]}
+                {bodyHtml}
             </div>
         );
     }
