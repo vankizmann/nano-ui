@@ -1,6 +1,7 @@
 @use "../../../root/helpers" as *;
 
-.n-collapse__header-icon {
+.n-collapse__header-icon,
+.n-collapse__header-angle {
     color: color('gray-40');
 }
 
