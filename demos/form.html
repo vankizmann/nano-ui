@@ -64,8 +64,22 @@
 
 <div id="app">
     <div class="app-container" style="margin: 5vh auto;">
-        <n-form kind="fieldset">
+        <n-form kind="fieldset" :form="n_testform">
             <n-form-frame style="height: 80vh; border: 1px solid #eee;" :show-search="true">
+                <n-form-group label="Echter Test">
+                    <n-form-item prop="teststring" label="Teststring" :rules="['required', 'minlength:3', 'email']">
+                        <n-input v-model="n_testform.teststring"></n-input>
+                    </n-form-item>
+                    <n-form-item prop="testbool" label="Testbool" :rules="['required']">
+                        <n-switch v-model="n_testform.testbool">Testbool</n-switch>
+                    </n-form-item>
+                    <n-form-item prop="testselect" label="Testselect" :rules="['value:primary']">
+                        <n-select v-model="n_testform.testselect" :options="types" :clearable="true"></n-select>
+                    </n-form-item>
+                    <n-form-item prop="testarray" label="Testarray" :rules="['minlength:2']">
+                        <n-select v-model="n_testform.testarray" :options="types" :multiple="true"></n-select>
+                    </n-form-item>
+                </n-form-group>
                 <n-form-group v-for="(item) in items" :label="'foobar asd asdasd asd asdas as dasd ' +  item" icon="fa fa-ghost" :type="{ '1' : 'primary', '2': 'secondary', '3': 'danger'}[item]" :collapse="true">
                     <template #action>
                         <n-button type="auto" :glass="true" size="xs">Action</n-button>
@@ -297,6 +311,10 @@
 
             data.n_form = {
                 size: 'md', conditional: true, modelValue: false
+            };
+
+            data.n_testform = {
+                testnumber: 0, teststring: '', testselect: '', testbool: false, testarray: [],
             };
 
             data.n_tags = {
