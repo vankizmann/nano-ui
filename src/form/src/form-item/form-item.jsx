@@ -63,6 +63,14 @@ export default {
             type: [String]
         },
 
+        rules: {
+            default()
+            {
+                return [];
+            },
+            type: [Array]
+        },
+
         tooltip: {
             default()
             {
@@ -179,6 +187,10 @@ export default {
 
     beforeMount()
     {
+        if ( this.NForm ) {
+            this.NForm.appendItem(this);
+        }
+
         if ( this.NFormGroup ) {
             this.NFormGroup.appendItem(this);
         }

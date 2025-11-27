@@ -1,5 +1,6 @@
 import { UUID, Num, Arr, Obj, Any, Dom, Locale } from "@kizmann/pico-js";
 import { h } from "vue";
+import {FormMessage, FormRules} from "./form-rules.mjs";
 
 export default {
 
@@ -29,13 +30,13 @@ export default {
             type: [Object]
         },
 
-        errors: {
-            default()
-            {
-                return {};
-            },
-            type: [Object]
-        },
+        // errors: {
+        //     default()
+        //     {
+        //         return {};
+        //     },
+        //     type: [Object]
+        // },
 
         size: {
             default()
@@ -120,7 +121,7 @@ export default {
     data()
     {
         return {
-            uid: UUID(), elements: [], groups: {}, blocked: true,
+            uid: UUID(), elements: [], rules: [], groups: {}, errors: {}, blocked: true,
         };
     },
 
@@ -138,8 +139,9 @@ export default {
 
     ready()
     {
-        this.$watch('form', this.emitChange,
-            { deep: true });
+        this.$watch('form', this.emitChange, {
+            deep: true
+        });
 
         this.resetChange();
     },
@@ -175,7 +177,7 @@ export default {
             return this.prevent;
         },
 
-        addItem(item)
+        appendItem(item)
         {
             Arr.add(this.elements, item, {
                 uid: item.uid
@@ -220,10 +222,44 @@ export default {
                 return;
             }
 
+            this.runTest();
+
             this.prevState = nextState;
 
             this.$emit('change');
         },
+
+        runTest()
+        {
+            let errors = {};
+
+            Arr.each(this.elements, (item) => {
+
+                let bag = [];
+
+                Arr.each(item.rules, (rule) => {
+                    let [name, ...args] = rule.split(':');
+
+                    if ( ! FormRules[name] || !FormMessage[name] ) {
+                        return;
+                    }
+
+                    let value = Obj.get(this.form, item.prop);
+
+                    if ( FormRules[name](item, value, ...args) ) {
+                        return;
+                    }
+
+                    bag.push(FormMessage[name](item, value, ...args));
+                });
+
+                errors[item.prop] = bag;
+            });
+
+            this.errors = errors;
+
+            console.log(this.form, errors);
+        }
 
     },
 
