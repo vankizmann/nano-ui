@@ -14,6 +14,14 @@ export default {
 
     props: {
 
+        ready: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
+        },
+
         dom: {
             default()
             {
@@ -30,13 +38,13 @@ export default {
             type: [Object]
         },
 
-        // errors: {
-        //     default()
-        //     {
-        //         return {};
-        //     },
-        //     type: [Object]
-        // },
+        errors: {
+            default()
+            {
+                return {};
+            },
+            type: [Object]
+        },
 
         size: {
             default()
@@ -121,7 +129,7 @@ export default {
     data()
     {
         return {
-            uid: UUID(), elements: [], rules: [], groups: {}, errors: {}, blocked: true,
+            uid: UUID(), elements: [], rules: [], groups: {}, ruleErrors: {}, blocked: true,
         };
     },
 
@@ -222,44 +230,92 @@ export default {
                 return;
             }
 
-            this.runTest();
+            this.validate();
 
             this.prevState = nextState;
 
             this.$emit('change');
         },
 
-        runTest()
+        validateField(field)
+        {
+            let errors = [];
+
+            Arr.each(field.rules, (rule) => {
+                let [name, ...args] = rule.split(':');
+
+                if ( ! FormRules[name] || !FormMessage[name] ) {
+                    return;
+                }
+
+                let value = Obj.get(this.form, field.prop);
+
+                if ( FormRules[name].call(this, field, value, ...args) ) {
+                    return;
+                }
+
+                let message = FormMessage[name].call(this, field, value, ...args);
+
+                if ( Any.isEmpty(message) ) {
+                    return;
+                }
+
+                errors.push(message);
+            });
+
+            return errors;
+        },
+
+        validate()
         {
             let errors = {};
 
-            Arr.each(this.elements, (item) => {
-
-                let bag = [];
-
-                Arr.each(item.rules, (rule) => {
-                    let [name, ...args] = rule.split(':');
-
-                    if ( ! FormRules[name] || !FormMessage[name] ) {
-                        return;
-                    }
-
-                    let value = Obj.get(this.form, item.prop);
-
-                    if ( FormRules[name](item, value, ...args) ) {
-                        return;
-                    }
-
-                    bag.push(FormMessage[name](item, value, ...args));
-                });
-
-                errors[item.prop] = bag;
+            Arr.each(this.elements, (field) => {
+                errors[field.prop] = this.validateField(field);
             });
 
-            this.errors = errors;
+            this.ruleErrors = Obj.filter(errors, (err) => {
+                return ! Any.isEmpty(err);
+            });
 
-            console.log(this.form, errors);
-        }
+            return this.ruleErrors;
+        },
+
+        isValid(includeErrors = false)
+        {
+            let count = Any.keys(this.ruleErrors).length;
+
+            if ( includeErrors ) {
+                count += Any.keys(this.errors).length;
+            }
+
+            return count === 0;
+        },
+
+        getErrors()
+        {
+            let errors = {};
+
+            Obj.each(this.errors, (err, key) => {
+
+                if ( ! Any.isArray(err) ) {
+                    err = [err];
+                }
+
+                errors[key] = err;
+            });
+
+            Obj.each(this.ruleErrors, (err, key) => {
+
+                if ( Obj.has(errors, key) ) {
+                    err = Arr.merge(errors[key], err);
+                }
+
+                errors[key] = err;
+            });
+
+            return errors;
+        },
 
     },
 

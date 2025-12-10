@@ -1,32 +1,76 @@
-import { Any, Locale } from "@kizmann/pico-js";
+import { Any, Arr, Locale, Obj } from "@kizmann/pico-js";
 
 export const FormMessage = {
 
-    required: (field, value) => {
+    required(field, value) {
         return Locale.trans('Field is required');
     },
 
-    value: (field, value, val = 'foobar') => {
+    required_if(field, value, key = '') {
+
+        let label = Arr.find(this.elements, (item) => {
+            return item.prop === key;
+        }) || key;
+
+        return Locale.trans('Field is required if :label isset', {
+            label: label.label || key
+        });
+    },
+
+    required_unless(field, value, key = '') {
+
+        let label = Arr.find(this.elements, (item) => {
+            return item.prop === key;
+        });
+
+        return Locale.trans('Field is required unless :label isset', {
+            label: label.label || key
+        });
+    },
+
+    same(field, value, key = '')
+    {
+        let label = Arr.find(this.elements, (item) => {
+            return item.prop === key;
+        }) || key;
+
+        return Locale.trans('Must be same as :label', {
+            label: label.label || key
+        });
+    },
+
+    diffrent(field, value, key = '')
+    {
+        let label = Arr.find(this.elements, (item) => {
+            return item.prop === key;
+        }) || key;
+
+        return Locale.trans('Must be diffrent from :label', {
+            label: label.label || key
+        });
+    },
+
+    value(field, value, val = 'foobar') {
         return Locale.trans('Must be exact value :val', { val });
     },
 
-    min: (field, value, min = Number.MIN_VALUE) => {
+    min(field, value, min = Number.MIN_VALUE) {
         return Locale.trans('Must be greather than :min', { min });
     },
 
-    max: (field, value, max = Number.MAX_VALUE) => {
+    max(field, value, max = Number.MAX_VALUE) {
         return Locale.trans('Must be lesser than :max', { max });
     },
 
-    minlength: (field, value, min = Number.MIN_VALUE) => {
+    minlength(field, value, min = Number.MIN_VALUE) {
         return Locale.trans('Length must be greater than :min', { min });
     },
 
-    maxlength: (field, value, max = Number.MAX_VALUE) => {
+    maxlength(field, value, max = Number.MAX_VALUE) {
         return Locale.trans('Length must be lesser than :max', { max });
     },
 
-    email: (field, value) => {
+    email(field, value) {
         return Locale.trans('Must be a valid email');
     }
 
@@ -34,7 +78,7 @@ export const FormMessage = {
 
 export const FormRules = {
 
-    required: (field, value) => {
+    required(field, value) {
 
         if ( Any.isBool(value) ) {
             return value === true;
@@ -43,7 +87,45 @@ export const FormRules = {
         return ! Any.isEmpty(value);
     },
 
-    value: (field, value, val = 'foobar') => {
+    required_if(field, value, key = '') {
+
+        let target = Obj.get(this.form, key);
+
+        if ( Any.isEmpty(target) ) {
+            return true;
+        }
+
+        if ( Any.isBool(value) ) {
+            return value === true;
+        }
+
+        return ! Any.isEmpty(value);
+    },
+
+    required_unless(field, value, key = '') {
+
+        let target = Obj.get(this.form, key);
+
+        if ( ! Any.isEmpty(target) ) {
+            return true;
+        }
+
+        if ( Any.isBool(value) ) {
+            return value === true;
+        }
+
+        return ! Any.isEmpty(value);
+    },
+
+    same(field, value, key = '') {
+        return value === Obj.get(this.form, key);
+    },
+
+    diffrent(field, value, key = '') {
+        return value !== Obj.get(this.form, key);
+    },
+
+    value(field, value, val = 'foobar') {
 
         if ( Any.isString(value) ) {
             return value === val;
@@ -52,7 +134,7 @@ export const FormRules = {
         return false;
     },
 
-    min: (field, value, min = Number.MIN_VALUE) => {
+    min(field, value, min = Number.MIN_VALUE) {
 
         if ( Any.isNumber(value) ) {
             return value >= min;
@@ -61,7 +143,7 @@ export const FormRules = {
         return false;
     },
 
-    max: (field, value, max = Number.MAX_VALUE) => {
+    max(field, value, max = Number.MAX_VALUE) {
 
         if ( Any.isNumber(value) ) {
             return value <= max;
@@ -70,7 +152,7 @@ export const FormRules = {
         return false;
     },
 
-    minlength: (field, value, min = Number.MIN_VALUE) => {
+    minlength(field, value, min = Number.MIN_VALUE) {
 
         if ( Any.isString(value) || Any.isArray(value) ) {
             return value.length > min;
@@ -79,7 +161,7 @@ export const FormRules = {
         return false;
     },
 
-    maxlength: (field, value, max = Number.MAX_VALUE) => {
+    maxlength(field, value, max = Number.MAX_VALUE) {
 
         if ( Any.isString(value) || Any.isArray(value) ) {
             return value.length < max;
@@ -88,7 +170,7 @@ export const FormRules = {
         return false;
     },
 
-    email: (field, value) => {
+    email(field, value) {
 
         if ( Any.isString(value) ) {
             return value.match(/^.*?@.*?\.[a-z]{2,}$/);

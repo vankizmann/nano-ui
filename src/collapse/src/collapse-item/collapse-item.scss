@@ -1,5 +1,9 @@
 @use "../../../root/helpers" as *;
 
+.n-collapse__header.is-last {
+    margin-bottom: -1px;
+}
+
 .n-collapse__header-label {
     flex: 1 1 auto;
 }

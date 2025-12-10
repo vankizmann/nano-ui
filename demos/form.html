@@ -8,7 +8,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../dist/nano-ui.css">
     <link id="theme" rel="stylesheet" href="../dist/themes/default.css">
 
@@ -20,9 +20,12 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            font-size: 14px;
+        }
+
         body {
             font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
-            font-size: 14px;
             height: 100%;
             overflow-x: hidden;
         }
@@ -64,48 +67,65 @@
 
 <div id="app">
     <div class="app-container" style="margin: 5vh auto;">
-        <n-form kind="fieldset" :form="n_testform">
+        <n-form kind="fieldset" :form="n_testform" :errors2="{ teststring: 'ALLES VERBOTEN' }">
             <n-form-frame style="height: 80vh; border: 1px solid #eee;" :show-search="true">
-                <n-form-group label="Echter Test">
-                    <n-form-item prop="teststring" label="Teststring" :rules="['required', 'minlength:3', 'email']">
-                        <n-input v-model="n_testform.teststring"></n-input>
-                    </n-form-item>
-                    <n-form-item prop="testbool" label="Testbool" :rules="['required']">
-                        <n-switch v-model="n_testform.testbool">Testbool</n-switch>
-                    </n-form-item>
-                    <n-form-item prop="testselect" label="Testselect" :rules="['value:primary']">
-                        <n-select v-model="n_testform.testselect" :options="types" :clearable="true"></n-select>
-                    </n-form-item>
-                    <n-form-item prop="testarray" label="Testarray" :rules="['minlength:2']">
-                        <n-select v-model="n_testform.testarray" :options="types" :multiple="true"></n-select>
-                    </n-form-item>
-                </n-form-group>
-                <n-form-group v-for="(item) in items" :label="'foobar asd asdasd asd asdas as dasd ' +  item" icon="fa fa-ghost" :type="{ '1' : 'primary', '2': 'secondary', '3': 'danger'}[item]" :collapse="true">
-                    <template #action>
-                        <n-button type="auto" :glass="true" size="xs">Action</n-button>
-                    </template>
-                    <n-form-item label="Test">
-                        <n-input></n-input>
-                    </n-form-item>
-                    <n-form-item label="Test">
-                        <n-input></n-input>
-                    </n-form-item>
-                    <n-form-item v-if="item < 3" :label="getLabel(item)">
-                        <n-input></n-input>
-                    </n-form-item>
-                    <n-form-item v-if="item < 2" label="Test">
-                        <n-input></n-input>
-                    </n-form-item>
-                    <n-form-item v-if="item < 2" label="Test">
-                        <n-input></n-input>
-                    </n-form-item>
-                    <n-form-item v-if="item < 2" label="Test">
-                        <n-input></n-input>
-                    </n-form-item>
-                    <n-form-item v-if="item < 2" label="Test">
-                        <n-input></n-input>
-                    </n-form-item>
-                </n-form-group>
+                <n-form-bag style="margin-bottom: 1200px"></n-form-bag>
+                <n-collapse>
+                    <n-collapse-item name="test1" label="Test1" :lazy="false">
+                        <n-form-item prop="testselect" label="Testselect" :rules="['required_unless:teststring', 'value:primary']">
+                            <n-select v-model="n_testform.testselect" :options="types" :clearable="true"></n-select>
+                        </n-form-item>
+                    </n-collapse-item>
+                    <n-collapse-item name="test2" label="Test2" :lazy="false">
+                        <n-form-item prop="teststring" label="Teststring" :rules="['required', 'minlength:3', 'diffrent:testselect']">
+                            <n-input v-model="n_testform.teststring"></n-input>
+                        </n-form-item>
+                    </n-collapse-item>
+                </n-collapse>
+                <n-tabs model-value="test1">
+                    <n-tabs-item name="test1" label="Test1" :lazy="false">
+                        <n-form-group label="Echter Test 1">
+                            <n-form-item prop="testarray" label="Testarray" :rules="['minlength:2']">
+                                <n-select v-model="n_testform.testarray" :options="types" :multiple="true"></n-select>
+                            </n-form-item>
+                        </n-form-group>
+                    </n-tabs-item>
+                    <n-tabs-item name="test2" label="Test2" :lazy="false">
+                        <n-form-group label="Echter Test 2">
+                            <n-form-item prop="testbool" label="Testbool" :rules="['required_if:teststring']">
+                                <n-switch v-model="n_testform.testbool">Testbool</n-switch>
+                            </n-form-item>
+                        </n-form-group>
+                    </n-tabs-item>
+                    <n-tabs-item name="foobar" label="Foobar">
+                        <n-form-group v-for="(item) in items" :label="'foobar asd asdasd asd asdas as dasd ' +  item" icon="fa fa-ghost" :type="{ '1' : 'primary', '2': 'secondary', '3': 'danger'}[item]" :collapse="true">
+                            <template #action>
+                                <n-button type="auto" :glass="true" size="xs">Action</n-button>
+                            </template>
+                            <n-form-item label="Test">
+                                <n-input></n-input>
+                            </n-form-item>
+                            <n-form-item label="Test">
+                                <n-input></n-input>
+                            </n-form-item>
+                            <n-form-item v-if="item < 3" :label="getLabel(item)">
+                                <n-input></n-input>
+                            </n-form-item>
+                            <n-form-item v-if="item < 2" label="Test">
+                                <n-input></n-input>
+                            </n-form-item>
+                            <n-form-item v-if="item < 2" label="Test">
+                                <n-input></n-input>
+                            </n-form-item>
+                            <n-form-item v-if="item < 2" label="Test">
+                                <n-input></n-input>
+                            </n-form-item>
+                            <n-form-item v-if="item < 2" label="Test">
+                                <n-input></n-input>
+                            </n-form-item>
+                        </n-form-group>
+                    </n-tabs-item>
+                </n-tabs>
             </n-form-frame>
         </n-form>
     </div>

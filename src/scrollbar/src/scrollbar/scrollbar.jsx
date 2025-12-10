@@ -185,6 +185,10 @@ export default {
 
         getWrapperSize()
         {
+            if ( ! this.$refs.wrapper ) {
+                return;
+            }
+
             let [width, height] = [0, 0];
 
             Dom.find(this.$refs.spacer).actual(() => {
@@ -288,10 +292,12 @@ export default {
             let offsetTop = $el.offsetTop(this.$el);
 
             if ( offsetTop < scrollTop ) {
+                console.log('a')
                 this.$refs.content.scrollTop = offsetTop - padding;
             }
 
             if ( offsetTop + $el.height() >= scrollTop + outerHeight ) {
+                console.log('b', offsetTop - outerHeight + $el.height(), padding)
                 this.$refs.content.scrollTop = offsetTop - outerHeight + $el.height() + padding;
             }
 

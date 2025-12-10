@@ -1,0 +1,59 @@
+@use "../../../root/helpers" as *;
+
+.n-form-bag {
+    display: flex;
+    flex-direction: column;
+    font-size: size('base-fnt');
+}
+
+.n-form-bag-item {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    border-radius: size('base-rad');
+    background: color('danger-color', 0.15);
+    padding: size('base-pad-vertical') size('base-pad');
+}
+
+.n-form-bag-item:not(:last-child) {
+    margin-bottom: size('base-pad-vertical');
+}
+
+.n-form-bag-item__label {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.n-form-bag-item__label i {
+    display: inline-flex;
+    justify-content: center;
+    opacity: 0.7;
+    width: size('base-hgt-inline');
+    color: color('danger-color');
+}
+
+.n-form-bag-item:hover .n-form-bag-item__label i {
+    opacity: 1;
+}
+
+.n-form-bag-item__label span {
+    display: inline-flex;
+    color: color('danger-color');
+    padding-left: size('base-pad', 'calc($ * 0.5)');
+}
+
+.n-form-bag-item__errors ul {
+    list-style: none;
+}
+
+.n-form-bag-item__errors ul {
+    padding-left: size('base-hgt-inline');
+}
+
+.n-form-bag-item__errors ul li {
+    padding-left: size('base-pad', 'calc($ * 0.5)');
+    color: color('text', 0.6);
+    font-size: size('base-fnt-label');
+}

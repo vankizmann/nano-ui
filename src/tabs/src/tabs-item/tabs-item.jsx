@@ -61,10 +61,10 @@ export default {
             type: [Boolean]
         },
 
-        preload: {
+        lazy: {
             default()
             {
-                return false;
+                return true;
             },
             type: [Boolean]
         },
@@ -154,11 +154,11 @@ export default {
     {
         let renderBody = this.NTabs.tempValue === this.name;
 
-        if ( this.NTabs.tempValue !== this.name && this.keep ) {
+        if ( this.keep ) {
             renderBody = this.init;
         }
 
-        if ( this.NTabs.tempValue !== this.name && this.preload ) {
+        if ( ! this.lazy ) {
             renderBody = true;
         }
 
