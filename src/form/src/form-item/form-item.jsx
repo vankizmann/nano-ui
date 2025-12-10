@@ -6,10 +6,6 @@ export default {
 
     inject: {
 
-        NTabs: {
-            default: undefined
-        },
-
         NForm: {
             default: undefined
         },
@@ -18,7 +14,23 @@ export default {
             default: undefined
         },
 
+        NTabs: {
+            default: undefined
+        },
+
         NTabsItem: {
+            default: undefined
+        },
+
+        NCollapse: {
+            default: undefined
+        },
+
+        NCollapseItem: {
+            default: undefined
+        },
+
+        NScrollbar: {
             default: undefined
         }
 
@@ -121,6 +133,42 @@ export default {
 
     },
 
+    data()
+    {
+        return {
+            uid: UUID()
+        };
+    },
+
+    beforeMount()
+    {
+        if ( this.NForm ) {
+            this.NForm.appendItem(this);
+        }
+
+        if ( this.NFormGroup ) {
+            this.NFormGroup.appendItem(this);
+        }
+    },
+
+    mounted()
+    {
+        if ( this.NForm ) {
+            this.NForm.$watch('errors', this.gotoInput, { deep: true });
+        }
+    },
+
+    beforeUnmount()
+    {
+        if ( this.NForm ) {
+            this.NForm.removeItem(this);
+        }
+
+        if ( this.NFormGroup ) {
+            this.NFormGroup.removeItem(this);
+        }
+    },
+
     methods: {
 
         enabled(component = false)
@@ -157,57 +205,23 @@ export default {
 
         gotoInput()
         {
-            let errors = this.NForm.errors;
+            let selector = `[data-form-field="${this.uid}"]`;
 
-            if ( Any.isEmpty(errors) ) {
-                return;
+            if ( this.NTabsItem ) {
+                this.NTabsItem.changeTab();
             }
 
-            if ( !this.NTabs || !this.NTabsItem ) {
-                return;
+            if ( this.NCollapseItem ) {
+                this.NCollapseItem.showTab();
             }
 
-            let keys = Any.keys(errors);
-
-            if ( Arr.first(keys) !== this.prop ) {
-                return;
+            if ( this.NScrollbar ) {
+                this.NScrollbar.scrollIntoView(selector, 0, 50);
             }
 
-            this.NTabs.changeTab(this.NTabsItem.name);
+            console.log(this.NScrollbar)
         }
 
-    },
-
-    data()
-    {
-        return {
-            uid: UUID()
-        };
-    },
-
-    beforeMount()
-    {
-        if ( this.NForm ) {
-            this.NForm.appendItem(this);
-        }
-
-        if ( this.NFormGroup ) {
-            this.NFormGroup.appendItem(this);
-        }
-    },
-
-    mounted()
-    {
-        if ( this.NForm ) {
-            this.NForm.$watch('errors', this.gotoInput, { deep: true });
-        }
-    },
-
-    beforeUnmount()
-    {
-        if ( this.NFormGroup ) {
-            this.NFormGroup.removeItem(this);
-        }
     },
 
     renderCondition()
@@ -231,7 +245,7 @@ export default {
 
         return (
             <div class="n-form-item__label">
-                <label onClick={this.focusInput} data-tooltip-ltr={this.tooltip}>
+                <label onClick={this.focusInput} data-tooltip-ltr={this.tooltip} data-required={Arr.has(this.rules, 'required')}>
                     {this.$slots.label && this.$slots.label() || this.label}
                 </label>
             </div>
@@ -240,13 +254,20 @@ export default {
 
     renderError()
     {
-        if ( !this.NForm || !Obj.has(this.NForm.errors, this.prop) ) {
+        if ( !this.NForm ) {
             return null;
+        }
+
+        let errors = Obj.get(this.NForm.getErrors(),
+            this.prop, []);
+
+        if ( Any.isEmpty(errors) ) {
+            return;
         }
 
         return (
             <div class="n-form-item__error">
-                {Obj.get(this.NForm.errors, this.prop)}
+                {Arr.first(errors)}
             </div>
         );
     },
@@ -274,7 +295,7 @@ export default {
             classList.push('is-disabled');
         }
 
-        return <div class={classList}>
+        return <div class={classList} data-form-field={this.uid}>
             {this.ctor('renderCondition')()}
             {this.ctor('renderLabel')()}
             {this.ctor('renderInput')()}

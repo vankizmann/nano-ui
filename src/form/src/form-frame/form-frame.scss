@@ -96,7 +96,7 @@
     height: size('base-hgt', 'calc($ * 1.2)');
     font-size: size('base-fnt');
     border-radius: size('base-rad');
-    padding-right: size('base-pad');
+    padding: 0 size('base-pad');
 }
 
 .n-form-frame__menu:before {
@@ -105,7 +105,6 @@
 
 .n-form-frame__menu i {
     width: size('base-hgt');
-    margin: 0 size('base-pad');
 }
 
 .n-form-frame__body .n-scrollbar__wrap {
