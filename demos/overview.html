@@ -279,6 +279,9 @@
                 <n-checkbox v-model="n_button.glass">Glass</n-checkbox>
             </div>
             <div class="col-auto">
+                <n-checkbox v-model="n_button.round">Round</n-checkbox>
+            </div>
+            <div class="col-auto">
                 <n-checkbox v-model="n_button.disabled">Disabled</n-checkbox>
             </div>
         </div>
@@ -1443,7 +1446,7 @@
             };
 
             data.n_button = {
-                icon: 'fa fa-ghost', size: 'md', square: false, link: false, glass: true, disabled: false
+                icon: 'fa fa-ghost', size: 'md', square: false, link: false, glass: true, round: false, disabled: false
             };
 
             data.n_textarea = {

@@ -39,6 +39,14 @@ export default {
             type: [Boolean]
         },
 
+        round: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         square: {
             default()
             {
@@ -114,6 +122,10 @@ export default {
 
         if ( this.link ) {
             classList.push('n-button--link');
+        }
+
+        if ( this.round ) {
+            classList.push('n-button--round');
         }
 
         if ( this.square ) {
