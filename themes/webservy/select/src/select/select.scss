@@ -1,0 +1,28 @@
+@use "../../../root/helpers" as *;
+
+.n-select {
+    background: color('form-input', 0.7);
+}
+
+.n-select.n-disabled {
+    background: color('form-disabled', 0.7);
+}
+
+.n-select__body,
+.n-select__empty {
+    background: color('popover');
+}
+
+.n-select__empty {
+    color: color('gray-60');
+}
+
+.n-select:not(.n-disabled):hover,
+.n-select:not(.n-disabled).n-focus {
+    background: color('form-input', 0.8);
+}
+
+.n-select .n-select__item {
+    color: color('base-color-fg-40');
+    background: color('base-color', 0.25);
+}

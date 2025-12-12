@@ -1,0 +1,21 @@
+@use "../../../root/helpers" as *;
+
+.n-cascader-panel {
+    background: color('background', 0.35);
+}
+
+.n-popover > .n-cascader-panel {
+    background: color('popover');
+}
+
+div:not(.n-popover) > .n-cascader-panel {
+    border: 1px solid color('gray-50', 0.15);
+}
+
+.n-cascader-panel .n-popover-option:not(.n-active) i {
+    color: color('gray-40');
+}
+
+.n-cascader-panel__items:not(:first-child) {
+    border-left: 1px solid color('gray-50', 0.15);
+}

@@ -1,0 +1,25 @@
+@use "../../../root/helpers" as *;
+
+.n-checkbox__checkbox {
+    color: color('foreground');
+    background: color('form-input', 0.7);
+}
+
+.n-checkbox.n-disabled .n-checkbox__checkbox  {
+    background: color('form-disabled', 0.7);
+}
+
+.n-checkbox:not(.n-disabled):hover .n-checkbox__checkbox {
+    background: color('form-input', 0.8);
+}
+
+.n-checkbox.n-checked:not(.n-disabled) .n-checkbox__checkbox,
+.n-checkbox.n-intermediate:not(.n-disabled) .n-checkbox__checkbox {
+    color: color('base-text');
+    background: color('base-color');
+    border-color: color('base-color');
+}
+
+.n-checkbox.n-checked:not(.n-disabled) .n-checkbox__label {
+    color: color('base-color');
+}

@@ -1,0 +1,479 @@
+@use 'sass:color';
+@use "../helpers" as *;
+
+$color-white:           #ffffff !default;
+$color-black:           #090b10 !default;
+
+$color-text:            #212121 !default;
+$color-shadow:          #000000 !default;
+$color-tooltip:         #161616 !default;
+$color-popover:         #ffffff !default;
+
+$color-foreground:      $color-black !default;
+$color-background:      $color-white !default;
+
+$color-neutral:         #9C9C9C !default;
+$color-primary:         #2B70E3 !default;
+$color-secondary:       #C23399 !default;
+$color-success:         #42BD97 !default;
+$color-warning:         #ED9E5A !default;
+$color-danger:          #DE4361 !default;
+$color-info:            #51BDD6 !default;
+
+$color-gray-05:               color.mix($color-foreground, $color-background, 0.05 * 100%) !default;
+$color-gray-10:               color.mix($color-foreground, $color-background, 0.10 * 100%) !default;
+$color-gray-15:               color.mix($color-foreground, $color-background, 0.15 * 100%) !default;
+$color-gray-20:               color.mix($color-foreground, $color-background, 0.20 * 100%) !default;
+$color-gray-25:               color.mix($color-foreground, $color-background, 0.25 * 100%) !default;
+$color-gray-30:               color.mix($color-foreground, $color-background, 0.30 * 100%) !default;
+$color-gray-35:               color.mix($color-foreground, $color-background, 0.35 * 100%) !default;
+$color-gray-40:               color.mix($color-foreground, $color-background, 0.40 * 100%) !default;
+$color-gray-45:               color.mix($color-foreground, $color-background, 0.45 * 100%) !default;
+$color-gray-50:               color.mix($color-foreground, $color-background, 0.50 * 100%) !default;
+$color-gray-55:               color.mix($color-foreground, $color-background, 0.55 * 100%) !default;
+$color-gray-60:               color.mix($color-foreground, $color-background, 0.60 * 100%) !default;
+$color-gray-65:               color.mix($color-foreground, $color-background, 0.65 * 100%) !default;
+$color-gray-70:               color.mix($color-foreground, $color-background, 0.70 * 100%) !default;
+$color-gray-75:               color.mix($color-foreground, $color-background, 0.75 * 100%) !default;
+$color-gray-80:               color.mix($color-foreground, $color-background, 0.80 * 100%) !default;
+$color-gray-85:               color.mix($color-foreground, $color-background, 0.85 * 100%) !default;
+$color-gray-90:               color.mix($color-foreground, $color-background, 0.90 * 100%) !default;
+$color-gray-95:               color.mix($color-foreground, $color-background, 0.95 * 100%) !default;
+
+$color-form:                  $color-gray-05 !default;
+$color-form-input:            $color-background !default;
+$color-form-disabled:         $color-gray-10 !default;
+
+$color-tag-0:                 #D74242 !default;
+$color-tag-1:                 #D76342 !default;
+$color-tag-2:                 #D78442 !default;
+$color-tag-3:                 #D7A142 !default;
+$color-tag-4:                 #C2A732 !default;
+$color-tag-5:                 #A2B02E !default;
+$color-tag-6:                 #8BB531 !default;
+$color-tag-7:                 #5EBF36 !default;
+$color-tag-8:                 #3AC778 !default;
+$color-tag-9:                 #39C498 !default;
+$color-tag-10:                #37BFBF !default;
+$color-tag-11:                #42B0D7 !default;
+$color-tag-12:                #428BD7 !default;
+$color-tag-13:                #434AE5 !default;
+$color-tag-14:                #5C42D7 !default;
+$color-tag-15:                #7842D7 !default;
+$color-tag-16:                #9542D7 !default;
+$color-tag-17:                #D742CD !default;
+$color-tag-18:                #D74285 !default;
+$color-tag-19:                #D74260 !default;
+
+$color-neutral-fg-10:         color.mix($color-foreground, $color-neutral, 10%) !default;
+$color-neutral-fg-20:         color.mix($color-foreground, $color-neutral, 20%) !default;
+$color-neutral-fg-30:         color.mix($color-foreground, $color-neutral, 30%) !default;
+$color-neutral-fg-40:         color.mix($color-foreground, $color-neutral, 40%) !default;
+$color-neutral-fg-50:         color.mix($color-foreground, $color-neutral, 50%) !default;
+$color-neutral-fg-60:         color.mix($color-foreground, $color-neutral, 60%) !default;
+$color-neutral-fg-70:         color.mix($color-foreground, $color-neutral, 70%) !default;
+$color-neutral-fg-80:         color.mix($color-foreground, $color-neutral, 80%) !default;
+$color-neutral-fg-90:         color.mix($color-foreground, $color-neutral, 90%) !default;
+
+$color-neutral-bg-10:         color.mix($color-background, $color-neutral, 10%) !default;
+$color-neutral-bg-20:         color.mix($color-background, $color-neutral, 20%) !default;
+$color-neutral-bg-30:         color.mix($color-background, $color-neutral, 30%) !default;
+$color-neutral-bg-40:         color.mix($color-background, $color-neutral, 40%) !default;
+$color-neutral-bg-50:         color.mix($color-background, $color-neutral, 50%) !default;
+$color-neutral-bg-60:         color.mix($color-background, $color-neutral, 60%) !default;
+$color-neutral-bg-70:         color.mix($color-background, $color-neutral, 70%) !default;
+$color-neutral-bg-80:         color.mix($color-background, $color-neutral, 80%) !default;
+$color-neutral-bg-90:         color.mix($color-background, $color-neutral, 90%) !default;
+
+$color-primary-fg-10:         color.mix($color-foreground, $color-primary, 10%) !default;
+$color-primary-fg-20:         color.mix($color-foreground, $color-primary, 20%) !default;
+$color-primary-fg-30:         color.mix($color-foreground, $color-primary, 30%) !default;
+$color-primary-fg-40:         color.mix($color-foreground, $color-primary, 40%) !default;
+$color-primary-fg-50:         color.mix($color-foreground, $color-primary, 50%) !default;
+$color-primary-fg-60:         color.mix($color-foreground, $color-primary, 60%) !default;
+$color-primary-fg-70:         color.mix($color-foreground, $color-primary, 70%) !default;
+$color-primary-fg-80:         color.mix($color-foreground, $color-primary, 80%) !default;
+$color-primary-fg-90:         color.mix($color-foreground, $color-primary, 90%) !default;
+
+$color-primary-bg-10:         color.mix($color-background, $color-primary, 10%) !default;
+$color-primary-bg-20:         color.mix($color-background, $color-primary, 20%) !default;
+$color-primary-bg-30:         color.mix($color-background, $color-primary, 30%) !default;
+$color-primary-bg-40:         color.mix($color-background, $color-primary, 40%) !default;
+$color-primary-bg-50:         color.mix($color-background, $color-primary, 50%) !default;
+$color-primary-bg-60:         color.mix($color-background, $color-primary, 60%) !default;
+$color-primary-bg-70:         color.mix($color-background, $color-primary, 70%) !default;
+$color-primary-bg-80:         color.mix($color-background, $color-primary, 80%) !default;
+$color-primary-bg-90:         color.mix($color-background, $color-primary, 90%) !default;
+
+$color-secondary-fg-10:       color.mix($color-foreground, $color-secondary, 10%) !default;
+$color-secondary-fg-20:       color.mix($color-foreground, $color-secondary, 20%) !default;
+$color-secondary-fg-30:       color.mix($color-foreground, $color-secondary, 30%) !default;
+$color-secondary-fg-40:       color.mix($color-foreground, $color-secondary, 40%) !default;
+$color-secondary-fg-50:       color.mix($color-foreground, $color-secondary, 50%) !default;
+$color-secondary-fg-60:       color.mix($color-foreground, $color-secondary, 60%) !default;
+$color-secondary-fg-70:       color.mix($color-foreground, $color-secondary, 70%) !default;
+$color-secondary-fg-80:       color.mix($color-foreground, $color-secondary, 80%) !default;
+$color-secondary-fg-90:       color.mix($color-foreground, $color-secondary, 90%) !default;
+
+$color-secondary-bg-10:       color.mix($color-background, $color-secondary, 10%) !default;
+$color-secondary-bg-20:       color.mix($color-background, $color-secondary, 20%) !default;
+$color-secondary-bg-30:       color.mix($color-background, $color-secondary, 30%) !default;
+$color-secondary-bg-40:       color.mix($color-background, $color-secondary, 40%) !default;
+$color-secondary-bg-50:       color.mix($color-background, $color-secondary, 50%) !default;
+$color-secondary-bg-60:       color.mix($color-background, $color-secondary, 60%) !default;
+$color-secondary-bg-70:       color.mix($color-background, $color-secondary, 70%) !default;
+$color-secondary-bg-80:       color.mix($color-background, $color-secondary, 80%) !default;
+$color-secondary-bg-90:       color.mix($color-background, $color-secondary, 90%) !default;
+
+$color-success-fg-10:         color.mix($color-foreground, $color-success, 10%) !default;
+$color-success-fg-20:         color.mix($color-foreground, $color-success, 20%) !default;
+$color-success-fg-30:         color.mix($color-foreground, $color-success, 30%) !default;
+$color-success-fg-40:         color.mix($color-foreground, $color-success, 40%) !default;
+$color-success-fg-50:         color.mix($color-foreground, $color-success, 50%) !default;
+$color-success-fg-60:         color.mix($color-foreground, $color-success, 60%) !default;
+$color-success-fg-70:         color.mix($color-foreground, $color-success, 70%) !default;
+$color-success-fg-80:         color.mix($color-foreground, $color-success, 80%) !default;
+$color-success-fg-90:         color.mix($color-foreground, $color-success, 90%) !default;
+
+$color-success-bg-10:         color.mix($color-background, $color-success, 10%) !default;
+$color-success-bg-20:         color.mix($color-background, $color-success, 20%) !default;
+$color-success-bg-30:         color.mix($color-background, $color-success, 30%) !default;
+$color-success-bg-40:         color.mix($color-background, $color-success, 40%) !default;
+$color-success-bg-50:         color.mix($color-background, $color-success, 50%) !default;
+$color-success-bg-60:         color.mix($color-background, $color-success, 60%) !default;
+$color-success-bg-70:         color.mix($color-background, $color-success, 70%) !default;
+$color-success-bg-80:         color.mix($color-background, $color-success, 80%) !default;
+$color-success-bg-90:         color.mix($color-background, $color-success, 90%) !default;
+
+$color-warning-fg-10:         color.mix($color-foreground, $color-warning, 10%) !default;
+$color-warning-fg-20:         color.mix($color-foreground, $color-warning, 20%) !default;
+$color-warning-fg-30:         color.mix($color-foreground, $color-warning, 30%) !default;
+$color-warning-fg-40:         color.mix($color-foreground, $color-warning, 40%) !default;
+$color-warning-fg-50:         color.mix($color-foreground, $color-warning, 50%) !default;
+$color-warning-fg-60:         color.mix($color-foreground, $color-warning, 60%) !default;
+$color-warning-fg-70:         color.mix($color-foreground, $color-warning, 70%) !default;
+$color-warning-fg-80:         color.mix($color-foreground, $color-warning, 80%) !default;
+$color-warning-fg-90:         color.mix($color-foreground, $color-warning, 90%) !default;
+
+$color-warning-bg-10:         color.mix($color-background, $color-warning, 10%) !default;
+$color-warning-bg-20:         color.mix($color-background, $color-warning, 20%) !default;
+$color-warning-bg-30:         color.mix($color-background, $color-warning, 30%) !default;
+$color-warning-bg-40:         color.mix($color-background, $color-warning, 40%) !default;
+$color-warning-bg-50:         color.mix($color-background, $color-warning, 50%) !default;
+$color-warning-bg-60:         color.mix($color-background, $color-warning, 60%) !default;
+$color-warning-bg-70:         color.mix($color-background, $color-warning, 70%) !default;
+$color-warning-bg-80:         color.mix($color-background, $color-warning, 80%) !default;
+$color-warning-bg-90:         color.mix($color-background, $color-warning, 90%) !default;
+
+$color-danger-fg-10:          color.mix($color-foreground, $color-danger, 10%) !default;
+$color-danger-fg-20:          color.mix($color-foreground, $color-danger, 20%) !default;
+$color-danger-fg-30:          color.mix($color-foreground, $color-danger, 30%) !default;
+$color-danger-fg-40:          color.mix($color-foreground, $color-danger, 40%) !default;
+$color-danger-fg-50:          color.mix($color-foreground, $color-danger, 50%) !default;
+$color-danger-fg-60:          color.mix($color-foreground, $color-danger, 60%) !default;
+$color-danger-fg-70:          color.mix($color-foreground, $color-danger, 70%) !default;
+$color-danger-fg-80:          color.mix($color-foreground, $color-danger, 80%) !default;
+$color-danger-fg-90:          color.mix($color-foreground, $color-danger, 90%) !default;
+
+$color-danger-bg-10:          color.mix($color-background, $color-danger, 10%) !default;
+$color-danger-bg-20:          color.mix($color-background, $color-danger, 20%) !default;
+$color-danger-bg-30:          color.mix($color-background, $color-danger, 30%) !default;
+$color-danger-bg-40:          color.mix($color-background, $color-danger, 40%) !default;
+$color-danger-bg-50:          color.mix($color-background, $color-danger, 50%) !default;
+$color-danger-bg-60:          color.mix($color-background, $color-danger, 60%) !default;
+$color-danger-bg-70:          color.mix($color-background, $color-danger, 70%) !default;
+$color-danger-bg-80:          color.mix($color-background, $color-danger, 80%) !default;
+$color-danger-bg-90:          color.mix($color-background, $color-danger, 90%) !default;
+
+$color-info-fg-10:            color.mix($color-foreground, $color-info, 10%) !default;
+$color-info-fg-20:            color.mix($color-foreground, $color-info, 20%) !default;
+$color-info-fg-30:            color.mix($color-foreground, $color-info, 30%) !default;
+$color-info-fg-40:            color.mix($color-foreground, $color-info, 40%) !default;
+$color-info-fg-50:            color.mix($color-foreground, $color-info, 50%) !default;
+$color-info-fg-60:            color.mix($color-foreground, $color-info, 60%) !default;
+$color-info-fg-70:            color.mix($color-foreground, $color-info, 70%) !default;
+$color-info-fg-80:            color.mix($color-foreground, $color-info, 80%) !default;
+$color-info-fg-90:            color.mix($color-foreground, $color-info, 90%) !default;
+
+$color-info-bg-10:            color.mix($color-background, $color-info, 10%) !default;
+$color-info-bg-20:            color.mix($color-background, $color-info, 20%) !default;
+$color-info-bg-30:            color.mix($color-background, $color-info, 30%) !default;
+$color-info-bg-40:            color.mix($color-background, $color-info, 40%) !default;
+$color-info-bg-50:            color.mix($color-background, $color-info, 50%) !default;
+$color-info-bg-60:            color.mix($color-background, $color-info, 60%) !default;
+$color-info-bg-70:            color.mix($color-background, $color-info, 70%) !default;
+$color-info-bg-80:            color.mix($color-background, $color-info, 80%) !default;
+$color-info-bg-90:            color.mix($color-background, $color-info, 90%) !default;
+
+$colors: (
+        'white': $color-white,
+        'black': $color-black,
+        'text': $color-text,
+        'shadow': $color-shadow,
+        'tooltip': $color-tooltip,
+        'popover': $color-popover,
+        'foreground': $color-foreground,
+        'background': $color-background,
+        'form': $color-form,
+        'form-input': $color-form-input,
+        'form-disabled': $color-form-disabled,
+        'gray-05': $color-gray-05,
+        'gray-10': $color-gray-10,
+        'gray-15': $color-gray-15,
+        'gray-20': $color-gray-20,
+        'gray-25': $color-gray-25,
+        'gray-30': $color-gray-30,
+        'gray-35': $color-gray-35,
+        'gray-40': $color-gray-40,
+        'gray-45': $color-gray-45,
+        'gray-50': $color-gray-50,
+        'gray-55': $color-gray-55,
+        'gray-60': $color-gray-60,
+        'gray-65': $color-gray-65,
+        'gray-70': $color-gray-70,
+        'gray-75': $color-gray-75,
+        'gray-80': $color-gray-80,
+        'gray-85': $color-gray-85,
+        'gray-90': $color-gray-90,
+        'gray-95': $color-gray-95,
+        'tag-0': $color-tag-0,
+        'tag-1': $color-tag-1,
+        'tag-2': $color-tag-2,
+        'tag-3': $color-tag-3,
+        'tag-4': $color-tag-4,
+        'tag-5': $color-tag-5,
+        'tag-6': $color-tag-6,
+        'tag-7': $color-tag-7,
+        'tag-8': $color-tag-8,
+        'tag-9': $color-tag-9,
+        'tag-10': $color-tag-10,
+        'tag-11': $color-tag-11,
+        'tag-12': $color-tag-12,
+        'tag-13': $color-tag-13,
+        'tag-14': $color-tag-14,
+        'tag-15': $color-tag-15,
+        'tag-16': $color-tag-16,
+        'tag-17': $color-tag-17,
+        'tag-18': $color-tag-18,
+        'tag-19': $color-tag-19,
+) !default;
+
+$color-base-neutral: (
+        'text': $color-white,
+        'color': $color-neutral,
+        'color-fg-10': $color-neutral-fg-10,
+        'color-fg-20': $color-neutral-fg-20,
+        'color-fg-30': $color-neutral-fg-30,
+        'color-fg-40': $color-neutral-fg-40,
+        'color-fg-50': $color-neutral-fg-50,
+        'color-fg-60': $color-neutral-fg-60,
+        'color-fg-70': $color-neutral-fg-70,
+        'color-fg-80': $color-neutral-fg-80,
+        'color-fg-90': $color-neutral-fg-90,
+        'color-bg-10': $color-neutral-bg-10,
+        'color-bg-20': $color-neutral-bg-20,
+        'color-bg-30': $color-neutral-bg-30,
+        'color-bg-40': $color-neutral-bg-40,
+        'color-bg-50': $color-neutral-bg-50,
+        'color-bg-60': $color-neutral-bg-60,
+        'color-bg-70': $color-neutral-bg-70,
+        'color-bg-80': $color-neutral-bg-80,
+        'color-bg-90': $color-neutral-bg-90,
+) !default;
+
+$color-base-primary: (
+        'text': $color-white,
+        'color': $color-primary,
+        'color-fg-10': $color-primary-fg-10,
+        'color-fg-20': $color-primary-fg-20,
+        'color-fg-30': $color-primary-fg-30,
+        'color-fg-40': $color-primary-fg-40,
+        'color-fg-50': $color-primary-fg-50,
+        'color-fg-60': $color-primary-fg-60,
+        'color-fg-70': $color-primary-fg-70,
+        'color-fg-80': $color-primary-fg-80,
+        'color-fg-90': $color-primary-fg-90,
+        'color-bg-10': $color-primary-bg-10,
+        'color-bg-20': $color-primary-bg-20,
+        'color-bg-30': $color-primary-bg-30,
+        'color-bg-40': $color-primary-bg-40,
+        'color-bg-50': $color-primary-bg-50,
+        'color-bg-60': $color-primary-bg-60,
+        'color-bg-70': $color-primary-bg-70,
+        'color-bg-80': $color-primary-bg-80,
+        'color-bg-90': $color-primary-bg-90,
+) !default;
+
+$color-base-secondary: (
+        'text': $color-white,
+        'color': $color-secondary,
+        'color-fg-10': $color-secondary-fg-10,
+        'color-fg-20': $color-secondary-fg-20,
+        'color-fg-30': $color-secondary-fg-30,
+        'color-fg-40': $color-secondary-fg-40,
+        'color-fg-50': $color-secondary-fg-50,
+        'color-fg-60': $color-secondary-fg-60,
+        'color-fg-70': $color-secondary-fg-70,
+        'color-fg-80': $color-secondary-fg-80,
+        'color-fg-90': $color-secondary-fg-90,
+        'color-bg-10': $color-secondary-bg-10,
+        'color-bg-20': $color-secondary-bg-20,
+        'color-bg-30': $color-secondary-bg-30,
+        'color-bg-40': $color-secondary-bg-40,
+        'color-bg-50': $color-secondary-bg-50,
+        'color-bg-60': $color-secondary-bg-60,
+        'color-bg-70': $color-secondary-bg-70,
+        'color-bg-80': $color-secondary-bg-80,
+        'color-bg-90': $color-secondary-bg-90,
+) !default;
+
+$color-base-success: (
+        'text': $color-white,
+        'color': $color-success,
+        'color-fg-10': $color-success-fg-10,
+        'color-fg-20': $color-success-fg-20,
+        'color-fg-30': $color-success-fg-30,
+        'color-fg-40': $color-success-fg-40,
+        'color-fg-50': $color-success-fg-50,
+        'color-fg-60': $color-success-fg-60,
+        'color-fg-70': $color-success-fg-70,
+        'color-fg-80': $color-success-fg-80,
+        'color-fg-90': $color-success-fg-90,
+        'color-bg-10': $color-success-bg-10,
+        'color-bg-20': $color-success-bg-20,
+        'color-bg-30': $color-success-bg-30,
+        'color-bg-40': $color-success-bg-40,
+        'color-bg-50': $color-success-bg-50,
+        'color-bg-60': $color-success-bg-60,
+        'color-bg-70': $color-success-bg-70,
+        'color-bg-80': $color-success-bg-80,
+        'color-bg-90': $color-success-bg-90,
+) !default;
+
+$color-base-warning: (
+        'text': $color-white,
+        'color': $color-warning,
+        'color-fg-10': $color-warning-fg-10,
+        'color-fg-20': $color-warning-fg-20,
+        'color-fg-30': $color-warning-fg-30,
+        'color-fg-40': $color-warning-fg-40,
+        'color-fg-50': $color-warning-fg-50,
+        'color-fg-60': $color-warning-fg-60,
+        'color-fg-70': $color-warning-fg-70,
+        'color-fg-80': $color-warning-fg-80,
+        'color-fg-90': $color-warning-fg-90,
+        'color-bg-10': $color-warning-bg-10,
+        'color-bg-20': $color-warning-bg-20,
+        'color-bg-30': $color-warning-bg-30,
+        'color-bg-40': $color-warning-bg-40,
+        'color-bg-50': $color-warning-bg-50,
+        'color-bg-60': $color-warning-bg-60,
+        'color-bg-70': $color-warning-bg-70,
+        'color-bg-80': $color-warning-bg-80,
+        'color-bg-90': $color-warning-bg-90,
+) !default;
+
+$color-base-danger: (
+        'text': $color-white,
+        'color': $color-danger,
+        'color-fg-10': $color-danger-fg-10,
+        'color-fg-20': $color-danger-fg-20,
+        'color-fg-30': $color-danger-fg-30,
+        'color-fg-40': $color-danger-fg-40,
+        'color-fg-50': $color-danger-fg-50,
+        'color-fg-60': $color-danger-fg-60,
+        'color-fg-70': $color-danger-fg-70,
+        'color-fg-80': $color-danger-fg-80,
+        'color-fg-90': $color-danger-fg-90,
+        'color-bg-10': $color-danger-bg-10,
+        'color-bg-20': $color-danger-bg-20,
+        'color-bg-30': $color-danger-bg-30,
+        'color-bg-40': $color-danger-bg-40,
+        'color-bg-50': $color-danger-bg-50,
+        'color-bg-60': $color-danger-bg-60,
+        'color-bg-70': $color-danger-bg-70,
+        'color-bg-80': $color-danger-bg-80,
+        'color-bg-90': $color-danger-bg-90,
+) !default;
+
+$color-base-info: (
+        'text': $color-white,
+        'color': $color-info,
+        'color-fg-10': $color-info-fg-10,
+        'color-fg-20': $color-info-fg-20,
+        'color-fg-30': $color-info-fg-30,
+        'color-fg-40': $color-info-fg-40,
+        'color-fg-50': $color-info-fg-50,
+        'color-fg-60': $color-info-fg-60,
+        'color-fg-70': $color-info-fg-70,
+        'color-fg-80': $color-info-fg-80,
+        'color-fg-90': $color-info-fg-90,
+        'color-bg-10': $color-info-bg-10,
+        'color-bg-20': $color-info-bg-20,
+        'color-bg-30': $color-info-bg-30,
+        'color-bg-40': $color-info-bg-40,
+        'color-bg-50': $color-info-bg-50,
+        'color-bg-60': $color-info-bg-60,
+        'color-bg-70': $color-info-bg-70,
+        'color-bg-80': $color-info-bg-80,
+        'color-bg-90': $color-info-bg-90,
+) !default;
+
+$color-tags: (
+        0:  #D74242,  // red
+        1:  #D76342,  // red-orange
+        2:  #D78442,  // orange
+        3:  #D7A142,  // orange-yellow
+        4:  #C2A732,  // yellow
+        5:  #A2B02E,  // yellow-green
+        6:  #8BB531,  // green
+        7:  #5EBF36,  // green-cyan
+        8:  #3AC778,  // teal
+        9:  #39C498,  // cyan
+        10: #37BFBF,  // cyan-blue
+        11: #42B0D7,  // light blue
+        12: #428BD7,  // blue
+        13: #434AE5,  // blue-indigo
+        14: #5C42D7,  // blue-indigo
+        15: #7842D7,  // indigo
+        16: #9542D7,  // purple
+        17: #D742CD,  // magenta
+        18: #D74285,  // pink-purple
+        19: #D74260   // reddish-pin
+) !default;
+
+$color-list: (
+        'neutral': $color-base-neutral,
+        'primary': $color-base-primary,
+        'secondary': $color-base-secondary,
+        'success': $color-base-success,
+        'warning': $color-base-warning,
+        'danger': $color-base-danger,
+        'info': $color-base-info,
+) !default;
+
+:root {
+
+    @each $name, $values in $color-list {
+        @include css-colors($values, '-light-#{$name}');
+    }
+
+    @include css-colors($colors, '-light');
+}
+
+@mixin exports() {
+
+    @each $name, $values in $color-list {
+        [class*="--#{$name}"] {
+            @include css-remaps($values, '-color-light-#{$name}', '-color-base');
+        }
+    }
+
+    @include css-remaps($colors, '-color-light', '-color');
+}
+
+@mixin default() {
+    @each $name, $values in $color-list {
+        @include css-remaps($values, '-color-dark-#{$name}', '-color-#{$name}');
+    }
+}

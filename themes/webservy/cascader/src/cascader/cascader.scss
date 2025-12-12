@@ -1,0 +1,27 @@
+@use "../../../root/helpers" as *;
+
+.n-cascader {
+    background: color('form-input', 0.7);
+}
+
+.n-cascader:not(.n-disabled):hover,
+.n-cascader:not(.n-disabled).n-focus {
+    background: color('form-input', 0.8);
+}
+
+.n-cascader.n-disabled {
+    background: color('form-disabled', 0.7);
+}
+
+.n-cascader__placeholder {
+    color: color('foreground', 0.6);
+}
+
+.n-cascader__body,
+.n-cascader__empty {
+     background: color('popover');
+}
+
+.n-cascader__empty {
+     color: color('gray-60');
+}

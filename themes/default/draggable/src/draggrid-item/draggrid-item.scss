@@ -35,7 +35,7 @@
     border-color: color('base-color');
 }
 
-.n-draggrid-item:not(.n-disabled) .n-draggrid-item__checkbox:hover {
+.n-draggrid-item:not(.n-disabled,.n-selected) .n-draggrid-item__checkbox:hover {
     border-color: color('base-color-bg-10');
 }
 

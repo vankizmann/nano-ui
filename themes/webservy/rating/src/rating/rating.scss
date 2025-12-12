@@ -1,0 +1,14 @@
+@use "../../../root/helpers" as *;
+
+.n-rating__stars span:before,
+.n-rating__stars span:after {
+    mask: svg-load('star.svg') no-repeat 0 0 / cover;
+}
+
+.n-rating__stars span:after {
+    background: color('gray-20');
+}
+
+.n-rating__stars span:before {
+    background: color('base-color');
+}
