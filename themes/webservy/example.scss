@@ -1,0 +1,29 @@
+@forward "./index";
+@forward "./root/vars/sizes-default";
+
+$color-primary: #2B70E3;
+
+@use "./root/vars/colors-light-bluish" as theme-light with (
+    $color-primary: $color-primary,
+);
+
+@use "./root/vars/colors-dark-bluish" as theme-dark with (
+    $color-primary: $color-primary,
+);
+
+[class*="n-theme--"] {
+    color: rgb(var(--n-color-text));
+}
+
+:root {
+    @include theme-light.default();
+}
+
+.n-theme--light {
+    @include theme-light.exports();
+}
+
+.n-theme--dark {
+    @include theme-dark.exports();
+}
+

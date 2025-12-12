@@ -1,0 +1,11 @@
+@use "../../../root/helpers" as *;
+
+.n-chart-item--other, .n-chart-legend--other {
+    --n-color-base-color: var(--n-color-gray-50);
+}
+
+@for $i from 0 through 20 {
+    .n-chart-item--color-#{$i}, .n-chart-legend--color-#{$i} {
+        --n-color-base-color: var(--n-color-tag-#{$i});
+    }
+}

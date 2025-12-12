@@ -1,0 +1,23 @@
+@use "../../../root/helpers" as *;
+
+.n-input {
+    color: color('foreground');
+    background: color('form-input', 0.7);
+}
+
+.n-input.n-disabled  {
+    background: color('form-disabled', 0.7);
+}
+
+.n-input .n-button {
+    color: color('gray-60');
+}
+
+.n-input:not(.n-disabled) .n-button:not(.n-disabled):hover {
+    color: color('base-color');
+}
+
+.n-input:not(.n-disabled):hover,
+.n-input:not(.n-disabled).n-focus {
+    background: color('form-input', 0.8);
+}

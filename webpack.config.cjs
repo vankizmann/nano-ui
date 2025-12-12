@@ -9,6 +9,7 @@ let themes = {
     './src/index.scss': './nano-ui.css',
     './docs/src/scss/index.scss': '../docs/dist/index.css',
     './themes/default/example.scss': './themes/default.css',
+    './themes/webservy/example.scss': './themes/webservy.css',
 };
 
 let libJs = {

@@ -1,0 +1,22 @@
+@use "../../../root/helpers" as *;
+
+.n-chart-donut circle.n-chart-item {
+    stroke: color('base-color');
+    transition: opacity 0.2s;
+}
+
+.n-chart-donut circle.n-chart-item--other {
+    stroke: color('foreground', 0.2);
+}
+
+circle.n-chart-hover:hover + circle.n-chart-item {
+    opacity: 0.5;
+}
+
+.n-chart-donut__text span:first-child {
+    color: color('text');
+}
+
+.n-chart-donut__text span:last-child {
+    color: color('text', 0.5);
+}

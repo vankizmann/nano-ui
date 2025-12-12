@@ -1,0 +1,34 @@
+@use "../../../root/helpers" as *;
+
+input, textarea {
+    outline: none !important;
+}
+
+[class*="n-"] input,
+[class*="n-"] textarea {
+    outline: none;
+    color: color('foreground');
+}
+
+[class*="n-"] input::placeholder,
+[class*="n-"] textarea::placeholder {
+    color: color('foreground');
+    opacity: 0.3;
+}
+
+:root {
+    --grid-gap-h: 0;
+    --grid-gap-v: 0;
+}
+
+.n-demo.n-theme--dark #app {
+    background: #181818;
+}
+
+.n-demo.n-theme--light #app {
+    background: #eeeeee;
+}
+
+.n-demo #app .app-container {
+    background: color('background');
+}

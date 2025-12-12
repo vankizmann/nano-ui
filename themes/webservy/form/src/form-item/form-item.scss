@@ -1,0 +1,25 @@
+@use "../../../root/helpers" as *;
+
+.n-form-item__condition span {
+    color: color('gray-50');
+}
+
+.n-form-item.is-disabled .n-form-item__condition {
+    background: color('base-color', 0.15);
+}
+
+.n-form-item.is-disabled .n-form-item__condition span {
+    color: color('base-color-fg-10');
+}
+
+.n-form-item.is-disabled .n-form-item__condition:hover {
+    background: color('base-color', 0.20);
+}
+
+.n-form-item__label label {
+    color: color('gray-60');
+}
+
+.n-form-item__error {
+    color: color('danger-color-bg-20');
+}

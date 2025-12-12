@@ -1,0 +1,14 @@
+@use "../../../root/helpers" as *;
+
+.n-table:before {
+    border: 1px solid color('gray-15');
+}
+
+.n-table .n-draglist-item {
+    border-bottom: 1px solid color('gray-10');
+}
+
+.n-table .n-table__header {
+    border-bottom: 1px solid color('gray-15');
+    background: color('form');
+}

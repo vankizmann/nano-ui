@@ -1,0 +1,31 @@
+@use "../../../root/helpers" as *;
+
+.n-table__header .n-table-column {
+    border-left: 1px solid color('gray-10');
+}
+
+.n-table-column.n-filtered .n-table-column__label {
+    color: color('base-color');
+}
+
+.n-table-column .n-table-column__sort > i:before {
+    border-top-color: color('gray-50', 0.5);
+}
+
+.n-table-column.n-sorted.n-desc .n-table-column__sort > i:before {
+    border-top-color: color('base-color');
+}
+
+.n-table-column .n-table-column__sort > i:after {
+    border-bottom-color: color('gray-50', 0.5);
+}
+
+.n-table-column.n-sorted.n-asc .n-table-column__sort > i:after {
+    border-bottom-color: color('base-color');
+}
+
+.n-table .n-table-column .n-table-column__filter > i {
+    color: color('gray-60');
+    background: color('gray-10');
+}
+

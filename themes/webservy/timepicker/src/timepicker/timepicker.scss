@@ -1,0 +1,40 @@
+@use "../../../root/helpers" as *;
+
+.n-timepicker {
+    background: color('form-input', 0.7);
+}
+
+.n-timepicker:not(.n-disabled):hover,
+.n-timepicker:not(.n-disabled).n-focus {
+    background: color('form-input', 0.8);
+}
+
+.n-timepicker.n-disabled {
+    background: color('form-disabled', 0.7);
+}
+
+.n-timepicker__seperator {
+    color: color('gray-60');
+}
+
+.n-timepicker__clear,
+.n-timepicker__angle {
+    color: color('gray-60');
+}
+
+.n-timepicker__clear i {
+    background: color('gray-15', 0.6);
+}
+
+.n-timepicker__placeholder {
+    color: color('foreground', 0.5);
+}
+
+.n-timepicker__body,
+.n-timepicker__empty {
+     background: color('form-input');
+}
+
+.n-timepicker__empty {
+     color: color('gray-60');
+}

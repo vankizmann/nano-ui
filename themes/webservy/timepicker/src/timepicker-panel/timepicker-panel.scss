@@ -1,0 +1,26 @@
+@use "../../../root/helpers" as *;
+
+.n-timepicker-panel {
+    background: color('background', 0.35);
+}
+
+.n-popover > .n-timepicker-panel {
+    background: color('popover');
+}
+
+div:not(.n-popover,.n-datetimepicker-panel) > .n-timepicker-panel {
+    border: 1px solid color('gray-50', 0.15);
+}
+
+.n-timepicker-panel__header {
+    border-bottom: 1px solid color('gray-50', 0.15);
+}
+
+.n-timepicker-panel__panel:not(:last-child) {
+    border-right: 1px solid color('gray-50', 0.15);
+}
+
+.n-timepicker-panel__item.n-selected {
+    color: color('base-text');
+    background: color('base-color');
+}
