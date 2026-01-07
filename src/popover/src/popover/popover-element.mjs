@@ -14,6 +14,7 @@ export class PopoverElement
         target: null,
         listen: false,
         trigger: 'hover',
+        toggle: false,
         position: 'bottom-center',
         width: -1,
         scrollClose: true,
@@ -205,12 +206,16 @@ export class PopoverElement
 
         let keyCode = event.which === 1 || event.which === 0;
 
-        if ( this.visible || ! keyCode ) {
+        if ( ! keyCode ) {
             return;
         }
 
         let tgt = Dom.find(event.target).closest(target),
             src = Dom.find(event.target).closest(el);
+
+        if ( this.visible ) {
+            return this.options.toggle && tgt && this.hideQueue('click');
+        }
 
         let result = (!! tgt || !! src);
 

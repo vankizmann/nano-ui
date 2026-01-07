@@ -66,10 +66,10 @@
     background: color('gray-50', 0.075);
 }
 
-//.n-popover-option:not(.n-disabled).n-focus,
-//.n-popover-option:not(.n-disabled).n-focus:hover {
-//    background: color('gray-50', 0.15);
-//}
+.n-popover-option:not(.n-disabled).n-focus,
+.n-popover-option:not(.n-disabled).n-focus:hover {
+    background: color('gray-50', 0.15);
+}
 
 .n-popover-option .n-image {
     color: color('gray-60');
