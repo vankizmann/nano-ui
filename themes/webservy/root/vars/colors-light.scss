@@ -8,6 +8,8 @@ $color-text:            #212121 !default;
 $color-shadow:          #000000 !default;
 $color-tooltip:         #161616 !default;
 $color-popover:         #ffffff !default;
+$color-modal:           #D9D9D9 !default;
+$color-confirm:         #0F0F0F !default;
 
 $color-foreground:      $color-black !default;
 $color-background:      $color-white !default;
@@ -42,7 +44,7 @@ $color-gray-95:               color.mix($color-foreground, $color-background, 0.
 
 $color-form:                  $color-gray-05 !default;
 $color-form-input:            $color-background !default;
-$color-form-disabled:         $color-gray-10 !default;
+$color-form-disabled:         $color-background !default;
 
 $color-tag-0:                 #D74242 !default;
 $color-tag-1:                 #D76342 !default;
@@ -212,6 +214,8 @@ $colors: (
         'shadow': $color-shadow,
         'tooltip': $color-tooltip,
         'popover': $color-popover,
+        'modal': $color-modal,
+        'confirm': $color-confirm,
         'foreground': $color-foreground,
         'background': $color-background,
         'form': $color-form,
