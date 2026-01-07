@@ -117,6 +117,14 @@ export default {
             type: [Boolean]
         },
 
+        alwaysRender: {
+            default()
+            {
+                return false;
+            },
+            type: [Boolean]
+        },
+
         framerate: {
             default()
             {
@@ -747,6 +755,10 @@ export default {
 
         if ( Any.isNull(this.modelValue) ) {
             viewBody = this.tempValue;
+        }
+
+        if ( this.alwaysRender ) {
+            viewBody = true;
         }
 
         if ( viewBody ) {

@@ -8,6 +8,8 @@ $color-text:            #E3E3E3 !default;
 $color-shadow:          #000000 !default;
 $color-tooltip:         #161616 !default;
 $color-popover:         #161616 !default;
+$color-modal:           #0F0F0F !default;
+$color-confirm:         #0F0F0F !default;
 
 $color-foreground:      $color-white !default;
 $color-background:      $color-black !default;
@@ -212,6 +214,8 @@ $colors: (
         'shadow': $color-shadow,
         'tooltip': $color-tooltip,
         'popover': $color-popover,
+        'modal': $color-modal,
+        'confirm': $color-confirm,
         'foreground': $color-foreground,
         'background': $color-background,
         'form': $color-form,
