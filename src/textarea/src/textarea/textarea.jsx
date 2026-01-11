@@ -5,6 +5,8 @@ export default {
 
     name: 'NTextarea',
 
+    inheritAttrs: false,
+
     props: {
 
         modelValue: {
