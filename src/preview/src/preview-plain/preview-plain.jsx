@@ -17,7 +17,24 @@ export default {
             default()
             {
                 return true;
-            }
+            },
+            type:  [Boolean]
+        },
+
+        buttonText: {
+            default()
+            {
+                return Locale.trans('Download file');
+            },
+            type: [String]
+        },
+
+        renderButton: {
+            default()
+            {
+                return true;
+            },
+            type:  [Boolean]
         }
 
     },
@@ -43,7 +60,21 @@ export default {
         );
 
         if ( this.showSrc ) {
-            slots[1] = (<li>{ this.file }</li>);
+            slots.push(<li class="np-file">{ this.file }</li>);
+        }
+
+        let buttonProps = {
+            nativeType: 'a', href: this.file, target: '_blank'
+        };
+
+        let buttonHtml = (
+            <li class="np-button">
+                <NButton {...buttonProps}>{ this.buttonText }</NButton>
+            </li>
+        );
+
+        if ( this.renderButton ) {
+            slots.push(buttonHtml);
         }
 
         return (

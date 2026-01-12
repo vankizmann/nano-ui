@@ -1,4 +1,4 @@
-import { UUID, Obj, Arr, Any, Event } from "@kizmann/pico-js";
+import { UUID, Obj, Arr, Any, Event, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -18,6 +18,14 @@ export default {
             {
                 return null;
             }
+        },
+
+        title: {
+            default()
+            {
+                return null;
+            },
+            type: [String]
         },
 
         index: {
@@ -66,6 +74,22 @@ export default {
                 return true;
             },
             type: [Boolean]
+        },
+
+        buttonText: {
+            default()
+            {
+                return Locale.trans('Download file');
+            },
+            type: [String]
+        },
+
+        renderButton: {
+            default()
+            {
+                return true;
+            },
+            type: [Boolean]
         }
 
     },
@@ -103,6 +127,20 @@ export default {
 
     },
 
+    renderTitle()
+    {
+        console.log(this.title);
+        if ( Any.isEmpty(this.title) ) {
+            return null;
+        }
+
+        return (
+            <div class="n-preview__title">
+                <span>{this.title}</span>
+            </div>
+        );
+    },
+
     renderPreview()
     {
         if ( ! this.preview ) {
@@ -116,7 +154,7 @@ export default {
         }
 
         let props = {
-            showSrc: false,
+            showSrc: false, renderButton: false,
         };
 
         return (<NPreviewPlain src={this.tempThumb} {...props} />);
@@ -135,7 +173,7 @@ export default {
         }
 
         let props = {
-            showSrc: this.showSrc,
+            showSrc: this.showSrc, buttonText: this.buttonText, renderButton: this.renderButton
         };
 
         return (<NPreviewPlain src={this.tempFile} {...props} />);
@@ -173,6 +211,12 @@ export default {
             classList.push('n-mime-' + type);
         }
 
+        let thumb = this.PreviewHelper.getType(this.tempThumb);
+
+        if ( thumb ) {
+            classList.push('n-mime-preview-' + thumb);
+        }
+
         let props = {};
 
         if ( this.preview ) {
@@ -183,7 +227,7 @@ export default {
 
         return (
             <div key={key} class={classList} {...props}>
-                { [this.ctor('renderPreview')(), this.ctor('renderModal')()] }
+                { [this.ctor('renderPreview')(), this.ctor('renderTitle')(), this.ctor('renderModal')()] }
             </div>
         );
     }
