@@ -155,7 +155,7 @@ export default {
         let renderBody = this.NTabs.tempValue === this.name;
 
         if ( this.keep ) {
-            renderBody = this.init;
+            renderBody |= this.init;
         }
 
         if ( ! this.lazy ) {

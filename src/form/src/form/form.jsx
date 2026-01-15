@@ -307,7 +307,7 @@ export default {
                 errors[key] = err;
             });
 
-            Obj.each(this.validate(), (err, key) => {
+            Obj.each(this.ruleErrors, (err, key) => {
 
                 if ( Obj.has(errors, key) ) {
                     err = Arr.merge(errors[key], err);
