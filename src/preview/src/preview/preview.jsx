@@ -129,7 +129,6 @@ export default {
 
     renderTitle()
     {
-        console.log(this.title);
         if ( Any.isEmpty(this.title) ) {
             return null;
         }
