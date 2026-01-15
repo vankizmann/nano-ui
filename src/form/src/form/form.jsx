@@ -283,6 +283,8 @@ export default {
 
         isValid(includeErrors = false)
         {
+            this.validate();
+
             let count = Any.keys(this.ruleErrors).length;
 
             if ( includeErrors ) {
@@ -305,7 +307,7 @@ export default {
                 errors[key] = err;
             });
 
-            Obj.each(this.ruleErrors, (err, key) => {
+            Obj.each(this.validate(), (err, key) => {
 
                 if ( Obj.has(errors, key) ) {
                     err = Arr.merge(errors[key], err);

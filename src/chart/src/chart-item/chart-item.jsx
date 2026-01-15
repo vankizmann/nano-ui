@@ -33,7 +33,7 @@ export default {
             {
                 return Locale.trans('Items');
             },
-            type: [String]
+            type: [String, Number]
         },
 
         type: {
