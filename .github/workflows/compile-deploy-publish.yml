@@ -52,12 +52,9 @@ jobs:
           git tag v$PACKAGE_VERSION
           git push origin v$PACKAGE_VERSION
 
-      - name: Set up .npmrc
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-
       - name: Create and push tag
         if: steps.check_tag.outputs.exists == 'false'
-        run: npm publish
+        run: npm publish --access public
 
       - name: Remove /dist and /docs/dist from .gitignore
         run: |
