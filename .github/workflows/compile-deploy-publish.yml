@@ -20,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
@@ -60,6 +60,8 @@ jobs:
       - name: Create and push tag
         if: steps.check_tag.outputs.exists == 'false'
         run: yarn publish --new-version $(node -p "require('./package.json').version") --non-interactive
+        env:
+          NPM_CONFIG_PROVENANCE: true
 
       - name: Remove /dist and /docs/dist from .gitignore
         run: |
