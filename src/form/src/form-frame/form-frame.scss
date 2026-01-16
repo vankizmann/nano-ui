@@ -107,6 +107,6 @@
     width: size('base-hgt');
 }
 
-.n-form-frame__body .n-scrollbar__wrap {
+.n-form-frame__body > .n-scrollbar-content > .n-scrollbar__wrap {
     padding: size('base-pad-vertical', 'calc($ * 2)') size('base-pad', 'calc($ * 2)');
 }
