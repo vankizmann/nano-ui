@@ -59,7 +59,7 @@ jobs:
 
       - name: Create and push tag
         if: steps.check_tag.outputs.exists == 'false'
-        run: yarn publish --new-version $(node -p "require('./package.json').version") --non-interactive
+        run: npm publish --access public
         env:
           NPM_CONFIG_PROVENANCE: true
 
