@@ -16,6 +16,10 @@
         "types/",
         "package.json"
     ],
+    "publishConfig": {
+        "access": "public",
+        "provenance": true
+    },
     "scripts": {
         "build": "webpack --mode production",
         "watch": "webpack --watch --mode development"
