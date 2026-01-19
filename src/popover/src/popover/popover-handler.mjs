@@ -1,4 +1,4 @@
-import { UUID, Str, Obj, Dom, Any, Arr } from "@kizmann/pico-js";
+import { UUID, Str, Obj, Dom, Any, Arr, Event } from "@kizmann/pico-js";
 import PopoverElement from "./popover-element.mjs";
 import PopoverHelper from "./popover-helper.mjs";
 
@@ -17,6 +17,10 @@ export class PopoverHandler
         }, 30));
 
         Dom.find(window).on(PopoverHelper.getScrollEvent(), Any.throttle((e) => {
+            this.detectScrollOnCurrent(e);
+        }, 30));
+
+        Event.bind('NScrollbar:scroll', Any.throttle((e) => {
             this.detectScrollOnCurrent(e);
         }, 30));
 
@@ -99,7 +103,9 @@ export class PopoverHandler
         });
 
         Arr.each(currents, (current) => {
-            current.hide('scroll');
+            if ( Dom.find(current.options.target).inside(event.target) ) {
+                current.hide('scroll');
+            }
         });
     }
 
@@ -110,7 +116,7 @@ if ( ! window[PopoverHandler.alias] ) {
 }
 
 Dom.ready(() => {
-   PopoverHandler.mount();
+    PopoverHandler.mount();
 });
 
 export default PopoverHandler;

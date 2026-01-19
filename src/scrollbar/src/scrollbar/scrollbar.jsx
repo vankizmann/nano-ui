@@ -467,8 +467,10 @@ export default {
             }
         },
 
-        onScroll()
+        onScroll(e)
         {
+            Event.fire('NScrollbar:scroll', e);
+
             let scroll = {
                 top: this.$refs.content.scrollTop,
                 left: this.$refs.content.scrollLeft
