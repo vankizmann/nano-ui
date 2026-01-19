@@ -1,6 +1,6 @@
 @use "../../../root/helpers" as *;
 
-.n-table__header .n-table-column {
+.n-table__header .n-table-column:not(:first-child) {
     border-left: 1px solid color('gray-10');
 }
 

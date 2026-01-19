@@ -47,7 +47,7 @@ export default {
         lazy: {
             default()
             {
-                return false;
+                return true;
             },
             type: [Boolean]
         },
@@ -218,7 +218,7 @@ export default {
 
     beforeMount()
     {
-        if ( this.lazy ) {
+        if ( this.lazy && ! this.$slots.default ) {
             this.generateOptions();
         }
 
@@ -253,6 +253,11 @@ export default {
             }
 
             this.tempValue = value;
+        },
+
+        options()
+        {
+            this.generateOptions();
         },
 
         search()
@@ -299,6 +304,8 @@ export default {
                     tempLabel: option.label, tempValue: option.value
                 });
             });
+
+            this.searchOptions();
         },
 
         addOption(option)

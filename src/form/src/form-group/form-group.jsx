@@ -26,7 +26,7 @@ export default {
             type: [Boolean]
         },
 
-        key: {
+        name: {
             default()
             {
                 return UUID();
@@ -322,7 +322,7 @@ export default {
         }
 
         return (
-            <fieldset id={this.key} class={classList} data-group-key={this.key}>
+            <fieldset id={this.name} class={classList} data-group-key={this.name}>
                 { this.ctor('renderLabel')() }
                 { this.ctor('renderTooltip')() }
                 { this.ctor('renderBody')() }

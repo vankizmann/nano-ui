@@ -11,7 +11,7 @@ export default {
             {
                 return 0;
             },
-            type: [Number]
+            type: [Number, String]
         },
 
         steps: {
