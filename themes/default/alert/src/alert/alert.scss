@@ -2,7 +2,7 @@
 
 .n-alert {
     background: color('shadow', 0.8);
-    backdrop-filter: blur(1.5px);
+    // PERFORMANCE backdrop-filter: blur(1.5px);
     transition: opacity 0.3s;
 }
 
