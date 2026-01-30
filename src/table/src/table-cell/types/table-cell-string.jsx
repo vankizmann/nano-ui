@@ -19,9 +19,11 @@ export default {
             );
         }
 
+        let input = this.input.replace(/<[^>]*>?/gm, '');
+
         return (
             <div>
-                <span>{ Any.convertString(this.input, this.column.emptyText) }</span>
+                <span>{ Any.convertString(input, this.column.emptyText) }</span>
             </div>
         );
     }
