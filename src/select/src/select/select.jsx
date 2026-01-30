@@ -218,7 +218,7 @@ export default {
 
     beforeMount()
     {
-        if ( this.lazy && ! this.$slots.default ) {
+        if ( this.lazy || ! this.$slots.default ) {
             this.generateOptions();
         }
 
@@ -304,8 +304,6 @@ export default {
                     tempLabel: option.label, tempValue: option.value
                 });
             });
-
-            this.searchOptions();
         },
 
         addOption(option)
@@ -768,7 +766,7 @@ export default {
             return emptyHtml;
         }
 
-        if ( this.lazy ) {
+        if ( this.lazy || ! this.$slots.default ) {
             return this.ctor('renderLazyItems')();
         }
 

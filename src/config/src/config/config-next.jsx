@@ -71,8 +71,6 @@ export default {
             let final = value.replace(/^@/, '')
                 .replace(/^\\@/, '@');
 
-
-
             if ( value.match(/^@/) ) {
                 return this.trans(final);
             }
