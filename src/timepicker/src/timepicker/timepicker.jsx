@@ -1,4 +1,4 @@
-import { Arr, Obj, Now, Any, Locale } from "@kizmann/pico-js";
+import { Arr, Obj, Now, Mix, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -114,17 +114,17 @@ export default {
 
         hoursGrid()
         {
-            return this.tempValue.getHours(this.hoursInterval);
+            return this.tempValue.getHoursGrid(this.hoursInterval);
         },
 
         minutesGrid()
         {
-            return this.tempValue.getMinutes(this.minutesInterval);
+            return this.tempValue.getMinutesGrid(this.minutesInterval);
         },
 
         secondsGrid()
         {
-            return this.tempValue.getSeconds(this.secondsInterval);
+            return this.tempValue.getSecondsGrid(this.secondsInterval);
         }
 
     },

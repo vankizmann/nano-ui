@@ -1,4 +1,4 @@
-import { UUID, Num, Arr, Obj, Dom, Any, Event, Locale } from "@kizmann/pico-js";
+import { Hash, Num, Arr, Obj, Dom, Mix, Event, Locale } from "@kizmann/pico-js";
 import NDraghandler from "../draghandler/draghandler.js";
 
 window.DEBUG_NDLIST = false;
@@ -139,7 +139,7 @@ export default {
         useKeys: {
             default()
             {
-                return true;
+                return false;
             },
             type: [Boolean]
         },
@@ -308,7 +308,7 @@ export default {
     data()
     {
         return {
-            uid: UUID(),
+            uid: Hash.uuid(),
             virtuals: [],
             visible: [],
             childNodes: {},
@@ -434,7 +434,7 @@ export default {
         {
             let canDrag = this.allowDrag;
 
-            if ( ! Any.isFunction(canDrag) ) {
+            if ( ! Mix.isFunction(canDrag) ) {
                 canDrag = () => this.allowDrag;
             }
 
@@ -595,7 +595,7 @@ export default {
         {
             let canSelect = this.allowSelect;
 
-            if ( ! Any.isFunction(canSelect) ) {
+            if ( ! Mix.isFunction(canSelect) ) {
                 canSelect = () => this.allowSelect;
             }
 

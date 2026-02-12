@@ -85,7 +85,7 @@ pi.Obj.assign(window.VueData, {
 | **Prop**           | **Type**       | **Default**         | **Description**                                                                   |
 |--------------------|----------------|---------------------|-----------------------------------------------------------------------------------|
 | `modelValue`       | `Boolean`      | `true`              | Controls whether the form group is expanded (visible) or collapsed.               |
-| `key`              | `String`       | `UUID()`            | Unique identifier for the form group.                                             |
+| `key`              | `String`       | `Hash.uuid()`            | Unique identifier for the form group.                                             |
 | `label`            | `String`       | `''`                | Title text for the form group.                                                    |
 | `icon`             | `String`       | `''`                | Icon class to display next to the label.                                          |
 | `size`             | `String`       | `''`                | Size of the form group (overrides the form's size setting).                       |

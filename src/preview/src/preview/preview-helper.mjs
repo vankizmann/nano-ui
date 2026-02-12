@@ -1,4 +1,4 @@
-import { Any, Arr, Dom, Obj } from "@kizmann/pico-js";
+import { Mix, Arr, Dom, Obj } from "@kizmann/pico-js";
 
 export class PreviewHelper
 {
@@ -12,7 +12,7 @@ export class PreviewHelper
             return fallback;
         }
 
-        if ( Any.isEmpty(match[1]) ) {
+        if ( Mix.isEmpty(match[1]) ) {
             return fallback;
         }
 
@@ -23,7 +23,7 @@ export class PreviewHelper
     {
         let file = Obj.get(source, 'name', source);
 
-        if ( Any.isEmpty(file) ) {
+        if ( Mix.isEmpty(file) ) {
             return fallback;
         }
 
@@ -48,7 +48,7 @@ export class PreviewHelper
     {
         let file = Obj.get(source, 'name', source);
 
-        if ( Any.isEmpty(file) ) {
+        if ( Mix.isEmpty(file) ) {
             return fallback;
         }
 
@@ -65,7 +65,7 @@ export class PreviewHelper
 
     static getVimeoKey(source, fallback = null)
     {
-        if ( ! Any.isString(source) ) {
+        if ( ! Mix.isString(source) ) {
             return fallback;
         }
 
@@ -86,7 +86,7 @@ export class PreviewHelper
 
     static getYoutubeKey(source, fallback)
     {
-        if ( ! Any.isString(source) ) {
+        if ( ! Mix.isString(source) ) {
             return fallback;
         }
 

@@ -1,4 +1,4 @@
-import { Arr, Dom, Any } from "@kizmann/pico-js";
+import { Arr, Dom, Mix } from "@kizmann/pico-js";
 
 export default {
 
@@ -70,7 +70,7 @@ export default {
         getSorted()
         {
             // Fix for vue constructor prop warning
-            let indexies = Arr.each(Any.keys(this.elements), (key) => {
+            let indexies = Arr.each(Mix.keys(this.elements), (key) => {
                 return { name: this.elements[key]['name'], index: this.getIndex(this.elements[key]) };
             });
 

@@ -1,5 +1,5 @@
 import TableCell from "../table-cell.jsx";
-import { Obj, Any } from "@kizmann/pico-js";
+import { Obj, Mix } from "@kizmann/pico-js";
 
 export default {
 

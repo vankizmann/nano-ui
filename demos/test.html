@@ -79,6 +79,17 @@
 
     </style>
 
+    <script src="https://unpkg.com/moment"></script>
+    <script src="https://unpkg.com/vue@3.4.6"></script>
+<!--    <script src="https://unpkg.com/@kizmann/pico-js/dist/pico-js.js"></script>-->
+    <script src="https://pico-js.test/dist/pico-js.browser.js"></script>
+    <script>
+        console.log(window.pi)
+    </script>
+    <script src="../dist/nano-ui.esm.js"></script>
+    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+
 </head>
 <body class="n-demo">
 
@@ -466,35 +477,6 @@
             </div>
             <div class="col-1-1 col-1-3@md">
                 <n-select v-bind="n_select" type="info" :options="icons"></n-select>
-            </div>
-        </div>
-
-        <h2>NCascader</h2>
-
-        <div class="app-options n-grid gap-30">
-            <div class="col-auto">
-                <n-select style="width: 100px;" v-model="n_cascader.size" :options="sizes"></n-select>
-            </div>
-            <div class="col-auto">
-                <n-select style="width: 210px;" v-model="n_cascader.type" :options="types"></n-select>
-            </div>
-            <div class="col-auto">
-                <n-checkbox v-model="n_cascader.clearable">Clearable</n-checkbox>
-            </div>
-            <div class="col-auto">
-                <n-checkbox v-model="n_cascader.disabled">Disabled</n-checkbox>
-            </div>
-        </div>
-
-        <div class="n-grid gap-10">
-            <div class="col--1-1">
-                <n-cascader-panel v-bind="n_cascader" trigger="click" :options="cascaderData"></n-cascader-panel>
-            </div>
-            <div class="col--1-1 col--1-8@md col--right">
-                <n-cascader v-bind="n_cascader" :options="cascaderData"></n-cascader>
-            </div>
-            <div class="col--1-1 col--1-8@md col--right">
-                <n-cascader v-bind="n_cascader" :options="[]"></n-cascader>
             </div>
         </div>
 
@@ -1254,27 +1236,19 @@
             </n-form-item>
         </n-form>
 
-        <n-map :lat="n_map.lat" :lng="n_map.lng" :zoom="9">
+        <n-map v-if="false" :lat="n_map.lat" :lng="n_map.lng" :zoom="9">
             <n-map-marker v-model:lat="n_map.lat" v-model:lng="n_map.lng" :drag="true"></n-map-marker>
         </n-map>
 
     </div>
 </div>
 
-<script src="https://unpkg.com/@kizmann/pico-js@2/dist/pico-js.browser.js"></script>
-<script src="https://unpkg.com/vue@3.4.6"></script>
-<script src="../dist/nano-ui.esm.js"></script>
-<script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js" defer></script>
-<script src="https://maps.googleapis.com/maps/api/js" defer></script>
-
 <script>
-    (function () {
+    (function (nano) {
 
         'use strict';
 
         pi.Dom.ready(function () {
-
-            console.log('ok?')
 
             let data = {
                 confirmTest: false
@@ -1425,9 +1399,11 @@
                 return pi.Obj.assign(item, { children: children });
             });
 
+            console.log(data.cascaderData);
+
             data.virtualData = itemGenerator(10000);
 
-            data.virtualTree = pi.Arr.each(itemGenerator(100), function (item) {
+            data.virtualTree = pi.Arr.map(itemGenerator(100), function (item) {
                 return pi.Obj.assign(item, { children: itemGenerator(10) });
             });
 
@@ -1598,7 +1574,7 @@
 
                     data.demoIcons = pi.Arr.reduce(pi.Mix.vals(nano.Icons), function (merge, icon) {
                         return pi.Obj.assign(merge, { [icon]: icon });
-                    }, {});
+                    }, { 'fa fa-ghost': 'fa fa-ghost' });
 
                     return data;
                 },
@@ -1619,11 +1595,10 @@
                 nano.Install(App);
             });
 
-
             window.App.mount('#app');
         });
 
-    })();
+    })(window.nano);
 </script>
 
 </body>

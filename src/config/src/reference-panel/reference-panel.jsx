@@ -1,4 +1,4 @@
-import { Arr, Obj, Any } from "@kizmann/pico-js";
+import { Arr, Obj, Mix } from "@kizmann/pico-js";
 
 export default {
 
@@ -45,7 +45,7 @@ export default {
         {
             let result = {};
 
-            if ( ! Any.isPlain(value) && ! Obj.get(value, '__v_skip') ) {
+            if ( ! Mix.isObj(value) && ! Obj.get(value, '__v_skip') ) {
                 return result;
             }
 
@@ -55,13 +55,13 @@ export default {
                     `${path}.${key}`, value[key]
                 ];
 
-                if ( Any.isPlain(val) ) {
+                if ( Mix.isObj(val) ) {
                     val = this.buildTree(val, ref);
                 }
 
                 let type = typeof val;
 
-                if ( Any.isArray(val) ) {
+                if ( Mix.isArray(val) ) {
                     type = 'array';
                 }
 

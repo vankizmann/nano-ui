@@ -1,4 +1,4 @@
-import { Any, Dom, Arr, Obj, UUID } from "@kizmann/pico-js";
+import { Mix, Dom, Arr, Obj, Run, Hash } from "@kizmann/pico-js";
 import { PopoverHelper } from "./popover-helper.mjs";
 import PopoverHandler from "./popover-handler.mjs";
 
@@ -34,7 +34,7 @@ export class PopoverElement
         });
 
         if ( ! options.uid ) {
-            options.uid = UUID()
+            options.uid = Hash.uuid()
         }
 
         this.bind();
@@ -46,17 +46,17 @@ export class PopoverElement
 
         if ( trigger === 'hover' ) {
             Dom.find(document.body).on(PopoverHelper.getHoverEvent(),
-                Any.framerate((e) => this.onHover(e), 30), { uid });
+                Run.framerate((e) => this.onHover(e), 15), { uid });
         }
 
         if ( trigger === 'click' ) {
             Dom.find(document.body).on(PopoverHelper.getClickEvent(),
-                Any.throttle((e) => this.onClick(e), 30), { uid });
+                Run.throttle((e) => this.onClick(e), 30), { uid });
         }
 
         if ( trigger === 'context' ) {
             Dom.find(document.body).on(PopoverHelper.getContextEvent(),
-                Any.throttle((e) => this.onContext(e), 30), { uid });
+                Run.throttle((e) => this.onContext(e), 30), { uid });
         }
     }
 
@@ -84,7 +84,7 @@ export class PopoverElement
     {
         let { parent } = this.options;
 
-        if ( Any.isEmpty(parent) ) {
+        if ( Mix.isEmpty(parent) ) {
             return [];
         }
 
@@ -135,7 +135,7 @@ export class PopoverElement
 
         Dom.find(el).attr('data-ready', 'true');
 
-        if ( Any.isFunction(this.events['open']) ) {
+        if ( Mix.isFunction(this.events['open']) ) {
             this.events['open'].apply({}, [event]);
         }
 
@@ -169,7 +169,7 @@ export class PopoverElement
 
         Dom.find(el).attr('data-ready', null);
 
-        if ( Any.isFunction(this.events['close']) ) {
+        if ( Mix.isFunction(this.events['close']) ) {
             this.events['close'].apply({}, [event]);
         }
 
@@ -288,7 +288,7 @@ export class PopoverElement
             window.zIndex = 9000;
         }
 
-        let style = Obj.assign(Dom.find(el).css(), {
+        let style = Obj.assign(Dom.find(el).style(), {
             'z-index':  window.zIndex++,
             'top':      Math.round(offset.y + scroll.top) + 'px',
             'left':     Math.round(offset.x + scroll.left) + 'px',
@@ -300,7 +300,7 @@ export class PopoverElement
             style.width = Math.round(rect.width) + 'px';
         }
 
-        Dom.find(el).css(style);
+        Dom.find(el).style(style);
 
         if ( ! style['--n-parent-width'] ) {
             style['--n-parent-width'] = `${rect.width}px`;
@@ -318,7 +318,7 @@ export class PopoverElement
             style['--n-node-height'] = `${el.clientHeight}px`;
         }
 
-        Dom.find(el).css(style);
+        Dom.find(el).style(style);
     }
 
     getTargetHorizontal(position, fallback = null)
@@ -555,7 +555,7 @@ export class PopoverElement
 
 
         if ( width > 0 ) {
-            Dom.find(el).css({ width: `${width}px`});
+            Dom.find(el).style({ width: `${width}px`});
         }
 
         if ( position.match(/^(top|bottom)\-/) ) {

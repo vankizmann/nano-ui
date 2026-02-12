@@ -1,4 +1,4 @@
-import { Arr, Any, Num, Locale } from "@kizmann/pico-js";
+import { Arr, Mix, Num, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -193,7 +193,7 @@ export default {
 
     renderBarOther(hidden, visible)
     {
-        if ( Any.isEmpty(hidden) ) {
+        if ( Mix.isEmpty(hidden) ) {
             return null;
         }
 
@@ -263,7 +263,7 @@ export default {
 
     renderLegendOther(hidden, visible)
     {
-        if ( Any.isEmpty(hidden) ) {
+        if ( Mix.isEmpty(hidden) ) {
             return null;
         }
 

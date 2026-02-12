@@ -1,4 +1,4 @@
-import { UUID, Num, Arr, Obj, Any, Dom, Locale } from "@kizmann/pico-js";
+import { Hash, Run, Arr, Obj, Mix, Dom, Locale } from "@kizmann/pico-js";
 import { h } from "vue";
 import {FormMessage, FormRules} from "./form-rules.mjs";
 
@@ -120,7 +120,7 @@ export default {
                 return [];
             }
 
-            return Any.isArray(this.$attrs) ? this.$attrs.class :
+            return Mix.isArray(this.$attrs) ? this.$attrs.class :
                 [this.$attrs.class];
         }
 
@@ -129,7 +129,7 @@ export default {
     data()
     {
         return {
-            uid: UUID(), elements: [], rules: [], groups: {}, ruleErrors: {}, blocked: true,
+            uid: Hash.uuid(), elements: [], rules: [], groups: {}, ruleErrors: {}, blocked: true,
         };
     },
 
@@ -142,7 +142,7 @@ export default {
 
     mounted()
     {
-        Any.delay(this.ctor('ready'), 500);
+        Run.delay(this.ctor('ready'), 500);
     },
 
     ready()
@@ -256,7 +256,7 @@ export default {
 
                 let message = FormMessage[name].call(this, field, value, ...args);
 
-                if ( Any.isEmpty(message) ) {
+                if ( Mix.isEmpty(message) ) {
                     return;
                 }
 
@@ -275,7 +275,7 @@ export default {
             });
 
             this.ruleErrors = Obj.filter(errors, (err) => {
-                return ! Any.isEmpty(err);
+                return ! Mix.isEmpty(err);
             });
 
             return this.ruleErrors;
@@ -285,10 +285,10 @@ export default {
         {
             this.validate();
 
-            let count = Any.keys(this.ruleErrors).length;
+            let count = Mix.keys(this.ruleErrors).length;
 
             if ( includeErrors ) {
-                count += Any.keys(this.errors).length;
+                count += Mix.keys(this.errors).length;
             }
 
             return count === 0;
@@ -300,7 +300,7 @@ export default {
 
             Obj.each(this.errors, (err, key) => {
 
-                if ( ! Any.isArray(err) ) {
+                if ( ! Mix.isArray(err) ) {
                     err = [err];
                 }
 

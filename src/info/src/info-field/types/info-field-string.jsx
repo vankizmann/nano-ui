@@ -1,4 +1,4 @@
-import { Any } from "@kizmann/pico-js";
+import { Str } from "@kizmann/pico-js";
 import InfoField from "../info-field.jsx";
 
 export default {
@@ -17,7 +17,7 @@ export default {
 
         return (
             <div>
-                <span>{ Any.convertString(this.input, this.column.emptyText) }</span>
+                <span>{ Str.string(this.input, this.column.emptyText) }</span>
             </div>
         );
     }

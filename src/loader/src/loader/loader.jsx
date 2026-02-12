@@ -1,4 +1,4 @@
-import { UUID, Num, Obj, Any, Dom, Locale } from "@kizmann/pico-js";
+import { Run } from "@kizmann/pico-js";
 
 export default {
 
@@ -91,12 +91,12 @@ export default {
                 return this.restartTimer(timing);
             }
 
-            this.timeout = setTimeout(() => this.tempVisible = false, 
+            this.timeout = setTimeout(() => this.tempVisible = false,
                 this.debounce);
         },
 
         restartTimer(timing = 0) {
-            Any.delay(this.startTimer, this.minimum - timing + 10);
+            Run.delay(this.startTimer, this.minimum - timing + 10);
         }
 
     },

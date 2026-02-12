@@ -1,4 +1,4 @@
-import { Arr, Any, UUID, Locale } from "@kizmann/pico-js";
+import { Arr, Mix, Hash, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -56,7 +56,7 @@ export default {
     data()
     {
         return {
-            uid: UUID()
+            uid: Hash.uuid()
         };
     },
 
@@ -78,7 +78,7 @@ export default {
 
         getClass(index, className = 'n-chart-item')
         {
-            if ( ! Any.isEmpty(this.type) ) {
+            if ( ! Mix.isEmpty(this.type) ) {
                 return className + '--' + this.type;
             }
 

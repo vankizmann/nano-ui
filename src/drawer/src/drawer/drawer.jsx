@@ -1,4 +1,4 @@
-import { UUID, Num, Arr, Obj, Any, Dom, Locale } from "@kizmann/pico-js";
+import { Run, Arr, Obj, Mix, Dom, Locale } from "@kizmann/pico-js";
 
 window.NDrawerStack = [];
 
@@ -146,7 +146,7 @@ export default {
     mounted()
     {
         this.target = Dom.find(this.selector || this.$el)
-            .previous().get(0);
+            .prev().get(0);
 
         Dom.find(document.body).on('mousedown',
             this.eventClick, this._.uid);
@@ -159,7 +159,7 @@ export default {
         };
 
         if ( this.modelValue ) {
-            Any.delay(showDrawer, 100);
+            Run.delay(showDrawer, 100);
         }
 
         Dom.find(document.body).append(this.$el);
@@ -215,7 +215,7 @@ export default {
         {
             clearTimeout(this.refresh);
 
-            Dom.find(this.$el).removeClass('n-ready');
+            Dom.find(this.$el).remClass('n-ready');
         },
 
         startRefreshTimeout()
@@ -229,7 +229,7 @@ export default {
             Dom.find(this.$el).attr('data-drawer',
                 window.zIndex);
 
-            Dom.find(this.$el).css({
+            Dom.find(this.$el).style({
                 'z-index': window.zIndex
             });
 

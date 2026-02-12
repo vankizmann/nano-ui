@@ -1,4 +1,4 @@
-import { Arr, Obj, UUID } from "@kizmann/pico-js";
+import { Arr, Obj, Hash } from "@kizmann/pico-js";
 
 export const RegionList = [
     {
@@ -396,7 +396,7 @@ export class ItemHelper
     static chunkedList()
     {
         let items = Arr.recursive(RegionList, 'cities', (item) => {
-            return Obj.assign({ id: UUID() }, item);
+            return Obj.assign({ id: Hash.uuid() }, item);
         });
 
         return Arr.chunk(items, Math.ceil(items.length/2));
@@ -409,7 +409,7 @@ export class ItemHelper
         }
 
         let items = Arr.each(Arr.make(count), (index) => {
-            return { id: UUID(), name: `Item with index (${index})`, image: `https://picsum.photos/300/300.jpg?${index}` };
+            return { id: Hash.uuid(), name: `Item with index (${index})`, image: `https://picsum.photos/300/300.jpg?${index}` };
         });
 
         return cache[count] = items;

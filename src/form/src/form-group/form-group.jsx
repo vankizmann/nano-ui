@@ -1,4 +1,4 @@
-import { Arr, UUID } from "@kizmann/pico-js";
+import { Arr, Hash } from "@kizmann/pico-js";
 
 export default {
 
@@ -29,7 +29,7 @@ export default {
         name: {
             default()
             {
-                return UUID();
+                return Hash.uuid();
             },
             type: [String]
         },
@@ -118,7 +118,7 @@ export default {
     data()
     {
         return {
-            uid: UUID(), tempValue: this.modelValue, items: []
+            uid: Hash.uuid(), tempValue: this.modelValue, items: []
         };
     },
 

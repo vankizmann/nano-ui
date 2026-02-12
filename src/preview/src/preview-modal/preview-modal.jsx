@@ -1,4 +1,4 @@
-import { Any, Event, Obj, UUID } from "@kizmann/pico-js";
+import { Mix, Event, Obj, Hash } from "@kizmann/pico-js";
 
 export default {
 
@@ -32,7 +32,7 @@ export default {
         group: {
             default()
             {
-                return UUID();
+                return Hash.uuid();
             },
             type: [String]
         },
@@ -41,7 +41,7 @@ export default {
 
     data()
     {
-        return { uid: UUID(), visible: false };
+        return { uid: Hash.uuid(), visible: false };
     },
 
     computed: {

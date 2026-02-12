@@ -1,4 +1,4 @@
-import { Obj, Arr, Str, Any, Dom } from "@kizmann/pico-js";
+import { Obj, Arr, Run, Mix, Dom } from "@kizmann/pico-js";
 
 export default {
 
@@ -58,7 +58,7 @@ export default {
 
             this.tempSrc = null;
 
-            if ( Any.isObject(this.src) ) {
+            if ( Mix.isRef(this.src) ) {
                 return this.resolveData();
             }
 
@@ -72,7 +72,7 @@ export default {
                 /**
                  * Mark image as loaded
                  */
-                Any.delay(() => this.load = false, 200);
+                Run.delay(() => this.load = false, 200);
             });
 
             this.laod = true;

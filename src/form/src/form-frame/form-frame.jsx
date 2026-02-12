@@ -1,4 +1,4 @@
-import { Arr, Any, Dom, Str, Locale } from "@kizmann/pico-js";
+import { Run, Arr, Mix, Dom, Str, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -89,7 +89,7 @@ export default {
                 return;
             }
 
-            if ( ! Any.isEmpty(this.timeout) ) {
+            if ( ! Mix.isEmpty(this.timeout) ) {
                 clearTimeout(this.timeout);
             }
 
@@ -107,7 +107,7 @@ export default {
             this.block = block;
 
             Dom.find(this.$el).find(`[data-menu-key]`).each((el) => {
-                Dom.find(el).removeClass('is-star');
+                Dom.find(el).remClass('is-star');
             });
 
             Dom.find(this.$el).find(`[data-menu-key="${id}"]`)
@@ -116,11 +116,11 @@ export default {
 
         onMoveEvent()
         {
-            Dom.find(window).on('mousemove', Any.debounce(e => {
+            Dom.find(window).on('mousemove', Run.debounce(e => {
 
                 let el = Dom.find(e.target).closest('[data-group-key]');
 
-                if ( Any.isEmpty(el) ) {
+                if ( Mix.isEmpty(el) ) {
                     return;
                 }
 
@@ -132,7 +132,7 @@ export default {
         onScrollEvent()
         {
             Dom.find(this.$el).find('[data-menu-key]').each((el) => {
-                Dom.find(el).removeClass(['is-visible', 'is-first']);
+                Dom.find(el).remClass(['is-visible', 'is-first']);
             });
 
             let options = {
@@ -165,9 +165,9 @@ export default {
             let search = Str.lower(this.search);
 
             Dom.find(this.$el).find(`[data-menu-key]`)
-                .removeClass('on-search');
+                .remClass('on-search');
 
-            if ( Any.isEmpty(search) ) {
+            if ( Mix.isEmpty(search) ) {
                 return;
             }
 
@@ -187,7 +187,7 @@ export default {
 
         onClickEvent(item, event = null)
         {
-            if ( ! Any.isEmpty(event) ) {
+            if ( ! Mix.isEmpty(event) ) {
                 event.preventDefault();
             }
 
@@ -216,7 +216,7 @@ export default {
             placeholder: this.searchPlaceholder
         };
 
-        if ( ! Any.isEmpty(this.search) ) {
+        if ( ! Mix.isEmpty(this.search) ) {
             searchProps.icon = this.searchIcon;
         }
 
@@ -300,7 +300,7 @@ export default {
             'n-form-frame--' + this.NForm.size
         ];
 
-        if ( ! Any.isEmpty(this.search) ) {
+        if ( ! Mix.isEmpty(this.search) ) {
             classList.push('n-form-frame--search')
         }
 

@@ -1,4 +1,4 @@
-import { Arr, Num, Any, Dom, UUID, Locale, Obj } from "@kizmann/pico-js";
+import { Arr, Num, Mix, Dom, Hash, Locale, Obj } from "@kizmann/pico-js";
 
 export default {
 
@@ -155,7 +155,7 @@ export default {
 
         onMouseenter(item)
         {
-            Dom.find(this.$refs.text).css({
+            Dom.find(this.$refs.text).style({
                 '--n-chart-label': `'${item.label}'`,
                 '--n-chart-value': Num.int(item.value)
             });
@@ -163,7 +163,7 @@ export default {
 
         onMouseleave(item)
         {
-            Dom.find(this.$refs.text).css(null);
+            Dom.find(this.$refs.text).style(null);
         }
 
     },
@@ -172,7 +172,7 @@ export default {
     {
         let gaps = (this.vis.length) * (this.width * 2);
 
-        if ( ! Any.isEmpty(this.hid) ) {
+        if ( ! Mix.isEmpty(this.hid) ) {
             gaps = (this.vis.length + 1) * (this.width * 2);
         }
 
@@ -228,7 +228,7 @@ export default {
 
     renderOtherCircle(others, items)
     {
-        if ( Any.isEmpty(others) ) {
+        if ( Mix.isEmpty(others) ) {
             return null;
         }
 
@@ -312,7 +312,7 @@ export default {
 
     renderLegendOther(hidden, visible)
     {
-        if ( Any.isEmpty(hidden) ) {
+        if ( Mix.isEmpty(hidden) ) {
             return null;
         }
 

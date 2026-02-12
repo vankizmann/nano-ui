@@ -1,4 +1,4 @@
-import { Arr, Obj, Any } from "@kizmann/pico-js";
+import { Arr, Obj, Mix } from "@kizmann/pico-js";
 
 export default {
 
@@ -187,7 +187,7 @@ export default {
 
     renderLabelClear()
     {
-        if ( ! this.clearable || Any.isEmpty(this.tempValue) ) {
+        if ( ! this.clearable || Mix.isEmpty(this.tempValue) ) {
             return null;
         }
 
@@ -217,7 +217,7 @@ export default {
     {
         let items = this.options, renderList = [];
 
-        if ( Any.isEmpty(this.tempValue) ) {
+        if ( Mix.isEmpty(this.tempValue) ) {
             return (
                 <div class="n-cascader__placeholder">
                     { this.trans(this.placeholder) }
@@ -276,7 +276,7 @@ export default {
             </div>
         );
 
-        if ( Any.isEmpty(this.options) ) {
+        if ( Mix.isEmpty(this.options) ) {
             return emptyHtml;
         }
 
@@ -319,7 +319,7 @@ export default {
             'n-cascader--' + this.size,
         ];
 
-        if ( Any.isEmpty(this.tempValue) ) {
+        if ( Mix.isEmpty(this.tempValue) ) {
             classList.push('n-empty');
         }
 

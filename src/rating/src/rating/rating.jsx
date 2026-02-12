@@ -1,4 +1,4 @@
-import { Num, Arr, Locale } from "@kizmann/pico-js";
+import { Str, Num, Arr, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -108,7 +108,7 @@ export default {
     renderValue()
     {
         let vars = {
-            value: Num.format(this.modelValue, '.', '', this.fixed)
+            value: Str.number(this.modelValue, this.fixed)
         };
 
         if ( this.$slots.default ) {

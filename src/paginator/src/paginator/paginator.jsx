@@ -1,4 +1,4 @@
-import { Str, Num, Arr, Any } from "@kizmann/pico-js";
+import { Str, Num, Arr, Mix } from "@kizmann/pico-js";
 
 export default {
 
@@ -82,7 +82,7 @@ export default {
 
         pageOptions()
         {
-            return Arr.make(this.pages || 1);
+            return Arr.make(this.pages || 1, (i) => i+1);
         }
 
     },
@@ -390,7 +390,7 @@ export default {
         let renderFunction = this.ctor('render' +
             Str.ucfirst(view));
 
-        if ( Any.isFunction(renderFunction) ) {
+        if ( Mix.isFunction(renderFunction) ) {
             return renderFunction();
         }
 

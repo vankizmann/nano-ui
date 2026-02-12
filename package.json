@@ -1,14 +1,18 @@
 {
     "name": "@kizmann/nano-ui",
-    "version": "1.1.4",
+    "version": "2.0.0",
     "license": "MIT",
     "type": "module",
     "private": false,
     "author": "Eduard Kizmann <kizmann@protonmail.ch>",
     "repository": "https://github.com/vankizmann/nano-ui",
-    "main": "src/index.js",
-    "unpkg": "dist/nano-ui.js",
-    "types": "types/index.d.ts",
+    "main": "./src/index.esm.js",
+    "unpkg": "./dist/pico-js.browser.js",
+    "jsnext:main": "./src/index.esm.js",
+    "typings": "./types/index.esm.d.ts",
+    "imports": {
+        "#src/*": "./src/*"
+    },
     "files": [
         "dist/",
         "src/",
@@ -37,6 +41,7 @@
         "copy-webpack-plugin": "^4.0.0",
         "cross-env": "^5.1",
         "css-loader": "^3.2.0",
+        "docsify": "^4.13.1",
         "html-webpack-plugin": "^5.0.0",
         "mini-css-extract-plugin": "^2.0.0",
         "postcss": "^8.4.31",
@@ -51,8 +56,6 @@
         "webpack-dev-server": "^5.2.3"
     },
     "dependencies": {
-        "@kizmann/pico-js": "^1.0.12",
-        "docsify": "^4.13.1",
-        "moment": "^2.30.1"
+        "@kizmann/pico-js": "^2.0.3"
     }
 }

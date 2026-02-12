@@ -55,7 +55,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git tag v$PACKAGE_VERSION
-          git push origin v$PACKAGE_VERSION
 
       - name: Create and push tag
         if: steps.check_tag.outputs.exists == 'false'
@@ -68,6 +67,10 @@ jobs:
           sed -i '/^\/dist$/d' .gitignore
           sed -i '/^\/docs\/dist$/d' .gitignore
           sed -i '/^\/docs\/index\.html$/d' .gitignore
+
+      - name: Push tag to github
+        if: steps.check_tag.outputs.exists == 'false'
+        run: git push origin v$PACKAGE_VERSION
     
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

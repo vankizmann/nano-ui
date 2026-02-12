@@ -1,4 +1,4 @@
-import { UUID, Str, Obj, Dom, Any, Arr, Event } from "@kizmann/pico-js";
+import { Run, Str, Obj, Dom, Mix, Arr, Event } from "@kizmann/pico-js";
 import PopoverElement from "./popover-element.mjs";
 import PopoverHelper from "./popover-helper.mjs";
 
@@ -12,15 +12,15 @@ export class PopoverHandler
 
     static mount()
     {
-        Dom.find(window).on(PopoverHelper.getMouseDownEvent(), Any.throttle((e) => {
+        Dom.find(window).on(PopoverHelper.getMouseDownEvent(), Run.throttle((e) => {
             this.detectFadeOnCurrent(e);
         }, 30));
 
-        Dom.find(window).on(PopoverHelper.getScrollEvent(), Any.throttle((e) => {
+        Dom.find(window).on(PopoverHelper.getScrollEvent(), Run.throttle((e) => {
             this.detectScrollOnCurrent(e);
         }, 30));
 
-        Event.bind('NScrollbar:scroll', Any.throttle((e) => {
+        Event.bind('NScrollbar:scroll', Run.throttle((e) => {
             this.detectScrollOnCurrent(e);
         }, 30));
 
@@ -74,7 +74,7 @@ export class PopoverHandler
     {
         let current = Arr.last(this.current);
 
-        if ( Any.isEmpty(current) ) {
+        if ( Mix.isEmpty(current) ) {
             return;
         }
 

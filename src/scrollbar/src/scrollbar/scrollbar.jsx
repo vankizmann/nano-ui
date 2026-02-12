@@ -1,4 +1,4 @@
-import { Arr, Obj, Dom, Any, Str, Event, UUID } from "@kizmann/pico-js";
+import { Run, Arr, Obj, Dom, Mix, Str, Event, Hash } from "@kizmann/pico-js";
 
 export default {
 
@@ -101,7 +101,7 @@ export default {
     data()
     {
         return {
-            uid: UUID(), init: false, native: false, height: 0, width: 0
+            uid: Hash.uuid(), init: false, native: false, height: 0, width: 0
         };
     },
 
@@ -172,7 +172,7 @@ export default {
                 width: Math.round(rect.width), height: Math.round(rect.height)
             };
 
-            if ( Any.isEqual(this.state, now) ) {
+            if ( Mix.isEqual(this.state, now) ) {
                 return;
             }
 
@@ -200,7 +200,7 @@ export default {
                     Math.round(this.$refs.wrapper.getBoundingClientRect().height)
                 ];
 
-                Dom.find(this.$el).removeClass('is-paused');
+                Dom.find(this.$el).remClass('is-paused');
             });
 
             let outer = {
@@ -212,7 +212,7 @@ export default {
                 width === this.width, height === this.height
             ]
 
-            if ( ! Arr.has(rainbow, true) && Any.isEqual(this.outer, outer) ) {
+            if ( ! Arr.has(rainbow, true) && Mix.isEqual(this.outer, outer) ) {
                 return;
             }
 
@@ -242,7 +242,7 @@ export default {
                 styles.height = this.height + 'px';
             }
 
-            Dom.find(this.$refs.spacer).css(styles);
+            Dom.find(this.$refs.spacer).style(styles);
 
             this.adaptScrollHeight();
             this.adaptScrollWidth();
@@ -256,11 +256,11 @@ export default {
 
         scrollTo(x = 0, y = 0, delay = 0)
         {
-            if ( Any.isEmpty(delay) ) {
+            if ( Mix.isEmpty(delay) ) {
                 return this.scrollTo(x, y);
             }
 
-            Any.delay(() => this.onScrollTo(x, y), delay);
+            Run.delay(() => this.onScrollTo(x, y), delay);
         },
 
         onScrollTo(x = 0, y = 0)
@@ -277,7 +277,7 @@ export default {
 
         scrollIntoView(selector, delay = 0, padding = 0)
         {
-            Any.delay(() => this.onScrollIntoView(selector, padding), delay);
+            Run.delay(() => this.onScrollIntoView(selector, padding), delay);
         },
 
         onScrollIntoView(selector, padding = 0)
@@ -361,7 +361,7 @@ export default {
             this.heightRatio = (maxHeight - (barHeight - height)
                 - this.offsetY) / maxHeight;
 
-            Dom.find(this.$refs.vbar).css({
+            Dom.find(this.$refs.vbar).style({
                 height: (this.barHeight = Math.ceil(barHeight)) + 'px'
             });
 
@@ -372,7 +372,7 @@ export default {
             }
 
             if ( !this.hasVtrack ) {
-                Dom.find(this.$el).removeClass('has-vtrack');
+                Dom.find(this.$el).remClass('has-vtrack');
             }
 
             this.adaptScrollPosition();
@@ -411,7 +411,7 @@ export default {
             this.widthRatio = (maxWidth - (barWidth - width)
                 - this.offsetX) / maxWidth;
 
-            Dom.find(this.$refs.hbar).css({
+            Dom.find(this.$refs.hbar).style({
                 width: (this.barWidth = Math.ceil(barWidth)) + 'px'
             });
 
@@ -422,7 +422,7 @@ export default {
             }
 
             if ( !this.hasHtrack ) {
-                Dom.find(this.$el).removeClass('has-htrack');
+                Dom.find(this.$el).remClass('has-htrack');
             }
 
             this.adaptScrollPosition();
@@ -447,7 +447,7 @@ export default {
 
             if ( !this.vbarTop || vbarTop !== this.vbarTop ) {
 
-                Dom.find(this.$refs.vbar).css({
+                Dom.find(this.$refs.vbar).style({
                     transform: `translateY(${vbarTop}px) translateZ(0)`
                 });
 
@@ -459,7 +459,7 @@ export default {
 
             if ( !this.hbarLeft || hbarLeft !== this.hbarLeft ) {
 
-                Dom.find(this.$refs.hbar).css({
+                Dom.find(this.$refs.hbar).style({
                     transform: `translateX(${hbarLeft}px) translateZ(0)`
                 });
 
@@ -541,7 +541,7 @@ export default {
             Dom.find(document).off(this.mouseup,
                 null, this._.uid);
 
-            Dom.find(this.$refs.vbar).removeClass('is-active');
+            Dom.find(this.$refs.vbar).remClass('is-active');
         },
 
         onHbarMousedown(event)
@@ -593,7 +593,7 @@ export default {
             Dom.find(document).off(this.mouseup,
                 null, this._.uid);
 
-            Dom.find(this.$refs.hbar).removeClass('is-active');
+            Dom.find(this.$refs.hbar).remClass('is-active');
         },
 
     },

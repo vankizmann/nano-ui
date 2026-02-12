@@ -3,7 +3,7 @@ var GenerateItems = function (count, loop) {
     return pi.Arr.each(pi.Arr.make(count), (index) => {
 
         var item = {
-            id: 'item-' + pi.UUID(), label: 'Item ' + index, image: 'https://picsum.photos/260/160.jpg?' + pi.UUID(), date: new Date,
+            id: 'item-' + pi.Hash.uuid(), label: 'Item ' + index, image: 'https://picsum.photos/260/160.jpg?' + pi.Hash.uuid(), date: new Date,
         }
 
         if ( loop > 1 ) {
@@ -55,11 +55,11 @@ let DemoPlugin = function (hook, vm) {
             el.remove();
         });
 
-        if ( ! pi.Any.isEmpty(window.VueData) ) {
+        if ( ! pi.Mix.isEmpty(window.VueData) ) {
             window.VueData = pi.Obj.assign({}, window.DefaultVueData);
         }
 
-        if ( ! pi.Any.isEmpty(window.VueRemote) ) {
+        if ( ! pi.Mix.isEmpty(window.VueRemote) ) {
             window.VueRemote.unmount();
         }
 
@@ -80,7 +80,7 @@ let DemoPlugin = function (hook, vm) {
 
     hook.afterEach(function (html) {
 
-        html = html.replace(/<code>(Mixed|Any|String|Boolean|Array|Object)<\/code>/gm,
+        html = html.replace(/<code>(Mixed|Mix|String|Boolean|Array|Object)<\/code>/gm,
             '<code data-type="$1">$1</code>');
 
         return '<div id="vue-remote">' + html + '</div>';
@@ -121,7 +121,7 @@ options.plugins = [
     DemoPlugin, PagetitlePlugin
 ];
 
-if ( pi.Any.isEmpty(options) ) {
+if ( pi.Mix.isEmpty(options) ) {
     options.repo = 'https://github.com/vankizmann/nano-ui'
 }
 

@@ -17,7 +17,7 @@
     <script src="https://unpkg.com/vue@3.4.6"></script>
     <!-- <script src="../node_modules/pico-js/dist/pico-js.js"></script> -->
     <script src="https://vankizmann.github.io/pico-js/dist/pico-js.js"></script>
-    <script src="../dist/nano-ui.js"></script>
+    <script src="../dist/nano-ui.esm.js"></script>
 
     <link rel="stylesheet" href="../docs/dist/index.css">
 
@@ -179,7 +179,7 @@
             let itemGenerator = function (count = 100, index = 0) {
                 return pi.Arr.each(pi.Arr.make(count), function (value) {
 
-                    let id = pi.UUID();
+                    let id = pi.Hash.uuid();
 
                     return {
                         uid:    id,
@@ -301,7 +301,7 @@
                         ghost: 'fa fa-ghost'
                     });
 
-                    data.demoIcons = pi.Arr.reduce(pi.Obj.values(nano.Icons), function (merge, icon) {
+                    data.demoIcons = pi.Arr.reduce(pi.Mix.vals(nano.Icons), function (merge, icon) {
                         return pi.Obj.assign(merge, { [icon]: icon });
                     }, {});
 

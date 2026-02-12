@@ -41,6 +41,9 @@
 @forward "./grid/index";
 @forward "./chart/index";
 
+.n-disabled:not(.n-draglist-item) {
+    pointer-events: none;
+}
 
 
 

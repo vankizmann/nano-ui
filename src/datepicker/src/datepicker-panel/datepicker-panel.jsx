@@ -1,4 +1,4 @@
-import { Arr, Str, Now, Any } from "@kizmann/pico-js";
+import { Arr, Str, Now, Mix } from "@kizmann/pico-js";
 
 export default {
 
@@ -137,12 +137,12 @@ export default {
 
         yearsGrid()
         {
-            return this.tempCache.getYears();
+            return this.tempCache.grid('years');
         },
 
         monthsGrid()
         {
-            return this.tempCache.getMonths();
+            return this.tempCache.grid('months');
         }
 
     },
@@ -205,12 +205,12 @@ export default {
 
         patchDate(now)
         {
-            if ( Any.isString(now) ) {
+            if ( Mix.isString(now) ) {
                 now = Now.make(now);
             }
 
-            if ( Any.isEmpty(this.modelValue) ) {
-                now.resetTime();
+            if ( Mix.isEmpty(this.modelValue) ) {
+                now.reset({ time: true });
             } else {
                 now.applyTime(this.tempValue);
             }
@@ -227,7 +227,7 @@ export default {
 
         patchMonth(now)
         {
-            if ( Any.isString(now) ) {
+            if ( Mix.isString(now) ) {
                 now = Now.make(now);
             }
 
@@ -243,7 +243,7 @@ export default {
 
         patchYear(now)
         {
-            if ( Any.isString(now) ) {
+            if ( Mix.isString(now) ) {
                 now = Now.make(now);
             }
 
@@ -319,14 +319,14 @@ export default {
         };
 
         let monthsHtml = [
-            this.months[this.tempCache.month()]
+            this.months[this.tempCache.month() -1]
         ];
 
         let month = this.tempCache.clone()
-            .addMonths(this.monthPanels - 1);
+            .add(this.monthPanels - 1, 'month');
 
         if ( month.month() !== this.tempCache.month() ) {
-            monthsHtml.push(this.months[month.month()]);
+            monthsHtml.push(this.months[month.month() -1]);
         }
 
         return (
@@ -347,7 +347,7 @@ export default {
         ];
 
         let month = this.tempCache.clone()
-            .addMonths(this.monthPanels - 1);
+            .add(this.monthPanels - 1, 'month');
 
         if ( month.year() !== this.tempCache.year() ) {
             yearsHtml.push(month.year());
@@ -388,7 +388,7 @@ export default {
             classList.push('n-today');
         }
 
-        let isSelected = this.tempValue.valid() && 
+        let isSelected = this.tempValue.valid() &&
             now.equalDate(this.tempValue);
 
         if ( isSelected ) {
@@ -539,7 +539,7 @@ export default {
         }
 
         let bodyHtml = (month) => (
-            Arr.each(Arr.chunk(month.getDatesGrid(), 7), (chunks) => {
+            Arr.each(Arr.chunk(month.grid('days'), 7), (chunks) => {
                 return (
                     <div class="n-datepicker-panel__week">
                         { Arr.each(chunks, (chunk) => renderItem(chunk, month)) }
@@ -552,7 +552,7 @@ export default {
             Arr.each(Arr.make(this.monthPanels), (offset) => {
 
                 let month = this.tempCache.clone()
-                    .addMonths(offset - 1);
+                    .add(offset, 'month');
 
                 return (
                     <div class="n-datepicker-panel__panel">
@@ -599,7 +599,7 @@ export default {
 
         return (
             <div class={classList} {...props}>
-                <span>{ this.trans(this.months[now.month()]) }</span>
+                <span>{ this.trans(this.months[now.month() -1]) }</span>
             </div>
         )
     },

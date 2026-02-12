@@ -1,4 +1,4 @@
-import { Num, Arr, Obj, Any } from "@kizmann/pico-js";
+import { Num, Arr, Obj, Mix } from "@kizmann/pico-js";
 
 export default {
 
@@ -58,7 +58,7 @@ export default {
 
         tempValue()
         {
-            if ( Any.isEmpty(this.valueProp) ) {
+            if ( Mix.isEmpty(this.valueProp) ) {
                 return this.value;
             }
 
@@ -67,7 +67,7 @@ export default {
 
         tempLabel()
         {
-            if ( Any.isEmpty(this.labelProp) ) {
+            if ( Mix.isEmpty(this.labelProp) ) {
                 return this.label;
             }
 
@@ -129,7 +129,7 @@ export default {
             classList.push('n-active');
         }
 
-        if ( this.NSelect.index === Num.int(index) ) {
+        if ( this.NSelect.index === Mix.int(index) ) {
             classList.push('n-focus');
         }
 

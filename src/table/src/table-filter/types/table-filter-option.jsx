@@ -1,5 +1,5 @@
 import TableFilter from "../table-filter.jsx";
-import { Arr, Obj, Any, Locale } from "@kizmann/pico-js";
+import { Arr, Obj, Mix, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -36,7 +36,7 @@ export default {
     {
         let items = this.column.options;
 
-        if ( Any.isFunction(items) ) {
+        if ( Mix.isFunction(items) ) {
             items = this.column.options(this);
         }
 

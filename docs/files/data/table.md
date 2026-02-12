@@ -139,7 +139,7 @@ pi.Obj.assign(window.VueData, {
 
 | **Prop**             | **Type**         | **Default**          | **Description**                                                 |
 |----------------------|------------------|----------------------|-----------------------------------------------------------------|
-| `prop`               | `String`         | `UUID()`             | Property name from the data item to display in this column.     |
+| `prop`               | `String`         | `Hash.uuid()`             | Property name from the data item to display in this column.     |
 | `label`              | `String`         | `''`                 | Column header text.                                             |
 | `tooltip`            | `String`         | `''`                 | Tooltip text for the column header.                             |
 | `type`               | `String`         | `'string'`           | Data type of the column ('string', 'number', 'boolean', etc.).  |

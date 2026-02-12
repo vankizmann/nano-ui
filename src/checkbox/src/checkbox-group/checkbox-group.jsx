@@ -1,4 +1,4 @@
-import { Arr, Any } from "@kizmann/pico-js";
+import { Arr, Mix } from "@kizmann/pico-js";
 
 export default {
 

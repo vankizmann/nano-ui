@@ -1,4 +1,4 @@
-import { Arr, Obj, Any } from "@kizmann/pico-js";
+import { Arr, Obj, Mix } from "@kizmann/pico-js";
 import { h, resolveComponent } from "vue";
 
 export default {
@@ -44,15 +44,15 @@ export default {
 
         solveAwait(value)
         {
-            if ( Any.isEmpty(value) ) {
+            if ( Mix.isEmpty(value) ) {
                 return true;
             }
 
-            if ( Any.isString(value) && value.match(/\$\$scope/) ) {
+            if ( Mix.isString(value) && value.match(/\$\$scope/) ) {
                 return Obj.has({ $$scope: this.scope }, value);
             }
 
-            if ( Any.isString(value) && value.match(/\$\$value/) ) {
+            if ( Mix.isString(value) && value.match(/\$\$value/) ) {
                 return Obj.has({ $$value: this.tempValue }, value);
             }
 
@@ -61,15 +61,15 @@ export default {
 
         solveValue(value, ...args)
         {
-            if ( Any.isFunction(value) ) {
+            if ( Mix.isFunction(value) ) {
                 return value.apply(this.scope, [this.tempValue, ...args]);
             }
 
-            if ( Any.isString(value) && value.match(/^\$\$scope/) ) {
+            if ( Mix.isString(value) && value.match(/^\$\$scope/) ) {
                 return Obj.get({ $$scope: this.scope }, value);
             }
 
-            if ( Any.isString(value) && value.match(/^\$\$value/) ) {
+            if ( Mix.isString(value) && value.match(/^\$\$value/) ) {
                 return Obj.get({ $$value: this.tempValue }, value);
             }
 
@@ -82,7 +82,7 @@ export default {
                 $configRefs: this.$refs
             });
 
-            if ( Any.isFunction(value) ) {
+            if ( Mix.isFunction(value) ) {
                 return (...args) => value.apply(scope, args);
             }
 
@@ -91,7 +91,7 @@ export default {
 
         solveContent(value, ...args)
         {
-            if ( Any.isFunction(value) ) {
+            if ( Mix.isFunction(value) ) {
                 return value.apply(this.scope, [this.$render, this.tempValue, ...args]);
             }
 
@@ -160,7 +160,7 @@ export default {
 
     renderLayer(source)
     {
-        if ( ! Any.isPlain(source) ) {
+        if ( ! Mix.isObj(source) ) {
             return source;
         }
 

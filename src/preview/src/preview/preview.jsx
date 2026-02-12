@@ -1,4 +1,4 @@
-import { UUID, Obj, Arr, Any, Event, Locale } from "@kizmann/pico-js";
+import { Hash, Obj, Arr, Mix, Event, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -39,7 +39,7 @@ export default {
         group: {
             default()
             {
-                return UUID();
+                return Hash.uuid();
             },
             type: [String]
         },
@@ -129,7 +129,7 @@ export default {
 
     renderTitle()
     {
-        if ( Any.isEmpty(this.title) ) {
+        if ( Mix.isEmpty(this.title) ) {
             return null;
         }
 

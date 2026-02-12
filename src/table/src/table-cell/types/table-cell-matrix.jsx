@@ -1,5 +1,5 @@
 import TableCell from "../table-cell.jsx";
-import { Num, Any, Obj, Arr, UUID } from "@kizmann/pico-js";
+import { Num, Mix, Obj, Arr, Hash } from "@kizmann/pico-js";
 
 export default {
 
@@ -35,10 +35,10 @@ export default {
                 item = Obj.assign({}, this.item, { [this.column.matrixProp]: 0 });
             }
 
-            let currentMatrix = Num.int(item[this.column.matrixProp]);
+            let currentMatrix = Mix.int(item[this.column.matrixProp]);
 
             let matrix = Arr.toggle(Num.matrix(currentMatrix),
-                Num.int(this.column.matrix));
+                Mix.int(this.column.matrix));
 
             item[this.column.matrixProp] = Num.combine(matrix);
 
@@ -85,7 +85,7 @@ export default {
                 return false;
             }
 
-            let value = Num.int(this.column.matrix);
+            let value = Mix.int(this.column.matrix);
 
             if ( value === -1 ) {
                 return true;
@@ -96,7 +96,7 @@ export default {
 
         isDisabled()
         {
-            if ( ! Any.isFunction(this.column.matrixDisabled) ) {
+            if ( ! Mix.isFunction(this.column.matrixDisabled) ) {
                 return this.column.matrixDisabled;
             }
 

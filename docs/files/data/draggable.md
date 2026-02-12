@@ -15,7 +15,7 @@ Drag and drop list or tree.
         data() {
             return {
                 items: pi.Arr.make(200).map((index) => {
-                    return { id: pi.UUID(), title: 'foo-' + index };
+                    return { id: pi.Hash.uuid(), title: 'foo-' + index };
                 })
             }
         }

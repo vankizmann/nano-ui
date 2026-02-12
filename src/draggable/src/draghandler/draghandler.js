@@ -1,4 +1,4 @@
-import { Arr, Obj, Num, Any, Dom, Event, Locale, UUID } from "@kizmann/pico-js";
+import { Run, Num, Arr, Obj, Mix, Dom, Event, Locale, Hash } from "@kizmann/pico-js";
 
 window.dragMods = [];
 
@@ -116,12 +116,12 @@ class NDragIndicator
             style.top = offsetTop + Dom.find(el).height();
         }
 
-        this.$el.css(Obj.map(style, (item) => item + 'px'));
+        this.$el.style(Obj.map(style, (item) => item + 'px'));
     }
 
     hide()
     {
-        this.$el.css(null);
+        this.$el.style(null);
     }
 
     destroy()
@@ -160,29 +160,31 @@ class NDraghandler
             this.bindDragstart.call(this, ...window.DragCache);
         }
 
-        Dom.find(this.rootNode.$el).on('dragenter', (event) => {
+        let key = this.rootNode._.uid + '-droot-';
+
+        Dom.find(this.rootNode.$el).on('dragenter', Run.framebuffer((event) => {
             this.onDragenterRoot(event);
-        });
+        }, key + 'dragenter', 140));
 
-        Dom.find(this.rootNode.$el).on('dragover', (event) => {
+        Dom.find(this.rootNode.$el).on('dragover', Run.framebuffer((event) => {
             this.onDragoverRoot(event);
-        });
+        }, key + 'dragover', 240));
 
-        Dom.find(this.rootNode.$el).on('dragleave', (event) => {
+        Dom.find(this.rootNode.$el).on('dragleave', Run.framebuffer((event) => {
             this.onDragleaveRoot(event);
-        });
+        }, key + 'dragleave', 340));
 
-        Dom.find(this.rootNode.$el).on('dragend', (event) => {
+        Dom.find(this.rootNode.$el).on('dragend', Run.framebuffer((event) => {
             this.onDragendRoot(event);
-        });
+        }, key + 'dragend', 440));
 
-        Dom.find(this.rootNode.$el).on('drop', (event) => {
+        Dom.find(this.rootNode.$el).on('drop', Run.framebuffer((event) => {
             this.onDragdropRoot(event);
-        });
+        }, key + 'drop', 540));
 
-        Dom.find(this.rootNode.$el).on('dragdrop', (event) => {
+        Dom.find(this.rootNode.$el).on('dragdrop', Run.framebuffer((event) => {
             this.onDragdropRoot(event);
-        });
+        }, key + 'dragdrop', 640));
 
         Event.bind('NDrag:start', this.bindDragstart.bind(this),
             this.rootNode.uid);
@@ -216,6 +218,9 @@ class NDraghandler
     onDragenterRoot(event)
     {
         event.preventDefault();
+
+        Dom.find(this.rootNode.$el).find('.n-dragover')
+            .remClass('n-dragover');
     }
 
     onDragoverRoot(event)
@@ -229,13 +234,13 @@ class NDraghandler
 
         event.preventDefault();
 
-        if ( this.frames && Date.now() - this.frames < 135 ) {
-            return;
-        }
+        // if ( this.frames && Date.now() - this.frames < 35 ) {
+        //     return;
+        // }
 
         let allowDrop = this.rootNode.allowDrop;
 
-        if ( !Any.isFunction(allowDrop) ) {
+        if ( !Mix.isFunction(allowDrop) ) {
             allowDrop = () => this.rootNode.allowDrop;
         }
 
@@ -254,13 +259,13 @@ class NDraghandler
         if ( this.strategy !== 'nodrop' ) {
             Dom.find(this.rootNode.$el).addClass('n-dragover');
         } else {
-            Dom.find(this.rootNode.$el).removeClass('n-dragover');
+            Dom.find(this.rootNode.$el).remClass('n-dragover');
         }
 
         if ( this.strategy === 'nodrop' ) {
             Dom.find(this.rootNode.$el).addClass('n-nodrop');
         } else {
-            Dom.find(this.rootNode.$el).removeClass('n-nodrop');
+            Dom.find(this.rootNode.$el).remClass('n-nodrop');
         }
 
         this.frames = Date.now();
@@ -269,7 +274,10 @@ class NDraghandler
     onDragleaveRoot(event)
     {
         Dom.find(this.rootNode.$el)
-            .removeClass('n-dragover n-nodrop');
+            .remClass(['n-dragover', 'n-nodrop']);
+
+        Dom.find(this.rootNode.$el).find('.n-dragover')
+            .remClass('n-dragover');
     }
 
     onDragendRoot(event)
@@ -279,7 +287,7 @@ class NDraghandler
         }
 
         Dom.find(this.rootNode.$el)
-            .removeClass('n-dragover n-nodrop');
+            .remClass(['n-dragover', 'n-nodrop']);
 
         if ( this.strategy !== 'root' ) {
             return;
@@ -295,7 +303,7 @@ class NDraghandler
         }
 
         Dom.find(this.rootNode.$el)
-            .removeClass('n-dragover n-nodrop');
+            .remClass(['n-dragover', 'n-nodrop']);
 
         if ( this.strategy !== 'root' ) {
             return;
@@ -393,9 +401,9 @@ class NDraghandler
 
         event.preventDefault();
 
-        if ( this.frames && Date.now() - this.frames < 45 ) {
-            return;
-        }
+        // if ( this.frames && Date.now() - this.frames < 45 ) {
+        //     return;
+        // }
 
         let safezone = this.rootNode
             .safezone(node.$el.clientHeight);
@@ -409,7 +417,7 @@ class NDraghandler
 
         let allowDrop = this.rootNode.allowDrop;
 
-        if ( !Any.isFunction(allowDrop) ) {
+        if ( !Mix.isFunction(allowDrop) ) {
             allowDrop = () => this.rootNode.allowDrop;
         }
 
@@ -420,7 +428,9 @@ class NDraghandler
         let isInSelf = Arr.has(node.value.cascade,
             this.rootNode.tempSelected);
 
-        rainbow.push(!isInSelf);
+        if ( this.rootNode.tempSelected.length ) {
+            rainbow.push(!isInSelf);
+        }
 
         if ( Arr.has(rainbow, false) ) {
             this.strategy = 'nodrop';
@@ -432,11 +442,11 @@ class NDraghandler
 
         if ( this.strategy !== 'nodrop' ) {
             Dom.find(node.$el).addClass('n-dragover');
-            Dom.find(node.$el).removeClass('n-nodrop');
+            Dom.find(node.$el).remClass('n-nodrop');
         }
 
         if ( this.strategy === 'nodrop' ) {
-            Dom.find(node.$el).removeClass('n-dragover');
+            Dom.find(node.$el).remClass('n-dragover');
             Dom.find(node.$el).addClass('n-nodrop');
         }
 
@@ -451,14 +461,14 @@ class NDraghandler
             return;
         }
 
-        Dom.find(node.$el).removeClass('n-dragover n-nodrop');
+        Dom.find(node.$el).remClass(['n-dragover', 'n-nodrop']);
 
         this.DragIndicator.hide();
     }
 
     onDragendNode(event, node)
     {
-        Dom.find(node.$el).removeClass('n-dragover n-nodrop');
+        Dom.find(node.$el).remClass(['n-dragover', 'n-nodrop']);
 
         this.DragIndicator.hide();
 
@@ -473,7 +483,7 @@ class NDraghandler
             return;
         }
 
-        Dom.find(node.$el).removeClass('n-dragover n-nodrop');
+        Dom.find(node.$el).remClass(['n-dragover', 'n-nodrop']);
 
         this.DragIndicator.hide();
 
@@ -506,29 +516,31 @@ class NDraghandler
             this.onDragstartNode(event, node);
         });
 
-        $el.on('dragenter', (event) => {
+        let key = this.rootNode._.uid + '-dnode-';
+
+        $el.on('dragenter', Run.framebuffer((event) => {
             this.onDragenterNode(event, node);
-        });
+        }, key + 'dragenter', 150));
 
-        $el.on('dragover', (event) => {
+        $el.on('dragover', Run.framebuffer((event) => {
             this.onDragoverNode(event, node);
-        });
+        }, key + 'dragover', 250));
 
-        $el.on('dragleave', (event) => {
+        $el.on('dragleave', Run.framebuffer((event) => {
             this.onDragleaveNode(event, node);
-        });
+        }, key + 'dragleave', 350));
 
-        $el.on('dragend', (event) => {
+        $el.on('dragend', Run.framebuffer((event) => {
             this.onDragendNode(event, node);
-        });
+        }, key + 'dragend', 450));
 
-        $el.on('drop', (event) => {
+        $el.on('drop', Run.framebuffer((event) => {
             this.onDragdropNode(event, node);
-        });
+        }, key + 'drop', 550));
 
-        $el.on('dragdrop', (event) => {
+        $el.on('dragdrop', Run.framebuffer((event) => {
             this.onDragdropNode(event, node);
-        });
+        }, key + 'dragdrop', 650));
 
         this.childNodes[node.uid] = node;
     }
@@ -554,7 +566,7 @@ class NDraghandler
             'dragdrop',
         ]);
 
-        $el.removeClass('n-dragover n-nodrop');
+        $el.remClass(['n-dragover', 'n-nodrop']);
 
         this.DragIndicator.hide();
 
@@ -786,7 +798,7 @@ class NDraghandler
         let items = Obj.get(clone, targetRoute);
 
         let target = Obj.except(node.item, [], {
-            [this.rootNode.uniqueProp]: UUID()
+            [this.rootNode.uniqueProp]: Hash.uuid()
         });
 
         items.splice(node.value.index + 1,
@@ -817,15 +829,16 @@ class NDraghandler
 
     reduce(items, ...props)
     {
-        return Arr.reduce(items, (merge, item, index) =>
-            this.reduceItem(merge, item, Num.int(index), ...props), []);
+        return Arr.reduce(items, (merge, item, index) => {
+            return this.reduceItem(merge, item, Num.int(index), ...props);
+        }, []);
     }
 
     reduceItem(merge, item, index, depth = 0, route = 'items', cascades = [])
     {
         // Get a unique id
         let unique = Obj.get(item,
-            this.rootNode.uniqueProp, UUID());
+            this.rootNode.uniqueProp, Hash.uuid());
 
         // Add unique to cascader
         let tempCascade = Arr.merge(cascades,
@@ -844,7 +857,7 @@ class NDraghandler
         let children = Obj.get(item,
             this.rootNode.childProp, []);
 
-        if ( Any.isEmpty(children) ) {
+        if ( Mix.isEmpty(children) ) {
             return Arr.merge(merge, [virtual]);
         }
 

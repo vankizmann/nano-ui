@@ -12,6 +12,8 @@ export default {
     
     },
 
+    inheritAttrs: false,
+
     provide()
     {
         return {

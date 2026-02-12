@@ -1,4 +1,4 @@
-import { Arr, Any, Dom } from "@kizmann/pico-js";
+import { Arr, Mix, Dom } from "@kizmann/pico-js";
 import { h, resolveComponent } from "vue";
 
 export default {

@@ -13,7 +13,7 @@ let themes = {
 };
 
 let libJs = {
-    entry: ["./src/index.js"],
+    entry: ["./src/index.esm.js"],
     optimization: {
         splitChunks: false, runtimeChunk: false
     },
@@ -28,6 +28,7 @@ let libJs = {
                 test: /.c?jsx?$/,
                 include: [
                     path.resolve('src'),
+                    path.resolve('node_modules/@kizmann/pico-js'),
                 ],
                 loader: 'babel-loader',
                 options: {
@@ -143,7 +144,7 @@ module.exports = function (env, argv) {
     let libJsBundle = Object.assign({
 
         output: {
-            filename: "nano-ui.js",
+            filename: "nano-ui.esm.js",
             path: path.resolve(__dirname, "dist"),
             library: 'Nano',
             libraryTarget: "umd",

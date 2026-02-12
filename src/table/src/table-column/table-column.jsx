@@ -1,4 +1,4 @@
-import { Any, Arr, Obj, Str, Dom, UUID, Num, Locale } from "@kizmann/pico-js";
+import { Mix, Arr, Obj, Str, Dom, Hash, Num, Locale } from "@kizmann/pico-js";
 import { h, resolveComponent } from "vue";
 
 export default {
@@ -25,7 +25,7 @@ export default {
         prop: {
             default()
             {
-                return UUID();
+                return Hash.uuid();
             },
             type: [String]
         },
@@ -262,7 +262,7 @@ export default {
 
             let values = {};
 
-            if ( Any.isEmpty(this.modelValue) ) {
+            if ( Mix.isEmpty(this.modelValue) ) {
                 return values;
             }
 
@@ -286,7 +286,7 @@ export default {
     data()
     {
         return {
-            uid: UUID(), tempWidth: 0
+            uid: Hash.uuid(), tempWidth: 0
         };
     },
 
@@ -405,7 +405,7 @@ export default {
             </div>
         );
 
-        if ( Any.isEmpty(this.tooltip) ) {
+        if ( Mix.isEmpty(this.tooltip) ) {
             return labelHtml;
         }
 

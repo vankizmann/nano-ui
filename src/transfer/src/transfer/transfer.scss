@@ -7,6 +7,10 @@
     justify-content: stretch;
 }
 
+.n-transfer .n-draglist-item {
+    //pointer-events: none;
+}
+
 .n-transfer__panel {
     overflow: hidden;
     flex: 1 1 50%;
