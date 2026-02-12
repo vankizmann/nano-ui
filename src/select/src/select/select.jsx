@@ -1,4 +1,4 @@
-import { Str, Arr, Obj, Any, Locale, Dom, Num } from "@kizmann/pico-js";
+import { Str, Arr, Obj, Mix, Locale, Dom, Num } from "@kizmann/pico-js";
 
 export default {
 
@@ -184,14 +184,14 @@ export default {
 
         empty()
         {
-            return Any.isEmpty(this.tempValue);
+            return Mix.isEmpty(this.tempValue);
         },
 
         custom()
         {
             let result = Arr.filter(this.elements, (element) => {
 
-                if ( Any.isArray(this.tempValue) ) {
+                if ( Mix.isArray(this.tempValue) ) {
                     return Arr.has(this.tempValue, element.value);
                 }
 
@@ -222,11 +222,11 @@ export default {
             this.generateOptions();
         }
 
-        if ( this.multiple && !Any.isArray(this.tempValue) ) {
+        if ( this.multiple && !Mix.isArray(this.tempValue) ) {
             this.tempValue = [];
         }
 
-        if ( this.multiple && !Any.isArray(this.clearValue) ) {
+        if ( this.multiple && !Mix.isArray(this.clearValue) ) {
             this.tempClear = [];
         }
 
@@ -244,11 +244,11 @@ export default {
 
         modelValue(value)
         {
-            if ( !this.multiple && Any.isArray(value) ) {
+            if ( !this.multiple && Mix.isArray(value) ) {
                 value = null;
             }
 
-            if ( this.multiple && !Any.isArray(value) ) {
+            if ( this.multiple && !Mix.isArray(value) ) {
                 value = [];
             }
 
@@ -368,20 +368,20 @@ export default {
         {
             this.index = - 1;
 
-            if ( Any.isEmpty(this.search) ) {
+            if ( Mix.isEmpty(this.search) ) {
                 return this.searched = this.elements;
             }
 
             let searchRegex = new RegExp(this.search, 'i');
 
             this.searched = Arr.filter(this.elements, (option) => {
-                return Any.string(option.label || '').match(searchRegex);
+                return Mix.string(option.label || '').match(searchRegex);
             });
         },
 
         toggleOption(value, event = null)
         {
-            if ( Any.isEmpty(value) ) {
+            if ( Mix.isEmpty(value) ) {
                 return;
             }
 
@@ -411,11 +411,11 @@ export default {
 
             let denyUpdate = this.tempValue === tempValue;
 
-            if ( this.multiple && !Any.isArray(this.modelValue) ) {
+            if ( this.multiple && !Mix.isArray(this.modelValue) ) {
                 denyUpdate = false;
             }
 
-            if ( !this.multiple && Any.isArray(this.modelValue) ) {
+            if ( !this.multiple && Mix.isArray(this.modelValue) ) {
                 denyUpdate = false;
             }
 
@@ -526,7 +526,7 @@ export default {
 
             let value = this.tempValue;
 
-            if ( Any.isArray(this.tempValue) ) {
+            if ( Mix.isArray(this.tempValue) ) {
                 value = Arr.first(this.tempValue);
             }
 
@@ -557,7 +557,7 @@ export default {
 
     renderLabelClear()
     {
-        if ( !this.clearable || Any.isEmpty(this.tempValue) ) {
+        if ( !this.clearable || Mix.isEmpty(this.tempValue) ) {
             return null;
         }
 
@@ -637,7 +637,7 @@ export default {
 
     renderLabelItems()
     {
-        if ( !Any.isArray(this.tempValue) ) {
+        if ( !Mix.isArray(this.tempValue) ) {
             return null;
         }
 
@@ -652,8 +652,8 @@ export default {
 
     renderMultiple()
     {
-        let isEmptyValue = Any.isEmpty(this.tempValue) &&
-            !Any.isNumber(this.tempValue);
+        let isEmptyValue = Mix.isEmpty(this.tempValue) &&
+            !Mix.isNumber(this.tempValue);
 
         let props = {
             value: this.search,
@@ -691,8 +691,8 @@ export default {
 
     renderSingle()
     {
-        let isEmptyValue = Any.isEmpty(this.tempValue) &&
-            !Any.isNumber(this.tempValue);
+        let isEmptyValue = Mix.isEmpty(this.tempValue) &&
+            !Mix.isNumber(this.tempValue);
 
         let modelLabel = this.getOptionLabel(
             this.tempValue);
@@ -780,7 +780,7 @@ export default {
 
         return (
             <NScrollbar ref="scrollbar" class="n-popover-shadow n-select__body" {...props}>
-                {Obj.values(options)}
+                {Mix.vals(options)}
             </NScrollbar>
         );
     },
@@ -803,7 +803,7 @@ export default {
             classList.push('n-active');
         }
 
-        if ( this.index === Num.int(index) ) {
+        if ( this.index === Mix.int(index) ) {
             classList.push('n-focus');
         }
 
@@ -877,7 +877,7 @@ export default {
             return null;
         }
 
-        if ( Any.isEmpty(this.options) ) {
+        if ( Mix.isEmpty(this.options) ) {
             return this.$slots.default && this.$slots.default();
         }
 
@@ -891,7 +891,7 @@ export default {
             return (<NSelectOption {...props}></NSelectOption>);
         };
 
-        return Obj.values(Obj.each(this.options, optionRender));
+        return Mix.vals(Obj.map(this.options, optionRender));
     },
 
     render()
@@ -902,8 +902,8 @@ export default {
             'n-select--' + this.size,
         ];
 
-        let isEmptyValue = Any.isEmpty(this.tempValue) &&
-            !Any.isNumber(this.tempValue);
+        let isEmptyValue = Mix.isEmpty(this.tempValue) &&
+            !Mix.isNumber(this.tempValue);
 
         if ( isEmptyValue ) {
             classList.push('n-empty');

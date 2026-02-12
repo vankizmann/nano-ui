@@ -6,7 +6,7 @@ window.Vue = Vue;
 window.$docsify = require('docsify')
 
 // moment.js
-window.moment = require('moment');
+// window.moment = require('moment');
 
 // pico.js
 window.pi = require('@kizmann/pico-js');

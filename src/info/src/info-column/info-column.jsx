@@ -1,4 +1,4 @@
-import { UUID, Obj, Locale, Str } from "@kizmann/pico-js";
+import { Hash, Obj, Locale, Str } from "@kizmann/pico-js";
 import { h, resolveComponent } from "vue";
 
 export default {
@@ -115,7 +115,7 @@ export default {
     data()
     {
         return {
-            uid: UUID()
+            uid: Hash.uuid()
         };
     },
 

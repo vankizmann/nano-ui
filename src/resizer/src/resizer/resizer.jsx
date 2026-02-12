@@ -1,4 +1,4 @@
-import { UUID, Arr, Obj, Dom, Any, Str, Locale, Event, Num } from "@kizmann/pico-js";
+import { Run, Arr, Obj, Dom, Mix, Str, Locale, Event, Num } from "@kizmann/pico-js";
 
 export default {
 
@@ -137,7 +137,7 @@ export default {
             this.forceWidth(...args)
         }, this._.uid);
 
-        Dom.find(window).on('resize', Any.debounce((...args) => {
+        Dom.find(window).on('resize', Run.debounce((...args) => {
             this.onResize(...args)
         }, 500), this._.uid);
 
@@ -180,7 +180,7 @@ export default {
                 width: this.tempValue + 'px', flex: '0 0 auto'
             };
 
-            Dom.find(this.$el).css(style);
+            Dom.find(this.$el).style(style);
         },
 
         updateWidth()
@@ -210,13 +210,13 @@ export default {
                 style.transform = `translateX(${this.tempValue - this.resizerWidth}px)`
             }
 
-            Dom.find(this.$refs.handle).css(style);
+            Dom.find(this.$refs.handle).style(style);
         },
 
         bindSizechange()
         {
             Dom.find(this.NScrollbar.$el).on('resized',
-                Any.debounce(this.updateWidth, 50), this._.uid);
+                Run.debounce(this.updateWidth, 50), this._.uid);
         },
 
         unbindSizechange()
@@ -261,10 +261,10 @@ export default {
             Dom.find(document.body).addClass('n-move');
 
             Dom.find(document).on(this.mouseup,
-                Any.framerate(this.onLeftMouseup, 60), this._.uid);
+                Mix.framerate(this.onLeftMouseup, 60), this._.uid);
 
             Dom.find(document).on(this.mousemove,
-                Any.framerate(this.onLeftMousemove, 60), this._.uid);
+                Mix.framerate(this.onLeftMousemove, 60), this._.uid);
         },
 
         onLeftMousemove(event)
@@ -295,7 +295,7 @@ export default {
                 transform: `translateX(-${targetWidth}px)`
             };
 
-            Dom.find(this.$refs.handle).css(style);
+            Dom.find(this.$refs.handle).style(style);
         },
 
         onLeftMouseup(event)
@@ -328,19 +328,19 @@ export default {
 
             this.tempValue = Math.round(targetWidth);
 
-            Dom.find(this.$el).removeClass('n-move');
+            Dom.find(this.$el).remClass('n-move');
 
             let style = {
                 transform: `translateX(-${targetWidth - this.resizerWidth}px)`
             };
 
-            Dom.find(this.$refs.handle).css(style);
+            Dom.find(this.$refs.handle).style(style);
 
             let frameStyle = {
                 width: this.tempValue + 'px', flex: '0 0 auto'
             };
 
-            Dom.find(this.$el).css(frameStyle);
+            Dom.find(this.$el).style(frameStyle);
 
             delete this.clientX;
 
@@ -368,10 +368,10 @@ export default {
             Dom.find(document.body).addClass('n-move');
 
             Dom.find(document).on(this.mouseup,
-                Any.framerate(this.onRightMouseup, 60), this._.uid);
+                Mix.framerate(this.onRightMouseup, 60), this._.uid);
 
             Dom.find(document).on(this.mousemove,
-                Any.framerate(this.onRightMousemove, 60), this._.uid);
+                Mix.framerate(this.onRightMousemove, 60), this._.uid);
         },
 
         onRightMousemove(event)
@@ -401,7 +401,7 @@ export default {
                 transform: `translateX(${targetWidth}px)`
             };
 
-            Dom.find(this.$refs.handle).css(style);
+            Dom.find(this.$refs.handle).style(style);
         },
 
         onRightMouseup(event)
@@ -434,19 +434,19 @@ export default {
 
             this.tempValue = Math.round(targetWidth);
 
-            Dom.find(this.$el).removeClass('n-move');
+            Dom.find(this.$el).remClass('n-move');
 
             let style = {
                 transform: `translateX(${targetWidth - this.resizerWidth}px)`
             };
 
-            Dom.find(this.$refs.handle).css(style);
+            Dom.find(this.$refs.handle).style(style);
 
             let frameStyle = {
                 width: this.tempValue + 'px', flex: '0 0 auto'
             };
 
-            Dom.find(this.$el).css(frameStyle);
+            Dom.find(this.$el).style(frameStyle);
 
             delete this.clientX;
 

@@ -8,13 +8,13 @@ window.NanoBuilderIndexies['NSwitch'] = {
 
 window.NanoBuilderIndexies['NSwitch']['props'] = {
     modelValue: {
-        for: ['binds', 'props'], type: 'Any'
+        for: ['binds', 'props'], type: 'Mix'
     },
     onValue: {
-        for: ['binds', 'props'], type: 'Any'
+        for: ['binds', 'props'], type: 'Mix'
     },
     offValue: {
-        for: ['binds', 'props'], type: 'Any'
+        for: ['binds', 'props'], type: 'Mix'
     },
     onType: {
         for: ['binds', 'props'], type: 'String', options: window.NanoPrototypeTypes

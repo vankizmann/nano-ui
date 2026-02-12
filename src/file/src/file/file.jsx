@@ -1,4 +1,4 @@
-import { Arr, Obj, Any, Locale } from "@kizmann/pico-js";
+import { Arr, Obj, Mix, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -105,7 +105,7 @@ export default {
 
         tempValue()
         {
-            if ( Any.isEmpty(this.tempValue) ) {
+            if ( Mix.isEmpty(this.tempValue) ) {
                 this.$refs.input.value = null;
             }
         }
@@ -158,7 +158,7 @@ export default {
                 this.tempValue.length);
         }
 
-        if ( this.clearable && !Any.isEmpty(this.tempValue) ) {
+        if ( this.clearable && !Mix.isEmpty(this.tempValue) ) {
             props.icon = this.clearableIcon;
         }
 

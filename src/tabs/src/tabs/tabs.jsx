@@ -1,4 +1,4 @@
-import { Arr, Dom, Any } from "@kizmann/pico-js";
+import { Arr, Dom, Run } from "@kizmann/pico-js";
 
 export default {
 
@@ -103,7 +103,7 @@ export default {
             let repeatNext = () => this.getTab(updateEvent);
 
             if ( ! currentTab ) {
-                return Any.delay(repeatNext, 250);
+                return Run.delay(repeatNext, 250);
             }
 
             if ( currentTab.name === this.tempValue || ! updateEvent  ) {

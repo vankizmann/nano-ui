@@ -1,5 +1,5 @@
 import TableFilter from "../table-filter.jsx";
-import { Any } from "@kizmann/pico-js";
+import { Mix } from "@kizmann/pico-js";
 
 export default {
 

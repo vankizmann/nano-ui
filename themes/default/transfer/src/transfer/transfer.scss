@@ -13,6 +13,7 @@
 .n-transfer__search .n-input {
     border-color: transparent;
     background: color('background');
+    box-shadow: 0 0 1px 1px color('shadow', 0.075);
 }
 
 .n-transfer__item-count {

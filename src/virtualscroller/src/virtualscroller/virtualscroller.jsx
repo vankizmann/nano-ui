@@ -1,4 +1,5 @@
-import { Arr, Obj, Any, Dom } from "@kizmann/pico-js";
+import { Arr, Num, Mix, Run } from "@kizmann/pico-js";
+
 
 window.DEBUG_NVSCROLL = false;
 
@@ -264,7 +265,7 @@ export default {
         updateRender()
         {
             if ( ! this.$refs.scrollbar ) {
-                return Any.delay(this.updateRender);
+                return Run.delay(this.updateRender);
             }
 
             this.scrollTop = this.$refs.scrollbar.
@@ -313,7 +314,7 @@ export default {
 
         refreshDriver(queue = true, callback = null)
         {
-            if ( Any.isEmpty(this.timer) ) {
+            if ( Mix.isEmpty(this.timer) ) {
                 this.timer = Date.now();
             }
 
@@ -370,13 +371,13 @@ export default {
 
             let state = { start, end, grid };
 
-            if ( Any.isEqual(this.state, state) ) {
+            if ( Mix.isEqual(this.state, state) ) {
                 return;
             }
 
             this.state = state;
 
-            if ( Any.isFunction(callback) ) {
+            if ( Mix.isFunction(callback) ) {
                 callback.call(this);
             }
         },
@@ -385,6 +386,8 @@ export default {
 
     renderItem(passed)
     {
+        // passed.index = Num.int(passed.index);
+
         passed.index = (passed.index +
             this.state.start);
 

@@ -1,5 +1,5 @@
-import { Dom, Obj, Arr, Any } from "@kizmann/pico-js";
-import { Install as NanoInstall } from "../../../../src/index.js";
+import { Dom, Obj, Arr, Mix } from "@kizmann/pico-js";
+import { Install as NanoInstall } from "#src/index.esm.js";
 import ItemHelper from "../helper/item-helper.js";
 
 export const VueDemoPlugin = function (hook, vm) {
@@ -55,11 +55,11 @@ export const VueDemoPlugin = function (hook, vm) {
             el.remove();
         });
 
-        if ( ! Any.isEmpty(window.VueData) ) {
+        if ( ! Mix.isEmpty(window.VueData) ) {
             window.VueData = Obj.assign({}, window.DefaultVueData);
         }
 
-        if ( ! Any.isEmpty(window.VueRemote) ) {
+        if ( ! Mix.isEmpty(window.VueRemote) ) {
             window.VueRemote.unmount();
         }
 
@@ -96,15 +96,15 @@ export const VueDemoPlugin = function (hook, vm) {
             },
             print: (arg) => {
 
-                if ( ! Any.isEmpty(arg) ) {
+                if ( ! Mix.isEmpty(arg) ) {
                     return arg;
                 }
 
-                if ( Any.isNull(arg) ) {
+                if ( Mix.isNull(arg) ) {
                     return 'null';
                 }
 
-                if ( Any.isString(arg) ) {
+                if ( Mix.isString(arg) ) {
                     return "''";
                 }
 

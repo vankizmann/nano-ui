@@ -1,4 +1,4 @@
-import { UUID, Num, Arr, Obj, Dom, Any, Event, Locale } from "@kizmann/pico-js";
+import { Hash, Num, Arr, Obj, Dom, Mix, Event, Locale } from "@kizmann/pico-js";
 import NDraghandler from "../draghandler/draghandler.js";
 
 window.DEBUG_NDLIST = false;
@@ -131,7 +131,7 @@ export default {
     data()
     {
         return {
-            uid: UUID(),
+            uid: Hash.uuid(),
         };
     },
 
@@ -152,7 +152,7 @@ export default {
 
     renderItem()
     {
-        if ( Any.isEmpty(this.item) ) {
+        if ( Mix.isEmpty(this.item) ) {
             return null;
         }
 
@@ -161,7 +161,7 @@ export default {
 
     renderEmpty()
     {
-        if ( ! Any.isEmpty(this.item) ) {
+        if ( ! Mix.isEmpty(this.item) ) {
             return null;
         }
 
@@ -180,7 +180,7 @@ export default {
             'n-dropzone--' + this.type
         ];
 
-        if ( Any.isEmpty(this.item) ) {
+        if ( Mix.isEmpty(this.item) ) {
             classList.push('n-empty');
         }
 

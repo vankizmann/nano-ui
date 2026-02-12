@@ -1,4 +1,4 @@
-import { Obj, Locale, Dom, Arr, Any } from "@kizmann/pico-js";
+import { Obj, Locale, Dom, Arr, Mix } from "@kizmann/pico-js";
 
 export default {
 
@@ -100,7 +100,7 @@ export default {
         });
 
         this.target = Dom.find(this.selector || this.$el)
-            .previous().get(0);
+            .prev().get(0);
 
         Dom.find(document.body).on('mousedown',
             this.eventClick, this._.uid);
@@ -124,7 +124,7 @@ export default {
 
             let nodes = this.$slots.default();
 
-            if ( Any.isEmpty(nodes) ) {
+            if ( Mix.isEmpty(nodes) ) {
                 return fallback;
             }
 
@@ -132,7 +132,7 @@ export default {
 
             nodes.map((el) => {
 
-                if ( !Any.isString(el.children) ) {
+                if ( !Mix.isString(el.children) ) {
                     return;
                 }
 

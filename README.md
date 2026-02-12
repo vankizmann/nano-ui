@@ -10,7 +10,7 @@
   <br>
 </p>
 
-<p align="center">A vue3 based ui library optimized for desktop applications with drag and drop in mind.</p>
+<p align="center">A vue3 based ui library optimized for desktop applications with drag and drop in mind. <a href="https://nano-ui.vanki.de/" target="_blank">Docs are here</a></p>
 <br>
 
 ### Installation
@@ -26,7 +26,7 @@ This package is dependent of [@kizmann/pico-js](https://github.com/vankizmann/pi
 ### Global Usage
 
 ```html
-<script src="//unpkg.com/@kizmann/nano-ui@latest/dist/nano-ui.js"></script>
+<script src="//unpkg.com/@kizmann/nano-ui@latest/dist/nano-ui.browser.js"></script>
 <link rel="stylesheet" href="//unpkg.com/@kizmann/nano-ui@latest/dist/nano-ui.css">
 <link rel="stylesheet" href="//unpkg.com/@kizmann/nano-ui@latest/dist/themes/light.css">
 ```
@@ -61,7 +61,7 @@ Incase you are not using the babel plugins (ES6) used in *babel.config.js* you w
 module.exports = {
     resolve: {
         alias: {
-            '@kizmann/nano-ui': '@kizmann/nano-ui/dist/nano-ui.js'
+            '@kizmann/nano-ui': '@kizmann/nano-ui/dist/nano-ui.esm.js'
         }
     }
 }
@@ -72,7 +72,7 @@ module.exports = {
 mix.webpackConfig({
     resolve: {
         alias: {
-            '@kizmann/nano-ui': '@kizmann/nano-ui/dist/nano-ui.js'
+            '@kizmann/nano-ui': '@kizmann/nano-ui/dist/nano-ui.esm.js'
         }
     }
 });

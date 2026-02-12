@@ -1,4 +1,4 @@
-import { Arr, Any, Dom } from "@kizmann/pico-js";
+import { Arr, Mix, Dom } from "@kizmann/pico-js";
 
 export default {
 
@@ -72,7 +72,7 @@ export default {
 
     renderIcon()
     {
-        if ( Any.isEmpty(this.icon) ) {
+        if ( Mix.isEmpty(this.icon) ) {
             return null;
         }
 

@@ -1,4 +1,4 @@
-import { Str, Arr, Obj, Any, UUID } from "@kizmann/pico-js";
+import { Str, Arr, Obj, Mix, Hash } from "@kizmann/pico-js";
 
 export default {
 
@@ -104,7 +104,7 @@ export default {
                 return ! Arr.find(this.tempValue, { [this.uniqueProp]: item[this.uniqueProp] });
             });
 
-            if ( Any.isEmpty(this.sourceSearch) ) {
+            if ( Mix.isEmpty(this.sourceSearch) ) {
                 return Arr.clone(source);
             }
 
@@ -123,7 +123,7 @@ export default {
                 return !! Arr.find(this.tempValue, { [this.uniqueProp]: item[this.uniqueProp] });
             });
 
-            if ( Any.isEmpty(this.targetSearch) ) {
+            if ( Mix.isEmpty(this.targetSearch) ) {
                 return Arr.clone(target);
             }
 
@@ -140,7 +140,7 @@ export default {
     data()
     {
         return {
-            uid: UUID(),
+            uid: Hash.uuid(),
             tempValue: this.modelValue,
             sourceSearch: '',
             targetSearch: '',

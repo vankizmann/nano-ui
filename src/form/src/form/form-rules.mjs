@@ -1,4 +1,4 @@
-import { Any, Arr, Locale, Obj } from "@kizmann/pico-js";
+import { Mix, Arr, Locale, Obj } from "@kizmann/pico-js";
 
 export const FormMessage = {
 
@@ -21,7 +21,6 @@ export const FormMessage = {
 
     required_unless(field, value, key = '')
     {
-
         let label = Arr.find(this.elements, (item) => {
             return item.prop === key;
         });
@@ -89,41 +88,41 @@ export const FormRules = {
 
     required(field, value)
     {
-        if ( Any.isBool(value) ) {
+        if ( Mix.isBool(value) ) {
             return value === true;
         }
 
-        return !Any.isEmpty(value);
+        return !Mix.isEmpty(value);
     },
 
     required_if(field, value, key = '')
     {
         let target = Obj.get(this.form, key);
 
-        if ( Any.isEmpty(target) ) {
+        if ( Mix.isEmpty(target) ) {
             return true;
         }
 
-        if ( Any.isBool(value) ) {
+        if ( Mix.isBool(value) ) {
             return value === true;
         }
 
-        return !Any.isEmpty(value);
+        return !Mix.isEmpty(value);
     },
 
     required_unless(field, value, key = '')
     {
         let target = Obj.get(this.form, key);
 
-        if ( !Any.isEmpty(target) ) {
+        if ( !Mix.isEmpty(target) ) {
             return true;
         }
 
-        if ( Any.isBool(value) ) {
+        if ( Mix.isBool(value) ) {
             return value === true;
         }
 
-        return !Any.isEmpty(value);
+        return !Mix.isEmpty(value);
     },
 
     same(field, value, key = '')
@@ -138,7 +137,7 @@ export const FormRules = {
 
     value(field, value, val = 'foobar')
     {
-        if ( Any.isString(value) ) {
+        if ( Mix.isString(value) ) {
             return value === val;
         }
 
@@ -147,11 +146,11 @@ export const FormRules = {
 
     min(field, value, min = Number.MIN_VALUE)
     {
-        if ( Any.isEmpty(value) ) {
+        if ( Mix.isEmpty(value) ) {
             return true;
         }
 
-        if ( Any.isNumber(value) ) {
+        if ( Mix.isNumber(value) ) {
             return value >= min;
         }
 
@@ -160,11 +159,11 @@ export const FormRules = {
 
     max(field, value, max = Number.MAX_VALUE)
     {
-        if ( Any.isEmpty(value) ) {
+        if ( Mix.isEmpty(value) ) {
             return true;
         }
 
-        if ( Any.isNumber(value) ) {
+        if ( Mix.isNumber(value) ) {
             return value <= max;
         }
 
@@ -173,11 +172,11 @@ export const FormRules = {
 
     minlength(field, value, min = Number.MIN_VALUE)
     {
-        if ( Any.isEmpty(value) ) {
+        if ( Mix.isEmpty(value) ) {
             return true;
         }
 
-        if ( Any.isString(value) || Any.isArray(value) ) {
+        if ( Mix.isString(value) || Mix.isArray(value) ) {
             return value.length > min;
         }
 
@@ -186,11 +185,11 @@ export const FormRules = {
 
     maxlength(field, value, max = Number.MAX_VALUE)
     {
-        if ( Any.isEmpty(value) ) {
+        if ( Mix.isEmpty(value) ) {
             return true;
         }
 
-        if ( Any.isString(value) || Any.isArray(value) ) {
+        if ( Mix.isString(value) || Mix.isArray(value) ) {
             return value.length < max;
         }
 
@@ -199,11 +198,11 @@ export const FormRules = {
 
     email(field, value)
     {
-        if ( Any.isEmpty(value) ) {
+        if ( Mix.isEmpty(value) ) {
             return true;
         }
 
-        if ( Any.isString(value) ) {
+        if ( Mix.isString(value) ) {
             return value.match(/^.*?@.*?\.[a-z]{2,}$/);
         }
 

@@ -1,4 +1,4 @@
-import { Any, Arr, Obj, UUID } from "@kizmann/pico-js";
+import { Mix, Arr, Obj, Hash } from "@kizmann/pico-js";
 
 export default {
 
@@ -15,7 +15,7 @@ export default {
     data()
     {
         return {
-            uid: UUID()
+            uid: Hash.uuid()
         };
     },
 
@@ -37,7 +37,7 @@ export default {
 
         console.log('err', field.prop, errors)
 
-        if ( Any.isEmpty(errors) ) {
+        if ( Mix.isEmpty(errors) ) {
             return null;
         }
 

@@ -1,4 +1,4 @@
-import { UUID, Str, Obj, Dom, Any } from "@kizmann/pico-js";
+import { Hash, Str, Run, Dom, Mix } from "@kizmann/pico-js";
 import NotificationElement from "./notification-element.mjs";
 
 window.NotificationBag = {};
@@ -20,14 +20,14 @@ export class NotificationHandler
         window.NotificationBag[uid].append(wrapper);
 
         // Queue remove
-        Any.delay(() => {
+        Run.delay(() => {
             NotificationHandler.remove(uid);
         }, el.options.duration);
 
         return uid;
     }
 
-    static create(uid = UUID(), ...args)
+    static create(uid = Hash.uuid(), ...args)
     {
         window.NotificationBag[uid] = new NotificationElement(...args);
 

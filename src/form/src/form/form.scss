@@ -19,8 +19,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: size('base-hgt', 'calc($ - 14px)');
-    height: size('base-hgt', 'calc($ - 14px)');
+    width: size('base-hgt', 'calc($ - 12px)');
+    height: size('base-hgt', 'calc($ - 12px)');
 }
 
 .n-form-clear i,
@@ -28,6 +28,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.8em;
+    text-align: center;
+    font-size: size('base-fnt-icon');
+    line-height: 10px;
     border-radius: size('base-rad-circle');
 }

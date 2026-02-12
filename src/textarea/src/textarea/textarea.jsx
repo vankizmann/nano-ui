@@ -1,5 +1,5 @@
 import { h } from "vue";
-import {Obj, Any, UUID} from "@kizmann/pico-js";
+import {Obj, Mix, Hash} from "@kizmann/pico-js";
 
 export default {
 

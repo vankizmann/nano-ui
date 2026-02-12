@@ -79,7 +79,7 @@
     <script src="https://unpkg.com/moment"></script>
     <script src="https://unpkg.com/vue@3.4.6"></script>
     <script src="https://unpkg.com/@kizmann/pico-js/dist/pico-js.js"></script>
-    <script src="../dist/nano-ui.js"></script>
+    <script src="../dist/nano-ui.esm.js"></script>
     <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
 
@@ -296,7 +296,7 @@
 
                 pi.Cookie.set('theme', this.n_theme = value);
 
-                pi.Dom.find('body').removeClass(['n-theme--dark', 'n-theme--light']);
+                pi.Dom.find('body').remClass(['n-theme--dark', 'n-theme--light']);
                 pi.Dom.find('body').addClass('n-theme--' + data.n_theme);
             }
 
@@ -307,7 +307,7 @@
                         ghost: 'fa fa-ghost'
                     });
 
-                    data.demoIcons = pi.Arr.reduce(pi.Obj.values(nano.Icons), function (merge, icon) {
+                    data.demoIcons = pi.Arr.reduce(pi.Mix.vals(nano.Icons), function (merge, icon) {
                         return pi.Obj.assign(merge, { [icon]: icon });
                     }, {});
 

@@ -24,7 +24,6 @@
     background: color('base-color');
 }
 
-.n-slider__handle span:before,
-.n-slider__handle span:after {
-    background: color('black', 0.4);
+.n-slider__handle span {
+    background: color('white');
 }

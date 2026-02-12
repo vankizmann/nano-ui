@@ -1,4 +1,4 @@
-import { UUID, Num, Arr, Obj, Dom, Any, Event, Locale } from "@kizmann/pico-js";
+import { Hash, Run, Arr, Obj, Dom, Mix, Event, Locale } from "@kizmann/pico-js";
 import NDraghandler from "../draghandler/draghandler.js";
 
 window.DEBUG_NDLIST = false;
@@ -315,7 +315,7 @@ export default {
     data()
     {
         return {
-            uid: UUID(),
+            uid: Hash.uuid(),
             modifier: [],
             virtuals: [], 
             visible: [], 
@@ -478,7 +478,7 @@ export default {
         scrollTo(x = 0, y = 0)
         {
             if ( ! this.$refs.virtualscroller ) {
-                return Any.delay(() => this.scrollTo(x, y));
+                return Run.delay(() => this.scrollTo(x, y));
             }
 
             this.$refs.virtualscroller.scrollTo(x, y);
@@ -487,7 +487,7 @@ export default {
         scrollToIndex(index)
         {
             if ( ! this.$refs.virtualscroller ) {
-                return Any.delay(() => this.scrollToIndex(index));
+                return Run.delay(() => this.scrollToIndex(index));
             }
 
             this.$refs.virtualscroller.scrollIntoView(index);
@@ -497,7 +497,7 @@ export default {
         {
             let canDrag = this.allowDrag;
 
-            if ( ! Any.isFunction(canDrag) ) {
+            if ( ! Mix.isFunction(canDrag) ) {
                 canDrag = () => this.allowDrag;
             }
 
@@ -520,11 +520,11 @@ export default {
 
                 let val = node;
 
-                if ( !Any.isEmpty(key) ) {
+                if ( !Mix.isEmpty(key) ) {
                     val = Obj.get(val, key);
                 }
 
-                if ( ! Any.isFunction(value) ) {
+                if ( ! Mix.isFunction(value) ) {
                     value = (val) => val === value;
                 }
 
@@ -668,7 +668,7 @@ export default {
         {
             let canSelect = this.allowSelect;
 
-            if ( ! Any.isFunction(canSelect) ) {
+            if ( ! Mix.isFunction(canSelect) ) {
                 canSelect = () => this.allowSelect;
             }
 
@@ -711,7 +711,7 @@ export default {
             let children = Obj.get(this.tempCurrent, 
                 this.childProp);
 
-            if ( Any.isEmpty(children) ) {
+            if ( Mix.isEmpty(children) ) {
                 return;
             }
 
@@ -755,7 +755,7 @@ export default {
         {
             let indexies = [0, -1], reversed = false;
 
-            if ( ! Any.isEmpty(this.lastSelected) ) {
+            if ( ! Mix.isEmpty(this.lastSelected) ) {
                 indexies[1] = this.getIndex(this.lastSelected);
             }
 
@@ -794,7 +794,7 @@ export default {
 
                 let canSelect = this.allowSelect;
 
-                if ( ! Any.isFunction(canSelect) ) {
+                if ( ! Mix.isFunction(canSelect) ) {
                     canSelect = () => this.allowSelect;
                 }
 

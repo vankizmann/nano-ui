@@ -1,4 +1,4 @@
-import { Arr, Any, Obj, Event, UUID } from "@kizmann/pico-js";
+import { Arr, Mix, Obj, Event, Hash, Run } from "@kizmann/pico-js";
 
 export default {
 
@@ -61,7 +61,7 @@ export default {
     data()
     {
         return {
-            uid: UUID(),
+            uid: Hash.uuid(),
             elements: [],
             options: [],
             tempValue: this.item,
@@ -91,7 +91,7 @@ export default {
 
     updated()
     {
-        Any.delay(() => {
+        Run.delay(() => {
             if ( this.$refs.scrollbar ) {
                 // this.$refs.scrollbar.adaptHeight();
             }
@@ -108,7 +108,7 @@ export default {
 
             this.options = this.syncEvent;
 
-            if ( Any.isFunction(this.options) ) {
+            if ( Mix.isFunction(this.options) ) {
                 this.options = this.options(this);
             }
 
@@ -165,7 +165,7 @@ export default {
 
     renderBody()
     {
-        if ( Any.isEmpty(this.tempValue) ) {
+        if ( Mix.isEmpty(this.tempValue) ) {
             return this.ctor('renderEmpty')();
         }
 
@@ -180,7 +180,7 @@ export default {
 
         return (
             <div class="n-info__body">
-                {Any.vals(elements)}
+                {Mix.vals(elements)}
             </div>
         );
     },

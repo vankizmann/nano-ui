@@ -1,4 +1,4 @@
-import { Obj, Now, Any, Locale } from "@kizmann/pico-js";
+import { Obj, Now, Mix, Locale } from "@kizmann/pico-js";
 
 export default {
 

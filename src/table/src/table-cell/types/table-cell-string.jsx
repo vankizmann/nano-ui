@@ -1,5 +1,5 @@
 import TableCell from "../table-cell.jsx";
-import { Any } from "@kizmann/pico-js";
+import { Str } from "@kizmann/pico-js";
 
 export default {
 
@@ -19,11 +19,9 @@ export default {
             );
         }
 
-        let input = this.input.replace(/<[^>]*>?/gm, '');
-
         return (
             <div>
-                <span>{ Any.convertString(input, this.column.emptyText) }</span>
+                <span>{ Str.string(this.input, this.column.emptyText) }</span>
             </div>
         );
     }

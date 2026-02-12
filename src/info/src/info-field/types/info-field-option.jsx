@@ -1,4 +1,4 @@
-import { Arr, Obj, Any } from "@kizmann/pico-js";
+import { Arr, Obj, Mix } from "@kizmann/pico-js";
 import InfoField from "../info-field.jsx";
 
 export default {
@@ -11,7 +11,7 @@ export default {
     {
         let options = this.column.options;
 
-        if ( Any.isFunction(options) ) {
+        if ( Mix.isFunction(options) ) {
             options = this.column.options(this);
         }
 
@@ -41,7 +41,7 @@ export default {
             );
         }
 
-        let input = ! Any.isObject(this.input) ?
+        let input = ! Mix.isRef(this.input) ?
             [this.input] : this.input;
 
         return (

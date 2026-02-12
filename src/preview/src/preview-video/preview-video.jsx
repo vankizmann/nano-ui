@@ -1,4 +1,4 @@
-import { Obj, Arr, Str, Any, Dom } from "@kizmann/pico-js";
+import { Obj, Arr, Str, Mix, Dom } from "@kizmann/pico-js";
 
 export default {
 
@@ -49,7 +49,7 @@ export default {
                 return;
             }
 
-            if ( Any.isObject(this.src) ) {
+            if ( Mix.isRef(this.src) ) {
                 this.resolveData();
             }
 

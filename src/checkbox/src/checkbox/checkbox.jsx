@@ -1,4 +1,4 @@
-import { Arr, Obj, Any, UUID } from "@kizmann/pico-js";
+import { Arr, Obj, Mix, Hash } from "@kizmann/pico-js";
 
 export default {
 
@@ -104,7 +104,7 @@ export default {
     data()
     {
         return {
-            uid: UUID(), tempChecked: this.modelValue
+            uid: Hash.uuid(), tempChecked: this.modelValue
         };
     },
 

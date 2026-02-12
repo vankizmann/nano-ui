@@ -1,4 +1,4 @@
-import { Arr, Any, Dom, Event, UUID } from "@kizmann/pico-js";
+import { Arr, Mix, Dom, Event, Hash } from "@kizmann/pico-js";
 
 
 export default {
@@ -146,7 +146,7 @@ export default {
     data()
     {
         return {
-            uid: UUID(),
+            uid: Hash.uuid(),
             tempValue: false,
             clientX: 0,
             clientY: 0,
@@ -171,7 +171,7 @@ export default {
 
     mounted()
     {
-        this.target = Dom.find(this.$el).previous().get(0);
+        this.target = Dom.find(this.$el).prev().get(0);
 
         if ( this.trigger === 'context' ) {
             this.target = Dom.find(this.$el).parent().get(0);
@@ -187,6 +187,7 @@ export default {
             width: this.width,
             scrollClose: this.scrollClose,
             multiClose: this.multiClose,
+            disabled: () => this.disabled,
         };
 
         if ( this.NPopover ) {
@@ -280,7 +281,7 @@ export default {
 
         let viewBody = this.modelValue;
 
-        if ( Any.isNull(this.modelValue) ) {
+        if ( Mix.isNull(this.modelValue) ) {
             viewBody = this.tempValue;
         }
 

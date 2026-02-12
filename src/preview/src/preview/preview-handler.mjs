@@ -1,4 +1,4 @@
-import { Any, Arr, Obj, Dom } from "@kizmann/pico-js";
+import { Mix, Arr, Obj, Dom } from "@kizmann/pico-js";
 
 window.PreviewGroups = {};
 
@@ -33,7 +33,7 @@ export class PreviewHandler
 
     static next()
     {
-        if ( ! Any.isObject(this.current) ) {
+        if ( ! Mix.isRef(this.current) ) {
             return null;
         }
 
@@ -54,7 +54,7 @@ export class PreviewHandler
 
     static prev()
     {
-        if ( ! Any.isObject(this.current) ) {
+        if ( ! Mix.isRef(this.current) ) {
             return null;
         }
 
@@ -178,18 +178,18 @@ export class PreviewHandler
 
         this.switch(null);
 
-        el.removeClass(['n-ready', 'n-multi']);
+        el.remClass(['n-ready', 'n-multi']);
     }
 
     static switch(item)
     {
-        if ( Any.isObject(this.current) ) {
+        if ( Mix.isRef(this.current) ) {
             Obj.set(this.current, 'visible', false);
         }
 
         this.current = item;
 
-        if ( Any.isObject(this.current) ) {
+        if ( Mix.isRef(this.current) ) {
             Obj.set(this.current, 'visible', true);
         }
 

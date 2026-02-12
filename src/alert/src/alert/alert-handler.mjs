@@ -1,4 +1,4 @@
-import { Any, Str, Obj, Dom, Locale, Arr, UUID } from "@kizmann/pico-js";
+import { Mix, Run, Obj, Dom, Locale, Arr, Hash } from "@kizmann/pico-js";
 
 
 export class AlertHandler
@@ -23,7 +23,7 @@ export class AlertHandler
     constructor(options = {})
     {
         this.options = Obj.assign(this.options, options, {
-            uid: UUID(),
+            uid: Hash.uuid(),
         });
     }
 
@@ -32,7 +32,7 @@ export class AlertHandler
         this.unbindEvents();
         this.modal.remove();
 
-        Dom.find(document.body).css({
+        Dom.find(document.body).style({
             'overflow': 'undefined'
         });
     }
@@ -73,7 +73,7 @@ export class AlertHandler
             }
         }, { uid });
 
-        Any.delay(() => {
+        Run.delay(() => {
             Dom.find(this.modal).addClass('n-ready');
         });
     }
@@ -95,7 +95,7 @@ export class AlertHandler
     {
         let cls = Obj.get(this.options, 'class', []);
 
-        if ( Any.isString(cls) ) {
+        if ( Mix.isString(cls) ) {
             cls = cls.split(' ');
         }
 
@@ -126,7 +126,7 @@ export class AlertHandler
         this.renderIcon(body);
         this.renderText(body);
 
-        Dom.find(document.body).css({
+        Dom.find(document.body).style({
             'overflow': 'hidden'
         });
 

@@ -1,4 +1,4 @@
-import { UUID, Obj, Num, Any } from "@kizmann/pico-js";
+import { Hash, Obj, Num, Mix, Run } from "@kizmann/pico-js";
 
 export default {
 
@@ -51,7 +51,7 @@ export default {
     data()
     {
         return {
-            id: UUID(), tempMarker: null
+            id: Hash.uuid(), tempMarker: null
         };
     },
 
@@ -76,14 +76,14 @@ export default {
                 lat: Num.float(this.lat), lng: Num.float(this.lng), draggable: this.drag
             }, this.options);
 
-            if ( ! Any.isEmpty(this.$slots.default) ) {
+            if ( ! Mix.isEmpty(this.$slots.default) ) {
                 options.html = this.$el.innerHTML;
             }
 
             this.tempMarker = this.NMap.getMap().createMarker(this.id, options);
 
             this.tempMarker.marker.addListener('position_changed',
-                Any.debounce(this.updateMarkerPosition));
+                Run.debounce(this.updateMarkerPosition));
 
             this.tempMarker.marker.addListener('dragstart',
                 () => this.$emit('dragstart', this.tempMarker));

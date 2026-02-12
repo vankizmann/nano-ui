@@ -1,4 +1,4 @@
-import { Arr, Obj, Any } from "@kizmann/pico-js";
+import { Arr, Obj, Mix } from "@kizmann/pico-js";
 import { Comment } from "vue";
 
 export default {

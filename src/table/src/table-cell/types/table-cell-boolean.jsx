@@ -1,5 +1,5 @@
 import TableCell from "../table-cell.jsx";
-import { Any } from "@kizmann/pico-js";
+import { Str } from "@kizmann/pico-js";
 
 export default {
 
@@ -21,7 +21,7 @@ export default {
 
         return (
             <div>
-                <span>{ Any.convertBoolean(this.input, this.column.trueText, this.column.falseText) }</span>
+                <span>{ Str.boolean(this.input, this.column.trueText, this.column.falseText) }</span>
             </div>
         );
     }

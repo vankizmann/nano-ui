@@ -1,4 +1,4 @@
-import { Any, Arr, Dom, Locale, Obj, UUID } from "@kizmann/pico-js";
+import { Run, Mix, Arr, Dom, Locale, Obj, Hash } from "@kizmann/pico-js";
 
 export class ConfirmHandler
 {
@@ -18,7 +18,7 @@ export class ConfirmHandler
     constructor(options = {})
     {
         this.options = Obj.assign(this.options, options, {
-            uid: UUID()
+            uid: Hash.uuid()
         });
     }
 
@@ -27,7 +27,7 @@ export class ConfirmHandler
         this.unbindEvents();
         this.modal.remove();
 
-        Dom.find(document.body).css({
+        Dom.find(document.body).style({
             'overflow': 'undefined'
         });
 
@@ -81,7 +81,7 @@ export class ConfirmHandler
 
         let text = Obj.get(this.options, 'confirmText');
 
-        if ( Any.isEmpty(text) ) {
+        if ( Mix.isEmpty(text) ) {
             text = Locale.trans('Okay');
         }
 
@@ -107,7 +107,7 @@ export class ConfirmHandler
 
         let text = Obj.get(this.options, 'cancelText');
 
-        if ( Any.isEmpty(text) ) {
+        if ( Mix.isEmpty(text) ) {
             text = Locale.trans('Cancel');
         }
 
@@ -141,7 +141,7 @@ export class ConfirmHandler
             }
         }, { uid });
 
-        Any.delay(() => {
+        Run.delay(() => {
             Dom.find(this.modal).addClass('n-ready');
         });
     }
@@ -163,7 +163,7 @@ export class ConfirmHandler
     {
         let cls = Obj.get(this.options, 'class', []);
 
-        if ( Any.isString(cls) ) {
+        if ( Mix.isString(cls) ) {
             cls = cls.split(' ');
         }
 
@@ -209,7 +209,7 @@ export class ConfirmHandler
         this.renderCancel(action, cancel);
         this.renderConfirm(action, confirm);
 
-        Dom.find(document.body).css({
+        Dom.find(document.body).style({
             'overflow': 'hidden'
         });
 
@@ -220,6 +220,7 @@ export class ConfirmHandler
         });
 
         this.modal = modal.get(0);
+        console.log(this.modal);
     }
 }
 

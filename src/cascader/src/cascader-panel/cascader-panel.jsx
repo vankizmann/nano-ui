@@ -1,4 +1,4 @@
-import { Arr, Obj, Any, Str } from "@kizmann/pico-js";
+import { Arr, Obj, Mix, Str, Run } from "@kizmann/pico-js";
 
 export default {
 
@@ -273,7 +273,7 @@ export default {
         let tempCascade = Arr.merge(Arr.clone(cascade), [value]);
 
         if ( this.trigger === 'hover' ) {
-            props.onMousemove = Any.framerate(this.onHover(tempCascade), 30);
+            props.onMousemove = Run.framerate(this.onHover(tempCascade), 30);
         }
 
         if ( ! disabled ) {
@@ -282,7 +282,7 @@ export default {
 
         let children = Obj.get(item, this.childProp);
 
-        if (  ! props.icon && ! Any.isEmpty(children) ) {
+        if (  ! props.icon && ! Mix.isEmpty(children) ) {
             props.icon = nano.Icons.angleRight;
         }
 
@@ -295,7 +295,7 @@ export default {
 
     renderOptions(items, cascade = [])
     {
-        if ( Any.isEmpty(items) ) {
+        if ( Mix.isEmpty(items) ) {
             return null;
         }
 

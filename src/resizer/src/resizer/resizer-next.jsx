@@ -1,4 +1,4 @@
-import { UUID, Arr, Obj, Dom, Any, Str, Locale, Event, Num } from "@kizmann/pico-js";
+import { Run, Arr, Obj, Dom, Mix, Str, Locale, Event, Num } from "@kizmann/pico-js";
 
 export default {
 
@@ -178,7 +178,7 @@ export default {
 
             let now = this.$el.getBoundingClientRect();
 
-            if ( Any.isEqual(this.last || {}, now) ) {
+            if ( Mix.isEqual(this.last || {}, now) ) {
                 return;
             }
 
@@ -207,7 +207,7 @@ export default {
                 width: this.tempValue + 'px', flex: '0 0 auto'
             };
 
-            Dom.find(this.$el).css(style);
+            Dom.find(this.$el).style(style);
         },
 
         updateRemoteWidth(el)
@@ -242,7 +242,7 @@ export default {
                 style.transform = `translateX(${this.tempValue - this.resizerWidth}px)`
             }
 
-            Dom.find(this.$refs.handle).css(style);
+            Dom.find(this.$refs.handle).style(style);
         },
 
         getTouchEvent(event)
@@ -271,10 +271,10 @@ export default {
             Dom.find(document.body).addClass('n-move');
 
             Dom.find(document).on(this.mouseup,
-                Any.framerate(this.onLeftMouseup, 60), this._.uid);
+                this.onLeftMouseup, this._.uid);
 
             Dom.find(document).on(this.mousemove,
-                Any.framerate(this.onLeftMousemove, 60), this._.uid);
+                this.onLeftMousemove, this._.uid);
         },
 
         onLeftMousemove(event)
@@ -307,7 +307,7 @@ export default {
                 transform: `translateX(-${targetWidth - this.resizerWidth}px)`
             };
 
-            Dom.find(this.$refs.handle).css(style);
+            Dom.find(this.$refs.handle).style(style);
         },
 
         onLeftMouseup(event)
@@ -341,19 +341,19 @@ export default {
 
             this.tempValue = Math.round(targetWidth);
 
-            Dom.find(this.$el).removeClass('n-move');
+            Dom.find(this.$el).remClass('n-move');
 
             let style = {
                 transform: `translateX(-${targetWidth - this.resizerWidth}px)`
             };
 
-            Dom.find(this.$refs.handle).css(style);
+            Dom.find(this.$refs.handle).style(style);
 
             let frameStyle = {
                 width: this.tempValue + 'px', flex: '0 0 auto'
             };
 
-            Dom.find(this.$el).css(frameStyle);
+            Dom.find(this.$el).style(frameStyle);
 
             delete this.clientX;
 
@@ -383,10 +383,10 @@ export default {
             Dom.find(document.body).addClass('n-move');
 
             Dom.find(document).on(this.mouseup,
-                Any.framerate(this.onRightMouseup, 60), this._.uid);
+                this.onRightMouseup, this._.uid);
 
             Dom.find(document).on(this.mousemove,
-                Any.framerate(this.onRightMousemove, 60), this._.uid);
+                this.onRightMousemove, this._.uid);
         },
 
         onRightMousemove(event)
@@ -416,7 +416,7 @@ export default {
                 transform: `translateX(${targetWidth - this.resizerWidth}px)`
             };
 
-            Dom.find(this.$refs.handle).css(style);
+            Dom.find(this.$refs.handle).style(style);
         },
 
         onRightMouseup(event)
@@ -450,19 +450,19 @@ export default {
 
             this.tempValue = Math.round(targetWidth);
 
-            Dom.find(this.$el).removeClass('n-move');
+            Dom.find(this.$el).remClass('n-move');
 
             let style = {
                 transform: `translateX(${targetWidth - this.resizerWidth}px)`
             };
 
-            Dom.find(this.$refs.handle).css(style);
+            Dom.find(this.$refs.handle).style(style);
 
             let frameStyle = {
                 width: this.tempValue + 'px', flex: '0 0 auto'
             };
 
-            Dom.find(this.$el).css(frameStyle);
+            Dom.find(this.$el).style(frameStyle);
 
             delete this.clientX;
 
@@ -516,17 +516,17 @@ export default {
 
         let style = {};
 
-        if ( !Any.isEmpty(this.flex) ) {
+        if ( !Mix.isEmpty(this.flex) ) {
             style['flex'] = this.flex;
         }
 
         let width = this.width;
 
-        if ( Any.isNumber(width) ) {
+        if ( Mix.isNumber(width) ) {
             width = width + 'px';
         }
 
-        if ( !Any.isEmpty(this.width) ) {
+        if ( !Mix.isEmpty(this.width) ) {
             style['width'] = this.width;
         }
 

@@ -1,5 +1,5 @@
 import TableCell from "../table-cell.jsx";
-import { Num, Any, Obj, Arr } from "@kizmann/pico-js";
+import { Num, Mix, Obj, Arr } from "@kizmann/pico-js";
 
 export default {
 
@@ -28,7 +28,7 @@ export default {
 
         isChecked()
         {
-            if ( Any.isEmpty(this.column.modelValue) ) {
+            if ( Mix.isEmpty(this.column.modelValue) ) {
                 return false;
             }
 
@@ -38,15 +38,15 @@ export default {
 
         isDisabled()
         {
-            if ( ! Any.isEmpty(this.column.modelValue) ) {
+            if ( ! Mix.isEmpty(this.column.modelValue) ) {
                 return true;
             }
 
-            if ( Any.isFunction(this.column.matrixDisabled) ) {
+            if ( Mix.isFunction(this.column.matrixDisabled) ) {
                 return this.column.matrixDisabled(this);
             }
 
-            if ( ! Any.isFunction(this.column.disabled) ) {
+            if ( ! Mix.isFunction(this.column.disabled) ) {
                 return this.column.disabled;
             }
 

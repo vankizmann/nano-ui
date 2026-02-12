@@ -1,4 +1,4 @@
-import { Obj, Arr, Any, Num, Dom, Event } from "@kizmann/pico-js";
+import { Obj, Arr, Mix, Num, Dom, Run } from "@kizmann/pico-js";
 
 export default {
 
@@ -94,12 +94,12 @@ export default {
 
         fixmin()
         {
-            return Any.isArray(this.steps) ? Arr.first(this.steps) : this.min;
+            return Mix.isArray(this.steps) ? Arr.first(this.steps) : this.min;
         },
 
         fixmax()
         {
-            return Any.isArray(this.steps) ? Arr.last(this.steps) : this.max;
+            return Mix.isArray(this.steps) ? Arr.last(this.steps) : this.max;
         },
 
         minmax()
@@ -140,7 +140,7 @@ export default {
     mounted()
     {
         Dom.find(window).on('resize',
-            Any.debounce(this.onResize, 500), this._.uid);
+            Run.debounce(this.onResize, 500), this._.uid);
 
         this.onResize();
         this.getPseudoValue();
@@ -163,10 +163,10 @@ export default {
         {
             let value = this.modelValue;
 
-            if ( Any.isNull(value) ) {
+            if ( Mix.isNull(value) ) {
                 value = this.fixmax;
             }
-            if ( ! Any.isArray(value) ) {
+            if ( ! Mix.isArray(value) ) {
                 value = [this.fixmin, value];
             }
 
@@ -212,8 +212,8 @@ export default {
 
         getClosestValue(width)
         {
-            if ( Any.isNumber(this.steps) ) {
-                return Num.round(width / this.steps) * this.steps;
+            if ( Mix.isNumber(this.steps) ) {
+                return Math.round(width / this.steps) * this.steps;
             }
 
             let range = Arr.last(this.steps) -
@@ -254,10 +254,10 @@ export default {
             Dom.find(document.body).addClass('n-move');
 
             Dom.find(document).on(this.mouseup,
-                Any.framerate(this.onMouseup, 60), this._.uid);
+                this.onMouseup, this._.uid);
 
             Dom.find(document).on(this.mousemove,
-                Any.framerate(this.onMousemove, 60), this._.uid);
+                this.onMousemove, this._.uid);
         },
 
         onMousemove(event)
@@ -302,8 +302,8 @@ export default {
             Dom.find(document).off(this.mouseup, null, this._.uid);
             Dom.find(document).off(this.mousemove, null, this._.uid);
 
-            Dom.find(this.$el).find(this.selector).removeClass('n-move');
-            Dom.find(document.body).removeClass('n-move');
+            Dom.find(this.$el).find(this.selector).remClass('n-move');
+            Dom.find(document.body).remClass('n-move');
 
             this.setModelValue();
         },
@@ -312,6 +312,8 @@ export default {
 
     renderHandle(value, index)
     {
+        let key = Arr.findIndex(this.steps, value);
+
         let handleProps = {
             'data-value': value,
             'data-index': index,
@@ -322,12 +324,12 @@ export default {
             this.onMousedown(event, this.index = index);
         };
 
-        let [key, tooltip] = [
-            Arr.findIndex(this.steps, value), Obj.get(this.labels, key, value)
-        ];
+        handleProps = {
+            ...handleProps, 'data-tooltip': Obj.get(this.labels, key, value)
+        }
 
         return (
-            <div class="n-slider__handle" data-tooltip={tooltip} {...handleProps}>
+            <div class="n-slider__handle" {...handleProps}>
                 <span></span>
             </div>
         );

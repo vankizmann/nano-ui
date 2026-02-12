@@ -23,7 +23,7 @@ div:not(.n-popover,.n-datetimepicker-panel) > .n-datepicker-panel {
 
 .n-datepicker-panel__display .n-datepicker-panel__month:hover,
 .n-datepicker-panel__display .n-datepicker-panel__year:hover {
-    background: color('gray-15', 0.6);
+    background: color('gray-50', 0.2);
 }
 
 .n-datepicker-panel .n-datepicker-panel__body .n-datepicker-panel__day.n-selected,
@@ -36,7 +36,7 @@ div:not(.n-popover,.n-datetimepicker-panel) > .n-datepicker-panel {
 .n-datepicker-panel__dateview .n-datepicker-panel__day.n-arrive:not(.n-selected),
 .n-datepicker-panel__dateview .n-datepicker-panel__day.n-depart:not(.n-selected),
 .n-datepicker-panel__dateview .n-datepicker-panel__day.n-between:not(.n-selected) {
-    background: color('gray-15', 0.6);
+    background: color('gray-50', 0.2);
 }
 
 .n-datepicker-panel__body .n-datepicker-panel__day:not(.n-current)  {

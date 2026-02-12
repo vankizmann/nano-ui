@@ -1,4 +1,4 @@
-import { Arr, Obj, Num, Now, Any, Dom, Locale } from "@kizmann/pico-js";
+import { Str, Obj, Num, Now, Mix, Dom, Locale } from "@kizmann/pico-js";
 import { h } from "vue";
 
 export default {
@@ -159,11 +159,11 @@ export default {
 
         getValue(value = null)
         {
-            if ( Any.isNull(value) ) {
+            if ( Mix.isNull(value) ) {
                 value = this.modelValue;
             }
 
-            if ( Any.isEmpty(value) ) {
+            if ( Mix.isEmpty(value) ) {
                 return this.min;
             }
 
@@ -172,12 +172,11 @@ export default {
 
         getDisplayValue()
         {
-            if ( Any.isEmpty(this.tempValue) ) {
+            if ( Mix.isEmpty(this.tempValue) ) {
                 return null;
             }
 
-            let value = Num.format(this.tempValue,
-                this.decimals, ' ', this.precision);
+            let value = Str.number(this.tempValue, this.precision);
 
             return Locale.trans(this.format, { count: value });
         },
@@ -388,7 +387,7 @@ export default {
 
     renderClear()
     {
-        if ( !this.clearable || Any.isEmpty(this.tempValue) ) {
+        if ( !this.clearable || Mix.isEmpty(this.tempValue) ) {
             return null;
         }
 
@@ -413,7 +412,7 @@ export default {
             'n-input-number--' + this.size,
         ];
 
-        if ( Any.isEmpty(this.modelValue) ) {
+        if ( Mix.isEmpty(this.modelValue) ) {
             classList.push('n-empty');
         }
 

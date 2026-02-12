@@ -1,4 +1,4 @@
-import { Arr, Obj, Str, Any } from "@kizmann/pico-js";
+import { Arr, Obj, Str, Mix } from "@kizmann/pico-js";
 import { h, resolveComponent } from "vue";
 
 export default {
@@ -80,11 +80,11 @@ export default {
 
         propAwait(value)
         {
-            if ( Any.isEmpty(value) ) {
+            if ( Mix.isEmpty(value) ) {
                 return true;
             }
 
-            if ( ! Any.isArray(value) ) {
+            if ( ! Mix.isArray(value) ) {
                 value = [value];
             }
 
@@ -97,11 +97,11 @@ export default {
 
         propExists(value)
         {
-            if ( Any.isEmpty(value) ) {
+            if ( Mix.isEmpty(value) ) {
                 return true;
             }
 
-            if ( ! Any.isArray(value) ) {
+            if ( ! Mix.isArray(value) ) {
                 value = [value];
             }
 
@@ -114,11 +114,11 @@ export default {
 
         getState(value, exists = true)
         {
-            if ( Any.isFunction(value) ) {
+            if ( Mix.isFunction(value) ) {
                 return !! this.solveInput(value);
             }
 
-            if ( ! Any.isString(value) ) {
+            if ( ! Mix.isString(value) ) {
                 return !! value;
             }
 
@@ -170,7 +170,7 @@ export default {
 
         solveContext(cb)
         {
-            if ( ! Any.isFunction(cb) ) {
+            if ( ! Mix.isFunction(cb) ) {
                 return () => console.error('Raw suffix (!) only allowed on functions');
             }
 
@@ -183,11 +183,11 @@ export default {
                 return this.solveContext(value);
             }
 
-            if ( Any.isFunction(value) ) {
+            if ( Mix.isFunction(value) ) {
                 return this.solveInput(value);
             }
 
-            if ( ! Any.isString(value) ) {
+            if ( ! Mix.isString(value) ) {
                 return value;
             }
 
@@ -202,11 +202,11 @@ export default {
             let result = Obj.get(sources, value.replace(/^!+/, ''));
 
             if ( value.match(/^!!\$/) ) {
-                result = Any.isEmpty(result);
+                result = Mix.isEmpty(result);
             }
 
             if ( value.match(/^!\$/) ) {
-                result = Any.isEmpty(result);
+                result = Mix.isEmpty(result);
             }
 
             return result;
@@ -214,7 +214,7 @@ export default {
 
         getInput(prop, fallback)
         {
-            if ( Any.isFunction(prop) ) {
+            if ( Mix.isFunction(prop) ) {
                 return this.solveInput(prop, fallback);
             }
 
@@ -222,7 +222,7 @@ export default {
                 $scope: this.scope, $model: this.tempValue, $extra: this.sempValue, $global: window
             };
 
-            if ( ! Any.isNull(fallback) && Obj.get(sources, prop, -1337) === -1337 ) {
+            if ( ! Mix.isNull(fallback) && Obj.get(sources, prop, -1337) === -1337 ) {
                 Obj.set(sources, prop, fallback);
             }
 
@@ -231,7 +231,7 @@ export default {
 
         setInput(prop, value)
         {
-            if ( Any.isFunction(prop) ) {
+            if ( Mix.isFunction(prop) ) {
                 return console.error('NConfigNew: Bind with function is not allowed!');
             }
 
@@ -246,7 +246,7 @@ export default {
 
     renderSetup(setup, alias)
     {
-        if ( ! Any.isPlain(setup) ) {
+        if ( ! Mix.isObj(setup) ) {
             return setup;
         }
 
@@ -272,7 +272,7 @@ export default {
 
         Obj.each(setup['binds'], (value, key) => {
 
-            if ( Any.isString(value) ) {
+            if ( Mix.isString(value) ) {
                 value = { value: value };
             }
 
@@ -311,7 +311,7 @@ export default {
             component = resolveComponent(component);
         }
 
-        if ( Any.isEmpty(component) ) {
+        if ( Mix.isEmpty(component) ) {
             return null;
         }
 
@@ -336,11 +336,11 @@ export default {
             return this.ctor('renderSetup')(value, key);
         });
 
-        if ( Any.isFunction(callback) ) {
+        if ( Mix.isFunction(callback) ) {
             render = () => callback.apply(this.scope);
         }
 
-        if ( Any.isString(callback) ) {
+        if ( Mix.isString(callback) ) {
             render = () => this.getString(callback);
         }
 

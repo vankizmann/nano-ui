@@ -1,4 +1,4 @@
-import { UUID, Num, Arr, Obj, Any, Dom, Locale } from "@kizmann/pico-js";
+import { Run, Arr, Obj, Mix, Dom, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -152,7 +152,7 @@ export default {
     mounted()
     {
         this.target = Dom.find(this.selector || this.$el)
-            .previous().get(0);
+            .prev().get(0);
 
         Dom.find(document.body).on('mousedown',
             this.eventClick, this._.uid);
@@ -165,7 +165,7 @@ export default {
         };
 
         if ( this.modelValue ) {
-            Any.delay(showModal, 100);
+            Run.delay(showModal, 100);
         }
 
         Dom.find(document.body).append(this.$el);
@@ -221,7 +221,7 @@ export default {
         {
             clearTimeout(this.refresh);
 
-            Dom.find(this.$el).removeClass('n-ready');
+            Dom.find(this.$el).remClass('n-ready');
         },
 
         startRefreshTimeout()
@@ -235,7 +235,7 @@ export default {
             Dom.find(this.$el).attr('data-modal',
                 window.zIndex);
 
-            Dom.find(this.$el).css({
+            Dom.find(this.$el).style({
                 'z-index': window.zIndex
             });
 

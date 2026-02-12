@@ -1,4 +1,4 @@
-import { Arr, Obj, Any, Dom, UUID, Locale } from "@kizmann/pico-js";
+import { Arr, Obj, Mix, Dom, Hash, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -136,7 +136,7 @@ export default {
     data()
     {
         return {
-            uid: UUID()
+            uid: Hash.uuid()
         };
     },
 
@@ -261,7 +261,7 @@ export default {
         let errors = Obj.get(this.NForm.getErrors(),
             this.prop, []);
 
-        if ( Any.isEmpty(errors) ) {
+        if ( Mix.isEmpty(errors) ) {
             return;
         }
 

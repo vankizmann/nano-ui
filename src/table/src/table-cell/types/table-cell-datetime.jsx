@@ -1,5 +1,5 @@
 import TableCell from "../table-cell.jsx";
-import { Any } from "@kizmann/pico-js";
+import { Str } from "@kizmann/pico-js";
 
 export default {
 
@@ -21,7 +21,7 @@ export default {
 
         return (
             <div>
-                <span>{ Any.convertDatetime(this.input, this.column.datetimeFormat, this.column.emptyText) }</span>
+                <span>{ Str.datetime(this.input, this.column.datetimeFormat, this.column.emptyText) }</span>
             </div>
         );
     }

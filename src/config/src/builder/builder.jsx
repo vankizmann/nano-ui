@@ -1,4 +1,4 @@
-import { Arr, Dom, Any, Locale, Obj, UUID, Num } from "@kizmann/pico-js";
+import { Arr, Dom, Mix, Locale, Obj, Hash, Num } from "@kizmann/pico-js";
 
 window.NanoBuilderPropType = {
     'root': Locale.trans('Root'),
@@ -160,7 +160,7 @@ export default {
 
             Obj.each(model, (value, key) => {
                 result[key] = Obj.assign(this.normalizeChild(value), {
-                    order: (Any.vals(result).length + 1) * 100
+                    order: (Mix.vals(result).length + 1) * 100
                 });
             });
 
@@ -173,11 +173,11 @@ export default {
                 ...Obj.except(child, ['content']), content: {}, builder: this.buildProps(child),
             });
 
-            if ( Any.isArray(child.content) ) {
+            if ( Mix.isArray(child.content) ) {
                 child.content = Arr.first(child.content);
             }
 
-            if ( ! Any.isPlain(child.content) && ! Any.isString(child.content) ) {
+            if ( ! Mix.isObj(child.content) && ! Mix.isString(child.content) ) {
                 child.content = {};
             }
 
@@ -185,15 +185,15 @@ export default {
                 type: typeof child.content
             }
 
-            if (Any.isPlain(child.content)) {
+            if (Mix.isObj(child.content)) {
                 Obj.each(child.content || {}, (value, key) => {
 
                     if ( ! key.match(':') ) {
-                        key += ':' + UUID();
+                        key += ':' + Hash.uuid();
                     }
 
                     result['content'][key] = Obj.assign(this.normalizeChild(value), {
-                        order: (Any.vals(result['content']).length + 1) * 100
+                        order: (Mix.vals(result['content']).length + 1) * 100
                     });
                 });
             } else {
@@ -219,15 +219,15 @@ export default {
             let safevalue = '';
 
             if ( typeof prop.value === 'string' ) {
-                safevalue = Any.string(prop.value);
+                safevalue = Mix.string(prop.value);
             }
 
             if ( typeof prop.value === 'boolean' ) {
-                safevalue = Any.string(prop.value);
+                safevalue = Mix.string(prop.value);
             }
 
             if ( typeof prop.value === 'number' ) {
-                safevalue = Any.string(prop.value);
+                safevalue = Mix.string(prop.value);
             }
 
             if ( typeof prop.value === 'object' ) {
@@ -246,15 +246,15 @@ export default {
             let realvalue = '';
 
             if ( prop.code === 'string' ) {
-                realvalue = Any.string(prop.value);
+                realvalue = Mix.string(prop.value);
             }
 
             if ( prop.code === 'boolean' ) {
-                realvalue = Any.boolean(prop.value);
+                realvalue = Mix.boolean(prop.value);
             }
 
             if ( prop.code === 'number' ) {
-                realvalue = Any.number(prop.value, 0);
+                realvalue = Mix.number(prop.value, 0);
             }
 
             if ( prop.code === 'object' ) {
@@ -270,7 +270,7 @@ export default {
 
         changeElement(key, update)
         {
-            if ( Any.isEmpty(update) ) {
+            if ( Mix.isEmpty(update) ) {
                 return;
             }
 
@@ -288,7 +288,7 @@ export default {
 
         changeAlias(key, update)
         {
-            if ( Any.isEmpty(update) ) {
+            if ( Mix.isEmpty(update) ) {
                 return;
             }
 
@@ -323,7 +323,7 @@ export default {
 
         applyProps(key = null, value = {})
         {
-            if ( ! Any.isEmpty(key) ) {
+            if ( ! Mix.isEmpty(key) ) {
                 value = Obj.get(this, key, {});
             }
 
@@ -337,7 +337,7 @@ export default {
 
             Obj.each(value.builder || {}, (val) => {
 
-                if ( Any.isEmpty(val.key) ) {
+                if ( Mix.isEmpty(val.key) ) {
                     return;
                 }
 
@@ -346,11 +346,11 @@ export default {
                 };
 
                 if ( val.code === 'string' ) {
-                    bindValue.fallback = Any.string(val.fallback || '');
+                    bindValue.fallback = Mix.string(val.fallback || '');
                 }
 
                 if ( val.code === 'boolean' ) {
-                    bindValue.fallback = Any.boolean(val.fallback || 'false');
+                    bindValue.fallback = Mix.boolean(val.fallback || 'false');
                 }
 
                 if ( val.code === 'object' ) {
@@ -366,7 +366,7 @@ export default {
                 try {
                     realvalue = this.getRealValue(val);
                 } catch (e) {
-                    if ( ! Any.isEmpty(val.value) ) {
+                    if ( ! Mix.isEmpty(val.value) ) {
                         console.error('Invalid JSON: ' + val.value);
                     }
                 }
@@ -389,7 +389,7 @@ export default {
 
             });
 
-            if ( Any.isEmpty(key) ) {
+            if ( Mix.isEmpty(key) ) {
                 return value;
             }
 
@@ -401,7 +401,7 @@ export default {
             let builder = {};
 
             Obj.each(Obj.only(el, ['vIf', 'vShow', 'classList']), (value, sey) => {
-                builder[UUID()] = {
+                builder[Hash.uuid()] = {
                     type: 'root', code: typeof value, key: sey, value: this.getSafeValue({ value }), fallback: null, original: this.getOriginalValue({ value })
                 };
             });
@@ -412,30 +412,30 @@ export default {
                     type: 'binds', code: typeof value, key: sey, fallback: null, original: this.getOriginalValue({ value })
                 }
 
-                if ( Any.isString(value) ) {
+                if ( Mix.isString(value) ) {
                     result.value = this.getSafeValue({ value });
                 }
 
-                if ( Any.isObject(value) ) {
+                if ( Mix.isRef(value) ) {
                     Obj.assign(result, { value: this.getSafeValue(value), fallback: Obj.get(value, 'fallback', null) })
                 }
 
-                builder[UUID()] = result;
+                builder[Hash.uuid()] = result;
             });
 
             Obj.each(Obj.get(el, `props`, {}), (value, sey) => {
-                builder[UUID()] = { type: 'props', code: typeof value, key: sey, value: this.getSafeValue({ value }), fallback: null, original: this.getOriginalValue({ value }) };
+                builder[Hash.uuid()] = { type: 'props', code: typeof value, key: sey, value: this.getSafeValue({ value }), fallback: null, original: this.getOriginalValue({ value }) };
             });
 
             Obj.each(Obj.get(el, `attrs`, {}), (value, sey) => {
-                builder[UUID()] = { type: 'attrs', code: typeof value, key: sey, value: this.getSafeValue({ value }), fallback: null, original: this.getOriginalValue({ value }) };
+                builder[Hash.uuid()] = { type: 'attrs', code: typeof value, key: sey, value: this.getSafeValue({ value }), fallback: null, original: this.getOriginalValue({ value }) };
             });
 
             Obj.each(Obj.get(el, `on`, {}), (value, sey) => {
-                builder[UUID()] = { type: 'on', code: typeof value, key: sey, value: this.getSafeValue({ value }), fallback: null, original: this.getOriginalValue({ value }) };
+                builder[Hash.uuid()] = { type: 'on', code: typeof value, key: sey, value: this.getSafeValue({ value }), fallback: null, original: this.getOriginalValue({ value }) };
             });
 
-            if ( Any.isEmpty(key) ) {
+            if ( Mix.isEmpty(key) ) {
                 return builder;
             }
 
@@ -450,7 +450,7 @@ export default {
         {
             let value = Obj.get(this, `${key}.builder`, {});
 
-            Obj.set(value, UUID(), {
+            Obj.set(value, Hash.uuid(), {
                 type: 'props', code: 'string', key: '', value: '', fallback: null
             });
 
@@ -473,8 +473,8 @@ export default {
         {
             let value = Obj.get(this, key, {});
 
-            Obj.set(value, 'div:' + UUID(), {
-                order: (Any.vals(value).length + 1) * 100, props: { modelValue: '$scope.list' }, content: {}
+            Obj.set(value, 'div:' + Hash.uuid(), {
+                order: (Mix.vals(value).length + 1) * 100, props: { modelValue: '$scope.list' }, content: {}
             });
 
             Obj.assign(this, key, value);
@@ -628,7 +628,7 @@ export default {
         props = Obj.assign({}, window.NanoBuilderProps, props);
 
         Obj.each(props, (prop, index) => {
-            if ( ! Any.isEmpty(prop.for) && ! Arr.has(prop.for, value.type) ) {
+            if ( ! Mix.isEmpty(prop.for) && ! Arr.has(prop.for, value.type) ) {
                 props = Obj.unset(props, index);
             }
         });
@@ -809,7 +809,7 @@ export default {
 
     renderBuilder(el, key)
     {
-        if ( Any.isEmpty(el) ) {
+        if ( Mix.isEmpty(el) ) {
             return null;
         }
 
@@ -894,7 +894,7 @@ export default {
 
         let renderFunction = this.$slots.default;
 
-        if ( Any.isEmpty(renderFunction) ) {
+        if ( Mix.isEmpty(renderFunction) ) {
             renderFunction = ({ render }) => render();
         }
 

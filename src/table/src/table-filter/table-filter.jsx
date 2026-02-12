@@ -1,4 +1,4 @@
-import {Arr, Obj, Any, Dom, Event, UUID} from "@kizmann/pico-js";
+import {Arr, Obj, Mix, Dom, Event, Hash} from "@kizmann/pico-js";
 
 export default {
 
@@ -32,7 +32,7 @@ export default {
 
         canApply()
         {
-            return ! Any.isEmpty(this.filter.value);
+            return ! Mix.isEmpty(this.filter.value);
         }
 
     },
@@ -73,7 +73,7 @@ export default {
         {
             let tempFilter = this.NTable.getColumnFilter(this.column);
 
-            if ( Any.isEmpty(tempFilter) ) {
+            if ( Mix.isEmpty(tempFilter) ) {
                 return null;
             }
 
@@ -139,10 +139,10 @@ export default {
                 this.clearFilter();
             }
 
-            let closeAnyway = event.which === 13 &&
+            let closeMixway = event.which === 13 &&
                 this.NTable.closeFilterOnEnter;
 
-            if ( closeAnyway || event.which === 27 ) {
+            if ( closeMixway || event.which === 27 ) {
                 this.$refs.popover.close();
             }
         },

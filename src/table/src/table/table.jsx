@@ -1,4 +1,4 @@
-import { Any, Arr, Obj, Dom, Event, UUID } from "@kizmann/pico-js";
+import { Mix, Arr, Obj, Dom, Event, Hash } from "@kizmann/pico-js";
 
 export default {
 
@@ -304,7 +304,7 @@ export default {
     data()
     {
         return {
-            uid: UUID(),
+            uid: Hash.uuid(),
             elements: [],
             tempVisible: this.visible,
             tempVisibleProps: [],
@@ -351,7 +351,7 @@ export default {
 
         getColumnIndex(column)
         {
-            if ( !Any.isString(column) ) {
+            if ( !Mix.isString(column) ) {
                 column = column['prop'];
             }
 
@@ -361,7 +361,7 @@ export default {
 
         getColumnVisiblity(column)
         {
-            if ( !Any.isString(column) ) {
+            if ( !Mix.isString(column) ) {
                 column = column.prop;
             }
 
@@ -372,11 +372,11 @@ export default {
         {
             let prop = column;
 
-            if ( !Any.isString(prop) ) {
+            if ( !Mix.isString(prop) ) {
                 prop = column.sortProp;
             }
 
-            if ( Any.isEmpty(prop) ) {
+            if ( Mix.isEmpty(prop) ) {
                 prop = column.prop;
             }
 
@@ -391,11 +391,11 @@ export default {
         {
             let prop = column;
 
-            if ( !Any.isString(prop) ) {
+            if ( !Mix.isString(prop) ) {
                 prop = column.filterProp;
             }
 
-            if ( Any.isEmpty(prop) ) {
+            if ( Mix.isEmpty(prop) ) {
                 prop = column.prop;
             }
 
@@ -408,11 +408,11 @@ export default {
         {
             let prop = column;
 
-            if ( !Any.isString(prop) ) {
+            if ( !Mix.isString(prop) ) {
                 prop = column.filterProp;
             }
 
-            if ( Any.isEmpty(prop) ) {
+            if ( Mix.isEmpty(prop) ) {
                 prop = column.prop;
             }
 
@@ -428,8 +428,11 @@ export default {
 
         makeVisibleProps()
         {
-            this.tempVisibleProps = Arr.intersect(
-                Arr.extract(this.elements, 'prop'), this.tempVisible);
+            let args = [
+                Arr.extract(this.elements, 'prop'), this.tempVisible
+            ];
+
+            this.tempVisibleProps = Arr.isect(...args);
 
             this.$nextTick(this.$refs.scrollbar.onResize);
         },
@@ -438,11 +441,11 @@ export default {
         {
             let prop = column;
 
-            if ( !Any.isString(prop) ) {
+            if ( !Mix.isString(prop) ) {
                 prop = column.sortProp;
             }
 
-            if ( Any.isEmpty(prop) ) {
+            if ( Mix.isEmpty(prop) ) {
                 prop = column.prop;
             }
 
@@ -566,7 +569,7 @@ export default {
             return column.disabled ? null : column.ctor('renderBody')(props);
         });
 
-        return Obj.values(columns);
+        return Mix.vals(columns);
     },
 
     renderContext()
@@ -590,7 +593,7 @@ export default {
                     {this.trans('Toggle column visiblity')}
                 </NPopoverGroup>
                 <NCheckboxGroup vModel={this.tempVisible} size="sm" align="vertical">
-                    {Obj.values(columns)}
+                    {Mix.vals(columns)}
                 </NCheckboxGroup>
             </NPopover>
         );
@@ -605,13 +608,13 @@ export default {
             this.ctor('renderContext')()
         ];
 
-        let columns = Obj.each(this.elements, (column) => {
+        let columns = Obj.map(this.elements, (column) => {
             return column.disabled ? null : column.ctor('renderHead')();
         });
 
         return (
             <div class="n-table__header">
-                {defaultRender} {Obj.values(columns)}
+                {defaultRender} {Mix.vals(columns)}
             </div>
         );
     },

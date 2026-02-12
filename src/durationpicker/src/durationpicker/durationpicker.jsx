@@ -1,4 +1,4 @@
-import { Any, Obj, Arr, Locale } from "@kizmann/pico-js";
+import { Mix, Obj, Arr, Locale } from "@kizmann/pico-js";
 
 export default {
 
@@ -192,7 +192,7 @@ export default {
 
         humanizeValue(value)
         {
-            if ( Any.isEmpty(value) ) {
+            if ( Mix.isEmpty(value) ) {
                 return '';
             }
 
@@ -238,7 +238,7 @@ export default {
 
         digitizeValue(text)
         {
-            if ( Any.isEmpty(text) ) {
+            if ( Mix.isEmpty(text) ) {
                 return this.clearValue;
             }
 
@@ -247,25 +247,25 @@ export default {
             let dmatch = this.findPattern(text, this.days);
 
             if ( dmatch && dmatch.length === 3 ) {
-                value += Any.float(dmatch[1].replace(',', '.')) * 24 * 60 * 60;
+                value += Mix.float(dmatch[1].replace(',', '.')) * 24 * 60 * 60;
             }
 
             let hmatch = this.findPattern(text, this.hours);
 
             if ( hmatch && hmatch.length === 3 ) {
-                value += Any.float(hmatch[1].replace(',', '.')) * 60 * 60;
+                value += Mix.float(hmatch[1].replace(',', '.')) * 60 * 60;
             }
 
             let mmatch = this.findPattern(text, this.minutes);
 
             if ( mmatch && mmatch.length === 3 ) {
-                value += Any.float(mmatch[1].replace(',', '.')) * 60;
+                value += Mix.float(mmatch[1].replace(',', '.')) * 60;
             }
 
             let smatch = this.findPattern(text, this.seconds);
 
             if ( smatch && smatch.length === 3 ) {
-                value += Any.float(smatch[1].replace(',', '.'));
+                value += Mix.float(smatch[1].replace(',', '.'));
             }
 
             return value;

@@ -1,4 +1,4 @@
-import { Any } from "@kizmann/pico-js";
+import { Str } from "@kizmann/pico-js";
 import InfoField from "../info-field.jsx";
 
 export default {
@@ -17,7 +17,7 @@ export default {
 
         return (
             <div>
-                <span>{ Any.convertBoolean(this.input, this.column.trueText, this.column.falseText) }</span>
+                <span>{ Str.boolean(this.input, this.column.trueText, this.column.falseText) }</span>
             </div>
         );
     }

@@ -2,7 +2,7 @@
 
 .n-drawer__backdrop {
     background: color('shadow', 0.4);
-    backdrop-filter: blur(1.5px);
+    // PERFORMANCE backdrop-filter: blur(1.5px);
 }
 
 .n-drawer__frame {

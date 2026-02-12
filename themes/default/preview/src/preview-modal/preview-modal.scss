@@ -2,7 +2,7 @@
 
 .n-preview-modal {
     background: color('shadow', 0.95);
-    backdrop-filter: blur(6px);
+    // PERFORMANCE backdrop-filter: blur(6px);
     transition: opacity 0.3s;
 }
 
