@@ -1,4 +1,4 @@
-import { Str, Obj, Arr, Dom } from "@kizmann/pico-js";
+import { Str, Obj, Arr, Dom, Run } from "@kizmann/pico-js";
 
 export default {
 
@@ -9,7 +9,7 @@ export default {
         NDraggable: {
             default: undefined
         }
-    
+
     },
 
     inheritAttrs: false,
@@ -45,22 +45,26 @@ export default {
             return Obj.get(this.NDraggable, this.value.route);
         },
 
-        touch() {
-            return !! ('ontouchstart' in window ||
+        touch()
+        {
+            return !!('ontouchstart' in window ||
                 navigator.msMaxTouchPoints);
         },
 
-        mousedown() {
+        mousedown()
+        {
             return this.touch ? 'touchstart' :
                 'mousedown';
         },
 
-        mousemove() {
+        mousemove()
+        {
             return this.touch ? 'touchmove' :
                 'mousemove';
         },
 
-        mouseup() {
+        mouseup()
+        {
             return this.touch ? 'touchend' :
                 'mouseup';
         }
@@ -70,29 +74,26 @@ export default {
     data()
     {
         return {
-            init: ! this.NDraggable.lazyload
+            init: !this.NDraggable.lazyload
         };
     },
 
     mounted()
     {
-        this.timer = setTimeout(() => {
+        if ( this.NDraggable.lazyload ) {
+            Run.frame(() => this.init = true);
+        }
 
-            if ( this.NDraggable.draggable ) {
-                this.timer = setTimeout(() => {
-                    this.NDraggable.drag.bindNode(this);
-                }, 10);
-            }
-
-            this.init = true;
-        }, 5);
+        if ( this.NDraggable.draggable ) {
+            this.NDraggable.drag.bindNode(this);
+        }
     },
 
-    beforeUnmount()
+    unmounted()
     {
-        clearTimeout(this.timer);
-
-        this.NDraggable.drag.unbindNode(this);
+        if ( this.NDraggable.draggable ) {
+            this.NDraggable.drag.unbindNode(this);
+        }
     },
 
     methods: {
@@ -185,7 +186,7 @@ export default {
             'n-draglist-item__element'
         ];
 
-        if ( ! this.init ) {
+        if ( !this.init ) {
             return (<div class={classList} />);
         }
 
@@ -204,17 +205,17 @@ export default {
 
         return (
             <div class={classList}>
-                { renderFunction(props) }
+                {renderFunction(props)}
             </div>
         );
     },
 
     renderSpacer()
     {
-        let width = this.value.depth * 
+        let width = this.value.depth *
             this.NDraggable.itemOffset;
 
-        if ( ! width ) {
+        if ( !width ) {
             return null;
         }
 
@@ -224,14 +225,14 @@ export default {
 
         return (
             <div class="n-draglist-item__spacer" style={style}>
-                { /* SPACER */ }
+                { /* SPACER */}
             </div>
         );
     },
 
     renderHandle()
     {
-        if ( ! this.NDraggable.renderHandle ) {
+        if ( !this.NDraggable.renderHandle ) {
             return null;
         }
 
@@ -244,7 +245,7 @@ export default {
         return (
             <div class="n-draglist-item__handle" {...props}>
                 <div class="n-draglist-item__ellipsis">
-                    <i class={ nano.Icons.handle }></i>
+                    <i class={nano.Icons.handle}></i>
                 </div>
             </div>
         );
@@ -252,7 +253,7 @@ export default {
 
     renderExpand()
     {
-        if ( ! this.NDraggable.renderExpand ) {
+        if ( !this.NDraggable.renderExpand ) {
             return null;
         }
 
@@ -263,7 +264,7 @@ export default {
         return (
             <div class="n-draglist-item__expand" {...props}>
                 <div class="n-draglist-item__angle">
-                    <i class={ nano.Icons.angleRight }></i>
+                    <i class={nano.Icons.angleRight}></i>
                 </div>
             </div>
         );
@@ -271,7 +272,7 @@ export default {
 
     renderSelect()
     {
-        if ( ! this.NDraggable.renderSelect ) {
+        if ( !this.NDraggable.renderSelect ) {
             return null;
         }
 
@@ -282,7 +283,7 @@ export default {
         return (
             <div class="n-draglist-item__select" {...props}>
                 <div class="n-draglist-item__checkbox">
-                    <i class={ nano.Icons.checked }></i>
+                    <i class={nano.Icons.checked}></i>
                 </div>
             </div>
         );
@@ -322,7 +323,7 @@ export default {
             onClick: this.onClick, onDblclick: this.onDblclick,
         };
 
-        if ( this.NDraggable.draggable && ! this.NDraggable.handle && this.isDraggable() ) {
+        if ( this.NDraggable.draggable && !this.NDraggable.handle && this.isDraggable() ) {
             props.draggable = true;
         }
 
@@ -330,11 +331,11 @@ export default {
 
         return (
             <div class={classList} {...props}>
-                { this.ctor('renderHandle')() }
-                { this.ctor('renderSpacer')() }
-                { this.ctor('renderExpand')() }
-                { this.ctor('renderSelect')() }
-                { this.ctor('renderElement')() }
+                {this.ctor('renderHandle')()}
+                {this.ctor('renderSpacer')()}
+                {this.ctor('renderExpand')()}
+                {this.ctor('renderSelect')()}
+                {this.ctor('renderElement')()}
             </div>
         );
     }

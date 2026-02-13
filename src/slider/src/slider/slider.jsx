@@ -312,6 +312,10 @@ export default {
 
     renderHandle(value, index)
     {
+        if ( value == null ) {
+            return null;
+        }
+
         let key = Arr.findIndex(this.steps, value);
 
         let handleProps = {

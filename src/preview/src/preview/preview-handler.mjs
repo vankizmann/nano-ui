@@ -75,7 +75,7 @@ export class PreviewHandler
 
     static create()
     {
-        el = Dom.find('.n-preview-modal');
+        let el = Dom.find('.n-preview-modal');
 
         if ( el.length() ) {
             return el;
@@ -88,7 +88,7 @@ export class PreviewHandler
             'n-theme--dark'
         ];
 
-        let el = Dom.make('div', {
+        el = Dom.make('div', {
             classList: classList.join(' ')
         });
 
