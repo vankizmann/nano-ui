@@ -164,27 +164,27 @@ class NDraghandler
 
         Dom.find(this.rootNode.$el).on('dragenter', Run.framebuffer((event) => {
             this.onDragenterRoot(event);
-        }, key + 'dragenter', 140));
+        }, key + 'dragenter', 100));
 
         Dom.find(this.rootNode.$el).on('dragover', Run.framebuffer((event) => {
             this.onDragoverRoot(event);
-        }, key + 'dragover', 240));
+        }, key + 'dragover', 200));
 
         Dom.find(this.rootNode.$el).on('dragleave', Run.framebuffer((event) => {
             this.onDragleaveRoot(event);
-        }, key + 'dragleave', 340));
+        }, key + 'dragleave', 300));
 
         Dom.find(this.rootNode.$el).on('dragend', Run.framebuffer((event) => {
             this.onDragendRoot(event);
-        }, key + 'dragend', 440));
+        }, key + 'dragend', 400));
 
         Dom.find(this.rootNode.$el).on('drop', Run.framebuffer((event) => {
             this.onDragdropRoot(event);
-        }, key + 'drop', 540));
+        }, key + 'drop', 500));
 
         Dom.find(this.rootNode.$el).on('dragdrop', Run.framebuffer((event) => {
             this.onDragdropRoot(event);
-        }, key + 'dragdrop', 640));
+        }, key + 'dragdrop', 600));
 
         Event.bind('NDrag:start', this.bindDragstart.bind(this),
             this.rootNode.uid);
@@ -540,7 +540,7 @@ class NDraghandler
 
         $el.on('dragdrop', Run.framebuffer((event) => {
             this.onDragdropNode(event, node);
-        }, `${id}-dnode-dragdrop`, 650), { id });
+        }, `${id}-dnode-dragdrop`, 550), { id });
 
         this.childNodes[node.uid] = node;
     }
