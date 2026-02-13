@@ -92,7 +92,7 @@ export default {
     data()
     {
         return {
-            _key: null, init: false
+            init: false
         }
     },
 

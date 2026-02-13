@@ -139,11 +139,9 @@ export class PopoverElement
             this.events['open'].apply({}, [event]);
         }
 
-        requestAnimationFrame(() => {
-            this.updatePosition();
-        });
+        this.updatePosition();
 
-        requestAnimationFrame(() => {
+        requestIdleCallback(() => {
             this.bindResizeObserver();
         });
 
