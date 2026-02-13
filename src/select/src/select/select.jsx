@@ -891,7 +891,7 @@ export default {
             return (<NSelectOption {...props}></NSelectOption>);
         };
 
-        return Mix.vals(Obj.map(this.options, optionRender));
+        return Arr.each(this.options, optionRender);
     },
 
     render()

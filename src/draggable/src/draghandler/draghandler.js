@@ -510,65 +510,46 @@ class NDraghandler
             $handle = $handle.find('[draggable]');
         }
 
-        let $el = Dom.find(node.$el);
+        let [$el, id] = [
+            Dom.find(node.$el), node.uid
+        ];
 
         $handle.on('dragstart', (event) => {
             this.onDragstartNode(event, node);
-        });
-
-        let key = this.rootNode._.uid + '-dnode-';
+        }, { id });
 
         $el.on('dragenter', Run.framebuffer((event) => {
             this.onDragenterNode(event, node);
-        }, key + 'dragenter', 150));
+        }, `${id}-dnode-dragenter`, 150), { id });
 
         $el.on('dragover', Run.framebuffer((event) => {
             this.onDragoverNode(event, node);
-        }, key + 'dragover', 250));
+        }, `${id}-dnode-dragover`, 250), { id });
 
         $el.on('dragleave', Run.framebuffer((event) => {
             this.onDragleaveNode(event, node);
-        }, key + 'dragleave', 350));
+        }, `${id}-dnode-dragleave`, 350), { id });
 
         $el.on('dragend', Run.framebuffer((event) => {
             this.onDragendNode(event, node);
-        }, key + 'dragend', 450));
+        }, `${id}-dnode-dragend`, 450), { id });
 
         $el.on('drop', Run.framebuffer((event) => {
             this.onDragdropNode(event, node);
-        }, key + 'drop', 550));
+        }, `${id}-dnode-drop`, 550), { id });
 
         $el.on('dragdrop', Run.framebuffer((event) => {
             this.onDragdropNode(event, node);
-        }, key + 'dragdrop', 650));
+        }, `${id}-dnode-dragdrop`, 650), { id });
 
         this.childNodes[node.uid] = node;
     }
 
     unbindNode(node)
     {
-        let $handle = Dom.find(node.$el);
-
-        if ( this.rootNode.handle ) {
-            $handle = $handle.find('[draggable]');
-        }
-
-        $handle.off('dragstart');
-
-        let $el = Dom.find(node.$el);
-
-        $el.off([
-            'dragenter',
-            'dragover',
-            'dragleave',
-            'dragend',
-            'drop',
-            'dragdrop',
-        ]);
-
-        $el.remClass(['n-dragover', 'n-nodrop']);
-
-        this.DragIndicator.hide();
+        Dom.find().optoff({
+            id: node.uid
+        });
 
         delete this.childNodes[node.uid];
     }

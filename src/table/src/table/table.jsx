@@ -608,13 +608,13 @@ export default {
             this.ctor('renderContext')()
         ];
 
-        let columns = Obj.map(this.elements, (column) => {
+        let columns = Arr.each(this.elements, (column) => {
             return column.disabled ? null : column.ctor('renderHead')();
         });
 
         return (
             <div class="n-table__header">
-                {defaultRender} {Mix.vals(columns)}
+                {defaultRender} {columns}
             </div>
         );
     },
