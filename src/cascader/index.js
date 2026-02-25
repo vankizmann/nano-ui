@@ -1,7 +1,7 @@
-import CascaderPanel from "./src/cascader-panel/cascader-panel.jsx";
-import Cascader from "./src/cascader/cascader.jsx";
+import NCascader from "./js/cascader/NCascader.js";
+import NCascaderPanel from "./js/cascader-panel/NCascaderPanel.js";
 
 export default function (App) {
-    App.component(CascaderPanel.name, CascaderPanel);
-    App.component(Cascader.name, Cascader);
+    App.component(NCascader.name, NCascader);
+    App.component(NCascaderPanel.name, NCascaderPanel);
 }

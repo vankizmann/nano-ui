@@ -442,7 +442,7 @@ $color-list: (
 @mixin exports() {
 
     @each $name, $values in $color-list {
-        [class*="--#{$name}"] {
+        &.n-type-#{$name}, .n-type-#{$name} {
             @include css-remaps($values, '-color-dark-#{$name}', '-color-base');
         }
     }

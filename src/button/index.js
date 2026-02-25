@@ -1,7 +1,7 @@
-import Button from "./src/button/button.jsx";
-import ButtonGroup from "./src/button-group/button-group.jsx";
+import NButton from "./js/button/NButton.js";
+import NButtonGroup from "./js/button-group/NButtonGroup.js";
 
 export default function (App) {
-    App.component(Button.name, Button);
-    App.component(ButtonGroup.name, ButtonGroup);
+    App.component(NButton.name, NButton);
+    App.component(NButtonGroup.name, NButtonGroup);
 }

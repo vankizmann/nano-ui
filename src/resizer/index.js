@@ -1,7 +1,5 @@
-import Resizer from "./src/resizer/resizer.jsx";
-import ResizerNext from "./src/resizer/resizer-next.jsx";
+import NResizer from "./js/resizer/NResizer.js";
 
 export default function (App) {
-    // App.component(Resizer.name, Resizer);
-    App.component(ResizerNext.name, ResizerNext);
+    App.component(NResizer.name, NResizer);
 }

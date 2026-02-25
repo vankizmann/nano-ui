@@ -1,7 +1,7 @@
-import Checkbox from "./src/checkbox/checkbox.jsx";
-import CheckboxGroup from "./src/checkbox-group/checkbox-group.jsx";
+import NCheckbox from "./js/checkbox/NCheckbox.js";
+import NCheckboxGroup from "./js/checkbox-group/NCheckboxGroup.js";
 
 export default function (App) {
-    App.component(Checkbox.name, Checkbox);
-    App.component(CheckboxGroup.name, CheckboxGroup);
+    App.component(NCheckbox.name, NCheckbox);
+    App.component(NCheckboxGroup.name, NCheckboxGroup);
 }

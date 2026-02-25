@@ -1,12 +1,68 @@
 @use "../../../root/helpers" as *;
 
 .n-draggable__indicator {
-    border-bottom: 1px solid color('primary-color');
+    border-bottom: 1px solid color('success-color');
+}
+
+.n-drag-indicator.n-mode-self:before {
+    border: 2px solid color('gray-30');
+    background: color('gray-30', 0.2);
+}
+
+.n-drag-indicator.n-mode-deny:before {
+    border: 2px solid color('danger-color');
+    background: color('danger-color', 0.2);
+}
+
+.n-drag-indicator.n-mode-append:before,
+.n-drag-indicator.n-mode-inside:before {
+    border: 2px solid color('base-color');
+    background: color('base-color', 0.2);
+}
+
+.n-drag-indicator.n-type-alt.n-mode-append:before,
+.n-drag-indicator.n-type-alt.n-mode-inside:before {
+    border: 2px solid color('warning-color');
+    background: color('warning-color', 0.2);
+}
+
+.n-drag-indicator.n-mode-before:before,
+.n-drag-indicator.n-mode-after:before {
+    background: color('base-color');
+}
+
+.n-drag-indicator.n-type-alt.n-mode-before:before,
+.n-drag-indicator.n-type-alt.n-mode-after:before {
+    background: color('warning-color');
+}
+
+.n-drag-counter {
+    color: color('white');
+    background: color('gray-50');
+}
+
+.n-drag-counter.n-mode-append,
+.n-drag-counter.n-mode-inside,
+.n-drag-counter.n-mode-before,
+.n-drag-counter.n-mode-after {
+    background: color('base-color');
+}
+
+.n-drag-counter.n-mode-deny {
+    background: color('danger-color');
+}
+
+.n-drag-counter.n-mode-append.n-type-alt,
+.n-drag-counter.n-mode-inside.n-type-alt,
+.n-drag-counter.n-mode-before.n-type-alt,
+.n-drag-counter.n-mode-after.n-type-alt {
+    color: color('warning-text');
+    background: color('warning-color');
 }
 
 .n-draggable__counter {
-    color: color('primary-text');
-    background: color('primary-color');
+    color: color('base-text');
+    background: color('base-color');
 }
 
 .n-draggable__counter[class*="n-modify--"] {

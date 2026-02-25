@@ -1,5 +1,5 @@
-import Switch from "./src/switch/switch.jsx";
+import NSwitch from "./js/switch/NSwitch.js";
 
 export default function (App) {
-    App.component(Switch.name, Switch);
+    App.component(NSwitch.name, NSwitch);
 }

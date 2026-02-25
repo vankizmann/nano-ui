@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
+        "removeComments": false,
+        "stripInternal": false,
+        "allowJs": true,
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "outDir": "./types",
+        "rootDir": "./src"
+    },
+    "include": [
+        "src/index.esm.js"
+    ],
+    "exclude": [
+        "src-api",
+        "tests",
+        "dist",
+    ],
+    "paths": {
+        "#src/*": ["./src/*"]
+    }
+}

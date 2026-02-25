@@ -4,14 +4,14 @@
     color: color('text', 0.4);
 }
 
-.n-empty-icon__frame {
+.n-empty-icon__type {
     background: color('text', 0.8);
 }
 
-.n-empty-icon--default .n-empty-icon__frame {
+.n-empty-icon--default .n-empty-icon__type {
     mask: svg-load('empty.svg') no-repeat center / contain;
 }
 
-.n-empty-icon--ufo .n-empty-icon__frame {
+.n-empty-icon--ufo .n-empty-icon__type {
     mask: svg-load('empty-ufo.svg') no-repeat center / contain;
 }

@@ -1,0 +1,105 @@
+@use "../../../root/helpers" as *;
+
+.n-scrollbar {
+    position: relative;
+    overflow: hidden;
+}
+
+.n-scrollbar.is-paused .n-table__wrap {
+    display: flex;
+}
+
+.n-scrollbar-content {
+    z-index: 50;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.n-scrollbar.n-scrollbar-content::-webkit-scrollbar {
+    display: none;
+}
+
+.n-scrollbar-content {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.n-scrollbar:not(.n-overflow-x) > .n-scrollbar-content {
+    bottom: 0;
+    overflow-x: hidden;
+}
+
+.n-scrollbar:not(.n-overflow-y) > .n-scrollbar-content {
+    right: 0;
+    overflow-y: hidden;
+}
+
+.n-scrollbar > .n-scrollbar-content > .n-scrollbar__wrap {
+    position: relative;
+}
+
+.n-scrollbar-v,
+.n-scrollbar-h {
+    cursor: default;
+    position: absolute;
+    z-index: 500;
+    user-select: none;
+    transition: transform 0.275s;
+}
+
+.n-scrollbar-v.is-active,
+.n-scrollbar-h.is-active {
+    transition: transform 0.125s;
+}
+
+.n-scrollbar-v {
+    top: 0;
+    right: 0;
+    width: 15px;
+}
+
+.n-scrollbar-h {
+    left: 0;
+    bottom: 0;
+    height: 15px;
+}
+
+.n-scrollbar:not(.has-vtrack) > .n-scrollbar-v,
+.n-scrollbar:not(.has-htrack) > .n-scrollbar-h {
+    display: none;
+}
+
+.n-scrollbar-v:before,
+.n-scrollbar-h:before {
+    content: '\00a0';
+    position: absolute;
+    display: block;
+    border-radius: 500px;
+    opacity: 0;
+    transition: opacity 0.15s, transform 0.15s;
+}
+
+.n-scrollbar-v:before,
+.n-scrollbar-h:before {
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    right: 4px;
+}
+
+.n-scrollbar.has-vtrack > .n-scrollbar-v.is-active:before,
+.n-scrollbar.has-htrack > .n-scrollbar-h.is-active:before,
+.n-scrollbar.has-vtrack:hover > .n-scrollbar-v:before,
+.n-scrollbar.has-htrack:hover > .n-scrollbar-h:before {
+    opacity: 1;
+}
+
+.n-scrollbar--touch.has-vtrack > .n-scrollbar-v:before,
+.n-scrollbar--touch.has-htrack > .n-scrollbar-h:before {
+    opacity: 1;
+}

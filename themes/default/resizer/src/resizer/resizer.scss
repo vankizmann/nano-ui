@@ -1,5 +1,11 @@
 @use "../../../root/helpers" as *;
 
 .n-resizer__handle:before {
-    background: color('base-color', 0.9);
+    background: color('gray-20');
+    transition: background 0.1s;
+}
+
+.n-resizer__handle:hover:before,
+.n-resizer.n-move .n-resizer__handle:before {
+    background: color('gray-30');
 }

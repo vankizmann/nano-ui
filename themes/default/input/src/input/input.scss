@@ -10,11 +10,12 @@
     background: color('form-disabled');
 }
 
-.n-input .n-button {
+.n-input .n-input__button {
     color: color('gray-60');
+    transition: color 0.2s;
 }
 
-.n-input:not(.n-disabled) .n-button:not(.n-disabled):hover {
+.n-input__button.n-has-event:hover {
     color: color('base-color');
 }
 

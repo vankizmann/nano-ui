@@ -1,5 +1,5 @@
-import NRadio from "./src/radio/radio.jsx";
-import NRadioGroup from "./src/radio-group/radio-group.jsx";
+import NRadio from "./js/radio/NRadio.js";
+import NRadioGroup from "./js/radio-group/NRadioGroup.js";
 
 export default function (App) {
     App.component(NRadio.name, NRadio);

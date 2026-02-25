@@ -1,5 +1,5 @@
-import EmptyIcon from "./src/empty-icon/empty-icon.jsx";
+import NEmptyIcon from "./js/empty-icon/NEmptyIcon.js";
 
 export default function (App) {
-    App.component(EmptyIcon.name, EmptyIcon);
+    App.component(NEmptyIcon.name, NEmptyIcon);
 }

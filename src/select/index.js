@@ -1,7 +1,5 @@
-import Select from "./src/select/select.jsx";
-import SelectOption from "./src/select-option/select-option.jsx";
+import NSelect from "./js/select/NSelect.js";
 
 export default function (App) {
-    App.component(Select.name, Select);
-    App.component(SelectOption.name, SelectOption);
+    App.component(NSelect.name, NSelect);
 }
