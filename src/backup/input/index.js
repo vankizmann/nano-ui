@@ -1,4 +1,4 @@
-import Input from "./src/input/input.jsx";
+import Input from "./src/input/input.ts";
 
 export default function (App) {
     App.component(Input.name, Input);

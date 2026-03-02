@@ -1,4 +1,4 @@
-import TableFilter from "../table-filter.jsx";
+import TableFilter from "../table-filter.ts";
 
 export default {
 

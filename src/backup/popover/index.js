@@ -1,6 +1,6 @@
-import Popover from "./src/popover/popover.jsx";
-import PopoverGroup from "./src/popover-group/popover-group.jsx";
-import PopoverOption from "./src/popover-option/popover-option.jsx";
+import Popover from "./src/popover/popover.ts";
+import PopoverGroup from "./src/popover-group/popover-group.ts";
+import PopoverOption from "./src/popover-option/popover-option.ts";
 
 import PopoverElement from "./src/popover/popover-element.mjs";
 import PopoverHandler from "./src/popover/popover-handler.mjs";

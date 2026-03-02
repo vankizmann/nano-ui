@@ -1,5 +1,5 @@
 import { Arr, Obj, Mix } from "@kizmann/pico-js";
-import InfoField from "../info-field.jsx";
+import InfoField from "../info-field.ts";
 
 export default {
 

@@ -1,5 +1,5 @@
-import DatepickerPanel from "./src/datepicker-panel/datepicker-panel.jsx";
-import Datepicker from "./src/datepicker/datepicker.jsx";
+import DatepickerPanel from "./src/datepicker-panel/datepicker-panel.ts";
+import Datepicker from "./src/datepicker/datepicker.ts";
 
 export default function (App) {
     App.component(DatepickerPanel.name, DatepickerPanel);

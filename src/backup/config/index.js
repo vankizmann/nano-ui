@@ -1,8 +1,8 @@
-import NConfig from "./src/config/config.jsx";
-import NConfigNext from "./src/config/config-next.jsx";
-// import NBuilder from "./src/builder/builder.jsx";
-// import NRefrencePanel from "./src/reference-panel/reference-panel.jsx";
-// import NRefrencePicker from "./src/reference-picker/reference-picker.jsx";
+import NConfig from "./src/config/config.ts";
+import NConfigNext from "./src/config/config-next.ts";
+// import NBuilder from "./src/builder/builder.ts";
+// import NRefrencePanel from "./src/reference-panel/reference-panel.ts";
+// import NRefrencePicker from "./src/reference-picker/reference-picker.ts";
 
 export default function(App) {
     App.component(NConfig.name, NConfig);

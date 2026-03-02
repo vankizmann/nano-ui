@@ -1,6 +1,6 @@
 @use "../../../root/helpers" as *;
 
-.n-drawer__backdrop {
+.n-drawer:before {
     background: color('shadow', 0.7);
     // PERFORMANCE backdrop-filter: blur(1.5px);
 }

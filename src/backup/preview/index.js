@@ -1,8 +1,8 @@
-import Preview from "./src/preview/preview.jsx";
-import PreviewPlain from "./src/preview-plain/preview-plain.jsx";
-import PreviewImage from "./src/preview-image/preview-image.jsx";
-import PreviewVideo from "./src/preview-video/preview-video.jsx";
-import PreviewModal from "./src/preview-modal/preview-modal.jsx";
+import Preview from "./src/preview/preview.ts";
+import PreviewPlain from "./src/preview-plain/preview-plain.ts";
+import PreviewImage from "./src/preview-image/preview-image.ts";
+import PreviewVideo from "./src/preview-video/preview-video.ts";
+import PreviewModal from "./src/preview-modal/preview-modal.ts";
 
 import PreviewHelper from "./src/preview/preview-helper.mjs";
 import PreviewHandler from "./src/preview/preview-handler.mjs";

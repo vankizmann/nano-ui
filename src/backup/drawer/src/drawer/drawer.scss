@@ -13,20 +13,7 @@
 
 .n-drawer.n-hidden {
     display: none;
-}
-
-.n-drawer__backdrop {
-    z-index: 10;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    transition: opacity 0.3s;
-}
-
-.n-drawer:not(.n-ready) .n-drawer__backdrop {
-    opacity: 0;
+    pointer-events: none;
 }
 
 .n-drawer__frame {
@@ -41,7 +28,7 @@
     height: 100vh;
     margin: auto;
     transform: translateX(0);
-    transition: opacity 0.2s 0.1s ease-out, transform 0.2s 0.1s ease-out;
+    transition: all 0.2s;
 }
 
 .n-drawer:not(.n-ready) .n-drawer__frame {

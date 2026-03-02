@@ -45,6 +45,10 @@
     min-height: size('base-hgt', 'calc($ * 5)');
 }
 
+.n-timepicker-panel__panel .n-scrollbar__wrap {
+    padding: size('base-pad-vertical') size('base-pad', 'calc($ * 0.8)');
+}
+
 .n-timepicker-panel__display {
     height: size('base-hgt', 'calc($ - 4px)');
 }
@@ -56,10 +60,6 @@
 
 .n-timepicker-panel__footer {
     padding: size('base-pad-vertical') size('base-pad');
-}
-
-.n-timepicker-panel__wrap {
-    padding: size('base-pad-vertical') size('base-pad', 'calc($ * 0.8)');
 }
 
 .n-timepicker-panel__item {

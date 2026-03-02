@@ -1,41 +1,33 @@
 @use "../../../root/helpers" as *;
 
 .n-alert {
-    z-index: 999999998;
     position: fixed;
     top: 0;
+    right: 0;
+    bottom: 0;
     left: 0;
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100%;
 }
 
-.n-alert-frame {
-    z-index: 100;
-    cursor: default;
-    position: relative;
-    flex: 1 1 auto;
+.n-alert__frame {
+    overflow: hidden;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    width: 100%;
-    max-width: 340px;
-    transition: transform 0.3s, opacity 0.15s;
+    flex-direction: column;
+    max-width: 100%;
+    max-height: 100%;
 }
 
-.n-alert-frame:not(.n-active) .n-alert {
+.n-alert__frame:not(.n-active) .n-alert {
     opacity: 0;
     transform: translateY(40%);
 }
 
 .n-alert__body {
-    width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: stretch;
 }
 
 .n-alert__icon {
@@ -60,15 +52,25 @@
     font-size: 1em;
 }
 
+.n-alert__action {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .n-alert {
     font-size: size('base-fnt');
     padding: size('base-pad', 'calc($ * 3)');
 }
 
-.n-alert-frame {
+.n-alert__frame {
     width: size('base-hgt', 'calc($ * 12)');
     padding: size('base-pad-vertical', 'calc($ * 3)') size('base-pad', 'calc($ * 3)');
     border-radius: size('base-rad-window');
+}
+
+.n-alert__body:not(:empty) {
+    margin-bottom: size('base-pad-vertical', 'calc($ * 2)');
 }
 
 .n-alert__icon {

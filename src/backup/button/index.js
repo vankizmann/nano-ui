@@ -1,5 +1,5 @@
-import Button from "./src/button/button.jsx";
-import ButtonGroup from "./src/button-group/button-group.jsx";
+import Button from "./src/button/button.ts";
+import ButtonGroup from "./src/button-group/button-group.ts";
 
 export default function (App) {
     App.component(Button.name, Button);

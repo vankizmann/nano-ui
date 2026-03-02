@@ -1,4 +1,4 @@
-import TableFilter from "../table-filter.jsx";
+import TableFilter from "../table-filter.ts";
 import { Arr, Obj, Mix, Locale } from "@kizmann/pico-js";
 
 export default {

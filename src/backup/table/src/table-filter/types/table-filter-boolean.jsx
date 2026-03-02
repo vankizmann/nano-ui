@@ -1,4 +1,4 @@
-import TableFilter from "../table-filter.jsx";
+import TableFilter from "../table-filter.ts";
 import { Mix } from "@kizmann/pico-js";
 
 export default {

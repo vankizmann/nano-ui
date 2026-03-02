@@ -1,51 +1,51 @@
 @use "../../../root/helpers" as *;
 
-.n-notification-frame {
+.n-notify-frame {
     z-index: 999999999;
     position: fixed;
     display: flex;
     flex-direction: column;
 }
 
-.n-notification-frame.n-notification-frame--top-start {
+.n-notify-frame[data-notify="top-start"] {
     top: 0;
     left: 0;
 }
 
-.n-notification-frame.n-notification-frame--top-center {
+.n-notify-frame[data-notify="top-center"] {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
 }
 
-.n-notification-frame.n-notification-frame--top-end {
+.n-notify-frame[data-notify="top-end"] {
     top: 0;
     right: 0;
 }
 
-.n-notification-frame.n-notification-frame--bottom-start {
+.n-notify-frame[data-notify="bottom-start"] {
     bottom: 0;
     left: 0;
 }
 
-.n-notification-frame.n-notification-frame--bottom-center {
+.n-notify-frame[data-notify="bottom-center"] {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
 }
 
-.n-notification-frame.n-notification-frame--bottom-end {
+.n-notify-frame[data-notify="bottom-end"] {
     bottom: 0;
     right: 0;
 }
 
-.n-notification-frame.n-notification-frame--bottom-start,
-.n-notification-frame.n-notification-frame--bottom-center,
-.n-notification-frame.n-notification-frame--bottom-end {
+.n-notify-frame[data-notify="bottom-start"],
+.n-notify-frame[data-notify="bottom-center"],
+.n-notify-frame[data-notify="bottom-end"] {
     flex-direction: column-reverse;
 }
 
-.n-notification {
+.n-notify {
     cursor: default;
     flex: 1 1 auto;
     display: flex;
@@ -60,22 +60,22 @@
     transition: transform 0.15s;
 }
 
-.n-notification:not(:first-child) {
+.n-notify:not(:first-child) {
     margin-bottom: 0;
 }
 
 
-.n-notification-frame.n-notification-frame--top-start .n-notification:not(.n-active),
-.n-notification-frame.n-notification-frame--bottom-start .n-notification:not(.n-active) {
+.n-notify-frame[data-notify="top-start"] .n-notify:not(.n-active),
+.n-notify-frame[data-notify="bottom-start"] .n-notify:not(.n-active) {
     transform: translateX(-150%);
 }
 
-.n-notification-frame.n-notification-frame--top-end .n-notification:not(.n-active),
-.n-notification-frame.n-notification-frame--bottom-end .n-notification:not(.n-active) {
+.n-notify-frame[data-notify="top-end"] .n-notify:not(.n-active),
+.n-notify-frame[data-notify="bottom-end"] .n-notify:not(.n-active) {
     transform: translateX(150%);
 }
 
-.n-notification__icon {
+.n-notify__icon {
     flex: 0 0 auto;
     display: flex;
     justify-content: center;
@@ -84,7 +84,7 @@
     font-size: 1.15em;
 }
 
-.n-notification__text {
+.n-notify__text {
     overflow: hidden;
     flex: 1 1 auto;
     line-height: 1.2;

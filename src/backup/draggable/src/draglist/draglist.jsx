@@ -1,5 +1,5 @@
 import { Hash, Run, Arr, Obj, Dom, Mix, Signal, Locale } from "@kizmann/pico-js";
-import NDraghandler from "../draghandler/draghandler.js";
+import NDraghandler from "../draghandler/draghandler.ts";
 
 window.DEBUG_NDLIST = false;
 

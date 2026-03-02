@@ -13,7 +13,7 @@ let themes = {
 };
 
 let libJs = {
-    entry: ["./src/index.esm.js"],
+    entry: ["./src/index.esm.ts"],
     optimization: {
         splitChunks: false, runtimeChunk: false
     },
@@ -26,6 +26,17 @@ let libJs = {
         rules: [
             {
                 test: /.c?jsx?$/,
+                include: [
+                    path.resolve('src'),
+                    path.resolve('node_modules/@kizmann/pico-js'),
+                ],
+                loader: 'babel-loader',
+                options: {
+                    configFile: path.resolve('babel.config.cjs')
+                },
+            },
+            {
+                test: /.ts$/,
                 include: [
                     path.resolve('src'),
                     path.resolve('node_modules/@kizmann/pico-js'),

@@ -1,10 +1,10 @@
-import Info from "./src/info/info.jsx";
-import InfoColumn from "./src/info-column/info-column.jsx";
-import InfoFieldString from "./src/info-field/types/info-field-string.jsx";
-import InfoFieldBoolean from "./src/info-field/types/info-field-boolean.jsx";
-import InfoFieldDatetime from "./src/info-field/types/info-field-datetime.jsx";
-import InfoFieldOption from "./src/info-field/types/info-field-option.jsx";
-import InfoFieldImage from "./src/info-field/types/info-field-image.jsx";
+import Info from "./src/info/info.ts";
+import InfoColumn from "./src/info-column/info-column.ts";
+import InfoFieldString from "./src/info-field/types/info-field-string.ts";
+import InfoFieldBoolean from "./src/info-field/types/info-field-boolean.ts";
+import InfoFieldDatetime from "./src/info-field/types/info-field-datetime.ts";
+import InfoFieldOption from "./src/info-field/types/info-field-option.ts";
+import InfoFieldImage from "./src/info-field/types/info-field-image.ts";
 
 export default function (App) {
     App.component(Info.name, Info);

@@ -1,16 +1,16 @@
-import Table from "./src/table/table.jsx";
-import TableColumn from "./src/table-column/table-column.jsx";
-import TableCellString from "./src/table-cell/types/table-cell-string.jsx";
-import TableCellBoolean from "./src/table-cell/types/table-cell-boolean.jsx";
-import TableCellDatetime from "./src/table-cell/types/table-cell-datetime.jsx";
-import TableCellOption from "./src/table-cell/types/table-cell-option.jsx";
-import TableCellImage from "./src/table-cell/types/table-cell-image.jsx";
-import TableCellMatrix from "./src/table-cell/types/table-cell-matrix.jsx";
-import TableCellSelect from "./src/table-cell/types/table-cell-select.jsx";
-import TableFilterString from "./src/table-filter/types/table-filter-string.jsx";
-import TableFilterBoolean from "./src/table-filter/types/table-filter-boolean.jsx";
-import TableFilterDatetime from "./src/table-filter/types/table-filter-datetime.jsx";
-import TableFilterOption from "./src/table-filter/types/table-filter-option.jsx";
+import Table from "./src/table/table.ts";
+import TableColumn from "./src/table-column/table-column.ts";
+import TableCellString from "./src/table-cell/types/table-cell-string.ts";
+import TableCellBoolean from "./src/table-cell/types/table-cell-boolean.ts";
+import TableCellDatetime from "./src/table-cell/types/table-cell-datetime.ts";
+import TableCellOption from "./src/table-cell/types/table-cell-option.ts";
+import TableCellImage from "./src/table-cell/types/table-cell-image.ts";
+import TableCellMatrix from "./src/table-cell/types/table-cell-matrix.ts";
+import TableCellSelect from "./src/table-cell/types/table-cell-select.ts";
+import TableFilterString from "./src/table-filter/types/table-filter-string.ts";
+import TableFilterBoolean from "./src/table-filter/types/table-filter-boolean.ts";
+import TableFilterDatetime from "./src/table-filter/types/table-filter-datetime.ts";
+import TableFilterOption from "./src/table-filter/types/table-filter-option.ts";
 
 
 export default function (App) {

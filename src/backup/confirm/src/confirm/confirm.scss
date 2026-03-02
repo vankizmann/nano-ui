@@ -1,7 +1,6 @@
 @use "../../../root/helpers" as *;
 
 .n-confirm {
-    z-index: 90000;
     position: fixed;
     top: 0;
     right: 0;
@@ -12,7 +11,7 @@
     justify-content: center;
 }
 
-.n-confirm-frame {
+.n-confirm__frame {
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -59,8 +58,9 @@
     padding: size('base-pad', 'calc($ * 3)');
 }
 
-.n-confirm-frame {
-    width: size('base-hgt', 'calc($ * 12)');
+.n-confirm__frame {
+    min-width: size('base-hgt', 'calc($ * 9)');
+    max-width: size('base-hgt', 'calc($ * 12)');
     padding: size('base-pad-vertical', 'calc($ * 3)') size('base-pad', 'calc($ * 3)');
     border-radius: size('base-rad-window');
 }

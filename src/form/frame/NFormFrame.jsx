@@ -1,6 +1,6 @@
-import NFormFrameClass from "./NFormFrameClass.js";
+import NFormFrameClass from "./NFormFrameClass.ts";
 import { defineComponent, ref } from "vue";
-import NFormFrameRender from "./NFormFrameRender.jsx";
+import NFormFrameRender from "./NFormFrameRender.ts";
 
 const cls = new NFormFrameClass();
 

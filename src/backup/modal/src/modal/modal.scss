@@ -1,5 +1,23 @@
 @use "../../../root/helpers" as *;
 
+body.n-backdrop {
+    overflow: hidden;
+}
+
+.n-modal-backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: opacity 0.2s;
+}
+
+.n-modal-backdrop:not(.n-ready) {
+    pointer-events: none;
+    opacity: 0;
+}
+
 .n-modal {
     position: fixed;
     top: 0;
@@ -14,20 +32,7 @@
 
 .n-modal.n-hidden {
     display: none;
-}
-
-.n-modal__backdrop {
-    z-index: 10;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    transition: opacity 0.3s;
-}
-
-.n-modal:not(.n-ready,.n-loop) .n-modal__backdrop {
-    opacity: 0;
+    pointer-events: none;
 }
 
 .n-modal__frame {
@@ -37,13 +42,13 @@
     flex: 0 1 auto;
     display: flex;
     flex-direction: column;
-    min-width: 300px;
+    min-width: 0;
     max-width: 100%;
     min-height: 0;
     max-height: 100%;
     margin: auto;
     transform: translateY(0);
-    transition: opacity 0.2s 0.1s ease-out, transform 0.2s 0.1s ease-out;
+    transition: all 0.2s;
 }
 
 .n-modal:not(.n-ready,.n-loop) .n-modal__frame {

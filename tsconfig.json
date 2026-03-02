@@ -1,25 +1,22 @@
 {
     "compilerOptions": {
         "target": "ESNext",
-        "module": "NodeNext",
-        "moduleResolution": "nodenext",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
         "removeComments": false,
-        "stripInternal": false,
-        "allowJs": true,
+        "skipLibCheck": true,
+        "allowImportingTsExtensions": true,
         "declaration": true,
         "emitDeclarationOnly": true,
+        "baseUrl": "./",
         "outDir": "./types",
         "rootDir": "./src"
     },
     "include": [
-        "src/index.esm.js"
+        "src/index.esm.ts"
     ],
     "exclude": [
-        "src-api",
         "tests",
         "dist",
-    ],
-    "paths": {
-        "#src/*": ["./src/*"]
-    }
+    ]
 }

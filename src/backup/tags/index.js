@@ -1,5 +1,5 @@
-import Tags from "./src/tags/tags.jsx";
-import TagsItem from "./src/tags-item/tags-item.jsx";
+import Tags from "./src/tags/tags.ts";
+import TagsItem from "./src/tags-item/tags-item.ts";
 
 export default function (App) {
     App.component(Tags.name, Tags);

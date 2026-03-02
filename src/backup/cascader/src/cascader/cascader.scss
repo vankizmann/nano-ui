@@ -77,8 +77,14 @@
     justify-content: flex-start;
 }
 
+.n-cascader__item:first-child,
+.n-cascader__item:last-child {
+    flex: 0 0 auto;
+}
+
 .n-cascader__item:not(:last-child):after {
     content: '/';
+    flex: 0 0 auto;
     opacity: 0.3;
     display: inline-block;
     text-align: center;

@@ -1,4 +1,4 @@
-import Confirm from "./src/confirm/confirm.jsx";
+import Confirm from "./src/confirm/confirm.ts";
 import ConfirmHandler from "./src/confirm/confirm-handler.mjs";
 
 export default function (App) {

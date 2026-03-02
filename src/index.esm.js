@@ -1,18 +1,18 @@
-import { Arr, Obj, Dom, Locale } from "@kizmann/pico-js";
+// import { Arr, Obj, Dom, Locale } from "@kizmann/pico-js";
 
-import NInput from "./api/input/index.js";
-import NButton from "./api/button/index.js";
-import NCheckbox from "./api/checkbox/index.js";
-import NRadio from "./api/radio/index.js";
-import NSelect from "./api/select/index.js";
-import NSwitch from "./api/switch/index.js";
-import NCascader from "./api/cascader/index.js";
-import NPopover from "./api/popover/index.js";
-import NScrollbar from "./api/scrollbar/index.js";
-import NResizer from "./api/resizer/index.js";
-import NDraggable from "./api/draggable/index.js";
-import NTable from "./api/table/index.js";
-import NEmpty from "./api/empty/index.js";
+import NInput from "./input/index.js";
+// import NButton from "./button/index.js";
+// import NCheckbox from "./checkbox/index.js";
+// import NRadio from "./radio/index.js";
+// import NSelect from "./select/index.js";
+// import NSwitch from "./switch/index.js";
+// import NCascader from "./cascader/index.js";
+// import NPopover from "./popover/index.js";
+// import NScrollbar from "./scrollbar/index.js";
+// import NResizer from "./resizer/index.js";
+// import NDraggable from "./draggable/index.js";
+// import NTable from "./table/index.js";
+// import NEmpty from "./empty/index.js";
 
 const NanoImports = [
     // Alert,
@@ -57,18 +57,18 @@ const NanoImports = [
     // Chart,
     // NForm,
     NInput,
-    NButton,
-    NCheckbox,
-    NRadio,
-    NSelect,
-    NSwitch,
-    NPopover,
-    NScrollbar,
-    NResizer,
-    NDraggable,
-    NTable,
-    NEmpty,
-    NCascader,
+    // NButton,
+    // NCheckbox,
+    // NRadio,
+    // NSelect,
+    // NSwitch,
+    // NPopover,
+    // NScrollbar,
+    // NResizer,
+    // NDraggable,
+    // NTable,
+    // NEmpty,
+    // NCascader,
 ];
 
 export const Icons = {
@@ -101,10 +101,6 @@ export const Settings = {
 
 export function Install(App, Icons = {}, Settings = {})
 {
-    /**
-     * @const window.pi
-     */
-
     // if ( typeof window.pi === 'undefined' ) {
     //     return console.error('pico-js is not available.');
     // }
@@ -123,7 +119,7 @@ export function Install(App, Icons = {}, Settings = {})
     // window.nano.Icons = Obj.assign(window.nano.Icons, Icons);
     // window.nano.Settings = Obj.assign(window.nano.Settings, Settings);
 
-    Arr.each(NanoImports, (NanoModule) => {
+    NanoImports.forEach((NanoModule) => {
         NanoModule(App);
     });
 

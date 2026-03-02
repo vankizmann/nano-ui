@@ -80,7 +80,7 @@
     </style>
 
 </head>
-<body class="n-demo n-size-md n-type-secondary n-theme--dark">
+<body class="n-demo n-size-md n-type-secondary n-theme-light">
 
 <div id="app" class="nano-theme-preview">
     <div class="app-container">
@@ -173,14 +173,24 @@
                     <n-button>fooooh baaar2</n-button>
                     <n-popover position="right-center" :toggle="true">
                         <div style="width: 200px; height: 200px; display: flex; align-items: center; justify-content: center;">
-                            <n-button>fooooh baaar3</n-button>
-                            <n-popover position="top-start" :toggle="true">
-                                <div style="width: 200px; height: 200px; display: flex; align-items: center; justify-content: center;">
-                                    <n-button>fooooh baaar4</n-button>
-                                </div>
-                            </n-popover>
+                            <n-button>fooooh modal</n-button>
+                            <n-drawer>
+                                <n-button>fooooh baaar3</n-button>
+                                <n-popover position="top-start" :toggle="true">
+                                    <div style="width: 200px; height: 200px; display: flex; align-items: center; justify-content: center;">
+                                        <n-button>fooooh baaar4</n-button>
+                                    </div>
+                                </n-popover>
+                            </n-drawer>
                         </div>
                     </n-popover>
+                </div>
+            </n-popover>
+
+            <n-button>fooooh baaar3</n-button>
+            <n-popover position="top-start" :toggle="true">
+                <div style="width: 200px; height: 200px; display: flex; align-items: center; justify-content: center;">
+                    <n-button>fooooh baaar4</n-button>
                 </div>
             </n-popover>
 

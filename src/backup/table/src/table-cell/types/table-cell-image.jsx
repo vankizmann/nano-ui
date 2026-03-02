@@ -1,4 +1,4 @@
-import TableCell from "../table-cell.jsx";
+import TableCell from "../table-cell.ts";
 import { Obj, Mix } from "@kizmann/pico-js";
 
 export default {

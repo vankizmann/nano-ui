@@ -1,8 +1,8 @@
-import Form from "./src/form/form.jsx";
-import FormBag from "./src/form-bag/form-bag.jsx";
-import FormGroup from "./src/form-group/form-group.jsx";
-import FormItem from "./src/form-item/form-item.jsx";
-import FormFrame from "./src/form-frame/form-frame.jsx";
+import Form from "./src/form/form.ts";
+import FormBag from "./src/form-bag/form-bag.ts";
+import FormGroup from "./src/form-group/form-group.ts";
+import FormItem from "./src/form-item/form-item.ts";
+import FormFrame from "./src/form-frame/form-frame.ts";
 
 export default function (App) {
     App.component(Form.name, Form);

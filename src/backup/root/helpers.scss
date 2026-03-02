@@ -1,0 +1,41 @@
+@use "sass:color";
+@use "sass:string";
+
+@mixin css-colors($colors, $prefix: '') {
+    @each $name, $color in $colors {
+        --n-color#{$prefix}-#{$name}: #{color.channel($color, 'red')}, #{color.channel($color, 'green')}, #{color.channel($color, 'blue')};
+    }
+}
+
+@mixin css-sizes($sizes, $prefix: '') {
+    @each $name, $value in $sizes {
+        --n-size#{$prefix}-#{$name}: #{$value};
+    }
+}
+
+@mixin css-remaps($values, $source: '-color-default', $target: '-color-base') {
+    @each $name, $value in $values {
+        --n#{$target}-#{$name}: var(--n#{$source}-#{$name});
+    }
+}
+
+@function string-replace($string, $search, $replace: "") {
+    $i: string.index($string, $search);
+
+    @if not $i {
+        @return $string;
+    }
+
+    $string: string.slice($string, 1, $i - 1) + $replace +
+        string.slice($string, $i + string.length($search));
+
+    @return string-replace($string, $search, $replace);
+}
+
+@function color($color, $opacity: 1) {
+    @return string.unquote("rgba(var(--n-color-#{$color}), #{$opacity})")
+};
+
+@function size($size, $context: '$') {
+    @return string.unquote(string-replace($context, "$", "var(--n-size-#{$size})"));
+};
