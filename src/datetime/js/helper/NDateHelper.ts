@@ -1,7 +1,8 @@
-import { Arr, Mix, Now } from "@kizmann/pico-js";
+import { Arr, Mix, Now, Obj } from "@kizmann/pico-js";
 
 export class NDateHelper
 {
+
     static getDate(scope : any, date : any = null)
     {
         const { model, arrive, depart } = scope.data;
@@ -33,7 +34,7 @@ export class NDateHelper
             date[0] = arrive;
         }
 
-        if ( ! Mix.isArr(model) ) {
+        if ( !Mix.isArr(model) ) {
             date = [model, model];
         }
 
@@ -61,6 +62,57 @@ export class NDateHelper
         });
 
         return dates ?? [];
+    }
+
+    static getDurationFromString(scope : any, key : string = 'days') : number
+    {
+        const { data } = scope.data;
+
+        if ( data[key] == null ) {
+            return 0;
+        }
+
+        const pattern = data[key]
+            .replaceAll(':count', '([0-9.,]+)')
+            .replaceAll(' ', '\\s*');
+
+        const regex = new RegExp(pattern, 'i');
+
+        if ( !regex.test(data.model) ) {
+            return 0;
+        }
+
+        return Mix.num(data.model.match(regex)[1]);
+    }
+
+    static humanDuration(scope : any, value : number = null)
+    {
+        console.log(scope, scope.data, scope.data.model)
+        const { data } = scope.data;
+
+        if ( value == null ) {
+            value = data.model;
+        }
+
+        if ( value < 0 ) {
+            value = value * -1;
+        }
+
+        const values = {
+            seconds: value,
+            minutes: 60,
+            hours: 24,
+            days: 24,
+        };
+
+        let keys : string[] = Mix.keys(values);
+
+        for ( let i = 0; keys.length < i; i++ ) {
+            values[keys[i]] = Math.floor(values[keys[i - 1]] - values[keys[i]]);
+        }
+
+        console.log(values);
+        return null;
     }
 
 }

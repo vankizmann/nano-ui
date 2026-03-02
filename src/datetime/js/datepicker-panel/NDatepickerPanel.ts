@@ -98,6 +98,8 @@ export default defineComponent({
      */
     emits: [
         'update:modelValue',
+        'update:arrive',
+        'update:depart',
     ],
 
     setup(props, context)

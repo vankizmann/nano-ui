@@ -32,17 +32,17 @@ export const NModalProps = {
     },
 
     /**
-     * @type {PropType<string>}
+     * @type {PropType<string|number>}
      */
     width: {
-        type: [String], default: null
+        type: [String,Number], default: null
     },
 
     /**
-     * @type {PropType<string>}
+     * @type {PropType<string|number>}
      */
     height: {
-        type: [String], default: null
+        type: [String,Number], default: null
     },
 
     /**

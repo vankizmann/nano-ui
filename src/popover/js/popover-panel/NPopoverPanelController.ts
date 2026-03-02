@@ -1,5 +1,5 @@
 import { onMounted, SetupContext } from "vue";
-import { Dom } from "@kizmann/pico-js";
+import { Dom, Run } from "@kizmann/pico-js";
 import { ProtoController } from "../../../root/index.ts";
 import { NPopoverPanelView } from "./NPopoverPanelView.ts";
 import { NPopoverPanelData } from "./NPopoverPanelData.ts";
@@ -63,12 +63,16 @@ export class NPopoverPanelController extends ProtoController
 
     onFocus()
     {
-        this.dom('el').child().pointerdown();
+        Run.frame(() => {
+            this.dom('el').child().pointerdown();
+        });
     }
 
     onBlur()
     {
-        Dom.find(window).pointerdown();
+        Run.frame(() => {
+            Dom.find(window).pointerdown();
+        });
     }
 
 }

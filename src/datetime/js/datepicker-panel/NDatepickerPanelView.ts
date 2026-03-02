@@ -24,7 +24,26 @@ export class NDatepickerPanelView extends ProtoView
         };
 
         return h('div', props, [
-            this.header(), this.body()
+            this.header(), this.body(), this.footer()
+        ]);
+    }
+
+    footer() : any
+    {
+        const { data } = this.scope;
+
+        if ( data.view === 'dates' ) {
+            return null;
+        }
+
+        let props : any = {
+            size: 'sm',
+            link: true,
+            glass: true,
+        };
+
+        return this.div('footer', [
+            this.comp('n-button', props, ['Go back'])
         ]);
     }
 

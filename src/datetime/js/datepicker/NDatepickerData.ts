@@ -65,6 +65,31 @@ export class NDatepickerData extends ProtoExtend([NPopoverPanelData, PositionDat
         return this.scope.get('displayFormat');
     }
 
+    get rangeSeperator() : string
+    {
+        return this.scope.get('rangeSeperator');
+    }
+
+    get minDate() : any
+    {
+        return this.scope.get('minDate');
+    }
+
+    get maxDate() : any
+    {
+        return this.scope.get('maxDate');
+    }
+
+    get clearArrive() : any
+    {
+        return this.scope.get('clearArrive');
+    }
+
+    get clearDepart() : any
+    {
+        return this.scope.get('clearDepart');
+    }
+
 }
 
 export interface NDatepickerData extends NPopoverPanelData, PositionData, TextData {

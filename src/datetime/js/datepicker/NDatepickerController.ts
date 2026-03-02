@@ -88,6 +88,34 @@ export class NDatepickerController extends NPopoverPanelController
         ]);
     }
 
+    applyClear()
+    {
+        let model = Obj.clone(...[
+            this.data.clearValue
+        ]);
+
+        const arrive = Obj.clone(...[
+            this.data.clearArrive
+        ]);
+
+        const depart = Obj.clone(...[
+            this.data.clearDepart
+        ]);
+
+        if ( this.data.range ) {
+            model = [arrive, depart];
+        }
+
+        this.update('modelValue', model);
+
+        if ( this.data.range ) {
+            this.update('arrive', arrive);
+            this.update('depart', depart);
+        }
+
+        this.updateDates();
+    }
+
     onClose()
     {
         this.ref('input')?.value?.blur();
@@ -96,11 +124,11 @@ export class NDatepickerController extends NPopoverPanelController
         this.updateDates();
     }
 
-    onSingle()
+    onInput()
     {
         const { data } = this;
 
-        const date = Now.make(...[
+        let date = Now.make(...[
             data.input, data.displayFormat
         ]);
 
@@ -108,9 +136,87 @@ export class NDatepickerController extends NPopoverPanelController
             return this.updateDates();
         }
 
+        if ( data.minDate && date.before(data.minDate) ) {
+            date = Now.make(data.minDate);
+        }
+
+        if ( data.maxDate && date.after(data.maxDate) ) {
+            date = Now.make(data.maxDate);
+        }
+
         this.update(...[
             'modelValue', date.format(data.format)
         ]);
+    }
+
+    onArrive()
+    {
+        const { data } = this;
+
+        let date = Now.make(...[
+            data.inputs[0], data.displayFormat
+        ]);
+
+        if ( !date.valid() ) {
+            return this.updateDates();
+        }
+
+        if ( data.minDate && date.before(data.minDate) ) {
+            date = Now.make(data.minDate);
+        }
+
+        if ( data.maxDate && date.after(data.maxDate) ) {
+            date = Now.make(data.maxDate);
+        }
+
+        let items = [
+            date, data.dates[1]
+        ];
+
+        items = Arr.each(items, (item:Now) => {
+            return item.format(data.format);
+        });
+
+        this.update(...[
+            'arrive', date.format(data.format)
+        ]);
+
+        this.update('modelValue', items);
+    }
+
+    onDepart()
+    {
+        const { data } = this;
+
+        let date = Now.make(...[
+            data.inputs[1], data.displayFormat
+        ]);
+
+        if ( !date.valid() ) {
+            return this.updateDates();
+        }
+
+        if ( data.minDate && date.before(data.minDate) ) {
+            date = Now.make(data.minDate);
+        }
+
+        if ( data.maxDate && date.after(data.maxDate) ) {
+            date = Now.make(data.maxDate);
+        }
+
+        let items = [
+            data.dates[0], date
+        ];
+
+        items = Arr.each(items, (item:Now) => {
+            return item.format(data.format);
+        });
+
+        this.update(...[
+            'depart', date.format(data.format)
+        ]);
+
+        this.update('modelValue', items);
     }
 
 }

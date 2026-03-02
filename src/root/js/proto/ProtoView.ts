@@ -21,12 +21,12 @@ export class ProtoView
         this.scope = scope;
     }
 
-    default()
+    default() : any
     {
         return null;
     }
 
-    slot(key : string = 'default', ...args : any[])
+    slot(key : string = 'default', ...args : any[]) : any
     {
         const { slots } = this.scope.context;
 
@@ -37,7 +37,7 @@ export class ProtoView
         return slots[key](...args);
     }
 
-    icon(props : any = undefined)
+    icon(props : any = undefined) : any
     {
         if ( typeof props !== 'object' ) {
             props = { icon: props };
@@ -59,7 +59,7 @@ export class ProtoView
         return h('i', props);
     }
 
-    comp(el : any, props : any = null, slot : any = null)
+    comp(el : any, props : any = null, slot : any = null) : any
     {
         let component = null;
 
@@ -76,7 +76,7 @@ export class ProtoView
         return h(component, props, slot);
     }
 
-    div(props : any = 'div', slot : any = null)
+    div(props : any = 'div', slot : any = null) : any
     {
         const { data } = this.scope;
 
@@ -96,7 +96,7 @@ export class ProtoView
         return h('div', props, slot);
     }
 
-    clear()
+    clear() : any
     {
         let { scope, data } = this.scope;
 
@@ -119,7 +119,7 @@ export class ProtoView
         ]);
     }
 
-    angle()
+    angle() : any
     {
         let config = {
             name: 'angle', class: ['n-form-angle']
@@ -130,7 +130,7 @@ export class ProtoView
         ]);
     }
 
-    empty(options : any = {})
+    empty(options : any = {}) : any
     {
         const props = {
             ...options

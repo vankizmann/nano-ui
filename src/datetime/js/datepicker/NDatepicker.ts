@@ -42,7 +42,7 @@ export const NDatepickerProps = {
      * @type {PropType<string>}
      */
     displayFormat: {
-        type: [String], default: 'YYYY-MM-DD HH:mm:ss'
+        type: [String], default: 'YYYY-MM-DD'
     },
 
 };
@@ -64,6 +64,8 @@ export default defineComponent({
      */
     emits: [
         'update:modelValue',
+        'update:arrive',
+        'update:depart',
     ],
 
     setup(props, context)
