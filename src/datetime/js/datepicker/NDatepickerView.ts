@@ -19,6 +19,7 @@ export class NDatepickerView extends NPopoverPanelView
     display() : any
     {
         return this.div('display', [
+            this.handle(),
             this.input(),
             this.range(),
             this.clear(),
@@ -35,13 +36,10 @@ export class NDatepickerView extends NPopoverPanelView
         }
 
         let props : any = {
+            ref: scope.ref('input'),
             value: data.input,
             placeholder: data.placeholder,
         };
-
-        if ( ! data.date.input ) {
-            props.value = '';
-        }
 
         props.onInput = (e : any) => {
             scope.set('input', e.target.value);
@@ -90,13 +88,10 @@ export class NDatepickerView extends NPopoverPanelView
         }
 
         let props : any = {
+            ref: scope.ref('arrive'),
             value: data.inputs[0],
             placeholder: data.placeholderArrive,
         };
-
-        if ( ! data.dates[0].input ) {
-            props.value = '';
-        }
 
         props.onInput = (e : any) => {
             scope.vals['inputs'].value[0] = e.target.value;
@@ -125,13 +120,10 @@ export class NDatepickerView extends NPopoverPanelView
         }
 
         let props : any = {
+            ref: scope.ref('depart'),
             value: data.inputs[1],
             placeholder: data.placeholderDepart,
         };
-
-        if ( ! data.dates[1].input ) {
-            props.value = '';
-        }
 
         props.onInput = (e : any) => {
             scope.vals['inputs'].value[1] = e.target.value;

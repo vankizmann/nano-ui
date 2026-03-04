@@ -1,5 +1,6 @@
-import { ProtoView } from "../../../root/index.ts";
 import { h } from "vue";
+import { Arr } from "@kizmann/pico-js";
+import { ProtoView } from "../../../root/index.ts";
 import NPopoverPanelController from "./NPopoverPanelController.ts";
 
 export class NPopoverPanelView extends ProtoView
@@ -19,7 +20,7 @@ export class NPopoverPanelView extends ProtoView
      */
     popoverConfig : any = {
         width: 1
-    }
+    };
 
     default() : any
     {
@@ -39,8 +40,30 @@ export class NPopoverPanelView extends ProtoView
     display() : any
     {
         return this.div('display', [
+            this.handle(),
             this.clear(),
             this.angle(),
+        ]);
+    }
+
+    handle() : any
+    {
+        const { data } = this.scope;
+
+        if ( !data.icon ) {
+            return null;
+        }
+
+        let props = {
+            class: data.classPart('icon')
+        };
+
+        Arr.append(...[
+            props.class, 'n-form-icon'
+        ]);
+
+        return h('div', props, [
+            this.icon(data.icon)
         ]);
     }
 

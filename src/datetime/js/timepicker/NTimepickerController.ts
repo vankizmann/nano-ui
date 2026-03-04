@@ -42,7 +42,9 @@ export class NTimepickerController extends NPopoverPanelController
 
         this.cloneProp('modelValue');
 
-        this.makeRef('panel');
+        this
+            .makeRef('input')
+            .makeRef('panel');
 
         this
             .makeData('date')
@@ -66,7 +68,7 @@ export class NTimepickerController extends NPopoverPanelController
         ]);
 
         this.set('input', ...[
-            date.format(data.displayFormat),
+            date.input ? date.format(data.displayFormat) : '',
         ]);
     }
 

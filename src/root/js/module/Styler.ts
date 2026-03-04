@@ -20,6 +20,9 @@ const ICONS_DEFAULT = {
     'search': 'fa fa-search',
     'times': 'fa fa-times',
     'minus': 'fa fa-minus',
+    'clock': 'fa fa-clock',
+    'calendar': 'fa fa-calendar-days',
+    'duration': 'fa fa-stopwatch'
 };
 
 export class Styler
@@ -76,6 +79,11 @@ export class Styler
         }
 
         return Obj.get(this.icons, [group, fallback]);
+    }
+
+    static wheel(index: number)
+    {
+        // TODO color wheel put in 30 get 12 if limit is 20
     }
 
 }

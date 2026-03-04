@@ -1,5 +1,5 @@
 import { PropType, defineComponent } from "vue";
-import { Props } from "../../../root/index.ts";
+import { Props, Styler } from "../../../root/index.ts";
 import { NDatepickerController } from "./NDatepickerController.ts";
 import { NDatepickerPanelProps } from "../datepicker-panel/NDatepickerPanel.ts";
 
@@ -43,6 +43,13 @@ export const NDatepickerProps = {
      */
     displayFormat: {
         type: [String], default: 'YYYY-MM-DD'
+    },
+
+    /**
+     * @type {PropType<string>}
+     */
+    icon: {
+        type: [String], default: () => Styler.icon('calendar')
     },
 
 };

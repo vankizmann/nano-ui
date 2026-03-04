@@ -18,6 +18,7 @@ import NDatetime from "./datetime/index.ts";
 import NTransfer from "./transfer/index.ts";
 import NTabs from "./tabs/index.ts";
 import NCollapse from "./collapse/index.ts";
+import NVisuals from "./visuals/index.ts";
 
 const NanoImports = [
     NSignal,
@@ -40,6 +41,7 @@ const NanoImports = [
     NTransfer,
     NTabs,
     NCollapse,
+    NVisuals,
 ];
 
 export const Icons = {

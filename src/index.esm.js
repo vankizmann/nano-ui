@@ -30,7 +30,7 @@ const NanoImports = [
     // Transfer, done
     // --- Form,
     // Tabs, done
-    // --- Tags,
+    // Tags, done
     // Collapse, done
     // Table, done
     // --- Paginator,

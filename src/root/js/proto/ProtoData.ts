@@ -34,6 +34,10 @@ export class ProtoData extends ProtoExtend([BaseData, IconData])
             classList.push(`n-type-${this.type}`);
         }
 
+        if ( this.color ) {
+            classList.push(`n-color-${this.color}`);
+        }
+
         if ( this.load ) {
             classList.push('n-load');
         }

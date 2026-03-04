@@ -1,5 +1,5 @@
 import { PropType, defineComponent } from "vue";
-import { Props } from "../../../root/index.ts";
+import { Props, Styler } from "../../../root/index.ts";
 import { NTimepickerController } from "./NTimepickerController.ts";
 import { NTimepickerPanelProps } from "../timepicker-panel/NTimepickerPanel.ts";
 
@@ -9,6 +9,13 @@ export const NTimepickerProps = {
     ...Props.ClearValue,
     ...Props.PositionBottomStart,
     ...NTimepickerPanelProps,
+
+    /**
+     * @type {PropType<string>}
+     */
+    icon: {
+        type: [String], default: () => Styler.icon('clock')
+    },
 
 };
 

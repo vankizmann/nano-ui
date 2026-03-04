@@ -123,7 +123,9 @@ export class NSelectController extends NPopoverPanelController
 
     applyModel(value:any)
     {
-        let model = Arr.all(this.data.model);
+        const { data } = this;
+
+        let model = Arr.all(data.model);
 
         if ( Mix.isArr(model) ) {
             model = Arr.filter(model);
@@ -133,19 +135,25 @@ export class NSelectController extends NPopoverPanelController
             Arr.toggle(model, value);
         }
 
-        if ( !this.data.multiple ) {
+        if ( !data.multiple ) {
             model = Arr.last(model);
         }
 
         const clearValue = Obj.clone(...[
-            this.data.clearValue,
+            data.clearValue,
         ]);
 
         if ( Mix.isEmpty(value) ) {
             model = clearValue;
         }
 
-        this.scope.update('modelValue', model);
+        const denyUpdate = Mix.isEmpty(model)
+            && ! data.clearable
+            && ! data.multiple;
+
+        if ( ! denyUpdate ) {
+            this.update('modelValue', model);
+        }
     }
 
     focusInput()

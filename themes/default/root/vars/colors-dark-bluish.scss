@@ -447,6 +447,12 @@ $color-list: (
         }
     }
 
+    @for $index from 0 through 20 {
+        &.n-color-#{$index}, .n-color-#{$index} {
+            --n-color-base-color: var(--n-color-dark-tag-#{$index});
+        }
+    }
+
     @include css-remaps($colors, '-color-dark', '-color');
 }
 

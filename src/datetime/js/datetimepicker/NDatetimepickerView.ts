@@ -2,6 +2,7 @@ import { h } from "vue";
 import { Arr, Dom, Locale, Mix, Obj } from "@kizmann/pico-js";
 import { NDatetimepickerController } from "./NDatetimepickerController.ts";
 import { NPopoverPanelView } from "../../../popover/js/popover-panel/NPopoverPanelView.ts";
+import { Styler } from "../../../root/index.ts";
 
 export class NDatetimepickerView extends NPopoverPanelView
 {
@@ -18,6 +19,7 @@ export class NDatetimepickerView extends NPopoverPanelView
     display() : any
     {
         return this.div('display', [
+            this.handle(),
             this.input(),
             this.clear(),
             this.angle(),
@@ -33,13 +35,10 @@ export class NDatetimepickerView extends NPopoverPanelView
         }
 
         let props : any = {
+            ref: scope.ref('input'),
             value: data.input,
             placeholder: data.placeholder,
         };
-
-        if ( ! data.date.input ) {
-            props.value = '';
-        }
 
         props.onInput = (e : any) => {
             scope.set('input', e.target.value);

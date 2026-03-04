@@ -44,6 +44,17 @@ export const Type = {
 
 };
 
+export const Color = {
+
+    /**
+     * @type {PropType<string|number>}
+     */
+    color: {
+        type: [String, Number], default: null
+    },
+
+};
+
 export const Clearable = {
 
     /**
@@ -61,7 +72,7 @@ export const ClearValue = {
      * @type {PropType<string|number|boolean>}
      */
     clearValue: {
-        type: [String,Number,Boolean], default: null
+        type: [String, Number, Boolean], default: null
     },
 
 };

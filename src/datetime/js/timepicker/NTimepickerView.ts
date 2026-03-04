@@ -19,6 +19,7 @@ export class NTimepickerView extends NPopoverPanelView
     display() : any
     {
         return this.div('display', [
+            this.handle(),
             this.input(),
             this.clear(),
             this.angle(),
@@ -30,13 +31,10 @@ export class NTimepickerView extends NPopoverPanelView
         const { scope, data } = this.scope;
 
         let props : any = {
+            ref: scope.ref('input'),
             value: data.input,
             placeholder: data.placeholder,
         };
-
-        if ( ! data.date.input ) {
-            props.value = '';
-        }
 
         props.onInput = (e : any) => {
             scope.set('input', e.target.value);

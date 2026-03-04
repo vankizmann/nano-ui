@@ -96,9 +96,13 @@ export class ProtoView
         return h(type, props, slot);
     }
 
-    clear() : any
+    clear(value : any = true) : any
     {
         let { scope, data } = this.scope;
+
+        if ( Mix.isEmpty(value) ) {
+            return null;
+        }
 
         if ( !scope.get('clearable') ) {
             return null;

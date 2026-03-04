@@ -69,7 +69,7 @@ export class NDatetimepickerController extends NPopoverPanelController
         ]);
 
         this.set('input', ...[
-            date.format(data.displayFormat),
+            date.input ? date.format(data.displayFormat) : '',
         ]);
     }
 

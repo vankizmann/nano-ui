@@ -419,29 +419,6 @@ $color-base-info: (
         'color-bg-90': $color-info-bg-90,
 ) !default;
 
-$color-tags: (
-        0:  #D74242,  // red
-        1:  #D76342,  // red-orange
-        2:  #D78442,  // orange
-        3:  #D7A142,  // orange-yellow
-        4:  #C2A732,  // yellow
-        5:  #A2B02E,  // yellow-green
-        6:  #8BB531,  // green
-        7:  #5EBF36,  // green-cyan
-        8:  #3AC778,  // teal
-        9:  #39C498,  // cyan
-        10: #37BFBF,  // cyan-blue
-        11: #42B0D7,  // light blue
-        12: #428BD7,  // blue
-        13: #434AE5,  // blue-indigo
-        14: #5C42D7,  // blue-indigo
-        15: #7842D7,  // indigo
-        16: #9542D7,  // purple
-        17: #D742CD,  // magenta
-        18: #D74285,  // pink-purple
-        19: #D74260   // reddish-pin
-) !default;
-
 $color-list: (
         'neutral': $color-base-neutral,
         'primary': $color-base-primary,
@@ -466,6 +443,12 @@ $color-list: (
     @each $name, $values in $color-list {
         &.n-type-#{$name}, .n-type-#{$name} {
             @include css-remaps($values, '-color-light-#{$name}', '-color-base');
+        }
+    }
+
+    @for $index from 0 through 20 {
+        &.n-color-#{$index}, .n-color-#{$index} {
+            --n-color-base-color: var(--n-color-light-tag-#{$index});
         }
     }
 

@@ -77,9 +77,9 @@ export class NDatepickerPanelController extends GroupController
             NDateHelper.getDates(this)
         ]);
 
-        this.set('displays', ...[
-            NDateHelper.getDisplays(this)
-        ]);
+        // this.set('displays', ...[
+        //     NDateHelper.getDisplays(this)
+        // ]);
     }
 
     setDisplayDates(date : Now = null)

@@ -64,6 +64,14 @@ export class BaseData
     }
 
     /**
+     * @returns {string|number}
+     */
+    get color() : string | number
+    {
+        return this.scope.get('color');
+    }
+
+    /**
      * @param {string} value
      */
     set type(value : string)

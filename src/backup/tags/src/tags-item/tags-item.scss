@@ -1,6 +1,6 @@
 @use "../../../root/helpers" as *;
 
-.n-tags-item {
+.n-tag {
     overflow: hidden;
     display: inline-flex;
     flex-direction: row;
@@ -9,12 +9,12 @@
     max-width: 160px;
 }
 
-.n-tags-item i {
+.n-tag i {
     flex: 0 0 auto;
     text-align: center;
 }
 
-.n-tags-item span {
+.n-tag span {
     overflow: hidden;
     display: block;
     white-space: nowrap;
@@ -22,14 +22,14 @@
     flex: 1 1 auto;
 }
 
-.n-tags-item {
+.n-tag {
     font-size: size('base-fnt');
     border-radius: size('base-rad');
     padding: 0 size('base-pad');
     height: size('base-hgt', 'calc($ * 0.9)');
 }
 
-.n-tags-item i {
+.n-tag i {
     margin-right: size('base-pad', 'calc($ * 0.6)');
     font-size: size('base-fnt-icon');
 }

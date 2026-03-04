@@ -99,19 +99,15 @@
 
         <div class="n-grid gap-30">
             <div class="col--1-1">
-                <n-tags v-bind="n_tags">
-                    <template v-for="type in ['neutral', 'primary', 'secondary', 'success', 'warning', 'danger', 'info']">
-                        <n-tags-item :type="type" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna</n-tags-item>
-                    </template>
-                </n-tags>
+                <template v-for="type in ['neutral', 'primary', 'secondary', 'success', 'warning', 'danger', 'info']">
+                    <n-tag v-bind="n_tags" :type="type" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna</n-tag>
+                </template>
             </div>
 
             <div class="col--1-1">
-                <n-tags v-bind="n_tags">
-                    <template v-for="(value, index) in Array(20).fill(0)">
-                        <n-tags-item :color="index" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna</n-tags-item>
-                    </template>
-                </n-tags>
+                <template v-for="(value, index) in Array(20).fill(0)">
+                    <n-tag v-bind="n_tags" :color="index" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna</n-tag>
+                </template>
             </div>
         </div>
 

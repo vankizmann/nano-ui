@@ -41,7 +41,7 @@ export class NInputView extends ProtoView
         }
 
         return h('div', props, [
-            ...slots, this.clear()
+            ...slots, this.clear(data.model)
         ]);
     }
 

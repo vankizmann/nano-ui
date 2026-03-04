@@ -1,5 +1,5 @@
 import { PropType, defineComponent } from "vue";
-import { Props } from "../../../root/index.ts";
+import { Props, Styler } from "../../../root/index.ts";
 import NDurationpickerController from "./NDurationpickerController.ts";
 
 export const NDurationpickerOptions = [
@@ -111,6 +111,13 @@ export const NDurationpickerProps = {
      */
     seconds: {
         type: [String], default: ':count Second|:count Seconds'
+    },
+
+    /**
+     * @type {PropType<string>}
+     */
+    icon: {
+        type: [String], default: () => Styler.icon('duration')
     },
 
 };

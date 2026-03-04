@@ -58,14 +58,19 @@
     cursor: not-allowed;
 }
 
+.n-datepicker__icon,
 .n-datepicker__clear,
 .n-datepicker__angle {
-    order: 100;
     flex: 0 0 auto;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+
+.n-datepicker__clear,
+.n-datepicker__angle {
+    order: 100;
 }
 
 .n-datepicker__clear {
@@ -130,6 +135,11 @@
     padding: 0 size('base-pad');
 }
 
+.n-datepicker__icon {
+    margin-right: size('base-pad', 'calc($ * -1)');
+}
+
+.n-datepicker__icon,
 .n-datepicker__clear,
 .n-datepicker__angle {
     width: size('base-hgt');

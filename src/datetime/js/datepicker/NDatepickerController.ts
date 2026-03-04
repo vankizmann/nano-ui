@@ -75,7 +75,7 @@ export class NDatepickerController extends NPopoverPanelController
         ]);
 
         this.set('input', ...[
-            date.format(data.displayFormat),
+            date.input ? date.format(data.displayFormat) : '',
         ]);
 
         const dates = this.set('dates', ...[
@@ -83,8 +83,8 @@ export class NDatepickerController extends NPopoverPanelController
         ]);
 
         this.set('inputs', [
-            dates[0].format(data.displayFormat),
-            dates[1].format(data.displayFormat),
+            dates[0].input ? dates[0].format(data.displayFormat) : '',
+            dates[1].input ? dates[1].format(data.displayFormat) : '',
         ]);
     }
 

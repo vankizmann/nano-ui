@@ -27,6 +27,7 @@ export class NDurationpickerView extends NPopoverPanelView
     display() : any
     {
         return this.div('display', [
+            this.handle(),
             this.input(),
             this.clear(),
             this.angle(),
@@ -42,6 +43,7 @@ export class NDurationpickerView extends NPopoverPanelView
         }
 
         let props : any = {
+            ref: scope.ref('input'),
             value: data.input,
             placeholder: data.placeholder,
         };

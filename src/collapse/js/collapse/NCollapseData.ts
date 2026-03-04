@@ -1,6 +1,6 @@
 import { ProtoData } from "../../../root/index.ts";
 import NCollapseController from "./NCollapseController.ts";
-import NCollapseItemController from "../tabs-item/NCollapseItemController.ts";
+import NCollapseItemController from "../collapse-item/NCollapseItemController.ts";
 
 export class NCollapseData extends ProtoData
 {
