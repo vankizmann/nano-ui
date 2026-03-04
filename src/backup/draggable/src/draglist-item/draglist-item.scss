@@ -59,15 +59,13 @@
     border: 1px solid transparent;
 }
 
-.n-draglist-head.n-disabled .n-draglist-item__checkbox,
-.n-draglist-item.n-disabled .n-draglist-item__checkbox {
+.n-draglist-item__select.n-disabled .n-draglist-item__checkbox {
     pointer-events: none;
     opacity: 0.7;
     cursor: not-allowed;
 }
 
-.n-draglist-head:not(.n-selected) .n-draglist-item__checkbox i,
-.n-draglist-item:not(.n-selected) .n-draglist-item__checkbox i {
+.n-draglist-item__select:not(.n-selected) .n-draglist-item__checkbox i {
     display: none;
 }
 

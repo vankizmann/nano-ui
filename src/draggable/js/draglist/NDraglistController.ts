@@ -56,14 +56,19 @@ export class NDraglistController extends ProtoController
         this.makeRef('virtualbar');
 
         // Make virtuals available (all items on one layer)
-        this.makeData('virtuals', this.buildVirtuals());
+        this.makeData('virtuals', ...[
+            this.buildVirtuals()
+        ]);
 
         this.watchProp('items', () => {
             this.set('virtuals', this.buildVirtuals());
+            this.update('selected', []);
         });
 
         // Make visibles available (all items except unexpanded)
-        this.makeData('visibles', this.buildVisibles());
+        this.makeData('visibles', ...[
+            this.buildVisibles()
+        ]);
 
         this.watchData('virtuals', () => {
             this.set('visibles', this.buildVisibles());
@@ -74,13 +79,17 @@ export class NDraglistController extends ProtoController
         });
 
         // Make relation available (first selected item)
-        this.makeData('relation', this.buildRelation());
+        this.makeData('relation', ...[
+            this.buildRelation()
+        ]);
 
         this.watchData('selected', () => {
             this.set('relation', this.buildRelation());
         });
 
-        this.makeData('index', this.buildIndex());
+        this.makeData('index', ...[
+            this.buildIndex()
+        ]);
 
         this.watchData('visibles', () => {
             this.set('index', this.buildIndex());
@@ -135,6 +144,13 @@ export class NDraglistController extends ProtoController
         };
 
         this.drag = NDragHandler.append(uid, config);
+    }
+
+    onUnmounted()
+    {
+        NDragHandler.remove(this.uid);
+        Pointer.unbind(this.uid);
+        console.log('unmounted', this.uid);
     }
 
     getValue(item : any, fallback : any = null)
@@ -640,8 +656,7 @@ export class NDraglistController extends ProtoController
             data.visibles, data.index,
         ]);
 
-        this.ref('virtualbar')?.value?._?.ncx
-            ?.scrollTo(index);
+        this.ncx('virtualbar')?.scrollTo(index);
 
         this.update('current', ...[
             this.getItem(data.visibles[index])
@@ -656,8 +671,7 @@ export class NDraglistController extends ProtoController
             data.visibles, data.index,
         ]);
 
-        this.ref('virtualbar')?.value?._?.ncx
-            ?.scrollTo(index);
+        this.ncx('virtualbar')?.scrollTo(index);
 
         this.update('current', ...[
             this.getItem(data.visibles[index])

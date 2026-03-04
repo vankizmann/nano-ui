@@ -101,9 +101,17 @@
     width: 100%;
 }
 
-.n-durationpicker-panel {
+
+.n-durationpicker__body,
+.n-durationpicker__empty {
     overflow: hidden;
     max-height: 210px;
+    border-radius: size('base-rad');
+}
+
+.n-durationpicker__empty {
+    text-align: center;
+    padding: size('base-pad-vertical') size('base-pad');
 }
 
 .n-durationpicker {

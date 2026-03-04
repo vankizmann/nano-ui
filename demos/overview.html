@@ -209,7 +209,7 @@
             <n-popover-option icon="fa fa-heading">
                 Headline H3
             </n-popover-option>
-            <n-popover>
+            <n-popover trigger="hover">
                 <n-popover-option icon="fa fa-heading">
                     Headline H3
                 </n-popover-option>
@@ -736,7 +736,7 @@
 
         <div class="n-grid gap-10">
             <div class="col-1-1 col-1-3@md">
-                <n-durationpicker v-bind="n_durationpicker"></n-durationpicker>
+                <n-durationpicker  v-model="n_durationpicker.modelValue" v-bind="n_durationpicker"></n-durationpicker>
             </div>
             <div class="col-1-1 col-1-3@md">
                 <n-durationpicker v-model="n_durationpicker.modelValue" v-bind="n_durationpicker"></n-durationpicker>
@@ -759,7 +759,7 @@
 
         <div class="n-grid gap-10">
             <div class="col--1-1">
-                <n-transfer v-bind="n_transfer" trigger="hover" :options="cascaderData"></n-transfer>
+                <n-transfer v-bind="n_transfer" trigger="hover" :options="virtualTree"></n-transfer>
             </div>
         </div>
 
@@ -969,9 +969,10 @@
                 eligendi?
             </n-tabs-item>
             <n-tabs-item name="keep" label="Keep" :keep="true">
+                <div style="position: absolute; top: 0; background: red">asd</div>
                 <n-textarea></n-textarea>
             </n-tabs-item>
-            <n-tabs-item name="bar" label="Headline in extra extra extra extra extra extra looooong">
+            <n-tabs-item name="bar" label="Headline in extra extra extra extra extra extra looooong" :lazy="false">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, modi?
             </n-tabs-item>
         </n-tabs>
@@ -987,7 +988,7 @@
             </div>
         </div>
 
-        <n-collapse v-bind="n_collapse" style="height: 600px;">
+        <n-collapse v-bind="n_collapse" :model-value="['bar']" style="height: 600px;">
             <n-collapse-item :sort="3" name="keep" label="Keep" icon="fa fa-ghost" :keep="true">
                 <n-textarea></n-textarea>
                 <template #action>
@@ -1002,7 +1003,7 @@
                     <n-button :glass="true" size="xs">Action</n-button>
                 </template>
             </n-collapse-item>
-            <n-collapse-item :sort="2" name="bar2" label="KKKKAKS SAKK">
+            <n-collapse-item :sort="2" name="default" label="KKKKAKS SAKK" :lazy="false">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, modi?
                 <br><br><br><br><br><br>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, modi?
@@ -1541,7 +1542,7 @@
             };
 
             data.n_tabs = {
-                value: 'default', size: 'md', type: 'primary', float: false
+                value: 'deimama', size: 'md', type: 'primary', float: false
             };
 
             data.n_collapse = {

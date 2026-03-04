@@ -9,9 +9,17 @@ const ICONS_SIGNAL = {
 };
 
 const ICONS_DEFAULT = {
-    'locate': 'fa fa-clock-rotate-left',
+    'revert': 'fa fa-clock-rotate-left',
     'prev': 'fa fa-angle-left',
     'next': 'fa fa-angle-right',
+    'check': 'fa fa-check',
+    'angle-left': 'fa fa-angle-left',
+    'angle-right': 'fa fa-angle-right',
+    'angle-up': 'fa fa-angle-up',
+    'angle-down': 'fa fa-angle-down',
+    'search': 'fa fa-search',
+    'times': 'fa fa-times',
+    'minus': 'fa fa-minus',
 };
 
 export class Styler

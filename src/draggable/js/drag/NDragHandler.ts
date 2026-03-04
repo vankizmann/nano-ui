@@ -40,35 +40,35 @@ export class NDragHandler
     {
         const win = Dom.find(document);
 
-        const onPassiveDragover = Run.framerate((e) => {
+        const onPassiveDragover = Run.framerate((e : any) => {
             this.dragover(e);
-        }, 14, false);
+        }, 16, false);
 
-        const onDelayedDragdrop = (e) => Run.delay(() => {
+        const onDelayedDragdrop = (e : any) => Run.delay(() => {
             this.dragdrop(e);
         });
 
-        win.on('dragenter', (e) => {
+        win.on('dragenter', (e : any) => {
             if ( this.active ) {
                 e.preventDefault();
             }
         });
 
-        win.on('dragover', (e) => {
+        win.on('dragover', (e : any) => {
             if ( this.active ) {
                 e.preventDefault();
                 onPassiveDragover(e);
             }
         });
 
-        win.on('drop', (e) => {
+        win.on('drop', (e : any) => {
             if ( this.active ) {
                 e.preventDefault();
                 onDelayedDragdrop(e);
             }
         });
 
-        win.on('dragend', (e) => {
+        win.on('dragend', (e : any) => {
             e.preventDefault();
             this.active = 0;
         });
@@ -94,7 +94,7 @@ export class NDragHandler
             this.type = 'alt';
         }
 
-        let [options, targets]: [any, any] = [
+        let [options, targets] : [any, any] = [
             {}, Dom.getNodePoint(e)
         ];
 
@@ -203,10 +203,6 @@ export class NDragHandler
 
     static remove(uid : string)
     {
-        if ( this.zones[uid] != null ) {
-            this.zones[uid].destroy();
-        }
-
         delete this.zones[uid];
 
         return this;

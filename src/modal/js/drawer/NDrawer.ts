@@ -39,17 +39,24 @@ export const NDrawerProps = {
     },
 
     /**
-     * @type {PropType<string>}
+     * @type {PropType<boolean>}
+     */
+    scrollbar: {
+        type: [Boolean], default: true
+    },
+
+    /**
+     * @type {PropType<string|number>}
      */
     width: {
-        type: [String], default: null
+        type: [String,Number], default: null
     },
 
     /**
      * @type {PropType<string>}
      */
     height: {
-        type: [String], default: null
+        type: [String,Number], default: null
     },
 
     /**

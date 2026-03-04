@@ -1,4 +1,4 @@
-import { ProtoController } from "../../index.ts";
+import { ProtoController, Styler } from "../../index.ts";
 import { Mix } from "@kizmann/pico-js";
 import { Obj } from "@kizmann/pico-js";
 import { h } from "vue";
@@ -76,7 +76,7 @@ export class ProtoView
         return h(component, props, slot);
     }
 
-    div(props : any = 'div', slot : any = null) : any
+    div(props : any = 'div', slot : any = null, type : string = 'div') : any
     {
         const { data } = this.scope;
 
@@ -93,7 +93,7 @@ export class ProtoView
             name, classList
         ]);
 
-        return h('div', props, slot);
+        return h(type, props, slot);
     }
 
     clear() : any
@@ -115,7 +115,7 @@ export class ProtoView
         };
 
         return this.div(config, [
-            this.icon('fa fa-times')
+            this.icon(Styler.icon('times'))
         ]);
     }
 
@@ -126,7 +126,7 @@ export class ProtoView
         };
 
         return this.div(config, [
-            this.icon('fa fa-angle-down')
+            this.icon(Styler.icon('angle-down'))
         ]);
     }
 

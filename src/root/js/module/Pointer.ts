@@ -1,4 +1,4 @@
-import { Arr, Dom, Obj, Run } from "@kizmann/pico-js";
+import { Arr, Dom, For, Mix, Obj, Run } from "@kizmann/pico-js";
 
 export class Pointer
 {
@@ -109,21 +109,36 @@ export class Pointer
             v = { ...v, type: 'keyenter' };
         }
 
-        let [types, prevent] = [
-            [], Dom.find(v.target).upnode('[prevent]')
+        let [prevent, pl] = [
+            false, Dom.find(v.target).upnode('[prevent]')
         ];
 
-        if ( !e.metaKey && !prevent.empty() ) {
-            types = prevent.attr('prevent').split(',');
+        if ( !e.metaKey && !pl.empty() ) {
+            prevent = this.preventCodes(e, pl);
         }
 
-        if ( Arr.has(types, e.type) ) {
+        if ( prevent ) {
             e && e.preventDefault();
         }
 
         for ( const { type, cb } of this.signals ) {
             if ( type === v.type ) cb(e, v);
         }
+    }
+
+    static preventCodes(e : any, el : Dom) : boolean
+    {
+        const keycode = For.parseOptions(...[
+            el.attr('prevent') || ''
+        ]);
+
+        const prevent = Obj.get(keycode, e.type);
+
+        if ( Mix.isArr(prevent) ) {
+            return Arr.has(prevent, e.which);
+        }
+
+        return !! prevent;
     }
 
     static bind(id : string, type : string, cb : Function) : void

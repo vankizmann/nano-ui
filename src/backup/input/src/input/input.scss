@@ -49,7 +49,8 @@
 }
 
 .n-input .n-input__button {
-    display: flex;
+    flex: 0 0 auto;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 }
@@ -59,10 +60,11 @@
 }
 
 .n-input .n-input__clear {
+    flex: 0 0 auto;
     display: none;
 }
 
 .n-input:hover .n-input__clear,
 .n-input.n-focus .n-input__clear {
-    display: block;
+    display: inline-flex;
 }

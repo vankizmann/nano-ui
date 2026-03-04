@@ -34,6 +34,11 @@ export class NModalData extends ProtoData
         return this.scope.get('closable');
     }
 
+    get scrollbar() : boolean
+    {
+        return this.scope.get('scrollbar');
+    }
+
     get width() : number
     {
         return this.scope.get('width');

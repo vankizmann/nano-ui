@@ -24,31 +24,31 @@ export class NCheckboxControllerSingle extends NCheckboxController
 
     onMounted()
     {
-        this.ref('group')?.ncx.append(this);
+        this.ncx('group')?.append(this);
     }
 
     onUnmounted()
     {
-        this.ref('group')?.ncx.remove(this);
+        this.ncx('group')?.remove(this);
     }
 
     watchModel()
     {
-        const group = this.ref('group');
+        const group = this.ncx('group');
 
         const fn = () => {
             this.updateModel();
         };
 
-        group?.ncx.watchProp('modelValue', fn);
+        group.watchProp('modelValue', fn);
     }
 
     updateModel()
     {
-        const group = this.ref('group');
+        const group = this.ncx('group');
 
         const value = Arr.has(...[
-            group?.ncx.data.model, this.data.value
+            group.data.model, this.data.value
         ]);
 
         this.set('modelValue', value);
@@ -56,10 +56,10 @@ export class NCheckboxControllerSingle extends NCheckboxController
 
     superToggle()
     {
-        const group = this.ref('group');
+        const group = this.ncx('group');
 
         if ( group ) {
-            group.ncx.superToggle(this);
+            group.superToggle(this);
         }
 
         this.update('modelValue', !this.data.model);

@@ -56,7 +56,7 @@ export class NTableColumnController extends ProtoController
         ]);
 
         if ( !Mix.isEmpty(plugin) ) {
-            this.plugin = new plugin(this.ref('table')?.ncx, this);
+            this.plugin = new plugin(this.ncx('table'), this);
         }
 
         return this;
@@ -64,12 +64,12 @@ export class NTableColumnController extends ProtoController
 
     onMounted()
     {
-        this.ref('table')?.ncx.append(this);
+        this.ncx('table').append(this);
     }
 
     onUnmounted()
     {
-        this.ref('table')?.ncx.remove(this);
+        this.ncx('table').remove(this);
     }
 
     createOptionsMap()

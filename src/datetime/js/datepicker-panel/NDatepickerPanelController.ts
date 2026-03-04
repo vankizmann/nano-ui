@@ -57,15 +57,15 @@ export class NDatepickerPanelController extends GroupController
         ]);
 
         this.watchProp('modelValue', () => {
-            this.updateDates()
+            this.updateDates();
         });
 
         this.watchProp('arrive', () => {
-            this.updateDates()
+            this.updateDates();
         });
 
         this.watchProp('depart', () => {
-            this.updateDates()
+            this.updateDates();
         });
 
         return this;
@@ -75,6 +75,10 @@ export class NDatepickerPanelController extends GroupController
     {
         this.set('dates', ...[
             NDateHelper.getDates(this)
+        ]);
+
+        this.set('displays', ...[
+            NDateHelper.getDisplays(this)
         ]);
     }
 

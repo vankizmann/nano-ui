@@ -197,9 +197,13 @@ export class ProtoController
         return this.refs[key] ?? fallback;
     }
 
-    ncx(key : string, fallback : any = null)
+    ncx(key : string)
     {
-        return this.refs[key]?.value?._?.ncx ?? fallback;
+        if ( this.refs[key]?.ncx ) {
+            return this.refs[key].ncx;
+        }
+
+        return this.refs[key]?.value?._?.ncx;
     }
 
     dom(key : string)
@@ -299,7 +303,7 @@ export class ProtoController
             options.deep ??= true;
         }
 
-        watch(() => this.vals[key], (v) => {
+        watch(this.vals[key], (v) => {
             cb(v);
         }, options);
 

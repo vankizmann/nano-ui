@@ -44,7 +44,7 @@ export class NTableView extends ProtoView
     {
         let props = {
             name: 'header',
-            prevent: 'contextmenu'
+            prevent: 'contextmenu:1'
         };
 
         const items = Arr.each(this.scope.childs, (column : any, index : number) => {

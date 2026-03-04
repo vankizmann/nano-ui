@@ -70,11 +70,11 @@
     text-overflow: ellipsis;
 }
 
-.n-transfer__item-count:before {
+.n-transfer__title span:last-child:before {
     content: '(';
 }
 
-.n-transfer__item-count:after {
+.n-transfer__title span:last-child:after {
     content: ')';
 }
 
@@ -96,7 +96,7 @@
     padding: 0 size('base-pad');
 }
 
-.n-transfer__item-count {
+.n-transfer__title span:last-child {
     margin-left: size('base-pad', 'calc($ * 0.5)');
 }
 

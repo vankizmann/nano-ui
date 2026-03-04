@@ -1,21 +1,34 @@
 @use "../../../root/helpers" as *;
 
-.n-collapse__header.is-last {
+.n-collapse-item__header {
+    cursor: default;
+    position: relative;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+    height: size('base-hgt', 'calc($ + 10px)');
+    padding: 0 size('base-pad');
+    border-bottom: 1px solid transparent;
+}
+
+.n-collapse-item__header.is-last {
     margin-bottom: -1px;
 }
 
-.n-collapse__header-label {
+.n-collapse-item__label {
     flex: 1 1 auto;
 }
 
-.n-collapse__header-label {
+.n-collapse-item__label {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-.n-collapse__header-icon,
-.n-collapse__header-angle {
+.n-collapse-item__icon,
+.n-collapse-item__angle {
     flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
@@ -24,33 +37,47 @@
     height: size('base-hgt-inline');
 }
 
-.n-collapse__header-angle {
+.n-collapse-item__angle {
     transition: transform 0.3s;
 }
 
-.n-collapse__header.n-active .n-collapse__header-angle {
+.n-collapse-item__header.n-active .n-collapse-item__angle {
     transform: rotate(90deg);
 }
 
-.n-collapse__header-icon {
+.n-collapse-item__icon {
     font-size: size('base-fnt-icon');
     margin-right: size('base-pad', 'calc($ * 0.6)');
 }
 
-.n-collapse__header-label {
+.n-collapse-item__label {
     font-size: 1.05em;
 }
 
-.n-collapse__header-angle {
+.n-collapse-item__angle {
     font-size: size('base-fnt-icon');
     margin-left: size('base-pad', 'calc($ * 0.6)');
 }
 
-.n-collapse__header-action {
+.n-collapse-item__action {
     flex: 0 0 auto;
     margin: 0 size('base-pad', 'calc($ * 0.6)');
 }
 
-.n-collapse__header-action > *:not(:last-child) {
+.n-collapse-item__action > *:not(:last-child) {
     margin-right: size('base-pad');
+}
+
+.n-collapse-item__content {
+    position: relative;
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.n-collapse-item__content:not(.n-scrollbar),
+.n-scrollbar.n-collapse-item__content > .n-scrollbar-content {
+    padding: size('base-pad-vertical', 'calc($ * 1.4)') size('base-pad');
 }

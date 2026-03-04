@@ -21,20 +21,17 @@
     border: 1px solid color('gray-15');
 }
 
-.n-draglist-head.n-disabled .n-draglist-item__checkbox,
-.n-draglist-item.n-disabled .n-draglist-item__checkbox {
+.n-draglist-item__select.n-disabled .n-draglist-item__checkbox {
     background: color('form-disabled');
 }
 
-.n-draglist-head.n-selected .n-draglist-item__checkbox,
-.n-draglist-item.n-selected .n-draglist-item__checkbox {
+.n-draglist-item__select.n-selected .n-draglist-item__checkbox {
     color: color('base-text');
     background: color('base-color');
     border-color: color('base-color');
 }
 
-.n-draglist-head:not(.n-disabled,.n-selected) .n-draglist-item__checkbox:hover,
-.n-draglist-item:not(.n-disabled,.n-selected) .n-draglist-item__checkbox:hover {
+.n-draglist-item__select:not(.n-disabled,.n-selected) .n-draglist-item__checkbox:hover {
     border-color: color('base-color-bg-10');
 }
 

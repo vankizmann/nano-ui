@@ -15,6 +15,9 @@ import NEmpty from "./empty/index.ts";
 import NModal from "./modal/index.ts";
 import NLoader from "./loader/index.ts";
 import NDatetime from "./datetime/index.ts";
+import NTransfer from "./transfer/index.ts";
+import NTabs from "./tabs/index.ts";
+import NCollapse from "./collapse/index.ts";
 
 const NanoImports = [
     NSignal,
@@ -34,6 +37,9 @@ const NanoImports = [
     NModal,
     NLoader,
     NDatetime,
+    NTransfer,
+    NTabs,
+    NCollapse,
 ];
 
 export const Icons = {

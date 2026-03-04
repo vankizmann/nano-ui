@@ -67,7 +67,7 @@ export class NModalView extends ProtoView
         }
 
         if ( slots.default ) {
-            html.push(this.div('body', this.slot('default')));
+            html.push(this.content());
         }
 
         if ( slots.footer ) {
@@ -75,6 +75,23 @@ export class NModalView extends ProtoView
         }
 
         return this.div({ ...props, style: style.join(' ') }, html);
+    }
+
+    content() : any
+    {
+        let { data } = this.scope;
+
+        const props = {
+            class: data.classPart('content')
+        };
+
+        if ( ! data.scrollbar ) {
+            return h('div', props, this.slot('default'));
+        }
+
+        return this.comp('n-scrollbar', props, () => {
+            return this.slot('default');
+        });
     }
 
 }

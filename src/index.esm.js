@@ -1,74 +1,46 @@
 // import { Arr, Obj, Dom, Locale } from "@kizmann/pico-js";
 
-import NInput from "./input/index.js";
-// import NButton from "./button/index.js";
-// import NCheckbox from "./checkbox/index.js";
-// import NRadio from "./radio/index.js";
-// import NSelect from "./select/index.js";
-// import NSwitch from "./switch/index.js";
-// import NCascader from "./cascader/index.js";
-// import NPopover from "./popover/index.js";
-// import NScrollbar from "./scrollbar/index.js";
-// import NResizer from "./resizer/index.js";
-// import NDraggable from "./draggable/index.js";
-// import NTable from "./table/index.js";
-// import NEmpty from "./empty/index.js";
-
 const NanoImports = [
-    // Alert,
-    // Notification,
-    // Empty,
-    // Config,
-    // Scrollbar,
-    // Virtualscroller,
-    // Draggable,
-    // Loader,
-    // Resizer,
-    // Popover,
-    // Modal,
-    // Button,
-    // Input,
-    // InputNumber,
-    // Textarea,
-    // Select,
-    // Checkbox,
-    // Radio,
-    // Slider,
-    // Switch,
-    // Confirm,
-    // Cascader,
-    // Datepicker,
-    // Timepicker,
-    // Datetimepicker,
-    // Durationpicker,
-    // Transfer,
-    // Form,
-    // Tabs,
-    // Tags,
-    // Collapse,
-    // Table,
-    // Paginator,
-    // Info,
-    // Preview,
-    // Map,
-    // File,
-    // Rating,
-    // Drawer,
-    // Chart,
-    // NForm,
-    NInput,
-    // NButton,
-    // NCheckbox,
-    // NRadio,
-    // NSelect,
-    // NSwitch,
-    // NPopover,
-    // NScrollbar,
-    // NResizer,
-    // NDraggable,
-    // NTable,
-    // NEmpty,
-    // NCascader,
+    // Alert, done
+    // Notification, done
+    // Empty, done
+    // --- Config,
+    // Scrollbar, done
+    // Virtualscroller, done
+    // --- Draggable,
+    // Loader, done
+    // Resizer, done
+    // Popover, done
+    // Modal, done
+    // Button, done
+    // Input, done
+    // InputNumber, done
+    // Textarea, done
+    // Select, done
+    // Checkbox, done
+    // Radio, done
+    // --- Slider,
+    // Switch, done
+    // Confirm, done
+    // Cascader, done
+    // Datepicker, done
+    // Timepicker, done
+    // Datetimepicker, done
+    // Durationpicker, done
+    // Transfer, done
+    // --- Form,
+    // Tabs, done
+    // --- Tags,
+    // Collapse, done
+    // Table, done
+    // --- Paginator,
+    // --- Info,
+    // --- Preview,
+    // --- Map,
+    // --- File,
+    // --- Rating,
+    // Drawer, done
+    // --- Chart,
 ];
 
 export const Icons = {

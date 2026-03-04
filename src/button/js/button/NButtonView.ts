@@ -15,7 +15,7 @@ export class NButtonView extends ProtoView
      */
     bem : string = 'n-button';
 
-    default()
+    default() : any
     {
         let { scope, data } = this.scope;
 
@@ -47,7 +47,7 @@ export class NButtonView extends ProtoView
         return h(data.native, props, slots);
     }
 
-    body()
+    body() : any
     {
         let { scope } = this.scope;
 

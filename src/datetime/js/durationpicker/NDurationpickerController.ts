@@ -1,5 +1,5 @@
 import { SetupContext } from "vue";
-import { Arr, Locale, Mix, Now, Obj, Run, Str } from "@kizmann/pico-js";
+import { Arr, Locale, Mix, Now, Num, Obj, Run, Str } from "@kizmann/pico-js";
 import { NPopoverPanelController } from "../../../popover/js/popover-panel/NPopoverPanelController.ts";
 import { NDurationpickerView } from "./NDurationpickerView.ts";
 import { NDurationpickerData } from "./NDurationpickerData.ts";
@@ -32,7 +32,6 @@ export class NDurationpickerController extends NPopoverPanelController
             // @ts-ignore
             new NDurationpickerData(this),
         ];
-        console.log(this.data)
 
         this.setup();
     }
@@ -41,13 +40,18 @@ export class NDurationpickerController extends NPopoverPanelController
     {
         super.setup();
 
-        this.makeRef('input');
+        this
+            .cloneProp('modelValue');
 
-        this.cloneProp('modelValue');
+        this
+            .makeData('input')
+            .makeData('index', 0);
 
-        this.makeData('input');
+        this
+            .makeRef('input')
+            .makeRef('scrollbar');
 
-        this.watchData('modelValue', () => {
+        this.watchProp('modelValue', () => {
             this.updateDuration();
         });
 
@@ -58,50 +62,93 @@ export class NDurationpickerController extends NPopoverPanelController
 
     updateDuration()
     {
-        const { data } = this;
+        this.set('input', ...[
+            NDateHelper.getDurationString(this),
+        ]);
+    }
 
-        console.log(data);
-        NDateHelper.humanDuration(this);
+    onReady()
+    {
+        this.scrollToIndex();
+    }
 
-        // const date = this.set('input', ...[
-        //     NDateHelper.humanDuration(this)
-        // ]);
-
-        // this.set('input', ...[
-        //     date.format(data.displayFormat),
-        // ]);
+    onOpen()
+    {
+        this.focusInput();
+        this.resetDisplay();
     }
 
     onClose()
     {
+        Run.frame(() => {
+            this.updateDuration();
+        });
+
         this.ref('input')?.value?.blur();
-        this.updateDuration();
     }
 
     onInput()
     {
-        const { data } = this;
+        const intval = NDateHelper.getDurationString(this);
 
-        let date = Now.make(...[
-            data.input, data.displayFormat
+        if ( intval === this.data.input ) {
+            return this.applyIndex();
+        }
+
+        const value = NDateHelper.getDurationNumber(...[
+            this, this.data.input
         ]);
 
-        if ( !date.valid() ) {
-            return this.updateDuration();
+        this.update('modelValue', value);
+    }
+
+    applyIndex()
+    {
+        const { data } = this;
+
+        const value = Obj.get(...[
+            data.options, data.index
+        ]);
+
+        this.update('modelValue', value);
+    }
+
+    focusInput()
+    {
+        Run.frame(() => {
+            this.ref('input')?.value?.focus();
+        });
+    }
+
+    resetDisplay()
+    {
+        const { data } = this;
+
+        const index = Arr.findIndex(data.options, [
+            data.model
+        ], 0);
+
+        this.set('index', Math.max(0, index));
+    }
+
+    scrollToIndex(index = null)
+    {
+        const { data } = this;
+
+        if ( index == null ) {
+            index = data.index;
         }
 
-        if ( data.minDate && date.before(data.minDate) ) {
-            date = Now.make(data.minDate);
+        index = Num.minmax(...[
+            index, 0, data.options.length - 1
+        ]);
+
+        if ( index !== data.index ) {
+            this.set('index', index);
         }
 
-        if ( data.maxDate && date.after(data.maxDate) ) {
-            date = Now.make(data.maxDate);
-        }
-
-        console.log(this, data.format, date.format());
-
-        this.update(...[
-            'modelValue', date.format(data.format)
+        this.ncx('scrollbar')?.scrollTo(...[
+            data.index
         ]);
     }
 

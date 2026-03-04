@@ -20,6 +20,13 @@ export const NModalProps = {
     /**
      * @type {PropType<boolean>}
      */
+    scrollbar: {
+        type: [Boolean], default: true
+    },
+
+    /**
+     * @type {PropType<boolean>}
+     */
     listen: {
         type: [Boolean], default: true
     },

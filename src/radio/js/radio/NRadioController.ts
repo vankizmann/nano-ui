@@ -53,17 +53,17 @@ export class NRadioController extends ProtoController
 
     onMounted()
     {
-        this.ref('group')?.ncx.append(this);
+        this.ncx('group')?.append(this);
     }
 
     onUnmounted()
     {
-        this.ref('group')?.ncx.remove(this);
+        this.ncx('group')?.remove(this);
     }
 
     superApply()
     {
-        this.ref('group')?.ncx.superApply(this);
+        this.ncx('group').superApply(this);
     }
 
 }

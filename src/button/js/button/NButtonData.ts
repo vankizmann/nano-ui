@@ -82,3 +82,5 @@ export class NButtonData extends ProtoData
     }
 
 }
+
+export default NButtonData;

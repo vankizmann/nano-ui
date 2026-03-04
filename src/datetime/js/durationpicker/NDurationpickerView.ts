@@ -1,7 +1,9 @@
 import { h } from "vue";
-import { Arr, Dom, Locale, Mix, Obj } from "@kizmann/pico-js";
+import { Arr, Dom, Hash, Locale, Mix, Obj } from "@kizmann/pico-js";
 import { NDurationpickerController } from "./NDurationpickerController.ts";
 import { NPopoverPanelView } from "../../../popover/js/popover-panel/NPopoverPanelView.ts";
+import { Styler } from "../../../root/index.ts";
+import { NDateHelper } from "../helper/NDateHelper.ts";
 
 export class NDurationpickerView extends NPopoverPanelView
 {
@@ -13,7 +15,14 @@ export class NDurationpickerView extends NPopoverPanelView
     /**
      * @type {string}
      */
-    bem : string = 'n-datetimepicker';
+    bem : string = 'n-durationpicker';
+
+    /**
+     * @type {any}
+     */
+    popoverConfig : any = {
+        width: -1,
+    };
 
     display() : any
     {
@@ -48,6 +57,8 @@ export class NDurationpickerView extends NPopoverPanelView
         props.onKeydown = (e : any) => {
             if ( e.which === 9 ) scope.onBlur();
             if ( e.which === 13 ) scope.onInput();
+            if ( e.which === 38 ) scope.scrollToIndex(data.index - 1);
+            if ( e.which === 40 ) scope.scrollToIndex(data.index + 1);
         };
 
         return this.div('input', [
@@ -57,53 +68,59 @@ export class NDurationpickerView extends NPopoverPanelView
 
     panel() : any
     {
-        let props = {
-            class: `${this.bem}-panel`
+        const { scope, data } = this.scope;
+
+        if ( !data.options.length ) {
+            return this.empty();
+        }
+
+        const items = Arr.each(data.options, (value : any) => {
+            return { value };
+        })
+
+        let props : any = {
+            ref: scope.ref('scrollbar'),
+            class: `${this.bem}__body`,
+            items: items,
         };
 
-        return h('div', props, [
-            this.datepicker(), this.timepicker()
-        ]);
+        props.onReady = () => {
+            this.scope.onReady();
+        };
+
+        const slots : any = {};
+
+        slots.default = (item : any) => {
+            return this.item(item);
+        };
+
+        return this.comp('n-virtualbar', props, slots);
     }
 
-    datepicker() : any
+    item({ value, index }) : any
     {
         const { scope, data } = this.scope;
 
-        let props = {
-            ref: scope.ref('datepicker'),
-            class: `${this.bem}__date-panel`,
+        let props : any = {
+            focus: index === data.index
         };
 
-        props = scope.passProps(props, [
-            'modelValue'
+        props.onClick = () => {
+            scope.set('index', index);
+            scope.update('modelValue', value.value);
+        };
+
+        props.active = Arr.has(...[
+            data.model, value.value
         ]);
 
-        props['onUpdate:modelValue'] = (value : any) => {
-            scope.update('modelValue', value);
-        };
+        if ( props.active ) {
+            props.icon = Styler.icon('check');
+        }
 
-        return this.comp('n-datepicker-panel', props);
-    }
-
-    timepicker() : any
-    {
-        const { scope, data } = this.scope;
-
-        let props = {
-            ref: scope.ref('timepicker'),
-            class: `${this.bem}__time-panel`,
-        };
-
-        props = scope.passProps(props, [
-            'modelValue'
+        return this.comp('n-popover-option', props, () => [
+            NDateHelper.getDurationString(this.scope, value.value)
         ]);
-
-        props['onUpdate:modelValue'] = (value : any) => {
-            scope.update('modelValue', value);
-        };
-
-        return this.comp('n-timepicker-panel', props);
     }
 
 }

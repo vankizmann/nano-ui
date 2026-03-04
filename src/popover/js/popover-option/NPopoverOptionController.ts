@@ -48,7 +48,7 @@ export class NPopoverOptionController extends ProtoController
         const popover = this.ref('popover');
 
         if ( popover && this.get('clickClose') ) {
-            popover.ncx.superClose(true);
+            popover.ncx.superClose();
         }
 
         this.emit('click', e);
@@ -59,7 +59,7 @@ export class NPopoverOptionController extends ProtoController
         const popover = this.ref('popover');
 
         if ( popover && this.get('clickClose') ) {
-            popover.ncx.superClose(true);
+            popover.ncx.superClose();
         }
 
         this.emit('dblclick', e);

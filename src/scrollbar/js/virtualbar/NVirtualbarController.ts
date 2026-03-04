@@ -170,7 +170,7 @@ export class NVirtualbarController extends ProtoController
 
         client -= this.data.itemHeight;
 
-        if ( target > scroll && target < scroll + client ) {
+        if ( target > scroll && target <= scroll + client ) {
             return;
         }
 

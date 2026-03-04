@@ -58,9 +58,13 @@
     margin: -6px 20px 2px;
     padding: 4px 12px;
     border-radius: 500px;
+    transition: opacity 0.1s, transform 0.2s;
 }
 
-.n-drag-counter[class*="n-type-"] {
+.n-drag-counter.n-ready {
     opacity: 1;
-    transition: opacity 0.1s 0.1s, transform 0.1s;
+}
+
+.n-drag-counter:not(.n-ready) {
+    transition: opacity 0s, transform 0s !important;
 }

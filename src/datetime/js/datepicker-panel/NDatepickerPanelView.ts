@@ -114,7 +114,7 @@ export class NDatepickerPanelView extends ProtoView
         let locateProps : any = {
             glass: true,
             square: true,
-            icon: Styler.icon('locate')
+            icon: Styler.icon('revert')
         };
 
         locateProps.onPointerdown = () => {

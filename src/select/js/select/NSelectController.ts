@@ -40,8 +40,7 @@ export class NSelectController extends NPopoverPanelController
         super.setup();
 
         this
-            .cloneProp('modelValue')
-            .cloneProp('clearValue');
+            .cloneProp('modelValue');
 
         this
             .makeRef('input')
@@ -50,7 +49,6 @@ export class NSelectController extends NPopoverPanelController
         this
             .makeData('search', '')
             .makeData('index', 0);
-
 
         this.compData('prepared', () => {
             return Helpers.Option.getFlat(this);

@@ -27,7 +27,7 @@ export const NDatepickerPanelProps = {
      * @type {PropType<any>}
      */
     clearArrive: {
-        type: [], default: null
+        default: null
     },
 
     /**
@@ -41,7 +41,7 @@ export const NDatepickerPanelProps = {
      * @type {PropType<any>}
      */
     clearDepart: {
-        type: [], default: null
+        default: null
     },
 
     /**
@@ -69,14 +69,14 @@ export const NDatepickerPanelProps = {
      * @type {PropType<any>}
      */
     minDate: {
-        type: [], default: null
+        default: null
     },
 
     /**
      * @type {PropType<any>}
      */
     maxDate: {
-        type: [], default: null
+        default: null
     },
 
 };

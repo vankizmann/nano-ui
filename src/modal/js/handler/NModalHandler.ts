@@ -69,8 +69,6 @@ export class NModalHandler
             throw new Error('Modal not found with id: ' + Mix.str(uid));
         }
 
-        console.log('remove modal', uid, modal)
-
         if ( modal && modal.destroy ) {
             modal.destroy();
         }

@@ -1,6 +1,30 @@
 import { PropType, defineComponent } from "vue";
 import { Props } from "../../../root/index.ts";
-import { NDurationpickerController } from "./NDurationpickerController.ts";
+import NDurationpickerController from "./NDurationpickerController.ts";
+
+export const NDurationpickerOptions = [
+    60 * 5,
+    60 * 10,
+    60 * 15,
+    60 * 30,
+    60 * 45,
+    60 * 60,
+    60 * 90,
+    60 * 120,
+    60 * 150,
+    60 * 60 * 3,
+    60 * 60 * 4,
+    60 * 60 * 5,
+    60 * 60 * 6,
+    60 * 60 * 12,
+    60 * 60 * 24,
+    60 * 60 * 24 * 2,
+    60 * 60 * 24 * 3,
+    60 * 60 * 24 * 4,
+    60 * 60 * 24 * 5,
+    60 * 60 * 24 * 6,
+    60 * 60 * 24 * 7,
+];
 
 export const NDurationpickerProps = {
 
@@ -9,34 +33,35 @@ export const NDurationpickerProps = {
     ...Props.Disabled,
     ...Props.Clearable,
     ...Props.ClearValue,
+    ...Props.EmptyText,
     ...Props.PositionBottomStart,
 
     /**
      * @type {PropType<any>}
      */
     modelValue: {
-        type: [], default: null
+        default: null
     },
 
     /**
      * @type {PropType<array|object>}
      */
     options: {
-        type: [Array, Object], default: () => []
+        type: [Array, Object], default: () => NDurationpickerOptions
     },
 
     /**
      * @type {PropType<any>}
      */
     minDuration: {
-        type: [], default: null
+        default: null
     },
 
     /**
      * @type {PropType<any>}
      */
     maxDuration: {
-        type: [], default: null
+        default: null
     },
 
     /**
@@ -63,43 +88,29 @@ export const NDurationpickerProps = {
     /**
      * @type {PropType<string>}
      */
-    years: {
-        type: [String], default: ':years Year|:years Years'
-    },
-
-    /**
-     * @type {PropType<string>}
-     */
-    months: {
-        type: [String], default: ':months Month|:months Months'
-    },
-
-    /**
-     * @type {PropType<string>}
-     */
-    days: {
-        type: [String], default: ':days Day|:days Days'
+    dates: {
+        type: [String], default: ':count Day|:count Days'
     },
 
     /**
      * @type {PropType<string>}
      */
     hours: {
-        type: [String], default: ':hours Hour|:hours Hours'
+        type: [String], default: ':count Hour|:count Hours'
     },
 
     /**
      * @type {PropType<string>}
      */
     minutes: {
-        type: [String], default: ':minutes Minute|:minutes Minutes'
+        type: [String], default: ':count Minute|:count Minutes'
     },
 
     /**
      * @type {PropType<string>}
      */
     seconds: {
-        type: [String], default: ':seconds Second|:seconds Seconds'
+        type: [String], default: ':count Second|:count Seconds'
     },
 
 };

@@ -20,6 +20,16 @@ export class NDurationpickerData extends ProtoExtend([NPopoverPanelData, Positio
         return this.scope.get('input');
     }
 
+    get index() : number
+    {
+        return this.scope.get('index');
+    }
+
+    get options() : string
+    {
+        return this.scope.get('options');
+    }
+
     get placeholder() : string
     {
         return this.scope.get('placeholder');
@@ -37,7 +47,11 @@ export class NDurationpickerData extends ProtoExtend([NPopoverPanelData, Positio
 
 }
 
-export interface NDurationpickerData extends NPopoverPanelData, PositionData, TextData {
+export interface NDurationpickerData extends NPopoverPanelData,
+    PositionData,
+    TextData
+{
+    //
 }
 
 export default NDurationpickerData;

@@ -1,5 +1,5 @@
 import { h } from "vue";
-import { ProtoView } from "../../../root/index.ts";
+import { ProtoView, Styler } from "../../../root/index.ts";
 import { NDraglistController } from "./NDraglistController.ts";
 import { Arr, Obj } from "@kizmann/pico-js";
 
@@ -28,7 +28,7 @@ export class NDraglistView extends ProtoView
             ref: scope.ref('virtualbar'),
             class: data.classList,
             items: data.visibles,
-            prevent: 'keydown',
+            prevent: 'keydown:[38,40]',
             rawMode: true,
             dropzone: scope.uid,
         };
@@ -39,7 +39,7 @@ export class NDraglistView extends ProtoView
             'itemOffset',
         ];
 
-        Arr.each(passed, (key) => {
+        Arr.each(passed, (key : string) => {
             props[key] = scope.props[key];
         });
 
@@ -57,12 +57,6 @@ export class NDraglistView extends ProtoView
         let props = {
             class: ['n-draglist-head']
         };
-
-        const state = this.scope.selectState();
-
-        if ( state ) {
-            Arr.append(props.class, 'n-selected');
-        }
 
         return h('div', props, [
             this.header_handle(),
@@ -109,24 +103,32 @@ export class NDraglistView extends ProtoView
             return null;
         }
 
-        let parent = {
-            class: ['n-draglist-item__select'],
-        };
-
-        let props : any = {
+        let props : any= {
             class: ['n-draglist-item__checkbox']
-        };
+        }
 
         props.onClick = (e : any) => {
             this.scope.selectAll();
         };
 
-        let [icon, state] = [
-            'fa fa-check', this.scope.selectState()
-        ];
+        let parent = {
+            class: ['n-draglist-item__select'],
+        };
+
+        const state = this.scope.selectState();
+
+        if ( state ) {
+            Arr.append(parent.class, 'n-selected');
+        }
+
+        if ( ! data.items.length ) {
+            Arr.append(parent.class, 'n-disabled');
+        }
+
+        let icon = Styler.icon('check');
 
         if ( state === 1 ) {
-            icon = 'fa fa-minus';
+            icon = Styler.icon('minus');
         }
 
         return h('div', parent, [
@@ -152,10 +154,6 @@ export class NDraglistView extends ProtoView
             Arr.append(props.class, 'n-children');
         }
 
-        if ( !scope.nodeAllowSelect(value) ) {
-            Arr.append(props.class, 'n-disabled');
-        }
-
         const uid = Obj.get(data.current, data.uniqueProp);
 
         if ( uid === value.uid ) {
@@ -164,10 +162,6 @@ export class NDraglistView extends ProtoView
 
         if ( Arr.has(data.expanded, value.uid) ) {
             Arr.append(props.class, 'n-expanded');
-        }
-
-        if ( Arr.has(data.selected, value.uid) ) {
-            Arr.append(props.class, 'n-selected');
         }
 
         Arr.append(props.class, this.iem);
@@ -270,18 +264,26 @@ export class NDraglistView extends ProtoView
 
     node_select(value : any)
     {
-        const { data } = this.scope;
+        const { scope, data } = this.scope;
 
         if ( !data.renderSelect ) {
             return null;
         }
 
-        const parent = {
-            class: `${this.iem}__select`
+        const parent : any = {
+            class: [`${this.iem}__select`]
         };
 
+        if ( !scope.nodeAllowSelect(value) ) {
+            Arr.append(parent.class, 'n-disabled');
+        }
+
+        if ( Arr.has(data.selected, value.uid) ) {
+            Arr.append(parent.class, 'n-selected');
+        }
+
         const props : any = {
-            class: `${this.iem}__checkbox`
+            class: [`${this.iem}__checkbox`]
         };
 
         props.onClick = () => {

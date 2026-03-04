@@ -15,21 +15,21 @@ export const NDatetimepickerProps = {
      * @type {PropType<any>}
      */
     modelValue: {
-        type: [], default: null
+        default: null
     },
 
     /**
      * @type {PropType<any>}
      */
     minDate: {
-        type: [], default: null
+        default: null
     },
 
     /**
      * @type {PropType<any>}
      */
     maxDate: {
-        type: [], default: null
+        default: null
     },
 
     /**

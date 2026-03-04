@@ -80,7 +80,12 @@ export class NDatetimepickerView extends NPopoverPanelView
         };
 
         props = scope.passProps(props, [
-            'modelValue'
+            'modelValue',
+            'clearValue',
+            'panels',
+            'format',
+            'minDate',
+            'maxDate',
         ]);
 
         props['onUpdate:modelValue'] = (value : any) => {
@@ -100,7 +105,9 @@ export class NDatetimepickerView extends NPopoverPanelView
         };
 
         props = scope.passProps(props, [
-            'modelValue'
+            'modelValue',
+            'clearValue',
+            'format',
         ]);
 
         props['onUpdate:modelValue'] = (value : any) => {

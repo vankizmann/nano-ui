@@ -1,4 +1,4 @@
-import { Arr, Dom } from "@kizmann/pico-js";
+import { Arr, Dom, Run } from "@kizmann/pico-js";
 
 export class NDragCounter
 {
@@ -11,6 +11,18 @@ export class NDragCounter
      * @type {Dom}
      */
     static ghost : Dom;
+
+    /**
+     * @type {boolean}
+     */
+    static active : boolean;
+
+    /**
+     * @type {number[]}
+     */
+    static translate : number[] = [
+        0, 0
+    ];
 
     static init()
     {
@@ -40,6 +52,8 @@ export class NDragCounter
 
     static remove()
     {
+        this.active = false;
+
         let classList = [
             'n-drag-counter',
         ];
@@ -55,9 +69,17 @@ export class NDragCounter
             return this.remove();
         }
 
+        if ( !this.active ) {
+            Run.frame(() => this.active = true);
+        }
+
         let classList = [
             'n-drag-counter',
         ];
+
+        if ( this.active ) {
+            Arr.append(classList, 'n-ready');
+        }
 
         if ( options.mode ) {
             Arr.append(classList, 'n-mode-' + options.mode);
@@ -76,9 +98,15 @@ export class NDragCounter
             translate,
         };
 
-        this.el
-            .attr('class', classList)
-            .style(style, false);
+        if ( ! this.active ) {
+            this.el.style(style, false);
+        }
+
+        if ( ! Arr.matches(this.translate, translate) ) {
+            Run.frame(() => this.el.style(style, false));
+        }
+
+        this.el.attr('class', classList);
 
         return this;
     }

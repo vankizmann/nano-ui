@@ -165,12 +165,12 @@ export class NTableController extends GroupController
 
     toggleSelect()
     {
-        return this.ref('draglist').value._.ncx.selectAll();
+        return this.ncx('draglist').selectAll();
     }
 
     getTotalSelect()
     {
-        return this.ref('draglist').value._.ncx.selectState();
+        return this.ncx('draglist').selectState();
     }
 
     applyColumnFilter()

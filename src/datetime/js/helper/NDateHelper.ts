@@ -1,4 +1,4 @@
-import { Arr, Mix, Now, Obj } from "@kizmann/pico-js";
+import { Arr, Locale, Mix, Now, Obj } from "@kizmann/pico-js";
 
 export class NDateHelper
 {
@@ -64,55 +64,74 @@ export class NDateHelper
         return dates ?? [];
     }
 
-    static getDurationFromString(scope : any, key : string = 'days') : number
+    static getDurationData(scope : any, value : number = null)
     {
-        const { data } = scope.data;
-
-        if ( data[key] == null ) {
-            return 0;
-        }
-
-        const pattern = data[key]
-            .replaceAll(':count', '([0-9.,]+)')
-            .replaceAll(' ', '\\s*');
-
-        const regex = new RegExp(pattern, 'i');
-
-        if ( !regex.test(data.model) ) {
-            return 0;
-        }
-
-        return Mix.num(data.model.match(regex)[1]);
-    }
-
-    static humanDuration(scope : any, value : number = null)
-    {
-        console.log(scope, scope.data, scope.data.model)
-        const { data } = scope.data;
+        const { model } = scope.data;
 
         if ( value == null ) {
-            value = data.model;
+            value = model;
         }
 
         if ( value < 0 ) {
             value = value * -1;
         }
 
-        const values = {
-            seconds: value,
-            minutes: 60,
-            hours: 24,
-            days: 24,
-        };
-
-        let keys : string[] = Mix.keys(values);
-
-        for ( let i = 0; keys.length < i; i++ ) {
-            values[keys[i]] = Math.floor(values[keys[i - 1]] - values[keys[i]]);
+        if ( value == 0 || value == null ) {
+            return null;
         }
 
-        console.log(values);
-        return null;
+        return Now.make().safeDuration(value);
+    }
+
+    static getDurationString(scope : any, value : number = null) : string
+    {
+        const result = this.getDurationData(scope, value);
+
+        if ( !result ) {
+            return null;
+        }
+
+        let texts = [];
+
+        Arr.each(result, (v : number, k : string) => {
+            if ( v !== 0 ) texts.push(Locale.choice(scope.get(k), v));
+        });
+
+       return texts.join(' ');
+    }
+
+    static getDurationMatch(scope : any, value: string, key : string = 'days') : number
+    {
+        const pattern = scope.get(key, '')
+            .replace(/\s+/g, '\\s*')
+            .replace(/:count/g, '([0-9]+)');
+
+        const regex = new RegExp(pattern, 'i');
+
+        if ( !regex.test(value) ) {
+            return 0;
+        }
+
+        return Mix.num(value.match(regex)[1]);
+    }
+
+    static getDurationNumber(scope : any, value : string = null) : number
+    {
+        if ( value == null ) {
+            return 0;
+        }
+
+        let keys = [
+            'dates', 'hours', 'minutes', 'seconds'
+        ];
+
+        const date = Now.make(), backup = date.clone();
+
+        Arr.each(keys, (k : string) => {
+            date.add(this.getDurationMatch(scope, value, k), k);
+        });
+
+        return date.diffrence(backup);
     }
 
 }

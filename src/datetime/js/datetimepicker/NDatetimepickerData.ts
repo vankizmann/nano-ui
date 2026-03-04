@@ -52,7 +52,10 @@ export class NDatetimepickerData extends ProtoExtend([NPopoverPanelData, Positio
 
 }
 
-export interface NDatetimepickerData extends NPopoverPanelData, PositionData, TextData {
+export interface NDatetimepickerData extends NPopoverPanelData,
+    PositionData,
+    TextData {
+    //
 }
 
 export default NDatetimepickerData;

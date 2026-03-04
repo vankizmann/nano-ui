@@ -27,7 +27,7 @@ export class NCheckboxControllerGlobal extends NCheckboxController
 
     superToggle()
     {
-        this.ref('group')?.ncx.superGlobal();
+        this.ncx('group').superGlobal();
     }
 
 }

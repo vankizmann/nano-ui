@@ -11,7 +11,12 @@ export class NScrollbarElement
     /**
      * @type {ResizeObserver}
      */
-    observer : ResizeObserver;
+    resize : ResizeObserver;
+
+    /**
+     * @type {MutationObserver}
+     */
+    mutate : MutationObserver;
 
     /**
      * @type {Dom}
@@ -92,13 +97,16 @@ export class NScrollbarElement
 
     destroy()
     {
+        this.resize.disconnect();
+        this.resize = null;
+        this.mutate.disconnect();
+        this.mutate = null;
         this.cl.off('scroll');
         this.sbar.el.remove();
         this.hbar.off('mousedown');
         this.hbar.el.remove();
         this.vbar.off('mousedown');
         this.vbar.el.remove();
-        this.observer.disconnect();
     }
 
     makePseudo()
@@ -169,6 +177,12 @@ export class NScrollbarElement
         const rect = Obj.only(this.wl.rect(), [
             'width', 'height',
         ]);
+
+        rect.height += Dom.num(this.wl.computed('margin-top'));
+        rect.height += Dom.num(this.wl.computed('margin-bottom'));
+
+        rect.width += Dom.num(this.wl.computed('margin-left'));
+        rect.width += Dom.num(this.wl.computed('margin-right'));
 
         this.el.remClass('is-paused');
 
@@ -325,11 +339,22 @@ export class NScrollbarElement
     observeBox()
     {
         // @ts-ignore
-        this.observer = new ResizeObserver(Run.debounce(() => {
+        this.resize = new ResizeObserver(Run.debounce(() => {
             Run.async(() => this.detectRect());
         }, 50));
 
-        this.observer.observe(this.wl.el);
+        this.resize.observe(this.wl.el, {
+            box: 'border-box'
+        });
+
+        // @ts-ignore
+        this.mutate = new MutationObserver(() => {
+            this.detectRect();
+        });
+
+        this.mutate.observe(this.el.el, {
+            attributeFilter: ['style']
+        });
     }
 
     onMousedown(e : any, key : string, el : Dom)
