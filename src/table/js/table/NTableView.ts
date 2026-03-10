@@ -16,7 +16,7 @@ export class NTableView extends ProtoView
      */
     bem : string = 'n-table';
 
-    resolve(type : string, scope : string = 'NTableCells')
+    resolve(type : string, scope : string = 'NTableCells') : any
     {
         if ( globalThis[scope][type] ) {
             return globalThis[scope][type];
@@ -25,7 +25,7 @@ export class NTableView extends ProtoView
         return globalThis[scope]['string'];
     }
 
-    default()
+    default() : any
     {
         let { scope, data } = this.scope;
 
@@ -40,7 +40,7 @@ export class NTableView extends ProtoView
         ]);
     }
 
-    header()
+    header() : any
     {
         let props = {
             name: 'header',
@@ -60,7 +60,7 @@ export class NTableView extends ProtoView
         ]);
     }
 
-    draghead()
+    draghead() : any
     {
         const draglist = this.scope.ref('draglist');
 
@@ -70,7 +70,7 @@ export class NTableView extends ProtoView
         return draglist.value._.ncx.view.header();
     }
 
-    context()
+    context() : any
     {
         const { scope, data } = this.scope;
 
@@ -109,7 +109,7 @@ export class NTableView extends ProtoView
         ]);
     }
 
-    column(column : any, index : number)
+    column(column : any, index : number) : any
     {
         const { scope, data } = this.scope;
 
@@ -174,7 +174,7 @@ export class NTableView extends ProtoView
         ]);
     }
 
-    sort(column : any)
+    sort(column : any) : any
     {
         if ( !column.data.sort ) {
             return null;
@@ -189,7 +189,7 @@ export class NTableView extends ProtoView
         ]);
     }
 
-    label(column : any)
+    label(column : any) : any
     {
         const props = {
             class: [`${this.bem}-column__label`],
@@ -200,7 +200,7 @@ export class NTableView extends ProtoView
         ]);
     }
 
-    filter(column : any)
+    filter(column : any) : any
     {
         if ( !column.data.filter ) {
             return null;
@@ -221,7 +221,7 @@ export class NTableView extends ProtoView
         return [angle, this.popover(column)];
     }
 
-    popover(column : any)
+    popover(column : any) : any
     {
         const { scope, data } = this.scope;
 
@@ -286,7 +286,7 @@ export class NTableView extends ProtoView
         return this.comp('n-popover', props, slots);
     }
 
-    body()
+    body() : any
     {
         let { scope, data } = this.scope;
 
@@ -330,7 +330,7 @@ export class NTableView extends ProtoView
         });
     }
 
-    rows(node : any)
+    rows(node : any) : any
     {
         const { scope, data } = this.scope;
 
@@ -343,7 +343,7 @@ export class NTableView extends ProtoView
         });
     }
 
-    cell(node : any, column : any, index : number)
+    cell(node : any, column : any, index : number) : any
     {
         const [{ scope }, { data }] = [
             this.scope, column.unpack()
@@ -376,7 +376,7 @@ export class NTableView extends ProtoView
         const input = Obj.get(node.item, data.prop);
 
         const cell = {
-            props, input, node, column, table: scope,
+            props, input, node, column, table: scope, comp: this.comp,
         };
 
         return this.resolve(data.type)({

@@ -31,4 +31,9 @@ export class NEmptyIconData extends ProtoData
         return this.scope.get('inline');
     }
 
+    get emptyText() : string
+    {
+        return this.scope.get('emptyText');
+    }
+
 }

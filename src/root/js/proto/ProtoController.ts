@@ -206,6 +206,15 @@ export class ProtoController
         return this.refs[key]?.value?._?.ncx;
     }
 
+    rel(key : string)
+    {
+        if ( this.refs[key]?.value?.$el ) {
+            return this.refs[key].value.$el;
+        }
+
+        return this.refs[key]?.value;
+    }
+
     dom(key : string)
     {
         if ( this.refs[key]?.value?.$el ) {

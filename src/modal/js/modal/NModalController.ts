@@ -44,6 +44,8 @@ export class NModalController extends ProtoController
     {
         super.setup();
 
+        this.makeUID();
+
         this.cloneProp('modelValue');
 
         this
@@ -58,8 +60,6 @@ export class NModalController extends ProtoController
     onMounted()
     {
         const { el, data } = this;
-
-        this.makeUID();
 
         this.modal = NModalHandler.append(el, {
             uid: this.uid,

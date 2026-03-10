@@ -1,7 +1,11 @@
-import { h } from "vue";
+import { h, withMemo } from "vue";
 import { ProtoView } from "../../../root/index.ts";
 import { NVirtualbarController } from "./NVirtualbarController.ts";
 import { Arr } from "@kizmann/pico-js";
+
+const VirtualRow = () => {
+
+};
 
 export class NVirtualbarView extends ProtoView
 {
@@ -19,6 +23,8 @@ export class NVirtualbarView extends ProtoView
      * @type {string}
      */
     vem : string = 'n-virtualscroller';
+
+    cache = new Map();
 
     default()
     {
@@ -111,7 +117,7 @@ export class NVirtualbarView extends ProtoView
 
     list()
     {
-        const [{ scope, data }, { start, end }] = [
+        const [{ context, data }, { start, end }] = [
             this.scope, this.scope.data.state
         ];
 
@@ -121,13 +127,57 @@ export class NVirtualbarView extends ProtoView
 
         let fn = () => null;
 
-        if ( scope.context.slots.default ) {
-            fn = scope.context.slots.default;
+        if ( context.slots.default ) {
+            fn = context.slots.default;
         }
 
-        return Arr.each(items, (value : any, index : number) => {
+        const result = Arr.each(items, (value : any, index : number) => {
             return this.node({ value, index: index + start }, fn);
         });
+
+        return [
+            this.first(), ...result, this.last()
+        ];
+    }
+
+    first() : any
+    {
+        const { context, data } = this.scope;
+
+        let fn = () => null;
+
+        if ( context.slots.default ) {
+            fn = context.slots.default;
+        }
+
+        if ( data.state.start === 0 ) {
+            return null;
+        }
+
+        return this.node({
+            value: Arr.first(data.items), index: 0
+        }, fn);
+    }
+
+    last() : any
+    {
+        const { context, data } = this.scope;
+
+        let fn = () => null;
+
+        if ( context.slots.default ) {
+            fn = context.slots.default;
+        }
+
+        const len = data.items.length;
+
+        if ( data.state.end === len ) {
+            return null;
+        }
+
+        return this.node({
+            value: Arr.last(data.items), index: len
+        }, fn);
     }
 
     node(item : any, fn : Function)
@@ -135,18 +185,19 @@ export class NVirtualbarView extends ProtoView
         const { data } = this.scope;
 
         let props : any = {
+            key: this.scope.uid + item.index,
             class: [`${this.vem}__item`]
         };
 
         const height = data.itemHeight;
 
         props.style = {
-            top: `${item.index * height}px`,
+           top: `${item.index * height}px`,
         };
 
-        if ( data.rawMode ) {
-            return fn({ ...item, props });
-        }
+        // if ( data.rawMode ) {
+        //     return fn({ ...item, props });
+        // }
 
         return h('div', props, [fn(item)]);
     }

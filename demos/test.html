@@ -80,7 +80,7 @@
     </style>
 
 </head>
-<body class="n-demo n-size-md n-type-secondary n-theme-light">
+<body class="n-demo n-size-md n-type-secondary n-theme-dark">
 
 <div id="app" class="nano-theme-preview">
     <div class="app-container">
@@ -436,8 +436,8 @@
 
             data.virtualData = Object.freeze(itemGenerator(10000));
 
-            data.virtualTree = pi.Arr.each(itemGenerator(200), function (item) {
-                return pi.Obj.assign(item, { children: itemGenerator(10) });
+            data.virtualTree = pi.Arr.each(itemGenerator(2000), function (item) {
+                return pi.Obj.assign(item, { children: itemGenerator(4) });
             });
 
 

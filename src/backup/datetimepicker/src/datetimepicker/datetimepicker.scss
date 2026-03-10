@@ -57,14 +57,23 @@
     cursor: not-allowed;
 }
 
+.n-datetimepicker__icon {
+    margin-right: size('base-pad', 'calc($ * -1)');
+}
+
+.n-datetimepicker__icon,
 .n-datetimepicker__clear,
 .n-datetimepicker__angle {
-    order: 100;
     flex: 0 0 auto;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+
+.n-datetimepicker__clear,
+.n-datetimepicker__angle {
+    order: 100;
 }
 
 .n-datetimepicker__clear {
@@ -141,6 +150,7 @@
     padding: 0 size('base-pad');
 }
 
+.n-datetimepicker__icon,
 .n-datetimepicker__clear,
 .n-datetimepicker__angle {
     width: size('base-hgt');

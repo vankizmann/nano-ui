@@ -54,6 +54,13 @@ export const Draglist = {
     /**
      * @type {PropType<boolean>}
      */
+    allowCurrent: {
+        type: [Boolean], default: true
+    },
+
+    /**
+     * @type {PropType<boolean>}
+     */
     renderHandle: {
         type: [Boolean], default: false
     },

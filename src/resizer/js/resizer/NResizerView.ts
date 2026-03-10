@@ -59,8 +59,8 @@ export class NResizerView extends ProtoView
             name: 'handle', ref: scope.ref('handle'),
         };
 
-        props.onPointerdown = (e) => {
-            scope.onMousedown(e);
+        props.onPointerdown = (e : any) => {
+            scope.onPointerdown(e);
         };
 
         return this.div(props);

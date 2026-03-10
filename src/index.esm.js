@@ -4,10 +4,7 @@ const NanoImports = [
     // Alert, done
     // Notification, done
     // Empty, done
-    // --- Config,
     // Scrollbar, done
-    // Virtualscroller, done
-    // --- Draggable,
     // Loader, done
     // Resizer, done
     // Popover, done
@@ -19,7 +16,6 @@ const NanoImports = [
     // Select, done
     // Checkbox, done
     // Radio, done
-    // --- Slider,
     // Switch, done
     // Confirm, done
     // Cascader, done
@@ -28,18 +24,23 @@ const NanoImports = [
     // Datetimepicker, done
     // Durationpicker, done
     // Transfer, done
-    // --- Form,
     // Tabs, done
     // Tags, done
     // Collapse, done
     // Table, done
-    // --- Paginator,
-    // --- Info,
-    // --- Preview,
-    // --- Map,
-    // --- File,
-    // --- Rating,
+    // Paginator, done
+    // Rating, done
     // Drawer, done
+    // Preview, done
+    // Slider, done
+    // --- Virtualscroller, partial grid missing
+    // --- Draggable, partial grid missing
+    // --- File,
+    // --- Password,
+    // --- Info,
+    // --- Form,
+    // --- Config,
+    // --- Map,
     // --- Chart,
 ];
 

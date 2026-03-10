@@ -150,7 +150,6 @@ export class NDraglistController extends ProtoController
     {
         NDragHandler.remove(this.uid);
         Pointer.unbind(this.uid);
-        console.log('unmounted', this.uid);
     }
 
     getValue(item : any, fallback : any = null)
@@ -237,11 +236,21 @@ export class NDraglistController extends ProtoController
             return this.extractValues(merge, item, index, ...args);
         }, []);
 
+        Arr.each(items, (item : any, index: number) => {
+            item.total = index;
+        });
+
         return items;
     }
 
-    extractValues(merge : any, item : any, index : any, depth : number = 0, path : string[] = ['items'], prev : any[] = [])
-    {
+    extractValues(
+        merge : any,
+        item : any,
+        index : any,
+        depth : number = 0,
+        path : string[] = ['items'],
+        prev : any[] = []
+    ) {
         const { data } = this;
 
         const uid = Obj.get(item, ...[
@@ -648,6 +657,21 @@ export class NDraglistController extends ProtoController
         });
     }
 
+    setTotalCurrent(total: number)
+    {
+        const { data } = this;
+
+        const index = Arr.findIndex(data.visibles, (node : any) => {
+            return node.total === total;
+        });
+
+        this.ncx('virtualbar')?.scrollTo(index);
+
+        this.update('current', ...[
+            this.getItem(data.visibles[index])
+        ]);
+    }
+
     setPrevCurrent()
     {
         const { data } = this;
@@ -693,7 +717,7 @@ export class NDraglistController extends ProtoController
         this.update('selected', ids);
     }
 
-    selectState()
+    selectState(): number
     {
         const { items, selected } = this.data;
 
@@ -707,6 +731,12 @@ export class NDraglistController extends ProtoController
 
         return 1;
     }
+
+    scrollToIndex(index : number)
+    {
+        this.ncx('virtualbar')?.scrollTo(index);
+    }
+
 }
 
 export default NDraglistController;

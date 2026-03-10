@@ -58,14 +58,23 @@
     cursor: not-allowed;
 }
 
+.n-timepicker__icon {
+    margin-right: size('base-pad', 'calc($ * -1)');
+}
+
+.n-timepicker__icon,
 .n-timepicker__clear,
 .n-timepicker__angle {
-    order: 100;
     flex: 0 0 auto;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+
+.n-timepicker__clear,
+.n-timepicker__angle {
+    order: 100;
 }
 
 .n-timepicker__clear {
@@ -130,6 +139,7 @@
     padding: 0 size('base-pad');
 }
 
+.n-timepicker__icon,
 .n-timepicker__clear,
 .n-timepicker__angle {
     width: size('base-hgt');

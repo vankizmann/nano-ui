@@ -50,6 +50,8 @@ export class NVirtualbarController extends ProtoController
     {
         super.setup();
 
+        this.makeUID();
+
         this
             .makeRef('el')
             .makeRef('viewport');
@@ -109,10 +111,14 @@ export class NVirtualbarController extends ProtoController
             x: data.itemWidth, y: data.itemHeight
         };
 
-        const target = this.ref('viewport')?.value;
+        const viewport = this.ref('viewport')?.value;
+
+        if ( !viewport ) {
+            return console.warn('Viewport is not ready yet!');
+        }
 
         const [scroll, client] = [
-            target.scrollTop - 400, el.clientHeight + 800
+            viewport.scrollTop - 400, el.clientHeight + 800
         ];
 
         const [start, end] = [

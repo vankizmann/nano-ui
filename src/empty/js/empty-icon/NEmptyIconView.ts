@@ -1,6 +1,7 @@
 import { h } from "vue";
 import { ProtoView } from "../../../root/index.ts";
 import { NEmptyIconController } from "./NEmptyIconController.ts";
+import { Locale, Mix } from "@kizmann/pico-js";
 
 export class NEmptyIconView extends ProtoView
 {
@@ -36,8 +37,20 @@ export class NEmptyIconView extends ProtoView
 
     body() : any
     {
-        return this.div('text', [
-            this.slot('default')
+        const {context, data} = this.scope;
+
+        let slot = null;
+
+        if ( context.slots.default ) {
+            slot = this.slot('default');
+        }
+
+        if ( ! Mix.isEmpty(data.emptyText) ) {
+            slot = Locale.trans(data.emptyText);
+        }
+
+        return !slot ? null : this.div('text', [
+            slot
         ]);
     }
 

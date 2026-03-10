@@ -51,7 +51,9 @@ export class NTableController extends GroupController
         this.makeData('looseWidth', {});
         this.makeData('fixedWidth', {});
 
-        this.makeData('filterMap', this.buildFilters());
+        this.makeData('filterMap', ...[
+            this.buildFilters()
+        ]);
 
         this.watchProp('filter', () => {
             this.set('filterMap', this.buildFilters());

@@ -20,6 +20,8 @@ export class NDraglistView extends ProtoView
      */
     iem : string = 'n-draglist-item';
 
+    cache = [];
+
     default()
     {
         let { scope, data } = this.scope;
@@ -140,10 +142,14 @@ export class NDraglistView extends ProtoView
 
     node({ value, props })
     {
+        if ( ! value ) {
+            return null;
+        }
+
         let { scope, data } = this.scope;
 
         props = {
-            dropitem: value.uid, ...props
+            dropitem: value.uid, class: [],
         };
 
         if ( !data.renderHandle ) {
@@ -156,7 +162,7 @@ export class NDraglistView extends ProtoView
 
         const uid = Obj.get(data.current, data.uniqueProp);
 
-        if ( uid === value.uid ) {
+        if ( data.allowCurrent && uid === value.uid ) {
             Arr.append(props.class, 'n-current');
         }
 
@@ -164,7 +170,7 @@ export class NDraglistView extends ProtoView
             Arr.append(props.class, 'n-expanded');
         }
 
-        Arr.append(props.class, this.iem);
+        Arr.append(props.class, scope.view.iem);
 
         props.onClick = () => {
             data.current = scope.getItem(value);

@@ -19,6 +19,8 @@ import NTransfer from "./transfer/index.ts";
 import NTabs from "./tabs/index.ts";
 import NCollapse from "./collapse/index.ts";
 import NVisuals from "./visuals/index.ts";
+import NPreview from "./preview/index.ts";
+import NSlider from "./slider/index.ts";
 
 const NanoImports = [
     NSignal,
@@ -42,6 +44,8 @@ const NanoImports = [
     NTabs,
     NCollapse,
     NVisuals,
+    NPreview,
+    NSlider,
 ];
 
 export const Icons = {

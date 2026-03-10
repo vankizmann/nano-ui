@@ -1,7 +1,6 @@
 @use "../../../root/helpers" as *;
 
 .n-preview-modal {
-    z-index: 999999997;
     overflow: hidden;
     position: fixed;
     top: 0;
@@ -9,7 +8,6 @@
     bottom: 0;
     left: 0;
     display: flex;
-    padding: size('base-hgt') size('base-hgt', 'calc($ * 2.4)');
 }
 
 .n-preview-modal i {
@@ -39,10 +37,6 @@
     justify-content: center;
 }
 
-.n-preview-modal .n-preview-frame {
-    background: transparent !important;
-}
-
 .n-preview-modal__prev,
 .n-preview-modal__next {
     cursor: pointer;
@@ -66,4 +60,60 @@
 
 .n-preview-modal__next {
     right: size('base-hgt', 'calc($ * 0.5)');
+}
+
+.n-preview-modal__frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100vw;
+    height: 100vh;
+}
+
+//.n-preview-modal.n-multi .n-preview-modal__frame {
+//    left: -100vw;
+//    width: 300vw;
+//}
+
+//.n-preview-modal.n-triple .n-preview-modal__frame {
+//    left: -100vw;
+//    width: 300vw;
+//}
+
+
+.n-preview-modal__slide {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 100vw;
+    height: 100vh;
+    padding: 20px 80px;
+    transform: translateX(0);
+}
+
+.n-preview-modal__slide.n-animate-left,
+.n-preview-modal__slide.n-animate-right {
+    opacity: 0;
+    transition: transform 0.3s, opacity 0.2s;
+}
+
+.n-preview-modal__slide.n-animate-left {
+    transform: translateX(-30vw);
+}
+
+.n-preview-modal__slide.n-animate-right {
+    transform: translateX(30vw);
+}
+
+.n-preview-modal__slide > div {
+    position: relative;
+    flex: 1 1 auto;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    //background: rgba(255, 0, 0, 0.3);
 }

@@ -39,11 +39,11 @@ export class ProtoView
 
     icon(props : any = undefined) : any
     {
-        if ( typeof props !== 'object' ) {
+        if ( ! Mix.isObj(props) ) {
             props = { icon: props };
         }
 
-        if ( Mix.isEmpty(props.icon) ) {
+        if ( !props.icon ) {
             return null;
         }
 
@@ -80,7 +80,7 @@ export class ProtoView
     {
         const { data } = this.scope;
 
-        if ( typeof props !== 'object' ) {
+        if ( ! Mix.isObj(props) ) {
             props = { name: props };
         }
 
@@ -136,14 +136,14 @@ export class ProtoView
 
     empty(options : any = {}) : any
     {
+        const { scope } = this.scope;
+
         const props = {
-            ...options
+            ...options, emptyText: scope.get('emptyText')
         };
 
         return this.div('empty', [
-            this.comp('n-empty-icon', props, () => [
-                this.scope.get('emptyText')
-            ])
+            this.comp('n-empty-icon', props)
         ]);
     }
 

@@ -26,16 +26,20 @@ export class ProtoData extends ProtoExtend([BaseData, IconData])
             view.bem
         ];
 
-        if ( this.size ) {
+        if ( this.theme != null ) {
+            classList.push(`n-theme-${this.theme}`);
+        }
+
+        if ( this.size != null ) {
             classList.push(`n-size-${this.size}`);
         }
 
-        if ( this.type ) {
+        if ( this.type != null ) {
             classList.push(`n-type-${this.type}`);
         }
 
-        if ( this.color ) {
-            classList.push(`n-color-${this.color}`);
+        if ( this.$color != null ) {
+            classList.push(`n-color-${this.$color}`);
         }
 
         if ( this.load ) {
@@ -48,10 +52,6 @@ export class ProtoData extends ProtoExtend([BaseData, IconData])
 
         if ( this.clearable ) {
             classList.push('n-clearable');
-        }
-
-        if ( this.theme ) {
-            classList.push(`n-theme-${this.theme}`);
         }
 
         if ( this.icon && this.iconPosition ) {

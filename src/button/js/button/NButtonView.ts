@@ -49,9 +49,13 @@ export class NButtonView extends ProtoView
 
     body() : any
     {
-        let { scope } = this.scope;
+        let { scope, context} = this.scope;
 
         if ( scope.get('square') ) {
+            return null;
+        }
+
+        if ( ! context.slots.default ) {
             return null;
         }
 

@@ -83,7 +83,7 @@ export class NScrollbarController extends ProtoController
         const viewport = this.ref('viewport')?.value;
 
         if ( !viewport ) {
-            console.warn('Viewport is not ready yet!');
+            return console.warn('Viewport is not ready yet!');
         }
 
         let target = item.offset('top', viewport);

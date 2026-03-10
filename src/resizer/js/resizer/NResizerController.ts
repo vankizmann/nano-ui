@@ -131,7 +131,7 @@ export class NResizerController extends ProtoController
         return target * -1;
     }
 
-    onMousedown(e : any)
+    onPointerdown(e : any)
     {
         const uid = this.uid;
 
@@ -144,11 +144,11 @@ export class NResizerController extends ProtoController
         ];
 
         db.on('pointermove', (e : any) => {
-            this.onMousemove(e);
+            this.onPointermove(e);
         }, { passive: true, uid });
 
         db.once('pointerup', (e : any) => {
-            this.onMouseup(e);
+            this.onPointerup(e);
             db.off('pointermove', { uid });
             el.remClass('n-move');
         });
@@ -156,7 +156,7 @@ export class NResizerController extends ProtoController
         el.addClass('n-move');
     }
 
-    onMousemove(e : any)
+    onPointermove(e : any)
     {
         const offset = this.detectOffset(e);
 
@@ -167,7 +167,7 @@ export class NResizerController extends ProtoController
         this.dom('handle').style(style);
     }
 
-    onMouseup(e : any)
+    onPointerup(e : any)
     {
         this.fireSignal('NResizer', this.data.group);
     }

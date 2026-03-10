@@ -1,4 +1,5 @@
 import { ProtoController } from "../../index.ts";
+import Styler from "../module/Styler.ts";
 
 export class BaseData
 {
@@ -69,6 +70,14 @@ export class BaseData
     get color() : string | number
     {
         return this.scope.get('color');
+    }
+
+    /**
+     * @returns {string|number}
+     */
+    get $color() : string | number
+    {
+        return this.color ? Styler.wheel(this.color) : null;
     }
 
     /**

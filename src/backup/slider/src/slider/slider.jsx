@@ -166,6 +166,7 @@ export default {
             if ( Mix.isNull(value) ) {
                 value = this.fixmax;
             }
+
             if ( ! Mix.isArray(value) ) {
                 value = [this.fixmin, value];
             }

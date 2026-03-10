@@ -1,4 +1,4 @@
-import { Obj } from "@kizmann/pico-js";
+import { Mix, Obj } from "@kizmann/pico-js";
 
 const ICONS_SIGNAL = {
     'default': 'fa fa-circle-check',
@@ -8,10 +8,17 @@ const ICONS_SIGNAL = {
     'danger': 'fa fa-circle-xmark',
 };
 
+const ICONS_PREVIEW = {
+    'default': 'fa fa-magnifying-glass-plus',
+    'video': 'fa fa-play',
+};
+
 const ICONS_DEFAULT = {
     'revert': 'fa fa-clock-rotate-left',
     'prev': 'fa fa-angle-left',
+    'prev-first': 'fa fa-angle-double-left',
     'next': 'fa fa-angle-right',
+    'next-last': 'fa fa-angle-double-right',
     'check': 'fa fa-check',
     'angle-left': 'fa fa-angle-left',
     'angle-right': 'fa fa-angle-right',
@@ -27,8 +34,17 @@ const ICONS_DEFAULT = {
 
 export class Styler
 {
-    static icons = {
+    /**
+     * @type {number}
+     */
+    static limitwheel : number = 20;
+
+    /**
+     * @type {any}
+     */
+    static icons : any = {
         default: ICONS_DEFAULT,
+        preview: ICONS_PREVIEW,
         alert: ICONS_SIGNAL,
         confirm: ICONS_SIGNAL,
         notify: ICONS_SIGNAL,
@@ -81,9 +97,20 @@ export class Styler
         return Obj.get(this.icons, [group, fallback]);
     }
 
-    static wheel(index: number)
+    static wheel(index: number | string) : number
     {
-        // TODO color wheel put in 30 get 12 if limit is 20
+        index = Mix.int(index);
+
+        if ( index >= 0 && index <= this.limitwheel ) {
+            return index;
+        }
+
+        const tank = Math.floor(...[
+            index / this.limitwheel
+        ]);
+
+        // Put in 30 get 12 if limit is 20
+        return index - (tank * this.limitwheel);
     }
 
 }

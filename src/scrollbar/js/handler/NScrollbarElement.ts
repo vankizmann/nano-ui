@@ -1,4 +1,4 @@
-import { Dom, Hash, Obj, Run } from "@kizmann/pico-js";
+import { Arr, Dom, Hash, Obj, Run } from "@kizmann/pico-js";
 import NScrollbarHelper from "./NScrollbarHelper.ts";
 
 export class NScrollbarElement
@@ -52,8 +52,15 @@ export class NScrollbarElement
      * @type {number}
      */
     width : number = -1;
+
+    /**
+     * @type {number}
+     */
     height : number = -1;
 
+    /**
+     * @type {any}
+     */
     buffer : any = {};
 
     options : any = {
@@ -331,9 +338,13 @@ export class NScrollbarElement
             style.translate = [0, offset + port.top + 'px'];
         }
 
-        Run.frame(() => {
-            el.style(style);
-        });
+        const comp = style.translate.join('');
+
+        if ( this.buffer['fx' + key] !== comp ) {
+            Run.frame(() => el.style(style));
+        }
+
+        this.buffer['fx' + key] = comp;
     }
 
     observeBox()
@@ -341,7 +352,7 @@ export class NScrollbarElement
         // @ts-ignore
         this.resize = new ResizeObserver(Run.debounce(() => {
             Run.async(() => this.detectRect());
-        }, 50));
+        }, 30));
 
         this.resize.observe(this.wl.el, {
             box: 'border-box'

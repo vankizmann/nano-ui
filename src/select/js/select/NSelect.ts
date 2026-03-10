@@ -15,10 +15,10 @@ export const NSelectProps = {
     ...Props.OptionsObject,
 
     /**
-     * @type {PropType<string|array>}
+     * @type {PropType<any>}
      */
     modelValue: {
-        type: [String,Array], default: null
+        default: null
     },
 
     /**

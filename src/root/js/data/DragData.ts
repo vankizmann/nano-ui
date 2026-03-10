@@ -122,6 +122,14 @@ export class DragData
     /**
      * @returns {boolean}
      */
+    get allowCurrent() : boolean
+    {
+        return this.scope.get('allowCurrent');
+    }
+
+    /**
+     * @returns {boolean}
+     */
     get renderHandle() : boolean
     {
         return this.scope.get('renderHandle');

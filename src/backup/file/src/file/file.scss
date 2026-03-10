@@ -1,25 +1,25 @@
 @use "../../../root/helpers" as *;
 
-.n-file {
+.n-input-file {
     position: relative;
     display: inline-flex;
     width: 100%;
 }
 
-.n-file > .n-input {
+.n-input-file > .n-input {
     flex: 1 1 auto;
 }
 
-.n-file .n-input input {
+.n-input-file .n-input input {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-.n-file > .n-button {
+.n-input-file > .n-button {
     flex: 0 0 auto;
     margin-left: size('base-pad');
 }
 
-.n-file .n-file__input {
+.n-input-file .n-input-file__input {
     display: none;
 }

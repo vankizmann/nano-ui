@@ -20,6 +20,13 @@ export const NEmptyIconProps = {
         type: [Boolean], default: true
     },
 
+    /**
+     * @type {PropType<string>}
+     */
+    emptyText: {
+        type: [String], default: null
+    },
+
 };
 
 export default defineComponent({
