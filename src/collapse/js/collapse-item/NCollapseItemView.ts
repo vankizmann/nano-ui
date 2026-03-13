@@ -18,11 +18,13 @@ export class NCollapseItemView extends ProtoView
 
     default() : any
     {
-        return null;
+        return this.display();
     }
 
-    display(collapse : NCollapseController) : any
+    display() : any
     {
+        const collapse = this.scope.ncx('collapse');
+
         return [
             this.header(collapse),
             this.content(collapse),

@@ -1,5 +1,5 @@
 import { h } from "vue";
-import { Arr, Mix, Obj } from "@kizmann/pico-js";
+import { Arr, Mix, Obj, Run } from "@kizmann/pico-js";
 import { ProtoView } from "../../../root/index.ts";
 import { NInputController } from "./NInputController.ts";
 
@@ -19,7 +19,7 @@ export class NInputView extends ProtoView
      */
     bem : string = 'n-input';
 
-    default()
+    default() : any
     {
         const { attrs, data } = this.scope;
 
@@ -36,8 +36,16 @@ export class NInputView extends ProtoView
             Arr.prepend(slots, this.button());
         }
 
+        if ( data.labelPosition === 'before' ) {
+            Arr.prepend(slots, this.label());
+        }
+
         if ( data.iconPosition === 'after' ) {
             Arr.append(slots, this.button());
+        }
+
+        if ( data.labelPosition === 'after' ) {
+            Arr.append(slots, this.label());
         }
 
         return h('div', props, [
@@ -45,7 +53,28 @@ export class NInputView extends ProtoView
         ]);
     }
 
-    input()
+    label() : any
+    {
+        let { scope, data } = this.scope;
+
+        if ( Mix.isEmpty(data.label) ) {
+            return null;
+        }
+
+        const props : any = {
+            name: 'label',
+        };
+
+        props.onPointerdown = (e : any) => {
+            Run.frame(() => scope.rel('input')?.focus());
+        };
+
+        return this.div(props, [
+            data.label
+        ]);
+    }
+
+    input() : any
     {
         let { scope, data } = this.scope;
 
@@ -64,7 +93,7 @@ export class NInputView extends ProtoView
             ref: scope.ref('input'),
             value: data.model,
             type: data.native,
-            disabled: data.disabled,
+            disabled: data.superDisabled,
             placeholder: data.placeholder,
         });
 
@@ -82,19 +111,19 @@ export class NInputView extends ProtoView
         };
 
         props.onFocus = (e : any) => {
-            data.focus = 1;
+            scope.set('focus', 1);
             scope.emit('focus', e);
         };
 
         props.onBlur = (e : any) => {
-            data.focus = 0;
+            scope.set('focus', 0);
             scope.emit('blur', e);
         };
 
         return h('input', props);
     }
 
-    button()
+    button() : any
     {
         let { scope, data } = this.scope;
 
@@ -112,7 +141,8 @@ export class NInputView extends ProtoView
             config.class.push('n-has-event');
         }
 
-        config.onClick = (e : any) => {
+        config.onPointerdown = (e : any) => {
+            Run.frame(() => scope.rel('input')?.focus());
             scope.emit('button-click', e);
         };
 

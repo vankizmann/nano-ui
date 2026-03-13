@@ -1,4 +1,4 @@
-import { SetupContext } from "vue";
+import { provide, SetupContext } from "vue";
 import { ProtoController } from "../../../root/index.ts";
 import { NTabsItemView } from "./NTabsItemView.ts";
 import { NTabsItemData } from "./NTabsItemData.ts";
@@ -46,6 +46,8 @@ export class NTabsItemController extends ProtoController
             .cloneProp('lazy')
             .cloneProp('keep');
 
+        provide('NTabsItem', this.instance);
+
         this.injectRef([
             'tabs', 'NTabs'
         ]);
@@ -75,6 +77,11 @@ export class NTabsItemController extends ProtoController
     onUnmounted()
     {
         this.ncx('tabs')?.remove(this);
+    }
+
+    superToggle() : void
+    {
+        this.ncx('tabs')?.superToggle(this.data.name);
     }
 
     isActive() : boolean

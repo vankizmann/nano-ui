@@ -1,4 +1,4 @@
-import { SetupContext } from "vue";
+import { provide, SetupContext } from "vue";
 import { ProtoController } from "../../../root/index.ts";
 import { NCollapseItemView } from "./NCollapseItemView.ts";
 import { NCollapseItemData } from "./NCollapseItemData.ts";
@@ -45,6 +45,8 @@ export class NCollapseItemController extends ProtoController
             .cloneProp('scrollbar')
             .cloneProp('lazy')
             .cloneProp('keep');
+
+        provide('NCollapseItem', this.instance);
 
         this.injectRef([
             'collapse', 'NCollapse'
@@ -105,6 +107,13 @@ export class NCollapseItemController extends ProtoController
         }
 
         return Arr.has(collapse?.data.model, data.name);
+    }
+
+    superToggle()
+    {
+        if ( ! this.isVisible() ) {
+            this.ncx('collapse')?.superToggle(this.data.name);
+        }
     }
 
 }

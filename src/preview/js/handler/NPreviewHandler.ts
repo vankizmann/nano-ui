@@ -39,6 +39,10 @@ export class NPreviewHandler
 
     static init() : NPreviewHandler
     {
+        Pointer.bind(this.uid, 'mouseup', (e : any) => {
+            Run.frame(() => this.backdrop(e));
+        });
+
         Pointer.bind(this.uid, 'keyescape', (e : any) => {
             if ( this.root && e.which === 27 ) this.close();
         });
@@ -49,6 +53,23 @@ export class NPreviewHandler
         });
 
         return this;
+    }
+
+    static backdrop(e : any)
+    {
+        if ( ! this.root ) {
+            return;
+        }
+
+        const tgt = this.frame.is(e.target);
+
+        console.log(tgt, e.target)
+
+        if ( !tgt ) {
+            return;
+        }
+
+        this.close();
     }
 
     static append(config : any)

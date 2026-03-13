@@ -23,7 +23,7 @@ export const NTableFilterString = ({ model, comp, table }) => {
         Obj.set(model, 'value', value);
     };
 
-    const value = h('div', valueProps, [
+    const value = comp('n-form-item', valueProps, () => [
         comp('n-input', valueProps)
     ])
 
@@ -42,7 +42,7 @@ export const NTableFilterString = ({ model, comp, table }) => {
         'new': Locale.trans('Except value'),
     };
 
-    const operator = h('div', operatorProps, [
+    const operator = comp('n-form-item', operatorProps, () => [
         comp('n-select', operatorProps)
     ]);
 

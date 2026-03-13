@@ -1,3 +1,7 @@
+//
+// ^._.^= ∫ Lilli und Pashi, ich liebe euch beiden
+//
+
 import NSignal from "./signal/index.ts";
 import NInput from "./input/index.ts";
 import NButton from "./button/index.ts";
@@ -21,6 +25,9 @@ import NCollapse from "./collapse/index.ts";
 import NVisuals from "./visuals/index.ts";
 import NPreview from "./preview/index.ts";
 import NSlider from "./slider/index.ts";
+import NForm from "./form/index.ts";
+import NConfig from "./config/index.ts";
+import NChart from "./chart/index.ts";
 
 const NanoImports = [
     NSignal,
@@ -46,6 +53,9 @@ const NanoImports = [
     NVisuals,
     NPreview,
     NSlider,
+    NForm,
+    NConfig,
+    NChart,
 ];
 
 export const Icons = {
@@ -133,7 +143,5 @@ export const Nano = {
 if ( !globalThis.nano ) {
     globalThis.nano = Nano;
 }
-
-console.log(globalThis.nano)
 
 export default Nano;

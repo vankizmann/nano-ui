@@ -36,19 +36,9 @@ export class NButtonData extends ProtoData
         return this.scope.get('nativeType');
     }
 
-    set native(value : string)
-    {
-        this.scope.set('nativeType', value);
-    }
-
     get link() : boolean
     {
         return this.scope.get('link');
-    }
-
-    set link(value : boolean)
-    {
-        this.scope.set('link', value);
     }
 
     get square() : boolean
@@ -56,29 +46,14 @@ export class NButtonData extends ProtoData
         return this.scope.get('square');
     }
 
-    set square(value : boolean)
-    {
-        this.scope.set('square', value);
-    }
-
     get round() : boolean
     {
         return this.scope.get('round');
     }
 
-    set round(value : boolean)
-    {
-        this.scope.set('round', value);
-    }
-
     get glass() : boolean
     {
         return this.scope.get('glass');
-    }
-
-    set glass(value : boolean)
-    {
-        this.scope.set('glass', value);
     }
 
 }

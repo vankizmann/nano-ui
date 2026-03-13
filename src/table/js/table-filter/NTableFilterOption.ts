@@ -24,7 +24,7 @@ export const NTableFilterOption = ({ model, comp, column, table }) => {
         return comp('n-checkbox', { value }, () => label);
     });
 
-    const value = h('div', valueProps, [
+    const value = comp('n-form-item', valueProps, [
         comp('n-checkbox-group', valueProps, () => values),
     ]);
 
@@ -41,7 +41,7 @@ export const NTableFilterOption = ({ model, comp, column, table }) => {
         'ni': Locale.trans('Excludes value'),
     };
 
-    const operator = h('div', operatorProps, [
+    const operator = comp('n-form-item', operatorProps, [
         comp('n-select', operatorProps)
     ]);
 

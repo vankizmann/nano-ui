@@ -53,7 +53,7 @@ export class NTextareaView extends ProtoView
             value: data.model,
             type: data.type,
             rows: data.minRows,
-            disabled: data.disabled,
+            disabled: data.superDisabled,
             placeholder: data.placeholder,
         });
 

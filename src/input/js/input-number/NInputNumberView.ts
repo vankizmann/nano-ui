@@ -63,7 +63,7 @@ export class NInputNumberView extends ProtoView
             ref: scope.ref('input'),
             value: value,
             type: data.type,
-            disabled: data.disabled,
+            disabled: data.superDisabled,
             placeholder: data.placeholder,
         });
 

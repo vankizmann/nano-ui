@@ -78,6 +78,6 @@
 }
 
 .n-collapse-item__content:not(.n-scrollbar),
-.n-scrollbar.n-collapse-item__content > .n-scrollbar-content {
+.n-scrollbar.n-collapse-item__content > .n-scrollbar-content > .n-collapse-item__wrap {
     padding: size('base-pad-vertical', 'calc($ * 1.4)') size('base-pad');
 }

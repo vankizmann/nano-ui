@@ -21,10 +21,10 @@ export class NButtonView extends ProtoView
 
         let props : any = {
             class: data.classList,
-            disabled: data.disabled,
+            disabled: data.superDisabled,
         };
 
-        props.onClick = (e : any) => {
+        props.onPointerdown = (e : any) => {
             scope.emit('click', e);
         };
 

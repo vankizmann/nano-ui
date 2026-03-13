@@ -68,3 +68,11 @@
 .n-input.n-focus .n-input__clear {
     display: inline-flex;
 }
+
+.n-input .n-input__label {
+    cursor: default;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 0 size('base-pad');
+}

@@ -3,6 +3,8 @@
 .n-preview-modal {
     // PERFORMANCE backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
+    transform: translateZ(0);
+    will-change: backdrop-filter;
     transition: opacity 0.3s;
 }
 

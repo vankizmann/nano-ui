@@ -26,3 +26,9 @@
 .n-input:not(.n-disabled).n-focus {
     border-color: color('base-color');
 }
+
+.n-input__label {
+    color: color('text', 0.6);
+    background: color('gray-10', 0.5);
+    border-right: 1px solid color('gray-10');
+}

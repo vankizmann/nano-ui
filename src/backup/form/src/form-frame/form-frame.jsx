@@ -182,8 +182,6 @@ export default {
                     .indexOf(search) !== -1;
             });
 
-            console.log('ghh', groups);
-
             Arr.each(groups, (group) => {
                 Dom.find(this.$el).find(`[data-menu-key="${group.key}"]`).addClass('on-search');
             });
@@ -246,8 +244,6 @@ export default {
         if ( item.icon ) {
             iconHtml = (<i class={item.icon} />);
         }
-
-        console.log(item);
 
         let buttonProps = {
             href: '#' + item.name

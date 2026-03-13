@@ -2,11 +2,20 @@
 
 .n-scrollbar {
     position: relative;
-    overflow: hidden;
+    overflow: clip;
+    scrollbar-gutter: stable;
+}
+
+body.n-drag .n-scrollbar {
+    overflow: hidden !important;
 }
 
 .n-scrollbar.is-paused .n-table__wrap {
     display: flex;
+}
+
+.n-scrollbar-spacer {
+    display: inline-block;
 }
 
 .n-scrollbar-content {
@@ -43,13 +52,17 @@
     position: relative;
 }
 
+.n-scrollbar > .n-scrollbar-content > div {
+    display: flow-root;
+}
+
 .n-scrollbar-v,
 .n-scrollbar-h {
     cursor: default;
     position: absolute;
     z-index: 500;
     user-select: none;
-    transition: transform 0.275s;
+    transition: transform 0.200s;
 }
 
 .n-scrollbar-v.is-active,

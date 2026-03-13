@@ -65,7 +65,8 @@ export class NPreviewView extends ProtoView
             props.class, classList,
         ]);
 
-        props.onPointerdown = () => {
+        props.onPointerup = (e) => {
+            e.stopPropagation();
             if ( data.preview ) scope.openPreview();
         };
 

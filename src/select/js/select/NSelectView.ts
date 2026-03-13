@@ -63,7 +63,7 @@ export class NSelectView extends NPopoverPanelView
         let props : any = {
             ref: scope.ref('input'),
             value: data.search,
-            disabled: data.disabled,
+            disabled: data.superDisabled,
             placeholder: Locale.trans(data.placeholder)
         };
 

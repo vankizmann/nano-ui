@@ -21,19 +21,9 @@ export class NInputData extends ProtoData
         return this.scope.get('modelValue');
     }
 
-    set model(value : any)
-    {
-        this.scope.set('modelValue', value);
-    }
-
     get native() : string
     {
         return this.scope.get('nativeType');
-    }
-
-    set native(value : string)
-    {
-        this.scope.set('nativeType', value);
     }
 
     get placeholder() : string
@@ -41,19 +31,19 @@ export class NInputData extends ProtoData
         return this.scope.get('placeholder');
     }
 
-    set placeholder(value : string)
-    {
-        this.scope.set('placeholder', value);
-    }
-
     get focus() : number
     {
         return this.scope.get('focus');
     }
 
-    set focus(value : number)
+    get label() : string
     {
-        this.scope.set('focus', value);
+        return this.scope.get('label');
+    }
+
+    get labelPosition() : string
+    {
+        return this.scope.get('labelPosition');
     }
 
 }

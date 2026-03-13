@@ -103,7 +103,7 @@ export class NTabsItemView extends ProtoView
         const { data } = this.scope;
 
         return this.div('label', [
-            data.label
+            h('span', null, data.label)
         ]);
     }
 

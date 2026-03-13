@@ -142,7 +142,7 @@
                 </template>
             </n-draglist>
 
-            <n-input clear-value="foobar" placeholder="foobar" data-type="fofofo" icon="fa fa-ghost" :clearable="true" @keydown="() => console.log('keydown')" @button-click="() => console.log('wooso')"></n-input>
+            <n-input label="Foobar" clear-value="foobar" placeholder="foobar" data-type="fofofo" icon="fa fa-ghost" :clearable="true" @keydown="() => console.log('keydown')" @button-click="() => console.log('wooso')"></n-input>
 
             <n-checkbox-group :model-value="['a']">
                 <n-checkbox :global="true">global</n-checkbox>
@@ -436,7 +436,7 @@
 
             data.virtualData = Object.freeze(itemGenerator(10000));
 
-            data.virtualTree = pi.Arr.each(itemGenerator(2000), function (item) {
+            data.virtualTree = pi.Arr.each(itemGenerator(300), function (item) {
                 return pi.Obj.assign(item, { children: itemGenerator(4) });
             });
 

@@ -71,6 +71,7 @@ export class NDragHandler
         win.on('dragend', (e : any) => {
             e.preventDefault();
             this.active = 0;
+            Dom.find(document.body).remClass('n-drag');
         });
 
         return this;
@@ -211,6 +212,7 @@ export class NDragHandler
     static dragstart(e : any, config : any = {}, options : any = {})
     {
         this.active = 1;
+        Dom.find(document.body).addClass('n-drag');
 
         config = {
             items: [], ...config

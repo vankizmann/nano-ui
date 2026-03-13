@@ -14,6 +14,7 @@ const ICONS_PREVIEW = {
 };
 
 const ICONS_DEFAULT = {
+    'locate': 'fa fa-location-crosshairs',
     'revert': 'fa fa-clock-rotate-left',
     'prev': 'fa fa-angle-left',
     'prev-first': 'fa fa-angle-double-left',
@@ -37,7 +38,7 @@ export class Styler
     /**
      * @type {number}
      */
-    static limitwheel : number = 20;
+    static limitwheel : number = 19;
 
     /**
      * @type {any}

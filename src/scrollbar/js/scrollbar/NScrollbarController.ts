@@ -72,8 +72,12 @@ export class NScrollbarController extends ProtoController
         this.scrollbar = new NScrollbarElement(el, options);
     }
 
-    scrollTo(selector : any, padding : number = 10)
+    scrollTo(selector : any, options : any = {})
     {
+        options = {
+            padding: 0, ...options
+        };
+
         const item = this.dom('el').find(selector);
 
         if ( !item ) {
@@ -92,7 +96,7 @@ export class NScrollbarController extends ProtoController
             viewport.scrollTop, viewport.clientHeight
         ];
 
-        client -= item.height() + padding;
+        client -= item.height() + options.padding;
 
         if ( target > scroll && target < scroll + client ) {
             return;
@@ -103,11 +107,11 @@ export class NScrollbarController extends ProtoController
         }
 
         Run.frame(() => {
-            viewport.scrollTop = target;
+            viewport.scrollTo({ top: target, ...options });
         });
     }
 
-    scrollCenter(selector : any)
+    scrollCenter(selector : any, options : any = {})
     {
         const item = this.dom('el').find(selector);
 
@@ -138,7 +142,7 @@ export class NScrollbarController extends ProtoController
         }
 
         Run.frame(() => {
-            viewport.scrollTop = target;
+            viewport.scrollTo({ top: target, ...options });
         });
     }
 

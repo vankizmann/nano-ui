@@ -141,6 +141,11 @@ export class Pointer
         return !! prevent;
     }
 
+    static findGesture(e : any)
+    {
+        // distinguish which gesture is executed
+    }
+
     static bind(id : string, type : string, cb : Function) : void
     {
         Arr.append(this.signals, { id, type, cb });

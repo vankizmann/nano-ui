@@ -24,7 +24,7 @@ export class NCollapseView extends ProtoView
         };
 
         return h('div', props, [
-            this.items(), this.slot('default')
+            this.slot('default')
         ]);
     }
 

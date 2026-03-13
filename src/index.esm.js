@@ -33,13 +33,13 @@ const NanoImports = [
     // Drawer, done
     // Preview, done
     // Slider, done
+    // File, done
+    // Form, done
+    // Config, done
     // --- Virtualscroller, partial grid missing
-    // --- Draggable, partial grid missing
-    // --- File,
+    // --- Draggable, partial grid missing - dropzone missing
     // --- Password,
     // --- Info,
-    // --- Form,
-    // --- Config,
     // --- Map,
     // --- Chart,
 ];

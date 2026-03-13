@@ -77,6 +77,10 @@ export class ProtoController
 
         this.scope = this;
 
+        this.injectRef([
+            'form-item', 'NFormItem'
+        ]);
+
         onMounted(() => {
             this.el = this.ref('el')?.value;
         });

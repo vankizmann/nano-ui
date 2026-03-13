@@ -36,6 +36,20 @@ export const NInputProps = {
     },
 
     /**
+     * @type {PropType<string>}
+     */
+    label: {
+        type: [String], default: null
+    },
+
+    /**
+     * @type {PropType<string>}
+     */
+    labelPosition: {
+        type: [String], default: 'before'
+    },
+
+    /**
      * @type {PropType<function>}
      */
     onButtonClick: {
@@ -48,7 +62,6 @@ export const NInputProps = {
     onButtonDblclick: {
         type: [Function], default: null
     },
-
 
 };
 

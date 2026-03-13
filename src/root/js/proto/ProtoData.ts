@@ -46,7 +46,7 @@ export class ProtoData extends ProtoExtend([BaseData, IconData])
             classList.push('n-load');
         }
 
-        if ( this.disabled ) {
+        if ( this.superDisabled ) {
             classList.push('n-disabled');
         }
 
@@ -90,6 +90,13 @@ export class ProtoData extends ProtoExtend([BaseData, IconData])
         });
 
         return classList;
+    }
+
+    get superDisabled() : boolean
+    {
+        const ncx = this.scope.ncx('form-item');
+
+        return this.scope.get('disabled') || ! (!ncx || ncx?.data.model);
     }
 
 }
