@@ -29,10 +29,12 @@ globalThis.NTableCells = {
 
 import NTableFilterString from "./js/table-filter/NTableFilterString.ts";
 import NTableFilterOption from "./js/table-filter/NTableFilterOption.ts";
+import NTableFilterDatetime from "./js/table-filter/NTableFilterDatetime.ts";
 
 globalThis.NTableFilters = {
     'string': NTableFilterString,
     'option': NTableFilterOption,
+    'datetime': NTableFilterDatetime,
 };
 
 import NTableMatrixPlugin from "./js/plugin/NTableMatrixPlugin.ts";

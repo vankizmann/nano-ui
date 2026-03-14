@@ -1,35 +1,35 @@
 import { provide, SetupContext } from "vue";
 import { GroupController } from "../../../root/index.ts";
-import { NChartBarView } from "./NChartBarView.ts";
-import { NChartBarData } from "./NChartBarData.ts";
+import { NChartDonutView } from "./NChartDonutView.ts";
+import { NChartDonutData } from "./NChartDonutData.ts";
 import { Mix, Arr, Num } from "@kizmann/pico-js";
 import NChartItemController from "../chart-item/NChartItemController.ts";
 
 
-export class NChartBarController extends GroupController
+export class NChartDonutController extends GroupController
 {
     /**
-     * @type {NChartBarController}
+     * @type {NChartDonutController}
      */
-    declare scope : NChartBarController;
+    declare scope : NChartDonutController;
 
     /**
-     * @type {NChartBarData}
+     * @type {NChartDonutData}
      */
-    declare data : NChartBarData;
+    declare data : NChartDonutData;
 
     /**
-     * @type {NChartBarView}
+     * @type {NChartDonutView}
      */
-    declare view : NChartBarView;
+    declare view : NChartDonutView;
 
     constructor(props : any, context : SetupContext)
     {
         super(props, context);
 
         [this.view, this.data] = [
-            new NChartBarView(this),
-            new NChartBarData(this),
+            new NChartDonutView(this),
+            new NChartDonutData(this),
         ];
 
         this.setup();
@@ -39,8 +39,10 @@ export class NChartBarController extends GroupController
     {
         super.setup();
 
+        this.makeRef('text');
+
         this.makeData('maxval');
-        this.makeData('avgval');
+        this.makeData('total');
         this.makeData('visible');
         this.makeData('hidden');
 
@@ -48,19 +50,19 @@ export class NChartBarController extends GroupController
 
         this.watchProp('limit', () => {
             this.makeDataset();
+            this.makeTotal();
             this.makeMaxval();
-            this.makeAvgval();
         });
 
         this.watchChilds(() => {
             this.makeDataset();
+            this.makeTotal();
             this.makeMaxval();
-            this.makeAvgval();
         });
 
         this.makeDataset();
+        this.makeTotal();
         this.makeMaxval();
-        this.makeAvgval();
 
         return this;
     }
@@ -90,6 +92,15 @@ export class NChartBarController extends GroupController
         this.set('hidden', hidden);
     }
 
+    makeTotal() : void
+    {
+        let count = Arr.each(this.childs, (item : any) => {
+            return Num.float(item.data.value);
+        });
+
+        this.set('total', Num.combine(count));
+    }
+
     makeMaxval() : void
     {
         let other = Number.MIN_VALUE;
@@ -107,30 +118,28 @@ export class NChartBarController extends GroupController
         this.set('maxval', max);
     }
 
-    makeAvgval() : void
+    getDistance(value : string | number) : number
     {
-        let total = 0;
+        const { length, width, total } = this.data;
 
-        Arr.each(this.childs, (item : NChartItemController) => {
-            total += Mix.num(item.data.value);
-        });
+        let gaps = 360 - (length * width * 2);
 
-        const avg = Num.fixed(...[
-            total / this.childs.length, 1
-        ]);
-
-        this.set('avgval', avg);
+        return (gaps * Mix.num(value) / total) + (width * 2);
     }
 
-    getHeight(value : string | number) : number
+    onPointerenter(item : any) : void
     {
-        const { maxval, minHeight: min } = this.data;
+        this.dom('text').style({
+            '--n-chart-label': `'${item.axis}'`,
+            '--n-chart-value': Mix.int(item.value)
+        });
+    }
 
-        return Num.int(...[
-            ((100 - min) / maxval * Mix.num(value)) + min
-        ]);
+    onPointerleave(item : any) : void
+    {
+        this.dom('text').style(null);
     }
 
 }
 
-export default NChartBarController;
+export default NChartDonutController;

@@ -28,6 +28,7 @@ import NSlider from "./slider/index.ts";
 import NForm from "./form/index.ts";
 import NConfig from "./config/index.ts";
 import NChart from "./chart/index.ts";
+import NMap from "./map/index.ts";
 
 const NanoImports = [
     NSignal,
@@ -56,6 +57,7 @@ const NanoImports = [
     NForm,
     NConfig,
     NChart,
+    NMap,
 ];
 
 export const Icons = {

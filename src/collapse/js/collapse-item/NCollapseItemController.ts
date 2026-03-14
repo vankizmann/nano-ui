@@ -111,7 +111,19 @@ export class NCollapseItemController extends ProtoController
 
     superToggle()
     {
+        this.ncx('collapse')?.superToggle(this.data.name);
+    }
+
+    superOpen()
+    {
         if ( ! this.isVisible() ) {
+            this.ncx('collapse')?.superToggle(this.data.name);
+        }
+    }
+
+    superClose()
+    {
+        if ( this.isVisible() ) {
             this.ncx('collapse')?.superToggle(this.data.name);
         }
     }

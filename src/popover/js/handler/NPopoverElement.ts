@@ -1,5 +1,6 @@
 import { Dom, Arr, Obj, Run, Hash, Str } from "@kizmann/pico-js";
 import { Pointer } from "../../../root/index.ts";
+import NPopoverHandler from "./NPopoverHandler.ts";
 
 export class NPopoverElement
 {
@@ -280,6 +281,9 @@ export class NPopoverElement
         if ( this.options.multiClose ) {
             Pointer.deblock(uid, 'popover', group, fn);
         }
+
+        // Needed to run pointerdown first
+        NPopoverHandler.moveup(this);
 
         Pointer.prevent(uid, 'popover', group, () => {
             this.close(true);

@@ -112,7 +112,7 @@ export class NDraglistController extends ProtoController
 
         Pointer.bind(uid, 'keydown', (e : any, v : any) => {
 
-            const self = v.target.closest(...[
+            const self = v.target?.closest(...[
                 `[dropzone="${uid}"]`
             ]);
 

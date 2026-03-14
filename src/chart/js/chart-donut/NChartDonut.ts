@@ -1,9 +1,9 @@
 import { PropType, defineComponent } from "vue";
 import { Props } from "../../../root/index.ts";
-import { NChartBarController } from "./NChartBarController.ts";
+import { NChartDonutController } from "./NChartDonutController.ts";
 import { Locale } from "@kizmann/pico-js";
 
-export const NChartBarProps = {
+export const NChartDonutProps = {
 
     ...Props.Size,
 
@@ -52,8 +52,15 @@ export const NChartBarProps = {
     /**
      * @type {PropType<number>}
      */
-    minHeight: {
-        type: [Number], default: 5
+    width: {
+        type: [Number], default: 8
+    },
+
+    /**
+     * @type {PropType<boolean>}
+     */
+    overlap: {
+        type: [Boolean], default: false
     },
 
 };
@@ -63,12 +70,12 @@ export default defineComponent({
     /**
      * @type {string}
      */
-    name: 'NChartBar',
+    name: 'NChartDonut',
 
     /**
-     * @type {typeof NChartBarProps}
+     * @type {typeof NChartDonutProps}
      */
-    props: NChartBarProps,
+    props: NChartDonutProps,
 
     /**
      * @type {string[]}
@@ -79,7 +86,7 @@ export default defineComponent({
 
     setup(props, context)
     {
-        let ncx = new NChartBarController(props, context);
+        let ncx = new NChartDonutController(props, context);
 
         ncx.dispose(() => {
             ncx = null;

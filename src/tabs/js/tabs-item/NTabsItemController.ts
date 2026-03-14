@@ -79,11 +79,6 @@ export class NTabsItemController extends ProtoController
         this.ncx('tabs')?.remove(this);
     }
 
-    superToggle() : void
-    {
-        this.ncx('tabs')?.superToggle(this.data.name);
-    }
-
     isActive() : boolean
     {
         const [{ data }, tabs] = [
@@ -113,6 +108,11 @@ export class NTabsItemController extends ProtoController
         }
 
         return Arr.has(tabs.data.value, data.name);
+    }
+
+    superOpen() : void
+    {
+        this.ncx('tabs')?.superToggle(this.data.name);
     }
 
 }

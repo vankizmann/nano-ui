@@ -60,6 +60,7 @@ export class NTimepickerView extends NPopoverPanelView
 
         let props = {
             ref: scope.ref('panel'),
+            class: ['n-popover-shadow']
         };
 
         props = scope.passProps(props, [

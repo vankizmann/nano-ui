@@ -61,7 +61,7 @@ export class NDatetimepickerView extends NPopoverPanelView
     panel() : any
     {
         let props = {
-            class: `${this.bem}-panel`
+            class: [`${this.bem}-panel`, 'n-popover-shadow']
         };
 
         return h('div', props, [

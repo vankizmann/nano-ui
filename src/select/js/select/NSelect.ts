@@ -3,6 +3,7 @@ import { Props } from "../../../root/index.ts";
 import { NSelectController } from "./NSelectController.ts";
 
 export const NSelectProps = {
+
     ...Props.Load,
     ...Props.Size,
     ...Props.Type,

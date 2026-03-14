@@ -83,7 +83,7 @@
                         </n-form-group>
                     </n-tabs-item>
                     <n-tabs-item name="test2" label="Test2" :lazy="false">
-                        <n-form-group label="Echter Test 2">
+                        <n-form-group label="Echter Test 2" :collapse="true" :model-value="false">
                             <n-form-item prop="testbool" label="Testbool" :rules="['required_if:teststring']">
                                 <n-switch v-model="n_testform.testbool">Testbool</n-switch>
                             </n-form-item>

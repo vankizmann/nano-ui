@@ -38,10 +38,12 @@ const NanoImports = [
     // Config, done
     // --- Virtualscroller, partial grid missing
     // --- Draggable, partial grid missing - dropzone missing
-    // --- Password,
     // --- Info,
     // --- Map,
-    // --- Chart,
+    // --- Chart, done
+
+
+    // --- Password,
 ];
 
 export const Icons = {

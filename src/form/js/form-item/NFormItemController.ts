@@ -77,8 +77,9 @@ export class NFormItemController extends ProtoController
 
     superView()
     {
-        this.ncx('tabs-item')?.superToggle();
-        this.ncx('collapse-item')?.superToggle();
+        this.ncx('tabs-item')?.superOpen();
+        this.ncx('collapse-item')?.superOpen();
+        this.ncx('form-group')?.superOpen();
 
         const options: any = {
             behavior: 'smooth'

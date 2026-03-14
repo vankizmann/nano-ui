@@ -18,9 +18,4 @@ export class NChartItemData extends ProtoData
         return this.scope.get('axis');
     }
 
-    get label() : string
-    {
-        return this.scope.get('label');
-    }
-
 }

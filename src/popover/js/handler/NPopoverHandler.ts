@@ -93,6 +93,15 @@ export class NPopoverHandler
         Arr.remove(this.popovers, { uid })
     }
 
+    static moveup({ uid } : any)
+    {
+        const popover = Arr.find(this.popovers, { uid });
+
+        Arr.remove(this.popovers, { uid });
+
+        Arr.prepend(this.popovers, popover);
+    }
+
 }
 
 if ( !globalThis.NPopoverHandler ) {

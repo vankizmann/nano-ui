@@ -5,6 +5,7 @@
     flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
+    height: size('base-hgt-inline', 'calc($ * 11)');
 }
 
 .n-chart-donut__chart {
@@ -17,26 +18,8 @@
     font-size: size('base-fnt');
 }
 
-.n-chart-donut__chart:before {
-    pointer-events: none;
-    content: '\00a0';
-    z-index: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    display: block;
-    width: size('base-hgt-inline', 'calc($ * 6.4)');
-    height: size('base-hgt-inline', 'calc($ * 6.4)');
-    border-radius: 500px;
-    transform: translate(-50%, -50%);
-}
-
 .n-chart-donut:not(.n-chart-donut--overlap) .n-chart-item {
     stroke-linecap: round;
-}
-
-.n-chart-donut:not(.n-chart-donut--overlap) .n-chart-hover {
-    stroke-linecap: square;
 }
 
 .n-chart-donut svg {
@@ -54,13 +37,9 @@
 }
 
 .n-chart-donut circle.n-chart-item {
-    pointer-events: none;
-    stroke-width: var(--n-stroke-width);
-}
-
-.n-chart-donut circle.n-chart-hover {
     pointer-events: stroke;
-    stroke-width: calc(var(--n-stroke-width) * 2px);
+    stroke-width: var(--n-stroke-width);
+    transition: opacity 0.2s;
 }
 
 .n-chart-donut__base {
@@ -116,8 +95,14 @@
 }
 
 .n-chart-donut__legend {
-    flex: 1 1 auto;
-    border-left: 1px solid color('gray-05');
+    flex: 0 0 auto;
+    height: 100%;
+    width: 230px;
     margin-left: size('base-pad', 'calc($ * 2)');
-    padding-left: size('base-pad', 'calc($ * 2.5)');
+    background: color('gray-50', 0.2);
+    border-radius: size('base-rad-inline');
+}
+
+.n-chart-donut__legend .n-scrollbar__wrap {
+    padding: size('base-pad', 'calc($ * 1.3)') size('base-pad', 'calc($ * 1.5)');
 }

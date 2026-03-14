@@ -3,11 +3,12 @@
 .n-chart-legend {
     display: flex;
     align-items: center;
-    color: color('text', 0.6);
 }
 
 .n-chart-legend:not(:last-child) {
     margin-bottom: size('base-pad-vertical');
+    padding-bottom: size('base-pad-vertical');
+    border-bottom: 1px solid color('gray-50', 0.1);
 }
 
 .n-chart-legend span:first-child {
@@ -15,6 +16,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    color: color('text', 0.8);
     font-size: size('base-fnt');
 }
 
@@ -22,7 +24,8 @@
     flex: 0 0 auto;
     font-size: size('base-fnt-label');
     display: inline-flex;
-    padding: size('base-pad-vertical', 'calc($ * 0.3)') size('base-pad', 'calc($ * 0.5)');
+    align-items: center;
+    padding: size('base-pad-vertical', 'calc($ * 0.25)') size('base-pad', 'calc($ * 0.6)');
     margin-left: size('base-pad');
     border-radius: size('base-rad-inline');
     color: color('base-color');

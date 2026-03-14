@@ -89,7 +89,7 @@ export class NFormItemView extends ProtoView
         const { data } = this.scope;
 
         const errors = this.scope.ncx('form')
-            ?.data.messages;
+            ?.data.messages ?? {};
 
         if ( ! errors[data.prop] ) {
             return null;

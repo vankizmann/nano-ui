@@ -1,13 +1,13 @@
 import { ProtoData } from "../../../root/index.ts";
-import NChartBarController from "./NChartBarController.ts";
+import NChartDonutController from "./NChartDonutController.ts";
 import NChartItemController from "../chart-item/NChartItemController.ts";
 
-export class NChartBarData extends ProtoData
+export class NChartDonutData extends ProtoData
 {
     /**
-     * @type {NChartBarController}
+     * @type {NChartDonutController}
      */
-    declare scope : NChartBarController;
+    declare scope : NChartDonutController;
 
     get classList() : string[]
     {
@@ -24,6 +24,11 @@ export class NChartBarData extends ProtoData
         return this.scope.get('hidden');
     }
 
+    get total() : number
+    {
+        return this.scope.get('total');
+    }
+
     get maxval() : number
     {
         return this.scope.get('maxval');
@@ -32,6 +37,11 @@ export class NChartBarData extends ProtoData
     get avgval() : number
     {
         return this.scope.get('avgval');
+    }
+
+    get length() : number
+    {
+        return this.hidden.length ? this.visible.length + 1 : this.visible.length;
     }
 
     get sort() : boolean
@@ -64,11 +74,16 @@ export class NChartBarData extends ProtoData
         return this.scope.get('otherLabel');
     }
 
-    get minHeight() : number
+    get width() : number
     {
-        return this.scope.get('minHeight');
+        return this.scope.get('width');
+    }
+
+    get overlap() : boolean
+    {
+        return this.scope.get('overlap');
     }
 
 }
 
-export default NChartBarData;
+export default NChartDonutData;

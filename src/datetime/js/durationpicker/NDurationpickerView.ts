@@ -82,7 +82,7 @@ export class NDurationpickerView extends NPopoverPanelView
 
         let props : any = {
             ref: scope.ref('scrollbar'),
-            class: `${this.bem}__body`,
+            class: [`${this.bem}__body`, 'n-popover-shadow'],
             items: items,
         };
 

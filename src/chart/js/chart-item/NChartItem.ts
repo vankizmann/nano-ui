@@ -1,6 +1,7 @@
 import { PropType, defineComponent } from "vue";
 import { Props } from "../../../root/index.ts";
 import { NChartItemController } from "./NChartItemController.ts";
+import { Locale } from "@kizmann/pico-js";
 
 export const NChartItemProps = {
 
@@ -18,7 +19,7 @@ export const NChartItemProps = {
      * @type {PropType<string>}
      */
     axis: {
-        type: [String], default: null
+        type: [String], default: () => Locale.trans('Item')
     },
 
     /**

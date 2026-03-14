@@ -265,7 +265,6 @@ export class NTableView extends ProtoView
         ]);
 
         const props = {
-            size: 'sm',
             toggle: true,
             width: 220,
         };

@@ -45,13 +45,22 @@ export class NChartItemController extends ProtoController
 
     onMounted()
     {
-        console.log('onMounted', this.ncx('chart'));
         this.ncx('chart')?.append(this);
     }
 
     onUnmounted()
     {
         this.ncx('chart')?.remove(this);
+    }
+
+    toItem()
+    {
+        return {
+            axis: this.data.axis,
+            value: this.data.value,
+            color: this.data.color,
+            type: this.data.type,
+        };
     }
 
 }

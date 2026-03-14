@@ -64,7 +64,6 @@ export class NTabsItemView extends ProtoView
             class: data.classPart('header')
         };
 
-
         if ( tabs.data.value === data.name ) {
             props.class.push('n-active');
         }

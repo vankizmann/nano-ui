@@ -14,14 +14,14 @@ export class NFormGroupController extends GroupController
     /**
      * @type {NFormGroupData}
      */
-    declare data: NFormGroupData;
+    declare data : NFormGroupData;
 
     /**
      * @type {NFormGroupView}
      */
-    declare view: NFormGroupView;
+    declare view : NFormGroupView;
 
-    constructor(props:any, context:SetupContext)
+    constructor(props : any, context : SetupContext)
     {
         super(props, context);
 
@@ -69,12 +69,26 @@ export class NFormGroupController extends GroupController
         }
     }
 
+    superOpen()
+    {
+        if ( this.data.collapse ) {
+            this.update('modelValue', true);
+        }
+    }
+
+    superClose()
+    {
+        if ( this.data.collapse ) {
+            this.update('modelValue', false);
+        }
+    }
+
     superView()
     {
-        this.ncx('tabs-item')?.superToggle();
-        this.ncx('collapse-item')?.superToggle();
+        this.ncx('tabs-item')?.superOpen();
+        this.ncx('collapse-item')?.superOpen();
 
-        const options: any = {
+        const options : any = {
             behavior: 'smooth'
         };
 

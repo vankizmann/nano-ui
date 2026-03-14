@@ -149,6 +149,7 @@ export class NDatepickerView extends NPopoverPanelView
 
         let props = {
             ref: scope.ref('panel'),
+            class: ['n-popover-shadow']
         };
 
         props = scope.passProps(props, [
