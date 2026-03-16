@@ -109,6 +109,7 @@
                 <n-table-column v-model="treeMatrix" label="Matrix 2" :data="{ matrix: 2 }" type="matrix" align="center" :fixed-width="120"></n-table-column>
                 <n-table-column v-model="treeMatrix" label="Matrix 4" type="matrix" :data="{ matrix: 4 }" align="center" :fixed-width="120"></n-table-column>
                 <n-table-column v-model="treeMatrix" label="Matrix 8" type="matrix" :data="{ matrix: 8 }" align="center" :fixed-width="120"></n-table-column>
+                <n-table-column v-model="treeMatrix" label="Matrix 8" type="matrix" :data="{ matrix: 16 }" align="center" :fixed-width="120"></n-table-column>
             </n-table>
 
 
@@ -232,12 +233,9 @@
     </div>
 </div>
 
-<!--<script src="https://unpkg.com/@kizmann/pico-js@latest/dist/pico-js.browser.js"></script>-->
-<script src="http://mac.local/pico-js/dist/pico-js.browser.js"></script>
+<script src="https://unpkg.com/@kizmann/pico-js@2.1/dist/pico-js.browser.js"></script>
 <script src="https://unpkg.com/vue@3.5.28"></script>
-<script src="http://mac.local/nano-ui/dist/nano-ui.esm.js"></script>
-<script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js" defer></script>
-<script src="https://maps.googleapis.com/maps/api/js" defer></script>
+<script src="../dist/nano-ui.esm.js"></script>
 
 <script>
     // // Reference to an output container, use 'pre' styling for JSON output
@@ -436,7 +434,7 @@
 
             data.virtualData = Object.freeze(itemGenerator(10000));
 
-            data.virtualTree = pi.Arr.each(itemGenerator(300), function (item) {
+            data.virtualTree = pi.Arr.each(itemGenerator(600), function (item) {
                 return pi.Obj.assign(item, { children: itemGenerator(4) });
             });
 
