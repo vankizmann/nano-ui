@@ -42,9 +42,9 @@ export class NDragHandler
 
         const onPassiveDragover = Run.framerate((e : any) => {
             this.dragover(e);
-        }, 16, false);
+        }, 20, false);
 
-        const onDelayedDragdrop = (e : any) => Run.delay(() => {
+        const onDelayedDragdrop = (e : any) => Run.async(() => {
             this.dragdrop(e);
         });
 
@@ -123,8 +123,8 @@ export class NDragHandler
 
     static dragdrop(e : any)
     {
-        let [options, targets] = [
-            { mode: 'abort' }, Dom.getNodePoint(e)
+        let [options, targets] : [any, any[]] = [
+            {}, Dom.getNodePoint(e)
         ];
 
         // Get deepest target
@@ -137,7 +137,7 @@ export class NDragHandler
             options = this.runDragdrop(e, target, zone);
         }
 
-        if ( zone != null ) {
+        if ( options.mode != null && zone != null ) {
             this.runDragend(e, options);
         }
 

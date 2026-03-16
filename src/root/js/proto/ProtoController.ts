@@ -5,6 +5,7 @@ import { ProtoData, ProtoView } from "../../index.ts";
 export interface FakeInternalInstance extends ComponentInternalInstance
 {
     ncx : ProtoController;
+    ctx : any;
     setupState : Record<string, any>;
 }
 
@@ -122,7 +123,7 @@ export class ProtoController
     pass(keys : any = [])
     {
         Arr.each(keys, (fn: string, key : string) => {
-            this.instance[key] = (...args : any[]) => this[fn](...args);
+            this.instance.ctx[key] = (...args : any[]) => this[fn](...args);
         });
     }
 

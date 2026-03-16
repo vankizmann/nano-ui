@@ -53,7 +53,7 @@ export const NChartDonutProps = {
      * @type {PropType<number>}
      */
     width: {
-        type: [Number], default: 8
+        type: [Number], default: 10
     },
 
     /**

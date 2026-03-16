@@ -61,6 +61,8 @@
 
 .n-transfer__body {
     flex: 1 1 auto;
+    overflow: hidden;
+    min-height: 0;
 }
 
 .n-transfer__body .n-draglist-item__element {

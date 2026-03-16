@@ -1,4 +1,4 @@
-import { onBeforeUnmount, onMounted } from "vue";
+import { onBeforeUnmount, onMounted, watch } from "vue";
 import { Run } from "@kizmann/pico-js";
 import { ProtoController } from "../../../root/index.ts";
 import { NVirtualbarView } from "./NVirtualbarView.ts";
@@ -60,6 +60,10 @@ export class NVirtualbarController extends ProtoController
             start: 0, end: 0, grid: 1
         });
 
+        watch(() => this.props.items, () => {
+            this.buildState();
+        });
+
         onBeforeUnmount(() => {
             this.scrollbar.destroy();
         });
@@ -99,12 +103,18 @@ export class NVirtualbarController extends ProtoController
     {
         const { el, data } = this;
 
-        let grid = 1;
+        let [grid, width] : [number, number] = [
+            1, el.clientWidth
+        ];
+
+        if ( data.grid ) {
+            grid = Math.floor(width / data.itemWidth);
+        }
 
         const total = Math.ceil(data.items.length / grid);
 
-        if ( data.threshold && total < data.threshold ) {
-            return this.set('state', { start: 0, end: total, grid: 1 });
+        if ( data.threshold && total * grid < data.threshold ) {
+            return this.set('state', { start: 0, end: total, grid, total });
         }
 
         const item = {
@@ -130,12 +140,14 @@ export class NVirtualbarController extends ProtoController
             start: Math.max(0, start),
             end: Math.min(end, total),
             grid: Math.max(1, grid),
+            total: Math.max(0, total),
         };
 
         const rainbow = [
             data.state.start === state.start,
             data.state.end === state.end,
             data.state.grid === state.grid,
+            data.state.total === state.total,
         ];
 
         if ( rainbow.indexOf(false) !== -1 ) {
@@ -168,13 +180,19 @@ export class NVirtualbarController extends ProtoController
             console.warn('Viewport is not ready yet!');
         }
 
-        let target = index * this.data.itemHeight;
+        const { items, state, itemHeight } = this.data;
+
+        if ( index < 0 ) {
+            index += items.length;
+        }
+
+        let target = Math.floor(index / state.grid) * itemHeight;
 
         let [scroll, client] = [
             viewport.scrollTop, viewport.clientHeight
         ];
 
-        client -= this.data.itemHeight;
+        client -= itemHeight;
 
         if ( target > scroll && target <= scroll + client ) {
             return;

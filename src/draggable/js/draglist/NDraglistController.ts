@@ -5,6 +5,8 @@ import { NDragHandler } from "../drag/NDragHandler.ts";
 import { NDragReciever } from "../drag/NDragReciever.ts";
 import { NDraglistView } from "./NDraglistView.ts";
 import { NDraglistData } from "./NDraglistData.ts";
+import { NDragHelper } from "../helper/NDragHelper.ts";
+import { NVirtualHelper } from "../helper/NVirtualHelper.ts";
 
 export class NDraglistController extends ProtoController
 {
@@ -27,6 +29,11 @@ export class NDraglistController extends ProtoController
      * @type {NDragReciever}
      */
     drag : NDragReciever;
+
+    /**
+     * @type {string}
+     */
+    selectbuffer : string;
 
     constructor(props : any, context : SetupContext)
     {
@@ -57,25 +64,25 @@ export class NDraglistController extends ProtoController
 
         // Make virtuals available (all items on one layer)
         this.makeData('virtuals', ...[
-            this.buildVirtuals()
+            NVirtualHelper.virtuals(this)
         ]);
 
         this.watchProp('items', () => {
-            this.set('virtuals', this.buildVirtuals());
+            this.set('virtuals', NVirtualHelper.virtuals(this));
             this.update('selected', []);
         });
 
         // Make visibles available (all items except unexpanded)
         this.makeData('visibles', ...[
-            this.buildVisibles()
+            NVirtualHelper.visibles(this)
         ]);
 
         this.watchData('virtuals', () => {
-            this.set('visibles', this.buildVisibles());
+            this.set('visibles', NVirtualHelper.visibles(this));
         });
 
         this.watchData('expanded', () => {
-            this.set('visibles', this.buildVisibles());
+            this.set('visibles', NVirtualHelper.visibles(this));
         });
 
         // Make relation available (first selected item)
@@ -103,6 +110,10 @@ export class NDraglistController extends ProtoController
             this.set('group', [this.uid]);
         }
 
+        if ( this.data.allowGroups == null ) {
+            this.set('allowGroups', this.data.group);
+        }
+
         return this;
     }
 
@@ -116,17 +127,19 @@ export class NDraglistController extends ProtoController
                 `[dropzone="${uid}"]`
             ]);
 
-            if ( self && e.which === 38 ) {
+            if ( self && e.which === 38 || self && e.which === 37 ) {
                 this.setPrevCurrent();
             }
 
-            if ( self && e.which === 40 ) {
+            if ( self && e.which === 40 || self && e.which === 39 ) {
                 this.setNextCurrent();
             }
 
         });
 
-        let config : any = {};
+        let config : any = {
+            grid: this.data.grid,
+        };
 
         config.dragmove = (...args : any[]) => {
             // @ts-ignore
@@ -206,17 +219,6 @@ export class NDraglistController extends ProtoController
         });
     }
 
-    buildVisibles()
-    {
-        let visibles = Arr.clone(this.data.virtuals);
-
-        visibles = Arr.filter(visibles, (node : any) => {
-            return Arr.contains(this.data.expanded, node.cascade.slice(0, -1));
-        });
-
-        return visibles;
-    }
-
     buildRelation()
     {
         let relation = Arr.find(this.data.virtuals, (val : any) => {
@@ -226,74 +228,54 @@ export class NDraglistController extends ProtoController
         return Object.freeze({ depth: -1, ...relation });
     }
 
-    buildVirtuals(items : any = null, ...args : any[])
+    onCurrentclick(e : any, item : any)
     {
-        if ( items == null ) {
-            items = Arr.clone(this.data.items);
+        if ( e.metaKey ) {
+            this.onSelectclick(e, item);
         }
 
-        items = Arr.reduce(items, (merge : any, item : any, index : any) => {
-            return this.extractValues(merge, item, index, ...args);
-        }, []);
-
-        Arr.each(items, (item : any, index: number) => {
-            item.total = index;
-        });
-
-        return items;
+        this.update('current', this.getItem(item));
     }
 
-    extractValues(
-        merge : any,
-        item : any,
-        index : any,
-        depth : number = 0,
-        path : string[] = ['items'],
-        prev : any[] = []
-    ) {
+    onSelectclick(e : any, item : any)
+    {
         const { data } = this;
 
-        const uid = Obj.get(item, ...[
-            data.uniqueProp,
+        let selected = Arr.toggle(...[
+            Arr.clone(data.selected), item.uid
         ]);
 
-        const parent = Arr.last(prev);
+        let first = Arr.find(data.visibles, (node : any) => {
+            return Arr.has(data.selected, node.uid);
+        });
 
-        const cascade = [
-            ...prev, uid
-        ];
-
-        const route = [
-            ...path, index
-        ];
-
-        let virtual : any = {
-            uid, index, depth, route, cascade, parent,
-        };
-
-        let childs = Obj.get(item, ...[
-            data.childProp, []
-        ]);
-
-        // Add child length
-        virtual.childs = childs.length;
-
-        if ( Mix.isEmpty(childs) ) {
-            return [...merge, virtual];
+        if ( ! e.shiftKey || ! first || item.depth ) {
+            return this.update('selected', selected);
         }
 
-        const croute = [
-            ...path, Num.int(index), data.childProp
-        ];
+        const items = Arr.filter(data.visibles, (node : any) => {
+            return ! node.depth;
+        });
 
-        const props = [
-            depth + 1, croute, cascade
-        ];
+        let last = item;
 
-        childs = this.buildVirtuals(childs, ...props);
+        if ( first.index > last.index ) {
+            [last, first] = [first, item];
+        }
 
-        return Arr.merge(...[
-            merge, [virtual], childs
+        const target = Arr.slice(...[
+            items, first.index, last.index + 1
+        ]);
+
+        selected = Arr.extract(target, 'uid');
+
+        return this.update('selected', selected);
+    }
+
+    onExpandclick(e : any, item : any)
+    {
+        this.update('expanded', ...[
+            Arr.toggle(this.data.expanded, item.uid)
         ]);
     }
 
@@ -301,7 +283,7 @@ export class NDraglistController extends ProtoController
     {
         const { data } = this;
 
-        if ( !Arr.has(config.group, data.group) ) {
+        if ( !Arr.has(config.group, data.allowGroups) ) {
             return result;
         }
 
@@ -333,27 +315,35 @@ export class NDraglistController extends ProtoController
         let transformDrop = this.data.transformDrop;
 
         if ( typeof transformDrop !== 'function' ) {
-            transformDrop = (value) => value;
+            transformDrop = (value : any) => value;
         }
 
         Arr.each(config.items, ({ item }, i) => {
             config.items[i]['item'] = transformDrop(item);
         });
 
+        const args : [...any] = [
+            this, clone, result, config
+        ];
+
         if ( result.mode === 'append' ) {
-            clone = this.appendNodes(clone, result, config);
+            // @ts-ignore
+            clone = NDragHelper.appendNodes(...args);
         }
 
         if ( result.mode === 'inside' ) {
-            clone = this.insideNodes(clone, result, config);
+            // @ts-ignore
+            clone = NDragHelper.insideNodes(...args);
         }
 
         if ( result.mode === 'before' ) {
-            clone = this.beforeNodes(clone, result, config);
+            // @ts-ignore
+            clone = NDragHelper.beforeNodes(...args);
         }
 
         if ( result.mode === 'after' ) {
-            clone = this.afterNodes(clone, result, config);
+            // @ts-ignore
+            clone = NDragHelper.afterNodes(...args);
         }
 
         this.emit('update:items', clone.items);
@@ -373,180 +363,21 @@ export class NDraglistController extends ProtoController
             items: Arr.clone(this.data.items),
         };
 
-        this.unlinkNodes(clone, result, config);
-        this.removeNodes(clone, result, config);
+        const args : [...any] = [
+            this, clone, result, config
+        ];
+
+        // @ts-ignore
+        NDragHelper.unlinkNodes(...args);
+
+        // @ts-ignore
+        NDragHelper.removeNodes(...args);
 
         this.emit('update:items', clone.items);
         this.update('current', null);
         this.update('selected', []);
 
         return result;
-    }
-
-    unlinkNodes(clone : any, result : any, config : any)
-    {
-        if ( !this.data.removeNode ) {
-            return clone;
-        }
-
-        Arr.each(config.items, ({ value }) => {
-            Obj.set(clone, value.route, null);
-        });
-
-        return clone;
-    }
-
-    removeNodes(clone : any, result : any, config : any)
-    {
-        if ( !this.data.removeNode ) {
-            return clone;
-        }
-
-        const { childProp } = this.data;
-
-        const fn = (value : any, prop : string = 'items') => {
-            return Arr.filter(value?.[prop]);
-        };
-
-        clone.items = Arr.recursive(fn(clone), childProp, (node : any) => {
-            return Obj.set(node, childProp, fn(node, childProp));
-        });
-
-        return clone;
-    }
-
-    appendNodes(clone : any, result : any, config : any)
-    {
-        if ( !this.data.insertNode ) {
-            return clone;
-        }
-
-        if ( config.uid === this.uid ) {
-            this.unlinkNodes(clone, result, config);
-        }
-
-        Arr.each(config.items, ({ item }) => {
-            Arr.append(clone.items, item);
-        });
-
-        if ( config.uid === this.uid ) {
-            clone = this.removeNodes(clone, result, config);
-        }
-
-        return clone;
-    }
-
-    insideNodes(clone : any, result : any, config : any)
-    {
-        const { data } = this;
-
-        if ( !this.data.insertNode ) {
-            return clone;
-        }
-
-        let value = Arr.find(data.virtuals, {
-            uid: result.uids.item
-        });
-
-        if ( value == null ) {
-            return clone;
-        }
-
-        if ( config.uid === this.uid ) {
-            this.unlinkNodes(clone, result, config);
-        }
-
-        const path = [
-            ...value.route, data.childProp
-        ];
-
-        const childs = Obj.get(clone, path, []);
-
-        Arr.each(config.items, ({ item }) => {
-            Arr.append(childs, item);
-        });
-
-        Obj.set(clone, path, childs);
-
-        if ( config.uid === this.uid ) {
-            this.removeNodes(clone, result, config);
-        }
-
-        return clone;
-    }
-
-    beforeNodes(clone : any, result : any, config : any)
-    {
-        const { data } = this;
-
-        if ( !this.data.insertNode ) {
-            return clone;
-        }
-
-        let value = Arr.find(data.virtuals, {
-            uid: result.uids.item
-        });
-
-        if ( value == null ) {
-            return clone;
-        }
-
-        if ( config.uid === this.uid ) {
-            this.unlinkNodes(clone, result, config);
-        }
-
-        const path = [
-            ...Arr.slice(value.route, 0, -1)
-        ];
-
-        const childs = Obj.get(clone, path, []);
-
-        Arr.each(config.items.reverse(), ({ item }) => {
-            Arr.insert(childs, value.index, item);
-        });
-
-        if ( config.uid === this.uid ) {
-            this.removeNodes(clone, result, config);
-        }
-
-        return clone;
-    }
-
-    afterNodes(clone : any, result : any, config : any)
-    {
-        const { data } = this;
-
-        if ( !this.data.insertNode ) {
-            return clone;
-        }
-
-        let value = Arr.find(data.virtuals, {
-            uid: result.uids.item
-        });
-
-        if ( value == null ) {
-            return clone;
-        }
-
-        if ( config.uid === this.uid ) {
-            this.unlinkNodes(clone, result, config);
-        }
-
-        const path = [
-            ...Arr.slice(value.route, 0, -1)
-        ];
-
-        const childs = Obj.get(clone, path, []);
-
-        Arr.each(config.items.reverse(), ({ item }) => {
-            Arr.insert(childs, value.index + 1, item);
-        });
-
-        if ( config.uid === this.uid ) {
-            this.removeNodes(clone, result, config);
-        }
-
-        return clone;
     }
 
     nodeDragstart(e : any, item : any)
@@ -572,7 +403,7 @@ export class NDraglistController extends ProtoController
         });
 
         Run.frame(() => {
-            data.selected = selected;
+            this.update('selected', selected);
         });
     }
 

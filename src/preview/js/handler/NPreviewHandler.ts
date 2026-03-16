@@ -1,9 +1,7 @@
 import { Arr, Dom, Mix, Run } from "@kizmann/pico-js";
-import NPreviewController from "../preview/NPreviewController";
 import { Pointer, Styler } from "../../../root/index.ts";
 import NModalHandler from "../../../modal/js/handler/NModalHandler.ts";
 import { NPreviewElement } from "./NPreviewElement.ts";
-import NModalElement from "../../../modal/js/handler/NModalElement.ts";
 
 export class NPreviewHandler
 {
@@ -44,12 +42,12 @@ export class NPreviewHandler
         });
 
         Pointer.bind(this.uid, 'keyescape', (e : any) => {
-            if ( this.root && e.which === 27 ) this.close();
+            if ( this.el && e.which === 27 ) this.close();
         });
 
         Pointer.bind(this.uid, 'keydown', (e : any) => {
-            if ( this.root && e.which === 37 ) this.prev();
-            if ( this.root && e.which === 39 ) this.next();
+            if ( this.el && e.which === 37 ) this.prev();
+            if ( this.el && e.which === 39 ) this.next();
         });
 
         return this;
@@ -57,13 +55,11 @@ export class NPreviewHandler
 
     static backdrop(e : any)
     {
-        if ( ! this.root ) {
+        if ( ! this.el ) {
             return;
         }
 
         const tgt = this.frame.is(e.target);
-
-        console.log(tgt, e.target)
 
         if ( !tgt ) {
             return;

@@ -26,24 +26,23 @@ export class NDraglistView extends ProtoView
     {
         let { scope, data } = this.scope;
 
+        this.bem = data.grid ? 'n-draggrid' :
+            'n-draglist';
+
+        this.iem = data.grid ? 'n-draggrid-item' :
+            'n-draglist-item';
+
         let props = {
             ref: scope.ref('virtualbar'),
             class: data.classList,
             items: data.visibles,
-            prevent: 'keydown:[38,40]',
-            rawMode: true,
+            grid: data.grid,
+            itemHeight: data.itemHeight,
+            itemWidth: data.itemWidth,
+            scrollPortal: data.scrollPortal,
+            prevent: 'keydown:[37,38,39,40]',
             dropzone: scope.uid,
         };
-
-        const passed = [
-            'scrollPortal',
-            'itemHeight',
-            'itemOffset',
-        ];
-
-        Arr.each(passed, (key : string) => {
-            props[key] = scope.props[key];
-        });
 
         const slots : any = {};
 
@@ -172,8 +171,8 @@ export class NDraglistView extends ProtoView
 
         Arr.append(props.class, scope.view.iem);
 
-        props.onClick = () => {
-            data.current = scope.getItem(value);
+        props.onPointerdown = (e : any) => {
+            scope.onCurrentclick(e, value);
             scope.emit('row-click', data.current);
         };
 
@@ -243,7 +242,7 @@ export class NDraglistView extends ProtoView
 
     node_expand(value : any)
     {
-        const { data } = this.scope;
+        const { scope, data } = this.scope;
 
         if ( !data.renderExpand ) {
             return null;
@@ -257,8 +256,9 @@ export class NDraglistView extends ProtoView
             class: `${this.iem}__angle`
         };
 
-        props.onClick = () => {
-            data.expanded = Arr.toggle(data.expanded, value.uid);
+        props.onPointerdown = (e : any) => {
+            e.preventDefault();
+            scope.onExpandclick(e, value);
         };
 
         return h('div', parent, [
@@ -292,8 +292,9 @@ export class NDraglistView extends ProtoView
             class: [`${this.iem}__checkbox`]
         };
 
-        props.onClick = () => {
-            data.selected = Arr.toggle(data.selected, value.uid);
+        props.onPointerdown = (e : any) => {
+            e.preventDefault();
+            scope.onSelectclick(e, value);
         };
 
         return h('div', parent, [
@@ -312,6 +313,18 @@ export class NDraglistView extends ProtoView
         };
 
         const item = Obj.get(data, value.route);
+
+        const passed : any = {
+            value, item
+        };
+
+        passed.copy = () => {
+            console.log('BUILD copy');
+        };
+
+        passed.remove = () => {
+            console.log('BUILD remove');
+        };
 
         let renderNode = () => {
             return scope.context.slots.default({ value, item });

@@ -23,7 +23,7 @@
 .n-preview-modal__prev,
 .n-preview-modal__next {
     color: color('white');
-    background: color('base-color', 0.6);
+    background: color('base-color', 0.8);
 }
 
 .n-preview-modal__close:hover {
@@ -32,7 +32,7 @@
 
 .n-preview-modal__prev:hover,
 .n-preview-modal__next:hover {
-    background: color('base-color', 0.4);
+    background: color('base-color', 0.7);
 }
 
 .n-preview-modal .n-preview-frame {

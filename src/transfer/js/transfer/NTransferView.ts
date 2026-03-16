@@ -105,7 +105,7 @@ export class NTransferView extends ProtoView
             group: [uid],
             items: data.source,
             allowCurrent: false,
-            appendNode: false,
+            insertNode: false,
             itemSkip: true,
             renderSelect: true,
         };
@@ -170,7 +170,7 @@ export class NTransferView extends ProtoView
             group: [uid],
             items: data.target,
             allowCurrent: false,
-            appendNode: false,
+            insertNode: true,
             removeNode: true,
             itemSkip: true,
             renderSelect: true,

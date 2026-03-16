@@ -34,13 +34,13 @@ const NanoImports = [
     // Preview, done
     // Slider, done
     // File, done
-    // Form, done
+    // Form, done - frame search not working yet and inview also
     // Config, done
-    // --- Virtualscroller, partial grid missing
-    // --- Draggable, partial grid missing - dropzone missing
+    // Virtualscroller, done
+    // Draggable, done
     // --- Info,
-    // --- Map,
-    // --- Chart, done
+    // Map, done
+    // Chart, done
 
 
     // --- Password,

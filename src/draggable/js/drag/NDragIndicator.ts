@@ -51,6 +51,10 @@ export class NDragIndicator
             'n-drag-indicator',
         ];
 
+        if ( options.grid ) {
+            Arr.append(classList, 'n-view-grid');
+        }
+
         if ( options.mode ) {
             Arr.append(classList, 'n-mode-' + options.mode);
         }

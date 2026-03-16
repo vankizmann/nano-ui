@@ -590,16 +590,16 @@
 
         <div class="n-grid gap-10">
             <div class="col--1-1">
-                <n-slider v-bind="n_slider" on-type="primary" v-model="n_slider.temp_value">Slider</n-slider>
+                <n-slider v-bind="n_slider" v-model="n_slider.temp_value">Slider</n-slider>
             </div>
             <div class="col--1-1">
                 {{ n_slider.temp_value }}
             </div>
             <div class="col--1-1">
-                <n-slider v-bind="n_slider" on-type="primary" :range="true">Slider</n-slider>
+                <n-slider v-bind="n_slider" :range="true">Slider</n-slider>
             </div>
             <div class="col--1-1">
-                <n-slider v-bind="n_slider" on-type="primary" :steps="[100,200,300]" :labels="['Small', 'Medium', 'Big']">Slider</n-slider>
+                <n-slider v-bind="n_slider" :steps="[100,200,300]" :labels="['Small', 'Medium', 'Big']">Slider</n-slider>
             </div>
         </div>
 
@@ -1027,30 +1027,41 @@
 
         <div class="n-grid gap-10">
             <div class="col-auto">
-                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(0)">
+                <n-button type="primary" @click="console.log($refs.virtualbar)">
+                    console.log
+                </n-button>
+            </div>
+            <div class="col-auto">
+                <n-button type="primary" @click="$refs.virtualbar.scrollTo(0)">
                     Scroll to first item
                 </n-button>
             </div>
             <div class="col-auto">
-                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(2000)">
+                <n-button type="primary" @click="$refs.virtualbar.scrollTo(2000)">
                     Scroll to item 2000
                 </n-button>
             </div>
             <div class="col-auto">
-                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(7100)">
+                <n-button type="primary" @click="$refs.virtualbar.scrollTo(7100)">
                     Scroll to item 7100
                 </n-button>
             </div>
             <div class="col-auto">
-                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(-1)">
+                <n-button type="primary" @click="$refs.virtualbar.scrollTo(-1)">
                     Scroll to last item
                 </n-button>
             </div>
         </div>
 
-        <n-virtualbar v-if="false" ref="virtualscroller" :items="virtualData" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
-            <template v-slot:default="{ item }">
-                <div style="padding: 0 15px; line-height: 30px;">{{ item.label }}</div>
+        <n-virtualbar ref="virtualbar" :items="virtualData" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+            <template v-slot:default="{ value }">
+                <div style="padding: 0 15px; line-height: 30px;">{{ value.label }}</div>
+            </template>
+        </n-virtualbar>
+
+        <n-virtualbar :items="virtualData" :grid="true" :item-height="100" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+            <template v-slot:default="{ value }">
+                <div style="padding: 0 15px; line-height: 30px;">{{ value.label }}</div>
             </template>
         </n-virtualbar>
 
@@ -1069,13 +1080,19 @@
             </div>
         </div>
 
-        <n-draglist v-model:items="cascaderData" :render-expand="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+        <n-draglist :group="['foobar']" v-model:items="virtualTree" :safezone="0.2" :render-expand="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
             <template v-slot:default="{ value, item }">
                 <div style="padding: 0 15px; line-height: 34px;">{{ item?.label }}</div>
             </template>
         </n-draglist>
 
-        <n-draglist v-model:items="testData" unique-prop="uid" :transform-drop="transDrop" :threshold="0" :lazyload="true" :handle="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+        <n-draglist :group="['foobar']" v-model:items="virtualTree" :safezone="0.2" :grid="true" :render-expand="false" :render-select="true" :item-height="130" :item-width="130" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+            <template v-slot:default="{ value, item }">
+                <div style="padding: 0 15px; line-height: 34px;">{{ item?.label }}</div>
+            </template>
+        </n-draglist>
+
+        <n-draglist v-if="false" v-model:items="testData" unique-prop="uid" :transform-drop="transDrop" :threshold="0" :lazyload="true" :handle="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
             <template v-slot:default="{ value, item, copy, remove }">
                 <div class="grid grid--row grid--middle" style="height: 34px;">
                     <div draggable="true" style="padding: 0 10px;">
@@ -1110,7 +1127,7 @@
 
         <h2>NDropzone</h2>
 
-        <n-dropzone v-model:item="virtualItem" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+        <n-dropzone v-model:item="virtualItem" style="width: 300px; height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;" :allow-groups="['foobar']">
             <template v-slot:default="item">
                 <div style="padding: 0 5px; line-height: 34px;">{{ item?.label }}</div>
             </template>
@@ -1154,7 +1171,7 @@
             <n-table-column v-model="treeMatrix" label="Matrix 2" type="matrix" :data="{ matrix: 2 }" align="center" :fixed-width="120"></n-table-column>
         </n-table>
 
-        <n-table ref="table" v-model:items="virtualTree" :handle="true" :render-handle="true" :render-expand="true" :item-height="100" style="margin-top: 30px; height: 500px;">
+        <n-table ref="table" v-model:items="virtualTree" :handle="true" :render-handle="true" :render-expand="true" :render-select="true" :item-height="100" style="margin-top: 30px; height: 500px;">
             <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true">
                 <!--                <template v-slot:default="{item}">{{ item.value }}</template>-->
             </n-table-column>
@@ -1440,7 +1457,7 @@
 
             data.virtualData = itemGenerator(10000);
 
-            data.virtualTree = pi.Arr.each(itemGenerator(100), function (item) {
+            data.virtualTree = pi.Arr.each(itemGenerator(160), function (item) {
                 return pi.Obj.assign(item, { children: itemGenerator(10) });
             });
 

@@ -4,10 +4,37 @@ import { NDraglistController } from "./NDraglistController.ts";
 
 export const NDraglistProps = {
 
-    ...Props.Load,
     ...Props.Size,
     ...Props.Type,
     ...Props.Draglist,
+
+    /**
+     * @type {PropType<boolean>}
+     */
+    grid: {
+        type: [Boolean], default: false
+    },
+
+    /**
+     * @type {PropType<number>}
+     */
+    itemHeight: {
+        type: [Number], default: 32
+    },
+
+    /**
+     * @type {PropType<number>}
+     */
+    itemWidth: {
+        type: [Number], default: 120
+    },
+
+    /**
+     * @type {PropType<number>}
+     */
+    itemOffset: {
+        type: [Number], default: 30
+    },
 
     /**
      * @type {PropType<boolean>}

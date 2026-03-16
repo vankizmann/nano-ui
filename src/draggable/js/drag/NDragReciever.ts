@@ -12,6 +12,7 @@ export class NDragReciever
      * @type {any}
      */
     options : any = {
+        grid: false,
         dragmove: null,
         dragend: null,
         dragdrop: null,
@@ -30,7 +31,7 @@ export class NDragReciever
 
     dragmove(e : any, target : HTMLElement, config : any)
     {
-        const { dragmove } = this.options;
+        const { dragmove, grid } = this.options;
 
         const [zone, item] = [
             target.closest('[dropzone]'),
@@ -48,6 +49,10 @@ export class NDragReciever
 
         if ( dragmove ) {
             result = dragmove(e, result, config, els);
+        }
+
+        if ( !result.grid ) {
+            result.grid = grid;
         }
 
         if ( !result.type ) {
@@ -99,15 +104,23 @@ export class NDragReciever
             fn = (v : number) => v * safezone;
         }
 
-        const [padding, rect] = [
-            fn(el.clientHeight), Dom.find(el).rect()
+        const [{ grid }, rect] = [
+            this.options, Dom.find(el).rect()
         ];
 
-        if ( event.clientY < rect.y + padding ) {
+        const [offset, size, scale] = [
+            grid ? rect.x : rect.y,
+            grid ? rect.width : rect.height,
+            grid ? event.clientX : event.clientY,
+        ];
+
+        const padding = fn(size);
+
+        if ( scale < offset + padding ) {
             mode = 'before';
         }
 
-        if ( event.clientY > rect.y + rect.height - padding ) {
+        if ( scale > offset + size - padding ) {
             mode = 'after';
         }
 

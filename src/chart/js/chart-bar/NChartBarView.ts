@@ -147,9 +147,20 @@ export class NChartBarView extends ProtoView
             trigger: 'hover',
         };
 
+        const axis : any = {
+            class: ['n-chart-axis']
+        }
+
+        if ( ! item.type ) {
+            axis.class.push(`n-color-${color}`);
+        } else {
+            axis.class.push(`n-type-${item.type}`);
+        }
+
         const value = this.comp('n-popover', popover, () => [
-            h('span', item.axis),
-            h('span', item.value),
+            this.div(axis, [
+                h('span', item.value), h('span', item.axis),
+            ])
         ]);
 
         return h('div', props, [

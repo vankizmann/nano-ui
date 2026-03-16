@@ -55,6 +55,26 @@ export class NDraglistData extends ProtoExtend([ProtoData, DragData])
         this.scope.set('relation', value);
     }
 
+    get grid() : boolean
+    {
+        return this.scope.get('grid');
+    }
+
+    get itemHeight() : number
+    {
+        return this.scope.get('itemHeight');
+    }
+
+    get itemWidth() : number
+    {
+        return this.scope.get('itemWidth');
+    }
+
+    get itemOffset() : number
+    {
+        return this.scope.get('itemOffset');
+    }
+
     get scrollPortal() : boolean
     {
         return this.scope.get('scrollPortal');

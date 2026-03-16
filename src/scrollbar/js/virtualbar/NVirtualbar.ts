@@ -42,13 +42,6 @@ export const NVirtualbarProps = {
     /**
      * @type {PropType<boolean>}
      */
-    rawMode: {
-        type: [Boolean], default: false
-    },
-
-    /**
-     * @type {PropType<boolean>}
-     */
     overflowX: {
         type: [Boolean], default: true
     },
@@ -100,9 +93,9 @@ export default defineComponent({
     {
         let ncx = new NVirtualbarController(props, context);
 
-        ncx.pass([
-            'scrollTo'
-        ]);
+        ncx.pass({
+            'scrollTo': 'scrollTo',
+        });
 
         ncx.dispose(() => {
             ncx = null;

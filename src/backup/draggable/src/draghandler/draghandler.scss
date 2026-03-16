@@ -30,18 +30,32 @@
     right: 2px;
 }
 
-.n-drag-indicator.n-mode-before:before {
+.n-drag-indicator:not(.n-view-grid).n-mode-before:before {
     top: 2px;
     left: 2px;
     right: 2px;
     height: 2px;
 }
 
-.n-drag-indicator.n-mode-after:before {
+.n-drag-indicator.n-view-grid.n-mode-before:before {
+    top: 2px;
+    bottom: 2px;
+    left: 2px;
+    width: 2px;
+}
+
+.n-drag-indicator:not(.n-view-grid).n-mode-after:before {
     bottom: 2px;
     left: 2px;
     right: 2px;
     height: 2px;
+}
+
+.n-drag-indicator.n-view-grid.n-mode-after:before {
+    top: 2px;
+    bottom: 2px;
+    right: 2px;
+    width: 2px;
 }
 
 .n-drag-counter,

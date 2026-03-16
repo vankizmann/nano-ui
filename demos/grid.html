@@ -10,15 +10,7 @@
     <link rel="stylesheet" href="https://unpkg.com/backpack.css@2.0.0/lib/backpack.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="../dist/nano-ui.css">
-    <link id="theme" rel="stylesheet" href="../dist/themes/light.css">
-
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.5/vue.window.prod.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://unpkg.com/vue@3.4.6"></script>
-    <!-- <script src="../node_modules/pico-js/dist/pico-js.js"></script> -->
-<!--    <script src="https://vankizmann.github.io/pico-js/dist/pico-js.js"></script>-->
-    <script src="https://pico-js.test/dist/pico-js.browser.js"></script>
-    <script src="../dist/nano-ui.esm.js"></script>
+    <link id="theme" rel="stylesheet" href="../dist/themes/default.css">
 
     <link rel="stylesheet" href="../docs/dist/index.css">
 
@@ -62,7 +54,7 @@
     </style>
 
 </head>
-<body>
+<body class="n-demo n-size-md n-type-primary n-theme-dark">
 
 <div id="app">
     <div class="app-container">
@@ -74,45 +66,45 @@
                 <n-button type="primary" @click="virtualTree = virtualData">
                     Swap items
                 </n-button>
-                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(0)">
+                <n-button type="primary" @click="$refs.vitrualbar.scrollTo(0)">
                     Scroll to first item
                 </n-button>
             </div>
             <div class="col--auto">
-                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(2000)">
+                <n-button type="primary" @click="$refs.vitrualbar.scrollTo(2000)">
                     Scroll to item 2000
                 </n-button>
             </div>
             <div class="col--auto">
-                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(7100)">
+                <n-button type="primary" @click="$refs.vitrualbar.scrollTo(7100)">
                     Scroll to item 7100
                 </n-button>
             </div>
             <div class="col--auto">
-                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(-1)">
+                <n-button type="primary" @click="$refs.vitrualbar.scrollTo(-1)">
                     Scroll to last item
                 </n-button>
             </div>
         </div>
 
-        <n-virtualscroller ref="virtualscroller" :items="virtualData" :item-height="100" :item-width="200" style="height: 500px; margin-top: 30px; box-shadow: 0 0 2px 2px #dddedf; border-radius: 4px;">
+        <n-vitrualbar v-if="false" ref="vitrualbar" :items="virtualData" :item-height="100" :item-width="200" style="height: 500px; margin-top: 30px; box-shadow: 0 0 2px 2px #dddedf; border-radius: 4px;">
             <template v-slot:default="{ value }">
                 <div style="padding: 0 15px; line-height: 30px;">{{ value.label }}</div>
             </template>
-        </n-virtualscroller>
+        </n-vitrualbar>
 
         <div style="height: 500px; margin-top: 30px; box-shadow: 0 0 2px 2px #dddedf; border-radius: 4px; display: flex; flex-direction: column;">
             <div style="background: yellow; height: 80px; flex: 0 0 auto;">
 
             </div>
-            <n-draggrid ref="draggrid" v-model:items="virtualData2" :item-height="100" :item-width="200" style="min-height: 0; flex: 1 1 auto;">
+            <n-draggrid v-if="false" ref="draggrid" v-model:items="virtualData2" :item-height="100" :item-width="200" style="min-height: 0; flex: 1 1 auto;">
                 <template v-slot:default="{ item }">
                     <div style="width: 200px; height: 100px; padding: 0 15px; line-height: 30px;  background: #eee;">{{ item.label }}</div>
                 </template>
             </n-draggrid>
         </div>
 
-        <n-draggrid ref="draggrid" v-model:items="testData" :item-height="100" :item-width="200" :threshold="0" style="height: 500px; margin-top: 30px; box-shadow: 0 0 2px 2px #dddedf; border-radius: 4px;">
+        <n-draggrid v-if="false" ref="draggrid" v-model:items="testData" :item-height="100" :item-width="200" :threshold="0" style="height: 500px; margin-top: 30px; box-shadow: 0 0 2px 2px #dddedf; border-radius: 4px;">
             <template v-slot:default="{ item }">
                 <div style="width: 200px; height: 100px; padding: 0 15px; line-height: 30px;">{{ item.label }}</div>
             </template>
@@ -121,6 +113,10 @@
 
     </div>
 </div>
+
+<script src="http://mac.local/pico-js/dist/pico-js.browser.js"></script>
+<script src="https://unpkg.com/vue@3.5.28"></script>
+<script src="http://mac.local/nano-ui/dist/nano-ui.esm.js"></script>
 
 <script>
     (function (nano) {

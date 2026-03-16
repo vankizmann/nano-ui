@@ -37,6 +37,20 @@ export const NTableProps = {
         type: [Array], default: null
     },
 
+    /**
+     * @type {PropType<number>}
+     */
+    itemHeight: {
+        type: [Number], default: 32
+    },
+
+    /**
+     * @type {PropType<number>}
+     */
+    itemOffset: {
+        type: [Number], default: 30
+    },
+
 };
 
 export default defineComponent({

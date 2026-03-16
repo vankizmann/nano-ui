@@ -1,12 +1,5 @@
 @use "../../../root/helpers" as *;
 
-.n-virtualscroller:before {
-    z-index: 10 !important;
-}
-.n-virtualscroller:after {
-    z-index: 5 !important;
-}
-
 .n-virtualscroller__inner {
     position: relative;
     width: 100%;
@@ -15,17 +8,15 @@
 }
 
 .n-virtualscroller__row {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-}
-
-.n-virtualscroller--absolute .n-virtualscroller__row {
     position: absolute;
     left: 0;
     right: 0;
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+    height: var(--n-item-height);
 }
 
 .n-virtualscroller__item {
@@ -40,6 +31,7 @@
 
 .n-virtualscroller__row > .n-virtualscroller__item {
     flex: 0 0 auto;
+    width: var(--n-item-width);
 }
 
 div:not(.n-virtualscroller__row) > .n-virtualscroller__item {

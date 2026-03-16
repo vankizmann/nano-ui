@@ -194,26 +194,20 @@
 
 
 
-.n-chart-bar .n-chart-bar__axis {
-    position: relative;
-    flex: 1 1 100%;
+.n-chart-axis {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    text-align: right;
-    padding: 0 size('base-pad', 'calc($ * 0.6)') size('base-hgt');
+    text-align: center;
+    min-width: 40px;
 }
 
-.n-chart-bar .n-chart-bar__axis span {
+.n-chart-axis span {
     color: color('text', 0.6);
-    line-height: size('base-hgt-inline');
     font-size: size('base-fnt-label');
+    line-height: size('base-hgt-inline');
 }
 
-.n-chart-bar .n-chart-bar__axis span:first-child {
-    margin-bottom: auto;
-}
-
-.n-chart-bar .n-chart-bar__axis span:last-child {
-    margin-top: auto;
+.n-chart-axis span:first-child {
+    color: color('base-color');
+    font-weight: bold;
 }

@@ -24,7 +24,7 @@ export class NChartDonutView extends ProtoView
      * @type {any}
      */
     attrs: any = {
-        'cx': '65', 'cy': '65', 'r': '57.2958'
+        'cx': '70', 'cy': '70', 'r': '57.2958'
     };
 
     default() : any
@@ -64,7 +64,7 @@ export class NChartDonutView extends ProtoView
         const props : any = {
             width: 600,
             height: 600,
-            viewBox: '0 0 130 130',
+            viewBox: '0 0 140 140',
         };
 
         this.last = 0;

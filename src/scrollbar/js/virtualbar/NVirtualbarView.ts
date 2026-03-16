@@ -87,7 +87,11 @@ export class NVirtualbarView extends ProtoView
             class: [`${this.vem}__inner`]
         };
 
-        const total = data.items.length * data.itemHeight;
+        let total = data.items.length * data.itemHeight;
+
+        if ( data.grid ) {
+            total = (data.state.total ?? 0) * data.itemHeight
+        }
 
         props.style = {
             'overflow-y': 'hidden', 'height': `${total}px`,
@@ -95,7 +99,7 @@ export class NVirtualbarView extends ProtoView
 
         const [hkey, wkey] = [
             '--n-item-height', '--n-item-width'
-        ]
+        ];
 
         props.style = {
             ...props.style, [hkey]: `${data.itemHeight}px`
@@ -112,13 +116,59 @@ export class NVirtualbarView extends ProtoView
 
     grid()
     {
-        return null;
+        const [{ data }, { start, end, grid, total }] = [
+            this.scope, this.scope.data.state
+        ];
+
+        const rows = Arr.chunk(...[
+            data.items, grid
+        ]);
+
+        let items = Arr.slice(...[
+            rows, start, end
+        ]);
+
+        const result = Arr.each(items, (value : any, index : number) => {
+            return this.row(value, index + start);
+        });
+
+        return [...result];
+    }
+
+    row(row : any[], index : number) : any
+    {
+        const { context, data } = this.scope;
+
+        let fn = () => null;
+
+        if ( context.slots.default ) {
+            fn = context.slots.default;
+        }
+
+        let props : any = {
+            class: [`${this.vem}__row`]
+        };
+
+        props.style = {
+            top: `${index * data.itemHeight}px`,
+        };
+
+        const nodes = Arr.each(row, (value : any, i : number) => {
+            return this.node({ value, index: i + index }, fn, true);
+        });
+
+        return h('div', props, [
+            ...nodes
+        ]);
     }
 
     list()
     {
-        const [{ context, data }, { start, end }] = [
-            this.scope, this.scope.data.state
+        const { context, data } = this.scope;
+
+        const [start, end] = [
+            Math.max(1, data.state.start),
+            Math.min(data.state.end, data.items.length - 1)
         ];
 
         let items = Arr.slice(...[
@@ -150,10 +200,6 @@ export class NVirtualbarView extends ProtoView
             fn = context.slots.default;
         }
 
-        if ( data.state.start === 0 ) {
-            return null;
-        }
-
         return this.node({
             value: Arr.first(data.items), index: 0
         }, fn);
@@ -169,35 +215,26 @@ export class NVirtualbarView extends ProtoView
             fn = context.slots.default;
         }
 
-        const len = data.items.length;
-
-        if ( data.state.end === len ) {
-            return null;
-        }
-
         return this.node({
-            value: Arr.last(data.items), index: len
+            value: Arr.last(data.items), index: data.items.length-1
         }, fn);
     }
 
-    node(item : any, fn : Function)
+    node(item : any, fn : Function, row : boolean = false)
     {
         const { data } = this.scope;
 
         let props : any = {
             key: this.scope.uid + item.index,
-            class: [`${this.vem}__item`]
+            class: [`${this.vem}__item`],
+            style: {}
         };
 
         const height = data.itemHeight;
 
-        props.style = {
-           top: `${item.index * height}px`,
-        };
-
-        // if ( data.rawMode ) {
-        //     return fn({ ...item, props });
-        // }
+        if ( ! row ) {
+            props.style.top = `${item.index * height}px`;
+        }
 
         return h('div', props, [fn(item)]);
     }
