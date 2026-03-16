@@ -69,7 +69,7 @@ export default defineComponent({
     /**
      * @type {boolean}
      */
-    inheritAttrs: false,
+    //inheritAttrs: false,
 
     /**
      * @type {string[]}
