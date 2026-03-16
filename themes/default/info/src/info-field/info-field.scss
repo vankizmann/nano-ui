@@ -1,5 +1,5 @@
 @use "../../../root/helpers" as *;
 
-.n-info-field.n-info-field--image > div {
+.n-info-column.n-info-column--image .n-info-cell .n-preview {
      background-color: color('gray-50', 0.2);
 }

@@ -1171,7 +1171,7 @@
             <n-table-column v-model="treeMatrix" label="Matrix 2" type="matrix" :data="{ matrix: 2 }" align="center" :fixed-width="120"></n-table-column>
         </n-table>
 
-        <n-table ref="table" v-model:items="virtualTree" :handle="true" :render-handle="true" :render-expand="true" :render-select="true" :item-height="100" style="margin-top: 30px; height: 500px;">
+        <n-table ref="table" v-model:items="virtualTree" v-model:current="n_table.current" :handle="true" :render-handle="true" :render-expand="true" :render-select="true" :item-height="100" style="margin-top: 30px; height: 500px;">
             <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true">
                 <!--                <template v-slot:default="{item}">{{ item.value }}</template>-->
             </n-table-column>
@@ -1211,20 +1211,22 @@
 
         <h2>NInfo</h2>
 
-        <n-info ref="info" :sync-event="() => $refs.table.syncCurrent()" style="margin-top: 30px; width: 300px; height: 500px;">
+        <n-info ref="info" :item="n_table.current" :scrollbar="true" style="margin-top: 30px; width: 300px; height: 500px;">
             <n-info-column label="Label" type="string" prop="label"></n-info-column>
             <n-info-column label="Image" type="image" prop="image"></n-info-column>
             <n-info-column label="Date" type="datetime" prop="date"></n-info-column>
             <n-info-column label="Enabled" type="boolean" prop="enabled"></n-info-column>
+            <n-info-column label="Enabled 3123 asd as" type="option" prop="enabled" :options="[{ value: true, name: 'JAAAA' }, { value: false, name: 'NEEEEEJ' }]" options-value="$value.value" options-label="$value.name"></n-info-column>
             <n-info-column label="Value" type="string" prop="value"></n-info-column>
             <n-info-column label="ID" type="string" prop="id"></n-info-column>
         </n-info>
 
-        <n-info ref="info" :sync-event="() => $refs.table.syncCurrent()" :relative="true" style="margin-top: 30px; width: 300px;">
+        <n-info ref="info" :item="n_table.current"  style="margin-top: 30px; width: 300px;">
             <n-info-column label="Label" type="string" prop="label"></n-info-column>
             <n-info-column label="Image" type="image" prop="image"></n-info-column>
             <n-info-column label="Date" type="datetime" prop="date"></n-info-column>
             <n-info-column label="Enabled" type="boolean" prop="enabled"></n-info-column>
+            <n-info-column label="Enabled 3123 asd as" type="option" prop="enabled" :options="[{ value: true, name: 'JAAAA' }, { value: false, name: 'NEEEEEJ' }]" options-value="$value.value" options-label="$value.name"></n-info-column>
             <n-info-column label="ID" type="string" prop="id"></n-info-column>
         </n-info>
 
@@ -1479,6 +1481,10 @@
 
             data.n_tags = {
                 size: 'md',
+            };
+
+            data.n_table = {
+                current: null
             };
 
             data.n_rating = {

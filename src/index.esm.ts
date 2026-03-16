@@ -15,6 +15,7 @@ import NScrollbar from "./scrollbar/index.ts";
 import NResizer from "./resizer/index.ts";
 import NDraggable from "./draggable/index.ts";
 import NTable from "./table/index.ts";
+import NInfo from "./info/index.ts";
 import NEmpty from "./empty/index.ts";
 import NModal from "./modal/index.ts";
 import NLoader from "./loader/index.ts";
@@ -43,6 +44,7 @@ const NanoImports = [
     NResizer,
     NDraggable,
     NTable,
+    NInfo,
     NEmpty,
     NCascader,
     NModal,

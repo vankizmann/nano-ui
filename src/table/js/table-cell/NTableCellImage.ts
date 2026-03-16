@@ -9,20 +9,21 @@ export const NTableCellImage = ({ node, table, column, props, input, comp }) => 
         ...props,
     };
 
-    const { total } = node.value;
-
     let image : any = {
         file: input,
-        index: total,
         group: column.uid,
     };
 
-    if ( data.thumbProp ) {
+    if ( Obj.has(node, 'value.total') ) {
+        image.index = node.value.total;
+    }
+
+    if ( Obj.has(data, 'thumbProp') ) {
         image.thumb = Obj.get(node.item, data.thumbProp);
     }
 
     image.onFocus = () => {
-        table.ncx('draglist').setTotalCurrent(total);
+        table?.ncx('draglist').setTotalCurrent(image.index);
     };
 
     return h('div', props, [

@@ -372,10 +372,17 @@ export class NTableView extends ProtoView
             width: width + 'px'
         };
 
-        const input = Obj.get(node.item, data.prop);
+        const input = Obj.get(...[
+            node.item, data.prop
+        ]);
 
         const cell = {
-            props, input, node, column, table: scope, comp: this.comp,
+            props: props,
+            input: input,
+            node: node,
+            column: column,
+            table: scope,
+            comp: this.comp,
         };
 
         return this.resolve(data.type)({

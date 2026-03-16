@@ -66,14 +66,11 @@ export class NFormController extends GroupController
     {
         this.compareChange();
         this.extractChecks();
-
-        console.log(this.hash, this.data.dirty, this.data.checks);
-        console.log('onFormChange');
     }
 
     onFieldChange()
     {
-        console.log('onFieldChange');
+        // console.log('onFieldChange');
     }
 
     compareChange()

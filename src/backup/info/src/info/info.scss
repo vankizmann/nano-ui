@@ -23,7 +23,3 @@
     margin: auto;
     padding: size('base-pad', 'calc($ * 2)') size('base-pad');
 }
-
-.n-info__column:not(:last-child) {
-    margin-bottom: size('base-pad');
-}

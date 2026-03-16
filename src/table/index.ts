@@ -21,10 +21,10 @@ globalThis.NTableCells = {
     'string': NTableCellString,
     'boolean': NTableCellBoolean,
     'datetime': NTableCellDatetime,
+    'image': NTableCellImage,
     'option': NTableCellOption,
     'select': NTableCellSelect,
     'matrix': NTableCellMatrix,
-    'image': NTableCellImage,
 };
 
 import NTableFilterString from "./js/table-filter/NTableFilterString.ts";

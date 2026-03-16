@@ -1,9 +1,10 @@
 @use "../../../root/helpers" as *;
 
-.n-info-field {
+.n-info-cell {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
+    font-size: size('base-fnt');
 }
