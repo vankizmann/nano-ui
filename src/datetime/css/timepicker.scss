@@ -1,0 +1,150 @@
+@use "../../root/css/helpers" as *;
+
+.n-timepicker {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 100%;
+    border: 1px solid transparent;
+}
+
+.n-timepicker.n-disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.n-timepicker__display {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: calc(100% + 2px);
+    margin: -1px;
+    border: 1px solid transparent;
+}
+
+.n-timepicker__seperator {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-timepicker__input {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 50%;
+}
+
+.n-timepicker__input input {
+    cursor: default;
+    appearance: none;
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    text-decoration: none;
+    line-height: 1.2;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.n-disabled .n-timepicker__input input {
+    cursor: not-allowed;
+}
+
+.n-timepicker__icon {
+    margin-right: size('base-pad', 'calc($ * -1)');
+}
+
+.n-timepicker__icon,
+.n-timepicker__clear,
+.n-timepicker__angle {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-timepicker__clear,
+.n-timepicker__angle {
+    order: 100;
+}
+
+.n-timepicker__clear {
+    display: none;
+}
+
+.n-timepicker:hover.n-clearable:not(.n-empty) .n-timepicker__clear,
+.n-timepicker.n-focus.n-clearable:not(.n-empty) .n-timepicker__clear {
+    display: flex;
+}
+
+.n-timepicker:hover.n-clearable:not(.n-empty) .n-timepicker__angle,
+.n-timepicker.n-focus.n-clearable:not(.n-empty) .n-timepicker__angle {
+    display: none;
+}
+
+.n-timepicker__angle {
+    transition: transform 0.25s;
+}
+
+.n-timepicker.n-focus .n-timepicker__angle {
+    transform: scaleY(-1);
+}
+
+.n-timepicker__clear i,
+.n-timepicker__angle i {
+    text-align: center;
+}
+
+.n-timepicker__clear i {
+    border-radius: 500px;
+}
+
+.n-timepicker__placeholder {
+    flex: 1 1 auto;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.n-timepicker__body,
+.n-timepicker__empty {
+     overflow: hidden;
+     border: 0;
+}
+
+.n-timepicker__empty {
+     text-align: center;
+}
+
+.n-timepicker {
+    height: size('base-hgt');
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
+}
+
+.n-timepicker__seperator,
+.n-timepicker__input input {
+    padding: 0 size('base-pad');
+}
+
+.n-timepicker__icon,
+.n-timepicker__clear,
+.n-timepicker__angle {
+    width: size('base-hgt');
+}
+
+.n-timepicker__body {
+    border-radius: size('base-rad');
+}

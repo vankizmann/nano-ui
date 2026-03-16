@@ -1,0 +1,53 @@
+@use "../../root/css/helpers" as *;
+
+.n-button {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    text-decoration: none;
+    font-size: size('base-fnt');
+    line-height: 1.2;
+    background: transparent;
+    border: 1px solid transparent;
+    transition: border 0.10s, background 0.10s;
+}
+
+.n-button:not(.n-button--link),
+.n-button.n-button--glass.n-button--link {
+    height: size('base-hgt');
+    border-radius: size('base-rad');
+}
+
+.n-button.n-button--square:not(.n-button--link),
+.n-button.n-button--square.n-button--glass.n-button--link {
+    width: size('base-hgt');
+}
+
+.n-button.n-button--round:not(.n-button--link),
+.n-button.n-button--round.n-button.n-button--glass.n-button--link {
+    padding: 0 size('base-pad', 'calc($ * 1.3)');
+    border-radius: 500px;
+}
+
+.n-button:not(.n-button--link,.n-button--square,.n-button--round),
+.n-button.n-button--glass.n-button--link:not(.n-button--square,.n-button--round) {
+    padding: 0 size('base-pad');
+}
+
+.n-button.n-disabled {
+    cursor: not-allowed;
+}
+
+.n-button .n-icon {
+    font-size: size('base-fnt-icon');
+}
+
+.n-button.n-icon-before .n-icon:not(:last-child) {
+    margin-right: size('base-pad', 'calc($ * 0.8)');
+}
+
+.n-button.n-icon-after .n-icon:not(:first-child) {
+    margin-left: size('base-pad', 'calc($ * 0.8)');
+}

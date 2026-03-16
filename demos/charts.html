@@ -76,15 +76,8 @@
 
     </style>
 
-    <script src="https://unpkg.com/moment"></script>
-    <script src="https://unpkg.com/vue@3.4.6"></script>
-    <script src="https://unpkg.com/@kizmann/pico-js/dist/pico-js.js"></script>
-    <script src="../dist/nano-ui.esm.js"></script>
-    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-
 </head>
-<body class="n-demo">
+<body class="n-demo n-size-md n-type-primary">
 
 <div id="app" class="nano-theme-preview">
     <div class="app-container">
@@ -111,7 +104,7 @@
 
         <div class="n-grid gap-30">
             <div class="col-auto">
-                <n-chart-donut v-bind="n_donut" size="xs" label="foaosdoas daosdo asofosdafs dfsdfo sdfosd">
+                <n-chart-donut v-bind="n_donut" :overlap="true" size="xs" label="foaosdoas daosdo asofosdafs dfsdfo sdfosd">
                     <n-chart-item value="80" type="primary"></n-chart-item>
                     <n-chart-item value="20" type="warning"></n-chart-item>
                     <n-chart-item value="25" type="success"></n-chart-item>
@@ -119,7 +112,7 @@
                 </n-chart-donut>
             </div>
             <div class="col-auto">
-                <n-chart-donut v-bind="n_donut" :overlap="true" linecap="normal" size="sm">
+                <n-chart-donut v-bind="n_donut" linecap="normal" size="sm">
                     <n-chart-item value="500" color="9"></n-chart-item>
                     <n-chart-item value="20" color="10"></n-chart-item>
                     <n-chart-item value="25" color="11"></n-chart-item>
@@ -130,40 +123,40 @@
             </div>
             <div class="col-auto">
                 <n-chart-donut v-bind="n_donut">
-                    <n-chart-item value="500" color="auto"></n-chart-item>
-                    <n-chart-item value="6" color="auto"></n-chart-item>
-                    <n-chart-item value="7" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="6" color="auto"></n-chart-item>
-                    <n-chart-item value="7" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="6" color="auto"></n-chart-item>
-                    <n-chart-item value="7" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="6" color="auto"></n-chart-item>
-                    <n-chart-item value="7" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="6" color="auto"></n-chart-item>
-                    <n-chart-item value="7" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
+                    <n-chart-item value="500"></n-chart-item>
+                    <n-chart-item value="6"></n-chart-item>
+                    <n-chart-item value="7"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="6"></n-chart-item>
+                    <n-chart-item value="7"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="6"></n-chart-item>
+                    <n-chart-item value="7"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="6"></n-chart-item>
+                    <n-chart-item value="7"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="6"></n-chart-item>
+                    <n-chart-item value="7"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
                 </n-chart-donut>
             </div>
             <div class="col-auto">
                 <n-chart-donut v-bind="n_donut" size="xl">
-                    <n-chart-item value="40" color="auto"></n-chart-item>
-                    <n-chart-item value="35" color="auto"></n-chart-item>
-                    <n-chart-item value="30" color="auto"></n-chart-item>
-                    <n-chart-item value="30" color="auto"></n-chart-item>
+                    <n-chart-item value="40"></n-chart-item>
+                    <n-chart-item value="35"></n-chart-item>
+                    <n-chart-item value="30"></n-chart-item>
+                    <n-chart-item value="30"></n-chart-item>
                 </n-chart-donut>
             </div>
         </div>
@@ -181,65 +174,69 @@
 
         <div class="n-grid gap-30">
             <div class="col-auto">
-                <n-chart-bar v-bind="n_bar" size="xs">
+                <n-chart-bar v-bind="n_bar" :legend="false" size="xs">
                     <n-chart-item value="80" type="primary"></n-chart-item>
-                    <n-chart-item value="20" type="primary"></n-chart-item>
-                    <n-chart-item value="25" type="primary"></n-chart-item>
-                    <n-chart-item value="40" type="primary"></n-chart-item>
-                    <n-chart-item value="25" type="primary"></n-chart-item>
-                    <n-chart-item value="40" type="primary"></n-chart-item>
+                    <n-chart-item value="20" type="warning"></n-chart-item>
+                    <n-chart-item value="25" type="danger"></n-chart-item>
+                    <n-chart-item value="40" type="info"></n-chart-item>
+                    <n-chart-item value="25" type="success"></n-chart-item>
+                    <n-chart-item value="40" type="neutral"></n-chart-item>
                 </n-chart-bar>
             </div>
             <div class="col-auto">
                 <n-chart-bar v-bind="n_bar" :sort="true" size="sm">
-                    <n-chart-item value="40" color="9"></n-chart-item>
-                    <n-chart-item value="20" color="10"></n-chart-item>
-                    <n-chart-item value="25" color="11"></n-chart-item>
-                    <n-chart-item value="40" color="12"></n-chart-item>
-                    <n-chart-item value="80" color="13"></n-chart-item>
-                    <n-chart-item value="20" color="14"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="6" color="auto"></n-chart-item>
-                    <n-chart-item value="7" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="6" color="auto"></n-chart-item>
-                    <n-chart-item value="7" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="6" color="auto"></n-chart-item>
-                    <n-chart-item value="7" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
-                    <n-chart-item value="2" color="auto"></n-chart-item>
+                    <n-chart-item value="40"></n-chart-item>
+                    <n-chart-item value="20"></n-chart-item>
+                    <n-chart-item value="25"></n-chart-item>
+                    <n-chart-item value="40"></n-chart-item>
+                    <n-chart-item value="80"></n-chart-item>
+                    <n-chart-item value="20"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="6"></n-chart-item>
+                    <n-chart-item value="7"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="6"></n-chart-item>
+                    <n-chart-item value="7"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="6"></n-chart-item>
+                    <n-chart-item value="7"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
+                    <n-chart-item value="2"></n-chart-item>
                 </n-chart-bar>
             </div>
             <div class="col-auto">
                 <n-chart-bar v-bind="n_bar">
-                    <n-chart-item value="4800" color="auto"></n-chart-item>
-                    <n-chart-item value="2000" color="auto"></n-chart-item>
-                    <n-chart-item value="0" color="auto"></n-chart-item>
-                    <n-chart-item value="250" color="auto"></n-chart-item>
-                    <n-chart-item value="400" color="auto"></n-chart-item>
-                    <n-chart-item value="800" color="auto"></n-chart-item>
-                    <n-chart-item value="200" color="auto"></n-chart-item>
-                    <n-chart-item value="250" color="auto"></n-chart-item>
+                    <n-chart-item value="4800"></n-chart-item>
+                    <n-chart-item value="2000"></n-chart-item>
+                    <n-chart-item value="0"></n-chart-item>
+                    <n-chart-item value="250"></n-chart-item>
+                    <n-chart-item value="400"></n-chart-item>
+                    <n-chart-item value="800"></n-chart-item>
+                    <n-chart-item value="200"></n-chart-item>
+                    <n-chart-item value="250"></n-chart-item>
                 </n-chart-bar>
             </div>
             <div class="col-auto">
-                <n-chart-bar v-bind="n_bar" size="xl">
-                    <n-chart-item value="40" color="auto"></n-chart-item>
-                    <n-chart-item value="35" color="auto"></n-chart-item>
-                    <n-chart-item value="30" color="auto"></n-chart-item>
-                    <n-chart-item value="30" color="auto"></n-chart-item>
+                <n-chart-bar v-bind="n_bar" :legend="false" size="xl">
+                    <n-chart-item value="40"></n-chart-item>
+                    <n-chart-item value="35"></n-chart-item>
+                    <n-chart-item value="30"></n-chart-item>
+                    <n-chart-item value="30"></n-chart-item>
                 </n-chart-bar>
             </div>
         </div>
 
     </div>
 </div>
+
+<script src="https://unpkg.com/@kizmann/pico-js@2.1/dist/pico-js.browser.js"></script>
+<script src="https://unpkg.com/vue@3.5.28"></script>
+<script src="../dist/nano-ui.esm.js"></script>
 
 <script>
     (function (nano) {
@@ -280,10 +277,10 @@
 
             data.n_theme = pi.Cookie.get('theme', 'light', 'string');
 
-            pi.Dom.find('body').addClass('n-theme--' + data.n_theme);
+            pi.Dom.find('body').addClass('n-theme-' + data.n_theme);
 
             data.n_donut = {
-                width: 6, color: 0, limit: 5
+                width: 8, color: 0, limit: 5
             };
 
             data.n_bar = {

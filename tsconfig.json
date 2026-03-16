@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "removeComments": false,
+        "skipLibCheck": true,
+        "allowImportingTsExtensions": true,
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "baseUrl": "./",
+        "outDir": "./types",
+        "rootDir": "./src"
+    },
+    "include": [
+        "src/index.esm.ts"
+    ],
+    "exclude": [
+        "tests",
+        "dist",
+    ]
+}

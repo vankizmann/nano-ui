@@ -1,7 +1,7 @@
 @use "../../../root/helpers" as *;
 
-.n-table__header .n-table-column:not(:first-child) {
-    border-left: 1px solid color('gray-10');
+.n-table__header .n-table-column:not(:last-child) {
+    box-shadow: inset -1px 0 1px 0 color('gray-15');
 }
 
 .n-table-column.n-filtered .n-table-column__label {

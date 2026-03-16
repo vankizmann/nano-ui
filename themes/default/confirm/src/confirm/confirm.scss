@@ -1,23 +1,22 @@
 @use "../../../root/helpers" as *;
 
 .n-confirm {
-    background: color('shadow', 0.8);
     // PERFORMANCE backdrop-filter: blur(1.5px);
-    transition: opacity 0.3s;
+    transition: opacity 0.2s;
 }
 
 .n-confirm:not(.n-ready) {
     opacity: 0;
 }
 
-.n-confirm-frame {
+.n-confirm__frame {
     background: color('background');
-    transition: transform 0.3s;
+    transition: transform 0.1s;
     box-shadow: 0 2px 20px color('shadow', 0.1), 0 0 2px color('shadow', 0.15);
 }
 
-.n-confirm:not(.n-ready) .n-confirm-frame {
-    transform: translateY(50px) scale(0.6);
+.n-confirm:not(.n-ready) .n-confirm__frame {
+    transform: translateY(50px) scale(0.7);
 }
 
 .n-confirm__text {

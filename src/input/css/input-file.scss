@@ -1,0 +1,25 @@
+@use "../../root/css/helpers" as *;
+
+.n-input-file {
+    position: relative;
+    display: inline-flex;
+    width: 100%;
+}
+
+.n-input-file > .n-input {
+    flex: 1 1 auto;
+}
+
+.n-input-file .n-input input {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.n-input-file > .n-button {
+    flex: 0 0 auto;
+    margin-left: size('base-pad');
+}
+
+.n-input-file .n-input-file__input {
+    display: none;
+}

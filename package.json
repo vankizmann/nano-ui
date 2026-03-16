@@ -1,18 +1,15 @@
 {
     "name": "@kizmann/nano-ui",
-    "version": "2.0.2",
+    "version": "3.0.0",
     "license": "MIT",
     "type": "module",
     "private": false,
     "author": "Eduard Kizmann <kizmann@protonmail.ch>",
     "repository": "https://github.com/vankizmann/nano-ui",
-    "main": "./src/index.esm.js",
-    "unpkg": "./dist/pico-js.browser.js",
-    "jsnext:main": "./src/index.esm.js",
+    "main": "./dist/nano-js.esm.js",
+    "unpkg": "./dist/nano-js.browser.js",
+    "jsnext:main": "./dist/nano-js.esm.js",
     "typings": "./types/index.esm.d.ts",
-    "imports": {
-        "#src/*": "./src/*"
-    },
     "files": [
         "dist/",
         "src/",
@@ -34,6 +31,7 @@
         "@babel/plugin-proposal-export-default-from": "^7.2.0",
         "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
         "@babel/preset-env": "^7.4.4",
+        "@babel/preset-typescript": "^7.28.5",
         "@vue/babel-plugin-jsx": "^1.0.0",
         "@vue/babel-preset-jsx": "^1.2.4",
         "autoprefixer": "^9.6.1",
@@ -56,6 +54,6 @@
         "webpack-dev-server": "^5.2.3"
     },
     "dependencies": {
-        "@kizmann/pico-js": "^2.0.6"
+        "@kizmann/pico-js": "^2.1.0"
     }
 }

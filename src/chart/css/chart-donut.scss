@@ -1,0 +1,108 @@
+@use "../../root/css/helpers" as *;
+
+.n-chart-donut {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    height: size('base-hgt-inline', 'calc($ * 11)');
+}
+
+.n-chart-donut__chart {
+    flex: 0 0 auto;
+    overflow: hidden;
+    position: relative;
+    width: size('base-hgt-inline', 'calc($ * 11)');
+    margin-bottom: auto;
+    border-radius: 500px;
+    font-size: size('base-fnt');
+}
+
+.n-chart-donut:not(.n-chart-donut--overlap) .n-chart-item {
+    stroke-linecap: round;
+}
+
+.n-chart-donut svg {
+    width: 100%;
+    height: auto;
+}
+
+.n-chart-donut g.n-chart-group {
+    transform: rotate(-90deg);
+    transform-origin: center;
+}
+
+.n-chart-donut circle {
+    fill: transparent;
+}
+
+.n-chart-donut circle.n-chart-item {
+    pointer-events: stroke;
+    stroke-width: var(--n-stroke-width);
+    transition: opacity 0.2s;
+}
+
+.n-chart-donut__base {
+    pointer-events: none;
+    stroke-width: var(--n-stroke-hover-width);
+    stroke: transparent;
+}
+
+@property --n-chart-value {
+    syntax: '<integer>';
+    initial-value: 0;
+    inherits: true;
+}
+
+.n-chart-donut__text {
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 22%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 56%;
+    transform: translateY(-50%);
+}
+
+.n-chart-donut__text span {
+    overflow: hidden;
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.n-chart-donut__text span:first-child {
+    font-size: 1.8em;
+    line-height: 1.2em;
+    transition: --n-chart-value 0.3s;
+    counter-reset: chart-counter var(--n-chart-value);
+}
+
+.n-chart-donut__text span:first-child:after {
+    content: counter(chart-counter);
+}
+
+.n-chart-donut__text span:last-child {
+    font-size: 0.95em;
+    line-height: 1.2em;
+}
+
+.n-chart-donut__text span:last-child:after {
+    content: var(--n-chart-label);
+}
+
+.n-chart-donut__legend {
+    flex: 0 0 auto;
+    height: 100%;
+    width: 230px;
+    margin-left: size('base-pad', 'calc($ * 2)');
+    background: color('gray-50', 0.2);
+    border-radius: size('base-rad-inline');
+}
+
+.n-chart-donut__legend .n-scrollbar__wrap {
+    padding: size('base-pad', 'calc($ * 1.3)') size('base-pad', 'calc($ * 1.5)');
+}

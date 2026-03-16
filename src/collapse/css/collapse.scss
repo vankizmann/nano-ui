@@ -1,0 +1,11 @@
+@use "../../root/css/helpers" as *;
+
+.n-collapse {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
+}

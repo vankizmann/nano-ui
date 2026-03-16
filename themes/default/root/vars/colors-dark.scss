@@ -6,7 +6,7 @@ $color-black:           #161616 !default;
 
 $color-text:            #E3E3E3 !default;
 $color-shadow:          #000000 !default;
-$color-tooltip:         #161616 !default;
+$color-tooltip:         #000000 !default;
 $color-popover:         #292929 !default;
 
 $color-foreground:      $color-white !default;
@@ -442,8 +442,14 @@ $color-list: (
 @mixin exports() {
 
     @each $name, $values in $color-list {
-        [class*="--#{$name}"] {
+        &.n-type-#{$name}, .n-type-#{$name} {
             @include css-remaps($values, '-color-dark-#{$name}', '-color-base');
+        }
+    }
+
+    @for $index from 0 through 20 {
+        &.n-color-#{$index}, .n-color-#{$index} {
+            --n-color-base-color: var(--n-color-dark-tag-#{$index});
         }
     }
 

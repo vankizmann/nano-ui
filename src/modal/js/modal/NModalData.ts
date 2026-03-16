@@ -1,0 +1,74 @@
+import { ProtoData } from "../../../root/index.ts";
+import { NModalController } from "./NModalController.ts";
+
+export class NModalData extends ProtoData
+{
+    /**
+     * @type {NModalController}
+     */
+    declare scope : NModalController;
+
+    get classList() : string[]
+    {
+        let classList = [];
+
+        if ( this.position != null ) {
+            classList.push(`:bem--${this.position}`);
+        }
+
+        return this.classRoot(classList);
+    }
+
+    get model() : boolean
+    {
+        return this.scope.get('modelValue');
+    }
+
+    get listen() : boolean
+    {
+        return this.scope.get('listen');
+    }
+
+    get closable() : boolean
+    {
+        return this.scope.get('closable');
+    }
+
+    get scrollbar() : boolean
+    {
+        return this.scope.get('scrollbar');
+    }
+
+    get width() : number
+    {
+        return this.scope.get('width');
+    }
+
+    get height() : number
+    {
+        return this.scope.get('height');
+    }
+
+    get target() : any
+    {
+        return this.scope.get('target');
+    }
+
+    get position() : string
+    {
+        return this.scope.get('position');
+    }
+
+    get beforeOpen() : Function
+    {
+        return this.scope.get('beforeOpen');
+    }
+
+    get beforeClose() : Function
+    {
+        return this.scope.get('beforeClose');
+    }
+
+}
+
+export default NModalData;

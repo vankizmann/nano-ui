@@ -1,0 +1,144 @@
+@use "../../root/css/helpers" as *;
+
+.n-durationpicker {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 100%;
+    border: 1px solid transparent;
+}
+
+.n-durationpicker.n-disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.n-durationpicker__display {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: calc(100% + 2px);
+    margin: -1px;
+    border: 1px solid transparent;
+}
+
+.n-durationpicker__input {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 50%;
+}
+
+.n-durationpicker__input input {
+    cursor: default;
+    appearance: none;
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    text-decoration: none;
+    line-height: 1.2;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.n-disabled .n-durationpicker__input input {
+    cursor: not-allowed;
+}
+
+.n-durationpicker__icon {
+    margin-right: size('base-pad', 'calc($ * -1)');
+}
+
+.n-durationpicker__icon,
+.n-durationpicker__clear,
+.n-durationpicker__angle {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-durationpicker__clear,
+.n-durationpicker__angle {
+    order: 100;
+}
+
+.n-durationpicker__clear {
+    display: none;
+}
+
+.n-durationpicker:hover.n-clearable:not(.n-empty) .n-durationpicker__clear,
+.n-durationpicker.n-focus.n-clearable:not(.n-empty) .n-durationpicker__clear {
+    display: flex;
+}
+
+.n-durationpicker:hover.n-clearable:not(.n-empty) .n-durationpicker__angle,
+.n-durationpicker.n-focus.n-clearable:not(.n-empty) .n-durationpicker__angle {
+    display: none;
+}
+
+.n-durationpicker__angle {
+    transition: transform 0.25s;
+}
+
+.n-durationpicker.n-focus .n-durationpicker__angle {
+    transform: scaleY(-1);
+}
+
+.n-durationpicker__clear i,
+.n-durationpicker__angle i {
+    text-align: center;
+}
+
+.n-durationpicker__clear i {
+    border-radius: 500px;
+}
+
+.n-durationpicker__placeholder {
+    flex: 1 1 auto;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+
+.n-durationpicker__body,
+.n-durationpicker__empty {
+    overflow: hidden;
+    max-height: 210px;
+    border-radius: size('base-rad');
+}
+
+.n-durationpicker__empty {
+    text-align: center;
+    padding: size('base-pad-vertical') size('base-pad');
+}
+
+.n-durationpicker {
+    height: size('base-hgt');
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
+}
+
+.n-durationpicker__input input {
+    padding: 0 size('base-pad');
+}
+
+.n-durationpicker__icon,
+.n-durationpicker__clear,
+.n-durationpicker__angle {
+    width: size('base-hgt');
+}
+
+.n-durationpicker-panel {
+    border-radius: size('base-rad');
+}

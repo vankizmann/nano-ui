@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="../dist/nano-ui.css">
     <link id="theme" rel="stylesheet" href="../dist/themes/default.css">
 
-    <link rel="stylesheet" href="../style.css">
-
     <style>
 
         div {
@@ -55,18 +53,15 @@
 
     </style>
 
-    <script src="https://unpkg.com/vue@3.4.6"></script>
-    <script src="https://pico-js.test/dist/pico-js.browser.js"></script>
-    <script src="../dist/nano-ui.esm.js"></script>
-
 </head>
-<body class="n-demo n-theme--dark">
+<body class="n-demo n-size-md n-type-primary">
 
 <div id="app">
     <div class="app-container" style="margin: 5vh auto;">
-        <n-form kind="fieldset" :form="n_testform" :errors2="{ teststring: 'ALLES VERBOTEN' }">
+        <n-form kind="fieldset" :form="n_testform" :errors="{ teststring: 'ALLES VERBOTEN' }">
             <n-form-frame style="height: 80vh; border: 1px solid #eee;" :show-search="true">
-                <n-form-bag style="margin-bottom: 1200px"></n-form-bag>
+                <n-form-bag></n-form-bag>
+                <div style="height: 1200px;"></div>
                 <n-collapse>
                     <n-collapse-item name="test1" label="Test1" :lazy="false">
                         <n-form-item prop="testselect" label="Testselect" :rules="['required_unless:teststring', 'value:primary']">
@@ -79,7 +74,7 @@
                         </n-form-item>
                     </n-collapse-item>
                 </n-collapse>
-                <n-tabs model-value="test1">
+                <n-tabs model-value="test1" :scrollbar="false">
                     <n-tabs-item name="test1" label="Test1" :lazy="false">
                         <n-form-group label="Echter Test 1">
                             <n-form-item prop="testarray" label="Testarray" :rules="['minlength:2']">
@@ -88,7 +83,7 @@
                         </n-form-group>
                     </n-tabs-item>
                     <n-tabs-item name="test2" label="Test2" :lazy="false">
-                        <n-form-group label="Echter Test 2">
+                        <n-form-group label="Echter Test 2" :collapse="true" :model-value="false">
                             <n-form-item prop="testbool" label="Testbool" :rules="['required_if:teststring']">
                                 <n-switch v-model="n_testform.testbool">Testbool</n-switch>
                             </n-form-item>
@@ -127,6 +122,10 @@
         </n-form>
     </div>
 </div>
+
+<script src="https://unpkg.com/@kizmann/pico-js@2.1/dist/pico-js.browser.js"></script>
+<script src="https://unpkg.com/vue@3.5.28"></script>
+<script src="../dist/nano-ui.esm.js"></script>
 
 <script>
 
@@ -323,8 +322,7 @@
 
             data.n_theme = pi.Cookie.get('theme', 'light', 'string');
 
-            // pi.Dom.find('#theme').attr('href', '../dist/themes/' +
-            //     data.n_theme + '.css');
+            pi.Dom.find('body').addClass('n-theme-' + data.n_theme);
 
             data.n_form = {
                 size: 'md', conditional: true, modelValue: false

@@ -11,7 +11,7 @@ $color-primary: #2B70E3;
     $color-primary: $color-primary,
 );
 
-[class*="n-theme--"] {
+[class*="n-theme-"] {
     color: rgb(var(--n-color-text));
 }
 
@@ -19,11 +19,11 @@ $color-primary: #2B70E3;
     @include theme-light.default();
 }
 
-.n-theme--light {
+.n-theme-light {
     @include theme-light.exports();
 }
 
-.n-theme--dark {
+.n-theme-dark {
     @include theme-dark.exports();
 }
 

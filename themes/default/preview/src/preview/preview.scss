@@ -1,0 +1,35 @@
+@use "../../../root/helpers" as *;
+
+.n-preview {
+    background: color('gray-50', 0.2);
+}
+
+.n-preview:after,
+.n-preview-portal:after{
+    border-color: color('base-color');
+}
+
+.n-preview__hover {
+    background: color('black', 0.6);
+}
+
+.n-preview__hover i {
+    color: color('white');
+}
+
+.n-preview__hover i {
+    transform: scale(0.5);
+    transition: transform 0.15s;
+}
+
+.n-preview:hover .n-preview__hover i {
+    transform: scale(1);
+}
+
+.n-preview__mime {
+    color: color('white', 0.5);
+}
+
+.n-preview__path {
+    color: color('white', 0.75);
+}

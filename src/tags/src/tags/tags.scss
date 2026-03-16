@@ -1,9 +1,0 @@
-@use "../../../root/helpers" as *;
-
-.n-tags {
-    margin-bottom: size('base-pad-vertical', 'calc($ * -1)');
-}
-
-.n-tags .n-tags-item {
-    margin: 0 size('base-pad-vertical') size('base-pad-vertical') 0;
-}

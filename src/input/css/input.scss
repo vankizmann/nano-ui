@@ -1,0 +1,78 @@
+@use "../../root/css/helpers" as *;
+
+.n-input {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 100%;
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
+    border: 1px solid transparent;
+}
+
+.n-input.n-disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.n-input input {
+    appearance: none;
+    display: block;
+    width: 100%;
+    height: size('base-hgt', 'calc($ - 2px)');
+    white-space: nowrap;
+    text-decoration: none;
+    line-height: 1.2;
+    padding: 0 size('base-pad');
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.n-input.n-icon-before input {
+    padding-left: 0;
+}
+
+.n-input.n-icon-after input {
+    padding-right: 0;
+}
+
+.n-input.n-disabled input {
+    cursor: not-allowed;
+}
+
+.n-input .n-input__clear,
+.n-input .n-input__button {
+    width: size('base-hgt', 'calc($ - 2px)');
+    height: size('base-hgt', 'calc($ - 2px)');
+}
+
+.n-input .n-input__button {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-input .n-input__button.n-has-event {
+    cursor: pointer;
+}
+
+.n-input .n-input__clear {
+    flex: 0 0 auto;
+    display: none;
+}
+
+.n-input:hover .n-input__clear,
+.n-input.n-focus .n-input__clear {
+    display: inline-flex;
+}
+
+.n-input .n-input__label {
+    cursor: default;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 0 size('base-pad');
+}

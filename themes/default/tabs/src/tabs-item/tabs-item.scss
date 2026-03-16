@@ -1,23 +1,23 @@
 @use "../../../root/helpers" as *;
 
-.n-tabs__tab:not(.is-active) .n-tabs__tab-icon {
+.n-tabs-item__header:not(.is-active) .n-tabs-item__header-icon {
     opacity: 0.6;
 }
 
-.n-tabs:not(.n-float) .n-tabs__tab.n-active .n-tabs__tab-icon,
-.n-tabs:not(.n-float) .n-tabs__tab.n-active .n-tabs__tab-label {
+.n-tabs:not(.n-float) .n-tabs-item__header.n-active .n-tabs-item__icon,
+.n-tabs:not(.n-float) .n-tabs-item__header.n-active .n-tabs-item__label {
     color: color('base-color');
 }
 
-.n-tabs.n-float .n-tabs__tab {
+.n-tabs.n-float .n-tabs-item__header {
     background: color('gray-15', 0.5);
 }
 
-.n-tabs.n-float .n-tabs__tab.n-active {
+.n-tabs.n-float .n-tabs-item__header.n-active {
     background: color('base-color');
 }
 
-.n-tabs.n-float .n-tabs__tab.n-active .n-tabs__tab-icon,
-.n-tabs.n-float .n-tabs__tab.n-active .n-tabs__tab-label {
+.n-tabs.n-float .n-tabs-item__header.n-active .n-tabs-item__icon,
+.n-tabs.n-float .n-tabs-item__header.n-active .n-tabs-item__label {
     color: color('base-text');
 }

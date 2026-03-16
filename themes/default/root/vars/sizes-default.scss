@@ -95,7 +95,7 @@ $size-list: (
 }
 
 @each $name, $values in $size-list {
-    [class*="--#{$name}"] {
+    .n-size-#{$name} {
         @include css-remaps($values, '-size-default-#{$name}', '-size-base');
     }
 }

@@ -1,14 +1,25 @@
 @use "../../../root/helpers" as *;
 
-.n-collapse__header-icon,
-.n-collapse__header-angle {
+.n-collapse-item__header {
+    background: color('form');
+    margin-bottom: -1px;
+    border-top: 1px solid color('gray-15');
+    border-bottom: 1px solid color('gray-15');
+}
+
+.n-collapse-item__header:first-child {
+    margin-top: -1px;
+}
+
+.n-collapse-item__icon,
+.n-collapse-item__angle {
     color: color('gray-40');
 }
 
-.n-collapse__header .n-collapse__header-icon {
+.n-collapse-item__header .n-collapse-item__icon {
     color: color('base-color');
 }
 
-.n-collapse__header.n-active .n-collapse__header-angle {
+.n-collapse-item__header.n-active .n-collapse-item__angle {
     color: color('base-color');
 }

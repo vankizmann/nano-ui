@@ -1,8 +1,10 @@
 @use "../../../root/helpers" as *;
 
 .n-preview-modal {
-    background: color('shadow', 0.95);
     // PERFORMANCE backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transform: translateZ(0);
+    will-change: backdrop-filter;
     transition: opacity 0.3s;
 }
 
@@ -20,8 +22,8 @@
 
 .n-preview-modal__prev,
 .n-preview-modal__next {
-    color: color('base-color-fg-20');
-    background: color('base-color', 0.3);
+    color: color('white');
+    background: color('base-color', 0.8);
 }
 
 .n-preview-modal__close:hover {
@@ -30,7 +32,7 @@
 
 .n-preview-modal__prev:hover,
 .n-preview-modal__next:hover {
-    background: color('base-color', 0.4);
+    background: color('base-color', 0.7);
 }
 
 .n-preview-modal .n-preview-frame {

@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="../dist/nano-ui.css">
     <link id="theme" rel="stylesheet" href="../dist/themes/default.css">
 
-    <link rel="stylesheet" href="../style.css">
-
     <style>
 
         div {
@@ -80,7 +78,7 @@
     </style>
 
 </head>
-<body class="n-demo">
+<body class="n-demo n-size-md n-type-primary">
 
 <div id="app" class="nano-theme-preview">
     <div class="app-container">
@@ -101,19 +99,15 @@
 
         <div class="n-grid gap-30">
             <div class="col--1-1">
-                <n-tags v-bind="n_tags">
-                    <template v-for="type in ['neutral', 'primary', 'secondary', 'success', 'warning', 'danger', 'info']">
-                        <n-tags-item :type="type" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna</n-tags-item>
-                    </template>
-                </n-tags>
+                <template v-for="type in ['neutral', 'primary', 'secondary', 'success', 'warning', 'danger', 'info']">
+                    <n-tag v-bind="n_tags" :type="type" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna</n-tag>
+                </template>
             </div>
 
             <div class="col--1-1">
-                <n-tags v-bind="n_tags">
-                    <template v-for="(value, index) in Array(20).fill(0)">
-                        <n-tags-item :color="index" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna</n-tags-item>
-                    </template>
-                </n-tags>
+                <template v-for="(value, index) in Array(30).fill(0)">
+                    <n-tag v-bind="n_tags" :color="index+40" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna</n-tag>
+                </template>
             </div>
         </div>
 
@@ -211,7 +205,7 @@
             <n-popover-option icon="fa fa-heading">
                 Headline H3
             </n-popover-option>
-            <n-popover>
+            <n-popover trigger="hover">
                 <n-popover-option icon="fa fa-heading">
                     Headline H3
                 </n-popover-option>
@@ -243,13 +237,13 @@
 
         <div class="n-grid gap-10">
             <div class="col-1-1 col-1-3@md">
-                <n-rating :model-value="3.5" v-bind="n_rating" type="primary" />
+                <n-rating :model-value="3.3" v-bind="n_rating" type="primary" />
             </div>
             <div class="col-1-1 col-1-3@md">
-                <n-rating :model-value="3" v-bind="n_rating" type="secondary" />
+                <n-rating :model-value="3.5" v-bind="n_rating" type="secondary" />
             </div>
             <div class="col-1-1 col-1-3@md">
-                <n-rating :model-value="3.5" v-bind="n_rating" type="success" />
+                <n-rating :model-value="3.8" v-bind="n_rating" type="success" />
             </div>
             <div class="col-1-1 col-1-3@md">
                 <n-rating :model-value="0" v-bind="n_rating" type="warning" />
@@ -258,7 +252,7 @@
                 <n-rating :model-value="1" v-bind="n_rating" type="danger" />
             </div>
             <div class="col-1-1 col-1-3@md">
-                <n-rating :model-value="3.5" v-bind="n_rating" type="info" />
+                <n-rating :model-value="3" v-bind="n_rating" type="info" />
             </div>
         </div>
 
@@ -494,7 +488,7 @@
                 <n-cascader v-bind="n_cascader" :options="cascaderData"></n-cascader>
             </div>
             <div class="col--1-1 col--1-8@md col--right">
-                <n-cascader v-bind="n_cascader" :options="[]"></n-cascader>
+                <n-cascader v-bind="n_cascader" :collapse="3" :collapse-first="false" :options="[]" :model-value="['1', '2', '3', '4', '5', '6']"></n-cascader>
             </div>
         </div>
 
@@ -596,16 +590,16 @@
 
         <div class="n-grid gap-10">
             <div class="col--1-1">
-                <n-slider v-bind="n_slider" on-type="primary" v-model="n_slider.temp_value">Slider</n-slider>
+                <n-slider v-bind="n_slider" v-model="n_slider.temp_value">Slider</n-slider>
             </div>
             <div class="col--1-1">
                 {{ n_slider.temp_value }}
             </div>
             <div class="col--1-1">
-                <n-slider v-bind="n_slider" on-type="primary" :range="true">Slider</n-slider>
+                <n-slider v-bind="n_slider" :range="true">Slider</n-slider>
             </div>
             <div class="col--1-1">
-                <n-slider v-bind="n_slider" on-type="primary" :steps="[100,200,300]" :labels="['Small', 'Medium', 'Big']">Slider</n-slider>
+                <n-slider v-bind="n_slider" :steps="[100,200,300]" :labels="['Small', 'Medium', 'Big']">Slider</n-slider>
             </div>
         </div>
 
@@ -622,7 +616,7 @@
 
         <div class="n-grid gap-10">
             <div class="col-1-1 col-1-3@md">
-                <n-switch v-bind="n_switch" on-type="primary">Switch</n-switch>
+                <n-switch v-bind="n_switch">Switch</n-switch>
             </div>
             <div class="col-1-1 col-1-3@md">
                 <n-switch v-bind="n_switch" on-type="secondary">Switch</n-switch>
@@ -660,13 +654,13 @@
 
         <div class="n-grid gap-10">
             <div class="col--1-1">
-                <n-datepicker-panel v-bind="n_datepicker" min-date="now" :month-panels="2" :range="true"></n-datepicker-panel>
+                <n-datepicker-panel v-bind="n_datepicker" min-date="now" :panels="2" :range="true"></n-datepicker-panel>
             </div>
             <div class="col-1-1 col-1-3@md">
                 <n-datepicker v-bind="n_datepicker"></n-datepicker>
             </div>
             <div class="col-1-1 col-1-3@md">
-                <n-datepicker v-bind="n_datepicker" :range="true" :month-panels="2"></n-datepicker>
+                <n-datepicker v-bind="n_datepicker" :range="true" :panels="2"></n-datepicker>
             </div>
         </div>
 
@@ -738,7 +732,7 @@
 
         <div class="n-grid gap-10">
             <div class="col-1-1 col-1-3@md">
-                <n-durationpicker v-bind="n_durationpicker"></n-durationpicker>
+                <n-durationpicker  v-model="n_durationpicker.modelValue" v-bind="n_durationpicker"></n-durationpicker>
             </div>
             <div class="col-1-1 col-1-3@md">
                 <n-durationpicker v-model="n_durationpicker.modelValue" v-bind="n_durationpicker"></n-durationpicker>
@@ -761,7 +755,7 @@
 
         <div class="n-grid gap-10">
             <div class="col--1-1">
-                <n-transfer v-bind="n_transfer" trigger="hover" :options="cascaderData"></n-transfer>
+                <n-transfer v-bind="n_transfer" trigger="hover" :options="virtualTree"></n-transfer>
             </div>
         </div>
 
@@ -787,17 +781,28 @@
                         Im the header
                     </template>
                     <div style="height: 2100px;">
-                        <n-form>
-                            <n-form-item label="Test">
-                                <n-input placeholder="Fill me"></n-input>
-                            </n-form-item>
-                            <n-form-item label="Test">
-                                <n-input placeholder="Fill me"></n-input>
-                            </n-form-item>
-                            <n-form-item label="Test">
-                                <n-input placeholder="Fill me"></n-input>
-                            </n-form-item>
-                        </n-form>
+                        <n-button>Open drawer</n-button>
+                        <n-drawer v-bind="n_drawer">
+                            <template v-slot:header>
+                                Im the header
+                            </template>
+                            <div style="height: 2100px;">
+                                <n-form>
+                                    <n-form-item label="Test">
+                                        <n-input placeholder="Fill me"></n-input>
+                                    </n-form-item>
+                                    <n-form-item label="Test">
+                                        <n-input placeholder="Fill me"></n-input>
+                                    </n-form-item>
+                                    <n-form-item label="Test">
+                                        <n-input placeholder="Fill me"></n-input>
+                                    </n-form-item>
+                                </n-form>
+                            </div>
+                            <template v-slot:footer>
+                                Im the footer
+                            </template>
+                        </n-drawer>
                     </div>
                     <template v-slot:footer>
                         Im the footer
@@ -850,36 +855,6 @@
             </div>
         </div>
 
-        <h2>NConfirm</h2>
-
-        <div class="app-options n-grid gap-30">
-            <div class="col-auto">
-                <n-select style="width: 100px;" v-model="n_confirm.size" :options="sizes"></n-select>
-            </div>
-            <div class="col-auto">
-                <n-select style="width: 210px;" v-model="n_confirm.type" :options="types"></n-select>
-            </div>
-            <div class="col-auto">
-                <n-checkbox v-model="n_confirm.disabled">Disabled</n-checkbox>
-            </div>
-        </div>
-
-        <div class="n-grid gap-10">
-            <div class="col-1-1 col-auto@md">
-                <n-button>Open confirm</n-button>
-                <n-confirm v-bind="n_confirm" @abort="log('Abort')" @confirm="log('Confirm')">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur corporis deserunt fuga harum illum ipsa, itaque nemo optio sunt? Aperiam cum ducimus explicabo, fugiat ipsum minima molestias odio quis quod.
-                </n-confirm>
-            </div>
-            <div class="col-1-1 col-auto@md">
-                <n-button @click="confirmTest = true">Open confirm</n-button>
-                <n-confirm v-model="confirmTest" :listen="false" @abort="log('Abort')" @confirm="log('Confirm')">
-                    <p>Boookeeeerrs</p>
-                </n-confirm>
-            </div>
-        </div>
-
-
         <h2>NLoader</h2>
 
         <div class="app-options n-grid gap-30">
@@ -895,7 +870,10 @@
         </div>
 
         <n-loader v-bind="n_loader" style="min-height: 200px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px; padding: 20px;">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia voluptas fuga sit iste odit amet, quam delectus iure facilis, voluptatum officiis magnam deserunt nulla maiores accusantium corrupti! Iste, rem optio? Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint dignissimos ad beatae soluta quaerat reprehenderit, quasi maxime quisquam? Commodi, cumque sequi? Harum quam nobis suscipit consequatur soluta aperiam! Rerum tempore minima saepe, quisquam ab sunt consequatur modi repudiandae molestiae inventore!
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia voluptas fuga sit iste odit amet, quam delectus iure facilis, voluptatum officiis
+            magnam deserunt nulla maiores accusantium corrupti! Iste, rem optio? Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint dignissimos ad
+            beatae soluta quaerat reprehenderit, quasi maxime quisquam? Commodi, cumque sequi? Harum quam nobis suscipit consequatur soluta aperiam! Rerum
+            tempore minima saepe, quisquam ab sunt consequatur modi repudiandae molestiae inventore!
         </n-loader>
 
         <h2>Notify</h2>
@@ -944,6 +922,29 @@
             </div>
         </div>
 
+        <h2>Confirm</h2>
+
+        <div class="n-grid gap-10">
+            <div class="col-1-1 col-auto@md">
+                <n-button type="primary" @click="confirm('primary')">Notify</n-button>
+            </div>
+            <div class="col-1-1 col-auto@md">
+                <n-button type="secondary" @click="confirm('secondary')">Notify</n-button>
+            </div>
+            <div class="col-1-1 col-auto@md">
+                <n-button type="success" @click="confirm('success')">Notify</n-button>
+            </div>
+            <div class="col-1-1 col-auto@md">
+                <n-button type="warning" @click="confirm('warning')">Notify</n-button>
+            </div>
+            <div class="col-1-1 col-auto@md">
+                <n-button type="danger" @click="confirm('danger')">Notify</n-button>
+            </div>
+            <div class="col-1-1 col-auto@md">
+                <n-button type="info" @click="confirm('info')">Notify</n-button>
+            </div>
+        </div>
+
         <h2>NTabs</h2>
 
         <div class="app-options n-grid gap-30">
@@ -960,12 +961,14 @@
 
         <n-tabs v-model="n_tabs.value" v-bind="n_tabs" :relative="false">
             <n-tabs-item label="Default" icon="fa fa-ghost">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aut, dicta quidem aliquid accusantium nulla veritatis nostrum? Porro, hic eligendi?
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aut, dicta quidem aliquid accusantium nulla veritatis nostrum? Porro, hic
+                eligendi?
             </n-tabs-item>
             <n-tabs-item name="keep" label="Keep" :keep="true">
+                <div style="position: absolute; top: 0; background: red">asd</div>
                 <n-textarea></n-textarea>
             </n-tabs-item>
-            <n-tabs-item name="bar" label="Headline in extra extra extra extra extra extra looooong">
+            <n-tabs-item name="bar" label="Headline in extra extra extra extra extra extra looooong" :lazy="false">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, modi?
             </n-tabs-item>
         </n-tabs>
@@ -981,7 +984,7 @@
             </div>
         </div>
 
-        <n-collapse v-bind="n_collapse" style="height: 600px;">
+        <n-collapse v-bind="n_collapse" :model-value="['bar']" style="height: 600px;">
             <n-collapse-item :sort="3" name="keep" label="Keep" icon="fa fa-ghost" :keep="true">
                 <n-textarea></n-textarea>
                 <template #action>
@@ -996,7 +999,7 @@
                     <n-button :glass="true" size="xs">Action</n-button>
                 </template>
             </n-collapse-item>
-            <n-collapse-item :sort="2" name="bar2" label="KKKKAKS SAKK">
+            <n-collapse-item :sort="2" name="default" label="KKKKAKS SAKK" :lazy="false">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, modi?
                 <br><br><br><br><br><br>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, modi?
@@ -1024,32 +1027,43 @@
 
         <div class="n-grid gap-10">
             <div class="col-auto">
-                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(0)">
+                <n-button type="primary" @click="console.log($refs.virtualbar)">
+                    console.log
+                </n-button>
+            </div>
+            <div class="col-auto">
+                <n-button type="primary" @click="$refs.virtualbar.scrollTo(0)">
                     Scroll to first item
                 </n-button>
             </div>
             <div class="col-auto">
-                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(2000)">
+                <n-button type="primary" @click="$refs.virtualbar.scrollTo(2000)">
                     Scroll to item 2000
                 </n-button>
             </div>
             <div class="col-auto">
-                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(7100)">
+                <n-button type="primary" @click="$refs.virtualbar.scrollTo(7100)">
                     Scroll to item 7100
                 </n-button>
             </div>
             <div class="col-auto">
-                <n-button type="primary" @click="$refs.virtualscroller.scrollIntoView(-1)">
+                <n-button type="primary" @click="$refs.virtualbar.scrollTo(-1)">
                     Scroll to last item
                 </n-button>
             </div>
         </div>
 
-        <n-virtualscroller ref="virtualscroller" :items="virtualData" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+        <n-virtualbar ref="virtualbar" :items="virtualData" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
             <template v-slot:default="{ value }">
                 <div style="padding: 0 15px; line-height: 30px;">{{ value.label }}</div>
             </template>
-        </n-virtualscroller>
+        </n-virtualbar>
+
+        <n-virtualbar :items="virtualData" :grid="true" :item-height="100" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+            <template v-slot:default="{ value }">
+                <div style="padding: 0 15px; line-height: 30px;">{{ value.label }}</div>
+            </template>
+        </n-virtualbar>
 
         <h2>NDraglist</h2>
 
@@ -1066,20 +1080,26 @@
             </div>
         </div>
 
-        <n-draglist v-model:items="cascaderData" :render-expand="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+        <n-draglist :group="['foobar']" v-model:items="virtualTree" :safezone="0.2" :render-expand="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
             <template v-slot:default="{ value, item }">
-                <div style="padding: 0 15px; line-height: 34px;">{{ item.label }}</div>
+                <div style="padding: 0 15px; line-height: 34px;">{{ item?.label }}</div>
             </template>
         </n-draglist>
 
-        <n-draglist v-model:items="testData" unique-prop="uid" :transform-drop="transDrop" :threshold="0" :lazyload="true" :handle="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+        <n-draglist :group="['foobar']" v-model:items="virtualTree" :safezone="0.2" :grid="true" :render-expand="false" :render-select="true" :item-height="130" :item-width="130" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+            <template v-slot:default="{ value, item }">
+                <div style="padding: 0 15px; line-height: 34px;">{{ item?.label }}</div>
+            </template>
+        </n-draglist>
+
+        <n-draglist v-if="false" v-model:items="testData" unique-prop="uid" :transform-drop="transDrop" :threshold="0" :lazyload="true" :handle="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
             <template v-slot:default="{ value, item, copy, remove }">
                 <div class="grid grid--row grid--middle" style="height: 34px;">
                     <div draggable="true" style="padding: 0 10px;">
                         <i class="fa fa-ellipsis-v"></i>
                     </div>
                     <div class="col--flex-1-1">
-                        {{ item.label }}
+                        {{ item?.label }}
                     </div>
                     <div class="col--flex-0-0" style="margin-right: 10px;">
                         <n-button size="xs" type="info" @click="copy">Copy</n-button>
@@ -1092,11 +1112,14 @@
         </n-draglist>
 
 
-        <template v-for="index in Arr.make(n_draggable.count)">
+        <template v-if="false" v-for="index in Arr.make(n_draggable.count)">
             <n-draglist v-model:items="virtualTree" :render-expand="true" :render-select="true" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
                 <template v-slot:default="{ value, item }">
-                    <div style="padding: 0 5px; line-height: 34px;">
-                        <n-input v-model="item.label"></n-input>
+                    <div style="display:flex; flex-direction: row;">
+                        <n-select :clearable="true" :options="icons"></n-select>
+                        <n-select :clearable="true" :options="icons"></n-select>
+                        <n-select :clearable="true" :options="icons"></n-select>
+                        <n-select :clearable="true" :options="icons"></n-select>
                     </div>
                 </template>
             </n-draglist>
@@ -1104,23 +1127,23 @@
 
         <h2>NDropzone</h2>
 
-        <n-dropzone v-model:item="virtualItem" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+        <n-dropzone v-model:item="virtualItem" style="width: 300px; height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;" :allow-groups="['foobar']">
             <template v-slot:default="item">
-                <div style="padding: 0 5px; line-height: 34px;">{{ item.label }}</div>
+                <div style="padding: 0 5px; line-height: 34px;">{{ item?.label }}</div>
             </template>
         </n-dropzone>
 
         <h2>NResizer</h2>
 
         <div style="display: flex; flex-direction: row; justify-content: flex-start;">
-            <n-resizer flex="0 0 60%" style="height: 200px; padding: 20px; background: rgba(110, 110, 110, 0.5);" position="right">
+            <n-resizer flex="0 0 60%" direction="right" style="height: 200px; padding: 20px; background: rgba(110, 110, 110, 0.5);">
                 Resizercontent
             </n-resizer>
         </div>
 
 
         <div style="display: flex; flex-direction: row; justify-content: flex-end;">
-            <n-resizer flex="0 0 60%" style="height: 200px; padding: 20px; background: rgba(110, 110, 110, 0.5);" position="left">
+            <n-resizer flex="0 0 60%" style="height: 200px; padding: 20px; background: rgba(110, 110, 110, 0.5);" direction="left">
                 Resizercontent
             </n-resizer>
         </div>
@@ -1145,14 +1168,14 @@
             <n-table-column v-model="treeSelect" label="Select" type="select" :allow-uncheck="true" :fixed-width="120">
                 <template v-slot:default="{ item }"></template>
             </n-table-column>
-            <n-table-column v-model="treeMatrix" label="Matrix 2" type="matrix" :matrix="-1" align="center" :fixed-width="120"></n-table-column>
+            <n-table-column v-model="treeMatrix" label="Matrix 2" type="matrix" :data="{ matrix: 2 }" align="center" :fixed-width="120"></n-table-column>
         </n-table>
 
-        <n-table ref="table" v-model:items="virtualTree" :handle="true" :render-handle="true" :render-expand="true" :item-height="100" style="margin-top: 30px; height: 500px;">
+        <n-table ref="table" v-model:items="virtualTree" v-model:current="n_table.current" :handle="true" :render-handle="true" :render-expand="true" :render-select="true" :item-height="100" style="margin-top: 30px; height: 500px;">
             <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true">
                 <!--                <template v-slot:default="{item}">{{ item.value }}</template>-->
             </n-table-column>
-            <n-table-column label="Image" type="image" prop="image" :fixed-width="130"></n-table-column>
+            <n-table-column label="Image" type="image" prop="file" :fixed-width="130" :data="{thumbProp: 'image'}"></n-table-column>
             <n-table-column label="Date" type="datetime" prop="date" :disabled="true" :sort="true" :width="50" :filter="true"></n-table-column>
             <n-table-column label="Enabled 3123 asd as" type="option" prop="enabled" :sort="true" :filter="true" :options="[{ value: true, name: 'JAAAA' }, { value: false, name: 'NEEEEEJ' }]" options-value="$value.value" :width="10" options-label="$value.name"></n-table-column>
             <n-table-column label="Value" type="string" prop="value" :sort="true" :filter="true" :width="20"></n-table-column>
@@ -1188,59 +1211,67 @@
 
         <h2>NInfo</h2>
 
-        <n-info ref="info" :sync-event="() => $refs.table.syncCurrent()" style="margin-top: 30px; width: 300px; height: 500px;">
+        <n-info ref="info" :item="n_table.current" :scrollbar="true" style="margin-top: 30px; width: 300px; height: 500px;">
             <n-info-column label="Label" type="string" prop="label"></n-info-column>
             <n-info-column label="Image" type="image" prop="image"></n-info-column>
             <n-info-column label="Date" type="datetime" prop="date"></n-info-column>
             <n-info-column label="Enabled" type="boolean" prop="enabled"></n-info-column>
+            <n-info-column label="Enabled 3123 asd as" type="option" prop="enabled" :options="[{ value: true, name: 'JAAAA' }, { value: false, name: 'NEEEEEJ' }]" options-value="$value.value" options-label="$value.name"></n-info-column>
             <n-info-column label="Value" type="string" prop="value"></n-info-column>
             <n-info-column label="ID" type="string" prop="id"></n-info-column>
         </n-info>
 
-        <n-info ref="info" :sync-event="() => $refs.table.syncCurrent()" :relative="true" style="margin-top: 30px; width: 300px;">
+        <n-info ref="info" :item="n_table.current"  style="margin-top: 30px; width: 300px;">
             <n-info-column label="Label" type="string" prop="label"></n-info-column>
             <n-info-column label="Image" type="image" prop="image"></n-info-column>
             <n-info-column label="Date" type="datetime" prop="date"></n-info-column>
             <n-info-column label="Enabled" type="boolean" prop="enabled"></n-info-column>
+            <n-info-column label="Enabled 3123 asd as" type="option" prop="enabled" :options="[{ value: true, name: 'JAAAA' }, { value: false, name: 'NEEEEEJ' }]" options-value="$value.value" options-label="$value.name"></n-info-column>
             <n-info-column label="ID" type="string" prop="id"></n-info-column>
         </n-info>
 
         <h2>NConfigNext</h2>
 
         <n-form>
-            <n-config-next :config="demoConfigNext" v-model="configData"></n-config-next>
+            <n-config :config="demoConfigNext" v-model="configData"></n-config>
         </n-form>
 
         <h2>NPreview</h2>
 
         <div class="n-grid gap-10">
             <div class="col--1-1">
-                <n-file v-model="n_preview.file"></n-file>
+                <n-input-file v-model="n_preview.file"></n-input-file>
             </div>
             <div class="col-auto" v-if="n_preview.file">
                 <n-preview :file="n_preview.file" style="width: 160px;" title="fooo fasdf sdf sd fsd fsdfsdf sdfsdfsd"></n-preview>
             </div>
             <div class="col-auto">
-                <n-preview group="foobar" :index="0" file="https://picsum.photos/1920/1920.jpg" thumb="https://picsum.photos/300/300.jpg" style="width: 160px;"  title="fooo fasdf sdf sd fsd fsdfsdf sdfsdfsd"></n-preview>
+                <n-preview group="foobar2" file="https://picsum.photos/1920/1920.jpg?a" thumb="https://picsum.photos/300/300.jpg?a" style="width: 160px;" title="fooo fasdf sdf sd fsd fsdfsdf sdfsdfsd"></n-preview>
+            </div>
+            <div class="col-auto">
+                <n-preview group="foobar2" file="https://picsum.photos/1920/1920.jpg?b" thumb="https://picsum.photos/300/300.jpg?b" style="width: 160px;" title="fooo fasdf sdf sd fsd fsdfsdf sdfsdfsd"></n-preview>
             </div>
             <div class="col-auto">
                 <n-preview group="foobar" :index="4" file="https://www.youtube.com/watch?v=m_Nw_BF90_4" thumb="https://via.placeholder.com/100/000/fff.jpg?text=Youtube" style="width: 160px;"></n-preview>
             </div>
             <div class="col-auto">
-                <n-preview group="foobar" :index="2" file="https://vimeo.com/128079949" thumb="https://via.placeholder.com/100/000/fff.jpg?text=Vimeo" style="width: 160px;"></n-preview>
+                <n-preview group="foobar" :index="2" file="https://vimeo.com/128079949" thumb="https://placehold.co/100x100.jpg?text=Vimeo" style="width: 160px;"></n-preview>
             </div>
             <div class="col-auto">
                 <n-preview group="foobar" :index="3" file="https://www.w3schools.com/html/mov_bbb.webm" style="width: 160px;" title="lol"></n-preview>
+            </div>
+            <div class="col-auto">
+                <n-preview group="foobar" :index="5" file="https://www.w3schools.com/html/mov_bbb.pdf" style="width: 160px;" title="lol"></n-preview>
             </div>
         </div>
 
 
         <h2>NPreviewVideo</h2>
 
-        <div style="margin: 0 auto; max-width: 480px;" v-if="false">
-            <n-preview-video src="https://www.youtube.com/embed/nFhMY2itmlc" @resolve:youtube="log"></n-preview-video>
-            <n-preview-video src="https://vimeo.com/128079949" @resolve:vimeo="log"></n-preview-video>
-            <n-preview-video src="https://www.w3schools.com/html/mov_bbb.webm"></n-preview-video>
+        <div style="margin: 0 auto;" v-if="false">
+            <n-preview style="width: 100%; max-width: 320px;" :preview="false" file="https://www.youtube.com/embed/nFhMY2itmlc"></n-preview>
+            <n-preview style="width: 100%; max-width: 320px;" :preview="false" file="https://vimeo.com/128079949"></n-preview>
+            <n-preview style="width: 100%; max-width: 320px;" :preview="false" file="https://www.w3schools.com/html/mov_bbb.webm"></n-preview>
         </div>
 
         <h2>NMap</h2>
@@ -1261,8 +1292,8 @@
     </div>
 </div>
 
-<script src="https://pico-js.test/dist/pico-js.browser.js"></script>
-<script src="https://unpkg.com/vue@3.4.6"></script>
+<script src="https://unpkg.com/@kizmann/pico-js@2.1/dist/pico-js.browser.js"></script>
+<script src="https://unpkg.com/vue@3.5.28"></script>
 <script src="../dist/nano-ui.esm.js"></script>
 <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js" defer></script>
 <script src="https://maps.googleapis.com/maps/api/js" defer></script>
@@ -1408,7 +1439,8 @@
                         value: id,
                         matrix: 10,
                         label: `Item ${index ++}`,
-                        image: 'https://picsum.photos/300/300.jpg?' + id,
+                        image: 'https://picsum.photos/600/600.jpg?' + id,
+                        file: 'https://picsum.photos/1200/1200.jpg?' + id,
                         date: pi.Now.make('now').format('YYYY-MM-DD HH:mm:ss', true),
                         enabled: !!Math.floor(Math.random() * 2)
                     };
@@ -1427,7 +1459,7 @@
 
             data.virtualData = itemGenerator(10000);
 
-            data.virtualTree = pi.Arr.each(itemGenerator(100), function (item) {
+            data.virtualTree = pi.Arr.each(itemGenerator(160), function (item) {
                 return pi.Obj.assign(item, { children: itemGenerator(10) });
             });
 
@@ -1441,7 +1473,7 @@
 
             data.n_theme = pi.Cookie.get('theme', 'light', 'string');
 
-            pi.Dom.find('body').addClass('n-theme--' + data.n_theme);
+            pi.Dom.find('body').addClass('n-theme-' + data.n_theme);
 
             data.n_form = {
                 size: 'md', conditional: true, modelValue: false
@@ -1449,6 +1481,10 @@
 
             data.n_tags = {
                 size: 'md',
+            };
+
+            data.n_table = {
+                current: null
             };
 
             data.n_rating = {
@@ -1480,11 +1516,11 @@
             };
 
             data.n_checkbox = {
-                size: 'md', type: 'primary', disabled: false
+                size: 'md', type: 'primary', disabled: false, allowUncheck: true
             };
 
             data.n_radio = {
-                size: 'md', type: 'primary', disabled: false
+                size: 'md', type: 'primary', modelValue: 'test1'
             };
 
             data.n_slider = {
@@ -1516,11 +1552,15 @@
             };
 
             data.n_modal = {
-                size: 'md', theme: 'auto', disabled: false
+                size: 'md', theme: 'auto', disabled: false, width: 640
             };
 
             data.n_drawer = {
-                size: 'md', theme: 'auto', position: 'right', disabled: false
+                size: 'md', theme: 'auto', position: 'right', disabled: false, width: 640
+            };
+
+            data.n_drawer.beforeClose = () => {
+                return window.Confirm.make('blabla', 'danger')
             };
 
             data.n_confirm = {
@@ -1528,7 +1568,7 @@
             };
 
             data.n_tabs = {
-                value: 'default', size: 'md', type: 'primary', float: false
+                value: 'deimama', size: 'md', type: 'primary', float: false
             };
 
             data.n_collapse = {
@@ -1561,8 +1601,8 @@
 
                 pi.Cookie.set('theme', this.n_theme = value);
 
-                pi.Dom.find('body').remClass(['n-theme--dark', 'n-theme--light']);
-                pi.Dom.find('body').addClass('n-theme--' + data.n_theme);
+                pi.Dom.find('body').remClass(['n-theme-dark', 'n-theme-light']);
+                pi.Dom.find('body').addClass('n-theme-' + data.n_theme);
             }
 
             methods.searchLocation = function () {
@@ -1581,12 +1621,30 @@
                 console.log(val || 'Log fired');
             };
 
+            let randomNotifyPosition = () => {
+                return [
+                    'top-start',
+                    'top-center',
+                    'top-end',
+                    'bottom-start',
+                    'bottom-center',
+                    'bottom-end',
+
+                ][pi.Hash.number(5)];
+            }
+
             methods.notify = function (type) {
-                this.Notification.make('Lorem ipsum dolore Lorem ipsum dolore Lorem ipsum dolore', type);
+                return window.Notify.make({
+                    text: 'Lorem ipsum dolore Lorem ipsum dolore Lorem ipsum dolore', type: type, position: randomNotifyPosition()
+                });
             };
 
             methods.alert = function (type) {
-                this.Alert.make('Lorem ipsum dolore Lorem ipsum dolore Lorem ipsum dolore', type);
+                return window.Alert.make('Lorem ipsum dolore Lorem ipsum dolore Lorem ipsum dolore', type);
+            };
+
+            methods.confirm = function (type) {
+                return window.Confirm.make('Lorem ipsum dolore Lorem ipsum dolore Lorem ipsum dolore', type);
             };
 
             var config = {
