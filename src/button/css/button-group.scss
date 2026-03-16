@@ -1,0 +1,32 @@
+@use "../../root/css/helpers" as *;
+
+.n-button-group {
+    display: flex;
+    flex-direction: row;
+}
+
+.n-button-group > *:not(:first-child):not(:last-child) {
+    position: relative;
+    border-radius: 0;
+}
+
+.n-button-group > *:not(:first-child):last-child {
+    border-radius: 0 size('base-rad') size('base-rad') 0;
+}
+
+.n-button-group > *:not(:last-child):first-child {
+    border-radius: size('base-rad') 0 0 size('base-rad');
+}
+
+.n-button-group > *:not(:last-child) {
+    margin-right: -1px;
+}
+
+.n-button-group > .n-button {
+    z-index: 5;
+}
+
+.n-button-group > *:hover,
+.n-button-group > *.n-focus {
+    z-index: 10;
+}

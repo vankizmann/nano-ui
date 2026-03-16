@@ -1,6 +1,5 @@
-//
-// ^._.^= ∫ Lilli und Pashi, ich liebe euch beiden
-//
+// nano-ui v2
+// ^._.^= ∫ Lilli und Pashi, ich liebe euch
 
 import NSignal from "./signal/index.ts";
 import NInput from "./input/index.ts";
@@ -30,6 +29,9 @@ import NForm from "./form/index.ts";
 import NConfig from "./config/index.ts";
 import NChart from "./chart/index.ts";
 import NMap from "./map/index.ts";
+import ctor from "./root/js/legacy/ctor.ts";
+import cmer from "./root/js/legacy/cmer.ts";
+import cslo from "./root/js/legacy/cslo.ts";
 
 const NanoImports = [
     NSignal,
@@ -42,7 +44,7 @@ const NanoImports = [
     NPopover,
     NScrollbar,
     NResizer,
-    NDraggable,
+    NDraggable, // copy und remove funktion
     NTable,
     NInfo,
     NEmpty,
@@ -56,7 +58,7 @@ const NanoImports = [
     NVisuals,
     NPreview,
     NSlider,
-    NForm,
+    NForm, // form-frame inview fixen
     NConfig,
     NChart,
     NMap,
@@ -84,65 +86,49 @@ export const Icons = {
     angleDoubleRight: 'fa fa-angle-double-right'
 };
 
-export const Settings = {
-    iconPosition: 'before',
-    notifySize: 'md',
-    notifyPosition: 'bottom-start'
-};
-
 export function Install(App : any, Icons : any = {}, Settings : any = {})
 {
-    // if ( typeof window.pi === 'undefined' ) {
-    //     return console.error('pico-js is not available.');
-    // }
-    //
+    if ( typeof globalThis.pi === 'undefined' ) {
+        return console.error('pico-js is not available.');
+    }
+
     // Obj.each(window.pi, (value, key) => {
     //     App.config.globalProperties[key] = value;
     // });
-    //
-    // App.config.globalProperties.ctor = CtorMixin.ctor;
-    // App.config.globalProperties.cmer = CmerMixin.cmer;
-    // App.config.globalProperties.cslo = CsloMixin.cslo;
-    //
-    // App.config.globalProperties.trans = Locale.trans;
-    // App.config.globalProperties.choice = Locale.choice;
-    //
-    // window.nano.Icons = Obj.assign(window.nano.Icons, Icons);
-    // window.nano.Settings = Obj.assign(window.nano.Settings, Settings);
+
+    App.config.globalProperties.ctor = ctor;
+    App.config.globalProperties.cmer = cmer;
+    App.config.globalProperties.cslo = cslo;
+
+    if ( ! App.config.globalProperties.Notify ) {
+        App.config.globalProperties.Notify = globalThis.Notify;
+    }
+
+    if ( ! App.config.globalProperties.Alert ) {
+        App.config.globalProperties.Alert = globalThis.Alert;
+    }
+
+    if ( ! App.config.globalProperties.Confirm ) {
+        App.config.globalProperties.Confirm = globalThis.Confirm;
+    }
+
+    if ( ! App.config.globalProperties.trans ) {
+        App.config.globalProperties.trans = globalThis.pi.Locale.trans;
+    }
+
+    if ( ! App.config.globalProperties.choice ) {
+        App.config.globalProperties.choice = globalThis.pi.Locale.choice;
+    }
 
     NanoImports.forEach((NanoModule) => {
         NanoModule(App);
     });
 
-    // require('./chart/index.ts'); // Ignore
-    // require('./wysiwyg/index.ts'); // Ignore
 }
 
 export const Nano = {
-    Icons: Icons, Settings: Settings, Install: Install
+    Install, /* Legacy */ Icons: {}
 };
-
-// window.keyMods = [];
-//
-// Dom.find(document).on('keydown', (event) => {
-//     Arr.add(window.keyMods, event.which);
-// });
-//
-// Dom.find(document).on('keyup', (event) => {
-//     Arr.remove(window.keyMods, event.which);
-// });
-//
-// Dom.find(document).on('dragstart', (event) => {
-//     Arr.add(window.keyMods, event.which);
-// });
-//
-// Dom.find(document).on('dragend', (event) => {
-//     window.keyMods = [];
-// });
-//
-// if ( typeof window.nano === 'undefined' ) {
-//     window.nano = Nano;
-// }
 
 if ( !globalThis.nano ) {
     globalThis.nano = Nano;

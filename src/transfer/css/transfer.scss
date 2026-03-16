@@ -1,0 +1,119 @@
+@use "../../root/css/helpers" as *;
+
+.n-transfer {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.n-transfer .n-draglist-item {
+    //pointer-events: none;
+}
+
+.n-transfer__panel {
+    overflow: hidden;
+    flex: 1 1 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    height: 360px;
+    //border: 1px solid transparent;
+}
+
+.n-transfer__controls {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-transfer__header {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.n-transfer__title {
+    flex: 1 1 auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.n-transfer__select {
+    flex:  0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+}
+
+.n-transfer__search {
+    flex:  1 0 30%;
+    max-width: 220px;
+}
+
+.n-transfer__body {
+    flex: 1 1 auto;
+    overflow: hidden;
+    min-height: 0;
+}
+
+.n-transfer__body .n-draglist-item__element {
+    overflow: hidden;
+    line-height: 34px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.n-transfer__title span:last-child:before {
+    content: '(';
+}
+
+.n-transfer__title span:last-child:after {
+    content: ')';
+}
+
+.n-transfer {
+    font-size: size('base-fnt');
+}
+
+.n-transfer__panel {
+    border-radius: size('base-rad');
+}
+
+.n-transfer__header {
+    height: size('base-hgt', 'calc($ * 1.6)');
+    padding: 0 size('base-pad');
+}
+
+.n-transfer__title {
+    font-size: 1.05em;
+    padding: 0 size('base-pad');
+}
+
+.n-transfer__title span:last-child {
+    margin-left: size('base-pad', 'calc($ * 0.5)');
+}
+
+.n-transfer__controls {
+    padding: 0 size('base-pad');
+}
+
+.n-transfer__controls > button:not(:last-child) {
+    margin-bottom: size('base-pad-vertical');
+}
+
+.n-transfer__body .n-draglist-item {
+    padding: 0 size('base-pad');
+}
+
+.n-transfer__body .n-draglist-item__element {
+    padding: 0 size('base-pad');
+}

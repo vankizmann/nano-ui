@@ -1,0 +1,169 @@
+@use "../../root/css/helpers" as *;
+
+.n-form-group {
+    position: relative;
+    scroll-margin-top: 30px;
+    scroll-margin-bottom: 30px;
+}
+
+.n-form-group.n-form-group--fieldset.has-collapse.n-hidden:after {
+    z-index: 0;
+    content: '\00a0';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 1px;
+}
+
+.n-form-group.has-collapse .n-form-group__legend {
+    cursor: pointer;
+}
+
+.n-form-group__legend {
+    cursor: default;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+}
+
+.n-form-group--classic .n-form-group__legend {
+    width: 100%;
+}
+
+.n-form-group--fieldset .n-form-group__legend {
+    display: inline-flex;
+}
+
+.n-form-group__collapse {
+    order: 900;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s;
+}
+
+.n-form-group.n-hidden .n-form-group__collapse {
+    transform: rotate(-90deg);
+}
+
+.n-form-group__label {
+    overflow: hidden;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.n-form-group__icon {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-form-group__text {
+    flex: 1 1 auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: bold;
+}
+
+.n-form-group.has-collapse.n-hidden .n-form-group__body {
+    display: none;
+}
+
+.n-form-group {
+    font-size: size('base-fnt');
+    margin-bottom: size('base-pad-vertical');
+}
+
+.n-form-group__header {
+    z-index: 10;
+    overflow: hidden;
+    position: relative;
+}
+
+.n-form-group__body {
+    border-radius: size('base-rad');
+}
+
+.n-form-group--fieldset .n-form-group__body {
+    padding: 0 size('base-pad', 'calc($ * 2)');
+}
+
+.n-form-group--fieldset:not(:last-child) .n-form-group__body {
+    margin-bottom: size('base-hgt');
+}
+
+.n-form-group.n-form-group--classic .n-form-group__legend {
+    min-height: size('base-hgt');
+}
+
+.n-form-group.n-form-group--fieldset .n-form-group__legend {
+    margin-left: size('base-pad', 'calc($ * 2)');
+    height: size('base-hgt');
+    border-radius: size('base-rad');
+    padding: 0 size('base-pad');
+}
+
+.n-form-group.n-form-group--classic .n-form-group__label span {
+    font-size: 1.2em;
+}
+
+.n-form-group.n-form-group--fieldset .n-form-group__label span {
+    font-size: 1em;
+}
+
+.n-form-group .n-form-group__icon,
+.n-form-group .n-form-group__collapse {
+    width: size('base-hgt-inline');
+    height: size('base-hgt-inline');
+}
+
+.n-form-group.n-form-group--fieldset .n-form-group__collapse {
+    margin-left: size('base-pad', 'calc($ * 0.7)');
+}
+
+.n-form-group .n-form-group__icon {
+    margin-right: size('base-pad', 'calc($ * 0.7)');
+}
+
+.n-form-group.n-form-group--classic .n-form-group__body {
+    padding-top: size('base-pad-vertical');
+}
+
+.n-form-group.n-form-group--fieldset .n-form-group__body {
+    padding-top: size('base-hgt');
+    padding-bottom: size('base-pad-vertical');
+    margin-top: size('base-hgt', 'calc($ * -0.5)');
+}
+
+.n-form-group__action {
+    flex: 0 0 auto;
+    padding: 0 size('base-pad');
+}
+
+.n-form-group.n-form-group--fieldset .n-form-group__action {
+    position: absolute;
+    top: 0;
+    right: size('base-pad');
+    display: inline-flex;
+    align-items: center;
+    height: size('base-hgt');
+}
+
+.n-form-group.n-form-group--fieldset .n-form-group__action {
+    order: 1000;
+}
+
+.n-form-group__action > *:not(:last-child) {
+    margin-right: size('base-pad');
+}

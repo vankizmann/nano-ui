@@ -1,0 +1,9 @@
+@use "../../root/css/helpers" as *;
+
+.n-info-column:not(:last-child) {
+    margin-bottom: size('base-pad');
+}
+
+.n-info-column__label {
+    font-size: size('base-fnt-label');
+}

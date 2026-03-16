@@ -22,9 +22,7 @@ export class NVirtualbarView extends ProtoView
     /**
      * @type {string}
      */
-    vem : string = 'n-virtualscroller';
-
-    cache = new Map();
+    vem : string = 'n-virtualbar';
 
     default()
     {

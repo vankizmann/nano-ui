@@ -1,0 +1,161 @@
+@use "../../root/css/helpers" as *;
+
+.n-datetimepicker {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 100%;
+}
+
+.n-datetimepicker.n-disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.n-datetimepicker__display {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: calc(100% + 2px);
+    margin: -1px;
+    border: 1px solid transparent;
+}
+
+.n-datetimepicker__seperator {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-datetimepicker__input {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 50%;
+}
+
+.n-datetimepicker__input input {
+    cursor: default;
+    appearance: none;
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    text-decoration: none;
+    line-height: 1.2;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.n-disabled .n-datetimepicker__input input {
+    cursor: not-allowed;
+}
+
+.n-datetimepicker__icon {
+    margin-right: size('base-pad', 'calc($ * -1)');
+}
+
+.n-datetimepicker__icon,
+.n-datetimepicker__clear,
+.n-datetimepicker__angle {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.n-datetimepicker__clear,
+.n-datetimepicker__angle {
+    order: 100;
+}
+
+.n-datetimepicker__clear {
+    display: none;
+}
+
+.n-datetimepicker:hover.n-clearable:not(.n-empty) .n-datetimepicker__clear,
+.n-datetimepicker.n-focus.n-clearable:not(.n-empty) .n-datetimepicker__clear {
+    display: flex;
+}
+
+.n-datetimepicker:hover.n-clearable:not(.n-empty) .n-datetimepicker__angle,
+.n-datetimepicker.n-focus.n-clearable:not(.n-empty) .n-datetimepicker__angle {
+    display: none;
+}
+
+.n-datetimepicker__angle {
+    transition: transform 0.25s;
+}
+
+.n-datetimepicker.n-focus .n-datetimepicker__angle {
+    transform: scaleY(-1);
+}
+
+.n-datetimepicker__clear i,
+.n-datetimepicker__angle i {
+    text-align: center;
+}
+
+.n-datetimepicker__clear i {
+    border-radius: 500px;
+}
+
+.n-datetimepicker__placeholder {
+    flex: 1 1 auto;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.n-datetimepicker-panel {
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+.n-datetimepicker__date-panel.n-datepicker-panel {
+    border: none;
+    border-radius: 0;
+}
+
+.n-datetimepicker__time-panel.n-timepicker-panel {
+    border: none;
+    border-radius: 0;
+    max-height: size('base-hgt', 'calc($ * 10)');
+}
+
+.n-datetimepicker__empty {
+     text-align: center;
+}
+
+.n-datetimepicker {
+    height: size('base-hgt');
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
+}
+
+.n-datetimepicker__input input {
+    padding: 0 size('base-pad');
+}
+
+.n-datetimepicker__icon,
+.n-datetimepicker__clear,
+.n-datetimepicker__angle {
+    width: size('base-hgt');
+}
+
+.n-datetimepicker-panel {
+    border-radius: size('base-rad');
+}

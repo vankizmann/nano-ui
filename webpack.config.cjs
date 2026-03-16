@@ -7,9 +7,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 let themes = {
     './src/index.scss': './nano-ui.css',
-    './docs/src/scss/index.scss': '../docs/dist/index.css',
+    // './docs/src/scss/index.scss': '../docs/dist/index.css',
     './themes/default/example.scss': './themes/default.css',
-    './themes/webservy/example.scss': './themes/webservy.css',
+    // './themes/webservy/example.scss': './themes/webservy.css',
 };
 
 let libJs = {
@@ -185,7 +185,7 @@ module.exports = function (env, argv) {
 
     if ( argv.mode === 'development' ) {
         return [
-            libJsBundle, docJsBundle, ...themeList
+            libJsBundle, ...themeList // docJsBundle,
         ];
     }
 
@@ -194,7 +194,7 @@ module.exports = function (env, argv) {
     });
 
     libJsBundle.plugins.push(loaderOptions);
-    docJsBundle.plugins.push(loaderOptions);
+    // docJsBundle.plugins.push(loaderOptions);
 
     themeList.forEach((cfg) => {
         cfg.plugins.push(loaderOptions);
@@ -215,13 +215,13 @@ module.exports = function (env, argv) {
     optimization.minimizer.push(terser);
 
     libJsBundle.optimization = optimization;
-    docJsBundle.optimization = optimization;
+    // docJsBundle.optimization = optimization;
 
     themeList.forEach((cfg) => {
         cfg.optimization = optimization;
     });
 
     return [
-        libJsBundle, docJsBundle, ...themeList
+        libJsBundle, ...themeList // docJsBundle,
     ];
 }

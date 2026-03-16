@@ -1,0 +1,35 @@
+@use "../../root/css/helpers" as *;
+
+.n-table-filter__footer {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.n-table-filter__footer > button {
+    flex: 0 0 auto;
+}
+
+.n-table-filter__footer > button:first-child {
+    margin-right: auto;
+}
+
+.n-table-filter__footer > button:last-child {
+    margin-left: auto;
+}
+
+.n-popover.n-table-filter__popover {
+    --n-color-popover: var(--n-color-form);
+}
+
+.n-table-filter__popover {
+    width: 240px;
+}
+
+.n-table-filter__popover .n-form-item {
+    margin-bottom: size('base-pad-vertical');
+}
+
+.n-table-filter__popover .n-form-item:last-child {
+    margin-bottom: 0;
+}

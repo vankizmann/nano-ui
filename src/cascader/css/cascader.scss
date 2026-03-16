@@ -1,0 +1,127 @@
+@use "../../root/css/helpers" as *;
+
+.n-cascader {
+    cursor: default;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 100%;
+    min-height: size('base-hgt');
+    font-size: size('base-fnt');
+    border-radius: size('base-rad');
+    border: 1px solid transparent;
+}
+
+.n-cascader.n-disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.n-cascader__display {
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: calc(100% + 2px);
+    margin: -1px;
+    border: 1px solid transparent;
+}
+
+.n-cascader__clear,
+.n-cascader__angle {
+    order: 100;
+    flex: 0 0 auto;
+    display: flex;
+}
+
+.n-cascader__clear {
+    display: none;
+}
+
+.n-cascader:hover.n-clearable:not(.n-empty) .n-cascader__clear,
+.n-cascader.n-focus.n-clearable:not(.n-empty) .n-cascader__clear {
+    display: flex;
+}
+
+.n-cascader:hover.n-clearable:not(.n-empty) .n-cascader__angle,
+.n-cascader.n-focus.n-clearable:not(.n-empty) .n-cascader__angle {
+    display: none;
+}
+
+.n-cascader__angle {
+    transition: transform 0.25s;
+}
+
+.n-cascader.n-focus .n-cascader__angle {
+    transform: scaleY(-1);
+}
+
+.n-cascader__items,
+.n-cascader__placeholder {
+    overflow: hidden;
+    flex: 1 1 auto;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.n-cascader__item {
+    overflow: hidden;
+    flex: 0 1 auto;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.n-cascader__item:first-child,
+.n-cascader__item:last-child {
+    flex: 0 0 auto;
+}
+
+.n-cascader__item:not(:last-child):after {
+    content: '/';
+    flex: 0 0 auto;
+    opacity: 0.3;
+    display: inline-block;
+    text-align: center;
+}
+
+.n-cascader__item span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.n-cascader__body,
+.n-cascader__empty {
+     overflow: hidden;
+     max-height: 210px;
+     border: 0;
+}
+
+.n-cascader__items,
+.n-cascader__placeholder {
+    padding: 0 size('base-pad');
+}
+
+.n-cascader__clear,
+.n-cascader__angle {
+    width: size('base-hgt');
+}
+
+.n-cascader__body,
+.n-cascader__empty {
+    border-radius: size('base-rad');
+}
+
+.n-cascader__empty {
+    padding: size('base-pad-vertical') size('base-pad');
+}
+
+.n-cascader__item:after {
+    width: size('base-pad', 'calc($ * 2)');
+}
