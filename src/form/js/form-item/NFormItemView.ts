@@ -73,7 +73,7 @@ export class NFormItemView extends ProtoView
         const { data } = this.scope;
 
         return this.div('label', [
-            h('span', null, data.label)
+            h('label', null, data.label)
         ]);
     }
 
