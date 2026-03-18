@@ -297,11 +297,25 @@ export class NTableView extends ProtoView
         };
 
         const passed = [
-            'itemHeight',
-            'itemOffset',
+            'group',
+            'allowGroup',
+            'safezone',
             'renderHandle',
             'renderExpand',
             'renderSelect',
+            'allowDrop',
+            'allowDrag',
+            'allowSelect',
+            'allowCurrent',
+            'transformDrop',
+            'insertNode',
+            'removeNode',
+            'itemSkip',
+            'rootSkip',
+            'uniqueProp',
+            'childProp',
+            'itemHeight',
+            'itemOffset',
         ];
 
         Arr.each(passed, (key : any) => {

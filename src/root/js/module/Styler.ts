@@ -116,4 +116,8 @@ export class Styler
 
 }
 
+if ( ! globalThis.NStyler ) {
+    globalThis.NStyler = Styler;
+}
+
 export default Styler;
