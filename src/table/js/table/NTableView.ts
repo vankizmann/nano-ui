@@ -113,7 +113,7 @@ export class NTableView extends ProtoView
     {
         const { scope, data } = this.scope;
 
-        if ( !Arr.has(data.visible, column.uid) ) {
+        if ( !Arr.has(data.visible, column.data.prop) ) {
             return null;
         }
 
