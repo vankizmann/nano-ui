@@ -453,6 +453,7 @@ $color-list: (
         }
     }
 
+    @include css-remaps($color-base-primary, '-color-dark-primary', '-color-base');
     @include css-remaps($colors, '-color-dark', '-color');
 }
 
