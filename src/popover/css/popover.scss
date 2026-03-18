@@ -276,17 +276,11 @@
     margin: 0 size('base-pad', 'calc($ * -1)');
 }
 
-.n-popover-option .n-image {
-    width: size('base-pad', 'calc($ * 2)');
-    height: size('base-pad', 'calc($ * 2)');
-}
-
-.n-popover-option .n-image--before,
-.n-popover-option .n-icon--before {
+.n-popover-option.n-icon-before .n-icon {
     margin-right: size('base-pad');
 }
 
-.n-popover-option .n-image--after,
-.n-popover-option .n-icon--after {
+.n-popover-option.n-icon-after .n-icon {
     margin-left: size('base-pad');
 }
+
