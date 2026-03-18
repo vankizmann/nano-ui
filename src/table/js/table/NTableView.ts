@@ -210,7 +210,7 @@ export class NTableView extends ProtoView
             class: [`${this.bem}-column__filter`],
         };
 
-        angleProps.onClick = (e) => {
+        angleProps.onClick = (e : any) => {
             e.stopPropagation();
         };
 
