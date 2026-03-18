@@ -95,7 +95,7 @@ export class NTableView extends ProtoView
         };
 
         const values = Arr.each(scope.childs, (column : any) => {
-            return this.comp('n-checkbox', { value: column.uid }, () => {
+            return this.comp('n-checkbox', { value: column.data.prop }, () => {
                 return column.data.label;
             });
         });
@@ -348,7 +348,7 @@ export class NTableView extends ProtoView
         const { scope, data } = this.scope;
 
         const columns = Arr.filter(scope.childs, (column : any) => {
-            return Arr.has(data.visible, column.uid);
+            return Arr.has(data.visible, column.data.prop);
         });
 
         return Arr.each(columns, (column : any, index : number) => {

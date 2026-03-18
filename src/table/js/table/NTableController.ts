@@ -88,7 +88,7 @@ export class NTableController extends GroupController
         });
 
         const visible = Arr.each(columns, (column : any) => {
-            return column.uid;
+            return column.data.prop;
         });
 
         this.update('visible', visible);
