@@ -15,6 +15,10 @@
     width: 6px;
 }
 
+.n-resizer.n-disabled > .n-resizer__handle {
+    display: none !important;
+}
+
 .n-resizer.n-move > .n-resizer__handle {
     z-index: 99999;
 }

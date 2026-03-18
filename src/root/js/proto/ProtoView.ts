@@ -116,6 +116,7 @@ export class ProtoView
             scope.applyClear();
             scope.set('search', '');
             scope.ref('input')?.value?.focus();
+            scope.emit('clear');
         };
 
         return this.div(config, [
