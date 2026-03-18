@@ -1650,13 +1650,16 @@
             var config = {
                 data: function () {
 
-                    this.icons = pi.Obj.assign(nano.Icons, {
+
+                    this.icons = pi.Obj.assign(window.NStyler.icons?.default, {
                         ghost: 'fa fa-ghost'
                     });
 
-                    data.demoIcons = pi.Arr.reduce(pi.Mix.vals(nano.Icons), function (merge, icon) {
+                    data.demoIcons = pi.Arr.reduce(pi.Mix.vals(window.NStyler.icons?.default), function (merge, icon) {
                         return pi.Obj.assign(merge, { [icon]: icon });
                     }, {});
+
+                    console.log(data.demoIcons);
 
                     return data;
                 },

@@ -165,8 +165,7 @@ export class NVirtualbarView extends ProtoView
         const { context, data } = this.scope;
 
         const [start, end] = [
-            Math.max(1, data.state.start),
-            Math.min(data.state.end, data.items.length - 1)
+            Math.max(1, data.state.start), Math.min(data.state.end, data.items.length - 1)
         ];
 
         let items = Arr.slice(...[
@@ -192,6 +191,10 @@ export class NVirtualbarView extends ProtoView
     {
         const { context, data } = this.scope;
 
+        if ( data.items.length < 1 ) {
+            return null;
+        }
+
         let fn = () => null;
 
         if ( context.slots.default ) {
@@ -206,6 +209,10 @@ export class NVirtualbarView extends ProtoView
     last() : any
     {
         const { context, data } = this.scope;
+
+        if ( data.items.length < 2 ) {
+            return null;
+        }
 
         let fn = () => null;
 

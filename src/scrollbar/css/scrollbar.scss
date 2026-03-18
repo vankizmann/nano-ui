@@ -3,6 +3,7 @@
 .n-scrollbar {
     position: relative;
     overflow: clip;
+    //overflow: hidden;
     scrollbar-gutter: stable;
 }
 
@@ -15,7 +16,7 @@ body.n-drag .n-scrollbar {
 }
 
 .n-scrollbar-spacer {
-    display: inline-block;
+    display: block;
 }
 
 .n-scrollbar-content {
