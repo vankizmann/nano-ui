@@ -452,6 +452,7 @@ $color-list: (
         }
     }
 
+    @include css-remaps($color-base-primary, '-color-light-primary', '-color-base');
     @include css-remaps($colors, '-color-light', '-color');
 }
 
