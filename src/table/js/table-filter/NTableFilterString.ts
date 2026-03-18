@@ -23,7 +23,7 @@ export const NTableFilterString = ({ model, comp, table }) => {
         Obj.set(model, 'value', value);
     };
 
-    const value = comp('n-form-item', valueProps, () => [
+    const value = comp('n-form-item', null, () => [
         comp('n-input', valueProps)
     ])
 
