@@ -27,7 +27,7 @@
 @forward "./root/index";
 @forward "./chart/index";
 
-.n-disabled:not(.n-draglist-item) {
+.n-disabled:not(.n-draglist-item,.n-resizer) {
     pointer-events: none;
 }
 
