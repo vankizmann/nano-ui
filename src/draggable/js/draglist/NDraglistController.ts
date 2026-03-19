@@ -1,4 +1,4 @@
-import { onMounted, SetupContext } from "vue";
+import { onMounted, provide, SetupContext } from "vue";
 import { Arr, Mix, Num, Obj, Run } from "@kizmann/pico-js";
 import { ProtoController, Pointer } from "../../../root/index.ts";
 import { NDragHandler } from "../drag/NDragHandler.ts";
@@ -113,6 +113,8 @@ export class NDraglistController extends ProtoController
         if ( this.data.allowGroups == null ) {
             this.set('allowGroups', this.data.group);
         }
+
+        provide('NDraglist', this.instance);
 
         return this;
     }
@@ -230,7 +232,14 @@ export class NDraglistController extends ProtoController
 
     onCurrentclick(e : any, item : any)
     {
-        if ( e.metaKey ) {
+        let depth = this.data.relation?.depth;
+
+        if ( depth === -1 ) {
+            depth = item.depth;
+        }
+
+        if ( e.metaKey && depth === item.depth ) {
+            e.stopPropagation();
             this.onSelectclick(e, item);
         }
 

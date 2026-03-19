@@ -3,10 +3,6 @@ import { ProtoView } from "../../../root/index.ts";
 import { NVirtualbarController } from "./NVirtualbarController.ts";
 import { Arr } from "@kizmann/pico-js";
 
-const VirtualRow = () => {
-
-};
-
 export class NVirtualbarView extends ProtoView
 {
     /**
@@ -135,7 +131,7 @@ export class NVirtualbarView extends ProtoView
 
     row(row : any[], index : number) : any
     {
-        const { context, data } = this.scope;
+        const { scope, context, data } = this.scope;
 
         let fn = () => null;
 
@@ -148,7 +144,7 @@ export class NVirtualbarView extends ProtoView
         };
 
         props.style = {
-            top: `${index * data.itemHeight}px`,
+            key: scope.uid + index, top: `${index * data.itemHeight}px`,
         };
 
         const nodes = Arr.each(row, (value : any, i : number) => {

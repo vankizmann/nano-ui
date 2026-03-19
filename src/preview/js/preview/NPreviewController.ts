@@ -1,6 +1,6 @@
 import { SetupContext, provide } from "vue";
 import { Dom, Run } from "@kizmann/pico-js";
-import { ProtoController } from "../../../root/index.ts";
+import { Pointer, ProtoController } from "../../../root/index.ts";
 import { NPreviewView } from "./NPreviewView.ts";
 import { NPreviewData } from "./NPreviewData.ts";
 import NPreviewHandler from "../handler/NPreviewHandler.ts";
@@ -45,12 +45,11 @@ export class NPreviewController extends ProtoController
 
         this.makeUID();
 
-        this
-            .makeRef('preview')
-            .makeRef('portal');
+        this.makeRef('preview');
+        this.makeRef('portal');
+        this.makeData('visible', false);
 
-        this
-            .makeData('visible', false);
+        this.injectRef(['draglist', 'NDraglist']);
 
         this.watchProp('index', () => {
             this.onChange();
@@ -94,7 +93,11 @@ export class NPreviewController extends ProtoController
 
     openPreview()
     {
-        NPreviewHandler.open(this.preview);
+        const fn = () => {
+            NPreviewHandler.open(this.preview);
+        };
+
+        this.ref('draglist') ? Pointer.wait(fn) : fn();
     }
 
     openPortal(el : Dom)

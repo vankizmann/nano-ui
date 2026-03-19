@@ -4,7 +4,7 @@ export const NTableCellOption = ({ props, input, column }) => {
 
     let value = column.getOption(input)
 
-    if ( value === input ) {
+    if ( value === null ) {
         value = column.data.undefinedText;
     }
 
