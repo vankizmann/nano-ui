@@ -175,7 +175,7 @@ export class NDraglistView extends ProtoView
 
         Arr.append(props.class, scope.view.iem);
 
-        props.onPointerdown = (e : any) => {
+        props.onClick = (e : any) => {
             scope.onCurrentclick(e, value);
             scope.emit('row-click', data.current, e);
         };

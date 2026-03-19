@@ -247,11 +247,9 @@ export class Pointer
 
     static stop()
     {
-        Arr.each(this.waiter, (clear : Function) => {
-            clear();
+        this.waiter = Arr.filter(this.waiter, (clear : Function) => {
+            return clear(), false;
         });
-
-        this.waiter = [];
     }
 
 }

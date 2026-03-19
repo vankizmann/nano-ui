@@ -140,11 +140,11 @@ export class NVirtualbarView extends ProtoView
         }
 
         let props : any = {
-            class: [`${this.vem}__row`]
+            key: scope.uid + index, class: [`${this.vem}__row`]
         };
 
         props.style = {
-            key: scope.uid + index, top: `${index * data.itemHeight}px`,
+            top: `${index * data.itemHeight}px`,
         };
 
         const nodes = Arr.each(row, (value : any, i : number) => {

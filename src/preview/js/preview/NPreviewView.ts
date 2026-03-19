@@ -65,7 +65,7 @@ export class NPreviewView extends ProtoView
             props.class, classList,
         ]);
 
-        props.onClick = (e : any) => {
+        props.onPointerup = (e : any) => {
             if ( data.preview ) scope.openPreview();
         };
 
