@@ -78,6 +78,10 @@ export class NModalController extends ProtoController
             this.onClose();
         });
 
+        if ( data.model ) {
+            this.modal.open();
+        }
+
         Dom.find(el).appendTo(document.body);
     }
 
