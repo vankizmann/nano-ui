@@ -238,9 +238,12 @@ export class NDraglistController extends ProtoController
             depth = item.depth;
         }
 
+        const fn = () => {
+            Run.frame(() => Pointer.stop());
+        };
+
         if ( e.metaKey && depth === item.depth ) {
-            e.stopPropagation();
-            this.onSelectclick(e, item);
+            fn(), this.onSelectclick(e, item);
         }
 
         this.update('current', this.getItem(item));
