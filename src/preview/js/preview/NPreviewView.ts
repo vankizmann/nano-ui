@@ -1,6 +1,6 @@
 import { h } from "vue";
 import { Arr, Mix } from "@kizmann/pico-js";
-import { ProtoView, Styler } from "../../../root/index.ts";
+import { Pointer, ProtoView, Styler } from "../../../root/index.ts";
 import { NPreviewController } from "./NPreviewController.ts";
 
 export class NPreviewView extends ProtoView
@@ -65,8 +65,7 @@ export class NPreviewView extends ProtoView
             props.class, classList,
         ]);
 
-        props.onPointerup = (e) => {
-            e.stopPropagation();
+        props.onClick = (e : any) => {
             if ( data.preview ) scope.openPreview();
         };
 

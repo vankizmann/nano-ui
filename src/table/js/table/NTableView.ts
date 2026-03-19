@@ -373,7 +373,7 @@ export class NTableView extends ProtoView
         ];
 
         let props : any = {
-            class: classList
+            key: column.uid, class: classList
         };
 
         let width = this.scope.getWidth(column.uid);

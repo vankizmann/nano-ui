@@ -1,5 +1,5 @@
 import { h } from "vue";
-import { ProtoView, Styler } from "../../../root/index.ts";
+import { Pointer, ProtoView, Styler } from "../../../root/index.ts";
 import { NDraglistController } from "./NDraglistController.ts";
 import { Arr, Obj } from "@kizmann/pico-js";
 
@@ -173,11 +173,13 @@ export class NDraglistView extends ProtoView
 
         props.onPointerdown = (e : any) => {
             scope.onCurrentclick(e, value);
-            scope.emit('row-click', data.current);
+            scope.emit('row-click', data.current, e);
         };
 
-        props.onDblclick = () => {
-            scope.emit('row-dblclick', data.current);
+        props.onDblclick = (e : any) => {
+            Pointer.stop();
+            console.log('BUILD onDblclick');
+            scope.emit('row-dblclick', data.current, e);
         };
 
         props.onDragstart = (e : any) => {

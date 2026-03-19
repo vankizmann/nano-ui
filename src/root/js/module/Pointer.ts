@@ -1,4 +1,5 @@
 import { Arr, Dom, For, Mix, Obj, Run } from "@kizmann/pico-js";
+import * as fs from "node:fs";
 
 export class Pointer
 {
@@ -28,6 +29,11 @@ export class Pointer
     static cursor : any = {
         clientX: 0, clientY: 0
     };
+
+    /**
+     * @type {any[]}
+     */
+    static waiter : any[] = [];
 
     static init() : Pointer
     {
@@ -232,6 +238,20 @@ export class Pointer
         });
 
         return index !== -1 && index !== this.chains.length - 1;
+    }
+
+    static wait(cb : Function)
+    {
+        Arr.append(this.waiter, Run.delay(cb, 200));
+    }
+
+    static stop()
+    {
+        Arr.each(this.waiter, (clear : Function) => {
+            clear();
+        });
+
+        this.waiter = [];
     }
 
 }
