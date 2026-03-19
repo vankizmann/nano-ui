@@ -151,6 +151,10 @@ export class NDraglistView extends ProtoView
             dropitem: value.uid, class: [],
         };
 
+        if ( Arr.has(data.selected, value.uid) ) {
+            Arr.append(props.class, 'n-selected');
+        }
+
         if ( !data.renderHandle ) {
             props.draggable = !data.renderHandle;
         }
@@ -178,7 +182,6 @@ export class NDraglistView extends ProtoView
 
         props.onDblclick = (e : any) => {
             Pointer.stop();
-            console.log('BUILD onDblclick');
             scope.emit('row-dblclick', data.current, e);
         };
 
