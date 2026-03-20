@@ -116,7 +116,6 @@ export class NDrawerController extends ProtoController
         this.modal.close(forceClose);
     }
 
-
 }
 
 export default NDrawerController;
