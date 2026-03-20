@@ -93,6 +93,12 @@ export class NModalElement
             return;
         }
 
+        const chain = Arr.last(Pointer.chains);
+
+        if ( chain[1] !== this.options.uid ) {
+            return;
+        }
+
         let { src, tgt } = this.getEventEls(event);
 
         if ( !this.visible && !tgt && !src ) {

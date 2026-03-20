@@ -41,23 +41,21 @@ export class NModalView extends ProtoView
         }
 
         const props : any = {
-            name: 'frame',
+            name: 'frame', style: {}
         };
 
-        let style = [];
-
         if ( data.width ) {
-            style.push(`width: ${data.width}px;`);
+            props.style.width = data.safeWidth + 'px';
         }
 
         if ( data.height ) {
-            style.push(`height: ${data.height}px;`);
+            props.style.height = data.safeHeight + 'px';
         }
 
         const { slots } = this.scope.context;
 
         if ( slots.raw ) {
-            return slots.raw();
+            return slots.raw({ props });
         }
 
         const html = [];
@@ -74,7 +72,7 @@ export class NModalView extends ProtoView
             html.push(this.div('footer', this.slot('footer')));
         }
 
-        return this.div({ ...props, style: style.join(' ') }, html);
+        return this.div(props, html);
     }
 
     content() : any

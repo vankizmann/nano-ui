@@ -291,7 +291,7 @@ export class NTableView extends ProtoView
     {
         let { scope, data } = this.scope;
 
-        let props = {
+        let props : any = {
             ref: scope.ref('draglist'),
             items: data.items,
             overflowX: false,
@@ -323,6 +323,14 @@ export class NTableView extends ProtoView
         Arr.each(passed, (key : any) => {
             props[key] = scope.props[key];
         });
+
+        props.onRowClick = (node : any) => {
+            this.scope.emit('row-click', node);
+        };
+
+        props.onRowDblclick = (node : any) => {
+            this.scope.emit('row-dblclick', node);
+        };
 
         props['onUpdate:items'] = (value : any) => {
             scope.emit('update:items', value);

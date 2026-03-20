@@ -48,7 +48,7 @@ export class NFormBagView extends ProtoView
             return null;
         }
 
-        const { data } = this.scope;
+        const { scope, data } = this.scope;
 
         let props : any = {
             name: 'item'
@@ -56,6 +56,7 @@ export class NFormBagView extends ProtoView
 
         props.onPointerdown = () => {
             field.superView();
+            scope.ncx('popover')?.superClose();
         };
 
         const items = Arr.each(errors[prop], (err : string) => {

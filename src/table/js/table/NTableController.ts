@@ -1,5 +1,5 @@
 import { onMounted, provide, SetupContext } from "vue";
-import { Arr, Mix } from "@kizmann/pico-js";
+import { Arr, Mix, Obj } from "@kizmann/pico-js";
 import { GroupController } from "../../../root/index.ts";
 import { NTableView } from "./NTableView.ts";
 import { NTableData } from "./NTableData.ts";
@@ -119,7 +119,7 @@ export class NTableController extends GroupController
         });
 
         if ( merge && active ) {
-            value = Object.assign(value, active);
+            value = Obj.assign(value, Obj.clone(active));
         }
 
         return value;
