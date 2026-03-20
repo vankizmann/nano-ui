@@ -89,6 +89,10 @@ export class NModalElement
 
     onMousedown(event : any)
     {
+        if ( event.which !== 1 ) {
+            return;
+        }
+
         let { src, tgt } = this.getEventEls(event);
 
         if ( !this.visible && !tgt && !src ) {
