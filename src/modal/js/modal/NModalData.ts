@@ -1,5 +1,6 @@
 import { ProtoData } from "../../../root/index.ts";
 import { NModalController } from "./NModalController.ts";
+import { Mix } from "@kizmann/pico-js";
 
 export class NModalData extends ProtoData
 {
@@ -39,14 +40,24 @@ export class NModalData extends ProtoData
         return this.scope.get('scrollbar');
     }
 
-    get width() : number
+    get width() : number | string
     {
         return this.scope.get('width');
     }
 
-    get height() : number
+    get safeWidth() : string
+    {
+        return Mix.isNum(this.width) ? this.width + 'px' : Mix.str(this.width);
+    }
+
+    get height() : number | string
     {
         return this.scope.get('height');
+    }
+
+    get safeHeight() : string
+    {
+        return Mix.isNum(this.height) ? this.height + 'px' : Mix.str(this.height);
     }
 
     get target() : any

@@ -1,5 +1,5 @@
 import { h } from "vue";
-import { Obj } from "@kizmann/pico-js";
+import { Mix, Obj } from "@kizmann/pico-js";
 import { ProtoView } from "../../../root/index.ts";
 import { NTextareaController } from "./NTextareaController.ts";
 
@@ -61,7 +61,7 @@ export class NTextareaView extends ProtoView
             props.maxLength = data.maxLength;
         }
 
-        let currentRows = (data.model.match(/\n/g) || []).length + 1;
+        let currentRows = (Mix.str(data.model).match(/\n/g) || []).length + 1;
 
         if ( data.autoRows && props.rows < currentRows ) {
             props.rows = currentRows <= data.maxRows ? currentRows : data.maxRows;

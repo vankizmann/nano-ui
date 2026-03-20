@@ -41,6 +41,10 @@ export class NFormBagController extends ProtoController
             'form', 'NForm'
         ]);
 
+        this.injectRef([
+            'popover', 'NPopover'
+        ]);
+
         return this;
     }
 

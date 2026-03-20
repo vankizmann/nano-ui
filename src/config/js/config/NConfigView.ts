@@ -128,6 +128,10 @@ export class NConfigView extends ProtoView
             render = () => callback.apply(this.scope);
         }
 
+        if ( Mix.isArr(callback) && callback.length === 1 ) {
+            callback = callback[0];
+        }
+
         if ( Mix.isStr(callback) ) {
             render = () => this.scope.getString(callback);
         }
