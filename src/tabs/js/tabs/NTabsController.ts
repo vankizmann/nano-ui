@@ -2,7 +2,7 @@ import { provide, SetupContext } from "vue";
 import { GroupController } from "../../../root/index.ts";
 import { NTabsView } from "./NTabsView.ts";
 import { NTabsData } from "./NTabsData.ts";
-import { Arr, Num, Run } from "@kizmann/pico-js";
+import { Arr, Mix, Num, Run } from "@kizmann/pico-js";
 
 
 export class NTabsController extends GroupController
@@ -108,6 +108,10 @@ export class NTabsController extends GroupController
 
     updateIndicator()
     {
+        if ( this.childs.length < 2 ) {
+            return;
+        }
+
         const [el, pl] = [
             this.dom('indicator'), this.dom('indicator').parent()
         ];

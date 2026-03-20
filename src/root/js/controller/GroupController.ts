@@ -17,7 +17,7 @@ export class GroupController extends ProtoController
 
     get childs() : any
     {
-        return this._childs.value;
+        return this._childs?.value ?? [];
     }
 
     set childs(value : any)

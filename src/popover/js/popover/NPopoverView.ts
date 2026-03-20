@@ -28,11 +28,11 @@ export class NPopoverView extends ProtoView
         }
 
         return h('div', props, [
-            this.body(),
+            this.frame(),
         ]);
     }
 
-    body() : any
+    frame() : any
     {
         const { data } = this.scope;
 
@@ -61,7 +61,7 @@ export class NPopoverView extends ProtoView
         }
 
         if ( slots.default ) {
-            html.push(this.div('body', this.slot('default')));
+            html.push(this.body());
         }
 
         if ( slots.footer ) {
@@ -69,6 +69,25 @@ export class NPopoverView extends ProtoView
         }
 
         return this.div(props, html);
+    }
+
+    body() : any
+    {
+        const { data } = this.scope;
+
+        const slots = [
+            this.slot('default')
+        ];
+
+        if ( ! data.scrollbar ) {
+            return this.div('body', slots)
+        }
+
+        let props : any = {
+            class: data.classPart('body')
+        };
+
+        return this.comp('n-scrollbar', props, () => slots);
     }
 
 }

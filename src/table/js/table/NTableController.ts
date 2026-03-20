@@ -113,7 +113,7 @@ export class NTableController extends GroupController
             value: null, type: data.type, property: data.filterProp,
         };
 
-        const active = Arr.find({
+        const active = Arr.find(this.data.filter, {
             // @ts-ignore
             property: value.property
         });
