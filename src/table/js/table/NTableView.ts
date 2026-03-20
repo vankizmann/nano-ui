@@ -230,8 +230,6 @@ export class NTableView extends ProtoView
             data.filterMap, column.uid
         ]);
 
-        console.log(data.filterMap);
-
         let resetProps : any = {
             type: 'neutral',
             size: 'xs',
