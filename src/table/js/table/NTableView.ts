@@ -75,10 +75,11 @@ export class NTableView extends ProtoView
         const { scope, data } = this.scope;
 
         let contextProps = {
+            class: `${this.bem}-context`,
             size: 'sm',
             trigger: 'context',
             toggle: true,
-            width: 160,
+            scrollbar: true,
         };
 
         const group = this.comp('n-popover-group', null, () => {
@@ -102,7 +103,7 @@ export class NTableView extends ProtoView
 
         const checkbox = this.comp('n-checkbox-group', groupProps, () => {
             return values;
-        })
+        });
 
         return this.comp('n-popover', contextProps, () => [
             group, checkbox
@@ -229,6 +230,8 @@ export class NTableView extends ProtoView
             data.filterMap, column.uid
         ]);
 
+        console.log(data.filterMap);
+
         let resetProps : any = {
             type: 'neutral',
             size: 'xs',
@@ -265,8 +268,9 @@ export class NTableView extends ProtoView
         ]);
 
         const props = {
+            class: `${this.bem}-filter`,
             toggle: true,
-            width: 220,
+            scrollbar: true,
         };
 
         const component = this.resolve(...[
@@ -278,7 +282,7 @@ export class NTableView extends ProtoView
         };
 
         let slots = {
-            default: () => h(component, compProps),
+            default: () => component(compProps),
             footer: () => [reset, apply]
         };
 

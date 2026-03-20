@@ -1171,7 +1171,7 @@
             <n-table-column v-model="treeMatrix" label="Matrix 2" type="matrix" :data="{ matrix: 2 }" align="center" :fixed-width="120"></n-table-column>
         </n-table>
 
-        <n-table ref="table" v-model:items="virtualTree" v-model:current="n_table.current" :handle="true" :render-handle="true" :render-expand="true" :render-select="true" :item-height="100" style="margin-top: 30px; height: 500px;">
+        <n-table ref="table" v-model:items="virtualTree" v-model:current="n_table.current" v-model:filter="n_table.filter" :handle="true" :render-handle="true" :render-expand="true" :render-select="true" :item-height="100" style="margin-top: 30px; height: 500px;">
             <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true">
                 <!--                <template v-slot:default="{item}">{{ item.value }}</template>-->
             </n-table-column>
@@ -1484,7 +1484,7 @@
             };
 
             data.n_table = {
-                current: null
+                current: null, filter: []
             };
 
             data.n_rating = {

@@ -48,6 +48,13 @@ export const NPopoverProps = {
     /**
      * @type {PropType<boolean>}
      */
+    scrollbar: {
+        type: [Boolean], default: false
+    },
+
+    /**
+     * @type {PropType<boolean>}
+     */
     escapeClose: {
         type: [Boolean], default: true
     },

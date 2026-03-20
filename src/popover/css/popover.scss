@@ -252,7 +252,8 @@
     padding: size('base-pad-vertical') size('base-pad');
 }
 
-.n-popover .n-popover__body {
+.n-popover .n-popover__body:not(.n-scrollbar),
+.n-popover .n-popover__body.n-scrollbar > .n-scrollbar-content > .n-scrollbar__wrap {
     padding: size('base-pad-vertical') size('base-pad');
 }
 

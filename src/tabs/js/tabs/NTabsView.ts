@@ -34,6 +34,10 @@ export class NTabsView extends ProtoView
     {
         const { scope, data } = this.scope;
 
+        if ( scope.childs.length < 2 ) {
+            return null;
+        }
+
         const items = Arr.each(data.sorted, (item: any) => {
             return item.view.header(scope);
         });

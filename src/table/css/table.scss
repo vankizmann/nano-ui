@@ -75,12 +75,6 @@
     width: 32px;
 }
 
-.n-table__checkbox .n-checkbox__label {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
 .n-table__body {
     overflow: hidden;
     flex: 1 1 auto;
@@ -118,4 +112,43 @@
     align-items: stretch;
     justify-content: flex-start;
     border-bottom: 1px solid transparent;
+}
+
+.n-table-context .n-popover__frame {
+    width: 160px;
+}
+
+.n-table-context .n-popover__body {
+    max-height: calc(100vh - 60px);
+}
+
+.n-table-context .n-checkbox__label {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.n-table-filter .n-form-item {
+    margin-bottom: size('base-pad-vertical');
+}
+
+.n-table-filter .n-popover__frame {
+    width: 210px;
+}
+
+.n-table-filter .n-popover__body {
+    max-height: calc(100vh - 60px);
+}
+
+.n-table-filter .n-popover__footer {
+    display: flex;
+    flex-direction: row;
+}
+
+.n-table-filter .n-popover__footer > *:first-child {
+    margin-right: auto;
+}
+
+.n-table-filter .n-popover__footer > *:last-child {
+    margin-left: auto;
 }

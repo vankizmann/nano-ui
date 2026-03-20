@@ -24,6 +24,11 @@ export class NPopoverData extends ProtoData
         return this.scope.get('modelValue');
     }
 
+    get scrollbar() : boolean
+    {
+        return this.scope.get('scrollbar');
+    }
+
     get width() : number
     {
         return this.scope.get('width');
