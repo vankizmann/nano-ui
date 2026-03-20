@@ -78,11 +78,19 @@ export class NDrawerController extends ProtoController
             this.onClose();
         });
 
+        if ( data.model ) {
+            this.modal.open();
+        }
+
         Dom.find(el).appendTo(document.body);
     }
 
     onUnmounted()
     {
+        if ( this.modal.visible ) {
+            this.modal.close(true, true);
+        }
+
         NModalHandler.remove({ uid: this.uid });
     }
 

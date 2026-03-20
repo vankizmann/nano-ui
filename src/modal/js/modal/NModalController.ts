@@ -87,6 +87,10 @@ export class NModalController extends ProtoController
 
     onUnmounted()
     {
+        if ( this.modal.visible ) {
+            this.modal.close(true, true);
+        }
+
         NModalHandler.remove(this.modal);
     }
 
