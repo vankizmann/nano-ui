@@ -152,6 +152,10 @@ export class NPopoverElement
             return this.onContext(event);
         }
 
+        if ( event.which !== 1 ) {
+            return;
+        }
+
         let { src, tgt } = this.getEventEls(event);
 
         if ( !this.visible && !tgt && !src ) {

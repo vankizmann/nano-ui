@@ -25,7 +25,7 @@ export class NButtonView extends ProtoView
         };
 
         props.onPointerdown = (e : any) => {
-            scope.emit('click', e);
+            if (e.which === 1) scope.emit('click', e);
         };
 
         props.onDblclick = (e : any) => {

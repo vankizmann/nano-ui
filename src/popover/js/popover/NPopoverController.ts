@@ -83,6 +83,10 @@ export class NPopoverController extends ProtoController
 
     onUnmounted()
     {
+        if ( this.popel.visible ) {
+            this.popel.close(true, true);
+        }
+
         NPopoverHandler.remove({ uid: this.uid });
     }
 

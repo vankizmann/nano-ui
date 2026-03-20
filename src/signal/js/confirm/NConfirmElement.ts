@@ -170,8 +170,8 @@ export class NConfirmElement
             class: cancelCls.join(' '),
         });
 
-        cancel.on('mousedown', () => {
-            this.signal(false);
+        cancel.on('pointerdown', (e : any) => {
+            if ( e.which === 1 ) this.signal(false);
         });
 
         cancel.html(...[
@@ -188,8 +188,8 @@ export class NConfirmElement
             class: confirmCls.join(' '),
         });
 
-        confirm.on('mousedown', () => {
-            this.signal(true);
+        confirm.on('pointerdown', (e : any) => {
+            if ( e.which === 1 ) this.signal(true);
         });
 
         confirm.html(...[

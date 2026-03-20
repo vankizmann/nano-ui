@@ -95,7 +95,7 @@ export class NModalElement
 
         const chain = Arr.last(Pointer.chains);
 
-        if ( chain[1] !== this.options.uid ) {
+        if ( chain[0] !== this.options.uid ) {
             return;
         }
 

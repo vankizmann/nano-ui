@@ -66,7 +66,7 @@ export class NPreviewView extends ProtoView
         ]);
 
         props.onPointerup = (e : any) => {
-            if ( data.preview ) scope.openPreview();
+            if ( e.which === 1 && data.preview ) scope.openPreview();
         };
 
         const preview = this.preview({
