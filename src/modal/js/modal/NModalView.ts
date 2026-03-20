@@ -45,11 +45,11 @@ export class NModalView extends ProtoView
         };
 
         if ( data.width ) {
-            props.style.width = data.safeWidth + 'px';
+            props.style.width = data.safeWidth;
         }
 
         if ( data.height ) {
-            props.style.height = data.safeHeight + 'px';
+            props.style.height = data.safeHeight;
         }
 
         const { slots } = this.scope.context;
