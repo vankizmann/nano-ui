@@ -58,6 +58,7 @@ export class NDraglistController extends ProtoController
             .cloneProp('current')
             .cloneProp('selected')
             .cloneProp('expanded')
+            .cloneProp('cascade')
             .cloneProp('group');
 
         this.makeRef('virtualbar');
@@ -105,6 +106,10 @@ export class NDraglistController extends ProtoController
         this.watchData('current', () => {
             this.set('index', this.buildIndex());
         });
+
+        if ( this.data.cascade.length ) {
+            this.buildCurrent();
+        }
 
         if ( this.data.group == null ) {
             this.set('group', [this.uid]);
@@ -230,6 +235,19 @@ export class NDraglistController extends ProtoController
         return Object.freeze({ depth: -1, ...relation });
     }
 
+    buildCurrent()
+    {
+        const { data } = this;
+
+        const items = Arr.cascadeFind(data.items, data.childProp, (item : any) => {
+            return Arr.last(data.cascade) === item[data.uniqueProp];
+        });
+
+        if ( ! Mix.isEmpty(items) ) {
+            this.update('current', items[0]);
+        }
+    }
+
     onCurrentclick(e : any, item : any)
     {
         let depth = this.data.relation?.depth;
@@ -242,11 +260,17 @@ export class NDraglistController extends ProtoController
             Run.frame(() => Pointer.stop());
         };
 
-        if ( e.metaKey && depth === item.depth ) {
+        if ( e && e.metaKey && depth === item.depth ) {
             fn(), this.onSelectclick(e, item);
         }
 
-        this.update('current', this.getItem(item));
+        this.update('cascade', [
+            ...item.cascade
+        ]);
+
+        this.update('current', ...[
+            this.getItem(item)
+        ]);
     }
 
     onSelectclick(e : any, item : any)
@@ -510,6 +534,10 @@ export class NDraglistController extends ProtoController
 
         this.ncx('virtualbar')?.scrollTo(index);
 
+        this.update('cascade', [
+            ...data.visibles[index]['cascade']
+        ]);
+
         this.update('current', ...[
             this.getItem(data.visibles[index])
         ]);
@@ -525,6 +553,10 @@ export class NDraglistController extends ProtoController
 
         this.ncx('virtualbar')?.scrollTo(index);
 
+        this.update('cascade', [
+            ...data.visibles[index]['cascade']
+        ]);
+
         this.update('current', ...[
             this.getItem(data.visibles[index])
         ]);
@@ -539,6 +571,10 @@ export class NDraglistController extends ProtoController
         ]);
 
         this.ncx('virtualbar')?.scrollTo(index);
+
+        this.update('cascade', [
+            ...data.visibles[index]['cascade']
+        ]);
 
         this.update('current', ...[
             this.getItem(data.visibles[index])

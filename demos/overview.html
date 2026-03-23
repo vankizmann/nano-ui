@@ -1080,7 +1080,7 @@
             </div>
         </div>
 
-        <n-draglist :group="['foobar']" v-model:items="virtualTree" :safezone="0.2" :render-expand="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+        <n-draglist :group="['foobar']" v-model:items="virtualTree" :safezone="0.2" :cascade="[virtualTree[virtualTree.length-2].id]":render-expand="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
             <template v-slot:default="{ value, item }">
                 <div style="padding: 0 15px; line-height: 34px;">{{ item?.label }}</div>
             </template>

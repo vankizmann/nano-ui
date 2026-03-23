@@ -42,6 +42,14 @@ export class DragData
     /**
      * @returns {any[]}
      */
+    get cascade() : any[]
+    {
+        return this.scope.get('cascade');
+    }
+
+    /**
+     * @returns {any[]}
+     */
     get group() : any[]
     {
         return this.scope.get('group');

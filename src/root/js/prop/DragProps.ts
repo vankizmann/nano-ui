@@ -33,6 +33,13 @@ export const Draglist = {
     /**
      * @type {PropType<array>}
      */
+    cascade: {
+        type: [Array], default: () => []
+    },
+
+    /**
+     * @type {PropType<array>}
+     */
     group: {
         type: [Array], default: null
     },
