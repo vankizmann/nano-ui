@@ -93,12 +93,6 @@ export class NModalElement
             return;
         }
 
-        const chain = Arr.last(Pointer.chains);
-
-        if ( chain[0] !== this.options.uid ) {
-            return;
-        }
-
         let { src, tgt } = this.getEventEls(event);
 
         if ( !this.visible && !tgt && !src ) {
@@ -142,6 +136,16 @@ export class NModalElement
 
     state(state : any)
     {
+        const { uid } = this.options;
+
+        const chain = Arr.last(Pointer.chains, [
+            uid
+        ]);
+
+        if ( ! state && chain[0] !== uid ) {
+            return;
+        }
+
         if ( !this.visible && state ) {
             this.open();
         }

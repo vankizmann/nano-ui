@@ -68,7 +68,7 @@ export class NTextareaView extends ProtoView
         }
 
         props.onInput = (e : any) => {
-            data.model = e.target.value;
+            scope.update('modelValue', e.target.value);
             scope.emit('input', e);
         };
 

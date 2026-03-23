@@ -2,7 +2,7 @@ import { provide, SetupContext } from "vue";
 import { ProtoController } from "../../../root/index.ts";
 import { NTabsItemView } from "./NTabsItemView.ts";
 import { NTabsItemData } from "./NTabsItemData.ts";
-import { Arr, Mix } from "@kizmann/pico-js";
+import { Arr, Mix, Run } from "@kizmann/pico-js";
 
 
 export class NTabsItemController extends ProtoController
@@ -50,6 +50,10 @@ export class NTabsItemController extends ProtoController
 
         this.injectRef([
             'tabs', 'NTabs'
+        ]);
+
+        this.injectRef([
+            'tabs-item', 'NTabsItem'
         ]);
 
         const tabs = this.ncx('tabs');
@@ -110,9 +114,19 @@ export class NTabsItemController extends ProtoController
         return Arr.has(tabs.data.value, data.name);
     }
 
-    superOpen() : void
+    superOpen(cb : Function = null) : void
     {
-        this.ncx('tabs')?.superToggle(this.data.name);
+        const { name } = this.data;
+
+        const [tabs, parent] = [
+            this.ncx('tabs'), this.ncx('tabs-item')
+        ];
+
+        const fn = () => {
+            tabs?.superToggle(name), cb && Run.frame(cb);
+        };
+
+        parent ? parent.superOpen(fn) : fn();
     }
 
 }

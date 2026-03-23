@@ -1,4 +1,4 @@
-import { SetupContext, onBeforeUnmount, onMounted, provide } from "vue";
+import { SetupContext, onUnmounted, onMounted, provide } from "vue";
 import { Dom } from "@kizmann/pico-js";
 import { ProtoController } from "../../../root/index.ts";
 import { NPopoverView } from "./NPopoverView.ts";
@@ -49,6 +49,10 @@ export class NPopoverController extends ProtoController
 
         provide('NPopover', this.instance);
 
+        onUnmounted(() => {
+            this.el?.remove();
+        });
+
         return this;
     }
 
@@ -87,7 +91,7 @@ export class NPopoverController extends ProtoController
             this.popel.close(true, true);
         }
 
-        NPopoverHandler.remove({ uid: this.uid });
+        NPopoverHandler.remove(this);
     }
 
     onOpen()
