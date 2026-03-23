@@ -95,7 +95,7 @@ export class NConfigView extends ProtoView
 
         let component : any = alias.replace(/:.*?$/, '');
 
-        if ( !Arr.has(['div', 'p', 'span'], component) ) {
+        if ( !Arr.has(['div', 'a', 'p', 'span', 'iframe'], component) ) {
             component = resolveComponent(component);
         }
 

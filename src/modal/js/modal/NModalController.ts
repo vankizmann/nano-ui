@@ -1,4 +1,4 @@
-import { SetupContext, provide } from "vue";
+import { SetupContext, provide, onUnmounted } from "vue";
 import { Dom } from "@kizmann/pico-js";
 import { ProtoController } from "../../../root/index.ts";
 import { NModalView } from "./NModalView.ts";
@@ -53,6 +53,10 @@ export class NModalController extends ProtoController
             .makeRef('frame');
 
         provide('NModal', this.instance);
+
+        onUnmounted(() => {
+            this.el?.remove();
+        });
 
         return this;
     }

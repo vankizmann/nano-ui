@@ -14,6 +14,10 @@ export const NFormRuleRequiredIf = {
             return true;
         }
 
+        if ( ! Mix.isTrue(target) ) {
+            return true;
+        }
+
         if ( Mix.isBool(value) ) {
             return value === true;
         }

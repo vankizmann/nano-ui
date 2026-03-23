@@ -121,11 +121,11 @@ export class NPreviewHandler
             this.root.addClass('n-multi');
         }
 
-        const zIndex = Pointer.zindex();
-
         Pointer.prevent(...[
             this.uid, 'preview', this.uid
         ]);
+
+        const zIndex = Pointer.zindex();
 
         this.root.style({
             'z-index': zIndex

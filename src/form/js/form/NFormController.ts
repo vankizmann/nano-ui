@@ -2,7 +2,7 @@ import { provide, ref, SetupContext, watch } from "vue";
 import { GroupController } from "../../../root/index.ts";
 import { NFormView } from "./NFormView.ts";
 import { NFormData } from "./NFormData.ts";
-import { Arr, Hash, Obj } from "@kizmann/pico-js";
+import { Arr, Hash, Mix, Obj } from "@kizmann/pico-js";
 import NFormRuleHandler from "../form-rules/NFormRuleHandler.ts";
 
 
@@ -118,6 +118,25 @@ export class NFormController extends GroupController
         });
 
         return messages;
+    }
+
+    gotoFirstError()
+    {
+        const messages = this.getMessages();
+
+        if ( Mix.isEmpty(messages) ) {
+            return;
+        }
+
+        const first = Arr.first(...[
+            Mix.keys(messages)
+        ]);
+
+        let child = Arr.find(this.childs, (child : any) => {
+            return child.data.prop == first;
+        });
+
+        child?.superView();
     }
 
 }
