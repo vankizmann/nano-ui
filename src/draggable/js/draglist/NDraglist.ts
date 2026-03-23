@@ -62,6 +62,7 @@ export default defineComponent({
      */
     emits: [
         'update:items',
+        'update:cascade',
         'update:current',
         'update:selected',
         'update:expanded',

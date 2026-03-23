@@ -300,6 +300,7 @@ export class NTableView extends ProtoView
 
         const passed = [
             'group',
+            'cascade',
             'allowGroup',
             'safezone',
             'renderHandle',
@@ -346,6 +347,10 @@ export class NTableView extends ProtoView
 
         props['onUpdate:expanded'] = (value : any) => {
             scope.emit('update:expanded', value);
+        };
+
+        props['onUpdate:cascade'] = (value : any) => {
+            scope.emit('update:cascade', value);
         };
 
         return this.comp('n-draglist', props, (node : any) => {
