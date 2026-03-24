@@ -1,6 +1,5 @@
-import { onMounted, SetupContext } from "vue";
-import { Arr, Locale, Mix, Obj, Run, Str } from "@kizmann/pico-js";
-import { ProtoExtend } from "../../../root/index.ts";
+import { SetupContext } from "vue";
+import { Mix } from "@kizmann/pico-js";
 import { NPopoverPanelController } from "../../../popover/js/popover-panel/NPopoverPanelController.ts";
 import { NCascaderView } from "./NCascaderView.ts";
 import { NCascaderData } from "./NCascaderData.ts";

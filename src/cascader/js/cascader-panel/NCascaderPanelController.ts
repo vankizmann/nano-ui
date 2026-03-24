@@ -67,21 +67,21 @@ export class NCascaderPanelController extends GroupController
         return this;
     }
 
-    onMouseenter(item : any)
+    onMouseenter(item : any, depth : number)
     {
         const { data } = this;
 
         if ( data.trigger === 'hover' ) {
-            this.updateVisible(item);
+            this.updateVisible(item, depth);
         }
     }
 
-    onClick(item : any)
+    onClick(item : any, depth : number)
     {
         const { data } = this;
 
         if ( data.trigger === 'click' ) {
-            this.updateVisible(item);
+            this.updateVisible(item, depth);
         }
 
         if ( data.trigger === 'hover' ) {
@@ -89,7 +89,7 @@ export class NCascaderPanelController extends GroupController
         }
     }
 
-    onDblclick(item : any)
+    onDblclick(item : any, depth : number)
     {
         const { data } = this;
 
@@ -98,13 +98,17 @@ export class NCascaderPanelController extends GroupController
         }
     }
 
-    updateVisible(item : any)
+    updateVisible(item : any, depth : number)
     {
-        const cascade = NCascaderHelper.getPath(...[
-            this, item
+        const { data } = this;
+
+        const visible = Arr.slice(...[
+            data.visible || [], 0, depth
         ]);
 
-        this.set('visible', cascade);
+        this.set('visible', [
+            ...visible, item[data.valueProp]
+        ]);
     }
 
     updateCascade(item : any)
