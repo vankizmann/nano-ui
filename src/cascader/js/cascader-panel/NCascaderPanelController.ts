@@ -46,6 +46,10 @@ export class NCascaderPanelController extends GroupController
         this
             .makeRef('el');
 
+        this.injectRef([
+            'popover', 'NPopover'
+        ]);
+
         const { model, split } = this.data;
 
         if ( Mix.isEmpty(model) && !Mix.isEmpty(split) ) {
@@ -56,9 +60,9 @@ export class NCascaderPanelController extends GroupController
             NCascaderHelper.buildSplitFromModel(this);
         }
 
-        this.compData('virtuals', () => {
-            return NCascaderHelper.getCascade(this);
-        });
+        this.makeData('virtuals', ...[
+            NCascaderHelper.getCascade(this)
+        ]);
 
         this.makeData('visible', ...[
             Obj.clone(this.data.model)
@@ -85,7 +89,7 @@ export class NCascaderPanelController extends GroupController
         }
 
         if ( data.trigger === 'hover' ) {
-            this.updateCascade(item);
+            this.updateCascade(item, depth);
         }
     }
 
@@ -94,7 +98,7 @@ export class NCascaderPanelController extends GroupController
         const { data } = this;
 
         if ( data.trigger === 'click' ) {
-            this.updateCascade(item);
+            this.updateCascade(item, depth);
         }
     }
 
@@ -109,20 +113,34 @@ export class NCascaderPanelController extends GroupController
         this.set('visible', [
             ...visible, item[data.valueProp]
         ]);
-    }
 
-    updateCascade(item : any)
-    {
-        const cascade = NCascaderHelper.getPath(...[
-            this, item
+        const virtuals = Arr.slice(...[
+            data.virtuals || [], 0, depth
         ]);
 
-        const [total, split] = [
-            cascade, Arr.last(cascade)
+        this.set('virtuals', [
+            ...virtuals, item
+        ]);
+    }
+
+    updateCascade(item : any, depth : number = 0)
+    {
+        const { data } = this;
+
+        const cascade = Arr.slice(...[
+            data.visible || [], 0, depth
+        ]);
+
+        const total = [
+            ...cascade, item[data.valueProp]
         ];
 
-        this.update('splitValue', split);
+        this.update('splitValue', ...[
+            Arr.last(total)
+        ]);
+
         this.update('modelValue', total);
+        this.ncx('popover')?.superClose();
     }
 
 }

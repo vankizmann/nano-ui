@@ -55,6 +55,7 @@ export class NCascaderPanelView extends ProtoView
         const { scope, data } = this.scope;
 
         let props : any = {
+            clickClose: false,
             disabled: item[data.disabledProp],
         };
 

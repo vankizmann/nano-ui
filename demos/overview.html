@@ -482,10 +482,10 @@
 
         <div class="n-grid gap-10">
             <div class="col--1-1">
-                <n-cascader-panel v-bind="n_cascader" trigger="click" :options="cascaderData"></n-cascader-panel>
+                <n-cascader-panel v-bind="n_cascader" :options="cascaderData"></n-cascader-panel>
             </div>
             <div class="col--1-1 col--1-8@md col--right">
-                <n-cascader v-bind="n_cascader" :options="cascaderData"></n-cascader>
+                <n-cascader v-bind="n_cascader" trigger="click" :options="cascaderData"></n-cascader>
             </div>
             <div class="col--1-1 col--1-8@md col--right">
                 <n-cascader v-bind="n_cascader" :collapse="3" :collapse-first="false" :options="[]" :model-value="['1', '2', '3', '4', '5', '6']"></n-cascader>

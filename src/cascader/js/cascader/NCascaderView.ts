@@ -46,7 +46,7 @@ export class NCascaderView extends NPopoverPanelView
             Mix.len(items) - data.collapse,
         ];
 
-        if ( ! data.collapseFirst ) {
+        if ( ! data.collapseFirst && offset > 0  ) {
             offset = offset + 1;
         }
 
