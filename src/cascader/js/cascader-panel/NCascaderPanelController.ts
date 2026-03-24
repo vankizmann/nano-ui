@@ -39,12 +39,11 @@ export class NCascaderPanelController extends GroupController
     {
         super.setup();
 
-        this
-            .cloneProp('modelValue')
-            .cloneProp('splitValue');
+        this.makeRef('el');
 
-        this
-            .makeRef('el');
+        this.cloneProp('modelValue');
+        this.cloneProp('splitValue');
+        this.makeData('virtuals', []);
 
         this.injectRef([
             'popover', 'NPopover'
@@ -60,15 +59,24 @@ export class NCascaderPanelController extends GroupController
             NCascaderHelper.buildSplitFromModel(this);
         }
 
-        this.makeData('virtuals', ...[
-            NCascaderHelper.getCascade(this)
-        ]);
+        this.watchProp('options', () => {
+            this.buildVirtuals();
+        });
+
+        this.buildVirtuals();
 
         this.makeData('visible', ...[
             Obj.clone(this.data.model)
         ]);
 
         return this;
+    }
+
+    buildVirtuals()
+    {
+        this.set('virtuals', ...[
+            NCascaderHelper.getCascade(this)
+        ]);
     }
 
     onMouseenter(item : any, depth : number)
@@ -140,6 +148,7 @@ export class NCascaderPanelController extends GroupController
         ]);
 
         this.update('modelValue', total);
+
         this.ncx('popover')?.superClose();
     }
 
