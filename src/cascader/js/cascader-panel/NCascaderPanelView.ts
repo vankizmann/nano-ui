@@ -23,16 +23,16 @@ export class NCascaderPanelView extends ProtoView
             class: data.classList
         };
 
-        const slots = Arr.each(data.virtuals, (val : any) => {
-            return this.items(val[data.childProp] ?? []);
+        const slots = Arr.each(data.virtuals, (val : any, index : number) => {
+            return this.items(val[data.childProp] ?? [], index + 1);
         });
 
         return h('div', props, [
-            this.items(data.options), ...slots
+            this.items(data.options, 0), ...slots
         ]);
     }
 
-    items(items : any) : any
+    items(items : any, depth : number) : any
     {
         const { data } = this.scope;
 
@@ -46,11 +46,11 @@ export class NCascaderPanelView extends ProtoView
         };
 
         return this.comp('n-virtualbar', props, ({ value }) => {
-            return this.item(value);
+            return this.item(value, depth);
         });
     }
 
-    item(item : any) : any
+    item(item : any, depth : number) : any
     {
         const { scope, data } = this.scope;
 
@@ -83,17 +83,17 @@ export class NCascaderPanelView extends ProtoView
         }
 
         props.onPointerenter = () => {
-            scope.onMouseenter(item);
+            scope.onMouseenter(item, depth);
         };
 
         props.onClick = (e : any) => {
             e.preventDefault();
-            scope.onClick(item);
+            scope.onClick(item, depth);
         };
 
         props.onDblclick = (e : any) => {
             e.preventDefault();
-            scope.onDblclick(item);
+            scope.onDblclick(item, depth);
         };
 
         return this.comp('n-popover-option', props, () => [

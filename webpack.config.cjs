@@ -96,6 +96,9 @@ let docJs = {
 
 let themeFn = (entry, target) => ({
     entry: [entry],
+    stats: {
+        loggingDebug: ["sass-loader"],
+    },
     module: {
         rules: [
             {

@@ -107,7 +107,7 @@ export class NDraglistController extends ProtoController
             this.set('index', this.buildIndex());
         });
 
-        if ( this.data.cascade.length ) {
+        if ( this.data.cascade?.length ) {
             this.buildCurrent();
         }
 
@@ -344,11 +344,13 @@ export class NDraglistController extends ProtoController
 
     onDragdrop(e : any, result : any, config : any)
     {
+        const { data } = this;
+
         let clone = {
-            items: Arr.clone(this.data.items),
+            items: Arr.clone(data.items),
         };
 
-        let transformDrop = this.data.transformDrop;
+        let transformDrop = data.transformDrop;
 
         if ( typeof transformDrop !== 'function' ) {
             transformDrop = (value : any) => value;
@@ -382,8 +384,25 @@ export class NDraglistController extends ProtoController
             clone = NDragHelper.afterNodes(...args);
         }
 
+        const valid = [
+            'inside', 'before', 'after', 'append'
+        ];
+
+        if ( !Arr.has(valid, result.mode) ) {
+            return result;
+        }
+
+        const ids = Arr.extract(...[
+            config.items, 'value.uid'
+        ]);
+
+        if ( result.mode !== 'append' ) {
+            config.uid = result.uids.item;
+        }
+
         this.emit('update:items', clone.items);
-        this.update('current', null);
+        this.emit('move', config.uid, ids, result);
+        this.set('current', null);
         this.update('selected', []);
 
         return result;
@@ -410,7 +429,7 @@ export class NDraglistController extends ProtoController
         NDragHelper.removeNodes(...args);
 
         this.emit('update:items', clone.items);
-        this.update('current', null);
+        this.set('current', null);
         this.update('selected', []);
 
         return result;
@@ -475,12 +494,12 @@ export class NDraglistController extends ProtoController
             return { ...result, mode: 'self' };
         }
 
-        if ( !this.nodeAllowDrop(node, result, config) ) {
-            result.mode = 'deny';
-        }
-
         if ( !result.mode ) {
             result.mode = this.drag.getMode(e, els.item, data.safezone);
+        }
+
+        if ( !this.nodeAllowDrop(node, result, config) ) {
+            result.mode = 'deny';
         }
 
         return result;
