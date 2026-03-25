@@ -72,7 +72,9 @@ export default defineComponent({
         'filter',
         'sort',
         'row-click',
+        'node-click',
         'row-dblclick',
+        'node-dblclick',
     ],
 
     setup(props, context)

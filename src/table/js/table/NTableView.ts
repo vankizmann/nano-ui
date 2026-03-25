@@ -333,6 +333,14 @@ export class NTableView extends ProtoView
             this.scope.emit('row-dblclick', node);
         };
 
+        props.onNodeClick = (node : any) => {
+            this.scope.emit('node-click', node);
+        };
+
+        props.onNodeDblclick = (node : any) => {
+            this.scope.emit('node-dblclick', node);
+        };
+
         props['onUpdate:items'] = (value : any) => {
             scope.emit('update:items', value);
         };

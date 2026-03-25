@@ -67,7 +67,9 @@ export default defineComponent({
         'update:selected',
         'update:expanded',
         'row-click',
+        'node-click',
         'row-dblclick',
+        'node-dblclick',
     ],
 
     setup(props, context)
