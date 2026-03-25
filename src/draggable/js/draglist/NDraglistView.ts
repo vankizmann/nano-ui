@@ -178,11 +178,13 @@ export class NDraglistView extends ProtoView
         props.onClick = (e : any) => {
             scope.onCurrentclick(e, value);
             scope.emit('row-click', data.current, e);
+            scope.emit('node-click', { value, item: data.current }, e);
         };
 
         props.onDblclick = (e : any) => {
             scope.onStopclick();
             scope.emit('row-dblclick', data.current, e);
+            scope.emit('node-dblcclick', { value, item: data.current }, e);
         };
 
         props.onDragstart = (e : any) => {
