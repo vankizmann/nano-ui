@@ -1,7 +1,11 @@
 @use "../../root/css/helpers" as *;
 
-.n-drag-indicator,
-.n-draggable__indicator {
+body:not(.n-drag) .n-drag-counter,
+body:not(.n-drag) .n-drag-indicator {
+    display: none !important;
+}
+
+.n-drag-indicator {
     pointer-events: none;
     z-index: 9999998;
     position: absolute;
@@ -58,8 +62,7 @@
     width: 2px;
 }
 
-.n-drag-counter,
-.n-draggable__counter {
+.n-drag-counter {
     cursor: none;
     pointer-events: none;
     will-change: transform;

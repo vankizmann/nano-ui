@@ -65,6 +65,7 @@ export default defineComponent({
         'update:current',
         'update:selected',
         'update:expanded',
+        'update:cascade',
         'update:filter',
         'update:sortProp',
         'update:sortDir',
