@@ -181,7 +181,7 @@ export class NDraglistView extends ProtoView
         };
 
         props.onDblclick = (e : any) => {
-            Pointer.stop();
+            scope.onStopclick();
             scope.emit('row-dblclick', data.current, e);
         };
 
@@ -234,8 +234,12 @@ export class NDraglistView extends ProtoView
             class: `${this.iem}__ellipsis`
         };
 
-        props.onDragstart = (e) => {
+        props.onDragstart = (e : any) => {
             scope.nodeDragstart(e, value);
+        };
+
+        props.onClick = (e : any) => {
+            e.stopPropagation();
         };
 
         return h('div', parent, [
@@ -262,8 +266,11 @@ export class NDraglistView extends ProtoView
         };
 
         props.onPointerdown = (e : any) => {
-            e.preventDefault();
             scope.onExpandclick(e, value);
+        };
+
+        props.onClick = (e : any) => {
+            e.stopPropagation();
         };
 
         return h('div', parent, [

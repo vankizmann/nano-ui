@@ -49,8 +49,6 @@ export class NPreviewController extends ProtoController
         this.makeRef('portal');
         this.makeData('visible', false);
 
-        this.injectRef(['draglist', 'NDraglist']);
-
         this.watchProp('index', () => {
             this.onChange();
         });
@@ -93,11 +91,9 @@ export class NPreviewController extends ProtoController
 
     openPreview()
     {
-        const fn = () => {
+        Pointer.wait(() => {
             NPreviewHandler.open(this.preview);
-        };
-
-        this.ref('draglist') ? Pointer.wait(fn) : fn();
+        });
     }
 
     openPortal(el : Dom)

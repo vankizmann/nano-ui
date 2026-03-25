@@ -248,6 +248,11 @@ export class NDraglistController extends ProtoController
         }
     }
 
+    onStopclick()
+    {
+        Run.frame(() => Pointer.stop());
+    }
+
     onCurrentclick(e : any, item : any)
     {
         let depth = this.data.relation?.depth;
@@ -256,12 +261,8 @@ export class NDraglistController extends ProtoController
             depth = item.depth;
         }
 
-        const fn = () => {
-            Run.frame(() => Pointer.stop());
-        };
-
         if ( e && e.metaKey && depth === item.depth ) {
-            fn(), this.onSelectclick(e, item);
+            this.onStopclick(), this.onSelectclick(e, item);
         }
 
         this.update('cascade', [
@@ -460,6 +461,8 @@ export class NDraglistController extends ProtoController
         Run.frame(() => {
             this.update('selected', selected);
         });
+
+        this.onStopclick();
     }
 
     nodeDragmove(e : any, result : any, config : any, els : any)
@@ -494,8 +497,12 @@ export class NDraglistController extends ProtoController
             return { ...result, mode: 'self' };
         }
 
+        const args : [any, any, any] = [
+            els.item, data.safezone, [{ node, result, config }]
+        ];
+
         if ( !result.mode ) {
-            result.mode = this.drag.getMode(e, els.item, data.safezone, [node]);
+            result.mode = this.drag.getMode(e, ...args);
         }
 
         if ( !this.nodeAllowDrop(node, result, config) ) {
