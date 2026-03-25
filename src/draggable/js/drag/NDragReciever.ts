@@ -95,7 +95,7 @@ export class NDragReciever
         NDragHandler.dragstart(e, config);
     }
 
-    getMode(event : any, el : HTMLElement, safezone : Function | number = 0.5)
+    getMode(event : any, el : HTMLElement, safezone : Function | number = 0.5, args : any[] = [])
     {
         let [fn, mode] = [safezone, 'inside'];
 
@@ -114,7 +114,7 @@ export class NDragReciever
             grid ? event.clientX : event.clientY,
         ];
 
-        const padding = fn(size);
+        const padding = fn(size, ...args);
 
         if ( scale < offset + padding ) {
             mode = 'before';
