@@ -483,7 +483,7 @@ export class NDraglistController extends ProtoController
         });
 
         const node = {
-            item, value: Obj.get(data, item.route)
+            value: item, item: Obj.get(data, item.route)
         };
 
         let rainbow = Arr.each(config.items ?? [], (el : any) => {
@@ -495,7 +495,7 @@ export class NDraglistController extends ProtoController
         }
 
         if ( !result.mode ) {
-            result.mode = this.drag.getMode(e, els.item, data.safezone);
+            result.mode = this.drag.getMode(e, els.item, data.safezone, [node]);
         }
 
         if ( !this.nodeAllowDrop(node, result, config) ) {
