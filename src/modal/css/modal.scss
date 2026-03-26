@@ -122,6 +122,10 @@ body.n-backdrop {
     justify-content: stretch;
 }
 
+.n-modal__content {
+    min-height: 0;
+}
+
 .n-modal .n-modal__wrap {
     flex: 1 1 auto;
 }

@@ -20,10 +20,12 @@ export class NAlertElement
      */
     options : any = {
         uid: null,
+        icon: null,
         text: null,
         theme: 'dark',
         size: null,
         type: null,
+        closable: true,
         okayText: null,
     };
 
@@ -55,7 +57,7 @@ export class NAlertElement
     open()
     {
         let modalProps : any = {
-            uid: this.options.uid, listen: false, closable: false
+            uid: this.options.uid, listen: false, closable: this.options.closable,
         };
 
         this.modal = NModalHandler.append(...[
@@ -107,7 +109,7 @@ export class NAlertElement
 
         body.appendTo(frame);
 
-        const iconCls = Styler.icon(...[
+        const iconCls = this.options.icon || Styler.icon(...[
             this.options.type, 'alert'
         ]);
 

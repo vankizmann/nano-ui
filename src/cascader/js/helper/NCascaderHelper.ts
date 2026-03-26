@@ -11,7 +11,7 @@ export class NCascaderHelper
             return this;
         }
 
-        scope.set('splitValue', ...[
+        scope.update('splitValue', ...[
             Arr.last(model)
         ]);
 
@@ -34,7 +34,7 @@ export class NCascaderHelper
             result = [{ [valueProp]: split }];
         }
 
-        scope.set('modelValue', ...[
+        scope.update('modelValue', ...[
             Arr.extract(result, valueProp)
         ]);
 

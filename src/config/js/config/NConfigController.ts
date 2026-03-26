@@ -190,11 +190,11 @@ export class NConfigController extends ProtoController
         ]);
 
         if ( value.match(/^!!\$/) ) {
-            result = Mix.isEmpty(result);
+            result = Mix.isTrue(result);
         }
 
         if ( value.match(/^!\$/) ) {
-            result = Mix.isEmpty(result);
+            result = ! Mix.isTrue(result);
         }
 
         return result;

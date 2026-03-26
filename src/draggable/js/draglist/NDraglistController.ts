@@ -243,7 +243,7 @@ export class NDraglistController extends ProtoController
             return Arr.last(data.cascade) === item[data.uniqueProp];
         });
 
-        if ( ! Mix.isEmpty(items) ) {
+        if ( !Mix.isEmpty(items) ) {
             this.update('current', items[0]);
         }
     }
@@ -265,9 +265,13 @@ export class NDraglistController extends ProtoController
             this.onStopclick(), this.onSelectclick(e, item);
         }
 
-        this.update('cascade', [
-            ...item.cascade
-        ]);
+        const rainbow = [
+            item.cascade.join(','), this.data.cascade.join(',')
+        ];
+
+        if ( Arr.unique(rainbow).length == 2 ) {
+            Pointer.wait(() => this.update('cascade', item.cascade));
+        }
 
         this.update('current', ...[
             this.getItem(item)
@@ -286,12 +290,12 @@ export class NDraglistController extends ProtoController
             return Arr.has(data.selected, node.uid);
         });
 
-        if ( ! e.shiftKey || ! first || item.depth ) {
+        if ( !e.shiftKey || !first || item.depth ) {
             return this.update('selected', selected);
         }
 
         const items = Arr.filter(data.visibles, (node : any) => {
-            return ! node.depth;
+            return !node.depth;
         });
 
         let last = item;
@@ -401,8 +405,12 @@ export class NDraglistController extends ProtoController
             config.uid = result.uids.item;
         }
 
+        const options = {
+            ...result, group: config.group, items: config.items
+        };
+
         this.emit('update:items', clone.items);
-        this.emit('move', config.uid, ids, result);
+        this.emit('move', config.uid, ids, options);
         this.set('current', null);
         this.update('selected', []);
 
@@ -550,7 +558,7 @@ export class NDraglistController extends ProtoController
         });
     }
 
-    setTotalCurrent(total: number)
+    setTotalCurrent(total : number)
     {
         const { data } = this;
 
@@ -622,7 +630,7 @@ export class NDraglistController extends ProtoController
         this.update('selected', ids);
     }
 
-    selectState(): number
+    selectState() : number
     {
         const { items, selected } = this.data;
 

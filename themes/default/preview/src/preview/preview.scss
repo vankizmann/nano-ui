@@ -22,14 +22,19 @@
     transition: transform 0.15s;
 }
 
-.n-preview:hover .n-preview__hover i {
-    transform: scale(1);
+.n-preview:hover .n-preview__hover span {
+    color: color('foreground', 0.7);
+}
+
+.n-preview.n-preview-image .n-preview__title span {
+    color: color('white');
+    text-shadow: 0 0 6px color('shadow', 0.7);
 }
 
 .n-preview__mime {
-    color: color('white', 0.5);
+    color: color('foreground', 0.5);
 }
 
 .n-preview__path {
-    color: color('white', 0.75);
+    color: color('foreground', 0.75);
 }
