@@ -38,6 +38,8 @@ export class NTableController extends GroupController
     {
         super.setup();
 
+        this.makeUID();
+
         this
             .cloneProp('visible')
             .cloneProp('filter')

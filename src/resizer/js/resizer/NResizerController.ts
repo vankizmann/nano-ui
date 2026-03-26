@@ -122,7 +122,11 @@ export class NResizerController extends ProtoController
             target = Math.min(target, data.maxWidth);
         }
 
-        target = data.width = Math.round(target);
+        target = Math.round(target);
+
+        if ( target > 0 ) {
+            this.set('width', target);
+        }
 
         if ( data.direction === 'right' ) {
             return target;
