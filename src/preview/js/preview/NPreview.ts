@@ -8,7 +8,7 @@ export const NPreviewProps = {
     ...Props.Load,
     ...Props.Size,
     ...Props.Type,
-    ...Props.ThemeDark,
+    ...Props.ThemeNone,
 
     /**
      * @type {PropType<any>}

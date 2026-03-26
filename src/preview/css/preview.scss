@@ -196,12 +196,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: size('base-fnt');
-    color: color('white', 0.7);
-}
-
-.n-preview.n-preview-image .n-preview__title span {
-    color: color('white');
-    text-shadow: 0 0 6px color('shadow', 0.7);
 }
 
 .n-preview__meta li {

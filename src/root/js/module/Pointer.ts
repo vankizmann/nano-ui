@@ -242,7 +242,7 @@ export class Pointer
 
     static wait(cb : Function)
     {
-        Arr.append(this.waiter, Run.delay(cb, 200));
+        Arr.append(this.waiter, Run.delay(cb, 250));
     }
 
     static stop()

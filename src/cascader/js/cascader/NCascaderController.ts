@@ -1,5 +1,5 @@
 import { provide, SetupContext } from "vue";
-import { Mix } from "@kizmann/pico-js";
+import { Mix, Run } from "@kizmann/pico-js";
 import { NPopoverPanelController } from "../../../popover/js/popover-panel/NPopoverPanelController.ts";
 import { NCascaderView } from "./NCascaderView.ts";
 import { NCascaderData } from "./NCascaderData.ts";
@@ -45,23 +45,36 @@ export class NCascaderController extends NPopoverPanelController
 
         this.makeRef('panel');
 
-        let { model, split } = this.data;
-
-        if ( Mix.isEmpty(model) && ! Mix.isEmpty(split) ) {
-            NCascaderHelper.buildModelFromSplit(this);
-        }
-
-        if ( ! Mix.isEmpty(model) && Mix.isEmpty(split) ) {
-            NCascaderHelper.buildSplitFromModel(this);
-        }
-
         this.compData('virtuals', () => {
             return NCascaderHelper.getCascade(this);
+        });
+
+        this.detectModel();
+
+        this.watchProp('splitValue', () => {
+            Run.frame(() => this.detectModel());
+        });
+
+        this.watchProp('options', () => {
+            Run.frame(() => this.detectModel());
         });
 
         provide('NCascader', this.instance);
 
         return this;
+    }
+
+    detectModel() : void
+    {
+        let { model, split } = this.data;
+
+        if ( ! Mix.isEmpty(model) && Mix.isEmpty(split) ) {
+            NCascaderHelper.buildSplitFromModel(this);
+        }
+
+        if ( Mix.isEmpty(model) && ! Mix.isEmpty(split) ) {
+            NCascaderHelper.buildModelFromSplit(this);
+        }
     }
 
 }

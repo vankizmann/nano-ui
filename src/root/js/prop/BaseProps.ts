@@ -77,6 +77,17 @@ export const ClearValue = {
 
 };
 
+export const ThemeNone = {
+
+    /**
+     * @type {PropType<string>}
+     */
+    theme: {
+        type: [String], default: null
+    },
+
+};
+
 export const ThemeDark = {
 
     /**
