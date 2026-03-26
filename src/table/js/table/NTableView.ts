@@ -153,7 +153,7 @@ export class NTableView extends ProtoView
         }
 
         props = {
-            ...props, ...scope.getStyle(column),
+            group: [scope.uid], ...props, ...scope.getStyle(column),
         };
 
         if ( !Mix.isEmpty(data.fixedWidth) ) {

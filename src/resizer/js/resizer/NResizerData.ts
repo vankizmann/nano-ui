@@ -24,19 +24,9 @@ export class NResizerData extends ProtoData
         return this.scope.get('modelValue');
     }
 
-    set model(value : number)
-    {
-        this.scope.set('modelValue', value);
-    }
-
     get width() : number
     {
         return this.scope.get('width');
-    }
-
-    set width(value : number)
-    {
-        this.scope.set('width', value);
     }
 
     get minWidth() : number
@@ -44,19 +34,9 @@ export class NResizerData extends ProtoData
         return this.scope.get('minWidth');
     }
 
-    set minWidth(value : number)
-    {
-        this.scope.set('minWidth', value);
-    }
-
     get maxWidth() : number
     {
         return this.scope.get('maxWidth');
-    }
-
-    set maxWidth(value : number)
-    {
-        this.scope.set('maxWidth', value);
     }
 
     get group() : any[]
@@ -64,29 +44,14 @@ export class NResizerData extends ProtoData
         return this.scope.get('group');
     }
 
-    set group(value : any[])
-    {
-        this.scope.set('group', value);
-    }
-
     get flex() : string
     {
         return this.scope.get('flex');
     }
 
-    set flex(value : string)
-    {
-        this.scope.set('flex', value);
-    }
-
     get direction() : string
     {
         return this.scope.get('direction');
-    }
-
-    set direction(value : string)
-    {
-        this.scope.set('direction', value);
     }
 
 }
