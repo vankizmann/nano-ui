@@ -164,7 +164,7 @@ export class NPreviewHandler
     static render(): [Dom, Dom]
     {
         const root = Dom.make('div', {
-            class: 'n-preview-modal',
+            class: 'n-preview-modal n-theme-dark',
         });
 
         const close = Dom.make('div', {

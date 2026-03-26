@@ -22,6 +22,10 @@
     transition: transform 0.15s;
 }
 
+.n-preview:hover .n-preview__hover i {
+    transform: scale(1);
+}
+
 .n-preview:hover .n-preview__hover span {
     color: color('foreground', 0.7);
 }
