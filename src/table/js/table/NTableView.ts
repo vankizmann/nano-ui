@@ -118,8 +118,14 @@ export class NTableView extends ProtoView
             return null;
         }
 
+        const classList = [
+            `${this.bem}-column`,
+            `${this.bem}-column--${column.data.type}`,
+            `${this.bem}-column--${column.data.align}`,
+        ]
+
         let props : any = {
-            class: [`${this.bem}-column`],
+            class: classList,
         };
 
         const sorted = [
@@ -300,6 +306,7 @@ export class NTableView extends ProtoView
 
         const passed = [
             'group',
+            'expanded',
             'cascade',
             'allowGroup',
             'safezone',

@@ -1,7 +1,7 @@
 import { h } from "vue";
 import { Pointer, ProtoView, Styler } from "../../../root/index.ts";
 import { NDraglistController } from "./NDraglistController.ts";
-import { Arr, Obj } from "@kizmann/pico-js";
+import { Arr, Mix, Obj } from "@kizmann/pico-js";
 
 export class NDraglistView extends ProtoView
 {
@@ -148,15 +148,21 @@ export class NDraglistView extends ProtoView
         let { scope, data } = this.scope;
 
         props = {
-            dropitem: value.uid, class: [],
+            class: [], dropitem: value.uid
         };
 
-        if ( Arr.has(data.selected, value.uid) ) {
-            Arr.append(props.class, 'n-selected');
+        let allowDrag : any = data.allowDrag;
+
+        if ( Mix.isFunc(allowDrag) ) {
+            allowDrag = allowDrag({ value });
         }
 
         if ( !data.renderHandle ) {
-            props.draggable = !data.renderHandle;
+            props.draggable = allowDrag;
+        }
+
+        if ( Arr.has(data.selected, value.uid) ) {
+            Arr.append(props.class, 'n-selected');
         }
 
         if ( value.childs ) {
@@ -184,7 +190,7 @@ export class NDraglistView extends ProtoView
         props.onDblclick = (e : any) => {
             scope.onStopclick();
             scope.emit('row-dblclick', data.current, e);
-            scope.emit('node-dblcclick', { value, item: data.current }, e);
+            scope.emit('node-dblclick', { value, item: data.current }, e);
         };
 
         props.onDragstart = (e : any) => {
@@ -227,10 +233,19 @@ export class NDraglistView extends ProtoView
             return null;
         }
 
-        const parent = {
+        const parent : any = {
             class: `${this.iem}__handle`,
-            draggable: true,
         };
+
+        let allowDrag : any = data.allowDrag;
+
+        if ( Mix.isFunc(allowDrag) ) {
+            allowDrag = allowDrag({ value });
+        }
+
+        if ( allowDrag ) {
+            parent.draggable = true;
+        }
 
         const props : any = {
             class: `${this.iem}__ellipsis`

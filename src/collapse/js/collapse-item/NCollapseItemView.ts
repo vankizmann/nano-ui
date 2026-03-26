@@ -119,8 +119,11 @@ export class NCollapseItemView extends ProtoView
 
         let props : any = {
             class: data.classPart('content'),
-            wrapClass: `${this.bem}__wrap`,
         };
+
+        if ( data.scrollbar ) {
+            props.wrapClass = `${this.bem}__wrap`;
+        }
 
         if ( !scope.isVisible() ) {
             props.style = 'display: none;';

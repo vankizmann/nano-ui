@@ -20,18 +20,21 @@ export class NTabsItemView extends ProtoView
     {
         let { scope, data } = this.scope;
 
-        if ( ! scope.isActive() ) {
+        if ( !scope.isActive() ) {
             return null;
         }
 
-        if ( ! data.init ) {
+        if ( !data.init ) {
             scope.set('init', true);
         }
 
         let props : any = {
             class: data.classList,
-            wrapClass: `${this.bem}__wrap`,
         };
+
+        if ( data.scrollbar ) {
+            props.wrapClass = `${this.bem}__wrap`;
+        }
 
         const tabs = scope.ncx('tabs');
 
@@ -39,7 +42,7 @@ export class NTabsItemView extends ProtoView
             props.class.push('n-float');
         }
 
-        if ( ! scope.isVisible() ) {
+        if ( !scope.isVisible() ) {
             props.style = 'display: none;';
         }
 
@@ -47,7 +50,7 @@ export class NTabsItemView extends ProtoView
             return this.slot('default');
         };
 
-        if ( ! data.scrollbar ) {
+        if ( !data.scrollbar ) {
             return h('div', props, slot());
         }
 
@@ -56,7 +59,7 @@ export class NTabsItemView extends ProtoView
         ]);
     }
 
-    header(tabs: NTabsController) : any
+    header(tabs : NTabsController) : any
     {
         const { data } = this.scope
 
@@ -73,7 +76,7 @@ export class NTabsItemView extends ProtoView
         };
 
         props.onDragenter = () => {
-            if( tabs.data.dragOpen ) {
+            if ( tabs.data.dragOpen ) {
                 tabs.superToggle(data.name);
             }
         };
@@ -84,7 +87,7 @@ export class NTabsItemView extends ProtoView
         ]);
     }
 
-    header_icon(tabs: NTabsController) : any
+    header_icon(tabs : NTabsController) : any
     {
         const { data } = this.scope;
 
@@ -97,7 +100,7 @@ export class NTabsItemView extends ProtoView
         ]);
     }
 
-    header_label(tabs: NTabsController) : any
+    header_label(tabs : NTabsController) : any
     {
         const { data } = this.scope;
 
