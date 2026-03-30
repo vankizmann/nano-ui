@@ -37,7 +37,9 @@ export class NDrawerController extends ProtoController
             new NDrawerData(this),
         ];
 
-        this.setup();
+        if ( this.constructor.name === 'NDrawerController' ) {
+            this.setup();
+        }
     }
 
     setup()

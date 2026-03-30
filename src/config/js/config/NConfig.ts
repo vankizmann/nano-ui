@@ -47,6 +47,11 @@ export default defineComponent({
     props: NConfigProps,
 
     /**
+     * @type {boolean}
+     */
+    inheritAttrs: false,
+
+    /**
      * @type {string[]}
      */
     emits: [

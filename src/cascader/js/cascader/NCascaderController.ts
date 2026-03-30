@@ -33,7 +33,9 @@ export class NCascaderController extends NPopoverPanelController
             new NCascaderData(this),
         ];
 
-        this.setup();
+        if ( this.constructor.name === 'NCascaderController' ) {
+            this.setup();
+        }
     }
 
     setup()

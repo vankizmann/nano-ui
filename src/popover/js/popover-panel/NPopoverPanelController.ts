@@ -30,7 +30,9 @@ export class NPopoverPanelController extends ProtoController
             new NPopoverPanelData(this),
         ];
 
-        this.setup();
+        if ( this.constructor.name === 'NPopoverPanelController' ) {
+            this.setup();
+        }
     }
 
     setup()

@@ -31,7 +31,9 @@ export class NTransferController extends ProtoController
             new NTransferData(this),
         ];
 
-        this.setup();
+        if ( this.constructor.name === 'NTransferController' ) {
+            this.setup();
+        }
     }
 
     setup()
@@ -116,7 +118,6 @@ export class NTransferController extends ProtoController
 
     moveToSource(item : any)
     {
-        console.log(item);
         const { uniqueProp } = this.data;
 
         const result = Arr.clone(...[

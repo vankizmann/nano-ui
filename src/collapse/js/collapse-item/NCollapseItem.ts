@@ -68,6 +68,11 @@ export default defineComponent({
     props: NCollapseItemProps,
 
     /**
+     * @type {boolean}
+     */
+    inheritAttrs: false,
+
+    /**
      * @type {string[]}
      */
     emits: [
