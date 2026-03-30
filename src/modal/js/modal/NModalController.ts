@@ -37,7 +37,9 @@ export class NModalController extends ProtoController
             new NModalData(this),
         ];
 
-        this.setup();
+        if ( this.constructor.name === 'NModalController' ) {
+            this.setup();
+        }
     }
 
     setup()

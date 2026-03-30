@@ -30,11 +30,6 @@ export class NDraglistController extends ProtoController
      */
     drag : NDragReciever;
 
-    /**
-     * @type {string}
-     */
-    selectbuffer : string;
-
     constructor(props : any, context : SetupContext)
     {
         super(props, context);
@@ -45,7 +40,9 @@ export class NDraglistController extends ProtoController
             new NDraglistData(this),
         ];
 
-        this.setup();
+        if ( this.constructor.name === 'NDraglistController' ) {
+            this.setup();
+        }
     }
 
     setup()

@@ -117,7 +117,7 @@ export class NTransferView extends ProtoView
         let slots : any = {};
 
         slots.default = ({ item }) => {
-            return Obj.get(item, 'label');
+            return Obj.get(item, data.labelProp);
         };
 
         const header = this.source_header();
@@ -187,7 +187,7 @@ export class NTransferView extends ProtoView
         let slots : any = {};
 
         slots.default = ({ item }) => {
-            return Obj.get(item, 'label', 'foobar');
+            return Obj.get(item, data.labelProp);
         };
 
         const header = this.target_header();

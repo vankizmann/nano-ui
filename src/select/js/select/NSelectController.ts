@@ -32,7 +32,9 @@ export class NSelectController extends NPopoverPanelController
             new NSelectData(this),
         ];
 
-        this.setup();
+        if ( this.constructor.name === 'NSelectController' ) {
+            this.setup();
+        }
     }
 
     setup()
