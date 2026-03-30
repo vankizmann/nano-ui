@@ -47,6 +47,7 @@ export class NTransferController extends ProtoController
             .makeRef('target');
 
         this.cloneProp('modelValue');
+        this.cloneProp('options');
 
         this
             .makeData('source')
@@ -54,12 +55,10 @@ export class NTransferController extends ProtoController
             .makeData('target')
             .makeData('targetSearch', '');
 
-        this.watchData('modelValue', () => {
-            this.updateSource();
-            this.updateTarget();
-        });
+        this.updateSource();
+        this.updateTarget();
 
-        this.watchProp('options', () => {
+        this.watchData('modelValue', () => {
             this.updateSource();
             this.updateTarget();
         });
@@ -72,10 +71,14 @@ export class NTransferController extends ProtoController
             this.updateTarget();
         });
 
-        this.updateSource();
-        this.updateTarget();
-
         return this;
+    }
+
+    onMounted() {
+        this.watchData('options', () => {
+            this.updateSource();
+            this.updateTarget();
+        });
     }
 
     updateSource()
