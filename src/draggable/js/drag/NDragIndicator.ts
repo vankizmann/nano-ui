@@ -91,6 +91,10 @@ export class NDragIndicator
 
         let boundry = target.el.offsetParent;
 
+        if ( boundry?.matches('.n-virtualbar__item') ) {
+            boundry = boundry.offsetParent;
+        }
+
         if ( boundry == null ) {
             boundry = document.body;
         }
