@@ -1,7 +1,7 @@
 import { h, withMemo } from "vue";
 import { ProtoView } from "../../../root/index.ts";
 import { NVirtualbarController } from "./NVirtualbarController.ts";
-import { Arr } from "@kizmann/pico-js";
+import { Arr, Mix } from "@kizmann/pico-js";
 
 export class NVirtualbarView extends ProtoView
 {
@@ -110,12 +110,20 @@ export class NVirtualbarView extends ProtoView
 
     grid()
     {
-        const [{ data }, { start, end, grid, total }] = [
-            this.scope, this.scope.data.state
+        const [data, state] = [
+            this.scope.data, this.scope.data.state
+        ];
+
+        if ( state.total == null ) {
+            return null;
+        }
+
+        const [start, end] = [
+            Math.max(1, state.start), Math.min(state.end, state.total - 1)
         ];
 
         const rows = Arr.chunk(...[
-            data.items, grid
+            data.items, state.grid
         ]);
 
         let items = Arr.slice(...[
@@ -126,12 +134,24 @@ export class NVirtualbarView extends ProtoView
             return this.row(value, index + start);
         });
 
-        return [...result];
+        const first = this.row(...[
+            rows[0], 0
+        ]);
+
+        const last = this.row(...[
+            rows[state.total - 1], state.total - 1
+        ]);
+
+        return [first, ...result, state.total > 1 && last];
     }
 
     row(row : any[], index : number) : any
     {
         const { scope, context, data } = this.scope;
+
+        if ( Mix.isEmpty(row) ) {
+            return null;
+        }
 
         let fn = () => null;
 
@@ -158,10 +178,16 @@ export class NVirtualbarView extends ProtoView
 
     list()
     {
-        const { context, data } = this.scope;
+        const [data, state] = [
+            this.scope.data, this.scope.data.state
+        ];
+
+        if ( state.total == null ) {
+            return null;
+        }
 
         const [start, end] = [
-            Math.max(1, data.state.start), Math.min(data.state.end, data.items.length - 1)
+            Math.max(1, state.start), Math.min(state.end, state.total - 1)
         ];
 
         let items = Arr.slice(...[
@@ -170,71 +196,44 @@ export class NVirtualbarView extends ProtoView
 
         let fn = () => null;
 
-        if ( context.slots.default ) {
-            fn = context.slots.default;
+        if ( this.scope.context.slots.default ) {
+            fn = this.scope.context.slots.default;
         }
 
         const result = Arr.each(items, (value : any, index : number) => {
             return this.node({ value, index: index + start }, fn);
         });
 
+        const first = this.node(...[
+            { value: data.items[0], index: 0 }, fn
+        ]);
+
+        const last = this.node(...[
+            { value: data.items[state.total - 1], index: state.total - 1 }, fn
+        ]);
+
         return [
-            this.first(), ...result, this.last()
+            first, ...result, state.total > 1 && last
         ];
-    }
-
-    first() : any
-    {
-        const { context, data } = this.scope;
-
-        if ( data.items.length < 1 ) {
-            return null;
-        }
-
-        let fn = () => null;
-
-        if ( context.slots.default ) {
-            fn = context.slots.default;
-        }
-
-        return this.node({
-            value: Arr.first(data.items), index: 0
-        }, fn);
-    }
-
-    last() : any
-    {
-        const { context, data } = this.scope;
-
-        if ( data.items.length < 2 ) {
-            return null;
-        }
-
-        let fn = () => null;
-
-        if ( context.slots.default ) {
-            fn = context.slots.default;
-        }
-
-        return this.node({
-            value: Arr.last(data.items), index: data.items.length-1
-        }, fn);
     }
 
     node(item : any, fn : Function, row : boolean = false)
     {
         const { data } = this.scope;
 
+        if ( Mix.isEmpty(item.value) ) {
+            return null;
+        }
+
         let props : any = {
             key: this.scope.uid + item.index,
             class: [`${this.vem}__item`],
-            style: {}
         };
 
         const height = data.itemHeight;
 
-        if ( ! row ) {
-            props.style.top = `${item.index * height}px`;
+        if ( !row ) {
+            props.style = { top: `${item.index * height}px` };
         }
 
         return h('div', props, [fn(item)]);

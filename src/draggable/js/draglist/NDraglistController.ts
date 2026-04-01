@@ -202,6 +202,48 @@ export class NDraglistController extends ProtoController
         ]);
     }
 
+    getItemById(id : string, fallback : any = null)
+    {
+        const { data } = this;
+
+        if ( id == null ) {
+            return fallback;
+        }
+
+        const value = this.getValue({
+            [data.uniqueProp]: id
+        });
+
+        if ( value == null ) {
+            return fallback;
+        }
+
+        return Obj.get(...[
+            data, value.route, fallback
+        ]);
+    }
+
+    getParentById(id : string, fallback : any = null)
+    {
+        const { data } = this;
+
+        if ( id == null ) {
+            return fallback;
+        }
+
+        const value = this.getValue({
+            [data.uniqueProp]: id
+        });
+
+        if ( value == null || value.depth === 0 ) {
+            return fallback;
+        }
+
+        return Obj.get(...[
+            data, Arr.slice(value.route, 0, -2), fallback
+        ]);
+    }
+
     buildIndex()
     {
         const { data } = this;
@@ -405,6 +447,14 @@ export class NDraglistController extends ProtoController
         const options = {
             ...result, group: config.group, items: config.items
         };
+
+        if ( config.uid && result.mode === 'inside' ) {
+            options.item = this.getItemById(config.uid);
+        }
+
+        if ( config.uid && result.mode !== 'inside' ) {
+            options.item = this.getParentById(config.uid);
+        }
 
         this.emit('update:items', clone.items);
         this.emit('move', config.uid, ids, options);

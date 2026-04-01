@@ -88,6 +88,10 @@ export class NModalController extends ProtoController
             this.modal.open();
         }
 
+        this.watchProp('modelValue', (value : boolean) => {
+            value ? this.modal.open() : this.modal.close();
+        });
+
         Dom.find(el).appendTo(document.body);
     }
 

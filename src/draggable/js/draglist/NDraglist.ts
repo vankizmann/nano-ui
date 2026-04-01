@@ -66,6 +66,7 @@ export default defineComponent({
         'update:current',
         'update:selected',
         'update:expanded',
+        'move',
         'row-click',
         'node-click',
         'row-dblclick',

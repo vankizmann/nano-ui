@@ -25,6 +25,11 @@ export class NModalData extends ProtoData
         return this.scope.get('modelValue');
     }
 
+    get keep() : boolean
+    {
+        return this.scope.get('keep');
+    }
+
     get listen() : boolean
     {
         return this.scope.get('listen');

@@ -12,9 +12,16 @@ export class NPreviewData extends ProtoData
 
     get classList() : string[]
     {
-        let classList = [];
+        let classList = [
+            `${this.scope.view.bem}--${this.fit}`
+        ];
 
         return this.classRoot(classList);
+    }
+
+    get fit() : string
+    {
+        return this.scope.get('fit');
     }
 
     get index(): number
