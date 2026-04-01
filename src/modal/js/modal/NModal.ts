@@ -27,6 +27,13 @@ export const NModalProps = {
     /**
      * @type {PropType<boolean>}
      */
+    keep: {
+        type: [Boolean], default: false
+    },
+
+    /**
+     * @type {PropType<boolean>}
+     */
     listen: {
         type: [Boolean], default: true
     },

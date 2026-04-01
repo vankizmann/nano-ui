@@ -36,7 +36,7 @@ export class NModalView extends ProtoView
     {
         const { scope, data } = this.scope;
 
-        if ( !data.model ) {
+        if ( !data.keep && !data.model ) {
             return null;
         }
 
@@ -83,7 +83,7 @@ export class NModalView extends ProtoView
             class: data.classPart('content')
         };
 
-        if ( ! data.scrollbar ) {
+        if ( !data.scrollbar ) {
             return h('div', props, this.slot('default'));
         }
 

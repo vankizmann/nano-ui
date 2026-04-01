@@ -76,10 +76,10 @@ export class NCollapseItemView extends ProtoView
 
     header_label(collapse : NCollapseController) : any
     {
-        const { data } = this.scope;
+        const { context, data } = this.scope;
 
         return this.div('label', [
-            data.label
+            context.slots.label ? context.slots.label() : data.label
         ]);
     }
 
