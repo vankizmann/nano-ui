@@ -35,7 +35,7 @@ body:not(.n-drag) .n-drag-indicator {
 }
 
 .n-drag-indicator:not(.n-view-grid).n-mode-before:before {
-    top: 2px;
+    top: -1px;
     left: 2px;
     right: 2px;
     height: 2px;
@@ -44,12 +44,12 @@ body:not(.n-drag) .n-drag-indicator {
 .n-drag-indicator.n-view-grid.n-mode-before:before {
     top: 2px;
     bottom: 2px;
-    left: 2px;
+    left: -1px;
     width: 2px;
 }
 
 .n-drag-indicator:not(.n-view-grid).n-mode-after:before {
-    bottom: 2px;
+    bottom: -1px;
     left: 2px;
     right: 2px;
     height: 2px;
@@ -58,7 +58,7 @@ body:not(.n-drag) .n-drag-indicator {
 .n-drag-indicator.n-view-grid.n-mode-after:before {
     top: 2px;
     bottom: 2px;
-    right: 2px;
+    right: -1px;
     width: 2px;
 }
 
