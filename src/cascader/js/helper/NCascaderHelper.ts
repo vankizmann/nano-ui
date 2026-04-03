@@ -30,12 +30,8 @@ export class NCascaderHelper
             return val[valueProp] === split;
         });
 
-        if ( Mix.isEmpty(result) ) {
-            result = [{ [valueProp]: split }];
-        }
-
         scope.update('modelValue', ...[
-            Arr.extract(result, valueProp)
+            Mix.isEmpty(result) ? null : Arr.extract(result, valueProp)
         ]);
 
         return this;

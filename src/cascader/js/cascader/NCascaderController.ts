@@ -1,5 +1,5 @@
 import { provide, SetupContext } from "vue";
-import { Mix, Run } from "@kizmann/pico-js";
+import { Mix, Obj, Run } from "@kizmann/pico-js";
 import { NPopoverPanelController } from "../../../popover/js/popover-panel/NPopoverPanelController.ts";
 import { NCascaderView } from "./NCascaderView.ts";
 import { NCascaderData } from "./NCascaderData.ts";
@@ -42,6 +42,7 @@ export class NCascaderController extends NPopoverPanelController
     {
         super.setup();
 
+        this.cloneProp('options');
         this.cloneProp('modelValue');
         this.cloneProp('splitValue');
 
@@ -57,7 +58,7 @@ export class NCascaderController extends NPopoverPanelController
             Run.frame(() => this.detectModel());
         });
 
-        this.watchProp('options', () => {
+        this.watchData('options', () => {
             Run.frame(() => this.detectModel());
         });
 
