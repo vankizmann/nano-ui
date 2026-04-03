@@ -172,6 +172,10 @@ export class NScrollbarElement
 
     fireScroll()
     {
+        this.el.el.setAttribute('data-scolled', ...[
+            this.cl.el.scrollTop != 0
+        ]);
+
         Dom.find(window).fire('virtualscroll', {
             target: this.cl.el,
         });

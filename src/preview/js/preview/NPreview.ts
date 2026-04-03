@@ -49,7 +49,7 @@ export const NPreviewProps = {
      * @type {PropType<string>}
      */
     fit: {
-        type: [String], default: 'cover'
+        type: [String], default: 'contain'
     },
 
     /**

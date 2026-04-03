@@ -21,7 +21,7 @@ export class NSwitchController extends ProtoController
      */
     declare view : NSwitchView;
 
-    constructor(props:any, context:SetupContext)
+    constructor(props : any, context : SetupContext)
     {
         super(props, context);
 
@@ -37,10 +37,26 @@ export class NSwitchController extends ProtoController
     {
         super.setup();
 
-        this
-            .cloneProp('modelValue');
+        this.cloneProp('modelValue');
+
+        this.resetValue();
 
         return this;
+    }
+
+    resetValue()
+    {
+        const { data } = this;
+
+        if ( data.model === data.onValue ) {
+            return;
+        }
+
+        if ( data.model === data.offValue ) {
+            return;
+        }
+
+        this.set('modelValue', data.offValue);
     }
 
     toggle()
@@ -59,7 +75,7 @@ export class NSwitchController extends ProtoController
             this.data.onValue, this.data.offValue
         ];
 
-        if ( ! Arr.has(both, value) ) {
+        if ( !Arr.has(both, value) ) {
             value = this.data.onValue;
         }
 
