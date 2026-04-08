@@ -98,3 +98,25 @@ export const ThemeDark = {
     },
 
 };
+
+export const EmptyPropsInline = {
+
+    /**
+     * @type {PropType<object>}
+     */
+    emptyProps: {
+        type: [Object], default: () => ({ inline: true })
+    },
+
+};
+
+export const EmptyPropsStacked = {
+
+    /**
+     * @type {PropType<object>}
+     */
+    emptyProps: {
+        type: [Object], default: () => ({ inline: false })
+    },
+
+};

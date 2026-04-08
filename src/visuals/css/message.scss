@@ -1,0 +1,99 @@
+@use "../../root/css/helpers" as *;
+
+.n-message {
+    position: relative;
+    overflow: hidden;
+    border-radius: size('base-rad');
+    background: color('base-color', 0.3);
+    transition: max-height 0.2s;
+    max-height: var(--n-message-height);
+}
+
+.n-message__wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: var(--n-message-height);
+    padding: 0 size('base-pad', 'calc($ * 0.5)') 0 size('base-pad');
+}
+
+
+.n-message:not(.n-active) {
+    max-height: 0 !important;
+}
+
+.n-message:before {
+    content: '\00a0';
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 4px;
+    height: 100%;
+    background: color('base-color');
+}
+
+.n-message__symbol,
+.n-message__close,
+.n-message__body {
+    display: inline-flex;
+    min-height: size('base-hgt-inline', 'calc($ * 2.5)');
+}
+
+.n-message__body {
+    flex: 1 1 auto;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    padding: size('base-pad');
+}
+
+.n-message__symbol,
+.n-message__close {
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 size('base-pad', 'calc($ * 0.5)');
+}
+
+.n-message.with-title .n-message__symbol,
+.n-message.with-title .n-message__close {
+    //padding: 0 size('base-pad', 'calc($ * 0.5)');
+}
+
+.n-message__symbol {
+    margin-left: 4px;
+}
+
+.n-message__symbol .n-icon {
+    color: color('base-color-fg-20');
+    font-size: 1.2em;
+}
+
+.n-message__close {
+    cursor: pointer;
+    flex: 0 0 auto;
+}
+
+.n-message__close a {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: size('base-hgt-inline');
+    height: size('base-hgt-inline');
+}
+
+.n-message__close .n-icon {
+    color: color('base-color-fg-20');
+    font-size: size('base-fnt-icon');
+}
+
+.n-message__title {
+    font-size: 1.1em;
+    color: color('base-color-fg-20');
+}
+
+.n-message__text {
+    color: color('text', 0.75);
+}
