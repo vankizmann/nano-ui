@@ -89,6 +89,29 @@
             <n-select :model-value="n_theme" @update:model-value="changeTheme" :options="themes"></n-select>
         </div>
 
+        <h2>NMessage</h2>
+
+        <div class="app-options n-grid gap-30">
+            <div class="col-auto">
+                <n-select style="width: 100px;" v-model="n_tags.size" :options="sizes"></n-select>
+            </div>
+        </div>
+
+        <div class="n-grid gap-20">
+            <div class="col-1-1">
+                <n-message v-bind="n_tags" type="primary" title="With title">Foo askd kasjdbnjka sjdkna</n-message>
+            </div>
+            <div class="col-1-1">
+                <n-message v-bind="n_tags" type="primary" icon="fa fa-ghost" title="With title and icon">Foo askd kasjdbnjka sjdkna</n-message>
+            </div>
+            <div class="col-1-1">
+                <n-message v-bind="n_tags" type="primary">Foo askd kasjdbnjka sjdkna</n-message>
+            </div>
+            <div class="col-1-1">
+                <n-message v-bind="n_tags" type="primary" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna</n-message>
+            </div>
+        </div>
+
         <h2>NTagsItem</h2>
 
         <div class="app-options n-grid gap-30">
@@ -732,7 +755,7 @@
 
         <div class="n-grid gap-10">
             <div class="col-1-1 col-1-3@md">
-                <n-durationpicker  v-model="n_durationpicker.modelValue" v-bind="n_durationpicker"></n-durationpicker>
+                <n-durationpicker v-model="n_durationpicker.modelValue" v-bind="n_durationpicker"></n-durationpicker>
             </div>
             <div class="col-1-1 col-1-3@md">
                 <n-durationpicker v-model="n_durationpicker.modelValue" v-bind="n_durationpicker"></n-durationpicker>
@@ -1053,6 +1076,12 @@
             </div>
         </div>
 
+        <n-virtualbar ref="virtualbar" :items="[]" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+            <template v-slot:default="{ value }">
+                <div style="padding: 0 15px; line-height: 30px;">{{ value.label }}</div>
+            </template>
+        </n-virtualbar>
+
         <n-virtualbar ref="virtualbar" :items="virtualData" style="height: 500px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
             <template v-slot:default="{ value }">
                 <div style="padding: 0 15px; line-height: 30px;">{{ value.label }}</div>
@@ -1080,7 +1109,7 @@
             </div>
         </div>
 
-        <n-draglist :group="['foobar']" v-model:items="virtualTree" :safezone="0.2" :cascade="[virtualTree[virtualTree.length-2].id]":render-expand="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
+        <n-draglist :group="['foobar']" v-model:items="virtualTree" :safezone="0.2" :cascade="[virtualTree[virtualTree.length-2].id]" :render-expand="true" :render-select="true" style="height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;">
             <template v-slot:default="{ value, item }">
                 <div style="padding: 0 15px; line-height: 34px;">{{ item?.label }}</div>
             </template>
@@ -1221,7 +1250,7 @@
             <n-info-column label="ID" type="string" prop="id"></n-info-column>
         </n-info>
 
-        <n-info ref="info" :item="n_table.current"  style="margin-top: 30px; width: 300px;">
+        <n-info ref="info" :item="n_table.current" style="margin-top: 30px; width: 300px;">
             <n-info-column label="Label" type="string" prop="label"></n-info-column>
             <n-info-column label="Image" type="image" prop="image"></n-info-column>
             <n-info-column label="Date" type="datetime" prop="date"></n-info-column>

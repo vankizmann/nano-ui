@@ -69,7 +69,7 @@ export class NVirtualbarView extends ProtoView
         };
 
         return h('div', props, [
-            this.wrapper()
+            data.items.length ? this.wrapper() : this.empty()
         ]);
     }
 

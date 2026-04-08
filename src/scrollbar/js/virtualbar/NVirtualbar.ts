@@ -4,6 +4,9 @@ import { NVirtualbarController } from "./NVirtualbarController.ts";
 
 export const NVirtualbarProps = {
 
+    ...Props.EmptyText,
+    ...Props.EmptyPropsStacked,
+
     /**
      * @type {PropType<array>}
      */

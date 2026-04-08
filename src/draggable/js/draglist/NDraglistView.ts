@@ -40,6 +40,8 @@ export class NDraglistView extends ProtoView
             itemHeight: data.itemHeight,
             itemWidth: data.itemWidth,
             scrollPortal: data.scrollPortal,
+            emptyText: scope.get('emptyText'),
+            emptyProps: scope.get('emptyProps'),
             prevent: 'keydown:[37,38,39,40]',
             dropzone: scope.uid,
         };
