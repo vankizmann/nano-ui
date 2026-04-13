@@ -1,0 +1,39 @@
+@use "../../root/css/helpers" as *;
+
+@keyframes NProgress {
+    0% {
+        background-position: -200% 0;
+    }
+    50% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.n-progress {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: size('base-hgt-inline');
+    background: color('gray-50', 0.15);
+    border-radius: size('base-rad');
+}
+
+.n-progress__bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--n-progress-width, 0%);
+    height: 100%;
+    background-size: 200% 100%;
+    background-position: -200% 0;
+    background-repeat: no-repeat;
+    background-color: color('base-color-bg-10');
+    background-image: linear-gradient(90deg, color('base-color-bg-10') 0%, color('base-color-fg-20') 50%, color('base-color-bg-10') 100%);
+}
+
+.n-progress.n-active .n-progress__bar {
+    animation: NProgress 2s linear infinite;
+}

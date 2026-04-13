@@ -7,6 +7,7 @@ export const NDraglistProps = {
     ...Props.Size,
     ...Props.Type,
     ...Props.Draglist,
+    ...Props.EmptyText,
     ...Props.EmptyPropsStacked,
 
     /**
