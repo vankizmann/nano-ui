@@ -36,9 +36,13 @@ export class NProgressView extends ProtoView
             class: data.classPart('bar')
         };
 
+<<<<<<< HEAD
         props.style = {
             '--n-progress-width': data.model + '%'
         };
+=======
+        props.style = `--n-progress-width: ${data.model}%;`
+>>>>>>> origin/master
 
         return h('div', props);
     }
