@@ -44,9 +44,7 @@ export class NInfoView extends ProtoView
             return this.div('body', [this.slot()]);
         }
 
-        return this.div('empty', [
-            this.empty({ inline: false })
-        ]);
+        return this.empty({ inline: false })
     }
 
 }

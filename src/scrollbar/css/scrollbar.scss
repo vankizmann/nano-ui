@@ -11,6 +11,10 @@ body.n-drag .n-scrollbar {
     overflow: hidden !important;
 }
 
+.n-scrollbar .n-scrollbar__empty {
+    padding: size('base-pad', 'calc($ * 3)') size('base-pad');
+}
+
 .n-scrollbar.is-paused .n-table__wrap {
     display: flex;
 }
