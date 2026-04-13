@@ -60,6 +60,11 @@ export class NProgressData extends ProtoData
         return this.scope.get('modelValue');
     }
 
+    get value() : number
+    {
+        return Math.min(100, Math.max(0, this.model));
+    }
+
     get state() : number
     {
         return this.scope.get('state');

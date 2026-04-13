@@ -37,7 +37,7 @@ export class NProgressView extends ProtoView
         };
 
         props.style = {
-            '--n-progress-width': data.model + '%'
+            '--n-progress-width': data.value + '%'
         };
 
         return h('div', props);
