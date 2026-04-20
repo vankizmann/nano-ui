@@ -92,8 +92,12 @@ export class NDropzoneController extends ProtoController
         }
 
         result = {
-            ...result, target: els.zone, mode: 'inside'
+            ...result, target: els.zone, mode: 'append'
         };
+
+        if ( !this.nodeAllowDrop(null, result, config) ) {
+            result.mode = 'deny';
+        }
 
         return result;
     }
@@ -111,6 +115,21 @@ export class NDropzoneController extends ProtoController
     {
 
         return result;
+    }
+
+    nodeAllowDrop(target : any, result : any, config : any)
+    {
+        let allowDrop = this.data.allowDrop;
+
+        if ( typeof allowDrop !== 'function' ) {
+            allowDrop = () => this.data.allowDrop;
+        }
+
+        let rainbow = Arr.each(config.items, (node : any) => {
+            return !!allowDrop(node, target, result.mode);
+        });
+
+        return !Arr.has(rainbow, false);
     }
 
 }

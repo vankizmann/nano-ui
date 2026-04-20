@@ -21,6 +21,13 @@ export const NDropzone = {
         type: [Array], default: null
     },
 
+    /**
+     * @type {PropType<boolean|function>}
+     */
+    allowDrop: {
+        type: [Boolean, Function], default: true
+    }
+
 };
 
 export default defineComponent({
