@@ -572,7 +572,7 @@ export class NDraglistController extends ProtoController
         let allowDrop = this.data.allowDrop;
 
         if ( typeof allowDrop !== 'function' ) {
-            allowDrop = () => allowDrop;
+            allowDrop = () => this.data.allowDrop;
         }
 
         let rainbow = Arr.each(config.items, (node : any) => {

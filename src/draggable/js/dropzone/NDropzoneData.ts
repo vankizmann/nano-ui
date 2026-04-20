@@ -23,6 +23,11 @@ export class NDropzoneData extends ProtoData
         return this.scope.get('allowGroups');
     }
 
+    get allowDrop() : any
+    {
+        return this.scope.get('allowDrop');
+    }
+
 }
 
 export default NDropzoneData;

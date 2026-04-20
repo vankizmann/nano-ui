@@ -29,13 +29,9 @@ export class NDropzoneView extends ProtoView
 
     body() : any
     {
-        let { data, context } = this.scope;
-
-        if ( data.item == null ) {
-            return null;
-        }
-
-        return context.slots.default(data.item);
+        return this.scope.context.slots?.default(...[
+            this.scope.data.item
+        ]);
     }
 
 }
