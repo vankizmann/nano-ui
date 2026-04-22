@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        body, div {
+            box-sizing: border-box;
+        }
+        :root {
+            --container-width: 1000px;
+            /* links versatz positiv, rechts versatz negativ, 0px geht => 0 geht nicht */
+            --container-offset: -200px;
+        }
+        .container {
+            --container-center: calc((100% - var(--container-width)));
+            --container-left: calc((var(--container-center) + var(--container-offset)) / 2);
+            --container-right: calc((var(--container-center) - var(--container-offset)) / 2);
+            padding: 20px 0;
+            width: 100%;
+            max-width: var(--container-width);
+            margin-left: max(0px, min(max(0px, var(--container-left)), var(--container-center)));
+            margin-right: max(0px, min(max(0px, var(--container-right)), var(--container-center)));
+        }
+        .grid {
+            margin: 0 -10px;
+            display: flex;
+        }
+        .col-1-2 {
+            position: relative;
+            width: calc(50% - 20px);
+            margin: 0 10px;
+        }
+
+
+        .col-1-2:before {
+            content: '\00a0';
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 1px;
+            height: 100%;
+            background: magenta;
+        }
+
+        .col-1-2:after {
+            content: '\00a0';
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: block;
+            width: 1px;
+            height: 100%;
+            background: magenta;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="background: yellow;">
+        <div class="grid gap-20" style="background: rgba(255, 0, 0, 0.4);">
+            <div class="col-1-2" style="height: 200px; background: rgba(0, 255, 0, 0.6);"></div>
+            <div class="col-1-2" style="height: 200px; background: rgba(0, 0, 255, 0.6);"></div>
+        </div>
+    </div>
+</body>
+</html>
