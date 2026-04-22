@@ -18,6 +18,11 @@ export class NDropzoneData extends ProtoData
         return this.scope.get('item');
     }
 
+    get mode() : string
+    {
+        return this.scope.get('mode');
+    }
+
     get allowGroups() : string[]
     {
         return this.scope.get('allowGroups');

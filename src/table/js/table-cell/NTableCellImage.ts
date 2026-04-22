@@ -19,7 +19,7 @@ export const NTableCellImage = ({ node, table, column, props, input, comp }) => 
     }
 
     if ( Obj.has(data, 'thumbProp') ) {
-        image.thumb = Obj.get(node.item, data.thumbProp);
+        image.thumb = Obj.get(node?.item, data.thumbProp);
     }
 
     image.onFocus = () => {

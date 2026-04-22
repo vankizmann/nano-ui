@@ -1,5 +1,5 @@
 import { h } from "vue";
-import { Arr, Mix } from "@kizmann/pico-js";
+import { Arr, Mix, Obj } from "@kizmann/pico-js";
 import { Pointer, ProtoView, Styler } from "../../../root/index.ts";
 import { NPreviewController } from "./NPreviewController.ts";
 
@@ -154,12 +154,9 @@ export class NPreviewView extends ProtoView
         let { data } = this.scope;
 
         let slots = [
-            this.mime()
+            this.mime(),
+            this.path(),
         ];
-
-        if ( fullscreen ) {
-            slots.push(this.path());
-        }
 
         if ( fullscreen ) {
             slots.push(this.link());
@@ -176,7 +173,11 @@ export class NPreviewView extends ProtoView
     {
         let { data } = this.scope;
 
-        if ( ! Mix.isStr(data.safeFile) ) {
+        const path = Obj.get(...[
+            data.safeFile, 'name', data.safeFile
+        ]);
+
+        if ( ! Mix.isStr(path) ) {
             return null;
         }
 
@@ -188,8 +189,11 @@ export class NPreviewView extends ProtoView
             class: data.classPart('path')
         };
 
-        return h('li', props, [data.safeFile]);
+        return h('li', props, [
+            path.replace(/(.*?)([^\/]+)$/, '$2')
+        ]);
     }
+
 
     mime() : any
     {

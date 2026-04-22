@@ -142,7 +142,7 @@ export class ProtoView
         let props : any = scope.get('emptyProps') || {};
 
         props = {
-            ...props, emptyText: scope.get('emptyText'), ...options
+            emptyText: scope.get('emptyText'), ...props, ...options
         };
 
         return this.div('empty', [

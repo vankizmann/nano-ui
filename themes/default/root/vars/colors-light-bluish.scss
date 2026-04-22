@@ -458,6 +458,6 @@ $color-list: (
 
 @mixin default() {
     @each $name, $values in $color-list {
-        @include css-remaps($values, '-color-dark-#{$name}', '-color-#{$name}');
+        @include css-remaps($values, '-color-light-#{$name}', '-color-#{$name}');
     }
 }

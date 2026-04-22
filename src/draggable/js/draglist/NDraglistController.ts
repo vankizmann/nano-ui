@@ -470,6 +470,10 @@ export class NDraglistController extends ProtoController
             return result;
         }
 
+        if ( Arr.has(['deny', 'ignore'], result.mode) ) {
+            return result;
+        }
+
         let clone = {
             items: Arr.clone(this.data.items),
         };

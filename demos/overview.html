@@ -1179,7 +1179,7 @@
 
         <h2>NDropzone</h2>
 
-        <n-dropzone v-model:item="virtualItem" :allow-drop="false" style="width: 300px; height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;" :allow-groups="['foobar']">
+        <n-dropzone v-model:item="virtualItem" :allow-drop="false" style="width: 300px; height: 300px; margin-top: 30px; border: 2px solid rgba(110, 110, 110, 0.5); border-radius: 4px;" :allow-groups="['foobar']" mode="ignore">
             <template v-slot:default="item">
                 <div style="padding: 0 5px; line-height: 34px;">{{ item?.label }}</div>
             </template>
