@@ -26,6 +26,13 @@ export const NDropzone = {
      */
     allowDrop: {
         type: [Boolean, Function], default: true
+    },
+
+    /**
+     * @type {PropType<object>}
+     */
+    mode: {
+        type: [String], default: null
     }
 
 };

@@ -108,11 +108,18 @@ export class NDropzoneController extends ProtoController
 
         this.update('item', node.item);
 
+        if ( this.data.mode ) {
+            result.mode = this.data.mode;
+        }
+
         return result;
     }
 
     onDragend(e : any, result : any, config : any)
     {
+        if ( this.data.mode ) {
+            result.mode = this.data.mode;
+        }
 
         return result;
     }
