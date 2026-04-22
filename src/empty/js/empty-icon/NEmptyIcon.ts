@@ -17,7 +17,7 @@ export const NEmptyIconProps = {
      * @type {PropType<boolean>}
      */
     inline: {
-        type: [Boolean], default: true
+        type: [Boolean], default: false
     },
 
     /**
