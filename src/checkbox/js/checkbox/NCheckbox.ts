@@ -37,6 +37,13 @@ export const NCheckboxProps = {
         type: [Boolean], default: false
     },
 
+    /**
+     * @type {PropType<string>}
+     */
+    view: {
+        type: [String], default: 'checkbox'
+    },
+
 };
 
 export default defineComponent({

@@ -17,6 +17,13 @@ export const NCheckboxGroupProps = {
         type: [Array], default: () => []
     },
 
+    /**
+     * @type {PropType<string>}
+     */
+    view: {
+        type: [String], default: 'checkbox'
+    },
+
 };
 
 export default defineComponent({

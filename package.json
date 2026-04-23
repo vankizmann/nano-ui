@@ -54,6 +54,6 @@
         "webpack-dev-server": "^5.2.3"
     },
     "dependencies": {
-        "@kizmann/pico-js": "^2.1.0"
+        "@kizmann/pico-js": "^2.1.4"
     }
 }

@@ -16,6 +16,13 @@ export const NRadioGroupProps = {
         type: [String,Number], default: ''
     },
 
+    /**
+     * @type {PropType<string>}
+     */
+    view: {
+        type: [String], default: 'checkbox'
+    },
+
 };
 
 export default defineComponent({

@@ -11,7 +11,9 @@ export class NRadioData extends ProtoData
 
     get classList() : string[]
     {
-        let classList = this.classRoot();
+        let classList = this.classRoot([
+            `:bem--${this.view}`,
+        ]);
 
         if ( this.model === this.value ) {
             Arr.append(classList, 'n-checked');
@@ -28,6 +30,11 @@ export class NRadioData extends ProtoData
     get value() : string
     {
         return this.scope.get('value');
+    }
+
+    get view() : string
+    {
+        return this.scope.ncx('group')?.data.view || this.scope.get('view');
     }
 
 }

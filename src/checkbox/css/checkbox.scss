@@ -43,3 +43,9 @@
 .n-checkbox .n-checkbox__label {
     padding-left: size('base-pad', 'calc($ * 0.8)');
 }
+
+.n-checkbox.n-checkbox--button {
+    padding: size('base-pad-vertical') size('base-pad');
+    border: 1px solid transparent;
+    border-radius: size('base-rad');
+}
