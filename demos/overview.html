@@ -144,13 +144,13 @@
         </div>
 
         <div class="n-grid gap-30">
-            <div class="col--1-1">
+            <div class="col-1-1">
                 <template v-for="type in ['neutral', 'primary', 'secondary', 'success', 'warning', 'danger', 'info']">
                     <n-tag v-bind="n_tags" :type="type" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna</n-tag>
                 </template>
             </div>
 
-            <div class="col--1-1">
+            <div class="col-1-1">
                 <template v-for="(value, index) in Array(30).fill(0)">
                     <n-tag v-bind="n_tags" :color="index+40" icon="fa fa-ghost">Foo askd kasjdbnjka sjdkna</n-tag>
                 </template>
@@ -527,13 +527,13 @@
         </div>
 
         <div class="n-grid gap-10">
-            <div class="col--1-1">
+            <div class="col-1-1">
                 <n-cascader-panel v-bind="n_cascader" :options="cascaderData"></n-cascader-panel>
             </div>
-            <div class="col--1-1 col--1-8@md col--right">
+            <div class="col-1-1 col-1-8@md col-right">
                 <n-cascader v-bind="n_cascader" trigger="click" :options="cascaderData"></n-cascader>
             </div>
-            <div class="col--1-1 col--1-8@md col--right">
+            <div class="col-1-1 col-1-8@md col-right">
                 <n-cascader v-bind="n_cascader" :collapse="3" :collapse-first="false" :options="[]" :model-value="['1', '2', '3', '4', '5', '6']"></n-cascader>
             </div>
         </div>
@@ -542,7 +542,7 @@
         <h2>NButtonGroup</h2>
 
         <div class="n-grid gap-10">
-            <div class="col--1-1">
+            <div class="col-1-1">
                 <n-button-group>
                     <n-input v-model="n_input.value" v-bind="n_input" type="primary"></n-input>
                     <n-datepicker v-bind="n_datepicker"></n-datepicker>
@@ -569,8 +569,8 @@
             </div>
         </div>
 
-        <div class="n-grid gap-10">
-            <div class="col--1-1">
+        <div class="n-grid gap-20">
+            <div class="col-1-1">
                 <n-checkbox-group v-bind="n_checkbox">
                     <n-checkbox :global="true" v-bind="n_checkbox">Check all</n-checkbox>
                     <n-checkbox value="test1" v-bind="n_checkbox">Foobar 1</n-checkbox>
@@ -579,8 +579,26 @@
                     <n-checkbox value="test4" v-bind="n_checkbox">Foobar 4</n-checkbox>
                 </n-checkbox-group>
             </div>
-            <div class="col--1-1">
+            <div class="col-1-1">
+                <n-checkbox-group v-bind="n_checkbox" view="button">
+                    <n-checkbox :global="true" v-bind="n_checkbox">Check all</n-checkbox>
+                    <n-checkbox value="test1" v-bind="n_checkbox">Foobar 1</n-checkbox>
+                    <n-checkbox value="test2" v-bind="n_checkbox">Foobar 2</n-checkbox>
+                    <n-checkbox value="test3" v-bind="n_checkbox">Foobar 3</n-checkbox>
+                    <n-checkbox value="test4" v-bind="n_checkbox">Foobar 4</n-checkbox>
+                </n-checkbox-group>
+            </div>
+            <div class="col-1-2">
                 <n-checkbox-group v-bind="n_checkbox" align="vertical">
+                    <n-checkbox :global="true" v-bind="n_checkbox">Check all</n-checkbox>
+                    <n-checkbox value="test1" v-bind="n_checkbox">Foobar 1</n-checkbox>
+                    <n-checkbox value="test2" v-bind="n_checkbox">Foobar 2</n-checkbox>
+                    <n-checkbox value="test3" v-bind="n_checkbox">Foobar 3</n-checkbox>
+                    <n-checkbox value="test4" v-bind="n_checkbox">Foobar 4</n-checkbox>
+                </n-checkbox-group>
+            </div>
+            <div class="col-1-2">
+                <n-checkbox-group v-bind="n_checkbox" align="vertical" view="button">
                     <n-checkbox :global="true" v-bind="n_checkbox">Check all</n-checkbox>
                     <n-checkbox value="test1" v-bind="n_checkbox">Foobar 1</n-checkbox>
                     <n-checkbox value="test2" v-bind="n_checkbox">Foobar 2</n-checkbox>
@@ -604,8 +622,8 @@
             </div>
         </div>
 
-        <div class="n-grid gap-10">
-            <div class="col--1-1">
+        <div class="n-grid gap-20">
+            <div class="col-1-1">
                 <n-radio-group v-bind="n_radio">
                     <n-radio value="test1" v-bind="n_radio">Foobar 1</n-radio>
                     <n-radio value="test2" v-bind="n_radio">Foobar 2</n-radio>
@@ -613,8 +631,24 @@
                     <n-radio value="test4" v-bind="n_radio">Foobar 4</n-radio>
                 </n-radio-group>
             </div>
-            <div class="col--1-1">
+            <div class="col-1-1">
+                <n-radio-group v-bind="n_radio" view="button">
+                    <n-radio value="test1" v-bind="n_radio">Foobar 1</n-radio>
+                    <n-radio value="test2" v-bind="n_radio">Foobar 2</n-radio>
+                    <n-radio value="test3" v-bind="n_radio">Foobar 3</n-radio>
+                    <n-radio value="test4" v-bind="n_radio">Foobar 4</n-radio>
+                </n-radio-group>
+            </div>
+            <div class="col-1-1">
                 <n-radio-group v-bind="n_radio" align="vertical">
+                    <n-radio value="test1" v-bind="n_radio">Foobar 1</n-radio>
+                    <n-radio value="test2" v-bind="n_radio">Foobar 2</n-radio>
+                    <n-radio value="test3" v-bind="n_radio">Foobar 3</n-radio>
+                    <n-radio value="test4" v-bind="n_radio">Foobar 4</n-radio>
+                </n-radio-group>
+            </div>
+            <div class="col-1-1">
+                <n-radio-group v-bind="n_radio" align="vertical" view="button">
                     <n-radio value="test1" v-bind="n_radio">Foobar 1</n-radio>
                     <n-radio value="test2" v-bind="n_radio">Foobar 2</n-radio>
                     <n-radio value="test3" v-bind="n_radio">Foobar 3</n-radio>
@@ -635,16 +669,16 @@
         </div>
 
         <div class="n-grid gap-10">
-            <div class="col--1-1">
+            <div class="col-1-1">
                 <n-slider v-bind="n_slider" v-model="n_slider.temp_value">Slider</n-slider>
             </div>
-            <div class="col--1-1">
+            <div class="col-1-1">
                 {{ n_slider.temp_value }}
             </div>
-            <div class="col--1-1">
+            <div class="col-1-1">
                 <n-slider v-bind="n_slider" :range="true">Slider</n-slider>
             </div>
-            <div class="col--1-1">
+            <div class="col-1-1">
                 <n-slider v-bind="n_slider" :steps="[100,200,300]" :labels="['Small', 'Medium', 'Big']">Slider</n-slider>
             </div>
         </div>
@@ -699,7 +733,7 @@
         </div>
 
         <div class="n-grid gap-10">
-            <div class="col--1-1">
+            <div class="col-1-1">
                 <n-datepicker-panel v-bind="n_datepicker" min-date="now" :panels="2" :range="true"></n-datepicker-panel>
             </div>
             <div class="col-1-1 col-1-3@md">
@@ -728,7 +762,7 @@
         </div>
 
         <div class="n-grid gap-10">
-            <div class="col--1-1">
+            <div class="col-1-1">
                 <n-timepicker-panel v-bind="n_timepicker"></n-timepicker-panel>
             </div>
             <div class="col-1-1 col-1-3@md">
@@ -800,7 +834,7 @@
         </div>
 
         <div class="n-grid gap-10">
-            <div class="col--1-1">
+            <div class="col-1-1">
                 <n-transfer v-bind="n_transfer" trigger="hover" :options="virtualTree"></n-transfer>
             </div>
         </div>
@@ -1150,13 +1184,13 @@
                     <div draggable="true" style="padding: 0 10px;">
                         <i class="fa fa-ellipsis-v"></i>
                     </div>
-                    <div class="col--flex-1-1">
+                    <div class="col-flex-1-1">
                         {{ item?.label }}
                     </div>
-                    <div class="col--flex-0-0" style="margin-right: 10px;">
+                    <div class="col-flex-0-0" style="margin-right: 10px;">
                         <n-button size="xs" type="info" @click="copy">Copy</n-button>
                     </div>
-                    <div class="col--flex-0-0" style="margin-right: 10px;">
+                    <div class="col-flex-0-0" style="margin-right: 10px;">
                         <n-button size="xs" type="danger" @click="remove">Remove</n-button>
                     </div>
                 </div>
@@ -1291,7 +1325,7 @@
         <h2>NPreview</h2>
 
         <div class="n-grid gap-10">
-            <div class="col--1-1">
+            <div class="col-1-1">
                 <n-input-file v-model="n_preview.file"></n-input-file>
             </div>
             <div class="col-auto" v-if="n_preview.file">
@@ -1438,7 +1472,7 @@
                             class: 'grid grid--row grid--wrap grid--30',
                             content: {
                                 'div:00': {
-                                    class: 'col--1-1 col--1-2@sm',
+                                    class: 'col-1-1 col-1-2@sm',
                                     content: {
                                         'NFormItem:00': {
                                             $props: {
@@ -1455,7 +1489,7 @@
                                     }
                                 },
                                 'div:10': {
-                                    class: 'col--1-1 col--1-2@sm',
+                                    class: 'col-1-1 col-1-2@sm',
                                     content: {
                                         'NFormItem:00': {
                                             $props: {

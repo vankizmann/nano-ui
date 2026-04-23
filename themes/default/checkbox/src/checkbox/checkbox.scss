@@ -24,3 +24,16 @@
 .n-checkbox.n-checked:not(.n-disabled) .n-checkbox__label {
     color: color('base-color');
 }
+
+.n-checkbox.n-checkbox--button {
+    border-color: color('gray-15');
+}
+
+.n-checkbox.n-checkbox--button:hover {
+    background: color('gray-50', 0.05);
+}
+
+.n-checkbox.n-checkbox--button.n-checked {
+    border-color: color('primary-color');
+    background: color('primary-color', 0.1);
+}

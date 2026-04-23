@@ -15,6 +15,13 @@ export const NRadioProps = {
         type: [String], default: 'undefined'
     },
 
+    /**
+     * @type {PropType<string>}
+     */
+    view: {
+        type: [String], default: 'checkbox'
+    },
+
 };
 
 export default defineComponent({

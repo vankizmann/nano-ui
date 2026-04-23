@@ -30,3 +30,16 @@
 .n-radio.n-checked:not(.n-disabled) .n-radio__label {
     color: color('base-color');
 }
+
+.n-radio.n-radio--button {
+    border-color: color('gray-15');
+}
+
+.n-radio.n-radio--button:hover {
+    background: color('gray-50', 0.05);
+}
+
+.n-radio.n-radio--button.n-checked {
+    border-color: color('primary-color');
+    background: color('primary-color', 0.1);
+}

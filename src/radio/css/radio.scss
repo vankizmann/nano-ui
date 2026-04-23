@@ -47,3 +47,9 @@
 .n-radio .n-radio__label {
     padding-left: size('base-pad', 'calc($ * 0.8)');
 }
+
+.n-radio.n-radio--button {
+    padding: size('base-pad-vertical') size('base-pad');
+    border: 1px solid transparent;
+    border-radius: size('base-rad');
+}

@@ -11,7 +11,9 @@ export class NCheckboxData extends ProtoData
 
     get classList() : string[]
     {
-        let classList = this.classRoot();
+        let classList = this.classRoot([
+            `${this.scope.view.bem}--${this.view}`
+        ]);
 
         if ( this.model ) {
             Arr.append(classList, 'n-checked');
@@ -51,6 +53,11 @@ export class NCheckboxData extends ProtoData
     get intermediate() : boolean
     {
         return this.scope.get('intermediate');
+    }
+
+    get view() : string
+    {
+        return this.scope.ncx('group')?.data.view || this.scope.get('view');
     }
 
 }

@@ -39,4 +39,9 @@ export class NCheckboxGroupData extends ProtoData
         return this.scope.get('align');
     }
 
+    get view() : string
+    {
+        return this.scope.get('view');
+    }
+
 }

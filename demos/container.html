@@ -10,16 +10,16 @@
             padding: 0;
             overflow-x: hidden;
         }
+
         body, div {
             box-sizing: border-box;
         }
-        :root {
+
+        .container {
             --container-width: 1000px;
             /* links versatz positiv, rechts versatz negativ, 0px geht => 0 geht nicht */
-            --container-offset: -200px;
-        }
-        .container {
             --container-center: calc((100% - var(--container-width)));
+            --container-offset: 200px;
             --container-left: calc((var(--container-center) + var(--container-offset)) / 2);
             --container-right: calc((var(--container-center) - var(--container-offset)) / 2);
             padding: 20px 0;
@@ -28,10 +28,12 @@
             margin-left: max(0px, min(max(0px, var(--container-left)), var(--container-center)));
             margin-right: max(0px, min(max(0px, var(--container-right)), var(--container-center)));
         }
+
         .grid {
             margin: 0 -10px;
             display: flex;
         }
+
         .col-1-2 {
             position: relative;
             width: calc(50% - 20px);
@@ -63,11 +65,34 @@
     </style>
 </head>
 <body>
+<div class="container" style="--container-width: 1300px; --container-offset: -200px;">
     <div class="container" style="background: yellow;">
         <div class="grid gap-20" style="background: rgba(255, 0, 0, 0.4);">
-            <div class="col-1-2" style="height: 200px; background: rgba(0, 255, 0, 0.6);"></div>
+            <div class="col-1-2" style="height: 200px; background: rgba(0, 255, 0, 0.6);">
+                OFFSET: 200px bis 1000px parent breite danach centriert
+            </div>
             <div class="col-1-2" style="height: 200px; background: rgba(0, 0, 255, 0.6);"></div>
         </div>
     </div>
+</div>
+<div class="container">
+    <div class="container" style="background: yellow; --container-width: 500px; --container-offset: 0px;">
+        <div class="grid gap-20" style="background: rgba(255, 0, 0, 0.4);">
+            <div class="col-1-2" style="height: 200px; background: rgba(0, 255, 0, 0.6);">
+                OFFSET: 200px ab 1000px parent breite
+            </div>
+            <div class="col-1-2" style="height: 200px; background: rgba(0, 0, 255, 0.6);"></div>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="background: yellow; --container-offset: calc(var(--container-center) * 0.2)">
+    <div class="grid gap-20" style="background: rgba(255, 0, 0, 0.4);">
+        <div class="col-1-2" style="height: 200px; background: rgba(0, 255, 0, 0.6);">
+            OFFSET: 20% des Abstands nach aussen
+        </div>
+        <div class="col-1-2" style="height: 200px; background: rgba(0, 0, 255, 0.6);"></div>
+    </div>
+</div>
 </body>
 </html>
