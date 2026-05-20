@@ -16,7 +16,7 @@
         }
 
         .container {
-            --container-width: 1000px;
+            --container-width: 1100px;
             /* links versatz positiv, rechts versatz negativ, 0px geht => 0 geht nicht */
             --container-center: calc((100% - var(--container-width)));
             --container-offset: 200px;
@@ -32,6 +32,18 @@
         .grid {
             margin: 0 -10px;
             display: flex;
+        }
+
+        .col-1-1 {
+            position: relative;
+            width: calc(100% - 20px);
+            margin: 0 10px;
+        }
+
+        .col-1-3 {
+            position: relative;
+            width: calc(33.332% - 20px);
+            margin: 0 10px;
         }
 
         .col-1-2 {
@@ -65,7 +77,7 @@
     </style>
 </head>
 <body>
-<div class="container" style="--container-width: 1300px; --container-offset: -200px;">
+<div class="container" style="--container-width: 1300px; --container-offset: -200px; display: none;">
     <div class="container" style="background: yellow;">
         <div class="grid gap-20" style="background: rgba(255, 0, 0, 0.4);">
             <div class="col-1-2" style="height: 200px; background: rgba(0, 255, 0, 0.6);">
@@ -76,7 +88,7 @@
     </div>
 </div>
 <div class="container">
-    <div class="container" style="background: yellow; --container-width: 500px; --container-offset: 0px;">
+    <div class="container" style="background: yellow; --container-width: 500px; --container-offset: 0px; display: none;">
         <div class="grid gap-20" style="background: rgba(255, 0, 0, 0.4);">
             <div class="col-1-2" style="height: 200px; background: rgba(0, 255, 0, 0.6);">
                 OFFSET: 200px ab 1000px parent breite
@@ -86,7 +98,7 @@
     </div>
 </div>
 
-<div class="container" style="background: yellow; --container-offset: calc(var(--container-center) * 0.2)">
+<div class="container" style="background: yellow; --container-offset: calc(var(--container-center) * 0.2); display: none;">
     <div class="grid gap-20" style="background: rgba(255, 0, 0, 0.4);">
         <div class="col-1-2" style="height: 200px; background: rgba(0, 255, 0, 0.6);">
             OFFSET: 20% des Abstands nach aussen
@@ -94,5 +106,40 @@
         <div class="col-1-2" style="height: 200px; background: rgba(0, 0, 255, 0.6);"></div>
     </div>
 </div>
+
+
+<div class="container" style="background: yellow; --container-offset: 0px; display: none;">
+    <div class="grid gap-20" style="background2: rgba(255, 0, 0, 0.4);">
+        <div class="col-1-3" style="height: 200px; background: rgba(0, 255, 0, 0.6);">
+            OFFSET: 20% des Abstands nach aussen
+        </div>
+        <div class="col-1-3" style="height: 200px; background: rgba(0, 0, 255, 0.6);"></div>
+        <div class="col-1-3" style="height: 200px; background: rgba(255, 0, 0, 0.6);"></div>
+    </div>
+</div>
+
+<div class="wrapper" style="display: none;">
+    <div class="container">
+        <div>
+            <div class="grid"></div>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="background: yellow; --container-offset: 0px; display: none;">
+    <div style="max-width: 900px; margin: 20px auto; background: magenta; height: 100px;">
+
+    </div>
+    <div class="grid" style="background: magenta;">
+        <div class="col-1-1" style="background: blue; height: 100px;"> height: 100px;</div>
+    </div>
+</div>
+
+<div class="container" style="background: yellow; --container-offset: 0px;">
+    <div class="formular" style="background: rgba(255, 0, 0, 0.4);">
+
+    </div>
+</div>
+
 </body>
 </html>

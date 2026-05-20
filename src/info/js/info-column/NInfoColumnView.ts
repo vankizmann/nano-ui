@@ -58,15 +58,19 @@ export class NInfoColumnView extends ProtoView
             class: ['n-info-cell']
         };
 
+        const item = Obj.get(...[
+            scope.ncx('info'), ['data', 'item'], {}
+        ]);
+
         const input = Obj.get(...[
-            scope.ncx('info').data.item, data.prop
+            item, data.prop
         ]);
 
         const cell = {
             bem: 'n-info-cell',
             props: props,
             input: input,
-            item: { item: data.item },
+            node: { item },
             column: scope,
             info: scope.ncx('info'),
             comp: this.comp,

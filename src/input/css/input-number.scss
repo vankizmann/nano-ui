@@ -50,6 +50,11 @@
     justify-content: center;
 }
 
+.n-input-number .n-input-number__increase i,
+.n-input-number .n-input-number__decrease i {
+    font-size: size('base-fnt-icon');
+}
+
 .n-input-number .n-input-number__clear {
     display: none;
 }
