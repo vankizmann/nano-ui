@@ -1,5 +1,4 @@
 import { h } from "vue";
-import { Arr } from "@kizmann/pico-js";
 import { ProtoView } from "../../../root/index.ts";
 import { NInfoController } from "./NInfoController.ts";
 
