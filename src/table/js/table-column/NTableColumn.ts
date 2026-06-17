@@ -55,6 +55,13 @@ export const NTableColumnProps = {
     /**
      * @type {PropType<string>}
      */
+    tooltip: {
+        type: [String], default: null
+    },
+
+    /**
+     * @type {PropType<string>}
+     */
     prop: {
         type: [String], default: null
     },

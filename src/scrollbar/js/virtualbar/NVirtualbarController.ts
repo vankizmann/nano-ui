@@ -104,7 +104,7 @@ export class NVirtualbarController extends ProtoController
         const { el, data } = this;
 
         let [grid, width] : [number, number] = [
-            1, el.clientWidth
+            1, el?.clientWidth || 0
         ];
 
         if ( data.grid ) {
