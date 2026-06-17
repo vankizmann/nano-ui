@@ -148,6 +148,10 @@ export class NTableView extends ProtoView
             'z-index': scope.childs.length - index
         };
 
+        if ( column.data.tooltip ) {
+            props['data-tooltip-inv'] = column.data.tooltip;
+        }
+
         if ( column.data.fixedWidth ) {
             props.disabled = true;
         }

@@ -43,6 +43,11 @@ export class NTableColumnData extends ProtoExtend([ProtoData, OptionData, TextDa
         return this.scope.get('label');
     }
 
+    get tooltip():string
+    {
+        return this.scope.get('tooltip');
+    }
+
     get prop():string
     {
         return this.scope.get('prop');

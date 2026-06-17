@@ -1258,7 +1258,7 @@
         </n-table>
 
         <n-table ref="table" v-model:items="virtualTree" v-model:current="n_table.current" v-model:filter="n_table.filter" :handle="true" :render-handle="true" :render-expand="true" :render-select="true" :item-height="100" style="margin-top: 30px; height: 500px;">
-            <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true">
+            <n-table-column label="Label" type="string" prop="label" align="center" :sort="true" :filter="true" tooltip="fooobar">
                 <!--                <template v-slot:default="{item}">{{ item.value }}</template>-->
             </n-table-column>
             <n-table-column label="Image" type="image" prop="file" :fixed-width="130" :data="{thumbProp: 'image'}"></n-table-column>
