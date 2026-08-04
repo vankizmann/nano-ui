@@ -10,10 +10,10 @@ export const NRadioGroupProps = {
     ...Props.AlignHorizontal,
 
     /**
-     * @type {PropType<string|number>}
+     * @type {PropType<string|number|boolean>}
      */
     modelValue: {
-        type: [String,Number], default: ''
+        type: [String,Number,Boolean], default: ''
     },
 
     /**

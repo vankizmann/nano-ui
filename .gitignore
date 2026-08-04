@@ -8,3 +8,4 @@ yarn-error.log
 /dist
 /docs/dist
 /docs/index.html
+/.claude/worktrees
