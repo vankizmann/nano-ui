@@ -9,10 +9,10 @@ export const NRadioProps = {
     ...Props.Disabled,
 
     /**
-     * @type {PropType<null|string>}
+     * @type {PropType<null|string|number|boolean>}
      */
     value: {
-        type: [String], default: 'undefined'
+        type: [String,Number,Boolean], default: 'undefined'
     },
 
     /**

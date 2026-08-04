@@ -2,6 +2,11 @@ import { Arr, Dom, Mix } from "@kizmann/pico-js";
 import { Pointer } from "../../../root/index.ts";
 import NModalElement from "./NModalElement.ts";
 
+globalThis.NModalIgnore = [
+    '.fr-popup',
+    '.fr-tooltip',
+];
+
 export class NModalHandler
 {
     /**
@@ -40,6 +45,14 @@ export class NModalHandler
 
     static mousedown(event : any)
     {
+        const ignore = Arr.each(globalThis.NModalIgnore, (selector : string) => {
+            return !! Dom.find(event.target).inside(selector);
+        });
+
+        if ( Arr.has(ignore, true) ) {
+            return;
+        }
+
         Arr.each(this.modals, (modal : NModalElement) => {
             modal.onMousedown(event);
         });
