@@ -48,7 +48,7 @@ export class NNotifyElement
         ]);
 
         Run.frame(() => {
-            this.el.addClass('n-active');
+            this.el?.addClass('n-active');
         });
 
         this.el.appendTo(frame);

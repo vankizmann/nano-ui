@@ -1,5 +1,6 @@
 @use "sass:color";
 @use "sass:string";
+@use "sass:math";
 
 @mixin css-colors($colors, $prefix: '') {
     @each $name, $color in $colors {
@@ -39,3 +40,22 @@
 @function size($size, $context: '$') {
     @return string.unquote(string-replace($context, "$", "var(--n-size-#{$size})"));
 };
+
+@function fixed-number($number) {
+    @return math.div(math.round($number * 1000), 1000);
+}
+
+@function to-space-fixed($color, $space: rgb) {
+
+    $target: color.to-space($color, $space);
+
+    @if $space != rgb {
+        @return $target;
+    }
+
+    $r: fixed-number(color.channel($target, 'red'));
+    $g: fixed-number(color.channel($target, 'green'));
+    $b: fixed-number(color.channel($target, 'blue'));
+
+    @return color.change($target, $space: $space, $red: $r, $green: $g, $blue: $b);
+}
