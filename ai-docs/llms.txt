@@ -1,0 +1,96 @@
+nano-ui (@kizmann/nano-ui) — Vue 3 component library for desktop
+applications, with drag-and-drop as a flagship feature. AI-agent-facing docs
+generated from source at commit 0ff05b4a37867486c8d7e3655ed05477cd0f886b on
+2026-08-20. Generated directly from src/ and demos/ — NOT derived from
+docs/ or any other pre-existing documentation in this repo.
+
+If a prop/behavior you observe in actual source contradicts these docs,
+treat the docs as stale rather than silently trusting either side — flag it
+instead of guessing which one is right.
+
+Read first:
+- concepts.md      Controller/Data/View pattern, ProtoController/ProtoData/
+                    ProtoView API, shared Props mixins, open-string type/size
+                    rule, options ($index/$value) resolution, v-model rules.
+- setup.md         install, module vs global usage, themes, webpack alias.
+- config.md        App.use(Install,...) options are inert; NConfig explained.
+- icons.md         icon prop = pass-through Font Awesome string; Styler
+                    override mechanism for nano-ui's own internal icons.
+- theming.md        CSS custom properties (--n-color-*, --n-size-*), themes.
+- patterns.md      5 realistic multi-component compositions.
+
+Components, by category:
+
+Form inputs
+- components/button.md              NButton
+- components/button-group.md        NButtonGroup (general wrapper, not button-only)
+- components/input.md               NInput
+- components/input-number.md        NInputNumber
+- components/input-file.md          NInputFile
+- components/textarea.md            NTextarea
+- components/checkbox.md            NCheckbox
+- components/checkbox-group.md      NCheckboxGroup
+- components/radio.md               NRadio (requires NRadioGroup)
+- components/radio-group.md         NRadioGroup
+- components/switch.md              NSwitch
+- components/slider.md              NSlider
+- components/select.md              NSelect
+- components/cascader.md            NCascader
+- components/cascader-panel.md      NCascaderPanel
+- components/transfer.md            NTransfer
+- components/datepicker.md          NDatepicker
+- components/datepicker-panel.md    NDatepickerPanel
+- components/datetimepicker.md      NDatetimepicker
+- components/timepicker.md          NTimepicker
+- components/timepicker-panel.md    NTimepickerPanel
+- components/durationpicker.md      NDurationpicker
+- components/form.md                NForm
+- components/form-item.md           NFormItem
+- components/form-bag.md            NFormBag
+- components/form-group.md          NFormGroup
+- components/form-frame.md          NFormFrame
+
+Layout & navigation
+- components/collapse.md            NCollapse
+- components/collapse-item.md       NCollapseItem (requires NCollapse)
+- components/tabs.md                NTabs
+- components/tabs-item.md           NTabsItem (requires NTabs)
+- components/resizer.md             NResizer
+- components/scrollbar.md           NScrollbar
+- components/virtualbar.md          NVirtualbar
+
+Feedback & overlay
+- components/modal.md               NModal
+- components/drawer.md              NDrawer
+- components/popover.md             NPopover
+- components/popover-group.md       NPopoverGroup (requires NPopover)
+- components/popover-option.md      NPopoverOption (requires NPopover)
+- components/signal.md              Alert / Confirm / Notify (global JS API, not tags)
+- components/message.md             NMessage
+- components/progress.md            NProgress
+- components/loader.md              NLoader
+- components/empty-icon.md          NEmptyIcon
+- components/preview.md             NPreview
+
+Data display
+- components/table.md               NTable
+- components/table-column.md        NTableColumn
+- components/paginator.md           NPaginator (adjacent to NTable, never nested)
+- components/info.md                NInfo
+- components/info-column.md         NInfoColumn (requires NInfo)
+- components/tag.md                 NTag
+- components/rating.md              NRating
+- components/chart-bar.md           NChartBar
+- components/chart-donut.md         NChartDonut
+- components/chart-item.md          NChartItem (required child of NChartBar/NChartDonut)
+- components/map.md                 NMap
+- components/map-marker.md          NMapMarker (requires NMap; geographic/Google Maps wrapper)
+
+Drag & drop
+- components/draglist.md            NDraglist
+- components/dropzone.md            NDropzone
+
+Dynamic rendering
+- components/config.md              NConfig (JSON/object-driven renderer; unrelated to Install() config)
+
+See ai-docs/llms-full.txt for all of the above concatenated into one file.
