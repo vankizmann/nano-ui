@@ -5,11 +5,6 @@
 To know a language's syntax you read this file and that language's file, and nothing
 else.
 
-Every rule below was measured in both PHP and TypeScript. Counts come from full sweeps
-of `plugins/`, excluding `vendor/`, `node_modules/`, `_OLD/`, `webroot/` and generated
-`tmp/` directories: **1204 PHP source files** (72 859 lines) and **708 TypeScript
-files** (47 157 lines).
-
 ## What the layout rules are for
 
 Code is read by people before it is run by machines, and people read it the way they
@@ -368,6 +363,42 @@ read that as a convention.
 Layout follows rule 8: the opening `[` stays on the assignment line, the values are
 indented one level, and the closing `];` sits at the statement's indentation.
 
+**A short pack next to a block, or alone in a body, may stay on one line.** When the
+whole line is short and the statement directly before **or** after it is a multi-line
+block, the pack keeps the one-line form; the block beside it already gives the
+sequence its shape. A pack that is the only statement in a body keeps it too, as a
+short array does under rule 13; for this case the lone-statement trigger of rule 14
+does not apply. Otherwise the start or end of a body is not a block — the neighbour
+has to be a statement.
+
+```ts
+// RIGHT — a block follows
+let [fn, mode] = [safezone, 'inside'];
+
+if ( typeof fn !== 'function' ) {
+    // …
+}
+
+// RIGHT — alone in the body
+if ( first.index > last.index ) {
+    [last, first] = [first, item];
+}
+```
+
+```ts
+// WRONG — a single line before, the end of the body after
+this.el.get(0).remove();
+
+[this.el, this.modal] = [null, null];
+
+// RIGHT
+this.el.get(0).remove();
+
+[this.el, this.modal] = [
+    null, null
+];
+```
+
 **Use it for values that genuinely belong together** — a view and its data, a path
 triple, a pair of accumulators. Do not pack unrelated assignments to save lines; that
 costs the reader more than it saves.
@@ -477,9 +508,8 @@ const architecture_flags = [
 ```
 
 ```ts
-// WRONG — the literal is a list and is laid out as one
+// WRONG — the entry is a call, so the literal is a list and is laid out as one
 const roots = [join(layout.usr, 'lib')];
-const extensions = ['so', 'dylib'];
 ```
 
 ```ts
@@ -514,6 +544,86 @@ const config = {
 ### Empty arrays stay on one line
 
 There is nothing to group. `const roots = [];` is correct.
+
+### A short array may stay on one line
+
+A block around one short value adds two lines and no structure; there is no list for
+the eye to follow. Two cases may therefore keep the literal on one line.
+
+**One or two entries, between non-single lines.** An array literal with one or two
+entries — a value, a name, a property access, a short call or a short expression —
+stays on one line when the whole line is short **and** the statements directly
+before and after it are not single lines. A block, a block's header or closing brace,
+and the start or end of a body all count as "not a single line". A statement alone in
+a body therefore qualifies; for this case the lone-statement trigger of rule 14 does
+not apply.
+
+```ts
+// RIGHT — alone in the body: header before, closing brace after
+if ( data.view === 'dates' ) {
+    slots = [this.dates()];
+}
+
+// RIGHT — two entries, one an expression, still a short line alone in the body
+if ( key === 'width' ) {
+    style.translate = [offset + port.left + 'px', 0];
+}
+
+// RIGHT — a block before and after
+let classList = ['is-null'];
+
+if ( data.closest >= index - 0.5 ) {
+    classList = ['is-half'];
+}
+```
+
+```ts
+// WRONG — a single line directly before it, so the two form a run (rule 14)
+const index = this.findIndex(item);
+selected = [item.uid];
+
+// RIGHT — the literal takes its block and breaks the run
+const index = this.findIndex(item);
+
+selected = [
+    item.uid
+];
+```
+
+A blank line between does not separate the two, and the neighbour counts even when
+it has no multi-line form of its own — a destructure from `this.scope` is still a
+single line.
+
+```ts
+// WRONG — the destructure before it is a single line
+const { data } = this.scope;
+
+let classList = ['is-null'];
+
+// RIGHT
+const { data } = this.scope;
+
+let classList = [
+    'is-null'
+];
+```
+
+**Two short entries, short line, anywhere.** An array literal with two short entries
+— string, number or boolean literals, `null`, bare names, a plain property access —
+may stay on one line when the whole line is short, whatever stands around it.
+
+```ts
+// RIGHT
+slots = [prev, next];
+date = [model, model];
+```
+
+Outside these two cases the literal takes its block as described above: at a third
+entry, at a nested literal, at a call or expression next to a single line, and
+whenever the line would no longer be short.
+
+The exception covers array literals only. Object literals with named keys still go
+one key per line, and a packed assignment follows its own exception in rule 12.
 
 ### Nested arrays: the outer one spans lines, the rows stay flat
 
@@ -666,11 +776,15 @@ block.
 
 ### The multi-line forms, in order of preference
 
-1. **A literal gets its block.** Array or object, assigned or passed — rule 13.
+1. **A literal gets its block.** Array or object, assigned or passed — rule 13. A short
+   array that rule 13 lets stay on one line — one or two entries between non-single
+   lines, or two short entries anywhere — counts as having no multi-line form.
 2. **A closure gets a braced body.** A one-expression arrow or closure becomes a
    braced body with the expression as its one statement.
 3. **A packed assignment gets its block.** The values go on their own indented line
-   — rule 12. A pack is never written on one line.
+   — rule 12. A pack is written on one line only when
+   it is short and either a block stands directly before or after it or it is
+   alone in its body.
 4. **A ternary becomes default-then-override.** Assign the default, then an `if`
    that overrides it. Both forms are allowed; the `if` is chosen when the ternary
    would be one of two adjacent single lines.
@@ -689,6 +803,10 @@ A statement that has none of these — a bare `return`, an `await` on a property
 call whose only argument is a bare name or literal like `clearTimeout(killer)` —
 stays single. A run made only of such statements is left alone; there is no rule to
 invent a wrapper just to get a block.
+
+Two or more simple one-line calls with no blank line between them count as one
+statement, not as a run — see "A group of simple calls counts as one statement"
+under rule 15.
 
 ### Examples
 
@@ -803,6 +921,49 @@ writeSync(log, `\n=== start ${command.join(' ')}\n`);
 
 A multi-line block is followed by a blank line before the next statement, so the
 block stands apart from what follows it.
+
+### Exception: a body made only of one-line conditionals
+
+A body whose statements are **all** brace-less one-line conditionals — `if ( … )
+statement;` — keeps that form. Typical is a key handler that maps keys to calls: the
+lines are read as one table, one row per case, and braces would scatter it into
+blocks with nothing between them. Such a body also stays tight against its brace;
+rule 15's gap is not applied, because the rows are one unit, not a sequence.
+
+```ts
+// RIGHT — the conditionals are the only statements in the body
+props.onKeydown = (e : any) => {
+    if ( e.which === 9 ) scope.onBlur();
+    if ( e.which === 13 ) scope.onEnter();
+};
+
+// RIGHT — a single one is the same case
+props.onPointerdown = (e : any) => {
+    if ( e.which === 1 ) scope.emit('click', e);
+};
+```
+
+The exception ends as soon as anything else shares the body. Then every conditional
+takes its braced form, and rule 15 applies as usual.
+
+```ts
+// WRONG in new code — a one-line conditional next to another statement
+// (an existing run like this is left alone; see rule 15)
+props.onKeydown = (e : any) => {
+    if ( e.which === 13 ) scope.applyFormat(e.target.value);
+    scope.emit('keydown', e);
+};
+
+// RIGHT
+props.onKeydown = (e : any) => {
+
+    if ( e.which === 13 ) {
+        scope.applyFormat(e.target.value);
+    }
+
+    scope.emit('keydown', e);
+};
+```
 
 ### Exception: constructors
 
@@ -953,3 +1114,92 @@ async exec(command : string[], options : ExecOptions = {}) : Promise<CommandResu
 
 Object, array and type literals are not blocks and take no blank line after their
 opening bracket.
+
+A body made only of brace-less one-line conditionals stays tight as well — see the
+exception under rule 14.
+
+### A group of simple calls counts as one statement
+
+Two or more **simple one-line calls**, written directly one under the other with no
+blank line between them, are read as one unit — one row per call — and count as a
+single statement. A body made only of such a group stays tight against its brace,
+and the group is not a run of single lines under rule 14: nothing in it is expanded
+or split.
+
+A call is simple when it is a statement of its own and its arguments are only names,
+literals, property accesses, or a short inline object of those, like `{ uid }`. The
+calls need not go to the same function; they need to look alike.
+
+```ts
+// RIGHT — the same call twice
+export default function (App : App) {
+    App.component(NModal.name, NModal);
+    App.component(NDrawer.name, NDrawer);
+}
+
+// RIGHT — different calls, but simple and alike, with no blank line between
+props.onClick = (e : any) => {
+    scope.onCurrentclick(e, value);
+    scope.emit('row-click', data.current, e);
+    scope.emit('node-click', { value, item: data.current }, e);
+};
+
+doc.once('mouseup', (e : any) => {
+    doc.off('mousemove', { uid });
+    el.remClass('is-active');
+});
+```
+
+A short inline object inside such a call stays on the line. It is an exception to
+rule 13: breaking it into a block would split the group, which is the thing this
+rule keeps together.
+
+**The blank line is what decides it.** Lines separated by a blank line are not a
+group, however alike they are; each is its own statement. And a line that is not a
+simple call — an assignment, a conditional, a call with a nested call or an operator
+in its arguments — ends the group.
+
+```ts
+// WRONG — not a group: the arguments hold nested calls, so rule 14 applies
+include_dirs.unshift(join(prefix, 'include'));
+library_dirs.unshift(join(prefix, 'lib'));
+```
+
+**Existing groups are left as they are.** Existing code holds many runs of short
+one-line statements with no blank line between them that do not meet the definition
+above — an assignment beside a call, a chained call, a closure argument, a one-line
+conditional beside a call. Where such a run already exists and the change does not
+touch it, treat it as a group: do not split it, do not add a blank line before it,
+and do not report it as a defect. **New code follows the rules exactly** — the
+definition of a simple call above, rule 14 and the gap of this rule.
+
+```ts
+// existing — left alone
+props.onFocus = (e : any) => {
+    data.focus = 1;
+    scope.emit('focus', e);
+};
+
+// new — an assignment is not a simple call, so the body takes its gap
+props.onFocus = (e : any) => {
+
+    data.focus = 1;
+    scope.emit('focus', e);
+};
+```
+
+The group is one statement, not a whole body. When anything else shares the body,
+the body holds more than one statement and takes its blank line; the group stays
+together as one unit inside it.
+
+```ts
+// RIGHT — the group plus another statement, so the gap
+export default function (App : App) {
+
+    App.use(NConfig);
+
+    App.component(NModal.name, NModal);
+    App.component(NDrawer.name, NDrawer);
+}
+```
+
